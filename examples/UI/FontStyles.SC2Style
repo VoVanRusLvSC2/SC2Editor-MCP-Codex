@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<StyleFile>
+    <Style name="MCPTitle" font="Arial" height="28" textcolor="FFFFFFFF" future="keep"/>
+</StyleFile>

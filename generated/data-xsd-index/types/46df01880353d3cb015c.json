@@ -1,0 +1,1 @@
+{"name":"simple_EButtonTooltipFlag","kind":"simple","fields":[],"enumValues":["ShowAutocast","ShowCooldown","ShowDuration","ShowHotkey","ShowLevel","ShowName","ShowRadius","ShowRange","ShowRequirements","ShowResources","ShowSupply","ShowTime","ShowUsage"],"facets":[],"base":"xs:string"}

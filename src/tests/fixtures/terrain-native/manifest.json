@@ -1,0 +1,246 @@
+[
+  {
+    "id": "nydus",
+    "evidence": "user-provided native map components; no new Editor round-trip executed",
+    "components": [
+      {
+        "name": "t3Terrain.xml",
+        "bytes": 4333,
+        "sha256": "1e66a45de6c4c2aa097e6582592c1a8daac504549376c27bb79fa4d11cd832b9"
+      },
+      {
+        "name": "t3HeightMap",
+        "bytes": 6566,
+        "sha256": "397bb71583fbf8c10a4e07ddb718e6783ed442d53d9b4a76cd474e1aa60ae4a6"
+      },
+      {
+        "name": "t3TextureMasks",
+        "bytes": 262208,
+        "sha256": "901087dbb65e738d774d2517fc694d8508d524c4ca988cc7478efd2e0f48cb99"
+      },
+      {
+        "name": "t3SyncHeightMap",
+        "bytes": 4420,
+        "sha256": "4725002333adecf4410376331bbbf695b5a613d55b2a5a6b7bda10701e1be3bd"
+      },
+      {
+        "name": "t3SyncCliffLevel",
+        "bytes": 2080,
+        "sha256": "ee6f88f90add90966dc89670499c3120e26d33968a12c26f0ba99d4da7504fd7"
+      },
+      {
+        "name": "t3SyncTextureInfo",
+        "bytes": 8236,
+        "sha256": "5fdf44defe5df115be5be49de20d822f1dfab785304cfbd228c120aa03f38c0c"
+      },
+      {
+        "name": "t3CellFlags",
+        "bytes": 1056,
+        "sha256": "56d47dee7d3e6c2245a5d69d1421bffa56c4f14ac936574d1ab1e6351c87b55e"
+      },
+      {
+        "name": "t3HardTile",
+        "bytes": 28,
+        "sha256": "12afa86368acf6158758ce235c2e3879d6edfab41cc2eef6738c939e746b745d"
+      },
+      {
+        "name": "t3Water",
+        "bytes": 32,
+        "sha256": "c15e6e4da91564e9349a449302114f4248dfe1f2cebee1a29526cb5f41db5af5"
+      },
+      {
+        "name": "t3VertCol",
+        "bytes": 3936,
+        "sha256": "07e468603720a21465401f31702bea01e69bea5a8aa9606fc672015bcd692a18"
+      },
+      {
+        "name": "t3FluffDoodad",
+        "bytes": 28,
+        "sha256": "3f3f15b8480e7cf37d97bc9c4affe5af1348b352bbc1213a71da32195a88e937"
+      }
+    ]
+  },
+  {
+    "id": "ant",
+    "evidence": "user-provided native map components; no new Editor round-trip executed",
+    "components": [
+      {
+        "name": "t3Terrain.xml",
+        "bytes": 84192,
+        "sha256": "6902a7e0f401e9c654c754b783d1add0cecd044592e223610a8dab188cb55edd"
+      },
+      {
+        "name": "t3HeightMap",
+        "bytes": 112646,
+        "sha256": "9e8edea0786311c1017bb8b0e9ec9e11ed6242af336199d56ce695ab56948940"
+      },
+      {
+        "name": "t3TextureMasks",
+        "bytes": 4735040,
+        "sha256": "d86f67d356d990b1e82199f90f4e8f14929f2a841429fbd02d411c2a15c8ed0a"
+      },
+      {
+        "name": "t3SyncHeightMap",
+        "bytes": 75140,
+        "sha256": "5a27b743f3a24937819925b1b18be3b06d6b4ac0dba73fc4560fca631fef292d"
+      },
+      {
+        "name": "t3SyncCliffLevel",
+        "bytes": 37024,
+        "sha256": "8918e598e1af03f60fdfc270fb2dc4bc4bdf1b0e27f7ac7b29a8e41cb550009b"
+      },
+      {
+        "name": "t3SyncTextureInfo",
+        "bytes": 148122,
+        "sha256": "b3188849f7847bc6b24f123ac0e435abaf872997c0f15e11b13a46e66905bcd1"
+      },
+      {
+        "name": "t3CellFlags",
+        "bytes": 18528,
+        "sha256": "44a3918d67c4b5f354060ff752780d3a4591d14b82f3afee24e2020ec88ebfb1"
+      },
+      {
+        "name": "t3HardTile",
+        "bytes": 28,
+        "sha256": "12afa86368acf6158758ce235c2e3879d6edfab41cc2eef6738c939e746b745d"
+      },
+      {
+        "name": "t3Water",
+        "bytes": 32,
+        "sha256": "c15e6e4da91564e9349a449302114f4248dfe1f2cebee1a29526cb5f41db5af5"
+      },
+      {
+        "name": "t3VertCol",
+        "bytes": 70548,
+        "sha256": "99b4d3ae49d9d368b0f29bf73af9ef3162bf9b09d58e5be0e77201f9b5ba1a0a"
+      },
+      {
+        "name": "t3FluffDoodad",
+        "bytes": 28,
+        "sha256": "3f3f15b8480e7cf37d97bc9c4affe5af1348b352bbc1213a71da32195a88e937"
+      }
+    ]
+  },
+  {
+    "id": "city",
+    "evidence": "user-provided native map components; no new Editor round-trip executed",
+    "components": [
+      {
+        "name": "t3Terrain.xml",
+        "bytes": 136288,
+        "sha256": "358911394cc79e570590791e860c252739430cba05fc3054de96f16adc962efc"
+      },
+      {
+        "name": "t3HeightMap",
+        "bytes": 188822,
+        "sha256": "f69b8e6fa859fe2f08633201dac2394a81e6aabbb2b86649370677069ca9fe9b"
+      },
+      {
+        "name": "t3TextureMasks",
+        "bytes": 7962688,
+        "sha256": "dd0ab1468e401c4caa5149f8a874e081b01d2377a0371f2a01da75dbed77b308"
+      },
+      {
+        "name": "t3SyncHeightMap",
+        "bytes": 125924,
+        "sha256": "3e5cb54b18b94dac3f20e9a0ca7f2f59166e0ae98a322387dc9a81f5d6cbb855"
+      },
+      {
+        "name": "t3SyncCliffLevel",
+        "bytes": 62240,
+        "sha256": "94714de3de157e6549faa22e04ae87fe3733cbab5cb648e7955390d249f34424"
+      },
+      {
+        "name": "t3SyncTextureInfo",
+        "bytes": 248950,
+        "sha256": "86edb70aa98c5fc26242e163a561c39e5689c0f3c26facea5e8238ec6af45b4f"
+      },
+      {
+        "name": "t3CellFlags",
+        "bytes": 31136,
+        "sha256": "eec492cc02eed46b89fbf8ead1131ac3c205806805d591bf458f02549880e62c"
+      },
+      {
+        "name": "t3HardTile",
+        "bytes": 28,
+        "sha256": "12afa86368acf6158758ce235c2e3879d6edfab41cc2eef6738c939e746b745d"
+      },
+      {
+        "name": "t3Water",
+        "bytes": 368,
+        "sha256": "5fbe1e42bad7a0dccaa536c9bc1076b14a83fccb632b9de6fec0d3d3097f63af"
+      },
+      {
+        "name": "t3VertCol",
+        "bytes": 225300,
+        "sha256": "3fbedb2df2d3c2d504e35533d81b9b2eba39635d4f410605b2d764b176de1a68"
+      },
+      {
+        "name": "t3FluffDoodad",
+        "bytes": 96652,
+        "sha256": "e9184f4c24a4ec2d12881e922de667c1aec2ec8ea206302204097eb345891c74"
+      }
+    ]
+  },
+  {
+    "id": "warships",
+    "evidence": "user-provided native map components; no new Editor round-trip executed",
+    "components": [
+      {
+        "name": "t3Terrain.xml",
+        "bytes": 56889,
+        "sha256": "a7bdaec1f974e643f2c88997d40fe23b2ca4da85a14447b4a6f9f15b4c7fe58e"
+      },
+      {
+        "name": "t3HeightMap",
+        "bytes": 396326,
+        "sha256": "c154b51e7adb9910179759b3ec76fe5fc8fde1ab9d06887fb19a8a03290a1249"
+      },
+      {
+        "name": "t3TextureMasks",
+        "bytes": 16777280,
+        "sha256": "b65aa53fb16722af36e9b9d8e5ffc6a3c8da5ea1381dbeb9c3219477fe2dd776"
+      },
+      {
+        "name": "t3SyncHeightMap",
+        "bytes": 264260,
+        "sha256": "10ccd3b497a93c5e10a8da85d0fefc1434c165af51a0da8e8ffce92ce368a2c1"
+      },
+      {
+        "name": "t3SyncCliffLevel",
+        "bytes": 131104,
+        "sha256": "c6e80d25183942af89a7445a0f5b7a56cdc75b07cef001dcfbd8f4ada59027ba"
+      },
+      {
+        "name": "t3SyncTextureInfo",
+        "bytes": 524332,
+        "sha256": "cd739c7e6962224f8fdea4eb76ab9f8b24632d6f55436c9afb8deeb2669c505b"
+      },
+      {
+        "name": "t3CellFlags",
+        "bytes": 65568,
+        "sha256": "b78880886e7800bfb8db84414e81b3d434080695269ca78650b7dd1bd3820faf"
+      },
+      {
+        "name": "t3HardTile",
+        "bytes": 28,
+        "sha256": "12afa86368acf6158758ce235c2e3879d6edfab41cc2eef6738c939e746b745d"
+      },
+      {
+        "name": "t3Water",
+        "bytes": 32,
+        "sha256": "c15e6e4da91564e9349a449302114f4248dfe1f2cebee1a29526cb5f41db5af5"
+      },
+      {
+        "name": "t3VertCol",
+        "bytes": 249978,
+        "sha256": "e7256bf3c75668d7d871ef499bf03d6b0533f3ac72b1ec0e2f0b70d84b92f079"
+      },
+      {
+        "name": "t3FluffDoodad",
+        "bytes": 28,
+        "sha256": "3f3f15b8480e7cf37d97bc9c4affe5af1348b352bbc1213a71da32195a88e937"
+      }
+    ]
+  }
+]

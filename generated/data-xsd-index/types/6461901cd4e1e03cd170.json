@@ -1,0 +1,1 @@
+{"name":"simple_EWeaponLegacyOption","kind":"simple","fields":[],"enumValues":["CanRetargetWhileChanneling","FaceTargetWhileInCooldown","KeepChanneling","LockTurretWhileFiring","NoDeceleration","Uninterruptible","UseRangeToCenter"],"facets":[],"base":"xs:string"}

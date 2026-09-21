@@ -1,0 +1,1 @@
+{"name":"simple_EScoreValueOperation","kind":"simple","fields":[],"enumValues":["Add","Divide","Multiply","Subtract"],"facets":[],"base":"xs:string"}

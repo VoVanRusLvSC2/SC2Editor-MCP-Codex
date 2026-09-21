@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Desc>
+    <Frame type="Frame" name="GameUI/UIContainer" file="GameUI">
+        <Frame type="Label" name="KaldirStormWarning">
+            <Anchor side="Top" relative="$parent" pos="Min" offset="100"/>
+            <Anchor side="Left" relative="$parent" pos="Mid" offset="-450"/>
+            <Anchor side="Right" relative="$parent" pos="Mid" offset="450"/>
+            <Height val="60"/>
+            <Style val="KaldirSubtitle"/>
+            <Text val="The storm is coming."/>
+        </Frame>
+    </Frame>
+</Desc>

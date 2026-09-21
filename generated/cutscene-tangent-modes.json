@@ -1,0 +1,73 @@
+{
+  "build": "5.0.16.97563",
+  "enum": {
+    "name": "TangentType",
+    "values": [
+      {
+        "token": "Custom",
+        "nativeId": null,
+        "displayKey": "Cutscenes/Value/TangentType/Custom",
+        "fileOffset": "0x3AF4D00",
+        "rva": "0x3AF5D00"
+      },
+      {
+        "token": "Fast",
+        "nativeId": null,
+        "displayKey": "Cutscenes/Value/TangentType/Fast",
+        "fileOffset": "0x3AF4D28",
+        "rva": "0x3AF5D28"
+      },
+      {
+        "token": "Flat",
+        "nativeId": null,
+        "displayKey": "Cutscenes/Value/TangentType/Flat",
+        "fileOffset": "0x3AF4D50",
+        "rva": "0x3AF5D50"
+      },
+      {
+        "token": "Linear",
+        "nativeId": null,
+        "displayKey": "Cutscenes/Value/TangentType/Linear",
+        "fileOffset": "0x3AF4D78",
+        "rva": "0x3AF5D78"
+      },
+      {
+        "token": "Slow",
+        "nativeId": null,
+        "displayKey": "Cutscenes/Value/TangentType/Slow",
+        "fileOffset": "0x3AF4DA0",
+        "rva": "0x3AF5DA0"
+      },
+      {
+        "token": "Smooth",
+        "nativeId": null,
+        "displayKey": "Cutscenes/Value/TangentType/Smooth",
+        "fileOffset": "0x3AF4DC8",
+        "rva": "0x3AF5DC8"
+      },
+      {
+        "token": "Step",
+        "nativeId": null,
+        "displayKey": "Cutscenes/Value/TangentType/Step",
+        "fileOffset": "0x3AF4DF0",
+        "rva": "0x3AF5DF0"
+      },
+      {
+        "token": "Auto",
+        "nativeId": null,
+        "displayKey": "Cutscenes/Value/TangentType/Auto",
+        "fileOffset": "0x3AF4E18",
+        "rva": "0x3AF5E18"
+      }
+    ],
+    "nativeIdsStatus": "not-recovered"
+  },
+  "serializationFields": [
+    "curveInType",
+    "curveOutType",
+    "curveInValue",
+    "curveOutValue"
+  ],
+  "nativeIntegerIds": "UNKNOWN_NEEDS_RESEARCH",
+  "warning": "Tokens are EXE-confirmed. Integer IDs were not inferred from display-string order."
+}

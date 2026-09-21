@@ -1,0 +1,1 @@
+{"name":"simple_ECommanderTalentType","kind":"simple","fields":[],"enumValues":["Ability","Bundle","Passive","Unit"],"facets":[],"base":"xs:string"}

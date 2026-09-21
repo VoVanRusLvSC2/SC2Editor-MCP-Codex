@@ -1,0 +1,1 @@
+{"name":"SAnimAlias","kind":"complex","fields":[{"kind":"attribute","name":"Alias","type":"simple_CAnimProps"},{"kind":"attribute","name":"Anim","type":"simple_CAnimProps"},{"kind":"element","name":"Alias","type":"CAnimProps","minOccurs":"0","maxOccurs":"1"},{"kind":"element","name":"Anim","type":"CAnimProps","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

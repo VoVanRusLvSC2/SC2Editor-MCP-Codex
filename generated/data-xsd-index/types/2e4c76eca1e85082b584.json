@@ -1,0 +1,1 @@
+{"name":"SActorTermPassChance","kind":"complex","fields":[{"kind":"attribute","name":"PassChance","type":"simple_real32"},{"kind":"element","name":"PassChance","type":"real32","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

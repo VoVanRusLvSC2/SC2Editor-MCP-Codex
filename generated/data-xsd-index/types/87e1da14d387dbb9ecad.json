@@ -1,0 +1,1 @@
+{"name":"SPathingData","kind":"complex","fields":[{"kind":"attribute","name":"index","type":"simple_EPath"},{"kind":"attribute","name":"removed","type":"simple_bool"},{"kind":"element","name":"Bits","minOccurs":"0","maxOccurs":"unbounded"}],"enumValues":[],"facets":[],"base":"bool"}

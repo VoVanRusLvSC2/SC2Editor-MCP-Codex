@@ -1,0 +1,1 @@
+{"name":"SEffectUpgrade","kind":"complex","fields":[{"kind":"attribute","name":"Count","type":"simple_int8"},{"kind":"attribute","name":"Upgrade","type":"simple_CUpgradeLink"},{"kind":"element","name":"Count","type":"int8","minOccurs":"0","maxOccurs":"1"},{"kind":"element","name":"Upgrade","type":"CUpgradeLink","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

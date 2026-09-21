@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Catalog>
+    <CUnit id="CodexMarine" parent="Marine">
+        <LifeMax value="250"/>
+        <FlagArray index="ArmySelect" value="1"/>
+        <WeaponArray index="0" Link="GaussRifle"/>
+    </CUnit>
+</Catalog>
+

@@ -1,0 +1,1 @@
+{"name":"CBase","kind":"complex","abstract":true,"fields":[{"kind":"attribute","name":"default","type":"simple_bool"},{"kind":"attribute","name":"id","type":"xs:string"},{"kind":"attribute","name":"parent","type":"xs:string"}],"enumValues":[],"facets":[]}

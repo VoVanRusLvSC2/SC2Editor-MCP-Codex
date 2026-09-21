@@ -1,0 +1,1 @@
+{"name":"simple_EActorDoodadFlag","kind":"simple","fields":[],"enumValues":["DefaultToModelAABBBounds","FootprintOnly","PauseAnimsWhileFogged"],"facets":[],"base":"xs:string"}

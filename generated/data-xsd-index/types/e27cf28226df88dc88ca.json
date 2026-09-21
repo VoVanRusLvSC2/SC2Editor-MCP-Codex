@@ -1,0 +1,1 @@
+{"name":"simple_EAbilInventoryCmd","kind":"simple","fields":[],"enumValues":["Drop","ItemCancel","ItemInstant","ItemTarget","ItemTogOff","ItemTogOn","Move","PawnInstant","Take"],"facets":[],"base":"xs:string"}

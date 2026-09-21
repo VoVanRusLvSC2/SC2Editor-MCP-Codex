@@ -1,0 +1,1 @@
+{"name":"simple_EResponseFlag","kind":"simple","fields":[],"enumValues":["Acquire","Flee"],"facets":[],"base":"xs:string"}

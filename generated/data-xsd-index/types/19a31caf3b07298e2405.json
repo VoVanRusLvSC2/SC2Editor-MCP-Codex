@@ -1,0 +1,1 @@
+{"name":"SActorMsgSetBearings","kind":"complex","fields":[{"kind":"attribute","name":"Bearings","type":"simple_CBearings"},{"kind":"element","name":"Bearings","type":"CBearings","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

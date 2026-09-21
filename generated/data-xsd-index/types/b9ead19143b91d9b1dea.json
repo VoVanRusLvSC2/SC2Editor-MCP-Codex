@@ -1,0 +1,1 @@
+{"name":"simple_EAnimFlags","kind":"simple","fields":[],"enumValues":["AssetDrivenLooping","DontResetOnUnhide","ForceLooping","FullMatch","NoMismatchQueryProps","NonLooping","PlayForever","RandomStartOffset","VariationMatch"],"facets":[],"base":"xs:string"}

@@ -1,0 +1,1 @@
+{"name":"SActorMsgMoverSetDeceleration","kind":"complex","fields":[{"kind":"attribute","name":"Deceleration","type":"simple_real32"},{"kind":"element","name":"Deceleration","type":"real32","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

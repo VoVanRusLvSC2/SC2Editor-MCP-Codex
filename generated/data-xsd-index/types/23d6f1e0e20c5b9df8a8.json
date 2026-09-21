@@ -1,0 +1,1 @@
+{"name":"simple_EAMFilterType","kind":"simple","fields":[],"enumValues":["Absolute","Preference"],"facets":[],"base":"xs:string"}

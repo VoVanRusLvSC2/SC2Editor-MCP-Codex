@@ -1,0 +1,1 @@
+{"name":"SActorMsgPlayUnitSound","kind":"complex","fields":[{"kind":"attribute","name":"Sound","type":"simple_EUnitSound"},{"kind":"element","name":"Sound","type":"EUnitSound","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

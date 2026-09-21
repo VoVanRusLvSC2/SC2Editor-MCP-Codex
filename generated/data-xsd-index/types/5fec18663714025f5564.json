@@ -1,0 +1,1 @@
+{"name":"simple_EMoverFlag","kind":"simple","fields":[],"enumValues":["IgnoreMovementSuppression","IgnoreNoFlyZones","RestoreHeight"],"facets":[],"base":"xs:string"}

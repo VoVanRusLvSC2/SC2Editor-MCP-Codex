@@ -1,0 +1,1 @@
+{"name":"simple_EHeroFlag","kind":"simple","fields":[],"enumValues":["AllowAIRandomSelection","ExcludeFromMapIntro","Flyer","GoodForModeA","GoodForModeB","Random","ShowInStore","UsesMount"],"facets":[],"base":"xs:string"}

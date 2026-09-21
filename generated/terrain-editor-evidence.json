@@ -1,0 +1,5816 @@
+{
+  "executable": "SC2Editor_x64.exe",
+  "sha256": "9cab25db2b7dcfaaad207978b4eac07ec694f1f7cdbee4257d0db0845e14a164",
+  "architecture": "x64",
+  "records": [
+    {
+      "text": "Terrain",
+      "encoding": "ascii",
+      "fileOffset": 55612768,
+      "pointerFileOffsets": [
+        57494184,
+        69791568,
+        69951776,
+        70151632,
+        70185792,
+        70203040,
+        70260048,
+        70295120,
+        70620200,
+        70620264,
+        70622056
+      ],
+      "pointerRvas": [
+        57498280,
+        69795664,
+        69955872,
+        70155728,
+        70189888,
+        70207136,
+        70264144,
+        70299216,
+        70624296,
+        70624360,
+        70626152
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55616864,
+      "virtualAddress": "0x14350A560"
+    },
+    {
+      "text": "Terrain Editor View Settings",
+      "encoding": "ascii",
+      "fileOffset": 55660800,
+      "pointerFileOffsets": [
+        69810144
+      ],
+      "pointerRvas": [
+        69814240
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55664896,
+      "virtualAddress": "0x143516100"
+    },
+    {
+      "text": "Terrain Editor View Settings (Text Format)",
+      "encoding": "ascii",
+      "fileOffset": 55660832,
+      "pointerFileOffsets": [
+        69810160
+      ],
+      "pointerRvas": [
+        69814256
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55664928,
+      "virtualAddress": "0x143516120"
+    },
+    {
+      "text": "Terrain Editor - Lock Game View",
+      "encoding": "ascii",
+      "fileOffset": 55660880,
+      "pointerFileOffsets": [
+        69810176
+      ],
+      "pointerRvas": [
+        69814272
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55664976,
+      "virtualAddress": "0x143516150"
+    },
+    {
+      "text": "Terrain Settings Search History",
+      "encoding": "ascii",
+      "fileOffset": 55666008,
+      "pointerFileOffsets": [
+        69812016
+      ],
+      "pointerRvas": [
+        69816112
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55670104,
+      "virtualAddress": "0x143517558"
+    },
+    {
+      "text": "Terrain Settings Custom Name History",
+      "encoding": "ascii",
+      "fileOffset": 55666040,
+      "pointerFileOffsets": [
+        69812032
+      ],
+      "pointerRvas": [
+        69816128
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55670136,
+      "virtualAddress": "0x143517578"
+    },
+    {
+      "text": "TerrainSpecularExp",
+      "encoding": "ascii",
+      "fileOffset": 55668352,
+      "pointerFileOffsets": [
+        69814096
+      ],
+      "pointerRvas": [
+        69818192
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55672448,
+      "virtualAddress": "0x143517E80"
+    },
+    {
+      "text": "TerrainDiffuse",
+      "encoding": "ascii",
+      "fileOffset": 55668376,
+      "pointerFileOffsets": [
+        69814120
+      ],
+      "pointerRvas": [
+        69818216
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55672472,
+      "virtualAddress": "0x143517E98"
+    },
+    {
+      "text": "TerrainSpecularMult",
+      "encoding": "ascii",
+      "fileOffset": 55668392,
+      "pointerFileOffsets": [
+        69814144
+      ],
+      "pointerRvas": [
+        69818240
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55672488,
+      "virtualAddress": "0x143517EA8"
+    },
+    {
+      "text": "CTerrain_Lighting",
+      "encoding": "ascii",
+      "fileOffset": 55670472,
+      "pointerFileOffsets": [
+        69815184,
+        69880240
+      ],
+      "pointerRvas": [
+        69819280,
+        69884336
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55674568,
+      "virtualAddress": "0x1435186C8"
+    },
+    {
+      "text": "TerrainShowSettings",
+      "encoding": "ascii",
+      "fileOffset": 55711496,
+      "pointerFileOffsets": [
+        69842912
+      ],
+      "pointerRvas": [
+        69847008
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55715592,
+      "virtualAddress": "0x143522708"
+    },
+    {
+      "text": "TerrainSettingsUseWindow",
+      "encoding": "ascii",
+      "fileOffset": 55711520,
+      "pointerFileOffsets": [
+        69842928
+      ],
+      "pointerRvas": [
+        69847024
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55715616,
+      "virtualAddress": "0x143522720"
+    },
+    {
+      "text": "TerrainSettingsWindowApplyImmediate",
+      "encoding": "ascii",
+      "fileOffset": 55711552,
+      "pointerFileOffsets": [
+        69842944
+      ],
+      "pointerRvas": [
+        69847040
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55715648,
+      "virtualAddress": "0x143522740"
+    },
+    {
+      "text": "TerrainUIPanelShow",
+      "encoding": "ascii",
+      "fileOffset": 55711592,
+      "pointerFileOffsets": [
+        69842960
+      ],
+      "pointerRvas": [
+        69847056
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55715688,
+      "virtualAddress": "0x143522768"
+    },
+    {
+      "text": "TerrainMinimapShow",
+      "encoding": "ascii",
+      "fileOffset": 55711616,
+      "pointerFileOffsets": [
+        69842976
+      ],
+      "pointerRvas": [
+        69847072
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55715712,
+      "virtualAddress": "0x143522780"
+    },
+    {
+      "text": "TerrainMinimapShowTarget",
+      "encoding": "ascii",
+      "fileOffset": 55711640,
+      "pointerFileOffsets": [
+        69842992
+      ],
+      "pointerRvas": [
+        69847088
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55715736,
+      "virtualAddress": "0x143522798"
+    },
+    {
+      "text": "TerrainMinimapShowViewBox",
+      "encoding": "ascii",
+      "fileOffset": 55711672,
+      "pointerFileOffsets": [
+        69843008
+      ],
+      "pointerRvas": [
+        69847104
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55715768,
+      "virtualAddress": "0x1435227B8"
+    },
+    {
+      "text": "TerrainPaletteShow",
+      "encoding": "ascii",
+      "fileOffset": 55711704,
+      "pointerFileOffsets": [
+        69843024
+      ],
+      "pointerRvas": [
+        69847120
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55715800,
+      "virtualAddress": "0x1435227D8"
+    },
+    {
+      "text": "TerrainPaletteShowHintText",
+      "encoding": "ascii",
+      "fileOffset": 55711728,
+      "pointerFileOffsets": [
+        69843040
+      ],
+      "pointerRvas": [
+        69847136
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55715824,
+      "virtualAddress": "0x1435227F0"
+    },
+    {
+      "text": "TerrainSectionNamesShow",
+      "encoding": "ascii",
+      "fileOffset": 55711760,
+      "pointerFileOffsets": [
+        69843056
+      ],
+      "pointerRvas": [
+        69847152
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55715856,
+      "virtualAddress": "0x143522810"
+    },
+    {
+      "text": "TerrainRenderStatsShow",
+      "encoding": "ascii",
+      "fileOffset": 55711784,
+      "pointerFileOffsets": [
+        69843072
+      ],
+      "pointerRvas": [
+        69847168
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55715880,
+      "virtualAddress": "0x143522828"
+    },
+    {
+      "text": "TerrainScrollBarsShow",
+      "encoding": "ascii",
+      "fileOffset": 55711808,
+      "pointerFileOffsets": [
+        69843088
+      ],
+      "pointerRvas": [
+        69847184
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55715904,
+      "virtualAddress": "0x143522840"
+    },
+    {
+      "text": "TerrainShowPower",
+      "encoding": "ascii",
+      "fileOffset": 55711832,
+      "pointerFileOffsets": [
+        69843104
+      ],
+      "pointerRvas": [
+        69847200
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55715928,
+      "virtualAddress": "0x143522858"
+    },
+    {
+      "text": "TerrainShowHiddenSelection",
+      "encoding": "ascii",
+      "fileOffset": 55711856,
+      "pointerFileOffsets": [
+        69843120
+      ],
+      "pointerRvas": [
+        69847216
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55715952,
+      "virtualAddress": "0x143522870"
+    },
+    {
+      "text": "TerrainShowEditorHelpers",
+      "encoding": "ascii",
+      "fileOffset": 55711888,
+      "pointerFileOffsets": [
+        69843136
+      ],
+      "pointerRvas": [
+        69847232
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55715984,
+      "virtualAddress": "0x143522890"
+    },
+    {
+      "text": "TerrainShowEditorModels",
+      "encoding": "ascii",
+      "fileOffset": 55711920,
+      "pointerFileOffsets": [
+        69843152
+      ],
+      "pointerRvas": [
+        69847248
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55716016,
+      "virtualAddress": "0x1435228B0"
+    },
+    {
+      "text": "TerrainShowRebuildCount",
+      "encoding": "ascii",
+      "fileOffset": 55711944,
+      "pointerFileOffsets": [
+        69843168
+      ],
+      "pointerRvas": [
+        69847264
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55716040,
+      "virtualAddress": "0x1435228C8"
+    },
+    {
+      "text": "TerrainShowStartLocsOnly",
+      "encoding": "ascii",
+      "fileOffset": 55711968,
+      "pointerFileOffsets": [
+        69843184
+      ],
+      "pointerRvas": [
+        69847280
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55716064,
+      "virtualAddress": "0x1435228E0"
+    },
+    {
+      "text": "TerrainPaletteUnitViewType",
+      "encoding": "ascii",
+      "fileOffset": 55712000,
+      "pointerFileOffsets": [
+        69843200
+      ],
+      "pointerRvas": [
+        69847296
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55716096,
+      "virtualAddress": "0x143522900"
+    },
+    {
+      "text": "TerrainPaletteUnitSortByName",
+      "encoding": "ascii",
+      "fileOffset": 55712032,
+      "pointerFileOffsets": [
+        69843216
+      ],
+      "pointerRvas": [
+        69847312
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55716128,
+      "virtualAddress": "0x143522920"
+    },
+    {
+      "text": "TerrainPaletteUnitCategories",
+      "encoding": "ascii",
+      "fileOffset": 55712064,
+      "pointerFileOffsets": [
+        69843232
+      ],
+      "pointerRvas": [
+        69847328
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55716160,
+      "virtualAddress": "0x143522940"
+    },
+    {
+      "text": "TerrainPaletteDoodadViewType",
+      "encoding": "ascii",
+      "fileOffset": 55712096,
+      "pointerFileOffsets": [
+        69843248
+      ],
+      "pointerRvas": [
+        69847344
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55716192,
+      "virtualAddress": "0x143522960"
+    },
+    {
+      "text": "TerrainPaletteDoodadSortByName",
+      "encoding": "ascii",
+      "fileOffset": 55712128,
+      "pointerFileOffsets": [
+        69843264
+      ],
+      "pointerRvas": [
+        69847360
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55716224,
+      "virtualAddress": "0x143522980"
+    },
+    {
+      "text": "TerrainPaletteDoodadCategories",
+      "encoding": "ascii",
+      "fileOffset": 55712160,
+      "pointerFileOffsets": [
+        69843280
+      ],
+      "pointerRvas": [
+        69847376
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55716256,
+      "virtualAddress": "0x1435229A0"
+    },
+    {
+      "text": "TerrainPaletteTerrainViewType",
+      "encoding": "ascii",
+      "fileOffset": 55712192,
+      "pointerFileOffsets": [
+        69843296
+      ],
+      "pointerRvas": [
+        69847392
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55716288,
+      "virtualAddress": "0x1435229C0"
+    },
+    {
+      "text": "TerrainActiveLayer",
+      "encoding": "ascii",
+      "fileOffset": 55712224,
+      "pointerFileOffsets": [
+        69843312
+      ],
+      "pointerRvas": [
+        69847408
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55716320,
+      "virtualAddress": "0x1435229E0"
+    },
+    {
+      "text": "TerrainLockActiveVisible",
+      "encoding": "ascii",
+      "fileOffset": 55712248,
+      "pointerFileOffsets": [
+        56003680,
+        69843328
+      ],
+      "pointerRvas": [
+        56007776,
+        69847424
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55716344,
+      "virtualAddress": "0x1435229F8"
+    },
+    {
+      "text": "TerrainLayersVisible",
+      "encoding": "ascii",
+      "fileOffset": 55712280,
+      "pointerFileOffsets": [
+        69843344
+      ],
+      "pointerRvas": [
+        69847440
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55716376,
+      "virtualAddress": "0x143522A18"
+    },
+    {
+      "text": "TerrainSelectFrom",
+      "encoding": "ascii",
+      "fileOffset": 55712304,
+      "pointerFileOffsets": [
+        69843360
+      ],
+      "pointerRvas": [
+        69847456
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55716400,
+      "virtualAddress": "0x143522A30"
+    },
+    {
+      "text": "TerrainSelectFromSpecific",
+      "encoding": "ascii",
+      "fileOffset": 55712328,
+      "pointerFileOffsets": [
+        56004800,
+        69843376
+      ],
+      "pointerRvas": [
+        56008896,
+        69847472
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55716424,
+      "virtualAddress": "0x143522A48"
+    },
+    {
+      "text": "TerrainSnapToGrid",
+      "encoding": "ascii",
+      "fileOffset": 55712360,
+      "pointerFileOffsets": [
+        69843392
+      ],
+      "pointerRvas": [
+        69847488
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55716456,
+      "virtualAddress": "0x143522A68"
+    },
+    {
+      "text": "TerrainSelectDiagonal",
+      "encoding": "ascii",
+      "fileOffset": 55712384,
+      "pointerFileOffsets": [
+        69843408
+      ],
+      "pointerRvas": [
+        69847504
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55716480,
+      "virtualAddress": "0x143522A80"
+    },
+    {
+      "text": "TerrainGroupSelection",
+      "encoding": "ascii",
+      "fileOffset": 55712408,
+      "pointerFileOffsets": [
+        69843424
+      ],
+      "pointerRvas": [
+        69847520
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55716504,
+      "virtualAddress": "0x143522A98"
+    },
+    {
+      "text": "TerrainSymmetryEnabled",
+      "encoding": "ascii",
+      "fileOffset": 55712432,
+      "pointerFileOffsets": [
+        69843440
+      ],
+      "pointerRvas": [
+        69847536
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55716528,
+      "virtualAddress": "0x143522AB0"
+    },
+    {
+      "text": "TerrainCameraAutoPreview",
+      "encoding": "ascii",
+      "fileOffset": 55712456,
+      "pointerFileOffsets": [
+        69843456
+      ],
+      "pointerRvas": [
+        69847552
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55716552,
+      "virtualAddress": "0x143522AC8"
+    },
+    {
+      "text": "TerrainShowSelectionHighlight",
+      "encoding": "ascii",
+      "fileOffset": 55712488,
+      "pointerFileOffsets": [
+        69843472
+      ],
+      "pointerRvas": [
+        69847568
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55716584,
+      "virtualAddress": "0x143522AE8"
+    },
+    {
+      "text": "TerrainShowSelectionDetails",
+      "encoding": "ascii",
+      "fileOffset": 55712520,
+      "pointerFileOffsets": [
+        69843488
+      ],
+      "pointerRvas": [
+        69847584
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55716616,
+      "virtualAddress": "0x143522B08"
+    },
+    {
+      "text": "TerrainManipulatorType",
+      "encoding": "ascii",
+      "fileOffset": 55712552,
+      "pointerFileOffsets": [
+        69843504
+      ],
+      "pointerRvas": [
+        69847600
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55716648,
+      "virtualAddress": "0x143522B28"
+    },
+    {
+      "text": "TerrainManipulatorSpaceTranslate",
+      "encoding": "ascii",
+      "fileOffset": 55712576,
+      "pointerFileOffsets": [
+        69843520
+      ],
+      "pointerRvas": [
+        69847616
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55716672,
+      "virtualAddress": "0x143522B40"
+    },
+    {
+      "text": "TerrainManipulatorSpaceRotate",
+      "encoding": "ascii",
+      "fileOffset": 55712616,
+      "pointerFileOffsets": [
+        69843536
+      ],
+      "pointerRvas": [
+        69847632
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55716712,
+      "virtualAddress": "0x143522B68"
+    },
+    {
+      "text": "TerrainManipulatorSpaceScale",
+      "encoding": "ascii",
+      "fileOffset": 55712648,
+      "pointerFileOffsets": [
+        69843552
+      ],
+      "pointerRvas": [
+        69847648
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55716744,
+      "virtualAddress": "0x143522B88"
+    },
+    {
+      "text": "TerrainBrushAllowCliffMerge",
+      "encoding": "ascii",
+      "fileOffset": 55712680,
+      "pointerFileOffsets": [
+        69843568
+      ],
+      "pointerRvas": [
+        69847664
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55716776,
+      "virtualAddress": "0x143522BA8"
+    },
+    {
+      "text": "TerrainBrushAllowLightMerge",
+      "encoding": "ascii",
+      "fileOffset": 55712712,
+      "pointerFileOffsets": [
+        69843584
+      ],
+      "pointerRvas": [
+        69847680
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55716808,
+      "virtualAddress": "0x143522BC8"
+    },
+    {
+      "text": "TerrainBrushSameCliffLevels",
+      "encoding": "ascii",
+      "fileOffset": 55712744,
+      "pointerFileOffsets": [
+        69843600
+      ],
+      "pointerRvas": [
+        69847696
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55716840,
+      "virtualAddress": "0x143522BE8"
+    },
+    {
+      "text": "TerrainCopyOptionTextures",
+      "encoding": "ascii",
+      "fileOffset": 55712776,
+      "pointerFileOffsets": [
+        56007680,
+        69843616
+      ],
+      "pointerRvas": [
+        56011776,
+        69847712
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55716872,
+      "virtualAddress": "0x143522C08"
+    },
+    {
+      "text": "TerrainCopyOptionGeometry",
+      "encoding": "ascii",
+      "fileOffset": 55712808,
+      "pointerFileOffsets": [
+        56007720,
+        69843632
+      ],
+      "pointerRvas": [
+        56011816,
+        69847728
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55716904,
+      "virtualAddress": "0x143522C28"
+    },
+    {
+      "text": "TerrainCopyOptionWater",
+      "encoding": "ascii",
+      "fileOffset": 55712840,
+      "pointerFileOffsets": [
+        56007760,
+        69843648
+      ],
+      "pointerRvas": [
+        56011856,
+        69847744
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55716936,
+      "virtualAddress": "0x143522C48"
+    },
+    {
+      "text": "TerrainCopyOptionPathing",
+      "encoding": "ascii",
+      "fileOffset": 55712864,
+      "pointerFileOffsets": [
+        56007800,
+        69843664
+      ],
+      "pointerRvas": [
+        56011896,
+        69847760
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55716960,
+      "virtualAddress": "0x143522C60"
+    },
+    {
+      "text": "TerrainCopyOptionCreep",
+      "encoding": "ascii",
+      "fileOffset": 55712896,
+      "pointerFileOffsets": [
+        56007840,
+        69843680
+      ],
+      "pointerRvas": [
+        56011936,
+        69847776
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55716992,
+      "virtualAddress": "0x143522C80"
+    },
+    {
+      "text": "TerrainCopyOptionVision",
+      "encoding": "ascii",
+      "fileOffset": 55712920,
+      "pointerFileOffsets": [
+        56007880,
+        69843696
+      ],
+      "pointerRvas": [
+        56011976,
+        69847792
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55717016,
+      "virtualAddress": "0x143522C98"
+    },
+    {
+      "text": "TerrainCopyOptionCustom",
+      "encoding": "ascii",
+      "fileOffset": 55712944,
+      "pointerFileOffsets": [
+        56007920,
+        69843712
+      ],
+      "pointerRvas": [
+        56012016,
+        69847808
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55717040,
+      "virtualAddress": "0x143522CB0"
+    },
+    {
+      "text": "TerrainBackLight",
+      "encoding": "ascii",
+      "fileOffset": 55720784,
+      "pointerFileOffsets": [
+        69846448
+      ],
+      "pointerRvas": [
+        69850544
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55724880,
+      "virtualAddress": "0x143524B50"
+    },
+    {
+      "text": "TerrainSpecularity",
+      "encoding": "ascii",
+      "fileOffset": 55720856,
+      "pointerFileOffsets": [
+        69846480
+      ],
+      "pointerRvas": [
+        69850576
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55724952,
+      "virtualAddress": "0x143524B98"
+    },
+    {
+      "text": "TerrainEditorModule",
+      "encoding": "ascii",
+      "fileOffset": 55768104,
+      "pointerFileOffsets": [
+        69862224,
+        69956344
+      ],
+      "pointerRvas": [
+        69866320,
+        69960440
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55772200,
+      "virtualAddress": "0x143530428"
+    },
+    {
+      "text": "EDSTR_TERRAIN_STATUS_CURSOR",
+      "encoding": "ascii",
+      "fileOffset": 55768344,
+      "pointerFileOffsets": [
+        69862528
+      ],
+      "pointerRvas": [
+        69866624
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55772440,
+      "virtualAddress": "0x143530518"
+    },
+    {
+      "text": "EDSTR_TERRAIN_STATUS_CURSORSNAP",
+      "encoding": "ascii",
+      "fileOffset": 55768376,
+      "pointerFileOffsets": [
+        69862544
+      ],
+      "pointerRvas": [
+        69866640
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55772472,
+      "virtualAddress": "0x143530538"
+    },
+    {
+      "text": "EDSTR_TERRAIN_STATUS_CURSORNONE",
+      "encoding": "ascii",
+      "fileOffset": 55768408,
+      "pointerFileOffsets": [
+        69862592
+      ],
+      "pointerRvas": [
+        69866688
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55772504,
+      "virtualAddress": "0x143530558"
+    },
+    {
+      "text": "EDSTR_TERRAIN_STATUS_LAYER",
+      "encoding": "ascii",
+      "fileOffset": 55768440,
+      "pointerFileOffsets": [
+        69862608
+      ],
+      "pointerRvas": [
+        69866704
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55772536,
+      "virtualAddress": "0x143530578"
+    },
+    {
+      "text": "EDSTR_TERRAIN_STATUS_SELECTFROM",
+      "encoding": "ascii",
+      "fileOffset": 55768472,
+      "pointerFileOffsets": [
+        69862688
+      ],
+      "pointerRvas": [
+        69866784
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55772568,
+      "virtualAddress": "0x143530598"
+    },
+    {
+      "text": "EDSTR_TERRAIN_STATUS_GIZMO",
+      "encoding": "ascii",
+      "fileOffset": 55768504,
+      "pointerFileOffsets": [
+        69862768
+      ],
+      "pointerRvas": [
+        69866864
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55772600,
+      "virtualAddress": "0x1435305B8"
+    },
+    {
+      "text": "EDSTR_TERRAIN_STATUS_GIZMO_NONE",
+      "encoding": "ascii",
+      "fileOffset": 55768536,
+      "pointerFileOffsets": [
+        69862832
+      ],
+      "pointerRvas": [
+        69866928
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55772632,
+      "virtualAddress": "0x1435305D8"
+    },
+    {
+      "text": "EDSTR_TERRAIN_STATUS_DIFFICULTY",
+      "encoding": "ascii",
+      "fileOffset": 55768568,
+      "pointerFileOffsets": [
+        69862848
+      ],
+      "pointerRvas": [
+        69866944
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55772664,
+      "virtualAddress": "0x1435305F8"
+    },
+    {
+      "text": "EDSTR_TERRAIN_STATUS_DIFFICULTY_ALL",
+      "encoding": "ascii",
+      "fileOffset": 55768600,
+      "pointerFileOffsets": [
+        69862912
+      ],
+      "pointerRvas": [
+        69867008
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55772696,
+      "virtualAddress": "0x143530618"
+    },
+    {
+      "text": "EDSTR_TERRAIN_STATUS_PATHING",
+      "encoding": "ascii",
+      "fileOffset": 55768640,
+      "pointerFileOffsets": [
+        69862928
+      ],
+      "pointerRvas": [
+        69867024
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55772736,
+      "virtualAddress": "0x143530640"
+    },
+    {
+      "text": "EDSTR_TERRAIN_STATUS_SYMMETRY",
+      "encoding": "ascii",
+      "fileOffset": 55768672,
+      "pointerFileOffsets": [
+        69863008
+      ],
+      "pointerRvas": [
+        69867104
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55772768,
+      "virtualAddress": "0x143530660"
+    },
+    {
+      "text": "EDSTR_TERRAIN_STATUS_SELECTION",
+      "encoding": "ascii",
+      "fileOffset": 55768704,
+      "pointerFileOffsets": [
+        69863088
+      ],
+      "pointerRvas": [
+        69867184
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55772800,
+      "virtualAddress": "0x143530680"
+    },
+    {
+      "text": "EDSTR_TERRAIN_STATUS_BRUSH",
+      "encoding": "ascii",
+      "fileOffset": 55768736,
+      "pointerFileOffsets": [
+        69863104
+      ],
+      "pointerRvas": [
+        69867200
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55772832,
+      "virtualAddress": "0x1435306A0"
+    },
+    {
+      "text": "EDSTR_TERRAIN_STATUS_PASTE",
+      "encoding": "ascii",
+      "fileOffset": 55768768,
+      "pointerFileOffsets": [
+        69863120
+      ],
+      "pointerRvas": [
+        69867216
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55772864,
+      "virtualAddress": "0x1435306C0"
+    },
+    {
+      "text": "EDSTR_TERRAIN_STATUS_MEASURE",
+      "encoding": "ascii",
+      "fileOffset": 55768800,
+      "pointerFileOffsets": [
+        69863136
+      ],
+      "pointerRvas": [
+        69867232
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55772896,
+      "virtualAddress": "0x1435306E0"
+    },
+    {
+      "text": "EDSTR_TERRAIN_STATUS_SELECTFROM_ACTIVE",
+      "encoding": "ascii",
+      "fileOffset": 55770256,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55774352,
+      "virtualAddress": "0x143530C90"
+    },
+    {
+      "text": "EDSTR_TERRAIN_STATUS_SELECTFROM_ALL",
+      "encoding": "ascii",
+      "fileOffset": 55770296,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55774392,
+      "virtualAddress": "0x143530CB8"
+    },
+    {
+      "text": "EDSTR_TERRAIN_STATUS_SELECTFROM_ALLOBJECT",
+      "encoding": "ascii",
+      "fileOffset": 55770336,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55774432,
+      "virtualAddress": "0x143530CE0"
+    },
+    {
+      "text": "EDSTR_TERRAIN_STATUS_SELECTFROM_NONE",
+      "encoding": "ascii",
+      "fileOffset": 55770384,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55774480,
+      "virtualAddress": "0x143530D10"
+    },
+    {
+      "text": "EDSTR_TERRAIN_PROGRESS_GENERATINGLIGHTING",
+      "encoding": "ascii",
+      "fileOffset": 55770488,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55774584,
+      "virtualAddress": "0x143530D78"
+    },
+    {
+      "text": "EDSTR_TERRAIN_ENABLEDFOLIAGE",
+      "encoding": "ascii",
+      "fileOffset": 55778816,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55782912,
+      "virtualAddress": "0x143532E00"
+    },
+    {
+      "text": "EDSTR_TERRAIN_GENFOLIAGEGRAPHIC",
+      "encoding": "ascii",
+      "fileOffset": 55778848,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55782944,
+      "virtualAddress": "0x143532E20"
+    },
+    {
+      "text": "EDSTR_TERRAIN_GENFOLIAGE",
+      "encoding": "ascii",
+      "fileOffset": 55778880,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55782976,
+      "virtualAddress": "0x143532E40"
+    },
+    {
+      "text": "TerrainEditor.Hotkeys",
+      "encoding": "ascii",
+      "fileOffset": 55794568,
+      "pointerFileOffsets": [
+        69870784
+      ],
+      "pointerRvas": [
+        69874880
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55798664,
+      "virtualAddress": "0x143536B88"
+    },
+    {
+      "text": "CTerrain_BlendTextures",
+      "encoding": "ascii",
+      "fileOffset": 55910888,
+      "pointerFileOffsets": [
+        55816248
+      ],
+      "pointerRvas": [
+        55820344
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55914984,
+      "virtualAddress": "0x1435531E8"
+    },
+    {
+      "text": "CTerrainTexLink",
+      "encoding": "ascii",
+      "fileOffset": 55910912,
+      "pointerFileOffsets": [
+        55816256
+      ],
+      "pointerRvas": [
+        55820352
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55915008,
+      "virtualAddress": "0x143553200"
+    },
+    {
+      "text": "TerrainRandomRotationToggle",
+      "encoding": "ascii",
+      "fileOffset": 55948680,
+      "pointerFileOffsets": [
+        56006280
+      ],
+      "pointerRvas": [
+        56010376
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55952776,
+      "virtualAddress": "0x14355C588"
+    },
+    {
+      "text": "TerrainRandomScaleToggle",
+      "encoding": "ascii",
+      "fileOffset": 55949008,
+      "pointerFileOffsets": [
+        56006320
+      ],
+      "pointerRvas": [
+        56010416
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55953104,
+      "virtualAddress": "0x14355C6D0"
+    },
+    {
+      "text": "TerrainRandomScaleOff",
+      "encoding": "ascii",
+      "fileOffset": 55949312,
+      "pointerFileOffsets": [
+        56006360
+      ],
+      "pointerRvas": [
+        56010456
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55953408,
+      "virtualAddress": "0x14355C800"
+    },
+    {
+      "text": "TerrainRandomScaleSymmetric",
+      "encoding": "ascii",
+      "fileOffset": 55949600,
+      "pointerFileOffsets": [
+        56006400
+      ],
+      "pointerRvas": [
+        56010496
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55953696,
+      "virtualAddress": "0x14355C920"
+    },
+    {
+      "text": "TerrainRandomScaleAsymAll",
+      "encoding": "ascii",
+      "fileOffset": 55949912,
+      "pointerFileOffsets": [
+        56006440
+      ],
+      "pointerRvas": [
+        56010536
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55954008,
+      "virtualAddress": "0x14355CA58"
+    },
+    {
+      "text": "TerrainRandomScaleAsymZ",
+      "encoding": "ascii",
+      "fileOffset": 55950200,
+      "pointerFileOffsets": [
+        56006480
+      ],
+      "pointerRvas": [
+        56010576
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55954296,
+      "virtualAddress": "0x14355CB78"
+    },
+    {
+      "text": "TerrainRandomScaleAsymXY",
+      "encoding": "ascii",
+      "fileOffset": 55950480,
+      "pointerFileOffsets": [
+        56006520
+      ],
+      "pointerRvas": [
+        56010616
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55954576,
+      "virtualAddress": "0x14355CC90"
+    },
+    {
+      "text": "TerrainRandomVariationToggle",
+      "encoding": "ascii",
+      "fileOffset": 55950792,
+      "pointerFileOffsets": [
+        56006560
+      ],
+      "pointerRvas": [
+        56010656
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55954888,
+      "virtualAddress": "0x14355CDC8"
+    },
+    {
+      "text": "TerrainRandomReset",
+      "encoding": "ascii",
+      "fileOffset": 55951136,
+      "pointerFileOffsets": [
+        56006600
+      ],
+      "pointerRvas": [
+        56010696
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55955232,
+      "virtualAddress": "0x14355CF20"
+    },
+    {
+      "text": "TerrainPlayer00",
+      "encoding": "ascii",
+      "fileOffset": 55951432,
+      "pointerFileOffsets": [
+        56006640
+      ],
+      "pointerRvas": [
+        56010736
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55955528,
+      "virtualAddress": "0x14355D048"
+    },
+    {
+      "text": "TerrainPlayer01",
+      "encoding": "ascii",
+      "fileOffset": 55951688,
+      "pointerFileOffsets": [
+        56006680
+      ],
+      "pointerRvas": [
+        56010776
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55955784,
+      "virtualAddress": "0x14355D148"
+    },
+    {
+      "text": "TerrainPlayer02",
+      "encoding": "ascii",
+      "fileOffset": 55951952,
+      "pointerFileOffsets": [
+        56006720
+      ],
+      "pointerRvas": [
+        56010816
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55956048,
+      "virtualAddress": "0x14355D250"
+    },
+    {
+      "text": "TerrainPlayer03",
+      "encoding": "ascii",
+      "fileOffset": 55952224,
+      "pointerFileOffsets": [
+        56006760
+      ],
+      "pointerRvas": [
+        56010856
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55956320,
+      "virtualAddress": "0x14355D360"
+    },
+    {
+      "text": "TerrainPlayer04",
+      "encoding": "ascii",
+      "fileOffset": 55952496,
+      "pointerFileOffsets": [
+        56006800
+      ],
+      "pointerRvas": [
+        56010896
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55956592,
+      "virtualAddress": "0x14355D470"
+    },
+    {
+      "text": "TerrainPlayer05",
+      "encoding": "ascii",
+      "fileOffset": 55952784,
+      "pointerFileOffsets": [
+        56006840
+      ],
+      "pointerRvas": [
+        56010936
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55956880,
+      "virtualAddress": "0x14355D590"
+    },
+    {
+      "text": "TerrainPlayer06",
+      "encoding": "ascii",
+      "fileOffset": 55953080,
+      "pointerFileOffsets": [
+        56006880
+      ],
+      "pointerRvas": [
+        56010976
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55957176,
+      "virtualAddress": "0x14355D6B8"
+    },
+    {
+      "text": "TerrainPlayer07",
+      "encoding": "ascii",
+      "fileOffset": 55953352,
+      "pointerFileOffsets": [
+        56006920
+      ],
+      "pointerRvas": [
+        56011016
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55957448,
+      "virtualAddress": "0x14355D7C8"
+    },
+    {
+      "text": "TerrainPlayer08",
+      "encoding": "ascii",
+      "fileOffset": 55953616,
+      "pointerFileOffsets": [
+        56006960
+      ],
+      "pointerRvas": [
+        56011056
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55957712,
+      "virtualAddress": "0x14355D8D0"
+    },
+    {
+      "text": "TerrainPlayer09",
+      "encoding": "ascii",
+      "fileOffset": 55953864,
+      "pointerFileOffsets": [
+        56007000
+      ],
+      "pointerRvas": [
+        56011096
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55957960,
+      "virtualAddress": "0x14355D9C8"
+    },
+    {
+      "text": "TerrainPlayer10",
+      "encoding": "ascii",
+      "fileOffset": 55954120,
+      "pointerFileOffsets": [
+        56007040
+      ],
+      "pointerRvas": [
+        56011136
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55958216,
+      "virtualAddress": "0x14355DAC8"
+    },
+    {
+      "text": "TerrainPlayer11",
+      "encoding": "ascii",
+      "fileOffset": 55954400,
+      "pointerFileOffsets": [
+        56007080
+      ],
+      "pointerRvas": [
+        56011176
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55958496,
+      "virtualAddress": "0x14355DBE0"
+    },
+    {
+      "text": "TerrainPlayer12",
+      "encoding": "ascii",
+      "fileOffset": 55954656,
+      "pointerFileOffsets": [
+        56007120
+      ],
+      "pointerRvas": [
+        56011216
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55958752,
+      "virtualAddress": "0x14355DCE0"
+    },
+    {
+      "text": "TerrainModifyHeight",
+      "encoding": "ascii",
+      "fileOffset": 55954912,
+      "pointerFileOffsets": [
+        56007160
+      ],
+      "pointerRvas": [
+        56011256
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55959008,
+      "virtualAddress": "0x14355DDE0"
+    },
+    {
+      "text": "TerrainAdjustCliffLevel",
+      "encoding": "ascii",
+      "fileOffset": 55955184,
+      "pointerFileOffsets": [
+        56007200
+      ],
+      "pointerRvas": [
+        56011296
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55959280,
+      "virtualAddress": "0x14355DEF0"
+    },
+    {
+      "text": "TerrainRotateDialog",
+      "encoding": "ascii",
+      "fileOffset": 55955456,
+      "pointerFileOffsets": [
+        56007240
+      ],
+      "pointerRvas": [
+        56011336
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55959552,
+      "virtualAddress": "0x14355E000"
+    },
+    {
+      "text": "TerrainGenerateLighting",
+      "encoding": "ascii",
+      "fileOffset": 55955728,
+      "pointerFileOffsets": [
+        56007280
+      ],
+      "pointerRvas": [
+        56011376
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55959824,
+      "virtualAddress": "0x14355E110"
+    },
+    {
+      "text": "TerrainGenerateFoliage",
+      "encoding": "ascii",
+      "fileOffset": 55956000,
+      "pointerFileOffsets": [
+        56007320
+      ],
+      "pointerRvas": [
+        56011416
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55960096,
+      "virtualAddress": "0x14355E220"
+    },
+    {
+      "text": "TerrainExportMapImage",
+      "encoding": "ascii",
+      "fileOffset": 55956304,
+      "pointerFileOffsets": [
+        56007360
+      ],
+      "pointerRvas": [
+        56011456
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55960400,
+      "virtualAddress": "0x14355E350"
+    },
+    {
+      "text": "TerrainUpdatePointAttach",
+      "encoding": "ascii",
+      "fileOffset": 55956600,
+      "pointerFileOffsets": [
+        56007400
+      ],
+      "pointerRvas": [
+        56011496
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55960696,
+      "virtualAddress": "0x14355E478"
+    },
+    {
+      "text": "TerrainCopyPosition",
+      "encoding": "ascii",
+      "fileOffset": 55956912,
+      "pointerFileOffsets": [
+        56007440
+      ],
+      "pointerRvas": [
+        56011536
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55961008,
+      "virtualAddress": "0x14355E5B0"
+    },
+    {
+      "text": "TerrainPastePosition",
+      "encoding": "ascii",
+      "fileOffset": 55957208,
+      "pointerFileOffsets": [
+        56007480
+      ],
+      "pointerRvas": [
+        56011576
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55961304,
+      "virtualAddress": "0x14355E6D8"
+    },
+    {
+      "text": "TerrainPastePositionSymmetrical",
+      "encoding": "ascii",
+      "fileOffset": 55957480,
+      "pointerFileOffsets": [
+        56007520
+      ],
+      "pointerRvas": [
+        56011616
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55961576,
+      "virtualAddress": "0x14355E7E8"
+    },
+    {
+      "text": "TerrainSelectionDetails",
+      "encoding": "ascii",
+      "fileOffset": 55957800,
+      "pointerFileOffsets": [
+        56007560
+      ],
+      "pointerRvas": [
+        56011656
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55961896,
+      "virtualAddress": "0x14355E928"
+    },
+    {
+      "text": "TerrainInstanceView",
+      "encoding": "ascii",
+      "fileOffset": 55958096,
+      "pointerFileOffsets": [
+        56007600
+      ],
+      "pointerRvas": [
+        56011696
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55962192,
+      "virtualAddress": "0x14355EA50"
+    },
+    {
+      "text": "TerrainInstanceToggleShow",
+      "encoding": "ascii",
+      "fileOffset": 55958368,
+      "pointerFileOffsets": [
+        56007640
+      ],
+      "pointerRvas": [
+        56011736
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 55962464,
+      "virtualAddress": "0x14355EB60"
+    },
+    {
+      "text": "TerrainToggleRenderStats",
+      "encoding": "ascii",
+      "fileOffset": 56063096,
+      "pointerFileOffsets": [
+        56000200
+      ],
+      "pointerRvas": [
+        56004296
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56067192,
+      "virtualAddress": "0x143578478"
+    },
+    {
+      "text": "TerrainToggleScrollBars",
+      "encoding": "ascii",
+      "fileOffset": 56063496,
+      "pointerFileOffsets": [
+        56000240
+      ],
+      "pointerRvas": [
+        56004336
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56067592,
+      "virtualAddress": "0x143578608"
+    },
+    {
+      "text": "TerrainToggleUIPanel",
+      "encoding": "ascii",
+      "fileOffset": 56063864,
+      "pointerFileOffsets": [
+        56000280
+      ],
+      "pointerRvas": [
+        56004376
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56067960,
+      "virtualAddress": "0x143578778"
+    },
+    {
+      "text": "TerrainToggleMinimap",
+      "encoding": "ascii",
+      "fileOffset": 56064264,
+      "pointerFileOffsets": [
+        56000320
+      ],
+      "pointerRvas": [
+        56004416
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56068360,
+      "virtualAddress": "0x143578908"
+    },
+    {
+      "text": "TerrainToggleMinimapTarget",
+      "encoding": "ascii",
+      "fileOffset": 56064656,
+      "pointerFileOffsets": [
+        56000360
+      ],
+      "pointerRvas": [
+        56004456
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56068752,
+      "virtualAddress": "0x143578A90"
+    },
+    {
+      "text": "TerrainToggleMinimapViewBox",
+      "encoding": "ascii",
+      "fileOffset": 56065080,
+      "pointerFileOffsets": [
+        56000400
+      ],
+      "pointerRvas": [
+        56004496
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56069176,
+      "virtualAddress": "0x143578C38"
+    },
+    {
+      "text": "TerrainTogglePalette",
+      "encoding": "ascii",
+      "fileOffset": 56065504,
+      "pointerFileOffsets": [
+        56000440
+      ],
+      "pointerRvas": [
+        56004536
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56069600,
+      "virtualAddress": "0x143578DE0"
+    },
+    {
+      "text": "TerrainTogglePaletteStyle",
+      "encoding": "ascii",
+      "fileOffset": 56065904,
+      "pointerFileOffsets": [
+        56000480
+      ],
+      "pointerRvas": [
+        56004576
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56070000,
+      "virtualAddress": "0x143578F70"
+    },
+    {
+      "text": "TerrainTogglePaletteSort",
+      "encoding": "ascii",
+      "fileOffset": 56066336,
+      "pointerFileOffsets": [
+        56000520
+      ],
+      "pointerRvas": [
+        56004616
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56070432,
+      "virtualAddress": "0x143579120"
+    },
+    {
+      "text": "TerrainTogglePalettePreview",
+      "encoding": "ascii",
+      "fileOffset": 56066752,
+      "pointerFileOffsets": [
+        56000560
+      ],
+      "pointerRvas": [
+        56004656
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56070848,
+      "virtualAddress": "0x1435792C0"
+    },
+    {
+      "text": "TerrainTogglePaletteExisting",
+      "encoding": "ascii",
+      "fileOffset": 56067192,
+      "pointerFileOffsets": [
+        56000600
+      ],
+      "pointerRvas": [
+        56004696
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56071288,
+      "virtualAddress": "0x143579478"
+    },
+    {
+      "text": "TerrainTogglePaletteHintText",
+      "encoding": "ascii",
+      "fileOffset": 56067640,
+      "pointerFileOffsets": [
+        56000640
+      ],
+      "pointerRvas": [
+        56004736
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56071736,
+      "virtualAddress": "0x143579638"
+    },
+    {
+      "text": "TerrainTogglePaletteRegionShapes",
+      "encoding": "ascii",
+      "fileOffset": 56068112,
+      "pointerFileOffsets": [
+        56000680
+      ],
+      "pointerRvas": [
+        56004776
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56072208,
+      "virtualAddress": "0x143579810"
+    },
+    {
+      "text": "TerrainToggleSectionNames",
+      "encoding": "ascii",
+      "fileOffset": 56068600,
+      "pointerFileOffsets": [
+        56000720
+      ],
+      "pointerRvas": [
+        56004816
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56072696,
+      "virtualAddress": "0x1435799F8"
+    },
+    {
+      "text": "TerrainToggleGrid",
+      "encoding": "ascii",
+      "fileOffset": 56069056,
+      "pointerFileOffsets": [
+        56000760
+      ],
+      "pointerRvas": [
+        56004856
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56073152,
+      "virtualAddress": "0x143579BC0"
+    },
+    {
+      "text": "TerrainToggleGridDiagonal",
+      "encoding": "ascii",
+      "fileOffset": 56069496,
+      "pointerFileOffsets": [
+        56000800
+      ],
+      "pointerRvas": [
+        56004896
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56073592,
+      "virtualAddress": "0x143579D78"
+    },
+    {
+      "text": "TerrainToggleCameraTarget",
+      "encoding": "ascii",
+      "fileOffset": 56069944,
+      "pointerFileOffsets": [
+        56000840
+      ],
+      "pointerRvas": [
+        56004936
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56074040,
+      "virtualAddress": "0x143579F38"
+    },
+    {
+      "text": "TerrainToggleBounds",
+      "encoding": "ascii",
+      "fileOffset": 56070368,
+      "pointerFileOffsets": [
+        56000880
+      ],
+      "pointerRvas": [
+        56004976
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56074464,
+      "virtualAddress": "0x14357A0E0"
+    },
+    {
+      "text": "TerrainToggleSymmetryOverlay",
+      "encoding": "ascii",
+      "fileOffset": 56070760,
+      "pointerFileOffsets": [
+        56000920
+      ],
+      "pointerRvas": [
+        56005016
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56074856,
+      "virtualAddress": "0x14357A268"
+    },
+    {
+      "text": "TerrainToggleBaseHeight",
+      "encoding": "ascii",
+      "fileOffset": 56071184,
+      "pointerFileOffsets": [
+        56000960
+      ],
+      "pointerRvas": [
+        56005056
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56075280,
+      "virtualAddress": "0x14357A410"
+    },
+    {
+      "text": "TerrainToggleCreep",
+      "encoding": "ascii",
+      "fileOffset": 56071584,
+      "pointerFileOffsets": [
+        56001000
+      ],
+      "pointerRvas": [
+        56005096
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56075680,
+      "virtualAddress": "0x14357A5A0"
+    },
+    {
+      "text": "TerrainToggleCreepUpgraded",
+      "encoding": "ascii",
+      "fileOffset": 56071896,
+      "pointerFileOffsets": [
+        56001040
+      ],
+      "pointerRvas": [
+        56005136
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56075992,
+      "virtualAddress": "0x14357A6D8"
+    },
+    {
+      "text": "TerrainToggleHiddenSelection",
+      "encoding": "ascii",
+      "fileOffset": 56072160,
+      "pointerFileOffsets": [
+        56001080
+      ],
+      "pointerRvas": [
+        56005176
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56076256,
+      "virtualAddress": "0x14357A7E0"
+    },
+    {
+      "text": "TerrainToggleCellHide",
+      "encoding": "ascii",
+      "fileOffset": 56072448,
+      "pointerFileOffsets": [
+        56001120
+      ],
+      "pointerRvas": [
+        56005216
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56076544,
+      "virtualAddress": "0x14357A900"
+    },
+    {
+      "text": "TerrainToggleOverlayActiveOnly",
+      "encoding": "ascii",
+      "fileOffset": 56072800,
+      "pointerFileOffsets": [
+        56001160
+      ],
+      "pointerRvas": [
+        56005256
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56076896,
+      "virtualAddress": "0x14357AA60"
+    },
+    {
+      "text": "TerrainTogglePower",
+      "encoding": "ascii",
+      "fileOffset": 56073168,
+      "pointerFileOffsets": [
+        56001200
+      ],
+      "pointerRvas": [
+        56005296
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56077264,
+      "virtualAddress": "0x14357ABD0"
+    },
+    {
+      "text": "TerrainToggleRange",
+      "encoding": "ascii",
+      "fileOffset": 56073520,
+      "pointerFileOffsets": [
+        56001240
+      ],
+      "pointerRvas": [
+        56005336
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56077616,
+      "virtualAddress": "0x14357AD30"
+    },
+    {
+      "text": "TerrainToggleVision",
+      "encoding": "ascii",
+      "fileOffset": 56073896,
+      "pointerFileOffsets": [
+        56001280
+      ],
+      "pointerRvas": [
+        56005376
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56077992,
+      "virtualAddress": "0x14357AEA8"
+    },
+    {
+      "text": "TerrainToggleVisionPlayer",
+      "encoding": "ascii",
+      "fileOffset": 56074240,
+      "pointerFileOffsets": [
+        56001320
+      ],
+      "pointerRvas": [
+        56005416
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56078336,
+      "virtualAddress": "0x14357B000"
+    },
+    {
+      "text": "TerrainToggleHelpers",
+      "encoding": "ascii",
+      "fileOffset": 56074568,
+      "pointerFileOffsets": [
+        56001360
+      ],
+      "pointerRvas": [
+        56005456
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56078664,
+      "virtualAddress": "0x14357B148"
+    },
+    {
+      "text": "TerrainToggleWater",
+      "encoding": "ascii",
+      "fileOffset": 56074856,
+      "pointerFileOffsets": [
+        56001400
+      ],
+      "pointerRvas": [
+        56005496
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56078952,
+      "virtualAddress": "0x14357B268"
+    },
+    {
+      "text": "TerrainToggleSelectionHighlight",
+      "encoding": "ascii",
+      "fileOffset": 56075144,
+      "pointerFileOffsets": [
+        56001440
+      ],
+      "pointerRvas": [
+        56005536
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56079240,
+      "virtualAddress": "0x14357B388"
+    },
+    {
+      "text": "TerrainToggleWireframe",
+      "encoding": "ascii",
+      "fileOffset": 56075520,
+      "pointerFileOffsets": [
+        56001480
+      ],
+      "pointerRvas": [
+        56005576
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56079616,
+      "virtualAddress": "0x14357B500"
+    },
+    {
+      "text": "TerrainToggleWireframeTiles",
+      "encoding": "ascii",
+      "fileOffset": 56075904,
+      "pointerFileOffsets": [
+        56001520
+      ],
+      "pointerRvas": [
+        56005616
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56080000,
+      "virtualAddress": "0x14357B680"
+    },
+    {
+      "text": "TerrainToggleLighting",
+      "encoding": "ascii",
+      "fileOffset": 56076232,
+      "pointerFileOffsets": [
+        56001560
+      ],
+      "pointerRvas": [
+        56005656
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56080328,
+      "virtualAddress": "0x14357B7C8"
+    },
+    {
+      "text": "TerrainToggleLightingMapPreview",
+      "encoding": "ascii",
+      "fileOffset": 56076528,
+      "pointerFileOffsets": [
+        56001600
+      ],
+      "pointerRvas": [
+        56005696
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56080624,
+      "virtualAddress": "0x14357B8F0"
+    },
+    {
+      "text": "TerrainToggleShaderMode",
+      "encoding": "ascii",
+      "fileOffset": 56076824,
+      "pointerFileOffsets": [
+        56001640
+      ],
+      "pointerRvas": [
+        56005736
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56080920,
+      "virtualAddress": "0x14357BA18"
+    },
+    {
+      "text": "TerrainToggleShadows",
+      "encoding": "ascii",
+      "fileOffset": 56077208,
+      "pointerFileOffsets": [
+        56001680
+      ],
+      "pointerRvas": [
+        56005776
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56081304,
+      "virtualAddress": "0x14357BB98"
+    },
+    {
+      "text": "TerrainToggleFogEffects",
+      "encoding": "ascii",
+      "fileOffset": 56077584,
+      "pointerFileOffsets": [
+        56001720
+      ],
+      "pointerRvas": [
+        56005816
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56081680,
+      "virtualAddress": "0x14357BD10"
+    },
+    {
+      "text": "TerrainToggleParticles",
+      "encoding": "ascii",
+      "fileOffset": 56077888,
+      "pointerFileOffsets": [
+        56001760
+      ],
+      "pointerRvas": [
+        56005856
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56081984,
+      "virtualAddress": "0x14357BE40"
+    },
+    {
+      "text": "TerrainToggleBackground",
+      "encoding": "ascii",
+      "fileOffset": 56078216,
+      "pointerFileOffsets": [
+        56001800
+      ],
+      "pointerRvas": [
+        56005896
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56082312,
+      "virtualAddress": "0x14357BF88"
+    },
+    {
+      "text": "TerrainToggleSnapToGrid",
+      "encoding": "ascii",
+      "fileOffset": 56078528,
+      "pointerFileOffsets": [
+        56001840
+      ],
+      "pointerRvas": [
+        56005936
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56082624,
+      "virtualAddress": "0x14357C0C0"
+    },
+    {
+      "text": "TerrainToggleGroupSelection",
+      "encoding": "ascii",
+      "fileOffset": 56078808,
+      "pointerFileOffsets": [
+        56001880
+      ],
+      "pointerRvas": [
+        56005976
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56082904,
+      "virtualAddress": "0x14357C1D8"
+    },
+    {
+      "text": "TerrainToggleSelectDiagonal",
+      "encoding": "ascii",
+      "fileOffset": 56079120,
+      "pointerFileOffsets": [
+        56001920
+      ],
+      "pointerRvas": [
+        56006016
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56083216,
+      "virtualAddress": "0x14357C310"
+    },
+    {
+      "text": "TerrainToggleNamePoints",
+      "encoding": "ascii",
+      "fileOffset": 56079432,
+      "pointerFileOffsets": [
+        56001960
+      ],
+      "pointerRvas": [
+        56006056
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56083528,
+      "virtualAddress": "0x14357C448"
+    },
+    {
+      "text": "TerrainToggleNameRegions",
+      "encoding": "ascii",
+      "fileOffset": 56079736,
+      "pointerFileOffsets": [
+        56002000
+      ],
+      "pointerRvas": [
+        56006096
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56083832,
+      "virtualAddress": "0x14357C578"
+    },
+    {
+      "text": "TerrainToggleNameTerrain",
+      "encoding": "ascii",
+      "fileOffset": 56080080,
+      "pointerFileOffsets": [
+        56002040
+      ],
+      "pointerRvas": [
+        56006136
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56084176,
+      "virtualAddress": "0x14357C6D0"
+    },
+    {
+      "text": "TerrainToggleNamePathing",
+      "encoding": "ascii",
+      "fileOffset": 56080408,
+      "pointerFileOffsets": [
+        56002080
+      ],
+      "pointerRvas": [
+        56006176
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56084504,
+      "virtualAddress": "0x14357C818"
+    },
+    {
+      "text": "TerrainToggleSound",
+      "encoding": "ascii",
+      "fileOffset": 56080736,
+      "pointerFileOffsets": [
+        56002120
+      ],
+      "pointerRvas": [
+        56006216
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56084832,
+      "virtualAddress": "0x14357C960"
+    },
+    {
+      "text": "TerrainToggleCameraAutoPreview",
+      "encoding": "ascii",
+      "fileOffset": 56081008,
+      "pointerFileOffsets": [
+        56002160
+      ],
+      "pointerRvas": [
+        56006256
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56085104,
+      "virtualAddress": "0x14357CA70"
+    },
+    {
+      "text": "TerrainViewEntireMap",
+      "encoding": "ascii",
+      "fileOffset": 56081328,
+      "pointerFileOffsets": [
+        56002200
+      ],
+      "pointerRvas": [
+        56006296
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56085424,
+      "virtualAddress": "0x14357CBB0"
+    },
+    {
+      "text": "TerrainViewModelCamera",
+      "encoding": "ascii",
+      "fileOffset": 56081648,
+      "pointerFileOffsets": [
+        56002240
+      ],
+      "pointerRvas": [
+        56006336
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56085744,
+      "virtualAddress": "0x14357CCF0"
+    },
+    {
+      "text": "TerrainToggleDifficulty",
+      "encoding": "ascii",
+      "fileOffset": 56082008,
+      "pointerFileOffsets": [
+        56002280
+      ],
+      "pointerRvas": [
+        56006376
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56086104,
+      "virtualAddress": "0x14357CE58"
+    },
+    {
+      "text": "TerrainDifficultyAll",
+      "encoding": "ascii",
+      "fileOffset": 56082336,
+      "pointerFileOffsets": [
+        56002320
+      ],
+      "pointerRvas": [
+        56006416
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56086432,
+      "virtualAddress": "0x14357CFA0"
+    },
+    {
+      "text": "TerrainToggleUserTag",
+      "encoding": "ascii",
+      "fileOffset": 56082608,
+      "pointerFileOffsets": [
+        56002360
+      ],
+      "pointerRvas": [
+        56006456
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56086704,
+      "virtualAddress": "0x14357D0B0"
+    },
+    {
+      "text": "TerrainSettingsToggleShowing",
+      "encoding": "ascii",
+      "fileOffset": 56082888,
+      "pointerFileOffsets": [
+        56002400
+      ],
+      "pointerRvas": [
+        56006496
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56086984,
+      "virtualAddress": "0x14357D1C8"
+    },
+    {
+      "text": "TerrainSettingsToggleWindow",
+      "encoding": "ascii",
+      "fileOffset": 56083184,
+      "pointerFileOffsets": [
+        56002440
+      ],
+      "pointerRvas": [
+        56006536
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56087280,
+      "virtualAddress": "0x14357D2F0"
+    },
+    {
+      "text": "TerrainPaletteStyleTree",
+      "encoding": "ascii",
+      "fileOffset": 56083472,
+      "pointerFileOffsets": [
+        56002480
+      ],
+      "pointerRvas": [
+        56006576
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56087568,
+      "virtualAddress": "0x14357D410"
+    },
+    {
+      "text": "TerrainPaletteStyleList",
+      "encoding": "ascii",
+      "fileOffset": 56083744,
+      "pointerFileOffsets": [
+        56002520
+      ],
+      "pointerRvas": [
+        56006616
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56087840,
+      "virtualAddress": "0x14357D520"
+    },
+    {
+      "text": "TerrainGridNone",
+      "encoding": "ascii",
+      "fileOffset": 56084008,
+      "pointerFileOffsets": [
+        56002560
+      ],
+      "pointerRvas": [
+        56006656
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56088104,
+      "virtualAddress": "0x14357D628"
+    },
+    {
+      "text": "TerrainGridLarge",
+      "encoding": "ascii",
+      "fileOffset": 56084256,
+      "pointerFileOffsets": [
+        56002600
+      ],
+      "pointerRvas": [
+        56006696
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56088352,
+      "virtualAddress": "0x14357D720"
+    },
+    {
+      "text": "TerrainGridSmall",
+      "encoding": "ascii",
+      "fileOffset": 56084536,
+      "pointerFileOffsets": [
+        56002640
+      ],
+      "pointerRvas": [
+        56006736
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56088632,
+      "virtualAddress": "0x14357D838"
+    },
+    {
+      "text": "TerrainPathingMeshEnabled",
+      "encoding": "ascii",
+      "fileOffset": 56084816,
+      "pointerFileOffsets": [
+        56002680
+      ],
+      "pointerRvas": [
+        56006776
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56088912,
+      "virtualAddress": "0x14357D950"
+    },
+    {
+      "text": "TerrainPathingMeshClimbable",
+      "encoding": "ascii",
+      "fileOffset": 56085120,
+      "pointerFileOffsets": [
+        56002720
+      ],
+      "pointerRvas": [
+        56006816
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56089216,
+      "virtualAddress": "0x14357DA80"
+    },
+    {
+      "text": "TerrainPathingMeshTerrain",
+      "encoding": "ascii",
+      "fileOffset": 56085432,
+      "pointerFileOffsets": [
+        56002760
+      ],
+      "pointerRvas": [
+        56006856
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56089528,
+      "virtualAddress": "0x14357DBB8"
+    },
+    {
+      "text": "TerrainPathingMeshBuildings",
+      "encoding": "ascii",
+      "fileOffset": 56085720,
+      "pointerFileOffsets": [
+        56002800
+      ],
+      "pointerRvas": [
+        56006896
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56089816,
+      "virtualAddress": "0x14357DCD8"
+    },
+    {
+      "text": "TerrainPathingMeshGround",
+      "encoding": "ascii",
+      "fileOffset": 56086040,
+      "pointerFileOffsets": [
+        56002840
+      ],
+      "pointerRvas": [
+        56006936
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56090136,
+      "virtualAddress": "0x14357DE18"
+    },
+    {
+      "text": "TerrainPathingMeshMisc",
+      "encoding": "ascii",
+      "fileOffset": 56086352,
+      "pointerFileOffsets": [
+        56002880
+      ],
+      "pointerRvas": [
+        56006976
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56090448,
+      "virtualAddress": "0x14357DF50"
+    },
+    {
+      "text": "TerrainPathingMeshNoFly",
+      "encoding": "ascii",
+      "fileOffset": 56086664,
+      "pointerFileOffsets": [
+        56002920
+      ],
+      "pointerRvas": [
+        56007016
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56090760,
+      "virtualAddress": "0x14357E088"
+    },
+    {
+      "text": "TerrainPlacementGridEnabled",
+      "encoding": "ascii",
+      "fileOffset": 56086976,
+      "pointerFileOffsets": [
+        56002960
+      ],
+      "pointerRvas": [
+        56007056
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56091072,
+      "virtualAddress": "0x14357E1C0"
+    },
+    {
+      "text": "TerrainPlacementGridGround",
+      "encoding": "ascii",
+      "fileOffset": 56087304,
+      "pointerFileOffsets": [
+        56003000
+      ],
+      "pointerRvas": [
+        56007096
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56091400,
+      "virtualAddress": "0x14357E308"
+    },
+    {
+      "text": "TerrainPlacementGridNoBuild",
+      "encoding": "ascii",
+      "fileOffset": 56087616,
+      "pointerFileOffsets": [
+        56003040
+      ],
+      "pointerRvas": [
+        56007136
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56091712,
+      "virtualAddress": "0x14357E440"
+    },
+    {
+      "text": "TerrainPlacementGridCreep",
+      "encoding": "ascii",
+      "fileOffset": 56087976,
+      "pointerFileOffsets": [
+        56003080
+      ],
+      "pointerRvas": [
+        56007176
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56092072,
+      "virtualAddress": "0x14357E5A8"
+    },
+    {
+      "text": "TerrainPlacementGridBlockVision",
+      "encoding": "ascii",
+      "fileOffset": 56088304,
+      "pointerFileOffsets": [
+        56003120
+      ],
+      "pointerRvas": [
+        56007216
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56092400,
+      "virtualAddress": "0x14357E6F0"
+    },
+    {
+      "text": "TerrainPlacementGridShrubVision",
+      "encoding": "ascii",
+      "fileOffset": 56088648,
+      "pointerFileOffsets": [
+        56003160
+      ],
+      "pointerRvas": [
+        56007256
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56092744,
+      "virtualAddress": "0x14357E848"
+    },
+    {
+      "text": "TerrainPlacementGridNearResources",
+      "encoding": "ascii",
+      "fileOffset": 56088984,
+      "pointerFileOffsets": [
+        56003200
+      ],
+      "pointerRvas": [
+        56007296
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56093080,
+      "virtualAddress": "0x14357E998"
+    },
+    {
+      "text": "TerrainPlacementGridBoostCliff",
+      "encoding": "ascii",
+      "fileOffset": 56089360,
+      "pointerFileOffsets": [
+        56003240
+      ],
+      "pointerRvas": [
+        56007336
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56093456,
+      "virtualAddress": "0x14357EB10"
+    },
+    {
+      "text": "TerrainLightingEditor",
+      "encoding": "ascii",
+      "fileOffset": 56089688,
+      "pointerFileOffsets": [
+        56003280
+      ],
+      "pointerRvas": [
+        56007376
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56093784,
+      "virtualAddress": "0x14357EC58"
+    },
+    {
+      "text": "TerrainLightingGame",
+      "encoding": "ascii",
+      "fileOffset": 56090000,
+      "pointerFileOffsets": [
+        56003320
+      ],
+      "pointerRvas": [
+        56007416
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56094096,
+      "virtualAddress": "0x14357ED90"
+    },
+    {
+      "text": "TerrainToggleTimeOfDay",
+      "encoding": "ascii",
+      "fileOffset": 56090328,
+      "pointerFileOffsets": [
+        56003360
+      ],
+      "pointerRvas": [
+        56007456
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56094424,
+      "virtualAddress": "0x14357EED8"
+    },
+    {
+      "text": "TerrainShowLayerTerrain",
+      "encoding": "ascii",
+      "fileOffset": 56090664,
+      "pointerFileOffsets": [
+        56003400
+      ],
+      "pointerRvas": [
+        56007496
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56094760,
+      "virtualAddress": "0x14357F028"
+    },
+    {
+      "text": "TerrainShowLayerUnits",
+      "encoding": "ascii",
+      "fileOffset": 56090984,
+      "pointerFileOffsets": [
+        56003440
+      ],
+      "pointerRvas": [
+        56007536
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56095080,
+      "virtualAddress": "0x14357F168"
+    },
+    {
+      "text": "TerrainShowLayerDoodads",
+      "encoding": "ascii",
+      "fileOffset": 56091304,
+      "pointerFileOffsets": [
+        56003480
+      ],
+      "pointerRvas": [
+        56007576
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56095400,
+      "virtualAddress": "0x14357F2A8"
+    },
+    {
+      "text": "TerrainShowLayerPoints",
+      "encoding": "ascii",
+      "fileOffset": 56091616,
+      "pointerFileOffsets": [
+        56003520
+      ],
+      "pointerRvas": [
+        56007616
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56095712,
+      "virtualAddress": "0x14357F3E0"
+    },
+    {
+      "text": "TerrainShowLayerCameras",
+      "encoding": "ascii",
+      "fileOffset": 56091936,
+      "pointerFileOffsets": [
+        56003560
+      ],
+      "pointerRvas": [
+        56007656
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56096032,
+      "virtualAddress": "0x14357F520"
+    },
+    {
+      "text": "TerrainShowLayerRegions",
+      "encoding": "ascii",
+      "fileOffset": 56092248,
+      "pointerFileOffsets": [
+        56003600
+      ],
+      "pointerRvas": [
+        56007696
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56096344,
+      "virtualAddress": "0x14357F658"
+    },
+    {
+      "text": "TerrainShowLayerPathing",
+      "encoding": "ascii",
+      "fileOffset": 56092560,
+      "pointerFileOffsets": [
+        56003640
+      ],
+      "pointerRvas": [
+        56007736
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56096656,
+      "virtualAddress": "0x14357F790"
+    },
+    {
+      "text": "TerrainLockGameView",
+      "encoding": "ascii",
+      "fileOffset": 56093136,
+      "pointerFileOffsets": [
+        56003720
+      ],
+      "pointerRvas": [
+        56007816
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56097232,
+      "virtualAddress": "0x14357F9D0"
+    },
+    {
+      "text": "TerrainAspectRatioNone",
+      "encoding": "ascii",
+      "fileOffset": 56093416,
+      "pointerFileOffsets": [
+        56003760
+      ],
+      "pointerRvas": [
+        56007856
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56097512,
+      "virtualAddress": "0x14357FAE8"
+    },
+    {
+      "text": "TerrainAspectRatio4x3",
+      "encoding": "ascii",
+      "fileOffset": 56093688,
+      "pointerFileOffsets": [
+        56003800
+      ],
+      "pointerRvas": [
+        56007896
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56097784,
+      "virtualAddress": "0x14357FBF8"
+    },
+    {
+      "text": "TerrainAspectRatio16x9",
+      "encoding": "ascii",
+      "fileOffset": 56093968,
+      "pointerFileOffsets": [
+        56003840
+      ],
+      "pointerRvas": [
+        56007936
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56098064,
+      "virtualAddress": "0x14357FD10"
+    },
+    {
+      "text": "TerrainAspectRatio16x10",
+      "encoding": "ascii",
+      "fileOffset": 56094264,
+      "pointerFileOffsets": [
+        56003880
+      ],
+      "pointerRvas": [
+        56007976
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56098360,
+      "virtualAddress": "0x14357FE38"
+    },
+    {
+      "text": "TerrainAspectRatio5x4",
+      "encoding": "ascii",
+      "fileOffset": 56094576,
+      "pointerFileOffsets": [
+        56003920
+      ],
+      "pointerRvas": [
+        56008016
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56098672,
+      "virtualAddress": "0x14357FF70"
+    },
+    {
+      "text": "TerrainAspectRatioToggle",
+      "encoding": "ascii",
+      "fileOffset": 56094912,
+      "pointerFileOffsets": [
+        56003960
+      ],
+      "pointerRvas": [
+        56008056
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56099008,
+      "virtualAddress": "0x1435800C0"
+    },
+    {
+      "text": "TerrainAspectGuideNone",
+      "encoding": "ascii",
+      "fileOffset": 56095248,
+      "pointerFileOffsets": [
+        56004000
+      ],
+      "pointerRvas": [
+        56008096
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56099344,
+      "virtualAddress": "0x143580210"
+    },
+    {
+      "text": "TerrainAspectGuide4x3",
+      "encoding": "ascii",
+      "fileOffset": 56095536,
+      "pointerFileOffsets": [
+        56004040
+      ],
+      "pointerRvas": [
+        56008136
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56099632,
+      "virtualAddress": "0x143580330"
+    },
+    {
+      "text": "TerrainAspectGuide16x9",
+      "encoding": "ascii",
+      "fileOffset": 56095832,
+      "pointerFileOffsets": [
+        56004080
+      ],
+      "pointerRvas": [
+        56008176
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56099928,
+      "virtualAddress": "0x143580458"
+    },
+    {
+      "text": "TerrainAspectGuide16x10",
+      "encoding": "ascii",
+      "fileOffset": 56096128,
+      "pointerFileOffsets": [
+        56004120
+      ],
+      "pointerRvas": [
+        56008216
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56100224,
+      "virtualAddress": "0x143580580"
+    },
+    {
+      "text": "TerrainAspectGuide5x4",
+      "encoding": "ascii",
+      "fileOffset": 56096424,
+      "pointerFileOffsets": [
+        56004160
+      ],
+      "pointerRvas": [
+        56008256
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56100520,
+      "virtualAddress": "0x1435806A8"
+    },
+    {
+      "text": "TerrainAspectGuideToggle",
+      "encoding": "ascii",
+      "fileOffset": 56096736,
+      "pointerFileOffsets": [
+        56004200
+      ],
+      "pointerRvas": [
+        56008296
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56100832,
+      "virtualAddress": "0x1435807E0"
+    },
+    {
+      "text": "TerrainLayerTerrain",
+      "encoding": "ascii",
+      "fileOffset": 56097056,
+      "pointerFileOffsets": [
+        56004240
+      ],
+      "pointerRvas": [
+        56008336
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56101152,
+      "virtualAddress": "0x143580920"
+    },
+    {
+      "text": "TerrainLayerUnits",
+      "encoding": "ascii",
+      "fileOffset": 56097352,
+      "pointerFileOffsets": [
+        56004280
+      ],
+      "pointerRvas": [
+        56008376
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56101448,
+      "virtualAddress": "0x143580A48"
+    },
+    {
+      "text": "TerrainLayerDoodads",
+      "encoding": "ascii",
+      "fileOffset": 56097624,
+      "pointerFileOffsets": [
+        56004320
+      ],
+      "pointerRvas": [
+        56008416
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56101720,
+      "virtualAddress": "0x143580B58"
+    },
+    {
+      "text": "TerrainLayerPoints",
+      "encoding": "ascii",
+      "fileOffset": 56097920,
+      "pointerFileOffsets": [
+        56004360
+      ],
+      "pointerRvas": [
+        56008456
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56102016,
+      "virtualAddress": "0x143580C80"
+    },
+    {
+      "text": "TerrainLayerCameras",
+      "encoding": "ascii",
+      "fileOffset": 56098248,
+      "pointerFileOffsets": [
+        56004400
+      ],
+      "pointerRvas": [
+        56008496
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56102344,
+      "virtualAddress": "0x143580DC8"
+    },
+    {
+      "text": "TerrainLayerRegions",
+      "encoding": "ascii",
+      "fileOffset": 56098544,
+      "pointerFileOffsets": [
+        56004440
+      ],
+      "pointerRvas": [
+        56008536
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56102640,
+      "virtualAddress": "0x143580EF0"
+    },
+    {
+      "text": "TerrainLayerPathing",
+      "encoding": "ascii",
+      "fileOffset": 56098832,
+      "pointerFileOffsets": [
+        56004480
+      ],
+      "pointerRvas": [
+        56008576
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56102928,
+      "virtualAddress": "0x143581010"
+    },
+    {
+      "text": "TerrainSelectModeToggle",
+      "encoding": "ascii",
+      "fileOffset": 56099120,
+      "pointerFileOffsets": [
+        56004520
+      ],
+      "pointerRvas": [
+        56008616
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56103216,
+      "virtualAddress": "0x143581130"
+    },
+    {
+      "text": "TerrainMeasureDistance",
+      "encoding": "ascii",
+      "fileOffset": 56099416,
+      "pointerFileOffsets": [
+        56004560
+      ],
+      "pointerRvas": [
+        56008656
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56103512,
+      "virtualAddress": "0x143581258"
+    },
+    {
+      "text": "TerrainCancelOperation",
+      "encoding": "ascii",
+      "fileOffset": 56099688,
+      "pointerFileOffsets": [
+        56004600
+      ],
+      "pointerRvas": [
+        56008696
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56103784,
+      "virtualAddress": "0x143581368"
+    },
+    {
+      "text": "TerrainSymmetryToggle",
+      "encoding": "ascii",
+      "fileOffset": 56099992,
+      "pointerFileOffsets": [
+        56004640
+      ],
+      "pointerRvas": [
+        56008736
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56104088,
+      "virtualAddress": "0x143581498"
+    },
+    {
+      "text": "TerrainSelectFromActive",
+      "encoding": "ascii",
+      "fileOffset": 56100296,
+      "pointerFileOffsets": [
+        56004680
+      ],
+      "pointerRvas": [
+        56008776
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56104392,
+      "virtualAddress": "0x1435815C8"
+    },
+    {
+      "text": "TerrainSelectFromAll",
+      "encoding": "ascii",
+      "fileOffset": 56100592,
+      "pointerFileOffsets": [
+        56004720
+      ],
+      "pointerRvas": [
+        56008816
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56104688,
+      "virtualAddress": "0x1435816F0"
+    },
+    {
+      "text": "TerrainSelectFromAllObject",
+      "encoding": "ascii",
+      "fileOffset": 56100888,
+      "pointerFileOffsets": [
+        56004760
+      ],
+      "pointerRvas": [
+        56008856
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56104984,
+      "virtualAddress": "0x143581818"
+    },
+    {
+      "text": "TerrainSelectFromTerrain",
+      "encoding": "ascii",
+      "fileOffset": 56101504,
+      "pointerFileOffsets": [
+        56004840
+      ],
+      "pointerRvas": [
+        56008936
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56105600,
+      "virtualAddress": "0x143581A80"
+    },
+    {
+      "text": "TerrainSelectFromUnits",
+      "encoding": "ascii",
+      "fileOffset": 56101832,
+      "pointerFileOffsets": [
+        56004880
+      ],
+      "pointerRvas": [
+        56008976
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56105928,
+      "virtualAddress": "0x143581BC8"
+    },
+    {
+      "text": "TerrainSelectFromDoodads",
+      "encoding": "ascii",
+      "fileOffset": 56102144,
+      "pointerFileOffsets": [
+        56004920
+      ],
+      "pointerRvas": [
+        56009016
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56106240,
+      "virtualAddress": "0x143581D00"
+    },
+    {
+      "text": "TerrainSelectFromPoints",
+      "encoding": "ascii",
+      "fileOffset": 56102480,
+      "pointerFileOffsets": [
+        56004960
+      ],
+      "pointerRvas": [
+        56009056
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56106576,
+      "virtualAddress": "0x143581E50"
+    },
+    {
+      "text": "TerrainSelectFromCameras",
+      "encoding": "ascii",
+      "fileOffset": 56102816,
+      "pointerFileOffsets": [
+        56005000
+      ],
+      "pointerRvas": [
+        56009096
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56106912,
+      "virtualAddress": "0x143581FA0"
+    },
+    {
+      "text": "TerrainSelectFromRegions",
+      "encoding": "ascii",
+      "fileOffset": 56103160,
+      "pointerFileOffsets": [
+        56005040
+      ],
+      "pointerRvas": [
+        56009136
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56107256,
+      "virtualAddress": "0x1435820F8"
+    },
+    {
+      "text": "TerrainSelectFromPathing",
+      "encoding": "ascii",
+      "fileOffset": 56103488,
+      "pointerFileOffsets": [
+        56005080
+      ],
+      "pointerRvas": [
+        56009176
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56107584,
+      "virtualAddress": "0x143582240"
+    },
+    {
+      "text": "TerrainSelectFromToggle",
+      "encoding": "ascii",
+      "fileOffset": 56103784,
+      "pointerFileOffsets": [
+        56005120
+      ],
+      "pointerRvas": [
+        56009216
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56107880,
+      "virtualAddress": "0x143582368"
+    },
+    {
+      "text": "EDSTR_TERRAIN_MEASUREDISTANCE_NOPATH",
+      "encoding": "ascii",
+      "fileOffset": 56145264,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56149360,
+      "virtualAddress": "0x14358C570"
+    },
+    {
+      "text": "EDSTR_TERRAIN_MEASUREDISTANCE",
+      "encoding": "ascii",
+      "fileOffset": 56145304,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56149400,
+      "virtualAddress": "0x14358C598"
+    },
+    {
+      "text": "TerrainObjectCount",
+      "encoding": "ascii",
+      "fileOffset": 56152656,
+      "pointerFileOffsets": [
+        69899040
+      ],
+      "pointerRvas": [
+        69903136
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56156752,
+      "virtualAddress": "0x14358E250"
+    },
+    {
+      "text": "t3SyncTextureInfo",
+      "encoding": "ascii",
+      "fileOffset": 56153040,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56157136,
+      "virtualAddress": "0x14358E3D0"
+    },
+    {
+      "text": "EDSTR_TERRAIN_STATUS_SELECTION_MULTIPLELAYERS",
+      "encoding": "ascii",
+      "fileOffset": 56243992,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56248088,
+      "virtualAddress": "0x1435A4718"
+    },
+    {
+      "text": "EDSTR_TERRAIN_STATUS_PASTE_MULTIPLELAYERS",
+      "encoding": "ascii",
+      "fileOffset": 56244040,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56248136,
+      "virtualAddress": "0x1435A4748"
+    },
+    {
+      "text": "EDSTR_TERRAIN_STATUS_PASTE_MULTIPLELAYERSNOCOUNT",
+      "encoding": "ascii",
+      "fileOffset": 56244088,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56248184,
+      "virtualAddress": "0x1435A4778"
+    },
+    {
+      "text": "EDSTR_TERRAIN_STATUS_PASTE_LAYERLINE",
+      "encoding": "ascii",
+      "fileOffset": 56244144,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56248240,
+      "virtualAddress": "0x1435A47B0"
+    },
+    {
+      "text": "EDSTR_TERRAIN_STATUS_MEASURE_DISTANCE",
+      "encoding": "ascii",
+      "fileOffset": 56244192,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56248288,
+      "virtualAddress": "0x1435A47E0"
+    },
+    {
+      "text": "EDSTR_TERRAIN_STATUS_MEASURE_DISTANCEPATH",
+      "encoding": "ascii",
+      "fileOffset": 56244256,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56248352,
+      "virtualAddress": "0x1435A4820"
+    },
+    {
+      "text": "TerrainEditor.Context.InstancePaletteRegion",
+      "encoding": "ascii",
+      "fileOffset": 56252736,
+      "pointerFileOffsets": [
+        69956760
+      ],
+      "pointerRvas": [
+        69960856
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56256832,
+      "virtualAddress": "0x1435A6940"
+    },
+    {
+      "text": "EDSTR_TERRAIN_STATUS_SELECTION_POINTPLAYERSMULTI",
+      "encoding": "ascii",
+      "fileOffset": 56255200,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56259296,
+      "virtualAddress": "0x1435A72E0"
+    },
+    {
+      "text": "TerrainSettingsDialog",
+      "encoding": "ascii",
+      "fileOffset": 56256432,
+      "pointerFileOffsets": [
+        69957928
+      ],
+      "pointerRvas": [
+        69962024
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56260528,
+      "virtualAddress": "0x1435A77B0"
+    },
+    {
+      "text": "TerrainEditor.Settings.Hotkeys",
+      "encoding": "ascii",
+      "fileOffset": 56256504,
+      "pointerFileOffsets": [
+        69958024
+      ],
+      "pointerRvas": [
+        69962120
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56260600,
+      "virtualAddress": "0x1435A77F8"
+    },
+    {
+      "text": "TerrainSettingsUI",
+      "encoding": "ascii",
+      "fileOffset": 56257016,
+      "pointerFileOffsets": [
+        69958112
+      ],
+      "pointerRvas": [
+        69962208
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56261112,
+      "virtualAddress": "0x1435A79F8"
+    },
+    {
+      "text": "EDSTR_TERRAINSETTINGS_CUSTOMNOSETTINGS",
+      "encoding": "ascii",
+      "fileOffset": 56257568,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56261664,
+      "virtualAddress": "0x1435A7C20"
+    },
+    {
+      "text": "EDSTR_TERRAINSETTINGS_CUSTOMCHOOSENAME",
+      "encoding": "ascii",
+      "fileOffset": 56257608,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56261704,
+      "virtualAddress": "0x1435A7C48"
+    },
+    {
+      "text": "EDSTR_TERRAINSETTINGS_CUSTOMDELETE_CONFIRM",
+      "encoding": "ascii",
+      "fileOffset": 56257648,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56261744,
+      "virtualAddress": "0x1435A7C70"
+    },
+    {
+      "text": "TerrainHeightDialog",
+      "encoding": "ascii",
+      "fileOffset": 56257704,
+      "pointerFileOffsets": [
+        69958568
+      ],
+      "pointerRvas": [
+        69962664
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56261800,
+      "virtualAddress": "0x1435A7CA8"
+    },
+    {
+      "text": "TerrainCliffLevelDialog",
+      "encoding": "ascii",
+      "fileOffset": 56258072,
+      "pointerFileOffsets": [
+        69958736
+      ],
+      "pointerRvas": [
+        69962832
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56262168,
+      "virtualAddress": "0x1435A7E18"
+    },
+    {
+      "text": "EDSTR_TERRAIN_UNITTEXT_REBUILDALWAYS",
+      "encoding": "ascii",
+      "fileOffset": 56278168,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56282264,
+      "virtualAddress": "0x1435ACC98"
+    },
+    {
+      "text": "TerrainScale",
+      "encoding": "ascii",
+      "fileOffset": 56298016,
+      "pointerFileOffsets": [
+        69976312
+      ],
+      "pointerRvas": [
+        69980408
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56302112,
+      "virtualAddress": "0x1435B1A20"
+    },
+    {
+      "text": "EDSTR_TERRAIN_STATUS_GIZMO_TRANSLATE",
+      "encoding": "ascii",
+      "fileOffset": 56451008,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56455104,
+      "virtualAddress": "0x1435D6FC0"
+    },
+    {
+      "text": "EDSTR_TERRAIN_STATUS_GIZMO_ROTATE",
+      "encoding": "ascii",
+      "fileOffset": 56451048,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56455144,
+      "virtualAddress": "0x1435D6FE8"
+    },
+    {
+      "text": "EDSTR_TERRAIN_STATUS_GIZMO_SCALE",
+      "encoding": "ascii",
+      "fileOffset": 56451088,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56455184,
+      "virtualAddress": "0x1435D7010"
+    },
+    {
+      "text": "EDSTR_TERRAIN_STATUS_GIZMO_SPACE_WORLD",
+      "encoding": "ascii",
+      "fileOffset": 56451128,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56455224,
+      "virtualAddress": "0x1435D7038"
+    },
+    {
+      "text": "EDSTR_TERRAIN_STATUS_GIZMO_SPACE_LOCAL",
+      "encoding": "ascii",
+      "fileOffset": 56451168,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56455264,
+      "virtualAddress": "0x1435D7060"
+    },
+    {
+      "text": "EDSTR_TERRAIN_STATUS_GIZMO_SPACE_OBJECT",
+      "encoding": "ascii",
+      "fileOffset": 56451208,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56455304,
+      "virtualAddress": "0x1435D7088"
+    },
+    {
+      "text": "EDSTR_TERRAIN_STATUS_GIZMO_TYPESPACE",
+      "encoding": "ascii",
+      "fileOffset": 56451248,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56455344,
+      "virtualAddress": "0x1435D70B0"
+    },
+    {
+      "text": "EDSTR_TERRAIN_STATUS_SELECTION_RESOURCETOTAL",
+      "encoding": "ascii",
+      "fileOffset": 56473880,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56477976,
+      "virtualAddress": "0x1435DC918"
+    },
+    {
+      "text": "EDSTR_TERRAIN_STATUS_SELECTION_LAYERLINE",
+      "encoding": "ascii",
+      "fileOffset": 56473928,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56478024,
+      "virtualAddress": "0x1435DC948"
+    },
+    {
+      "text": "EDSTR_TERRAIN_STATUS_BRUSH_UNITS_MULTI",
+      "encoding": "ascii",
+      "fileOffset": 56474296,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56478392,
+      "virtualAddress": "0x1435DCAB8"
+    },
+    {
+      "text": "EDSTR_TERRAIN_STATUS_BRUSH_UNITS_SINGLE",
+      "encoding": "ascii",
+      "fileOffset": 56474336,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56478432,
+      "virtualAddress": "0x1435DCAE0"
+    },
+    {
+      "text": "EDSTR_TERRAIN_STATUS_BRUSH_OBJECTS_MULTI",
+      "encoding": "ascii",
+      "fileOffset": 56474376,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56478472,
+      "virtualAddress": "0x1435DCB08"
+    },
+    {
+      "text": "EDSTR_TERRAIN_STATUS_BRUSH_OBJECTS_SINGLE",
+      "encoding": "ascii",
+      "fileOffset": 56474424,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56478520,
+      "virtualAddress": "0x1435DCB38"
+    },
+    {
+      "text": "EDSTR_TERRAIN_STATUS_BRUSH_POINTS_NAME",
+      "encoding": "ascii",
+      "fileOffset": 56474472,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56478568,
+      "virtualAddress": "0x1435DCB68"
+    },
+    {
+      "text": "EDSTR_TERRAIN_STATUS_PLAYER",
+      "encoding": "ascii",
+      "fileOffset": 56474512,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56478608,
+      "virtualAddress": "0x1435DCB90"
+    },
+    {
+      "text": "TerrainEditor.Context.InstancePalette",
+      "encoding": "ascii",
+      "fileOffset": 56479504,
+      "pointerFileOffsets": [
+        70026792,
+        70027184,
+        70027480,
+        70027704
+      ],
+      "pointerRvas": [
+        70030888,
+        70031280,
+        70031576,
+        70031800
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56483600,
+      "virtualAddress": "0x1435DDF10"
+    },
+    {
+      "text": "TerrainPalette",
+      "encoding": "ascii",
+      "fileOffset": 56482440,
+      "pointerFileOffsets": [
+        70028000
+      ],
+      "pointerRvas": [
+        70032096
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56486536,
+      "virtualAddress": "0x1435DEA88"
+    },
+    {
+      "text": "EDSTR_TERRAIN_STATUS_SELECTION_REGIONSINGLE",
+      "encoding": "ascii",
+      "fileOffset": 56489152,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56493248,
+      "virtualAddress": "0x1435E04C0"
+    },
+    {
+      "text": "EDSTR_TERRAIN_STATUS_SELECTION_REGIONMULTI",
+      "encoding": "ascii",
+      "fileOffset": 56489200,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56493296,
+      "virtualAddress": "0x1435E04F0"
+    },
+    {
+      "text": "EDSTR_TERRAIN_STATUS_SELECTION_MULTIPLESECTIONS",
+      "encoding": "ascii",
+      "fileOffset": 56489248,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56493344,
+      "virtualAddress": "0x1435E0520"
+    },
+    {
+      "text": "EDSTR_TERRAIN_STATUS_SELECTION_SECTION",
+      "encoding": "ascii",
+      "fileOffset": 56489296,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56493392,
+      "virtualAddress": "0x1435E0550"
+    },
+    {
+      "text": "EDSTR_TERRAIN_STATUS_SELECTION_POINTSINGLE",
+      "encoding": "ascii",
+      "fileOffset": 56490256,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56494352,
+      "virtualAddress": "0x1435E0910"
+    },
+    {
+      "text": "EDSTR_TERRAIN_STATUS_SELECTION_POINTMULTI",
+      "encoding": "ascii",
+      "fileOffset": 56490304,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56494400,
+      "virtualAddress": "0x1435E0940"
+    },
+    {
+      "text": "EDSTR_TERRAIN_STATUS_SELECTION_CAMERASINGLE",
+      "encoding": "ascii",
+      "fileOffset": 56490352,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56494448,
+      "virtualAddress": "0x1435E0970"
+    },
+    {
+      "text": "EDSTR_TERRAIN_STATUS_SELECTION_CAMERAMULTI",
+      "encoding": "ascii",
+      "fileOffset": 56490400,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56494496,
+      "virtualAddress": "0x1435E09A0"
+    },
+    {
+      "text": "EDSTR_TERRAIN_STATUS_SELECTION_SINGLE",
+      "encoding": "ascii",
+      "fileOffset": 56490448,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56494544,
+      "virtualAddress": "0x1435E09D0"
+    },
+    {
+      "text": "EDSTR_TERRAIN_STATUS_SELECTION_MULTI",
+      "encoding": "ascii",
+      "fileOffset": 56490488,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56494584,
+      "virtualAddress": "0x1435E09F8"
+    },
+    {
+      "text": "EDSTR_TERRAIN_STATUS_SELECTION_MULTIPLETYPES",
+      "encoding": "ascii",
+      "fileOffset": 56490528,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56494624,
+      "virtualAddress": "0x1435E0A20"
+    },
+    {
+      "text": "EDSTR_TERRAIN_STATUS_SELECTION_PLAYER",
+      "encoding": "ascii",
+      "fileOffset": 56490576,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56494672,
+      "virtualAddress": "0x1435E0A50"
+    },
+    {
+      "text": "EDSTR_TERRAIN_STATUS_SELECTION_MULTIPLEPLAYERS",
+      "encoding": "ascii",
+      "fileOffset": 56490616,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56494712,
+      "virtualAddress": "0x1435E0A78"
+    },
+    {
+      "text": "EDSTR_TERRAIN_STATUS_SELECTION_GROUP",
+      "encoding": "ascii",
+      "fileOffset": 56490664,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56494760,
+      "virtualAddress": "0x1435E0AA8"
+    },
+    {
+      "text": "EDSTR_TERRAIN_STATUS_SELECTION_GROUP_MULTIPLE",
+      "encoding": "ascii",
+      "fileOffset": 56490704,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56494800,
+      "virtualAddress": "0x1435E0AD0"
+    },
+    {
+      "text": "EDSTR_TERRAIN_STATUS_SELECTION_RESOURCEPROVIDED",
+      "encoding": "ascii",
+      "fileOffset": 56490752,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56494848,
+      "virtualAddress": "0x1435E0B00"
+    },
+    {
+      "text": "EDSTR_TERRAIN_STATUS_SELECTION_SUPPLYPROVIDED",
+      "encoding": "ascii",
+      "fileOffset": 56490800,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56494896,
+      "virtualAddress": "0x1435E0B30"
+    },
+    {
+      "text": "EDSTR_TERRAIN_STATUS_SELECTION_RESOURCECOST",
+      "encoding": "ascii",
+      "fileOffset": 56490848,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56494944,
+      "virtualAddress": "0x1435E0B60"
+    },
+    {
+      "text": "EDSTR_TERRAIN_STATUS_SELECTION_SUPPLYCOST",
+      "encoding": "ascii",
+      "fileOffset": 56490896,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56494992,
+      "virtualAddress": "0x1435E0B90"
+    },
+    {
+      "text": "EDSTR_TERRAIN_STATUS_SELECTION_TERRAIN",
+      "encoding": "ascii",
+      "fileOffset": 56491896,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56495992,
+      "virtualAddress": "0x1435E0F78"
+    },
+    {
+      "text": "TerrainSettingSimpleToggle",
+      "encoding": "ascii",
+      "fileOffset": 56492368,
+      "pointerFileOffsets": [
+        70030304
+      ],
+      "pointerRvas": [
+        70034400
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56496464,
+      "virtualAddress": "0x1435E1150"
+    },
+    {
+      "text": "TerrainSettingMutexToggle",
+      "encoding": "ascii",
+      "fileOffset": 56492400,
+      "pointerFileOffsets": [
+        70030320
+      ],
+      "pointerRvas": [
+        70034416
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56496496,
+      "virtualAddress": "0x1435E1170"
+    },
+    {
+      "text": "TerrainSettingMutexItem",
+      "encoding": "ascii",
+      "fileOffset": 56492432,
+      "pointerFileOffsets": [
+        70030336
+      ],
+      "pointerRvas": [
+        70034432
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56496528,
+      "virtualAddress": "0x1435E1190"
+    },
+    {
+      "text": "EDSTR_TERRAINSETTINGS_RESETCONFIRM",
+      "encoding": "ascii",
+      "fileOffset": 56492968,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56497064,
+      "virtualAddress": "0x1435E13A8"
+    },
+    {
+      "text": "EDSTR_TERRAINSETTINGS_USAGECOL_NAME",
+      "encoding": "ascii",
+      "fileOffset": 56493008,
+      "pointerFileOffsets": [
+        70030448
+      ],
+      "pointerRvas": [
+        70034544
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56497104,
+      "virtualAddress": "0x1435E13D0"
+    },
+    {
+      "text": "EDSTR_TERRAINSETTINGS_USAGECOL_HOTKEY",
+      "encoding": "ascii",
+      "fileOffset": 56493048,
+      "pointerFileOffsets": [
+        70030464
+      ],
+      "pointerRvas": [
+        70034560
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56497144,
+      "virtualAddress": "0x1435E13F8"
+    },
+    {
+      "text": "EDSTR_TERRAINSETTINGS_USAGECOL_VALUE",
+      "encoding": "ascii",
+      "fileOffset": 56493088,
+      "pointerFileOffsets": [
+        70030480
+      ],
+      "pointerRvas": [
+        70034576
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56497184,
+      "virtualAddress": "0x1435E1420"
+    },
+    {
+      "text": "EDSTR_TERRAINSETTINGS_USAGECOL_TIME",
+      "encoding": "ascii",
+      "fileOffset": 56493128,
+      "pointerFileOffsets": [
+        70030496
+      ],
+      "pointerRvas": [
+        70034592
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56497224,
+      "virtualAddress": "0x1435E1448"
+    },
+    {
+      "text": "TerrainHeightControl",
+      "encoding": "ascii",
+      "fileOffset": 56493600,
+      "pointerFileOffsets": [
+        70030640
+      ],
+      "pointerRvas": [
+        70034736
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56497696,
+      "virtualAddress": "0x1435E1620"
+    },
+    {
+      "text": "TerrainObjectPreviewModel",
+      "encoding": "ascii",
+      "fileOffset": 56693776,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56697872,
+      "virtualAddress": "0x143612410"
+    },
+    {
+      "text": "EDSTR_TERRAIN_COPYTYPE_TEXTURES",
+      "encoding": "ascii",
+      "fileOffset": 56712872,
+      "pointerFileOffsets": [
+        70079536
+      ],
+      "pointerRvas": [
+        70083632
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56716968,
+      "virtualAddress": "0x143616EA8"
+    },
+    {
+      "text": "EDSTR_TERRAIN_COPYTYPE_GEOMETRY",
+      "encoding": "ascii",
+      "fileOffset": 56712904,
+      "pointerFileOffsets": [
+        70079552
+      ],
+      "pointerRvas": [
+        70083648
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56717000,
+      "virtualAddress": "0x143616EC8"
+    },
+    {
+      "text": "EDSTR_TERRAIN_COPYTYPE_WATER",
+      "encoding": "ascii",
+      "fileOffset": 56712936,
+      "pointerFileOffsets": [
+        70079568
+      ],
+      "pointerRvas": [
+        70083664
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56717032,
+      "virtualAddress": "0x143616EE8"
+    },
+    {
+      "text": "EDSTR_TERRAIN_COPYTYPE_PATHING",
+      "encoding": "ascii",
+      "fileOffset": 56712968,
+      "pointerFileOffsets": [
+        70079584
+      ],
+      "pointerRvas": [
+        70083680
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56717064,
+      "virtualAddress": "0x143616F08"
+    },
+    {
+      "text": "EDSTR_TERRAIN_COPYTYPE_CREEP",
+      "encoding": "ascii",
+      "fileOffset": 56713000,
+      "pointerFileOffsets": [
+        70079600
+      ],
+      "pointerRvas": [
+        70083696
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56717096,
+      "virtualAddress": "0x143616F28"
+    },
+    {
+      "text": "EDSTR_TERRAIN_COPYTYPE_VISION",
+      "encoding": "ascii",
+      "fileOffset": 56713032,
+      "pointerFileOffsets": [
+        70079616
+      ],
+      "pointerRvas": [
+        70083712
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56717128,
+      "virtualAddress": "0x143616F48"
+    },
+    {
+      "text": "EDSTR_TERRAIN_COPYTYPE_CUSTOM",
+      "encoding": "ascii",
+      "fileOffset": 56713064,
+      "pointerFileOffsets": [
+        70079632
+      ],
+      "pointerRvas": [
+        70083728
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56717160,
+      "virtualAddress": "0x143616F68"
+    },
+    {
+      "text": "EDSTR_TERRAIN_STATUS_SELECTION_TILE_POINTSINGLE",
+      "encoding": "ascii",
+      "fileOffset": 56714816,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56718912,
+      "virtualAddress": "0x143617640"
+    },
+    {
+      "text": "EDSTR_TERRAIN_STATUS_SELECTION_TILE_POINTMULTI",
+      "encoding": "ascii",
+      "fileOffset": 56714864,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56718960,
+      "virtualAddress": "0x143617670"
+    },
+    {
+      "text": "EDSTR_TERRAIN_STATUS_SELECTION_TILE_TILEMULTI",
+      "encoding": "ascii",
+      "fileOffset": 56714912,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56719008,
+      "virtualAddress": "0x1436176A0"
+    },
+    {
+      "text": "EDSTR_TERRAIN_STATUS_PASTE_TERRAIN",
+      "encoding": "ascii",
+      "fileOffset": 56715264,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56719360,
+      "virtualAddress": "0x143617800"
+    },
+    {
+      "text": "TerrainShowRegion",
+      "encoding": "ascii",
+      "fileOffset": 56827544,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56831640,
+      "virtualAddress": "0x143632E98"
+    },
+    {
+      "text": "TerrainTexture",
+      "encoding": "ascii",
+      "fileOffset": 56828368,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56832464,
+      "virtualAddress": "0x1436331D0"
+    },
+    {
+      "text": "TerrainObject",
+      "encoding": "ascii",
+      "fileOffset": 56902536,
+      "pointerFileOffsets": [
+        70151648
+      ],
+      "pointerRvas": [
+        70155744
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56906632,
+      "virtualAddress": "0x143645388"
+    },
+    {
+      "text": "TerrainTex",
+      "encoding": "ascii",
+      "fileOffset": 56902552,
+      "pointerFileOffsets": [
+        70151664
+      ],
+      "pointerRvas": [
+        70155760
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56906648,
+      "virtualAddress": "0x143645398"
+    },
+    {
+      "text": "CTerrain",
+      "encoding": "ascii",
+      "fileOffset": 56954848,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 56958944,
+      "virtualAddress": "0x143651FE0"
+    },
+    {
+      "text": "TerrainButton",
+      "encoding": "ascii",
+      "fileOffset": 57191952,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 57196048,
+      "virtualAddress": "0x14368BE10"
+    },
+    {
+      "text": "t3SyncCliffLevel",
+      "encoding": "ascii",
+      "fileOffset": 57344400,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 57348496,
+      "virtualAddress": "0x1436B1190"
+    },
+    {
+      "text": "t3Terrain.xml",
+      "encoding": "ascii",
+      "fileOffset": 57344608,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 57348704,
+      "virtualAddress": "0x1436B1260"
+    },
+    {
+      "text": "t3HeightMap",
+      "encoding": "ascii",
+      "fileOffset": 57344624,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 57348720,
+      "virtualAddress": "0x1436B1270"
+    },
+    {
+      "text": "t3TextureMasks",
+      "encoding": "ascii",
+      "fileOffset": 57344640,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 57348736,
+      "virtualAddress": "0x1436B1280"
+    },
+    {
+      "text": "t3SyncHeightMap",
+      "encoding": "ascii",
+      "fileOffset": 57344656,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 57348752,
+      "virtualAddress": "0x1436B1290"
+    },
+    {
+      "text": "t3VertCol",
+      "encoding": "ascii",
+      "fileOffset": 57344672,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 57348768,
+      "virtualAddress": "0x1436B12A0"
+    },
+    {
+      "text": "t3HardTile",
+      "encoding": "ascii",
+      "fileOffset": 57344688,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 57348784,
+      "virtualAddress": "0x1436B12B0"
+    },
+    {
+      "text": "t3FluffDoodad",
+      "encoding": "ascii",
+      "fileOffset": 57344704,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 57348800,
+      "virtualAddress": "0x1436B12C0"
+    },
+    {
+      "text": "t3Water",
+      "encoding": "ascii",
+      "fileOffset": 57344720,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 57348816,
+      "virtualAddress": "0x1436B12D0"
+    },
+    {
+      "text": "t3CellFlags",
+      "encoding": "ascii",
+      "fileOffset": 57344728,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 57348824,
+      "virtualAddress": "0x1436B12D8"
+    },
+    {
+      "text": "Terrain doodad",
+      "encoding": "ascii",
+      "fileOffset": 57494592,
+      "pointerFileOffsets": [
+        57494072
+      ],
+      "pointerRvas": [
+        57498168
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 57498688,
+      "virtualAddress": "0x1436D5C40"
+    },
+    {
+      "text": "CTerrain3HeightMap::Read",
+      "encoding": "ascii",
+      "fileOffset": 58364504,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 58368600,
+      "virtualAddress": "0x1437AA258"
+    },
+    {
+      "text": "Terrain default normal texture",
+      "encoding": "ascii",
+      "fileOffset": 58364536,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 58368632,
+      "virtualAddress": "0x1437AA278"
+    },
+    {
+      "text": "CTerrain3HeightMap::WeldGeoms",
+      "encoding": "ascii",
+      "fileOffset": 58364568,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 58368664,
+      "virtualAddress": "0x1437AA298"
+    },
+    {
+      "text": "Terrain base texture",
+      "encoding": "ascii",
+      "fileOffset": 58364912,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 58369008,
+      "virtualAddress": "0x1437AA3F0"
+    },
+    {
+      "text": "Terrain normal map texture",
+      "encoding": "ascii",
+      "fileOffset": 58364936,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 58369032,
+      "virtualAddress": "0x1437AA408"
+    },
+    {
+      "text": "quantizeBias",
+      "encoding": "ascii",
+      "fileOffset": 58365472,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 58369568,
+      "virtualAddress": "0x1437AA620"
+    },
+    {
+      "text": "quantizeScale",
+      "encoding": "ascii",
+      "fileOffset": 58365488,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 58369584,
+      "virtualAddress": "0x1437AA630"
+    },
+    {
+      "text": "standardHeight",
+      "encoding": "ascii",
+      "fileOffset": 58365504,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 58369600,
+      "virtualAddress": "0x1437AA640"
+    },
+    {
+      "text": "Terrain3 Vertex Lighting Thread",
+      "encoding": "ascii",
+      "fileOffset": 58366080,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 58370176,
+      "virtualAddress": "0x1437AA880"
+    },
+    {
+      "text": "Terrain mask 0",
+      "encoding": "ascii",
+      "fileOffset": 58371960,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 58376056,
+      "virtualAddress": "0x1437ABF78"
+    },
+    {
+      "text": "Terrain mask 1",
+      "encoding": "ascii",
+      "fileOffset": 58371976,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 58376072,
+      "virtualAddress": "0x1437ABF88"
+    },
+    {
+      "text": "Terrain Block",
+      "encoding": "ascii",
+      "fileOffset": 58372128,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 58376224,
+      "virtualAddress": "0x1437AC020"
+    },
+    {
+      "text": "Terrain Big RT",
+      "encoding": "ascii",
+      "fileOffset": 58377080,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 58381176,
+      "virtualAddress": "0x1437AD378"
+    },
+    {
+      "text": "Terrain Small RT",
+      "encoding": "ascii",
+      "fileOffset": 58377096,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 58381192,
+      "virtualAddress": "0x1437AD388"
+    },
+    {
+      "text": "TerrainMat",
+      "encoding": "ascii",
+      "fileOffset": 58396072,
+      "pointerFileOffsets": [
+        70400240
+      ],
+      "pointerRvas": [
+        70404336
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 58400168,
+      "virtualAddress": "0x1437B1DA8"
+    },
+    {
+      "text": "TerrainTextureSize",
+      "encoding": "ascii",
+      "fileOffset": 58603752,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 58607848,
+      "virtualAddress": "0x1437E48E8"
+    },
+    {
+      "text": "TerrainTextureHiResCacheSize",
+      "encoding": "ascii",
+      "fileOffset": 58603776,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 58607872,
+      "virtualAddress": "0x1437E4900"
+    },
+    {
+      "text": "TerrainTextureLowResCacheSize",
+      "encoding": "ascii",
+      "fileOffset": 58603808,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 58607904,
+      "virtualAddress": "0x1437E4920"
+    },
+    {
+      "text": "TerrainBlend",
+      "encoding": "ascii",
+      "fileOffset": 58616016,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 58620112,
+      "virtualAddress": "0x1437E78D0"
+    },
+    {
+      "text": "TerrainDoodad",
+      "encoding": "ascii",
+      "fileOffset": 58616472,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 58620568,
+      "virtualAddress": "0x1437E7A98"
+    },
+    {
+      "text": "TerrainAlphaMask",
+      "encoding": "ascii",
+      "fileOffset": 58616488,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 58620584,
+      "virtualAddress": "0x1437E7AA8"
+    },
+    {
+      "text": "TerrainUV",
+      "encoding": "ascii",
+      "fileOffset": 58621056,
+      "pointerFileOffsets": [
+        70407808
+      ],
+      "pointerRvas": [
+        70411904
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 58625152,
+      "virtualAddress": "0x1437E8C80"
+    },
+    {
+      "text": "TerrainPhysicsMaterialEnter",
+      "encoding": "ascii",
+      "fileOffset": 59625576,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 59629672,
+      "virtualAddress": "0x1438DE068"
+    },
+    {
+      "text": "TerrainPhysicsMaterialLeave",
+      "encoding": "ascii",
+      "fileOffset": 59625720,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 59629816,
+      "virtualAddress": "0x1438DE0F8"
+    },
+    {
+      "text": "TerrainSquib",
+      "encoding": "ascii",
+      "fileOffset": 59625864,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 59629960,
+      "virtualAddress": "0x1438DE188"
+    },
+    {
+      "text": "TerrainPhysicsReinitialize",
+      "encoding": "ascii",
+      "fileOffset": 59635912,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 59640008,
+      "virtualAddress": "0x1438E08C8"
+    },
+    {
+      "text": "TerrainSquibActivateGroup",
+      "encoding": "ascii",
+      "fileOffset": 59645648,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 59649744,
+      "virtualAddress": "0x1438E2ED0"
+    },
+    {
+      "text": "TerrainSquibDeactivate",
+      "encoding": "ascii",
+      "fileOffset": 59657352,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 59661448,
+      "virtualAddress": "0x1438E5C88"
+    },
+    {
+      "text": "TerrainPhysicsMaterialOverride",
+      "encoding": "ascii",
+      "fileOffset": 59696920,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 59701016,
+      "virtualAddress": "0x1438EF718"
+    },
+    {
+      "text": "TerrainPhysicsMaterialRestore",
+      "encoding": "ascii",
+      "fileOffset": 59704984,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 59709080,
+      "virtualAddress": "0x1438F1698"
+    },
+    {
+      "text": "TerrainPhysicsMaterial",
+      "encoding": "ascii",
+      "fileOffset": 59738192,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 59742288,
+      "virtualAddress": "0x1438F9850"
+    },
+    {
+      "text": "TerrainPhysicsMaterialAtActor",
+      "encoding": "ascii",
+      "fileOffset": 59740128,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 59744224,
+      "virtualAddress": "0x1438F9FE0"
+    },
+    {
+      "text": "TerrainDeformer",
+      "encoding": "ascii",
+      "fileOffset": 59882912,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 59887008,
+      "virtualAddress": "0x14391CDA0"
+    },
+    {
+      "text": "TerrainSpecularExp",
+      "encoding": "ascii",
+      "fileOffset": 62825344,
+      "pointerFileOffsets": [
+        62824456
+      ],
+      "pointerRvas": [
+        62828552
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 62829440,
+      "virtualAddress": "0x143BEB380"
+    },
+    {
+      "text": "TerrainHDRDiffuse",
+      "encoding": "ascii",
+      "fileOffset": 62825368,
+      "pointerFileOffsets": [
+        62824480
+      ],
+      "pointerRvas": [
+        62828576
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 62829464,
+      "virtualAddress": "0x143BEB398"
+    },
+    {
+      "text": "TerrainHDRSpecular",
+      "encoding": "ascii",
+      "fileOffset": 62825392,
+      "pointerFileOffsets": [
+        62824504
+      ],
+      "pointerRvas": [
+        62828600
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 62829488,
+      "virtualAddress": "0x143BEB3B0"
+    },
+    {
+      "text": "TerrainSync",
+      "encoding": "ascii",
+      "fileOffset": 62845656,
+      "pointerFileOffsets": [
+        62842496
+      ],
+      "pointerRvas": [
+        62846592
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 62849752,
+      "virtualAddress": "0x143BF02D8"
+    },
+    {
+      "text": "Terrain",
+      "encoding": "ascii",
+      "fileOffset": 62874520,
+      "pointerFileOffsets": [
+        62867504,
+        62870144,
+        62872880,
+        62908720,
+        62957464
+      ],
+      "pointerRvas": [
+        62871600,
+        62874240,
+        62876976,
+        62912816,
+        62961560
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 62878616,
+      "virtualAddress": "0x143BF7398"
+    },
+    {
+      "text": "TerrainObject",
+      "encoding": "ascii",
+      "fileOffset": 62874528,
+      "pointerFileOffsets": [
+        62867528,
+        62870168,
+        62872904
+      ],
+      "pointerRvas": [
+        62871624,
+        62874264,
+        62877000
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 62878624,
+      "virtualAddress": "0x143BF73A0"
+    },
+    {
+      "text": "TerrainTex",
+      "encoding": "ascii",
+      "fileOffset": 62874544,
+      "pointerFileOffsets": [
+        62867552,
+        62870192,
+        62872928
+      ],
+      "pointerRvas": [
+        62871648,
+        62874288,
+        62877024
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 62878640,
+      "virtualAddress": "0x143BF73B0"
+    },
+    {
+      "text": "CTerrainLink",
+      "encoding": "ascii",
+      "fileOffset": 62876512,
+      "pointerFileOffsets": [
+        62864864
+      ],
+      "pointerRvas": [
+        62868960
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 62880608,
+      "virtualAddress": "0x143BF7B60"
+    },
+    {
+      "text": "CTerrainObjectLink",
+      "encoding": "ascii",
+      "fileOffset": 62876528,
+      "pointerFileOffsets": [
+        62864888
+      ],
+      "pointerRvas": [
+        62868984
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 62880624,
+      "virtualAddress": "0x143BF7B70"
+    },
+    {
+      "text": "CTerrainTexLink",
+      "encoding": "ascii",
+      "fileOffset": 62876552,
+      "pointerFileOffsets": [
+        62864912
+      ],
+      "pointerRvas": [
+        62869008
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 62880648,
+      "virtualAddress": "0x143BF7B88"
+    },
+    {
+      "text": "TerrainPhysicsMaterialOverride",
+      "encoding": "ascii",
+      "fileOffset": 62941072,
+      "pointerFileOffsets": [
+        62968720
+      ],
+      "pointerRvas": [
+        62972816
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 62945168,
+      "virtualAddress": "0x143C07790"
+    },
+    {
+      "text": "TerrainPhysicsMaterialRestore",
+      "encoding": "ascii",
+      "fileOffset": 62941104,
+      "pointerFileOffsets": [
+        62968744
+      ],
+      "pointerRvas": [
+        62972840
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 62945200,
+      "virtualAddress": "0x143C077B0"
+    },
+    {
+      "text": "TerrainPhysicsReinitialize",
+      "encoding": "ascii",
+      "fileOffset": 62941136,
+      "pointerFileOffsets": [
+        62968768
+      ],
+      "pointerRvas": [
+        62972864
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 62945232,
+      "virtualAddress": "0x143C077D0"
+    },
+    {
+      "text": "TerrainSquibActivateGroup",
+      "encoding": "ascii",
+      "fileOffset": 62941168,
+      "pointerFileOffsets": [
+        62968792
+      ],
+      "pointerRvas": [
+        62972888
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 62945264,
+      "virtualAddress": "0x143C077F0"
+    },
+    {
+      "text": "TerrainSquibDeactivate",
+      "encoding": "ascii",
+      "fileOffset": 62941200,
+      "pointerFileOffsets": [
+        62968816
+      ],
+      "pointerRvas": [
+        62972912
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 62945296,
+      "virtualAddress": "0x143C07810"
+    },
+    {
+      "text": "TerrainPhysicsMaterial",
+      "encoding": "ascii",
+      "fileOffset": 62971320,
+      "pointerFileOffsets": [
+        62956376
+      ],
+      "pointerRvas": [
+        62960472
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 62975416,
+      "virtualAddress": "0x143C0EDB8"
+    },
+    {
+      "text": "TerrainPhysicsMaterialAtActor",
+      "encoding": "ascii",
+      "fileOffset": 62971344,
+      "pointerFileOffsets": [
+        62956400
+      ],
+      "pointerRvas": [
+        62960496
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 62975440,
+      "virtualAddress": "0x143C0EDD0"
+    },
+    {
+      "text": "TerrainOnly",
+      "encoding": "ascii",
+      "fileOffset": 62973416,
+      "pointerFileOffsets": [
+        62946912
+      ],
+      "pointerRvas": [
+        62951008
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 62977512,
+      "virtualAddress": "0x143C0F5E8"
+    },
+    {
+      "text": "TerrainPhysicsMaterialEnter",
+      "encoding": "ascii",
+      "fileOffset": 62975752,
+      "pointerFileOffsets": [
+        62959912
+      ],
+      "pointerRvas": [
+        62964008
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 62979848,
+      "virtualAddress": "0x143C0FF08"
+    },
+    {
+      "text": "TerrainPhysicsMaterialLeave",
+      "encoding": "ascii",
+      "fileOffset": 62975784,
+      "pointerFileOffsets": [
+        62959936
+      ],
+      "pointerRvas": [
+        62964032
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 62979880,
+      "virtualAddress": "0x143C0FF28"
+    },
+    {
+      "text": "TerrainSquib",
+      "encoding": "ascii",
+      "fileOffset": 62975816,
+      "pointerFileOffsets": [
+        62959960
+      ],
+      "pointerRvas": [
+        62964056
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 62979912,
+      "virtualAddress": "0x143C0FF48"
+    },
+    {
+      "text": "TerrainUVTiling",
+      "encoding": "ascii",
+      "fileOffset": 63087536,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 63091632,
+      "virtualAddress": "0x143C2B3B0"
+    },
+    {
+      "text": "TerrainAndWaterFlags",
+      "encoding": "ascii",
+      "fileOffset": 63093744,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 63097840,
+      "virtualAddress": "0x143C2CBF0"
+    },
+    {
+      "text": "TerrainDeformerFlags",
+      "encoding": "ascii",
+      "fileOffset": 63094864,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 63098960,
+      "virtualAddress": "0x143C2D050"
+    },
+    {
+      "text": "TerrainSquibs",
+      "encoding": "ascii",
+      "fileOffset": 63095576,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 63099672,
+      "virtualAddress": "0x143C2D318"
+    },
+    {
+      "text": "TerrainUseBackLight",
+      "encoding": "ascii",
+      "fileOffset": 63198736,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 63202832,
+      "virtualAddress": "0x143C46610"
+    },
+    {
+      "text": "CTerrain",
+      "encoding": "ascii",
+      "fileOffset": 63226984,
+      "pointerFileOffsets": [
+        63226832,
+        63361856
+      ],
+      "pointerRvas": [
+        63230928,
+        63365952
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 63231080,
+      "virtualAddress": "0x143C4D468"
+    },
+    {
+      "text": "CTerrainObject",
+      "encoding": "ascii",
+      "fileOffset": 63228648,
+      "pointerFileOffsets": [
+        63228480,
+        63228560,
+        63362128
+      ],
+      "pointerRvas": [
+        63232576,
+        63232656,
+        63366224
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 63232744,
+      "virtualAddress": "0x143C4DAE8"
+    },
+    {
+      "text": "CTerrainTex",
+      "encoding": "ascii",
+      "fileOffset": 63228936,
+      "pointerFileOffsets": [
+        63228832,
+        63362256
+      ],
+      "pointerRvas": [
+        63232928,
+        63366352
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 63233032,
+      "virtualAddress": "0x143C4DC08"
+    },
+    {
+      "text": "CTerrainUnknown",
+      "encoding": "ascii",
+      "fileOffset": 63361968,
+      "pointerFileOffsets": [
+        63361832
+      ],
+      "pointerRvas": [
+        63365928
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 63366064,
+      "virtualAddress": "0x143C6E3B0"
+    },
+    {
+      "text": "EClassIdCTerrain",
+      "encoding": "ascii",
+      "fileOffset": 63362016,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 63366112,
+      "virtualAddress": "0x143C6E3E0"
+    },
+    {
+      "text": "CTerrainObjectUnknown",
+      "encoding": "ascii",
+      "fileOffset": 63362168,
+      "pointerFileOffsets": [
+        63362104
+      ],
+      "pointerRvas": [
+        63366200
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 63366264,
+      "virtualAddress": "0x143C6E478"
+    },
+    {
+      "text": "EClassIdCTerrainObject",
+      "encoding": "ascii",
+      "fileOffset": 63362192,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 63366288,
+      "virtualAddress": "0x143C6E490"
+    },
+    {
+      "text": "CTerrainTexUnknown",
+      "encoding": "ascii",
+      "fileOffset": 63362272,
+      "pointerFileOffsets": [
+        63362232
+      ],
+      "pointerRvas": [
+        63366328
+      ],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 63366368,
+      "virtualAddress": "0x143C6E4E0"
+    },
+    {
+      "text": "EClassIdCTerrainTex",
+      "encoding": "ascii",
+      "fileOffset": 63362296,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 63366392,
+      "virtualAddress": "0x143C6E4F8"
+    },
+    {
+      "text": "Terrain Render_Ground",
+      "encoding": "utf16le",
+      "fileOffset": 58365968,
+      "pointerFileOffsets": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "containingFunctions": [],
+      "rva": 58370064,
+      "virtualAddress": "0x1437AA810"
+    }
+  ],
+  "count": 413,
+  "evidence": "EXE strings, addresses and candidate cross-references; NOT recovered serialization/business logic",
+  "writerStatus": {
+    "height": "reference-supported + native corpus",
+    "textures": "reference-supported + native corpus",
+    "water": "existing v110 entry cloning only",
+    "cliffs": "not recovered",
+    "ramps": "not recovered",
+    "pathing": "not recovered"
+  }
+}

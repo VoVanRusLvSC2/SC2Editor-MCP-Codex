@@ -1,0 +1,1 @@
+{"name":"simple_EBehaviorRate","kind":"simple","fields":[],"enumValues":["Charge","Cooldown","Creep","Morph","Progress","Queueable","Spawn"],"facets":[],"base":"xs:string"}

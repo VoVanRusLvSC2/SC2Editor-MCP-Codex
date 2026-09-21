@@ -1,0 +1,1 @@
+{"name":"simple_EMuteControl","kind":"simple","fields":[],"enumValues":["Music","Sound","SoundAmbience","SoundEffects","SoundMovement","SoundReady","SoundUI","SoundVoices","Unknown"],"facets":[],"base":"xs:string"}

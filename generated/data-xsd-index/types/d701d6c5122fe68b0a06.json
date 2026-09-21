@@ -1,0 +1,1 @@
+{"name":"simple_ESoundDataFlag","kind":"simple","fields":[],"enumValues":["ApplyCategoryDuckingGlobal","ApplyCategoryDuckingNonLocal","AudibleWhenFocusLost","PauseOnDisable"],"facets":[],"base":"xs:string"}

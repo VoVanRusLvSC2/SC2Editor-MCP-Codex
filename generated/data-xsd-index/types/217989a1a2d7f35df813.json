@@ -1,0 +1,1 @@
+{"name":"simple_EClassIdCShape","kind":"simple","fields":[],"enumValues":["CShape","CShapeArc","CShapeQuad"],"facets":[],"base":"xs:string"}

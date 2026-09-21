@@ -1,0 +1,1 @@
+{"name":"SActorMsgSetSoundSuffix","kind":"complex","fields":[{"kind":"attribute","name":"Suffix","type":"simple_CString8"},{"kind":"element","name":"Suffix","type":"CString8","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

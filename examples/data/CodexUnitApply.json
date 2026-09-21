@@ -1,0 +1,31 @@
+{
+  "file": "Base.SC2Data/GameData/UnitData.xml",
+  "operations": [
+    {
+      "op": "object.create",
+      "as": "hero",
+      "ctype": "CUnit",
+      "id": "CodexMarine",
+      "parent": "Marine"
+    },
+    {
+      "op": "field.set",
+      "object": "@hero",
+      "path": "LifeMax",
+      "value": 250
+    },
+    {
+      "op": "field.set",
+      "object": "@hero",
+      "path": "FlagArray[ArmySelect]",
+      "value": true
+    },
+    {
+      "op": "field.setLink",
+      "object": "@hero",
+      "path": "WeaponArray[0]",
+      "link": "GaussRifle"
+    }
+  ],
+  "dryRun": true
+}

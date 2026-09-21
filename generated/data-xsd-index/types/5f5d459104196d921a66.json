@@ -1,0 +1,1 @@
+{"name":"SLootChoice","kind":"complex","fields":[{"kind":"attribute","name":"Chance","type":"simple_uint8"},{"kind":"attribute","name":"Child","type":"simple_CLootLink"},{"kind":"element","name":"Chance","type":"uint8","minOccurs":"0","maxOccurs":"1"},{"kind":"element","name":"Child","type":"CLootLink","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

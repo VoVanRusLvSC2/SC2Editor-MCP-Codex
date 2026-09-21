@@ -1,0 +1,1 @@
+{"name":"SActorMsgTextureProps","kind":"complex","fields":[{"kind":"attribute","name":"Props","type":"simple_CTextureProps"},{"kind":"element","name":"Props","type":"CTextureProps","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

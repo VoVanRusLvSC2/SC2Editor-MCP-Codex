@@ -1,0 +1,1 @@
+{"name":"SCutsceneAssetPath","kind":"complex","fields":[{"kind":"attribute","name":"Path","type":"simple_CAssetLink"},{"kind":"attribute","name":"Theme","type":"simple_EGlueTheme"},{"kind":"element","name":"Path","type":"CAssetLink","minOccurs":"0","maxOccurs":"1"},{"kind":"element","name":"Theme","type":"EGlueTheme","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

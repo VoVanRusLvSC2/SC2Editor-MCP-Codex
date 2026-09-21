@@ -1,0 +1,1 @@
+{"name":"simple_EBehaviorBuff","kind":"simple","fields":[],"enumValues":["Channeled","Channeling","Countdown","DisableWhileUnderConstruction","Extend","LeechUseDamageResponseCondition","RefreshStack","RemoveDamageResponseExhausted","ReplaceFarthestDistance","ReplaceShortestDuration","UpdateDurationWhileDisabled"],"facets":[],"base":"xs:string"}

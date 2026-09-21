@@ -1,0 +1,1 @@
+{"name":"simple_EEffectHealerFlag","kind":"simple","fields":[],"enumValues":["Channeled","Channeling","ContinueWhenFull","KeepMarkerAfterHeal","SuppressEnergyRegen","SuppressLifeRegen","SuppressShieldsRegen"],"facets":[],"base":"xs:string"}

@@ -1,0 +1,1 @@
+{"name":"simple_EAbilResearchFlag","kind":"simple","fields":[],"enumValues":["BestUnit","Transient","UnitOrderQueue"],"facets":[],"base":"xs:string"}

@@ -1,0 +1,1 @@
+{"name":"simple_EAchievementTagCheck","kind":"simple","fields":[],"enumValues":["Absent","Present"],"facets":[],"base":"xs:string"}

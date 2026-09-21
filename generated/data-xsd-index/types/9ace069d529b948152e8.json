@@ -1,0 +1,1 @@
+{"name":"simple_EClassIdCTargetFind","kind":"simple","fields":[],"enumValues":["CTargetFind","CTargetFindBestPoint","CTargetFindEffect","CTargetFindEnumArea","CTargetFindLastAttacker","CTargetFindOffset","CTargetFindOrder","CTargetFindRallyPoint","CTargetFindSet","CTargetFindWorkerRallyPoint"],"facets":[],"base":"xs:string"}

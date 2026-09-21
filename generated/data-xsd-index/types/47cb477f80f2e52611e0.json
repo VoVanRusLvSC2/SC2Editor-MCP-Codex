@@ -1,0 +1,1 @@
+{"name":"simple_EEffectMorph","kind":"simple","fields":[],"enumValues":["Birth","IgnoreFacing","IgnoreMorphing","IgnorePlacement","RallyReset"],"facets":[],"base":"xs:string"}

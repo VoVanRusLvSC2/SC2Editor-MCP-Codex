@@ -1,0 +1,1 @@
+{"name":"SMotionOverlayPhase","kind":"complex","fields":[{"kind":"attribute","name":"Scale","type":"simple_CVariatorGameFixed"},{"kind":"element","name":"Scale","type":"CVariatorGameFixed","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

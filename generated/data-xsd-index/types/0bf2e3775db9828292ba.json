@@ -1,0 +1,1 @@
+{"name":"simple_EAMReductionType","kind":"simple","fields":[],"enumValues":["Fixed","Percentage"],"facets":[],"base":"xs:string"}

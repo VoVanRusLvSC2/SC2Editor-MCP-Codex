@@ -1,0 +1,1 @@
+{"name":"SRequirementNode","kind":"complex","fields":[{"kind":"attribute","name":"Link","type":"simple_CRequirementNodeLink"},{"kind":"element","name":"Link","type":"CRequirementNodeLink","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

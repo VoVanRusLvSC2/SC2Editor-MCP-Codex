@@ -1,0 +1,1 @@
+{"name":"simple_ETextureVideoPlayFlag","kind":"simple","fields":[],"enumValues":["Looping","Synced"],"facets":[],"base":"xs:string"}

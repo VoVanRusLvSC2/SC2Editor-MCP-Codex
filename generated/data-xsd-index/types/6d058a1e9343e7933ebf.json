@@ -1,0 +1,1 @@
+{"name":"SActorTermViewerTreatsUnitAs","kind":"complex","fields":[{"kind":"attribute","name":"Test","type":"simple_EActorViewerTreatsAs"},{"kind":"element","name":"Test","type":"EActorViewerTreatsAs","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

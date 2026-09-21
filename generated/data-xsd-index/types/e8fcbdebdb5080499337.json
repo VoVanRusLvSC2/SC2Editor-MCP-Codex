@@ -1,0 +1,1 @@
+{"name":"simple_EActorModelAspectObservedPlayerType","kind":"simple","fields":[],"enumValues":["Any","Computer","Human","HumanObserver","HumanParticipant"],"facets":[],"base":"xs:string"}

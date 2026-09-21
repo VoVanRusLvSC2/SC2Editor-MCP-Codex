@@ -1,0 +1,1 @@
+{"name":"SActorTermAttach","kind":"complex","fields":[{"kind":"attribute","name":"AttachMethods","type":"simple_CAttachMethods"},{"kind":"element","name":"AttachMethods","type":"CAttachMethods","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

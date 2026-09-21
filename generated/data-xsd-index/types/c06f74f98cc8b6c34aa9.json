@@ -1,0 +1,1 @@
+{"name":"simple_EDamageTypeResponse","kind":"simple","fields":[],"enumValues":["Acid","Cold","Death","Defensive","Demolition","Disease","Divine","Enhanced","Fire","Force","Lightning","Magic","Mind","None","Normal","Plant","Poison","ShadowStrike","SlowPoison","Sonic","SpiritLink","Universal"],"facets":[],"base":"xs:string"}

@@ -1,0 +1,1 @@
+{"name":"simple_EAbilMorphStage","kind":"simple","fields":[],"enumValues":["AbilsEnd","AbilsStart","ActorEnd","ActorStart","Approach","CollideEnd","CollideStart","FacingEnd","FacingStart","MoverEnd","MoverStart","StatsEnd","StatsStart","UnitEnd","UnitStart","Wait"],"facets":[],"base":"xs:string"}

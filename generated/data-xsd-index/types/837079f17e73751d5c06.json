@@ -1,0 +1,1 @@
+{"name":"simple_EAbilArmMagazineFlag","kind":"simple","fields":[],"enumValues":["AutoCastOffOwnerLeave","AutoCreate","BestUnit","IgnoreUnitCost","Retarget","ShowStatus","Transient","UnitOrderQueue","WaitForFood"],"facets":[],"base":"xs:string"}

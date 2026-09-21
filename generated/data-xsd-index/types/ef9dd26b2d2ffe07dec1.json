@@ -1,0 +1,1 @@
+{"name":"simple_EActorCombatRevealDurationType","kind":"simple","fields":[],"enumValues":["ByVictim","OneShot"],"facets":[],"base":"xs:string"}

@@ -1,0 +1,1 @@
+{"name":"SActorMsgSceneStrobeSetCycleLength","kind":"complex","fields":[{"kind":"attribute","name":"CycleLength","type":"simple_real32"},{"kind":"element","name":"CycleLength","type":"real32","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

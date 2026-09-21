@@ -1,0 +1,1 @@
+{"name":"simple_EUnitUserFlag","kind":"simple","fields":[],"enumValues":["Ancient","ArmyUnit","Bridge","Building","CanSleep","Destructible","Hero","Item","Powerup","Projectile","Tree","Unit","User13","User14","User15","User16","Ward"],"facets":[],"base":"xs:string"}

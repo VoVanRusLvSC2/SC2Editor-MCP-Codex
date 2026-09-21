@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Desc>
+    <Frame type="Frame" name="LURL" template="ScreenCustomFeatured/CTABannerTemplate">
+        <Anchor side="Top" relative="$this" pos="Min" offset="0"/>
+        <Anchor side="Left" relative="$this" pos="Min" offset="0"/>
+
+        <Frame type="LaunchURLButton" name="WebsiteButton" template="StandardBattlenetTemplates/BattlenetMediumAlternateButtonTemplate">
+            <Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+            <Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+            <Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
+            <Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+            <Width val="0"/>
+            <Height val="0"/>
+        </Frame>
+
+        <Frame type="Frame" name="BannerImage"><DescFlags val="CreationDeferred"/></Frame>
+        <Frame type="Frame" name="BorderInner"><DescFlags val="CreationDeferred"/></Frame>
+        <Frame type="Frame" name="BorderOuter"><DescFlags val="CreationDeferred"/></Frame>
+        <Frame type="Frame" name="BannerVignette"><DescFlags val="CreationDeferred"/></Frame>
+        <Frame type="Frame" name="DescriptionLabel"><DescFlags val="CreationDeferred"/></Frame>
+        <Frame type="Frame" name="HeaderLabel"><DescFlags val="CreationDeferred"/></Frame>
+        <Frame type="Frame" name="MoreInfoLabel"><DescFlags val="CreationDeferred"/></Frame>
+    </Frame>
+
+    <Frame type="Frame" name="GameUI/UIContainer" file="GameUI">
+        <Frame type="Frame" name="TopBar">
+            <Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+            <Anchor side="Left" relative="$parent" pos="Mid" offset="0"/>
+            <Anchor side="Right" relative="$parent" pos="Mid" offset="0"/>
+            <Width val="1100"/>
+            <Height val="300"/>
+            <Frame type="Label" name="FrameLabel">
+                <Anchor side="Top" relative="$parent" pos="Min" offset="60"/>
+                <Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+                <Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
+                <Style val="ModCenterSize16Bold"/>
+                <Text val="https://sc2mapster.com"/>
+                <Handle val="TextSource"/>
+                <Visible val="False"/>
+            </Frame>
+            <Frame type="Frame" name="DiscordButton" template="URLButton/LURL">
+                <Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+                <Width val="550"/>
+                <Height val="80"/>
+
+                <Frame type="LaunchURLButton" name="WebsiteButton">
+                    <Text val="Copy"/>
+                    <URL val="{$TextSource/@Text}"/>
+                </Frame>
+            </Frame>
+        </Frame>
+    </Frame>
+</Desc>

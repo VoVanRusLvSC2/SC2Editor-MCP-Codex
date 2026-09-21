@@ -1,0 +1,1 @@
+{"name":"STriggerLib","kind":"complex","fields":[{"kind":"attribute","name":"Id","type":"simple_TTriggerLibId"},{"kind":"attribute","name":"IncludePath","type":"simple_CString"},{"kind":"element","name":"Id","type":"TTriggerLibId","minOccurs":"0","maxOccurs":"1"},{"kind":"element","name":"IncludePath","type":"CString","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

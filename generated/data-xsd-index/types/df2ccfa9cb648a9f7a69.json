@@ -1,0 +1,1 @@
+{"name":"simple_EAbilBehaviorFlag","kind":"simple","fields":[],"enumValues":["AutoCast","AutoCastOffOwnerLeave","AutoCastOn","AutomaticOn","BestUnit","Toggle","ToggledOn","Transient"],"facets":[],"base":"xs:string"}

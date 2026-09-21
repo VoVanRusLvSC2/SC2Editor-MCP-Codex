@@ -1,0 +1,1 @@
+{"name":"CCardId","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CCardId"}],"enumValues":[],"facets":[]}

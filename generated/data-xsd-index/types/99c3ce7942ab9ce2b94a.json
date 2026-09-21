@@ -1,0 +1,1 @@
+{"name":"simple_EActorIntersectType","kind":"simple","fields":[],"enumValues":["AgainstCenter","AgainstCenterGame","AgainstRadiusContact","AgainstRadiusGame","AgainstRadiusVisual"],"facets":[],"base":"xs:string"}

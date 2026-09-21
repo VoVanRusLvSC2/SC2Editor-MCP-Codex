@@ -1,0 +1,1 @@
+{"name":"SActorMsgRefTableDump","kind":"complex","fields":[{"kind":"attribute","name":"Space","type":"simple_EActorRefSpace"},{"kind":"element","name":"Space","type":"EActorRefSpace","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

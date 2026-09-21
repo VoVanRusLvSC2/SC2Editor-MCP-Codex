@@ -1,0 +1,1 @@
+{"name":"SActorMsgMoverSetDestination2D","kind":"complex","fields":[{"kind":"attribute","name":"Destination2D","type":"simple_C2Vector"},{"kind":"element","name":"Destination2D","type":"C2Vector","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

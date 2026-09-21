@@ -1,0 +1,1 @@
+{"name":"simple_EClassIdCBankCondition","kind":"simple","fields":[],"enumValues":["CBankCondition","CBankConditionCombine","CBankConditionCompare","CBankConditionCompareValueCount","CBankConditionCompareValueInteger","CBankConditionCompareValueString","CBankConditionCompareValueSum","CBankConditionCurrentMap"],"facets":[],"base":"xs:string"}

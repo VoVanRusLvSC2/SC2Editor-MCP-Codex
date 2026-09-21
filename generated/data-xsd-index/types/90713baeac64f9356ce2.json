@@ -1,0 +1,1 @@
+{"name":"SActorTermKilledByEffect","kind":"complex","fields":[{"kind":"attribute","name":"Effects","type":"simple_CEffectLinks"},{"kind":"element","name":"Effects","type":"CEffectLinks","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

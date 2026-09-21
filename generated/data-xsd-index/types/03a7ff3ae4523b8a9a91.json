@@ -1,0 +1,1 @@
+{"name":"simple_EAbilAugmentFlag","kind":"simple","fields":[],"enumValues":["AutoCast","AutoCastOffOwnerLeave","AutoCastOn","BestUnit","Smart"],"facets":[],"base":"xs:string"}

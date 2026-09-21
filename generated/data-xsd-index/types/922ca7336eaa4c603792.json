@@ -1,0 +1,1 @@
+{"name":"SCommanderUnit","kind":"complex","fields":[{"kind":"attribute","name":"Unit","type":"simple_CUnitLink"},{"kind":"attribute","name":"Upgrade","type":"simple_CUnitLink"},{"kind":"element","name":"Unit","type":"CUnitLink","minOccurs":"0","maxOccurs":"1"},{"kind":"element","name":"Upgrade","type":"CUnitLink","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

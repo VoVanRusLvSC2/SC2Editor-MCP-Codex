@@ -1,0 +1,1 @@
+{"name":"simple_EResponseUnitBirthType","kind":"simple","fields":[],"enumValues":["Built","CheatCreated","EffectCreated","Morphed","Trained","TriggerCreated"],"facets":[],"base":"xs:string"}

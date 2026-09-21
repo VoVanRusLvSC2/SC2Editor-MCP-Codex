@@ -1,0 +1,1 @@
+{"name":"simple_EHeroAITalentBuildType","kind":"simple","fields":[],"enumValues":["Damage","General","Support","Tank"],"facets":[],"base":"xs:string"}

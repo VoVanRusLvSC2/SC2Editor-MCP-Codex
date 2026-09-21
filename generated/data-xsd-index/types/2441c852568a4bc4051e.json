@@ -1,0 +1,1 @@
+{"name":"simple_EBehaviorModify","kind":"simple","fields":[],"enumValues":["Detected","DisableAbils","DisableWeapons","EnableAttack","EnableMove","HideChangeUI","Movement","OrdersUninterruptible","OverrideAttackTargetPriority","Reveal","ShareSight","SuppressMoving","SuppressTurning","Warpable"],"facets":[],"base":"xs:string"}

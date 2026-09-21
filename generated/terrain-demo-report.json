@@ -1,0 +1,1232 @@
+{
+  "version": "1.1.0-alpha.9",
+  "evidence": "native component fixture copy; not a playable map or Editor/runtime round-trip",
+  "inspection": {
+    "directory": "",
+    "components": [
+      {
+        "name": "t3Terrain.xml",
+        "file": "t3Terrain.xml",
+        "exists": true,
+        "bytes": 4333,
+        "sha256": "1e66a45de6c4c2aa097e6582592c1a8daac504549376c27bb79fa4d11cd832b9"
+      },
+      {
+        "name": "t3HeightMap",
+        "file": "t3HeightMap",
+        "exists": true,
+        "bytes": 6566,
+        "sha256": "397bb71583fbf8c10a4e07ddb718e6783ed442d53d9b4a76cd474e1aa60ae4a6"
+      },
+      {
+        "name": "t3TextureMasks",
+        "file": "t3TextureMasks",
+        "exists": true,
+        "bytes": 262208,
+        "sha256": "901087dbb65e738d774d2517fc694d8508d524c4ca988cc7478efd2e0f48cb99"
+      },
+      {
+        "name": "t3SyncHeightMap",
+        "file": "t3SyncHeightMap",
+        "exists": true,
+        "bytes": 4420,
+        "sha256": "4725002333adecf4410376331bbbf695b5a613d55b2a5a6b7bda10701e1be3bd"
+      },
+      {
+        "name": "t3SyncCliffLevel",
+        "file": "t3SyncCliffLevel",
+        "exists": true,
+        "bytes": 2080,
+        "sha256": "ee6f88f90add90966dc89670499c3120e26d33968a12c26f0ba99d4da7504fd7"
+      },
+      {
+        "name": "t3SyncTextureInfo",
+        "file": "t3SyncTextureInfo",
+        "exists": true,
+        "bytes": 8236,
+        "sha256": "5fdf44defe5df115be5be49de20d822f1dfab785304cfbd228c120aa03f38c0c"
+      },
+      {
+        "name": "t3CellFlags",
+        "file": "t3CellFlags",
+        "exists": true,
+        "bytes": 1056,
+        "sha256": "56d47dee7d3e6c2245a5d69d1421bffa56c4f14ac936574d1ab1e6351c87b55e"
+      },
+      {
+        "name": "t3HardTile",
+        "file": "t3HardTile",
+        "exists": true,
+        "bytes": 28,
+        "sha256": "12afa86368acf6158758ce235c2e3879d6edfab41cc2eef6738c939e746b745d"
+      },
+      {
+        "name": "t3Water",
+        "file": "t3Water",
+        "exists": true,
+        "bytes": 32,
+        "sha256": "c15e6e4da91564e9349a449302114f4248dfe1f2cebee1a29526cb5f41db5af5"
+      },
+      {
+        "name": "t3VertCol",
+        "file": "t3VertCol",
+        "exists": true,
+        "bytes": 3936,
+        "sha256": "07e468603720a21465401f31702bea01e69bea5a8aa9606fc672015bcd692a18"
+      },
+      {
+        "name": "t3FluffDoodad",
+        "file": "t3FluffDoodad",
+        "exists": true,
+        "bytes": 28,
+        "sha256": "3f3f15b8480e7cf37d97bc9c4affe5af1348b352bbc1213a71da32195a88e937"
+      },
+      {
+        "name": "PaintedPathingLayer",
+        "file": "PaintedPathingLayer",
+        "exists": false,
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "name": "t3SyncPathingInfo",
+        "file": "t3SyncPathingInfo",
+        "exists": false,
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "name": "Terrain",
+        "file": "Terrain",
+        "exists": false,
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ],
+    "version": 115,
+    "dimensions": {
+      "vertices": [
+        33,
+        33
+      ],
+      "cells": [
+        32,
+        32
+      ]
+    },
+    "bounds": {
+      "minX": 0,
+      "minY": 0,
+      "maxX": 32,
+      "maxY": 32
+    },
+    "tileSet": "BelShirEx1",
+    "transform": {
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    "quantization": {
+      "bias": 1.000153,
+      "scale": 0.0001525902
+    },
+    "textures": [
+      {
+        "slot": 0,
+        "id": "BelShirDirtLight"
+      },
+      {
+        "slot": 1,
+        "id": ""
+      },
+      {
+        "slot": 2,
+        "id": ""
+      },
+      {
+        "slot": 3,
+        "id": ""
+      },
+      {
+        "slot": 4,
+        "id": ""
+      },
+      {
+        "slot": 5,
+        "id": ""
+      },
+      {
+        "slot": 6,
+        "id": ""
+      },
+      {
+        "slot": 7,
+        "id": ""
+      },
+      {
+        "slot": 8,
+        "id": ""
+      },
+      {
+        "slot": 9,
+        "id": ""
+      },
+      {
+        "slot": 10,
+        "id": ""
+      },
+      {
+        "slot": 11,
+        "id": ""
+      },
+      {
+        "slot": 12,
+        "id": ""
+      },
+      {
+        "slot": 13,
+        "id": ""
+      },
+      {
+        "slot": 14,
+        "id": ""
+      },
+      {
+        "slot": 15,
+        "id": ""
+      },
+      {
+        "slot": 16,
+        "id": ""
+      },
+      {
+        "slot": 17,
+        "id": ""
+      },
+      {
+        "slot": 18,
+        "id": ""
+      },
+      {
+        "slot": 19,
+        "id": ""
+      },
+      {
+        "slot": 20,
+        "id": ""
+      },
+      {
+        "slot": 21,
+        "id": ""
+      },
+      {
+        "slot": 22,
+        "id": ""
+      },
+      {
+        "slot": 23,
+        "id": ""
+      },
+      {
+        "slot": 24,
+        "id": ""
+      },
+      {
+        "slot": 25,
+        "id": ""
+      },
+      {
+        "slot": 26,
+        "id": ""
+      },
+      {
+        "slot": 27,
+        "id": ""
+      },
+      {
+        "slot": 28,
+        "id": ""
+      },
+      {
+        "slot": 29,
+        "id": ""
+      },
+      {
+        "slot": 30,
+        "id": ""
+      },
+      {
+        "slot": 31,
+        "id": ""
+      },
+      {
+        "slot": 32,
+        "id": ""
+      },
+      {
+        "slot": 33,
+        "id": ""
+      },
+      {
+        "slot": 34,
+        "id": ""
+      },
+      {
+        "slot": 35,
+        "id": ""
+      },
+      {
+        "slot": 36,
+        "id": ""
+      },
+      {
+        "slot": 37,
+        "id": ""
+      },
+      {
+        "slot": 38,
+        "id": ""
+      },
+      {
+        "slot": 39,
+        "id": ""
+      },
+      {
+        "slot": 40,
+        "id": ""
+      },
+      {
+        "slot": 41,
+        "id": ""
+      },
+      {
+        "slot": 42,
+        "id": ""
+      },
+      {
+        "slot": 43,
+        "id": ""
+      },
+      {
+        "slot": 44,
+        "id": ""
+      },
+      {
+        "slot": 45,
+        "id": ""
+      },
+      {
+        "slot": 46,
+        "id": ""
+      },
+      {
+        "slot": 47,
+        "id": ""
+      },
+      {
+        "slot": 48,
+        "id": ""
+      },
+      {
+        "slot": 49,
+        "id": ""
+      },
+      {
+        "slot": 50,
+        "id": ""
+      },
+      {
+        "slot": 51,
+        "id": ""
+      },
+      {
+        "slot": 52,
+        "id": ""
+      },
+      {
+        "slot": 53,
+        "id": ""
+      },
+      {
+        "slot": 54,
+        "id": ""
+      },
+      {
+        "slot": 55,
+        "id": ""
+      },
+      {
+        "slot": 56,
+        "id": ""
+      },
+      {
+        "slot": 57,
+        "id": ""
+      },
+      {
+        "slot": 58,
+        "id": ""
+      },
+      {
+        "slot": 59,
+        "id": ""
+      },
+      {
+        "slot": 60,
+        "id": ""
+      },
+      {
+        "slot": 61,
+        "id": ""
+      },
+      {
+        "slot": 62,
+        "id": ""
+      },
+      {
+        "slot": 63,
+        "id": ""
+      }
+    ],
+    "tileSets": [
+      {
+        "slot": 0,
+        "id": "BelShirEx1"
+      },
+      {
+        "slot": 1,
+        "id": ""
+      },
+      {
+        "slot": 2,
+        "id": ""
+      },
+      {
+        "slot": 3,
+        "id": ""
+      },
+      {
+        "slot": 4,
+        "id": ""
+      },
+      {
+        "slot": 5,
+        "id": ""
+      },
+      {
+        "slot": 6,
+        "id": ""
+      },
+      {
+        "slot": 7,
+        "id": ""
+      }
+    ],
+    "cliffSets": [],
+    "ramps": 0,
+    "water": {
+      "entries": [],
+      "opaque": false,
+      "bodyCount": 0,
+      "count": 0,
+      "version": 110
+    },
+    "capabilities": {
+      "read": true,
+      "heightBrush": true,
+      "textureBrush": true,
+      "paletteUpdate": true,
+      "waterEntries": true,
+      "waterCreateRequiresExistingTemplate": true,
+      "proceduralStyles": [
+        "forest",
+        "desert",
+        "city",
+        "snow",
+        "jungle",
+        "swamp",
+        "volcanic",
+        "badlands",
+        "coastal",
+        "space_platform"
+      ],
+      "wholeMapStamp": true,
+      "structuralCliffEditing": false,
+      "nativeRampEditing": false,
+      "pathingPainting": false,
+      "arbitraryWaterLevel": false,
+      "vertexColorPainting": false,
+      "syncStrategy": "preserve native residuals + quantized delta; dominant texture rule",
+      "editorOracle": "not run",
+      "runtimePathingProof": "unavailable"
+    },
+    "nativeEditorVerified": false
+  },
+  "plan": {
+    "id": "terrain_16a0dc567f0cab5284da8239",
+    "directory": "",
+    "operations": [
+      {
+        "op": "height.flatten",
+        "area": {
+          "type": "rectangle",
+          "minX": 4,
+          "minY": 4,
+          "maxX": 28,
+          "maxY": 28
+        },
+        "edgeBlend": 3,
+        "height": "currentMedian"
+      },
+      {
+        "op": "height.noise",
+        "area": {
+          "type": "rectangle",
+          "minX": 4,
+          "minY": 4,
+          "maxX": 28,
+          "maxY": 28
+        },
+        "edgeBlend": 3,
+        "amplitude": 0.7,
+        "wavelength": 12,
+        "seed": 42
+      },
+      {
+        "op": "height.smooth",
+        "area": {
+          "type": "rectangle",
+          "minX": 4,
+          "minY": 4,
+          "maxX": 28,
+          "maxY": 28
+        },
+        "strength": 0.35,
+        "edgeBlend": 3,
+        "radius": 2,
+        "method": "edge_preserving"
+      },
+      {
+        "op": "texture.paint",
+        "area": {
+          "type": "rectangle",
+          "minX": 4,
+          "minY": 4,
+          "maxX": 28,
+          "maxY": 28
+        },
+        "edgeBlend": 3,
+        "texture": "BelShirDirtLight"
+      },
+      {
+        "op": "height.flatten",
+        "area": {
+          "type": "corridor",
+          "points": [
+            {
+              "x": 6,
+              "y": 16
+            },
+            {
+              "x": 16,
+              "y": 16
+            },
+            {
+              "x": 26,
+              "y": 20
+            }
+          ],
+          "width": 4
+        },
+        "edgeBlend": 1,
+        "height": "currentMedian"
+      },
+      {
+        "op": "texture.paint",
+        "area": {
+          "type": "corridor",
+          "points": [
+            {
+              "x": 6,
+              "y": 16
+            },
+            {
+              "x": 16,
+              "y": 16
+            },
+            {
+              "x": 26,
+              "y": 20
+            }
+          ],
+          "width": 4
+        },
+        "edgeBlend": 1,
+        "texture": "BelShirDirtLight"
+      },
+      {
+        "op": "height.smooth",
+        "area": {
+          "type": "rectangle",
+          "minX": 4,
+          "minY": 4,
+          "maxX": 28,
+          "maxY": 28
+        },
+        "strength": 0.25,
+        "radius": 2,
+        "method": "edge_preserving"
+      }
+    ],
+    "files": [
+      {
+        "file": "t3Terrain.xml",
+        "beforeSha256": "1e66a45de6c4c2aa097e6582592c1a8daac504549376c27bb79fa4d11cd832b9",
+        "afterSha256": "1e66a45de6c4c2aa097e6582592c1a8daac504549376c27bb79fa4d11cd832b9",
+        "changedBytes": 0,
+        "beforeBytes": 4333,
+        "afterBytes": 4333
+      },
+      {
+        "file": "t3HeightMap",
+        "beforeSha256": "397bb71583fbf8c10a4e07ddb718e6783ed442d53d9b4a76cd474e1aa60ae4a6",
+        "afterSha256": "d27df499b55598a58c5098d7bf4d1b57964db6646d6bf7a3176a5b7e7ce373e0",
+        "changedBytes": 1094,
+        "beforeBytes": 6566,
+        "afterBytes": 6566
+      },
+      {
+        "file": "t3TextureMasks",
+        "beforeSha256": "901087dbb65e738d774d2517fc694d8508d524c4ca988cc7478efd2e0f48cb99",
+        "afterSha256": "901087dbb65e738d774d2517fc694d8508d524c4ca988cc7478efd2e0f48cb99",
+        "changedBytes": 0,
+        "beforeBytes": 262208,
+        "afterBytes": 262208
+      },
+      {
+        "file": "t3SyncHeightMap",
+        "beforeSha256": "4725002333adecf4410376331bbbf695b5a613d55b2a5a6b7bda10701e1be3bd",
+        "afterSha256": "55bf4b1c09b6f4a2064ca1f6274702cb0876e4402c883693828faa13ecd1d3f8",
+        "changedBytes": 731,
+        "beforeBytes": 4420,
+        "afterBytes": 4420
+      },
+      {
+        "file": "t3SyncCliffLevel",
+        "beforeSha256": "ee6f88f90add90966dc89670499c3120e26d33968a12c26f0ba99d4da7504fd7",
+        "afterSha256": "ee6f88f90add90966dc89670499c3120e26d33968a12c26f0ba99d4da7504fd7",
+        "changedBytes": 0,
+        "beforeBytes": 2080,
+        "afterBytes": 2080
+      },
+      {
+        "file": "t3SyncTextureInfo",
+        "beforeSha256": "5fdf44defe5df115be5be49de20d822f1dfab785304cfbd228c120aa03f38c0c",
+        "afterSha256": "5fdf44defe5df115be5be49de20d822f1dfab785304cfbd228c120aa03f38c0c",
+        "changedBytes": 0,
+        "beforeBytes": 8236,
+        "afterBytes": 8236
+      },
+      {
+        "file": "t3CellFlags",
+        "beforeSha256": "56d47dee7d3e6c2245a5d69d1421bffa56c4f14ac936574d1ab1e6351c87b55e",
+        "afterSha256": "56d47dee7d3e6c2245a5d69d1421bffa56c4f14ac936574d1ab1e6351c87b55e",
+        "changedBytes": 0,
+        "beforeBytes": 1056,
+        "afterBytes": 1056
+      },
+      {
+        "file": "t3HardTile",
+        "beforeSha256": "12afa86368acf6158758ce235c2e3879d6edfab41cc2eef6738c939e746b745d",
+        "afterSha256": "12afa86368acf6158758ce235c2e3879d6edfab41cc2eef6738c939e746b745d",
+        "changedBytes": 0,
+        "beforeBytes": 28,
+        "afterBytes": 28
+      },
+      {
+        "file": "t3Water",
+        "beforeSha256": "c15e6e4da91564e9349a449302114f4248dfe1f2cebee1a29526cb5f41db5af5",
+        "afterSha256": "c15e6e4da91564e9349a449302114f4248dfe1f2cebee1a29526cb5f41db5af5",
+        "changedBytes": 0,
+        "beforeBytes": 32,
+        "afterBytes": 32
+      },
+      {
+        "file": "t3VertCol",
+        "beforeSha256": "07e468603720a21465401f31702bea01e69bea5a8aa9606fc672015bcd692a18",
+        "afterSha256": "07e468603720a21465401f31702bea01e69bea5a8aa9606fc672015bcd692a18",
+        "changedBytes": 0,
+        "beforeBytes": 3936,
+        "afterBytes": 3936
+      },
+      {
+        "file": "t3FluffDoodad",
+        "beforeSha256": "3f3f15b8480e7cf37d97bc9c4affe5af1348b352bbc1213a71da32195a88e937",
+        "afterSha256": "3f3f15b8480e7cf37d97bc9c4affe5af1348b352bbc1213a71da32195a88e937",
+        "changedBytes": 0,
+        "beforeBytes": 28,
+        "afterBytes": 28
+      },
+      {
+        "file": "PaintedPathingLayer",
+        "beforeSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "afterSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "changedBytes": 0,
+        "beforeBytes": 0,
+        "afterBytes": 0
+      },
+      {
+        "file": "t3SyncPathingInfo",
+        "beforeSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "afterSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "changedBytes": 0,
+        "beforeBytes": 0,
+        "afterBytes": 0
+      },
+      {
+        "file": "Terrain",
+        "beforeSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "afterSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "changedBytes": 0,
+        "beforeBytes": 0,
+        "afterBytes": 0
+      }
+    ],
+    "issues": [
+      {
+        "severity": "warning",
+        "code": "SYNC_DELTA_REFERENCE_SUPPORTED",
+        "message": "Sync heights retain native residuals and receive the quantized height delta. Editor save/reopen and runtime movement have not been executed."
+      },
+      {
+        "severity": "warning",
+        "code": "SYNC_TEXTURE_DOMINANT_RULE",
+        "message": "Changed sync cells use the dominant layer averaged over 8x8 mask pixels; native Editor equivalence remains unverified."
+      }
+    ],
+    "valid": true,
+    "changedVertices": 624,
+    "changedTexturePixels": 0,
+    "sourceSha256": {
+      "t3Terrain.xml": "1e66a45de6c4c2aa097e6582592c1a8daac504549376c27bb79fa4d11cd832b9",
+      "t3HeightMap": "397bb71583fbf8c10a4e07ddb718e6783ed442d53d9b4a76cd474e1aa60ae4a6",
+      "t3TextureMasks": "901087dbb65e738d774d2517fc694d8508d524c4ca988cc7478efd2e0f48cb99",
+      "t3SyncHeightMap": "4725002333adecf4410376331bbbf695b5a613d55b2a5a6b7bda10701e1be3bd",
+      "t3SyncCliffLevel": "ee6f88f90add90966dc89670499c3120e26d33968a12c26f0ba99d4da7504fd7",
+      "t3SyncTextureInfo": "5fdf44defe5df115be5be49de20d822f1dfab785304cfbd228c120aa03f38c0c",
+      "t3CellFlags": "56d47dee7d3e6c2245a5d69d1421bffa56c4f14ac936574d1ab1e6351c87b55e",
+      "t3HardTile": "12afa86368acf6158758ce235c2e3879d6edfab41cc2eef6738c939e746b745d",
+      "t3Water": "c15e6e4da91564e9349a449302114f4248dfe1f2cebee1a29526cb5f41db5af5",
+      "t3VertCol": "07e468603720a21465401f31702bea01e69bea5a8aa9606fc672015bcd692a18",
+      "t3FluffDoodad": "3f3f15b8480e7cf37d97bc9c4affe5af1348b352bbc1213a71da32195a88e937",
+      "PaintedPathingLayer": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "t3SyncPathingInfo": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "Terrain": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "diskSha256": {
+      "t3Terrain.xml": "1e66a45de6c4c2aa097e6582592c1a8daac504549376c27bb79fa4d11cd832b9",
+      "t3HeightMap": "397bb71583fbf8c10a4e07ddb718e6783ed442d53d9b4a76cd474e1aa60ae4a6",
+      "t3TextureMasks": "901087dbb65e738d774d2517fc694d8508d524c4ca988cc7478efd2e0f48cb99",
+      "t3SyncHeightMap": "4725002333adecf4410376331bbbf695b5a613d55b2a5a6b7bda10701e1be3bd",
+      "t3SyncCliffLevel": "ee6f88f90add90966dc89670499c3120e26d33968a12c26f0ba99d4da7504fd7",
+      "t3SyncTextureInfo": "5fdf44defe5df115be5be49de20d822f1dfab785304cfbd228c120aa03f38c0c",
+      "t3CellFlags": "56d47dee7d3e6c2245a5d69d1421bffa56c4f14ac936574d1ab1e6351c87b55e",
+      "t3HardTile": "12afa86368acf6158758ce235c2e3879d6edfab41cc2eef6738c939e746b745d",
+      "t3Water": "c15e6e4da91564e9349a449302114f4248dfe1f2cebee1a29526cb5f41db5af5",
+      "t3VertCol": "07e468603720a21465401f31702bea01e69bea5a8aa9606fc672015bcd692a18",
+      "t3FluffDoodad": "3f3f15b8480e7cf37d97bc9c4affe5af1348b352bbc1213a71da32195a88e937",
+      "PaintedPathingLayer": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "t3SyncPathingInfo": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "Terrain": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "evidence": [
+      "OBSERVED_REAL_MAP_COMPONENTS",
+      "EXE_STRING_EVIDENCE",
+      "REFERENCE_SUPPORTED_WRITERS"
+    ],
+    "nativeEditorVerified": false
+  },
+  "dryRun": {
+    "accepted": true,
+    "planId": "terrain_16a0dc567f0cab5284da8239",
+    "transaction": {
+      "accepted": true,
+      "dryRun": true,
+      "staged": false,
+      "saved": false,
+      "files": [
+        {
+          "file": "t3Terrain.xml",
+          "changed": false,
+          "diskChanged": false,
+          "beforeSha256": "1e66a45de6c4c2aa097e6582592c1a8daac504549376c27bb79fa4d11cd832b9",
+          "afterSha256": "1e66a45de6c4c2aa097e6582592c1a8daac504549376c27bb79fa4d11cd832b9",
+          "beforeBytes": 4333,
+          "afterBytes": 4333
+        },
+        {
+          "file": "t3HeightMap",
+          "changed": true,
+          "diskChanged": true,
+          "beforeSha256": "397bb71583fbf8c10a4e07ddb718e6783ed442d53d9b4a76cd474e1aa60ae4a6",
+          "afterSha256": "d27df499b55598a58c5098d7bf4d1b57964db6646d6bf7a3176a5b7e7ce373e0",
+          "beforeBytes": 6566,
+          "afterBytes": 6566
+        },
+        {
+          "file": "t3TextureMasks",
+          "changed": false,
+          "diskChanged": false,
+          "beforeSha256": "901087dbb65e738d774d2517fc694d8508d524c4ca988cc7478efd2e0f48cb99",
+          "afterSha256": "901087dbb65e738d774d2517fc694d8508d524c4ca988cc7478efd2e0f48cb99",
+          "beforeBytes": 262208,
+          "afterBytes": 262208
+        },
+        {
+          "file": "t3SyncHeightMap",
+          "changed": true,
+          "diskChanged": true,
+          "beforeSha256": "4725002333adecf4410376331bbbf695b5a613d55b2a5a6b7bda10701e1be3bd",
+          "afterSha256": "55bf4b1c09b6f4a2064ca1f6274702cb0876e4402c883693828faa13ecd1d3f8",
+          "beforeBytes": 4420,
+          "afterBytes": 4420
+        },
+        {
+          "file": "t3SyncCliffLevel",
+          "changed": false,
+          "diskChanged": false,
+          "beforeSha256": "ee6f88f90add90966dc89670499c3120e26d33968a12c26f0ba99d4da7504fd7",
+          "afterSha256": "ee6f88f90add90966dc89670499c3120e26d33968a12c26f0ba99d4da7504fd7",
+          "beforeBytes": 2080,
+          "afterBytes": 2080
+        },
+        {
+          "file": "t3SyncTextureInfo",
+          "changed": false,
+          "diskChanged": false,
+          "beforeSha256": "5fdf44defe5df115be5be49de20d822f1dfab785304cfbd228c120aa03f38c0c",
+          "afterSha256": "5fdf44defe5df115be5be49de20d822f1dfab785304cfbd228c120aa03f38c0c",
+          "beforeBytes": 8236,
+          "afterBytes": 8236
+        },
+        {
+          "file": "t3CellFlags",
+          "changed": false,
+          "diskChanged": false,
+          "beforeSha256": "56d47dee7d3e6c2245a5d69d1421bffa56c4f14ac936574d1ab1e6351c87b55e",
+          "afterSha256": "56d47dee7d3e6c2245a5d69d1421bffa56c4f14ac936574d1ab1e6351c87b55e",
+          "beforeBytes": 1056,
+          "afterBytes": 1056
+        },
+        {
+          "file": "t3HardTile",
+          "changed": false,
+          "diskChanged": false,
+          "beforeSha256": "12afa86368acf6158758ce235c2e3879d6edfab41cc2eef6738c939e746b745d",
+          "afterSha256": "12afa86368acf6158758ce235c2e3879d6edfab41cc2eef6738c939e746b745d",
+          "beforeBytes": 28,
+          "afterBytes": 28
+        },
+        {
+          "file": "t3Water",
+          "changed": false,
+          "diskChanged": false,
+          "beforeSha256": "c15e6e4da91564e9349a449302114f4248dfe1f2cebee1a29526cb5f41db5af5",
+          "afterSha256": "c15e6e4da91564e9349a449302114f4248dfe1f2cebee1a29526cb5f41db5af5",
+          "beforeBytes": 32,
+          "afterBytes": 32
+        },
+        {
+          "file": "t3VertCol",
+          "changed": false,
+          "diskChanged": false,
+          "beforeSha256": "07e468603720a21465401f31702bea01e69bea5a8aa9606fc672015bcd692a18",
+          "afterSha256": "07e468603720a21465401f31702bea01e69bea5a8aa9606fc672015bcd692a18",
+          "beforeBytes": 3936,
+          "afterBytes": 3936
+        },
+        {
+          "file": "t3FluffDoodad",
+          "changed": false,
+          "diskChanged": false,
+          "beforeSha256": "3f3f15b8480e7cf37d97bc9c4affe5af1348b352bbc1213a71da32195a88e937",
+          "afterSha256": "3f3f15b8480e7cf37d97bc9c4affe5af1348b352bbc1213a71da32195a88e937",
+          "beforeBytes": 28,
+          "afterBytes": 28
+        },
+        {
+          "file": "PaintedPathingLayer",
+          "changed": false,
+          "diskChanged": false,
+          "beforeSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "afterSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "beforeBytes": 0,
+          "afterBytes": 0
+        },
+        {
+          "file": "t3SyncPathingInfo",
+          "changed": false,
+          "diskChanged": false,
+          "beforeSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "afterSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "beforeBytes": 0,
+          "afterBytes": 0
+        },
+        {
+          "file": "Terrain",
+          "changed": false,
+          "diskChanged": false,
+          "beforeSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "afterSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "beforeBytes": 0,
+          "afterBytes": 0
+        }
+      ]
+    },
+    "issues": [
+      {
+        "severity": "warning",
+        "code": "SYNC_DELTA_REFERENCE_SUPPORTED",
+        "message": "Sync heights retain native residuals and receive the quantized height delta. Editor save/reopen and runtime movement have not been executed."
+      },
+      {
+        "severity": "warning",
+        "code": "SYNC_TEXTURE_DOMINANT_RULE",
+        "message": "Changed sync cells use the dominant layer averaged over 8x8 mask pixels; native Editor equivalence remains unverified."
+      }
+    ]
+  },
+  "staged": {
+    "accepted": true,
+    "planId": "terrain_16a0dc567f0cab5284da8239",
+    "transaction": {
+      "accepted": true,
+      "dryRun": false,
+      "staged": true,
+      "saved": false,
+      "transactionId": "bytes_99a04624-ed90-4a8b-b189-0ecaca91adb8",
+      "files": [
+        {
+          "file": "t3Terrain.xml",
+          "changed": false,
+          "diskChanged": false,
+          "beforeSha256": "1e66a45de6c4c2aa097e6582592c1a8daac504549376c27bb79fa4d11cd832b9",
+          "afterSha256": "1e66a45de6c4c2aa097e6582592c1a8daac504549376c27bb79fa4d11cd832b9",
+          "beforeBytes": 4333,
+          "afterBytes": 4333
+        },
+        {
+          "file": "t3HeightMap",
+          "changed": true,
+          "diskChanged": true,
+          "beforeSha256": "397bb71583fbf8c10a4e07ddb718e6783ed442d53d9b4a76cd474e1aa60ae4a6",
+          "afterSha256": "d27df499b55598a58c5098d7bf4d1b57964db6646d6bf7a3176a5b7e7ce373e0",
+          "beforeBytes": 6566,
+          "afterBytes": 6566
+        },
+        {
+          "file": "t3TextureMasks",
+          "changed": false,
+          "diskChanged": false,
+          "beforeSha256": "901087dbb65e738d774d2517fc694d8508d524c4ca988cc7478efd2e0f48cb99",
+          "afterSha256": "901087dbb65e738d774d2517fc694d8508d524c4ca988cc7478efd2e0f48cb99",
+          "beforeBytes": 262208,
+          "afterBytes": 262208
+        },
+        {
+          "file": "t3SyncHeightMap",
+          "changed": true,
+          "diskChanged": true,
+          "beforeSha256": "4725002333adecf4410376331bbbf695b5a613d55b2a5a6b7bda10701e1be3bd",
+          "afterSha256": "55bf4b1c09b6f4a2064ca1f6274702cb0876e4402c883693828faa13ecd1d3f8",
+          "beforeBytes": 4420,
+          "afterBytes": 4420
+        },
+        {
+          "file": "t3SyncCliffLevel",
+          "changed": false,
+          "diskChanged": false,
+          "beforeSha256": "ee6f88f90add90966dc89670499c3120e26d33968a12c26f0ba99d4da7504fd7",
+          "afterSha256": "ee6f88f90add90966dc89670499c3120e26d33968a12c26f0ba99d4da7504fd7",
+          "beforeBytes": 2080,
+          "afterBytes": 2080
+        },
+        {
+          "file": "t3SyncTextureInfo",
+          "changed": false,
+          "diskChanged": false,
+          "beforeSha256": "5fdf44defe5df115be5be49de20d822f1dfab785304cfbd228c120aa03f38c0c",
+          "afterSha256": "5fdf44defe5df115be5be49de20d822f1dfab785304cfbd228c120aa03f38c0c",
+          "beforeBytes": 8236,
+          "afterBytes": 8236
+        },
+        {
+          "file": "t3CellFlags",
+          "changed": false,
+          "diskChanged": false,
+          "beforeSha256": "56d47dee7d3e6c2245a5d69d1421bffa56c4f14ac936574d1ab1e6351c87b55e",
+          "afterSha256": "56d47dee7d3e6c2245a5d69d1421bffa56c4f14ac936574d1ab1e6351c87b55e",
+          "beforeBytes": 1056,
+          "afterBytes": 1056
+        },
+        {
+          "file": "t3HardTile",
+          "changed": false,
+          "diskChanged": false,
+          "beforeSha256": "12afa86368acf6158758ce235c2e3879d6edfab41cc2eef6738c939e746b745d",
+          "afterSha256": "12afa86368acf6158758ce235c2e3879d6edfab41cc2eef6738c939e746b745d",
+          "beforeBytes": 28,
+          "afterBytes": 28
+        },
+        {
+          "file": "t3Water",
+          "changed": false,
+          "diskChanged": false,
+          "beforeSha256": "c15e6e4da91564e9349a449302114f4248dfe1f2cebee1a29526cb5f41db5af5",
+          "afterSha256": "c15e6e4da91564e9349a449302114f4248dfe1f2cebee1a29526cb5f41db5af5",
+          "beforeBytes": 32,
+          "afterBytes": 32
+        },
+        {
+          "file": "t3VertCol",
+          "changed": false,
+          "diskChanged": false,
+          "beforeSha256": "07e468603720a21465401f31702bea01e69bea5a8aa9606fc672015bcd692a18",
+          "afterSha256": "07e468603720a21465401f31702bea01e69bea5a8aa9606fc672015bcd692a18",
+          "beforeBytes": 3936,
+          "afterBytes": 3936
+        },
+        {
+          "file": "t3FluffDoodad",
+          "changed": false,
+          "diskChanged": false,
+          "beforeSha256": "3f3f15b8480e7cf37d97bc9c4affe5af1348b352bbc1213a71da32195a88e937",
+          "afterSha256": "3f3f15b8480e7cf37d97bc9c4affe5af1348b352bbc1213a71da32195a88e937",
+          "beforeBytes": 28,
+          "afterBytes": 28
+        },
+        {
+          "file": "PaintedPathingLayer",
+          "changed": false,
+          "diskChanged": false,
+          "beforeSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "afterSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "beforeBytes": 0,
+          "afterBytes": 0
+        },
+        {
+          "file": "t3SyncPathingInfo",
+          "changed": false,
+          "diskChanged": false,
+          "beforeSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "afterSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "beforeBytes": 0,
+          "afterBytes": 0
+        },
+        {
+          "file": "Terrain",
+          "changed": false,
+          "diskChanged": false,
+          "beforeSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "afterSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "beforeBytes": 0,
+          "afterBytes": 0
+        }
+      ]
+    },
+    "issues": [
+      {
+        "severity": "warning",
+        "code": "SYNC_DELTA_REFERENCE_SUPPORTED",
+        "message": "Sync heights retain native residuals and receive the quantized height delta. Editor save/reopen and runtime movement have not been executed."
+      },
+      {
+        "severity": "warning",
+        "code": "SYNC_TEXTURE_DOMINANT_RULE",
+        "message": "Changed sync cells use the dominant layer averaged over 8x8 mask pixels; native Editor equivalence remains unverified."
+      }
+    ]
+  },
+  "saved": {
+    "accepted": true,
+    "dryRun": false,
+    "staged": false,
+    "saved": true,
+    "transactionId": "bytes_99a04624-ed90-4a8b-b189-0ecaca91adb8",
+    "files": [
+      {
+        "file": "t3Terrain.xml",
+        "changed": false,
+        "diskChanged": false,
+        "beforeSha256": "1e66a45de6c4c2aa097e6582592c1a8daac504549376c27bb79fa4d11cd832b9",
+        "afterSha256": "1e66a45de6c4c2aa097e6582592c1a8daac504549376c27bb79fa4d11cd832b9",
+        "beforeBytes": 4333,
+        "afterBytes": 4333
+      },
+      {
+        "file": "t3HeightMap",
+        "changed": false,
+        "diskChanged": true,
+        "beforeSha256": "397bb71583fbf8c10a4e07ddb718e6783ed442d53d9b4a76cd474e1aa60ae4a6",
+        "afterSha256": "d27df499b55598a58c5098d7bf4d1b57964db6646d6bf7a3176a5b7e7ce373e0",
+        "beforeBytes": 6566,
+        "afterBytes": 6566
+      },
+      {
+        "file": "t3TextureMasks",
+        "changed": false,
+        "diskChanged": false,
+        "beforeSha256": "901087dbb65e738d774d2517fc694d8508d524c4ca988cc7478efd2e0f48cb99",
+        "afterSha256": "901087dbb65e738d774d2517fc694d8508d524c4ca988cc7478efd2e0f48cb99",
+        "beforeBytes": 262208,
+        "afterBytes": 262208
+      },
+      {
+        "file": "t3SyncHeightMap",
+        "changed": false,
+        "diskChanged": true,
+        "beforeSha256": "4725002333adecf4410376331bbbf695b5a613d55b2a5a6b7bda10701e1be3bd",
+        "afterSha256": "55bf4b1c09b6f4a2064ca1f6274702cb0876e4402c883693828faa13ecd1d3f8",
+        "beforeBytes": 4420,
+        "afterBytes": 4420
+      },
+      {
+        "file": "t3SyncCliffLevel",
+        "changed": false,
+        "diskChanged": false,
+        "beforeSha256": "ee6f88f90add90966dc89670499c3120e26d33968a12c26f0ba99d4da7504fd7",
+        "afterSha256": "ee6f88f90add90966dc89670499c3120e26d33968a12c26f0ba99d4da7504fd7",
+        "beforeBytes": 2080,
+        "afterBytes": 2080
+      },
+      {
+        "file": "t3SyncTextureInfo",
+        "changed": false,
+        "diskChanged": false,
+        "beforeSha256": "5fdf44defe5df115be5be49de20d822f1dfab785304cfbd228c120aa03f38c0c",
+        "afterSha256": "5fdf44defe5df115be5be49de20d822f1dfab785304cfbd228c120aa03f38c0c",
+        "beforeBytes": 8236,
+        "afterBytes": 8236
+      },
+      {
+        "file": "t3CellFlags",
+        "changed": false,
+        "diskChanged": false,
+        "beforeSha256": "56d47dee7d3e6c2245a5d69d1421bffa56c4f14ac936574d1ab1e6351c87b55e",
+        "afterSha256": "56d47dee7d3e6c2245a5d69d1421bffa56c4f14ac936574d1ab1e6351c87b55e",
+        "beforeBytes": 1056,
+        "afterBytes": 1056
+      },
+      {
+        "file": "t3HardTile",
+        "changed": false,
+        "diskChanged": false,
+        "beforeSha256": "12afa86368acf6158758ce235c2e3879d6edfab41cc2eef6738c939e746b745d",
+        "afterSha256": "12afa86368acf6158758ce235c2e3879d6edfab41cc2eef6738c939e746b745d",
+        "beforeBytes": 28,
+        "afterBytes": 28
+      },
+      {
+        "file": "t3Water",
+        "changed": false,
+        "diskChanged": false,
+        "beforeSha256": "c15e6e4da91564e9349a449302114f4248dfe1f2cebee1a29526cb5f41db5af5",
+        "afterSha256": "c15e6e4da91564e9349a449302114f4248dfe1f2cebee1a29526cb5f41db5af5",
+        "beforeBytes": 32,
+        "afterBytes": 32
+      },
+      {
+        "file": "t3VertCol",
+        "changed": false,
+        "diskChanged": false,
+        "beforeSha256": "07e468603720a21465401f31702bea01e69bea5a8aa9606fc672015bcd692a18",
+        "afterSha256": "07e468603720a21465401f31702bea01e69bea5a8aa9606fc672015bcd692a18",
+        "beforeBytes": 3936,
+        "afterBytes": 3936
+      },
+      {
+        "file": "t3FluffDoodad",
+        "changed": false,
+        "diskChanged": false,
+        "beforeSha256": "3f3f15b8480e7cf37d97bc9c4affe5af1348b352bbc1213a71da32195a88e937",
+        "afterSha256": "3f3f15b8480e7cf37d97bc9c4affe5af1348b352bbc1213a71da32195a88e937",
+        "beforeBytes": 28,
+        "afterBytes": 28
+      },
+      {
+        "file": "PaintedPathingLayer",
+        "changed": false,
+        "diskChanged": false,
+        "beforeSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "afterSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "beforeBytes": 0,
+        "afterBytes": 0
+      },
+      {
+        "file": "t3SyncPathingInfo",
+        "changed": false,
+        "diskChanged": false,
+        "beforeSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "afterSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "beforeBytes": 0,
+        "afterBytes": 0
+      },
+      {
+        "file": "Terrain",
+        "changed": false,
+        "diskChanged": false,
+        "beforeSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "afterSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "beforeBytes": 0,
+        "afterBytes": 0
+      }
+    ]
+  },
+  "restored": {
+    "rolledBack": true,
+    "discarded": true,
+    "dryRun": false,
+    "mode": "restore-committed-bytes",
+    "transaction": {
+      "accepted": true,
+      "dryRun": false,
+      "staged": false,
+      "saved": true,
+      "transactionId": "bytes_8e559d52-099a-4c05-bac7-85521cced88e",
+      "files": [
+        {
+          "file": "t3HeightMap",
+          "changed": true,
+          "diskChanged": true,
+          "beforeSha256": "d27df499b55598a58c5098d7bf4d1b57964db6646d6bf7a3176a5b7e7ce373e0",
+          "afterSha256": "397bb71583fbf8c10a4e07ddb718e6783ed442d53d9b4a76cd474e1aa60ae4a6",
+          "beforeBytes": 6566,
+          "afterBytes": 6566
+        },
+        {
+          "file": "t3SyncHeightMap",
+          "changed": true,
+          "diskChanged": true,
+          "beforeSha256": "55bf4b1c09b6f4a2064ca1f6274702cb0876e4402c883693828faa13ecd1d3f8",
+          "afterSha256": "4725002333adecf4410376331bbbf695b5a613d55b2a5a6b7bda10701e1be3bd",
+          "beforeBytes": 4420,
+          "afterBytes": 4420
+        }
+      ]
+    },
+    "files": [
+      "t3HeightMap",
+      "t3SyncHeightMap"
+    ]
+  },
+  "sourceRestored": true,
+  "editor": "NOT_EXECUTED",
+  "runtime": "NOT_EXECUTED"
+}

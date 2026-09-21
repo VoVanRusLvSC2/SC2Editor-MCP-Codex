@@ -1,0 +1,1 @@
+{"name":"simple_EAchievementFlag","kind":"simple","fields":[],"enumValues":["Callout","Cloaked","Enabled","Finalize","Hidden","Local","Progress","Repeatable","Victory"],"facets":[],"base":"xs:string"}

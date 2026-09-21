@@ -1,0 +1,1 @@
+{"name":"SActorTermMorphTo","kind":"complex","fields":[{"kind":"attribute","name":"UnitLink","type":"simple_CUnitLink"},{"kind":"element","name":"UnitLink","type":"CUnitLink","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

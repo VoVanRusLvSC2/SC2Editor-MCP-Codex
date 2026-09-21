@@ -1,0 +1,1 @@
+{"name":"simple_EActorScopeBearingsTrackingType","kind":"simple","fields":[],"enumValues":["AutomaticBySituation","ForceOff","ForceOn"],"facets":[],"base":"xs:string"}

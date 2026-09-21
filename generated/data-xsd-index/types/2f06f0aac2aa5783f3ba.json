@@ -1,0 +1,1 @@
+{"name":"SActorMsgCameraSetEyePosition","kind":"complex","fields":[{"kind":"attribute","name":"Position","type":"simple_CGamePoint3D"},{"kind":"element","name":"Position","type":"CGamePoint3D","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

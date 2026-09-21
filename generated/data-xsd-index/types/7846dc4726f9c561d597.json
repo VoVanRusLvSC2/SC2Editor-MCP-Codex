@@ -1,0 +1,1 @@
+{"name":"SActorTermAnimFinished","kind":"complex","fields":[{"kind":"attribute","name":"Name","type":"simple_CAnimNameKey"},{"kind":"element","name":"Name","type":"CAnimNameKey","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

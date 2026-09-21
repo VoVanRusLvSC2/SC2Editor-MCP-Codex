@@ -1,0 +1,1 @@
+{"name":"SActorMsgSceneHaloSetEmission","kind":"complex","fields":[{"kind":"attribute","name":"Emission","type":"simple_real32"},{"kind":"element","name":"Emission","type":"real32","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

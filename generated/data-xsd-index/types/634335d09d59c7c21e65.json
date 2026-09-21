@@ -1,0 +1,1 @@
+{"name":"simple_EActorAnimTransitionType","kind":"simple","fields":[],"enumValues":["ClearToPlay","ClearWhilePlaying","PlayWhilePlaying"],"facets":[],"base":"xs:string"}

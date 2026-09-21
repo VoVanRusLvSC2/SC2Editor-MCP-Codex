@@ -1,0 +1,1 @@
+{"name":"simple_EPreloadFlag","kind":"simple","fields":[],"enumValues":["Automatic","Instantiate","MapCampaign"],"facets":[],"base":"xs:string"}

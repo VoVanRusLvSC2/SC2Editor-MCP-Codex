@@ -1,0 +1,1 @@
+{"name":"SUserInstanceMovie","kind":"complex","fields":[{"kind":"attribute","name":"Movie","type":"simple_CMoviePath"},{"kind":"element","name":"Field","type":"SUserInstanceField","minOccurs":"0","maxOccurs":"1"},{"kind":"element","name":"Movie","type":"CMoviePath","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

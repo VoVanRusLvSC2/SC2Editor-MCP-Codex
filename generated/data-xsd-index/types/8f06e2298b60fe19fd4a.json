@@ -1,0 +1,1 @@
+{"name":"simple_EAbilArmMagazineLaunch","kind":"simple","fields":[],"enumValues":["FireAtTarget","ReleaseAtSource","ReleaseAtTarget"],"facets":[],"base":"xs:string"}

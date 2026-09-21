@@ -1,0 +1,537 @@
+{
+  "build": "5.0.16.97563",
+  "sha256": "9cab25db2b7dcfaaad207978b4eac07ec694f1f7cdbee4257d0db0845e14a164",
+  "classes": [
+    {
+      "mangled": ".?AVCCutsceneFrame@@",
+      "className": "CCutsceneFrame",
+      "fileOffset": "0x43698E8",
+      "rva": "0x436A8E8",
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": []
+    },
+    {
+      "mangled": ".?AVCCutsceneField@@",
+      "className": "CCutsceneField",
+      "fileOffset": "0x436E458",
+      "rva": "0x436F458",
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": []
+    },
+    {
+      "mangled": ".?AVCCutsceneElementModelMaterial@@",
+      "className": "CCutsceneElementModelMaterial",
+      "fileOffset": "0x43AF788",
+      "rva": "0x43B0788",
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": []
+    },
+    {
+      "mangled": ".?AVCCutsceneElementFade@@",
+      "className": "CCutsceneElementFade",
+      "fileOffset": "0x43AF7C0",
+      "rva": "0x43B07C0",
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": []
+    },
+    {
+      "mangled": ".?AVCCutsceneElementLookAt@@",
+      "className": "CCutsceneElementLookAt",
+      "fileOffset": "0x43AF7F0",
+      "rva": "0x43B07F0",
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": []
+    },
+    {
+      "mangled": ".?AVCCutsceneElementAttachment@@",
+      "className": "CCutsceneElementAttachment",
+      "fileOffset": "0x43AF820",
+      "rva": "0x43B0820",
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": []
+    },
+    {
+      "mangled": ".?AVCCutsceneElementFollowPath@@",
+      "className": "CCutsceneElementFollowPath",
+      "fileOffset": "0x43AF858",
+      "rva": "0x43B0858",
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": []
+    },
+    {
+      "mangled": ".?AVCCutsceneElementConversation@@",
+      "className": "CCutsceneElementConversation",
+      "fileOffset": "0x43AF890",
+      "rva": "0x43B0890",
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": []
+    },
+    {
+      "mangled": ".?AVCCutsceneElementAnim@@",
+      "className": "CCutsceneElementAnim",
+      "fileOffset": "0x43AF8C8",
+      "rva": "0x43B08C8",
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": []
+    },
+    {
+      "mangled": ".?AVCCutsceneElementConversationDriver@@",
+      "className": "CCutsceneElementConversationDriver",
+      "fileOffset": "0x43AF8F8",
+      "rva": "0x43B08F8",
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": []
+    },
+    {
+      "mangled": ".?AVCCutsceneElementActiveLight@@",
+      "className": "CCutsceneElementActiveLight",
+      "fileOffset": "0x43AF938",
+      "rva": "0x43B0938",
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": []
+    },
+    {
+      "mangled": ".?AVCCutsceneElementActiveCamera@@",
+      "className": "CCutsceneElementActiveCamera",
+      "fileOffset": "0x43AF970",
+      "rva": "0x43B0970",
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": []
+    },
+    {
+      "mangled": ".?AVCCutsceneElementPropertyCurve@@",
+      "className": "CCutsceneElementPropertyCurve",
+      "fileOffset": "0x43AF9A8",
+      "rva": "0x43B09A8",
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": []
+    },
+    {
+      "mangled": ".?AVCCutsceneElementPropertyValue@@",
+      "className": "CCutsceneElementPropertyValue",
+      "fileOffset": "0x43AF9E0",
+      "rva": "0x43B09E0",
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": []
+    },
+    {
+      "mangled": ".?AVCCutsceneElementProperty@@",
+      "className": "CCutsceneElementProperty",
+      "fileOffset": "0x43AFA18",
+      "rva": "0x43B0A18",
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": []
+    },
+    {
+      "mangled": ".?AVCCutsceneElementRTTChannel@@",
+      "className": "CCutsceneElementRTTChannel",
+      "fileOffset": "0x43AFA48",
+      "rva": "0x43B0A48",
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": []
+    },
+    {
+      "mangled": ".?AVCCutsceneElementBookmark@@",
+      "className": "CCutsceneElementBookmark",
+      "fileOffset": "0x43AFA80",
+      "rva": "0x43B0A80",
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": []
+    },
+    {
+      "mangled": ".?AVCCutsceneNodeModelMaterial@@",
+      "className": "CCutsceneNodeModelMaterial",
+      "fileOffset": "0x43AFAB0",
+      "rva": "0x43B0AB0",
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": []
+    },
+    {
+      "mangled": ".?AVCCutsceneNodeHaloController@@",
+      "className": "CCutsceneNodeHaloController",
+      "fileOffset": "0x43AFAE8",
+      "rva": "0x43B0AE8",
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": []
+    },
+    {
+      "mangled": ".?AVCCutsceneNodeTargetCamera@@",
+      "className": "CCutsceneNodeTargetCamera",
+      "fileOffset": "0x43AFB20",
+      "rva": "0x43B0B20",
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": []
+    },
+    {
+      "mangled": ".?AVCCutsceneNodeText@@",
+      "className": "CCutsceneNodeText",
+      "fileOffset": "0x43AFB50",
+      "rva": "0x43B0B50",
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": []
+    },
+    {
+      "mangled": ".?AVCCutsceneNodeFade@@",
+      "className": "CCutsceneNodeFade",
+      "fileOffset": "0x43AFB78",
+      "rva": "0x43B0B78",
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": []
+    },
+    {
+      "mangled": ".?AVCCutsceneNodeConversationDriver@@",
+      "className": "CCutsceneNodeConversationDriver",
+      "fileOffset": "0x43AFBA0",
+      "rva": "0x43B0BA0",
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": []
+    },
+    {
+      "mangled": ".?AVCCutsceneNodeFog@@",
+      "className": "CCutsceneNodeFog",
+      "fileOffset": "0x43AFBD8",
+      "rva": "0x43B0BD8",
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": []
+    },
+    {
+      "mangled": ".?AVCCutsceneNodeRTTChannel@@",
+      "className": "CCutsceneNodeRTTChannel",
+      "fileOffset": "0x43AFC00",
+      "rva": "0x43B0C00",
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": []
+    },
+    {
+      "mangled": ".?AVCCutsceneNodeLookAt@@",
+      "className": "CCutsceneNodeLookAt",
+      "fileOffset": "0x43AFC30",
+      "rva": "0x43B0C30",
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": []
+    },
+    {
+      "mangled": ".?AVCCutsceneNodeAttachment@@",
+      "className": "CCutsceneNodeAttachment",
+      "fileOffset": "0x43AFC60",
+      "rva": "0x43B0C60",
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": []
+    },
+    {
+      "mangled": ".?AVCCutsceneNodeMasterSound@@",
+      "className": "CCutsceneNodeMasterSound",
+      "fileOffset": "0x43AFC90",
+      "rva": "0x43B0C90",
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": []
+    },
+    {
+      "mangled": ".?AVCCutsceneNodeM3A@@",
+      "className": "CCutsceneNodeM3A",
+      "fileOffset": "0x43AFCC0",
+      "rva": "0x43B0CC0",
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": []
+    },
+    {
+      "mangled": ".?AVCCutsceneNodeFile@@",
+      "className": "CCutsceneNodeFile",
+      "fileOffset": "0x43AFCE8",
+      "rva": "0x43B0CE8",
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": []
+    },
+    {
+      "mangled": ".?AVCCutsceneNodePathMarker@@",
+      "className": "CCutsceneNodePathMarker",
+      "fileOffset": "0x43AFD10",
+      "rva": "0x43B0D10",
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": []
+    },
+    {
+      "mangled": ".?AVCCutsceneNodePath@@",
+      "className": "CCutsceneNodePath",
+      "fileOffset": "0x43AFD40",
+      "rva": "0x43B0D40",
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": []
+    },
+    {
+      "mangled": ".?AVCCutsceneNodeEnvironmentLight@@",
+      "className": "CCutsceneNodeEnvironmentLight",
+      "fileOffset": "0x43AFD68",
+      "rva": "0x43B0D68",
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": []
+    },
+    {
+      "mangled": ".?AVCCutsceneNodeFollowPath@@",
+      "className": "CCutsceneNodeFollowPath",
+      "fileOffset": "0x43AFDA0",
+      "rva": "0x43B0DA0",
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": []
+    },
+    {
+      "mangled": ".?AVCCutsceneNodeLight@@",
+      "className": "CCutsceneNodeLight",
+      "fileOffset": "0x43AFDD0",
+      "rva": "0x43B0DD0",
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": []
+    },
+    {
+      "mangled": ".?AVCCutsceneNodeCamera@@",
+      "className": "CCutsceneNodeCamera",
+      "fileOffset": "0x43AFE00",
+      "rva": "0x43B0E00",
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": []
+    },
+    {
+      "mangled": ".?AVCCutsceneNodeBaseCamera@@",
+      "className": "CCutsceneNodeBaseCamera",
+      "fileOffset": "0x43AFE30",
+      "rva": "0x43B0E30",
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": []
+    },
+    {
+      "mangled": ".?AVCCutsceneNodePropertyValue@@",
+      "className": "CCutsceneNodePropertyValue",
+      "fileOffset": "0x43AFE60",
+      "rva": "0x43B0E60",
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": []
+    },
+    {
+      "mangled": ".?AVCCutsceneNodeConversation@@",
+      "className": "CCutsceneNodeConversation",
+      "fileOffset": "0x43AFE98",
+      "rva": "0x43B0E98",
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": []
+    },
+    {
+      "mangled": ".?AVCCutsceneNodeRoot@@",
+      "className": "CCutsceneNodeRoot",
+      "fileOffset": "0x43AFEC8",
+      "rva": "0x43B0EC8",
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": []
+    },
+    {
+      "mangled": ".?AVCCutsceneNodeSoundGroup@@",
+      "className": "CCutsceneNodeSoundGroup",
+      "fileOffset": "0x43AFEF0",
+      "rva": "0x43B0EF0",
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": []
+    },
+    {
+      "mangled": ".?AVCCutsceneNodeFolder@@",
+      "className": "CCutsceneNodeFolder",
+      "fileOffset": "0x43AFF20",
+      "rva": "0x43B0F20",
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": []
+    },
+    {
+      "mangled": ".?AVCCutsceneNodeSound@@",
+      "className": "CCutsceneNodeSound",
+      "fileOffset": "0x43AFF50",
+      "rva": "0x43B0F50",
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": []
+    },
+    {
+      "mangled": ".?AVCCutsceneNodeActiveShot@@",
+      "className": "CCutsceneNodeActiveShot",
+      "fileOffset": "0x43AFF80",
+      "rva": "0x43B0F80",
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": []
+    },
+    {
+      "mangled": ".?AVCCutsceneNodeActiveLight@@",
+      "className": "CCutsceneNodeActiveLight",
+      "fileOffset": "0x43AFFB0",
+      "rva": "0x43B0FB0",
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": []
+    },
+    {
+      "mangled": ".?AVCCutsceneNodeActiveCamera@@",
+      "className": "CCutsceneNodeActiveCamera",
+      "fileOffset": "0x43AFFE0",
+      "rva": "0x43B0FE0",
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": []
+    },
+    {
+      "mangled": ".?AVCCutsceneNodeAnimLayer@@",
+      "className": "CCutsceneNodeAnimLayer",
+      "fileOffset": "0x43B0010",
+      "rva": "0x43B1010",
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": []
+    },
+    {
+      "mangled": ".?AVCCutsceneNodeActor@@",
+      "className": "CCutsceneNodeActor",
+      "fileOffset": "0x43B0040",
+      "rva": "0x43B1040",
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": []
+    },
+    {
+      "mangled": ".?AVCCutsceneNodeObject@@",
+      "className": "CCutsceneNodeObject",
+      "fileOffset": "0x43B0070",
+      "rva": "0x43B1070",
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": []
+    },
+    {
+      "mangled": ".?AVCCutsceneElementObject@@",
+      "className": "CCutsceneElementObject",
+      "fileOffset": "0x43B00A0",
+      "rva": "0x43B10A0",
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": []
+    },
+    {
+      "mangled": ".?AVCCutsceneNodeEndScene@@",
+      "className": "CCutsceneNodeEndScene",
+      "fileOffset": "0x43B00D0",
+      "rva": "0x43B10D0",
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": []
+    },
+    {
+      "mangled": ".?AVCCutsceneElementEndScene@@",
+      "className": "CCutsceneElementEndScene",
+      "fileOffset": "0x43B0100",
+      "rva": "0x43B1100",
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": []
+    },
+    {
+      "mangled": ".?AVCCutsceneNodeBookmark@@",
+      "className": "CCutsceneNodeBookmark",
+      "fileOffset": "0x43B0130",
+      "rva": "0x43B1130",
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": []
+    },
+    {
+      "mangled": ".?AVCCutsceneNodeProperty@@",
+      "className": "CCutsceneNodeProperty",
+      "fileOffset": "0x43B0160",
+      "rva": "0x43B1160",
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": []
+    },
+    {
+      "mangled": ".?AVCCutsceneNodeElementList@@",
+      "className": "CCutsceneNodeElementList",
+      "fileOffset": "0x43B0190",
+      "rva": "0x43B1190",
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": []
+    },
+    {
+      "mangled": ".?AVCCutsceneElement@@",
+      "className": "CCutsceneElement",
+      "fileOffset": "0x43B01C0",
+      "rva": "0x43B11C0",
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": []
+    },
+    {
+      "mangled": ".?AVCCutsceneNodeDirector@@",
+      "className": "CCutsceneNodeDirector",
+      "fileOffset": "0x43B01E8",
+      "rva": "0x43B11E8",
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": []
+    },
+    {
+      "mangled": ".?AVCCutsceneNode@@",
+      "className": "CCutsceneNode",
+      "fileOffset": "0x43B0218",
+      "rva": "0x43B1218",
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": []
+    },
+    {
+      "mangled": ".?AVCCutsceneCommandable@@",
+      "className": "CCutsceneCommandable",
+      "fileOffset": "0x43B0240",
+      "rva": "0x43B1240",
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": []
+    }
+  ]
+}

@@ -1,0 +1,1 @@
+{"name":"SActorVisibilityShape","kind":"complex","fields":[{"kind":"attribute","name":"Shape","type":"simple_CShapeLink"},{"kind":"element","name":"Shape","type":"CShapeLink","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

@@ -1,0 +1,1 @@
+Cutscene/Kaldir/StormWarning=<s val="KaldirSubtitle">Приближается буря.</s>

@@ -1,0 +1,1 @@
+{"name":"simple_EVolumeControl","kind":"simple","fields":[],"enumValues":["Music","SoundAmbience","SoundEffects","SoundReady","SoundUI","SoundVoices","Unknown"],"facets":[],"base":"xs:string"}

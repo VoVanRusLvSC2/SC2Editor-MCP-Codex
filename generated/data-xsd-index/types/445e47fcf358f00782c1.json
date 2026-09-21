@@ -1,0 +1,1 @@
+{"name":"simple_ECampaignProductType","kind":"simple","fields":[],"enumValues":["Deluxe","MissionBundle","MissionPack","Standard"],"facets":[],"base":"xs:string"}

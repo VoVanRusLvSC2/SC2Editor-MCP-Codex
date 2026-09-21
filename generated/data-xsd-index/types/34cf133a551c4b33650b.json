@@ -1,0 +1,1 @@
+{"name":"simple_EActorSplatHeight","kind":"simple","fields":[],"enumValues":["Automatic","MinimumActor","MinimumTerrain","Normal"],"facets":[],"base":"xs:string"}

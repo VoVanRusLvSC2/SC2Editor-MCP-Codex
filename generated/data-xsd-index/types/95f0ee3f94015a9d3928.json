@@ -1,0 +1,1 @@
+{"name":"simple_EHeightMap","kind":"simple","fields":[],"enumValues":["Air","Glide","Ground"],"facets":[],"base":"xs:string"}

@@ -1,0 +1,1 @@
+{"name":"simple_EActorPropertyCurveType","kind":"simple","fields":[],"enumValues":["CameraEyePosition","CameraParams","FlagLooping","Offset","Position","Rotation","Scale","SoundParams","TangentAuto","TangentCustom","TangentFast","TangentFlat","TangentLinear","TangentSlow","TangentSmooth","TangentStep","TeamColor","TintColor"],"facets":[],"base":"xs:string"}

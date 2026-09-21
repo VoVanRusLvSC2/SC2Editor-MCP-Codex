@@ -1,0 +1,1 @@
+{"name":"simple_ECardButtonType","kind":"simple","fields":[],"enumValues":["AbilCmd","CancelPlacementMode","CancelSubmenu","CancelTargetMode","Passive","SelectBuilder","SelectLarva","Submenu","Undefined"],"facets":[],"base":"xs:string"}

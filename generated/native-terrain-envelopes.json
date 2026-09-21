@@ -1,0 +1,293 @@
+{
+  "status": "PASS",
+  "results": [
+    {
+      "id": "nydus",
+      "valid": true,
+      "components": [
+        {
+          "name": "t3CellFlags",
+          "status": "PASS",
+          "details": {
+            "cells": [
+              32,
+              32
+            ],
+            "rawFlags": [
+              {
+                "rawValue": 2,
+                "cells": 1024
+              }
+            ],
+            "pathingSemantics": "NOT_VERIFIED"
+          }
+        },
+        {
+          "name": "t3SyncCliffLevel",
+          "status": "PASS",
+          "details": {
+            "cells": [
+              32,
+              32
+            ],
+            "rawLevels": [
+              {
+                "rawValue": 64,
+                "cells": 1024
+              }
+            ],
+            "geometryConsistency": "NOT_VERIFIED"
+          }
+        },
+        {
+          "name": "t3VertCol",
+          "status": "PASS",
+          "details": {
+            "version": 104,
+            "entries": 64,
+            "subDataBytes": 1600,
+            "subDataSemantics": "OPAQUE",
+            "writer": false
+          }
+        }
+      ],
+      "issues": [],
+      "validationScope": "Known native envelopes, dimensions and variable-entry boundaries; not cliff geometry, vertex color meaning or engine pathing"
+    },
+    {
+      "id": "ant",
+      "valid": true,
+      "components": [
+        {
+          "name": "t3CellFlags",
+          "status": "PASS",
+          "details": {
+            "cells": [
+              136,
+              136
+            ],
+            "rawFlags": [
+              {
+                "rawValue": 2,
+                "cells": 18496
+              }
+            ],
+            "pathingSemantics": "NOT_VERIFIED"
+          }
+        },
+        {
+          "name": "t3SyncCliffLevel",
+          "status": "PASS",
+          "details": {
+            "cells": [
+              136,
+              136
+            ],
+            "rawLevels": [
+              {
+                "rawValue": 64,
+                "cells": 18496
+              }
+            ],
+            "geometryConsistency": "NOT_VERIFIED"
+          }
+        },
+        {
+          "name": "t3VertCol",
+          "status": "PASS",
+          "details": {
+            "version": 104,
+            "entries": 1156,
+            "subDataBytes": 28900,
+            "subDataSemantics": "OPAQUE",
+            "writer": false
+          }
+        }
+      ],
+      "issues": [],
+      "validationScope": "Known native envelopes, dimensions and variable-entry boundaries; not cliff geometry, vertex color meaning or engine pathing"
+    },
+    {
+      "id": "city",
+      "valid": true,
+      "components": [
+        {
+          "name": "t3CellFlags",
+          "status": "PASS",
+          "details": {
+            "cells": [
+              144,
+              216
+            ],
+            "rawFlags": [
+              {
+                "rawValue": 0,
+                "cells": 552
+              },
+              {
+                "rawValue": 2,
+                "cells": 26420
+              },
+              {
+                "rawValue": 3,
+                "cells": 4132
+              }
+            ],
+            "pathingSemantics": "NOT_VERIFIED"
+          }
+        },
+        {
+          "name": "t3SyncCliffLevel",
+          "status": "PASS",
+          "details": {
+            "cells": [
+              144,
+              216
+            ],
+            "rawLevels": [
+              {
+                "rawValue": 0,
+                "cells": 1436
+              },
+              {
+                "rawValue": 64,
+                "cells": 22124
+              },
+              {
+                "rawValue": 72,
+                "cells": 200
+              },
+              {
+                "rawValue": 80,
+                "cells": 48
+              },
+              {
+                "rawValue": 88,
+                "cells": 200
+              },
+              {
+                "rawValue": 96,
+                "cells": 48
+              },
+              {
+                "rawValue": 104,
+                "cells": 200
+              },
+              {
+                "rawValue": 112,
+                "cells": 48
+              },
+              {
+                "rawValue": 128,
+                "cells": 4840
+              },
+              {
+                "rawValue": 136,
+                "cells": 68
+              },
+              {
+                "rawValue": 144,
+                "cells": 8
+              },
+              {
+                "rawValue": 152,
+                "cells": 68
+              },
+              {
+                "rawValue": 160,
+                "cells": 8
+              },
+              {
+                "rawValue": 168,
+                "cells": 68
+              },
+              {
+                "rawValue": 176,
+                "cells": 8
+              },
+              {
+                "rawValue": 192,
+                "cells": 1732
+              }
+            ],
+            "geometryConsistency": "NOT_VERIFIED"
+          }
+        },
+        {
+          "name": "t3VertCol",
+          "status": "PASS",
+          "details": {
+            "version": 104,
+            "entries": 2824,
+            "subDataBytes": 123604,
+            "subDataSemantics": "OPAQUE",
+            "writer": false
+          }
+        }
+      ],
+      "issues": [],
+      "validationScope": "Known native envelopes, dimensions and variable-entry boundaries; not cliff geometry, vertex color meaning or engine pathing"
+    },
+    {
+      "id": "warships",
+      "valid": true,
+      "components": [
+        {
+          "name": "t3CellFlags",
+          "status": "PASS",
+          "details": {
+            "cells": [
+              256,
+              256
+            ],
+            "rawFlags": [
+              {
+                "rawValue": 1,
+                "cells": 256
+              },
+              {
+                "rawValue": 3,
+                "cells": 65280
+              }
+            ],
+            "pathingSemantics": "NOT_VERIFIED"
+          }
+        },
+        {
+          "name": "t3SyncCliffLevel",
+          "status": "PASS",
+          "details": {
+            "cells": [
+              256,
+              256
+            ],
+            "rawLevels": [
+              {
+                "rawValue": 0,
+                "cells": 65535
+              },
+              {
+                "rawValue": 64,
+                "cells": 1
+              }
+            ],
+            "geometryConsistency": "NOT_VERIFIED"
+          }
+        },
+        {
+          "name": "t3VertCol",
+          "status": "PASS",
+          "details": {
+            "version": 104,
+            "entries": 4097,
+            "subDataBytes": 102454,
+            "subDataSemantics": "OPAQUE",
+            "writer": false
+          }
+        }
+      ],
+      "issues": [],
+      "validationScope": "Known native envelopes, dimensions and variable-entry boundaries; not cliff geometry, vertex color meaning or engine pathing"
+    }
+  ]
+}

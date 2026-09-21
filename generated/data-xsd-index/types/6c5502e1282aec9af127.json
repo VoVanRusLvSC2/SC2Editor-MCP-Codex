@@ -1,0 +1,1 @@
+{"name":"simple_EActorSiteOpRotatorType","kind":"simple","fields":[],"enumValues":["AccumulateAndSetRotation","AddRotationChange"],"facets":[],"base":"xs:string"}

@@ -1,0 +1,1 @@
+{"name":"simple_EAMAttachType","kind":"simple","fields":[],"enumValues":["HasKeywords","NoKeywords"],"facets":[],"base":"xs:string"}

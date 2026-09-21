@@ -1,0 +1,1 @@
+{"name":"simple_EAMPatternType","kind":"simple","fields":[],"enumValues":["Bounce","Stripe"],"facets":[],"base":"xs:string"}

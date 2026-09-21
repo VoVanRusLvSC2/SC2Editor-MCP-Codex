@@ -1,0 +1,1 @@
+{"name":"SUserInstanceUnit","kind":"complex","fields":[{"kind":"attribute","name":"Unit","type":"simple_CUnitLink"},{"kind":"element","name":"Field","type":"SUserInstanceField","minOccurs":"0","maxOccurs":"1"},{"kind":"element","name":"Unit","type":"CUnitLink","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

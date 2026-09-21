@@ -1,0 +1,1 @@
+{"name":"SActorTermModelSwapFrom","kind":"complex","fields":[{"kind":"attribute","name":"ModelLink","type":"simple_CModelLink"},{"kind":"element","name":"ModelLink","type":"CModelLink","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

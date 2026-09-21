@@ -1,0 +1,1 @@
+{"name":"simple_EPathMode","kind":"simple","fields":[],"enumValues":["Amphibious","Builder","Digger","Float","Flying","Ground","Jumper","Scaler"],"facets":[],"base":"xs:string"}

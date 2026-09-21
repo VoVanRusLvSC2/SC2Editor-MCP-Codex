@@ -1,0 +1,1 @@
+{"name":"simple_EValueCompare","kind":"simple","fields":[],"enumValues":["Eq","GE","GT","LE","LT","NE"],"facets":[],"base":"xs:string"}

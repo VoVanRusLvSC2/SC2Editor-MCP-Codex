@@ -1,0 +1,1 @@
+{"name":"simple_EOverrideColor","kind":"simple","fields":[],"enumValues":["Ally","Hostile","Neutral","Self","SelfMinimap"],"facets":[],"base":"xs:string"}

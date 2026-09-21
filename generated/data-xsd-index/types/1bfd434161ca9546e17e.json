@@ -1,0 +1,1 @@
+{"name":"SActorMsgPrint","kind":"complex","fields":[{"kind":"attribute","name":"String","type":"simple_CString"},{"kind":"element","name":"String","type":"CString","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

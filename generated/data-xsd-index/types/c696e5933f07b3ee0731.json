@@ -1,0 +1,1 @@
+{"name":"simple_EVitalType","kind":"simple","fields":[],"enumValues":["Current","Delta","Fraction","Maximum"],"facets":[],"base":"xs:string"}

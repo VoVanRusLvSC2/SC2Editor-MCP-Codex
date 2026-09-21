@@ -1,0 +1,1 @@
+{"name":"simple_EClassIdCItem","kind":"simple","fields":[],"enumValues":["CItem","CItemAbil","CItemAbilPowerUp","CItemEffect","CItemEffectInstant","CItemEffectTarget"],"facets":[],"base":"xs:string"}

@@ -1,0 +1,74 @@
+[
+  {
+    "file": "github-t3Water",
+    "sha256": "3762f6dee122d5b0594abe29f8b2f9069130b6229b23848ff60cbff82f01ce01",
+    "source": "https://github.com/willuwontu/thethingrevivalremade.SC2Map",
+    "revision": "206d6644f56a2818969b4e4dc323d117a8e84484"
+  },
+  {
+    "file": "Core-WaterData.xml",
+    "sha256": "08c3923c62e2ac9bd94ec3b888de419f9c559d9772c6a5ffd1448adcaf9928ac",
+    "source": "https://github.com/SC2Mapster/SC2GameData",
+    "revision": "6dd323aae4209a01f110719a00b4e8f7a88389bc"
+  },
+  {
+    "file": "Liberty-WaterData.xml",
+    "sha256": "92eba54ea766938e8d88e977d82abc9a8b62da31ff087fed7e7725c4675740f5",
+    "source": "https://github.com/SC2Mapster/SC2GameData",
+    "revision": "6dd323aae4209a01f110719a00b4e8f7a88389bc"
+  },
+  {
+    "file": "nova01.sc2map-t3Water",
+    "sha256": "c15e6e4da91564e9349a449302114f4248dfe1f2cebee1a29526cb5f41db5af5",
+    "source": "https://github.com/SC2Mapster/SC2GameData/blob/6dd323aae4209a01f110719a00b4e8f7a88389bc/mods/novastoryassets.sc2mod/base.sc2maps/maps/campaign/nova/nova01.sc2map/t3Water",
+    "revision": "6dd323aae4209a01f110719a00b4e8f7a88389bc"
+  },
+  {
+    "file": "nova02.sc2map-t3Water",
+    "sha256": "0e12bd5ec907f4213b4d0ebb0fbc0521ee0fcf525dfcb8b0aaff37fbb2b51fe4",
+    "source": "https://github.com/SC2Mapster/SC2GameData/blob/6dd323aae4209a01f110719a00b4e8f7a88389bc/mods/novastoryassets.sc2mod/base.sc2maps/maps/campaign/nova/nova02.sc2map/t3Water",
+    "revision": "6dd323aae4209a01f110719a00b4e8f7a88389bc"
+  },
+  {
+    "file": "nova03.sc2map-t3Water",
+    "sha256": "191409a4c5e3f6a93e4ae2f33c854e629e53e5daa47c653f81faa210709c27b5",
+    "source": "https://github.com/SC2Mapster/SC2GameData/blob/6dd323aae4209a01f110719a00b4e8f7a88389bc/mods/novastoryassets.sc2mod/base.sc2maps/maps/campaign/nova/nova03.sc2map/t3Water",
+    "revision": "6dd323aae4209a01f110719a00b4e8f7a88389bc"
+  },
+  {
+    "file": "nova04.sc2map-t3Water",
+    "sha256": "aac076bfe70338869f416ac6840ad875b62d38cf677f9d1cf13436ef94cd3052",
+    "source": "https://github.com/SC2Mapster/SC2GameData/blob/6dd323aae4209a01f110719a00b4e8f7a88389bc/mods/novastoryassets.sc2mod/base2.sc2maps/maps/campaign/nova/nova04.sc2map/t3Water",
+    "revision": "6dd323aae4209a01f110719a00b4e8f7a88389bc"
+  },
+  {
+    "file": "nova05.sc2map-t3Water",
+    "sha256": "c15e6e4da91564e9349a449302114f4248dfe1f2cebee1a29526cb5f41db5af5",
+    "source": "https://github.com/SC2Mapster/SC2GameData/blob/6dd323aae4209a01f110719a00b4e8f7a88389bc/mods/novastoryassets.sc2mod/base2.sc2maps/maps/campaign/nova/nova05.sc2map/t3Water",
+    "revision": "6dd323aae4209a01f110719a00b4e8f7a88389bc"
+  },
+  {
+    "file": "nova06.sc2map-t3Water",
+    "sha256": "21ca327e5c9b5883af5b69d38cb9739fdcc2a61abb0fb67f34a54736043ff37a",
+    "source": "https://github.com/SC2Mapster/SC2GameData/blob/6dd323aae4209a01f110719a00b4e8f7a88389bc/mods/novastoryassets.sc2mod/base2.sc2maps/maps/campaign/nova/nova06.sc2map/t3Water",
+    "revision": "6dd323aae4209a01f110719a00b4e8f7a88389bc"
+  },
+  {
+    "file": "nova07.sc2map-t3Water",
+    "sha256": "7d10b672acb4a363e50579003a326d423cdc65336b21e6d0d22a004765fe7046",
+    "source": "https://github.com/SC2Mapster/SC2GameData/blob/6dd323aae4209a01f110719a00b4e8f7a88389bc/mods/novastoryassets.sc2mod/base3.sc2maps/maps/campaign/nova/nova07.sc2map/t3Water",
+    "revision": "6dd323aae4209a01f110719a00b4e8f7a88389bc"
+  },
+  {
+    "file": "nova08.sc2map-t3Water",
+    "sha256": "f8a9d17957b7b6c10e2e299df801ac9426175d4b71aa182aeb74f302ffcc5b9f",
+    "source": "https://github.com/SC2Mapster/SC2GameData/blob/6dd323aae4209a01f110719a00b4e8f7a88389bc/mods/novastoryassets.sc2mod/base3.sc2maps/maps/campaign/nova/nova08.sc2map/t3Water",
+    "revision": "6dd323aae4209a01f110719a00b4e8f7a88389bc"
+  },
+  {
+    "file": "nova09.sc2map-t3Water",
+    "sha256": "c15e6e4da91564e9349a449302114f4248dfe1f2cebee1a29526cb5f41db5af5",
+    "source": "https://github.com/SC2Mapster/SC2GameData/blob/6dd323aae4209a01f110719a00b4e8f7a88389bc/mods/novastoryassets.sc2mod/base3.sc2maps/maps/campaign/nova/nova09.sc2map/t3Water",
+    "revision": "6dd323aae4209a01f110719a00b4e8f7a88389bc"
+  }
+]

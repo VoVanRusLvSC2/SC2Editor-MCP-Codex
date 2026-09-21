@@ -1,0 +1,1 @@
+{"name":"SActorMsgModelEventSuppress","kind":"complex","fields":[{"kind":"attribute","name":"Event","type":"simple_EEventID"},{"kind":"attribute","name":"Suppress","type":"simple_bool"},{"kind":"element","name":"Event","type":"EEventID","minOccurs":"0","maxOccurs":"1"},{"kind":"element","name":"Suppress","type":"bool","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

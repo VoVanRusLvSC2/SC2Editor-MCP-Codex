@@ -1,0 +1,1 @@
+{"name":"SUserInstanceModel","kind":"complex","fields":[{"kind":"attribute","name":"Model","type":"simple_CModelLink"},{"kind":"element","name":"Field","type":"SUserInstanceField","minOccurs":"0","maxOccurs":"1"},{"kind":"element","name":"Model","type":"CModelLink","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

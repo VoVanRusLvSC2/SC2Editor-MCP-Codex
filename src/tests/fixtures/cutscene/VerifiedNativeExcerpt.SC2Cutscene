@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CutsceneState cutsceneVersion="1.300000" customRoot="preserve-me">
+    <!-- This compact fixture uses native names verified in Blizzard MainMenuDefault.SC2Cutscene. -->
+    <CCutsceneNodeDirector guid="13738145560223799656" name="Director" sortIndex="0" interactive="1">
+        <CCutsceneNodeActiveCamera guid="9559972194667190632" name="Active Camera" sortIndex="0">
+            <CCutsceneElementActiveCamera guid="9001342617568401768" cameraIndex="0" objectGuid="10640950140912785768"/>
+        </CCutsceneNodeActiveCamera>
+        <CCutsceneNodeBookmark guid="10480265430741126004" name="Bookmarks" sortIndex="2">
+            <CCutsceneElementBookmark guid="4964062138715821563" bookmarkName="StandStart"/>
+            <CCutsceneElementBookmark guid="4888641493069533376" start="116617" bookmarkName="StandEnd" jumpToBookmarkWhenHit="StandStart"/>
+        </CCutsceneNodeBookmark>
+    </CCutsceneNodeDirector>
+    <CCutsceneNodeActor guid="10640950140912785768" name="Main Menu Default" sortIndex="1" modelLink="MainMenuDefault" shadowBox="0" teamColorDiffuse="0.705800,0.078300,0.117600,1" futureAttribute="keep">
+        <CCutsceneUnknownExtension vendor="FutureEditor" payload="keep-too"/>
+    </CCutsceneNodeActor>
+</CutsceneState>

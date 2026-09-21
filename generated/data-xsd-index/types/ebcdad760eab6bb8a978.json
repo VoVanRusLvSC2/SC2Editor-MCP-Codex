@@ -1,0 +1,1 @@
+{"name":"simple_EAbilBatteryFlag","kind":"simple","fields":[],"enumValues":["AutoCast","AutoCastOffOwnerLeave","AutoCastOn"],"facets":[],"base":"xs:string"}

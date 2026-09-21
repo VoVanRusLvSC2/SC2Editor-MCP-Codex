@@ -1,0 +1,1 @@
+{"name":"simple_EDamageLocation","kind":"simple","fields":[],"enumValues":["Attacker","Defender"],"facets":[],"base":"xs:string"}

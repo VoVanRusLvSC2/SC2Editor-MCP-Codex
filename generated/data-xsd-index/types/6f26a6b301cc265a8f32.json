@@ -1,0 +1,1 @@
+{"name":"simple_EArmyUpgradeState","kind":"simple","fields":[],"enumValues":["Disabled","Locked","Purchased","Unlocked"],"facets":[],"base":"xs:string"}

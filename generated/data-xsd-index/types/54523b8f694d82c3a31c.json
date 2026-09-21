@@ -1,0 +1,1 @@
+{"name":"SUserInstanceFixed","kind":"complex","fields":[{"kind":"attribute","name":"Fixed","type":"simple_CFixed"},{"kind":"element","name":"Field","type":"SUserInstanceField","minOccurs":"0","maxOccurs":"1"},{"kind":"element","name":"Fixed","type":"CFixed","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

@@ -1,0 +1,1 @@
+{"name":"SActorTermFlyerHelper","kind":"complex","fields":[{"kind":"attribute","name":"Display","type":"simple_EFlyerDisplay"},{"kind":"element","name":"Display","type":"EFlyerDisplay","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

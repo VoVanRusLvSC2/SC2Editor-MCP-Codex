@@ -1,0 +1,1 @@
+{"name":"STechCost","kind":"complex","fields":[{"kind":"attribute","name":"index","type":"simple_EResourceType"},{"kind":"attribute","name":"removed","type":"simple_bool"},{"kind":"element","name":"Resource","minOccurs":"0","maxOccurs":"unbounded"}],"enumValues":[],"facets":[],"base":"int32"}

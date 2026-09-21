@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Desc>
+    <Include path="UI/Layout/StandardTemplates.SC2Layout"/>
+    <Include path="UI/Layout/Advanced.SC2Layout"/>
+    <Include path="UI/Layout/ClippingAndURL.SC2Layout"/>
+    <Include path="UI/Layout/RestrictedSceneBrowser.SC2Layout"/>
+    <Include path="UI/Layout/TransactionDemo.SC2Layout"/>
+</Desc>

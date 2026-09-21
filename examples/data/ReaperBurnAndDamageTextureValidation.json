@@ -1,0 +1,94 @@
+{
+  "accepted": true,
+  "aliases": {
+    "@burn": "CBehaviorBuff:CodexReaperBurn",
+    "@damageSkin": "CActorStateMonitor:CodexReaperDamageSkinMonitor"
+  },
+  "efficiency": {
+    "toolCalls": 1,
+    "operations": 2,
+    "nativeMutations": 10,
+    "files": 3,
+    "includesValidation": true,
+    "includesDiff": true
+  },
+  "validation": {
+    "valid": true,
+    "errors": 0,
+    "warnings": 4,
+    "diagnostics": [
+      {
+        "level": "L3",
+        "severity": "warning",
+        "code": "DATA_VALUE_REFERENCE_UNRESOLVED",
+        "message": "Observed catalog-reference field points to 'P38ScytheGuassPistol', which was not found in the loaded dependency chain",
+        "file": "Base.SC2Data/GameData/ReaperBurnAndDamageTextureData.xml",
+        "path": "CEffectSet:CodexReaperBurnHitSet.EffectArray[0]@value",
+        "reference": {
+          "kind": "Behavior|Effect",
+          "value": "P38ScytheGuassPistol"
+        }
+      },
+      {
+        "level": "L3",
+        "severity": "warning",
+        "code": "DATA_PARENT_UNRESOLVED",
+        "message": "Parent 'ModelAnimationStyleOneShot' was not found in domain Actor",
+        "file": "Base.SC2Data/GameData/ReaperBurnAndDamageTextureData.xml",
+        "path": "CActorModel:CodexReaperBurnVisual@parent",
+        "reference": {
+          "kind": "Actor",
+          "value": "ModelAnimationStyleOneShot"
+        }
+      },
+      {
+        "level": "L3",
+        "severity": "warning",
+        "code": "DATA_VALUE_REFERENCE_UNRESOLVED",
+        "message": "Observed catalog-reference field points to 'HellionTankAttackFireAddition', which was not found in the loaded dependency chain",
+        "file": "Base.SC2Data/GameData/ReaperBurnAndDamageTextureData.xml",
+        "path": "CActorModel:CodexReaperBurnVisual.Model@value",
+        "reference": {
+          "kind": "Abil|Actor|ArmyCategory|Behavior|Button|Character|Effect|Light|Model|Mover|Preload|Skin|Sound|TargetSort|Turret|Unit|Upgrade|Validator|Weapon",
+          "value": "HellionTankAttackFireAddition"
+        }
+      },
+      {
+        "level": "L3",
+        "severity": "warning",
+        "code": "DATA_PARENT_UNRESOLVED",
+        "message": "Parent 'CasterLifePercent' was not found in domain Validator",
+        "file": "Base.SC2Data/GameData/ReaperBurnAndDamageTextureData.xml",
+        "path": "CValidatorUnitCompareVital:CodexReaperDamageSkinLifeBelow@parent",
+        "reference": {
+          "kind": "Validator",
+          "value": "CasterLifePercent"
+        }
+      },
+      {
+        "level": "L5",
+        "severity": "info",
+        "code": "DATA_EDITOR_UNAVAILABLE",
+        "message": "SC2Editor Data Module validation was not executed in this environment",
+        "file": "Base.SC2Data/GameData/ReaperBurnAndDamageTextureData.xml",
+        "path": "Base.SC2Data/GameData/ReaperBurnAndDamageTextureData.xml"
+      },
+      {
+        "level": "L6",
+        "severity": "info",
+        "code": "DATA_RUNTIME_UNTESTED",
+        "message": "Game runtime validation was not executed",
+        "file": "Base.SC2Data/GameData/ReaperBurnAndDamageTextureData.xml",
+        "path": "Base.SC2Data/GameData/ReaperBurnAndDamageTextureData.xml"
+      }
+    ],
+    "levels": {
+      "L1": "PASS",
+      "L2": "PASS",
+      "L3": "PASS",
+      "L4": "PASS",
+      "L5": "UNAVAILABLE",
+      "L6": "UNTESTED"
+    }
+  }
+}

@@ -1,0 +1,1 @@
+{"name":"simple_EEffectRevealFlag","kind":"simple","fields":[],"enumValues":["Detect","LoS","Permanent","Radar","Unfog"],"facets":[],"base":"xs:string"}

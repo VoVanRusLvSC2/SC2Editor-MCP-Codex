@@ -1,0 +1,1 @@
+{"name":"SActorTermIsStatus","kind":"complex","fields":[{"kind":"attribute","name":"Level","type":"simple_uint32"},{"kind":"attribute","name":"SubName","type":"simple_CSubNameKey"},{"kind":"element","name":"Level","type":"uint32","minOccurs":"0","maxOccurs":"1"},{"kind":"element","name":"SubName","type":"CSubNameKey","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

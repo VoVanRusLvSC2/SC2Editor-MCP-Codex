@@ -1,0 +1,1 @@
+{"name":"simple_EUserType","kind":"simple","fields":[],"enumValues":["AbilCmd","Actor","Color","Compare","Fixed","GameLink","Image","Int","Model","Movie","Sound","String","Text","Unit","Upgrade","User"],"facets":[],"base":"xs:string"}

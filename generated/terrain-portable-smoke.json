@@ -1,0 +1,18 @@
+{
+  "version": "1.1.0-alpha.8",
+  "status": "PASS",
+  "checks": [
+    "portable runtime imports",
+    "HTTP GUI assets",
+    "native inspect",
+    "plan",
+    "PNG preview",
+    "stage preserves disk",
+    "group save",
+    "byte-exact committed rollback"
+  ],
+  "windowsLauncherExecution": "NOT_EXECUTED",
+  "guiVisual": "NOT_EXECUTED: Chromium download timed out/502",
+  "editor": "NOT_EXECUTED",
+  "runtime": "NOT_EXECUTED"
+}

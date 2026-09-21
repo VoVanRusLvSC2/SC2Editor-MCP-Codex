@@ -1,0 +1,1 @@
+{"name":"SDSPArray","kind":"complex","fields":[{"kind":"attribute","name":"index","type":"xs:integer"},{"kind":"attribute","name":"removed","type":"simple_bool"},{"kind":"element","name":"LinkArray","minOccurs":"0","maxOccurs":"unbounded"}],"enumValues":[],"facets":[],"base":"CDSPLink"}

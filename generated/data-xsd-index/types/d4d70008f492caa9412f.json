@@ -1,0 +1,1 @@
+{"name":"simple_EAlertDisplay","kind":"simple","fields":[],"enumValues":["Ally","Enemy","Neutral","Observer","Other","Self"],"facets":[],"base":"xs:string"}

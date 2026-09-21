@@ -1,0 +1,1 @@
+{"name":"SActorMsgHaloSetColorFromAllianceType","kind":"complex","fields":[{"kind":"attribute","name":"AllianceType","type":"simple_EActorFilter"},{"kind":"element","name":"AllianceType","type":"EActorFilter","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

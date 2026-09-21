@@ -1,0 +1,1 @@
+{"name":"simple_EAlertAction","kind":"simple","fields":[],"enumValues":["Flash","Select","Target","View"],"facets":[],"base":"xs:string"}

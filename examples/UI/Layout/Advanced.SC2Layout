@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Desc>
+    <!-- unknown content must survive every unrelated edit -->
+    <Frame type="Frame" name="CustomWindow" futureAttr="keep-me">
+        <Width val="600"/>
+        <Height val="360"/>
+        <Visible val="true"/>
+        <Anchor side="Top" relative="$parent" pos="Mid" offset="0"/>
+        <Anchor side="Left" relative="$parent" pos="Mid" offset="0"/>
+        <StateGroup name="EnabledState">
+            <DefaultState val="Enabled"/>
+            <State name="Enabled">
+                <Action type="SetProperty" frame="$this" Enabled="true"/>
+            </State>
+            <State name="Disabled">
+                <Action type="SetProperty" frame="$this" Enabled="false"/>
+            </State>
+        </StateGroup>
+        <Animation name="OpenFade">
+            <Controller type="Fade" frame="$this" end="Pause">
+                <Key type="Curve" time="0" value="0"/>
+                <Key type="Curve" time="0.25" value="1"/>
+            </Controller>
+            <Controller type="Visibility" frame="$this" end="Pause">
+                <Key type="Bool" time="0" value="true"/>
+            </Controller>
+        </Animation>
+        <FutureElement answer="42"><Nested keep="yes"/></FutureElement>
+        <Frame type="Button" name="AcceptButton" template="StandardTemplates/MCPButtonTemplate">
+            <Text val="Accept"/>
+            <Anchor side="Bottom" relative="$parent" pos="Max" offset="-24"/>
+            <Anchor side="Right" relative="$parent" pos="Mid" offset="-12"/>
+        </Frame>
+    </Frame>
+</Desc>

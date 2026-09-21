@@ -1,0 +1,1 @@
+{"name":"simple_EHeroState","kind":"simple","fields":[],"enumValues":["Locked","Unlocked"],"facets":[],"base":"xs:string"}

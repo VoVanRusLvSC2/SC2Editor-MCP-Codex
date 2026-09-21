@@ -1,0 +1,1 @@
+{"name":"simple_EAnimBracketStateExitReason","kind":"simple","fields":[],"enumValues":["Cleared","Complete","ModelSwap"],"facets":[],"base":"xs:string"}

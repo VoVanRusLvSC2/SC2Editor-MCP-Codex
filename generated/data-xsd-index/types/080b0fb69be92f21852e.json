@@ -1,0 +1,1 @@
+{"name":"simple_EBehaviorVeterancyFlag","kind":"simple","fields":[],"enumValues":["CombineNumericModifications","CombineXP","Global","MaxLevelLeech"],"facets":[],"base":"xs:string"}

@@ -1,0 +1,1 @@
+{"name":"SActorMsgSetScaleAbsolute","kind":"complex","fields":[{"kind":"attribute","name":"Scale","type":"simple_CScaleVector"},{"kind":"element","name":"Scale","type":"CScaleVector","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

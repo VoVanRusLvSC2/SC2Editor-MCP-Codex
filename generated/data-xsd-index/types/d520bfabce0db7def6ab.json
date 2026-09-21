@@ -1,0 +1,1 @@
+{"name":"simple_EActorRequestActor","kind":"simple","fields":[],"enumValues":["Create","Find","Implicit"],"facets":[],"base":"xs:string"}

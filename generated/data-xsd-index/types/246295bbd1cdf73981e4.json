@@ -1,0 +1,1 @@
+{"name":"SActorCloakTransition","kind":"complex","fields":[{"kind":"attribute","name":"index","type":"simple_EActorCloakEffect"},{"kind":"attribute","name":"removed","type":"simple_bool"},{"kind":"element","name":"StateArray","minOccurs":"0","maxOccurs":"unbounded"}],"enumValues":[],"facets":[],"base":"SActorCloakState"}

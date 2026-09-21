@@ -1,0 +1,1 @@
+{"name":"SActorTermEffectExecuteIndex","kind":"complex","fields":[{"kind":"attribute","name":"Index","type":"simple_int32"},{"kind":"element","name":"Index","type":"int32","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

@@ -1,0 +1,1 @@
+{"name":"SLoadingScreenHelp","kind":"complex","fields":[{"kind":"attribute","name":"Race","type":"simple_CRaceLink"},{"kind":"attribute","name":"Text","type":"simple_CStringLink"},{"kind":"element","name":"Race","type":"CRaceLink","minOccurs":"0","maxOccurs":"1"},{"kind":"element","name":"Text","type":"CStringLink","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

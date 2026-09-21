@@ -1,0 +1,1 @@
+{"name":"simple_EActorModelAspectDuring","kind":"simple","fields":[],"enumValues":["Any","LiveGame","LiveGameHijacked","LiveGameNotHijacked","Replay"],"facets":[],"base":"xs:string"}

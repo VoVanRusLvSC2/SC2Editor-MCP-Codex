@@ -1,0 +1,1 @@
+{"name":"simple_EEditorTextType","kind":"simple","fields":[],"enumValues":["Name","Prefix","Suffix","Unknown"],"facets":[],"base":"xs:string"}

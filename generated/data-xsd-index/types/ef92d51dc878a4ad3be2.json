@@ -1,0 +1,1 @@
+{"name":"simple_EMercenaryPortraitTintColor","kind":"simple","fields":[],"enumValues":["Available","InsufficientCredits","Purchased"],"facets":[],"base":"xs:string"}

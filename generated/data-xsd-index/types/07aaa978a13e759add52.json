@@ -1,0 +1,1 @@
+{"name":"simple_EAttackModifierFlag","kind":"simple","fields":[],"enumValues":["Critical","HallucinationVisualOnly","NeverMiss","OnlyApplyDamageBonusToValidTargets"],"facets":[],"base":"xs:string"}

@@ -1,0 +1,1 @@
+{"name":"SActorRangeAbil","kind":"complex","fields":[{"kind":"attribute","name":"Index","type":"simple_TAbilCmdIndex"},{"kind":"attribute","name":"Link","type":"simple_CAbilLink"},{"kind":"element","name":"Index","type":"TAbilCmdIndex","minOccurs":"0","maxOccurs":"1"},{"kind":"element","name":"Link","type":"CAbilLink","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

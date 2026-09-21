@@ -1,0 +1,1 @@
+{"name":"simple_EAbilityCategory","kind":"simple","fields":[],"enumValues":["Aura","BlockByMorph","CanBeDisabled","CanBeIllusionDisabled","CanBeSilenced","Dispel","Heal","Magic","Passive","PassiveMagic","PassivePhysical","Physical","Polymorph","Repair","SpellSteal","Ultimate","User1","User2","User3","User4","User5"],"facets":[],"base":"xs:string"}

@@ -1,0 +1,1 @@
+{"name":"simple_EUnitMob","kind":"simple","fields":[],"enumValues":["Campaign","Classic","Multiplayer","None","Obsolete","OnHold","Story","Warcraft"],"facets":[],"base":"xs:string"}

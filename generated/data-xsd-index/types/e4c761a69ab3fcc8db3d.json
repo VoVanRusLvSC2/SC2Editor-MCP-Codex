@@ -1,0 +1,1 @@
+{"name":"simple_EBehaviorVeterancyXP","kind":"simple","fields":[],"enumValues":["DamageDealt","DamageTaken","Kills"],"facets":[],"base":"xs:string"}

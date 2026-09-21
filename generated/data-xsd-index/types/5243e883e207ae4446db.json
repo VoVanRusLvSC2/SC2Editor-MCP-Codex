@@ -1,0 +1,1 @@
+{"name":"SActorTermHasScopeFlag","kind":"complex","fields":[{"kind":"attribute","name":"Flag","type":"simple_EActorScopeFlags"},{"kind":"element","name":"Flag","type":"EActorScopeFlags","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

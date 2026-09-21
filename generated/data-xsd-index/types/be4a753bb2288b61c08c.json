@@ -1,0 +1,1 @@
+{"name":"SUserInstanceText","kind":"complex","fields":[{"kind":"attribute","name":"Text","type":"simple_CStringLink"},{"kind":"element","name":"Field","type":"SUserInstanceField","minOccurs":"0","maxOccurs":"1"},{"kind":"element","name":"Text","type":"CStringLink","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

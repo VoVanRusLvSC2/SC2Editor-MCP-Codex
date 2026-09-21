@@ -1,0 +1,17 @@
+{
+  "version": "1.1.0-alpha.11",
+  "tests": { "total": 205, "passed": 205, "failed": 0, "newRegressionTests": 7 },
+  "build": "PASS",
+  "lint": "PASS",
+  "portableCrossBuild": "PASS",
+  "portableMcpHttpSmoke": "PASS",
+  "moduleCount": 8,
+  "mcpToolCount": 128,
+  "completeEngineCoverage": false,
+  "sc2Editor": "NOT_EXECUTED",
+  "gameRuntime": "NOT_EXECUTED",
+  "windowsLauncherExecution": "NOT_EXECUTED",
+  "guiVisual": "NOT_EXECUTED",
+  "testLog": "project-regression-tests-alpha11.log",
+  "portableSmokeReport": "project-portable-smoke.json"
+}

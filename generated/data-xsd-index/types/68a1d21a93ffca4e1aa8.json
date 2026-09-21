@@ -1,0 +1,1 @@
+{"name":"SAbilReplace","kind":"complex","fields":[{"kind":"attribute","name":"New","type":"simple_CAbilLink"},{"kind":"attribute","name":"Origin","type":"simple_CAbilLink"},{"kind":"element","name":"New","type":"CAbilLink","minOccurs":"0","maxOccurs":"1"},{"kind":"element","name":"Origin","type":"CAbilLink","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

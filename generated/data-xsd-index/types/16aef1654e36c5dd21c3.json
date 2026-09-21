@@ -1,0 +1,1 @@
+{"name":"SHeroHeroicAbility","kind":"complex","fields":[{"kind":"attribute","name":"Abil","type":"simple_CAbilLink"},{"kind":"element","name":"Abil","type":"CAbilLink","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

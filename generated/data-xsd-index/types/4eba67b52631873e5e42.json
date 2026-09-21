@@ -1,0 +1,1 @@
+{"name":"SUserInstanceCompare","kind":"complex","fields":[{"kind":"attribute","name":"Compare","type":"simple_EValueCompare"},{"kind":"element","name":"Compare","type":"EValueCompare","minOccurs":"0","maxOccurs":"1"},{"kind":"element","name":"Field","type":"SUserInstanceField","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

@@ -1,0 +1,2172 @@
+{
+  "build": "5.0.16.97563",
+  "sha256": "9cab25db2b7dcfaaad207978b4eac07ec694f1f7cdbee4257d0db0845e14a164",
+  "cameraTypes": [
+    {
+      "nativeId": "CCutsceneNodeActiveCamera",
+      "displayName": "Active Camera",
+      "className": "CCutsceneNodeActiveCamera",
+      "category": "director-camera-track",
+      "representations": [
+        "xml-name",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x350D3B0"
+      ],
+      "rvas": [
+        "0x350E3B0"
+      ],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "vtable": null,
+      "factory": null,
+      "baseClass": null,
+      "confidence": 1,
+      "limitations": [
+        "Static string/RTTI evidence confirms the class token; factory, vtable, and inheritance still require targeted RTTI/COL recovery."
+      ]
+    },
+    {
+      "nativeId": "CCutsceneNodeBaseCamera",
+      "displayName": "Base Camera",
+      "className": "CCutsceneNodeBaseCamera",
+      "category": "camera",
+      "representations": [
+        "xml-name",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3AEEE40"
+      ],
+      "rvas": [
+        "0x3AEFE40"
+      ],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "vtable": null,
+      "factory": null,
+      "baseClass": null,
+      "confidence": 1,
+      "limitations": [
+        "Static string/RTTI evidence confirms the class token; factory, vtable, and inheritance still require targeted RTTI/COL recovery."
+      ]
+    },
+    {
+      "nativeId": "CCutsceneNodeCamera",
+      "displayName": "Camera",
+      "className": "CCutsceneNodeCamera",
+      "category": "camera",
+      "representations": [
+        "xml-name",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x350D2E8"
+      ],
+      "rvas": [
+        "0x350E2E8"
+      ],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "vtable": null,
+      "factory": null,
+      "baseClass": null,
+      "confidence": 1,
+      "limitations": [
+        "Static string/RTTI evidence confirms the class token; factory, vtable, and inheritance still require targeted RTTI/COL recovery."
+      ]
+    },
+    {
+      "nativeId": "CCutsceneNodeTargetCamera",
+      "displayName": "Target Camera",
+      "className": "CCutsceneNodeTargetCamera",
+      "category": "camera",
+      "representations": [
+        "xml-name",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3AEEFB8"
+      ],
+      "rvas": [
+        "0x3AEFFB8"
+      ],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "vtable": null,
+      "factory": null,
+      "baseClass": null,
+      "confidence": 1,
+      "limitations": [
+        "Static string/RTTI evidence confirms the class token; factory, vtable, and inheritance still require targeted RTTI/COL recovery."
+      ]
+    }
+  ],
+  "editorPropertyCluster": [
+    {
+      "category": "Camera",
+      "schemaObjectType": "@Category:Camera",
+      "property": "fov",
+      "displayName": "FOV",
+      "displayKey": "Cutscenes/Property/FOV",
+      "xmlNameCandidate": "fov",
+      "xmlNameStatus": "corpus-confirmed",
+      "valueType": "Decimal",
+      "keyframeable": "confirmed",
+      "readOnly": "unknown",
+      "editorOnly": false,
+      "fileOffset": "0x3AF87D0",
+      "rva": "0x3AF97D0",
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "confidence": 1,
+      "evidence": [
+        "SC2Editor property localization key Cutscenes/Property/FOV",
+        "Exact case-insensitive XML attribute match in Cutscene corpus: fov"
+      ]
+    },
+    {
+      "category": "Camera",
+      "schemaObjectType": "@Category:Camera",
+      "property": "nearClip",
+      "displayName": "NearClip",
+      "displayKey": "Cutscenes/Property/NearClip",
+      "xmlNameCandidate": "nearClip",
+      "xmlNameStatus": "corpus-confirmed",
+      "valueType": "Decimal",
+      "keyframeable": "confirmed",
+      "readOnly": "unknown",
+      "editorOnly": false,
+      "fileOffset": "0x3AF87F8",
+      "rva": "0x3AF97F8",
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "confidence": 1,
+      "evidence": [
+        "SC2Editor property localization key Cutscenes/Property/NearClip",
+        "Exact case-insensitive XML attribute match in Cutscene corpus: nearClip"
+      ]
+    },
+    {
+      "category": "Camera",
+      "schemaObjectType": "@Category:Camera",
+      "property": "farClip",
+      "displayName": "FarClip",
+      "displayKey": "Cutscenes/Property/FarClip",
+      "xmlNameCandidate": "farClip",
+      "xmlNameStatus": "corpus-confirmed",
+      "valueType": "Decimal",
+      "keyframeable": "confirmed",
+      "readOnly": "unknown",
+      "editorOnly": false,
+      "fileOffset": "0x3AF8818",
+      "rva": "0x3AF9818",
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "confidence": 1,
+      "evidence": [
+        "SC2Editor property localization key Cutscenes/Property/FarClip",
+        "Exact case-insensitive XML attribute match in Cutscene corpus: farClip"
+      ]
+    },
+    {
+      "category": "Camera",
+      "schemaObjectType": "@Category:Camera",
+      "property": "shadowClip",
+      "displayName": "ShadowClip",
+      "displayKey": "Cutscenes/Property/ShadowClip",
+      "xmlNameCandidate": "shadowClip",
+      "xmlNameStatus": "corpus-confirmed",
+      "valueType": "Decimal",
+      "keyframeable": "unknown",
+      "readOnly": "unknown",
+      "editorOnly": false,
+      "fileOffset": "0x3AF8838",
+      "rva": "0x3AF9838",
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "confidence": 1,
+      "evidence": [
+        "SC2Editor property localization key Cutscenes/Property/ShadowClip",
+        "Exact case-insensitive XML attribute match in Cutscene corpus: shadowClip"
+      ]
+    },
+    {
+      "category": "Camera",
+      "schemaObjectType": "@Category:Camera",
+      "property": "depthOfField",
+      "displayName": "DepthOfField",
+      "displayKey": "Cutscenes/Property/DepthOfField",
+      "xmlNameCandidate": "depthOfField",
+      "xmlNameStatus": "corpus-confirmed",
+      "valueType": "Decimal",
+      "keyframeable": "confirmed",
+      "readOnly": "unknown",
+      "editorOnly": false,
+      "fileOffset": "0x3AF8858",
+      "rva": "0x3AF9858",
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "confidence": 1,
+      "evidence": [
+        "SC2Editor property localization key Cutscenes/Property/DepthOfField",
+        "Exact case-insensitive XML attribute match in Cutscene corpus: depthOfField"
+      ]
+    },
+    {
+      "category": "Camera",
+      "schemaObjectType": "@Category:Camera",
+      "property": "focalDepth",
+      "displayName": "FocalDepth",
+      "displayKey": "Cutscenes/Property/FocalDepth",
+      "xmlNameCandidate": "focalDepth",
+      "xmlNameStatus": "corpus-confirmed",
+      "valueType": "Decimal",
+      "keyframeable": "confirmed",
+      "readOnly": "unknown",
+      "editorOnly": false,
+      "fileOffset": "0x3AF8878",
+      "rva": "0x3AF9878",
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "confidence": 1,
+      "evidence": [
+        "SC2Editor property localization key Cutscenes/Property/FocalDepth",
+        "Exact case-insensitive XML attribute match in Cutscene corpus: focalDepth"
+      ]
+    },
+    {
+      "category": "Camera",
+      "schemaObjectType": "@Category:Camera",
+      "property": "falloffStart",
+      "displayName": "FalloffStart",
+      "displayKey": "Cutscenes/Property/FalloffStart",
+      "xmlNameCandidate": "falloffStart",
+      "xmlNameStatus": "corpus-confirmed",
+      "valueType": "Decimal",
+      "keyframeable": "confirmed",
+      "readOnly": "unknown",
+      "editorOnly": false,
+      "fileOffset": "0x3AF8898",
+      "rva": "0x3AF9898",
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "confidence": 1,
+      "evidence": [
+        "SC2Editor property localization key Cutscenes/Property/FalloffStart",
+        "Exact case-insensitive XML attribute match in Cutscene corpus: falloffStart"
+      ]
+    },
+    {
+      "category": "Camera",
+      "schemaObjectType": "@Category:Camera",
+      "property": "falloffEnd",
+      "displayName": "FalloffEnd",
+      "displayKey": "Cutscenes/Property/FalloffEnd",
+      "xmlNameCandidate": "falloffEnd",
+      "xmlNameStatus": "corpus-confirmed",
+      "valueType": "Decimal",
+      "keyframeable": "confirmed",
+      "readOnly": "unknown",
+      "editorOnly": false,
+      "fileOffset": "0x3AF88B8",
+      "rva": "0x3AF98B8",
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "confidence": 1,
+      "evidence": [
+        "SC2Editor property localization key Cutscenes/Property/FalloffEnd",
+        "Exact case-insensitive XML attribute match in Cutscene corpus: falloffEnd"
+      ]
+    },
+    {
+      "category": "Camera",
+      "schemaObjectType": "@Category:Camera",
+      "property": "falloffStartNear",
+      "displayName": "FalloffStartNear",
+      "displayKey": "Cutscenes/Property/FalloffStartNear",
+      "xmlNameCandidate": "falloffStartNear",
+      "xmlNameStatus": "corpus-confirmed",
+      "valueType": "Decimal",
+      "keyframeable": "unknown",
+      "readOnly": "unknown",
+      "editorOnly": false,
+      "fileOffset": "0x3AF88D8",
+      "rva": "0x3AF98D8",
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "confidence": 1,
+      "evidence": [
+        "SC2Editor property localization key Cutscenes/Property/FalloffStartNear",
+        "Exact case-insensitive XML attribute match in Cutscene corpus: falloffStartNear"
+      ]
+    },
+    {
+      "category": "Camera",
+      "schemaObjectType": "@Category:Camera",
+      "property": "falloffEndNear",
+      "displayName": "FalloffEndNear",
+      "displayKey": "Cutscenes/Property/FalloffEndNear",
+      "xmlNameCandidate": "falloffEndNear",
+      "xmlNameStatus": "corpus-confirmed",
+      "valueType": "Decimal",
+      "keyframeable": "unknown",
+      "readOnly": "unknown",
+      "editorOnly": false,
+      "fileOffset": "0x3AF8900",
+      "rva": "0x3AF9900",
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "confidence": 1,
+      "evidence": [
+        "SC2Editor property localization key Cutscenes/Property/FalloffEndNear",
+        "Exact case-insensitive XML attribute match in Cutscene corpus: falloffEndNear"
+      ]
+    },
+    {
+      "category": "Camera",
+      "schemaObjectType": "@Category:Camera",
+      "property": "fstop",
+      "displayName": "BokehFStop",
+      "displayKey": "Cutscenes/Property/BokehFStop",
+      "xmlNameCandidate": "fstop",
+      "xmlNameStatus": "corpus-confirmed",
+      "valueType": "Decimal",
+      "keyframeable": "unknown",
+      "readOnly": "unknown",
+      "editorOnly": false,
+      "fileOffset": "0x3AF8928",
+      "rva": "0x3AF9928",
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "confidence": 1,
+      "evidence": [
+        "SC2Editor property localization key Cutscenes/Property/BokehFStop",
+        "Exact case-insensitive XML attribute match in Cutscene corpus: fstop"
+      ]
+    },
+    {
+      "category": "Camera",
+      "schemaObjectType": "@Category:Camera",
+      "property": "maxcoc",
+      "displayName": "BokehMaxCoC",
+      "displayKey": "Cutscenes/Property/BokehMaxCoC",
+      "xmlNameCandidate": "maxcoc",
+      "xmlNameStatus": "corpus-confirmed",
+      "valueType": "Decimal",
+      "keyframeable": "unknown",
+      "readOnly": "unknown",
+      "editorOnly": false,
+      "fileOffset": "0x3AF8950",
+      "rva": "0x3AF9950",
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "confidence": 1,
+      "evidence": [
+        "SC2Editor property localization key Cutscenes/Property/BokehMaxCoC",
+        "Exact case-insensitive XML attribute match in Cutscene corpus: maxcoc"
+      ]
+    },
+    {
+      "category": "Camera",
+      "schemaObjectType": "@Category:Camera",
+      "property": "doftype",
+      "displayName": "DOFType",
+      "displayKey": "Cutscenes/Property/DOFType",
+      "xmlNameCandidate": "doftype",
+      "xmlNameStatus": "corpus-confirmed",
+      "valueType": "Decimal",
+      "keyframeable": "unknown",
+      "readOnly": "unknown",
+      "editorOnly": false,
+      "fileOffset": "0x3AF8980",
+      "rva": "0x3AF9980",
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "confidence": 1,
+      "evidence": [
+        "SC2Editor property localization key Cutscenes/Property/DOFType",
+        "Exact case-insensitive XML attribute match in Cutscene corpus: doftype"
+      ]
+    },
+    {
+      "category": "Camera",
+      "schemaObjectType": "@Category:Camera",
+      "property": "roll",
+      "displayName": "Roll",
+      "displayKey": "Cutscenes/Property/Roll",
+      "xmlNameCandidate": "roll",
+      "xmlNameStatus": "corpus-confirmed",
+      "valueType": "Decimal",
+      "keyframeable": "confirmed",
+      "readOnly": "unknown",
+      "editorOnly": false,
+      "fileOffset": "0x3AF89B0",
+      "rva": "0x3AF99B0",
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "confidence": 1,
+      "evidence": [
+        "SC2Editor property localization key Cutscenes/Property/Roll",
+        "Exact case-insensitive XML attribute match in Cutscene corpus: roll"
+      ]
+    },
+    {
+      "category": "Camera",
+      "schemaObjectType": "@Category:Camera",
+      "property": "verticalFOV",
+      "displayName": "VerticalFOV",
+      "displayKey": "Cutscenes/Property/VerticalFOV",
+      "internalName": "verticalFOV",
+      "xmlNameCandidate": "verticalFOV",
+      "xmlNameStatus": "corpus-confirmed",
+      "valueType": "Decimal",
+      "keyframeable": "unknown",
+      "readOnly": "unknown",
+      "editorOnly": false,
+      "fileOffset": "0x3AF89D8",
+      "rva": "0x3AF99D8",
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "confidence": 1,
+      "evidence": [
+        "SC2Editor property localization key Cutscenes/Property/VerticalFOV",
+        "Adjacent internal token verticalFOV",
+        "Exact case-insensitive XML attribute match in Cutscene corpus: verticalFOV"
+      ]
+    },
+    {
+      "category": "Camera",
+      "schemaObjectType": "@Category:Camera",
+      "property": "distance",
+      "displayName": "Distance",
+      "displayKey": "Cutscenes/Property/Distance",
+      "xmlNameCandidate": "distance",
+      "xmlNameStatus": "corpus-confirmed",
+      "valueType": "Decimal",
+      "keyframeable": "confirmed",
+      "readOnly": "unknown",
+      "editorOnly": false,
+      "fileOffset": "0x3AF8EB0",
+      "rva": "0x3AF9EB0",
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "confidence": 1,
+      "evidence": [
+        "SC2Editor property localization key Cutscenes/Property/Distance",
+        "Exact case-insensitive XML attribute match in Cutscene corpus: distance"
+      ]
+    },
+    {
+      "category": "Camera",
+      "schemaObjectType": "@Category:Camera",
+      "property": "yaw",
+      "displayName": "Yaw",
+      "displayKey": "Cutscenes/Property/Yaw",
+      "xmlNameCandidate": "yaw",
+      "xmlNameStatus": "corpus-confirmed",
+      "valueType": "Decimal",
+      "keyframeable": "confirmed",
+      "readOnly": "unknown",
+      "editorOnly": false,
+      "fileOffset": "0x3AF8ED0",
+      "rva": "0x3AF9ED0",
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "confidence": 1,
+      "evidence": [
+        "SC2Editor property localization key Cutscenes/Property/Yaw",
+        "Exact case-insensitive XML attribute match in Cutscene corpus: yaw"
+      ]
+    },
+    {
+      "category": "Camera",
+      "schemaObjectType": "@Category:Camera",
+      "property": "heightOffset",
+      "displayName": "HeightOffset",
+      "displayKey": "Cutscenes/Property/HeightOffset",
+      "xmlNameCandidate": "heightOffset",
+      "xmlNameStatus": "corpus-confirmed",
+      "valueType": "Decimal",
+      "keyframeable": "confirmed",
+      "readOnly": "unknown",
+      "editorOnly": false,
+      "fileOffset": "0x3AF8EE8",
+      "rva": "0x3AF9EE8",
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "confidence": 1,
+      "evidence": [
+        "SC2Editor property localization key Cutscenes/Property/HeightOffset",
+        "Exact case-insensitive XML attribute match in Cutscene corpus: heightOffset"
+      ]
+    },
+    {
+      "category": "Camera",
+      "schemaObjectType": "@Category:Camera",
+      "property": "eyePositionX",
+      "displayName": "EyePositionX",
+      "displayKey": "Cutscenes/Property/EyePositionX",
+      "xmlNameCandidate": "eyePositionX",
+      "xmlNameStatus": "corpus-confirmed",
+      "valueType": "Decimal",
+      "keyframeable": "confirmed",
+      "readOnly": "unknown",
+      "editorOnly": false,
+      "fileOffset": "0x3AF8F08",
+      "rva": "0x3AF9F08",
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "confidence": 1,
+      "evidence": [
+        "SC2Editor property localization key Cutscenes/Property/EyePositionX",
+        "Exact case-insensitive XML attribute match in Cutscene corpus: eyePositionX"
+      ]
+    },
+    {
+      "category": "Camera",
+      "schemaObjectType": "@Category:Camera",
+      "property": "eyePositionY",
+      "displayName": "EyePositionY",
+      "displayKey": "Cutscenes/Property/EyePositionY",
+      "xmlNameCandidate": "eyePositionY",
+      "xmlNameStatus": "corpus-confirmed",
+      "valueType": "Decimal",
+      "keyframeable": "confirmed",
+      "readOnly": "unknown",
+      "editorOnly": false,
+      "fileOffset": "0x3AF8F28",
+      "rva": "0x3AF9F28",
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "confidence": 1,
+      "evidence": [
+        "SC2Editor property localization key Cutscenes/Property/EyePositionY",
+        "Exact case-insensitive XML attribute match in Cutscene corpus: eyePositionY"
+      ]
+    },
+    {
+      "category": "Camera",
+      "schemaObjectType": "@Category:Camera",
+      "property": "eyePositionZ",
+      "displayName": "EyePositionZ",
+      "displayKey": "Cutscenes/Property/EyePositionZ",
+      "xmlNameCandidate": "eyePositionZ",
+      "xmlNameStatus": "corpus-confirmed",
+      "valueType": "Decimal",
+      "keyframeable": "confirmed",
+      "readOnly": "unknown",
+      "editorOnly": false,
+      "fileOffset": "0x3AF8F48",
+      "rva": "0x3AF9F48",
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "confidence": 1,
+      "evidence": [
+        "SC2Editor property localization key Cutscenes/Property/EyePositionZ",
+        "Exact case-insensitive XML attribute match in Cutscene corpus: eyePositionZ"
+      ]
+    },
+    {
+      "category": "Camera",
+      "schemaObjectType": "@Category:Camera",
+      "property": "targetPositionX",
+      "displayName": "TargetPositionX",
+      "displayKey": "Cutscenes/Property/TargetPositionX",
+      "xmlNameCandidate": "targetPositionX",
+      "xmlNameStatus": "corpus-confirmed",
+      "valueType": "Decimal",
+      "keyframeable": "confirmed",
+      "readOnly": "unknown",
+      "editorOnly": false,
+      "fileOffset": "0x3AF8F68",
+      "rva": "0x3AF9F68",
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "confidence": 1,
+      "evidence": [
+        "SC2Editor property localization key Cutscenes/Property/TargetPositionX",
+        "Exact case-insensitive XML attribute match in Cutscene corpus: targetPositionX"
+      ]
+    },
+    {
+      "category": "Camera",
+      "schemaObjectType": "@Category:Camera",
+      "property": "targetPositionY",
+      "displayName": "TargetPositionY",
+      "displayKey": "Cutscenes/Property/TargetPositionY",
+      "xmlNameCandidate": "targetPositionY",
+      "xmlNameStatus": "corpus-confirmed",
+      "valueType": "Decimal",
+      "keyframeable": "confirmed",
+      "readOnly": "unknown",
+      "editorOnly": false,
+      "fileOffset": "0x3AF8F90",
+      "rva": "0x3AF9F90",
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "confidence": 1,
+      "evidence": [
+        "SC2Editor property localization key Cutscenes/Property/TargetPositionY",
+        "Exact case-insensitive XML attribute match in Cutscene corpus: targetPositionY"
+      ]
+    },
+    {
+      "category": "Camera",
+      "schemaObjectType": "@Category:Camera",
+      "property": "targetPositionZ",
+      "displayName": "TargetPositionZ",
+      "displayKey": "Cutscenes/Property/TargetPositionZ",
+      "xmlNameCandidate": "targetPositionZ",
+      "xmlNameStatus": "corpus-confirmed",
+      "valueType": "Decimal",
+      "keyframeable": "confirmed",
+      "readOnly": "unknown",
+      "editorOnly": false,
+      "fileOffset": "0x3AF8FB8",
+      "rva": "0x3AF9FB8",
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "confidence": 1,
+      "evidence": [
+        "SC2Editor property localization key Cutscenes/Property/TargetPositionZ",
+        "Exact case-insensitive XML attribute match in Cutscene corpus: targetPositionZ"
+      ]
+    }
+  ],
+  "properties": [
+    {
+      "property": "blendToTerrain",
+      "nativeTypes": [
+        "@Category:Object"
+      ],
+      "valueTypes": [
+        "Decimal"
+      ],
+      "editorDescriptor": "NOT_FOUND_IN_CAMERA_LOCALIZATION_CLUSTER",
+      "corpus": {
+        "status": "NOT_OBSERVED",
+        "observations": 0
+      },
+      "runtimeMapping": "NOT_PROVEN",
+      "status": "PRESERVE_ONLY"
+    },
+    {
+      "property": "depthOfField",
+      "nativeTypes": [
+        "@Category:Camera",
+        "CCutsceneNodeCamera",
+        "CCutsceneNodeTargetCamera"
+      ],
+      "valueTypes": [
+        "Decimal"
+      ],
+      "editorDescriptor": "FOUND_STRING_CLUSTER",
+      "editorEvidence": {
+        "category": "Camera",
+        "schemaObjectType": "@Category:Camera",
+        "property": "depthOfField",
+        "displayName": "DepthOfField",
+        "displayKey": "Cutscenes/Property/DepthOfField",
+        "xmlNameCandidate": "depthOfField",
+        "xmlNameStatus": "corpus-confirmed",
+        "valueType": "Decimal",
+        "keyframeable": "confirmed",
+        "readOnly": "unknown",
+        "editorOnly": false,
+        "fileOffset": "0x3AF8858",
+        "rva": "0x3AF9858",
+        "pointerRvas": [],
+        "xrefRvas": [],
+        "functions": [],
+        "confidence": 1,
+        "evidence": [
+          "SC2Editor property localization key Cutscenes/Property/DepthOfField",
+          "Exact case-insensitive XML attribute match in Cutscene corpus: depthOfField"
+        ]
+      },
+      "corpus": {
+        "status": "FOUND",
+        "observations": 2126
+      },
+      "runtimeMapping": {
+        "status": "CANDIDATE_NAME_MATCH_NOT_PROVEN_EQUIVALENT",
+        "constant": "c_cameraValueDepthOfField"
+      },
+      "status": "SUPPORTED_TYPED"
+    },
+    {
+      "property": "distance",
+      "nativeTypes": [
+        "@Category:Camera",
+        "CCutsceneNodeCamera"
+      ],
+      "valueTypes": [
+        "Decimal"
+      ],
+      "editorDescriptor": "FOUND_STRING_CLUSTER",
+      "editorEvidence": {
+        "category": "Camera",
+        "schemaObjectType": "@Category:Camera",
+        "property": "distance",
+        "displayName": "Distance",
+        "displayKey": "Cutscenes/Property/Distance",
+        "xmlNameCandidate": "distance",
+        "xmlNameStatus": "corpus-confirmed",
+        "valueType": "Decimal",
+        "keyframeable": "confirmed",
+        "readOnly": "unknown",
+        "editorOnly": false,
+        "fileOffset": "0x3AF8EB0",
+        "rva": "0x3AF9EB0",
+        "pointerRvas": [],
+        "xrefRvas": [],
+        "functions": [],
+        "confidence": 1,
+        "evidence": [
+          "SC2Editor property localization key Cutscenes/Property/Distance",
+          "Exact case-insensitive XML attribute match in Cutscene corpus: distance"
+        ]
+      },
+      "corpus": {
+        "status": "FOUND",
+        "observations": 2060
+      },
+      "runtimeMapping": {
+        "status": "CANDIDATE_NAME_MATCH_NOT_PROVEN_EQUIVALENT",
+        "constant": "c_cameraValueDistance"
+      },
+      "status": "SUPPORTED_TYPED"
+    },
+    {
+      "property": "doftype",
+      "nativeTypes": [
+        "@Category:Camera",
+        "CCutsceneNodeCamera",
+        "CCutsceneNodeTargetCamera"
+      ],
+      "valueTypes": [
+        "Decimal"
+      ],
+      "editorDescriptor": "FOUND_STRING_CLUSTER",
+      "editorEvidence": {
+        "category": "Camera",
+        "schemaObjectType": "@Category:Camera",
+        "property": "doftype",
+        "displayName": "DOFType",
+        "displayKey": "Cutscenes/Property/DOFType",
+        "xmlNameCandidate": "doftype",
+        "xmlNameStatus": "corpus-confirmed",
+        "valueType": "Decimal",
+        "keyframeable": "unknown",
+        "readOnly": "unknown",
+        "editorOnly": false,
+        "fileOffset": "0x3AF8980",
+        "rva": "0x3AF9980",
+        "pointerRvas": [],
+        "xrefRvas": [],
+        "functions": [],
+        "confidence": 1,
+        "evidence": [
+          "SC2Editor property localization key Cutscenes/Property/DOFType",
+          "Exact case-insensitive XML attribute match in Cutscene corpus: doftype"
+        ]
+      },
+      "corpus": {
+        "status": "FOUND",
+        "observations": 1983
+      },
+      "runtimeMapping": "NOT_PROVEN",
+      "status": "SUPPORTED_TYPED"
+    },
+    {
+      "property": "enabled",
+      "nativeTypes": [
+        "@Category:Node"
+      ],
+      "valueTypes": [
+        "Bool"
+      ],
+      "editorDescriptor": "NOT_FOUND_IN_CAMERA_LOCALIZATION_CLUSTER",
+      "corpus": {
+        "status": "NOT_OBSERVED",
+        "observations": 0
+      },
+      "runtimeMapping": "NOT_PROVEN",
+      "status": "PRESERVE_ONLY"
+    },
+    {
+      "property": "eyePositionX",
+      "nativeTypes": [
+        "@Category:Camera",
+        "CCutsceneNodeTargetCamera"
+      ],
+      "valueTypes": [
+        "Decimal"
+      ],
+      "editorDescriptor": "FOUND_STRING_CLUSTER",
+      "editorEvidence": {
+        "category": "Camera",
+        "schemaObjectType": "@Category:Camera",
+        "property": "eyePositionX",
+        "displayName": "EyePositionX",
+        "displayKey": "Cutscenes/Property/EyePositionX",
+        "xmlNameCandidate": "eyePositionX",
+        "xmlNameStatus": "corpus-confirmed",
+        "valueType": "Decimal",
+        "keyframeable": "confirmed",
+        "readOnly": "unknown",
+        "editorOnly": false,
+        "fileOffset": "0x3AF8F08",
+        "rva": "0x3AF9F08",
+        "pointerRvas": [],
+        "xrefRvas": [],
+        "functions": [],
+        "confidence": 1,
+        "evidence": [
+          "SC2Editor property localization key Cutscenes/Property/EyePositionX",
+          "Exact case-insensitive XML attribute match in Cutscene corpus: eyePositionX"
+        ]
+      },
+      "corpus": {
+        "status": "FOUND",
+        "observations": 66
+      },
+      "runtimeMapping": "NOT_PROVEN",
+      "status": "SUPPORTED_TYPED"
+    },
+    {
+      "property": "eyePositionY",
+      "nativeTypes": [
+        "@Category:Camera",
+        "CCutsceneNodeTargetCamera"
+      ],
+      "valueTypes": [
+        "Decimal"
+      ],
+      "editorDescriptor": "FOUND_STRING_CLUSTER",
+      "editorEvidence": {
+        "category": "Camera",
+        "schemaObjectType": "@Category:Camera",
+        "property": "eyePositionY",
+        "displayName": "EyePositionY",
+        "displayKey": "Cutscenes/Property/EyePositionY",
+        "xmlNameCandidate": "eyePositionY",
+        "xmlNameStatus": "corpus-confirmed",
+        "valueType": "Decimal",
+        "keyframeable": "confirmed",
+        "readOnly": "unknown",
+        "editorOnly": false,
+        "fileOffset": "0x3AF8F28",
+        "rva": "0x3AF9F28",
+        "pointerRvas": [],
+        "xrefRvas": [],
+        "functions": [],
+        "confidence": 1,
+        "evidence": [
+          "SC2Editor property localization key Cutscenes/Property/EyePositionY",
+          "Exact case-insensitive XML attribute match in Cutscene corpus: eyePositionY"
+        ]
+      },
+      "corpus": {
+        "status": "FOUND",
+        "observations": 66
+      },
+      "runtimeMapping": "NOT_PROVEN",
+      "status": "SUPPORTED_TYPED"
+    },
+    {
+      "property": "eyePositionZ",
+      "nativeTypes": [
+        "@Category:Camera",
+        "CCutsceneNodeTargetCamera"
+      ],
+      "valueTypes": [
+        "Decimal"
+      ],
+      "editorDescriptor": "FOUND_STRING_CLUSTER",
+      "editorEvidence": {
+        "category": "Camera",
+        "schemaObjectType": "@Category:Camera",
+        "property": "eyePositionZ",
+        "displayName": "EyePositionZ",
+        "displayKey": "Cutscenes/Property/EyePositionZ",
+        "xmlNameCandidate": "eyePositionZ",
+        "xmlNameStatus": "corpus-confirmed",
+        "valueType": "Decimal",
+        "keyframeable": "confirmed",
+        "readOnly": "unknown",
+        "editorOnly": false,
+        "fileOffset": "0x3AF8F48",
+        "rva": "0x3AF9F48",
+        "pointerRvas": [],
+        "xrefRvas": [],
+        "functions": [],
+        "confidence": 1,
+        "evidence": [
+          "SC2Editor property localization key Cutscenes/Property/EyePositionZ",
+          "Exact case-insensitive XML attribute match in Cutscene corpus: eyePositionZ"
+        ]
+      },
+      "corpus": {
+        "status": "FOUND",
+        "observations": 66
+      },
+      "runtimeMapping": "NOT_PROVEN",
+      "status": "SUPPORTED_TYPED"
+    },
+    {
+      "property": "falloffEnd",
+      "nativeTypes": [
+        "@Category:Camera",
+        "CCutsceneNodeCamera",
+        "CCutsceneNodeTargetCamera"
+      ],
+      "valueTypes": [
+        "Decimal"
+      ],
+      "editorDescriptor": "FOUND_STRING_CLUSTER",
+      "editorEvidence": {
+        "category": "Camera",
+        "schemaObjectType": "@Category:Camera",
+        "property": "falloffEnd",
+        "displayName": "FalloffEnd",
+        "displayKey": "Cutscenes/Property/FalloffEnd",
+        "xmlNameCandidate": "falloffEnd",
+        "xmlNameStatus": "corpus-confirmed",
+        "valueType": "Decimal",
+        "keyframeable": "confirmed",
+        "readOnly": "unknown",
+        "editorOnly": false,
+        "fileOffset": "0x3AF88B8",
+        "rva": "0x3AF98B8",
+        "pointerRvas": [],
+        "xrefRvas": [],
+        "functions": [],
+        "confidence": 1,
+        "evidence": [
+          "SC2Editor property localization key Cutscenes/Property/FalloffEnd",
+          "Exact case-insensitive XML attribute match in Cutscene corpus: falloffEnd"
+        ]
+      },
+      "corpus": {
+        "status": "FOUND",
+        "observations": 2126
+      },
+      "runtimeMapping": {
+        "status": "CANDIDATE_NAME_MATCH_NOT_PROVEN_EQUIVALENT",
+        "constant": "c_cameraValueFalloffEnd"
+      },
+      "status": "SUPPORTED_TYPED"
+    },
+    {
+      "property": "falloffEndNear",
+      "nativeTypes": [
+        "@Category:Camera",
+        "CCutsceneNodeCamera",
+        "CCutsceneNodeTargetCamera"
+      ],
+      "valueTypes": [
+        "Decimal"
+      ],
+      "editorDescriptor": "FOUND_STRING_CLUSTER",
+      "editorEvidence": {
+        "category": "Camera",
+        "schemaObjectType": "@Category:Camera",
+        "property": "falloffEndNear",
+        "displayName": "FalloffEndNear",
+        "displayKey": "Cutscenes/Property/FalloffEndNear",
+        "xmlNameCandidate": "falloffEndNear",
+        "xmlNameStatus": "corpus-confirmed",
+        "valueType": "Decimal",
+        "keyframeable": "unknown",
+        "readOnly": "unknown",
+        "editorOnly": false,
+        "fileOffset": "0x3AF8900",
+        "rva": "0x3AF9900",
+        "pointerRvas": [],
+        "xrefRvas": [],
+        "functions": [],
+        "confidence": 1,
+        "evidence": [
+          "SC2Editor property localization key Cutscenes/Property/FalloffEndNear",
+          "Exact case-insensitive XML attribute match in Cutscene corpus: falloffEndNear"
+        ]
+      },
+      "corpus": {
+        "status": "FOUND",
+        "observations": 2025
+      },
+      "runtimeMapping": {
+        "status": "CANDIDATE_NAME_MATCH_NOT_PROVEN_EQUIVALENT",
+        "constant": "c_cameraValueFalloffEndNear"
+      },
+      "status": "SUPPORTED_TYPED"
+    },
+    {
+      "property": "falloffStart",
+      "nativeTypes": [
+        "@Category:Camera",
+        "CCutsceneNodeCamera",
+        "CCutsceneNodeTargetCamera"
+      ],
+      "valueTypes": [
+        "Decimal"
+      ],
+      "editorDescriptor": "FOUND_STRING_CLUSTER",
+      "editorEvidence": {
+        "category": "Camera",
+        "schemaObjectType": "@Category:Camera",
+        "property": "falloffStart",
+        "displayName": "FalloffStart",
+        "displayKey": "Cutscenes/Property/FalloffStart",
+        "xmlNameCandidate": "falloffStart",
+        "xmlNameStatus": "corpus-confirmed",
+        "valueType": "Decimal",
+        "keyframeable": "confirmed",
+        "readOnly": "unknown",
+        "editorOnly": false,
+        "fileOffset": "0x3AF8898",
+        "rva": "0x3AF9898",
+        "pointerRvas": [],
+        "xrefRvas": [],
+        "functions": [],
+        "confidence": 1,
+        "evidence": [
+          "SC2Editor property localization key Cutscenes/Property/FalloffStart",
+          "Exact case-insensitive XML attribute match in Cutscene corpus: falloffStart"
+        ]
+      },
+      "corpus": {
+        "status": "FOUND",
+        "observations": 2126
+      },
+      "runtimeMapping": {
+        "status": "CANDIDATE_NAME_MATCH_NOT_PROVEN_EQUIVALENT",
+        "constant": "c_cameraValueFalloffStart"
+      },
+      "status": "SUPPORTED_TYPED"
+    },
+    {
+      "property": "falloffStartNear",
+      "nativeTypes": [
+        "@Category:Camera",
+        "CCutsceneNodeCamera",
+        "CCutsceneNodeTargetCamera"
+      ],
+      "valueTypes": [
+        "Decimal"
+      ],
+      "editorDescriptor": "FOUND_STRING_CLUSTER",
+      "editorEvidence": {
+        "category": "Camera",
+        "schemaObjectType": "@Category:Camera",
+        "property": "falloffStartNear",
+        "displayName": "FalloffStartNear",
+        "displayKey": "Cutscenes/Property/FalloffStartNear",
+        "xmlNameCandidate": "falloffStartNear",
+        "xmlNameStatus": "corpus-confirmed",
+        "valueType": "Decimal",
+        "keyframeable": "unknown",
+        "readOnly": "unknown",
+        "editorOnly": false,
+        "fileOffset": "0x3AF88D8",
+        "rva": "0x3AF98D8",
+        "pointerRvas": [],
+        "xrefRvas": [],
+        "functions": [],
+        "confidence": 1,
+        "evidence": [
+          "SC2Editor property localization key Cutscenes/Property/FalloffStartNear",
+          "Exact case-insensitive XML attribute match in Cutscene corpus: falloffStartNear"
+        ]
+      },
+      "corpus": {
+        "status": "FOUND",
+        "observations": 2025
+      },
+      "runtimeMapping": {
+        "status": "CANDIDATE_NAME_MATCH_NOT_PROVEN_EQUIVALENT",
+        "constant": "c_cameraValueFalloffStartNear"
+      },
+      "status": "SUPPORTED_TYPED"
+    },
+    {
+      "property": "farClip",
+      "nativeTypes": [
+        "@Category:Camera",
+        "CCutsceneNodeCamera",
+        "CCutsceneNodeTargetCamera"
+      ],
+      "valueTypes": [
+        "Decimal"
+      ],
+      "editorDescriptor": "FOUND_STRING_CLUSTER",
+      "editorEvidence": {
+        "category": "Camera",
+        "schemaObjectType": "@Category:Camera",
+        "property": "farClip",
+        "displayName": "FarClip",
+        "displayKey": "Cutscenes/Property/FarClip",
+        "xmlNameCandidate": "farClip",
+        "xmlNameStatus": "corpus-confirmed",
+        "valueType": "Decimal",
+        "keyframeable": "confirmed",
+        "readOnly": "unknown",
+        "editorOnly": false,
+        "fileOffset": "0x3AF8818",
+        "rva": "0x3AF9818",
+        "pointerRvas": [],
+        "xrefRvas": [],
+        "functions": [],
+        "confidence": 1,
+        "evidence": [
+          "SC2Editor property localization key Cutscenes/Property/FarClip",
+          "Exact case-insensitive XML attribute match in Cutscene corpus: farClip"
+        ]
+      },
+      "corpus": {
+        "status": "FOUND",
+        "observations": 2126
+      },
+      "runtimeMapping": {
+        "status": "CANDIDATE_NAME_MATCH_NOT_PROVEN_EQUIVALENT",
+        "constant": "c_cameraValueFarClip"
+      },
+      "status": "SUPPORTED_TYPED"
+    },
+    {
+      "property": "filter",
+      "nativeTypes": [
+        "@Category:Node"
+      ],
+      "valueTypes": [
+        "String"
+      ],
+      "editorDescriptor": "NOT_FOUND_IN_CAMERA_LOCALIZATION_CLUSTER",
+      "corpus": {
+        "status": "NOT_OBSERVED",
+        "observations": 0
+      },
+      "runtimeMapping": "NOT_PROVEN",
+      "status": "PRESERVE_ONLY"
+    },
+    {
+      "property": "finderTag",
+      "nativeTypes": [
+        "@Category:Object",
+        "CCutsceneNodeCamera"
+      ],
+      "valueTypes": [
+        "String"
+      ],
+      "editorDescriptor": "NOT_FOUND_IN_CAMERA_LOCALIZATION_CLUSTER",
+      "corpus": {
+        "status": "FOUND",
+        "observations": 124
+      },
+      "runtimeMapping": "NOT_PROVEN",
+      "status": "SUPPORTED_TYPED"
+    },
+    {
+      "property": "focalDepth",
+      "nativeTypes": [
+        "@Category:Camera",
+        "CCutsceneNodeCamera",
+        "CCutsceneNodeTargetCamera"
+      ],
+      "valueTypes": [
+        "Decimal"
+      ],
+      "editorDescriptor": "FOUND_STRING_CLUSTER",
+      "editorEvidence": {
+        "category": "Camera",
+        "schemaObjectType": "@Category:Camera",
+        "property": "focalDepth",
+        "displayName": "FocalDepth",
+        "displayKey": "Cutscenes/Property/FocalDepth",
+        "xmlNameCandidate": "focalDepth",
+        "xmlNameStatus": "corpus-confirmed",
+        "valueType": "Decimal",
+        "keyframeable": "confirmed",
+        "readOnly": "unknown",
+        "editorOnly": false,
+        "fileOffset": "0x3AF8878",
+        "rva": "0x3AF9878",
+        "pointerRvas": [],
+        "xrefRvas": [],
+        "functions": [],
+        "confidence": 1,
+        "evidence": [
+          "SC2Editor property localization key Cutscenes/Property/FocalDepth",
+          "Exact case-insensitive XML attribute match in Cutscene corpus: focalDepth"
+        ]
+      },
+      "corpus": {
+        "status": "FOUND",
+        "observations": 2126
+      },
+      "runtimeMapping": {
+        "status": "CANDIDATE_NAME_MATCH_NOT_PROVEN_EQUIVALENT",
+        "constant": "c_cameraValueFocalDepth"
+      },
+      "status": "SUPPORTED_TYPED"
+    },
+    {
+      "property": "fogVisibility",
+      "nativeTypes": [
+        "@Category:Object"
+      ],
+      "valueTypes": [
+        "Enum"
+      ],
+      "editorDescriptor": "NOT_FOUND_IN_CAMERA_LOCALIZATION_CLUSTER",
+      "corpus": {
+        "status": "NOT_OBSERVED",
+        "observations": 0
+      },
+      "runtimeMapping": "NOT_PROVEN",
+      "status": "PRESERVE_ONLY"
+    },
+    {
+      "property": "followTerrainOffset",
+      "nativeTypes": [
+        "@Category:Object"
+      ],
+      "valueTypes": [
+        "Decimal"
+      ],
+      "editorDescriptor": "NOT_FOUND_IN_CAMERA_LOCALIZATION_CLUSTER",
+      "corpus": {
+        "status": "NOT_OBSERVED",
+        "observations": 0
+      },
+      "runtimeMapping": "NOT_PROVEN",
+      "status": "PRESERVE_ONLY"
+    },
+    {
+      "property": "fov",
+      "nativeTypes": [
+        "@Category:Camera",
+        "CCutsceneNodeCamera",
+        "CCutsceneNodeTargetCamera"
+      ],
+      "valueTypes": [
+        "Decimal"
+      ],
+      "editorDescriptor": "FOUND_STRING_CLUSTER",
+      "editorEvidence": {
+        "category": "Camera",
+        "schemaObjectType": "@Category:Camera",
+        "property": "fov",
+        "displayName": "FOV",
+        "displayKey": "Cutscenes/Property/FOV",
+        "xmlNameCandidate": "fov",
+        "xmlNameStatus": "corpus-confirmed",
+        "valueType": "Decimal",
+        "keyframeable": "confirmed",
+        "readOnly": "unknown",
+        "editorOnly": false,
+        "fileOffset": "0x3AF87D0",
+        "rva": "0x3AF97D0",
+        "pointerRvas": [],
+        "xrefRvas": [],
+        "functions": [],
+        "confidence": 1,
+        "evidence": [
+          "SC2Editor property localization key Cutscenes/Property/FOV",
+          "Exact case-insensitive XML attribute match in Cutscene corpus: fov"
+        ]
+      },
+      "corpus": {
+        "status": "FOUND",
+        "observations": 2126
+      },
+      "runtimeMapping": {
+        "status": "CANDIDATE_NAME_MATCH_NOT_PROVEN_EQUIVALENT",
+        "constant": "c_cameraValueFieldOfView"
+      },
+      "status": "SUPPORTED_TYPED"
+    },
+    {
+      "property": "fstop",
+      "nativeTypes": [
+        "@Category:Camera",
+        "CCutsceneNodeCamera",
+        "CCutsceneNodeTargetCamera"
+      ],
+      "valueTypes": [
+        "Decimal"
+      ],
+      "editorDescriptor": "FOUND_STRING_CLUSTER",
+      "editorEvidence": {
+        "category": "Camera",
+        "schemaObjectType": "@Category:Camera",
+        "property": "fstop",
+        "displayName": "BokehFStop",
+        "displayKey": "Cutscenes/Property/BokehFStop",
+        "xmlNameCandidate": "fstop",
+        "xmlNameStatus": "corpus-confirmed",
+        "valueType": "Decimal",
+        "keyframeable": "unknown",
+        "readOnly": "unknown",
+        "editorOnly": false,
+        "fileOffset": "0x3AF8928",
+        "rva": "0x3AF9928",
+        "pointerRvas": [],
+        "xrefRvas": [],
+        "functions": [],
+        "confidence": 1,
+        "evidence": [
+          "SC2Editor property localization key Cutscenes/Property/BokehFStop",
+          "Exact case-insensitive XML attribute match in Cutscene corpus: fstop"
+        ]
+      },
+      "corpus": {
+        "status": "FOUND",
+        "observations": 241
+      },
+      "runtimeMapping": "NOT_PROVEN",
+      "status": "SUPPORTED_TYPED"
+    },
+    {
+      "property": "guid",
+      "nativeTypes": [
+        "@Category:Commandable",
+        "CCutsceneNodeCamera",
+        "CCutsceneNodeTargetCamera"
+      ],
+      "valueTypes": [
+        "ObjectRef",
+        "String"
+      ],
+      "editorDescriptor": "NOT_FOUND_IN_CAMERA_LOCALIZATION_CLUSTER",
+      "corpus": {
+        "status": "FOUND",
+        "observations": 2126
+      },
+      "runtimeMapping": "NOT_PROVEN",
+      "status": "SUPPORTED_TYPED"
+    },
+    {
+      "property": "guide",
+      "nativeTypes": [
+        "@Category:Node"
+      ],
+      "valueTypes": [
+        "ObjectRef"
+      ],
+      "editorDescriptor": "NOT_FOUND_IN_CAMERA_LOCALIZATION_CLUSTER",
+      "corpus": {
+        "status": "NOT_OBSERVED",
+        "observations": 0
+      },
+      "runtimeMapping": "NOT_PROVEN",
+      "status": "PRESERVE_ONLY"
+    },
+    {
+      "property": "heightOffset",
+      "nativeTypes": [
+        "@Category:Camera",
+        "CCutsceneNodeCamera"
+      ],
+      "valueTypes": [
+        "Decimal"
+      ],
+      "editorDescriptor": "FOUND_STRING_CLUSTER",
+      "editorEvidence": {
+        "category": "Camera",
+        "schemaObjectType": "@Category:Camera",
+        "property": "heightOffset",
+        "displayName": "HeightOffset",
+        "displayKey": "Cutscenes/Property/HeightOffset",
+        "xmlNameCandidate": "heightOffset",
+        "xmlNameStatus": "corpus-confirmed",
+        "valueType": "Decimal",
+        "keyframeable": "confirmed",
+        "readOnly": "unknown",
+        "editorOnly": false,
+        "fileOffset": "0x3AF8EE8",
+        "rva": "0x3AF9EE8",
+        "pointerRvas": [],
+        "xrefRvas": [],
+        "functions": [],
+        "confidence": 1,
+        "evidence": [
+          "SC2Editor property localization key Cutscenes/Property/HeightOffset",
+          "Exact case-insensitive XML attribute match in Cutscene corpus: heightOffset"
+        ]
+      },
+      "corpus": {
+        "status": "FOUND",
+        "observations": 2060
+      },
+      "runtimeMapping": {
+        "status": "CANDIDATE_NAME_MATCH_NOT_PROVEN_EQUIVALENT",
+        "constant": "c_cameraValueHeightOffset"
+      },
+      "status": "SUPPORTED_TYPED"
+    },
+    {
+      "property": "locked",
+      "nativeTypes": [
+        "@Category:Node",
+        "CCutsceneNodeCamera"
+      ],
+      "valueTypes": [
+        "Bool"
+      ],
+      "editorDescriptor": "NOT_FOUND_IN_CAMERA_LOCALIZATION_CLUSTER",
+      "corpus": {
+        "status": "FOUND",
+        "observations": 10
+      },
+      "runtimeMapping": "NOT_PROVEN",
+      "status": "SUPPORTED_TYPED"
+    },
+    {
+      "property": "maxcoc",
+      "nativeTypes": [
+        "@Category:Camera",
+        "CCutsceneNodeCamera",
+        "CCutsceneNodeTargetCamera"
+      ],
+      "valueTypes": [
+        "Decimal"
+      ],
+      "editorDescriptor": "FOUND_STRING_CLUSTER",
+      "editorEvidence": {
+        "category": "Camera",
+        "schemaObjectType": "@Category:Camera",
+        "property": "maxcoc",
+        "displayName": "BokehMaxCoC",
+        "displayKey": "Cutscenes/Property/BokehMaxCoC",
+        "xmlNameCandidate": "maxcoc",
+        "xmlNameStatus": "corpus-confirmed",
+        "valueType": "Decimal",
+        "keyframeable": "unknown",
+        "readOnly": "unknown",
+        "editorOnly": false,
+        "fileOffset": "0x3AF8950",
+        "rva": "0x3AF9950",
+        "pointerRvas": [],
+        "xrefRvas": [],
+        "functions": [],
+        "confidence": 1,
+        "evidence": [
+          "SC2Editor property localization key Cutscenes/Property/BokehMaxCoC",
+          "Exact case-insensitive XML attribute match in Cutscene corpus: maxcoc"
+        ]
+      },
+      "corpus": {
+        "status": "FOUND",
+        "observations": 21
+      },
+      "runtimeMapping": "NOT_PROVEN",
+      "status": "SUPPORTED_TYPED"
+    },
+    {
+      "property": "name",
+      "nativeTypes": [
+        "@Category:Node",
+        "CCutsceneNodeCamera",
+        "CCutsceneNodeTargetCamera"
+      ],
+      "valueTypes": [
+        "String"
+      ],
+      "editorDescriptor": "NOT_FOUND_IN_CAMERA_LOCALIZATION_CLUSTER",
+      "corpus": {
+        "status": "FOUND",
+        "observations": 2126
+      },
+      "runtimeMapping": "NOT_PROVEN",
+      "status": "SUPPORTED_TYPED"
+    },
+    {
+      "property": "nearClip",
+      "nativeTypes": [
+        "@Category:Camera",
+        "CCutsceneNodeCamera",
+        "CCutsceneNodeTargetCamera"
+      ],
+      "valueTypes": [
+        "Decimal"
+      ],
+      "editorDescriptor": "FOUND_STRING_CLUSTER",
+      "editorEvidence": {
+        "category": "Camera",
+        "schemaObjectType": "@Category:Camera",
+        "property": "nearClip",
+        "displayName": "NearClip",
+        "displayKey": "Cutscenes/Property/NearClip",
+        "xmlNameCandidate": "nearClip",
+        "xmlNameStatus": "corpus-confirmed",
+        "valueType": "Decimal",
+        "keyframeable": "confirmed",
+        "readOnly": "unknown",
+        "editorOnly": false,
+        "fileOffset": "0x3AF87F8",
+        "rva": "0x3AF97F8",
+        "pointerRvas": [],
+        "xrefRvas": [],
+        "functions": [],
+        "confidence": 1,
+        "evidence": [
+          "SC2Editor property localization key Cutscenes/Property/NearClip",
+          "Exact case-insensitive XML attribute match in Cutscene corpus: nearClip"
+        ]
+      },
+      "corpus": {
+        "status": "FOUND",
+        "observations": 2126
+      },
+      "runtimeMapping": {
+        "status": "CANDIDATE_NAME_MATCH_NOT_PROVEN_EQUIVALENT",
+        "constant": "c_cameraValueNearClip"
+      },
+      "status": "SUPPORTED_TYPED"
+    },
+    {
+      "property": "parentID",
+      "nativeTypes": [
+        "@Category:Commandable"
+      ],
+      "valueTypes": [
+        "ObjectRef"
+      ],
+      "editorDescriptor": "NOT_FOUND_IN_CAMERA_LOCALIZATION_CLUSTER",
+      "corpus": {
+        "status": "NOT_OBSERVED",
+        "observations": 0
+      },
+      "runtimeMapping": "NOT_PROVEN",
+      "status": "PRESERVE_ONLY"
+    },
+    {
+      "property": "pitch",
+      "nativeTypes": [
+        "CCutsceneNodeCamera"
+      ],
+      "valueTypes": [
+        "Decimal"
+      ],
+      "editorDescriptor": "NOT_FOUND_IN_CAMERA_LOCALIZATION_CLUSTER",
+      "corpus": {
+        "status": "FOUND",
+        "observations": 2060
+      },
+      "runtimeMapping": {
+        "status": "CANDIDATE_NAME_MATCH_NOT_PROVEN_EQUIVALENT",
+        "constant": "c_cameraValuePitch"
+      },
+      "status": "SUPPORTED_TYPED"
+    },
+    {
+      "property": "position",
+      "nativeTypes": [
+        "CCutsceneNodeCamera",
+        "CCutsceneNodeTargetCamera"
+      ],
+      "valueTypes": [
+        "Struct"
+      ],
+      "editorDescriptor": "NOT_FOUND_IN_CAMERA_LOCALIZATION_CLUSTER",
+      "corpus": {
+        "status": "FOUND",
+        "observations": 2079
+      },
+      "runtimeMapping": "NOT_PROVEN",
+      "status": "SUPPORTED_TYPED"
+    },
+    {
+      "property": "positionX",
+      "nativeTypes": [
+        "@Category:Object"
+      ],
+      "valueTypes": [
+        "Decimal"
+      ],
+      "editorDescriptor": "NOT_FOUND_IN_CAMERA_LOCALIZATION_CLUSTER",
+      "corpus": {
+        "status": "NOT_OBSERVED",
+        "observations": 0
+      },
+      "runtimeMapping": "NOT_PROVEN",
+      "status": "PRESERVE_ONLY"
+    },
+    {
+      "property": "positionY",
+      "nativeTypes": [
+        "@Category:Object"
+      ],
+      "valueTypes": [
+        "Decimal"
+      ],
+      "editorDescriptor": "NOT_FOUND_IN_CAMERA_LOCALIZATION_CLUSTER",
+      "corpus": {
+        "status": "NOT_OBSERVED",
+        "observations": 0
+      },
+      "runtimeMapping": "NOT_PROVEN",
+      "status": "PRESERVE_ONLY"
+    },
+    {
+      "property": "positionZ",
+      "nativeTypes": [
+        "@Category:Object"
+      ],
+      "valueTypes": [
+        "Decimal"
+      ],
+      "editorDescriptor": "NOT_FOUND_IN_CAMERA_LOCALIZATION_CLUSTER",
+      "corpus": {
+        "status": "NOT_OBSERVED",
+        "observations": 0
+      },
+      "runtimeMapping": "NOT_PROVEN",
+      "status": "PRESERVE_ONLY"
+    },
+    {
+      "property": "referenceFile",
+      "nativeTypes": [
+        "@Category:Commandable",
+        "CCutsceneNodeCamera",
+        "CCutsceneNodeTargetCamera"
+      ],
+      "valueTypes": [
+        "Decimal",
+        "AssetRef"
+      ],
+      "editorDescriptor": "NOT_FOUND_IN_CAMERA_LOCALIZATION_CLUSTER",
+      "corpus": {
+        "status": "FOUND",
+        "observations": 778
+      },
+      "runtimeMapping": "NOT_PROVEN",
+      "status": "SUPPORTED_TYPED"
+    },
+    {
+      "property": "referenceGuid",
+      "nativeTypes": [
+        "@Category:Commandable",
+        "CCutsceneNodeCamera",
+        "CCutsceneNodeTargetCamera"
+      ],
+      "valueTypes": [
+        "ObjectRef"
+      ],
+      "editorDescriptor": "NOT_FOUND_IN_CAMERA_LOCALIZATION_CLUSTER",
+      "corpus": {
+        "status": "FOUND",
+        "observations": 778
+      },
+      "runtimeMapping": "NOT_PROVEN",
+      "status": "SUPPORTED_TYPED"
+    },
+    {
+      "property": "roll",
+      "nativeTypes": [
+        "@Category:Camera",
+        "CCutsceneNodeCamera",
+        "CCutsceneNodeTargetCamera"
+      ],
+      "valueTypes": [
+        "Decimal"
+      ],
+      "editorDescriptor": "FOUND_STRING_CLUSTER",
+      "editorEvidence": {
+        "category": "Camera",
+        "schemaObjectType": "@Category:Camera",
+        "property": "roll",
+        "displayName": "Roll",
+        "displayKey": "Cutscenes/Property/Roll",
+        "xmlNameCandidate": "roll",
+        "xmlNameStatus": "corpus-confirmed",
+        "valueType": "Decimal",
+        "keyframeable": "confirmed",
+        "readOnly": "unknown",
+        "editorOnly": false,
+        "fileOffset": "0x3AF89B0",
+        "rva": "0x3AF99B0",
+        "pointerRvas": [],
+        "xrefRvas": [],
+        "functions": [],
+        "confidence": 1,
+        "evidence": [
+          "SC2Editor property localization key Cutscenes/Property/Roll",
+          "Exact case-insensitive XML attribute match in Cutscene corpus: roll"
+        ]
+      },
+      "corpus": {
+        "status": "FOUND",
+        "observations": 2126
+      },
+      "runtimeMapping": {
+        "status": "CANDIDATE_NAME_MATCH_NOT_PROVEN_EQUIVALENT",
+        "constant": "c_cameraValueRoll"
+      },
+      "status": "SUPPORTED_TYPED"
+    },
+    {
+      "property": "rotation",
+      "nativeTypes": [
+        "@Category:Object",
+        "CCutsceneNodeCamera",
+        "CCutsceneNodeTargetCamera"
+      ],
+      "valueTypes": [
+        "Vec3",
+        "Struct"
+      ],
+      "editorDescriptor": "NOT_FOUND_IN_CAMERA_LOCALIZATION_CLUSTER",
+      "corpus": {
+        "status": "FOUND",
+        "observations": 45
+      },
+      "runtimeMapping": "NOT_PROVEN",
+      "status": "SUPPORTED_TYPED"
+    },
+    {
+      "property": "rotationX",
+      "nativeTypes": [
+        "@Category:Object"
+      ],
+      "valueTypes": [
+        "Decimal"
+      ],
+      "editorDescriptor": "NOT_FOUND_IN_CAMERA_LOCALIZATION_CLUSTER",
+      "corpus": {
+        "status": "NOT_OBSERVED",
+        "observations": 0
+      },
+      "runtimeMapping": "NOT_PROVEN",
+      "status": "PRESERVE_ONLY"
+    },
+    {
+      "property": "rotationY",
+      "nativeTypes": [
+        "@Category:Object"
+      ],
+      "valueTypes": [
+        "Decimal"
+      ],
+      "editorDescriptor": "NOT_FOUND_IN_CAMERA_LOCALIZATION_CLUSTER",
+      "corpus": {
+        "status": "NOT_OBSERVED",
+        "observations": 0
+      },
+      "runtimeMapping": "NOT_PROVEN",
+      "status": "PRESERVE_ONLY"
+    },
+    {
+      "property": "rotationZ",
+      "nativeTypes": [
+        "@Category:Object"
+      ],
+      "valueTypes": [
+        "Decimal"
+      ],
+      "editorDescriptor": "NOT_FOUND_IN_CAMERA_LOCALIZATION_CLUSTER",
+      "corpus": {
+        "status": "NOT_OBSERVED",
+        "observations": 0
+      },
+      "runtimeMapping": "NOT_PROVEN",
+      "status": "PRESERVE_ONLY"
+    },
+    {
+      "property": "scale",
+      "nativeTypes": [
+        "CCutsceneNodeTargetCamera"
+      ],
+      "valueTypes": [
+        "Struct"
+      ],
+      "editorDescriptor": "NOT_FOUND_IN_CAMERA_LOCALIZATION_CLUSTER",
+      "corpus": {
+        "status": "FOUND",
+        "observations": 1
+      },
+      "runtimeMapping": "NOT_PROVEN",
+      "status": "SUPPORTED_TYPED"
+    },
+    {
+      "property": "scaleX",
+      "nativeTypes": [
+        "@Category:Object"
+      ],
+      "valueTypes": [
+        "Decimal"
+      ],
+      "editorDescriptor": "NOT_FOUND_IN_CAMERA_LOCALIZATION_CLUSTER",
+      "corpus": {
+        "status": "NOT_OBSERVED",
+        "observations": 0
+      },
+      "runtimeMapping": "NOT_PROVEN",
+      "status": "PRESERVE_ONLY"
+    },
+    {
+      "property": "scaleY",
+      "nativeTypes": [
+        "@Category:Object"
+      ],
+      "valueTypes": [
+        "Decimal"
+      ],
+      "editorDescriptor": "NOT_FOUND_IN_CAMERA_LOCALIZATION_CLUSTER",
+      "corpus": {
+        "status": "NOT_OBSERVED",
+        "observations": 0
+      },
+      "runtimeMapping": "NOT_PROVEN",
+      "status": "PRESERVE_ONLY"
+    },
+    {
+      "property": "scaleZ",
+      "nativeTypes": [
+        "@Category:Object"
+      ],
+      "valueTypes": [
+        "Decimal"
+      ],
+      "editorDescriptor": "NOT_FOUND_IN_CAMERA_LOCALIZATION_CLUSTER",
+      "corpus": {
+        "status": "NOT_OBSERVED",
+        "observations": 0
+      },
+      "runtimeMapping": "NOT_PROVEN",
+      "status": "PRESERVE_ONLY"
+    },
+    {
+      "property": "shadowClip",
+      "nativeTypes": [
+        "@Category:Camera",
+        "CCutsceneNodeCamera",
+        "CCutsceneNodeTargetCamera"
+      ],
+      "valueTypes": [
+        "Decimal"
+      ],
+      "editorDescriptor": "FOUND_STRING_CLUSTER",
+      "editorEvidence": {
+        "category": "Camera",
+        "schemaObjectType": "@Category:Camera",
+        "property": "shadowClip",
+        "displayName": "ShadowClip",
+        "displayKey": "Cutscenes/Property/ShadowClip",
+        "xmlNameCandidate": "shadowClip",
+        "xmlNameStatus": "corpus-confirmed",
+        "valueType": "Decimal",
+        "keyframeable": "unknown",
+        "readOnly": "unknown",
+        "editorOnly": false,
+        "fileOffset": "0x3AF8838",
+        "rva": "0x3AF9838",
+        "pointerRvas": [],
+        "xrefRvas": [],
+        "functions": [],
+        "confidence": 1,
+        "evidence": [
+          "SC2Editor property localization key Cutscenes/Property/ShadowClip",
+          "Exact case-insensitive XML attribute match in Cutscene corpus: shadowClip"
+        ]
+      },
+      "corpus": {
+        "status": "FOUND",
+        "observations": 2126
+      },
+      "runtimeMapping": {
+        "status": "CANDIDATE_NAME_MATCH_NOT_PROVEN_EQUIVALENT",
+        "constant": "c_cameraValueShadowClip"
+      },
+      "status": "SUPPORTED_TYPED"
+    },
+    {
+      "property": "sortIndex",
+      "nativeTypes": [
+        "CCutsceneNodeCamera",
+        "CCutsceneNodeTargetCamera"
+      ],
+      "valueTypes": [
+        "Int"
+      ],
+      "editorDescriptor": "NOT_FOUND_IN_CAMERA_LOCALIZATION_CLUSTER",
+      "corpus": {
+        "status": "FOUND",
+        "observations": 1181
+      },
+      "runtimeMapping": "NOT_PROVEN",
+      "status": "SUPPORTED_TYPED"
+    },
+    {
+      "property": "targetPositionX",
+      "nativeTypes": [
+        "@Category:Camera",
+        "CCutsceneNodeTargetCamera"
+      ],
+      "valueTypes": [
+        "Decimal"
+      ],
+      "editorDescriptor": "FOUND_STRING_CLUSTER",
+      "editorEvidence": {
+        "category": "Camera",
+        "schemaObjectType": "@Category:Camera",
+        "property": "targetPositionX",
+        "displayName": "TargetPositionX",
+        "displayKey": "Cutscenes/Property/TargetPositionX",
+        "xmlNameCandidate": "targetPositionX",
+        "xmlNameStatus": "corpus-confirmed",
+        "valueType": "Decimal",
+        "keyframeable": "confirmed",
+        "readOnly": "unknown",
+        "editorOnly": false,
+        "fileOffset": "0x3AF8F68",
+        "rva": "0x3AF9F68",
+        "pointerRvas": [],
+        "xrefRvas": [],
+        "functions": [],
+        "confidence": 1,
+        "evidence": [
+          "SC2Editor property localization key Cutscenes/Property/TargetPositionX",
+          "Exact case-insensitive XML attribute match in Cutscene corpus: targetPositionX"
+        ]
+      },
+      "corpus": {
+        "status": "FOUND",
+        "observations": 66
+      },
+      "runtimeMapping": "NOT_PROVEN",
+      "status": "SUPPORTED_TYPED"
+    },
+    {
+      "property": "targetPositionY",
+      "nativeTypes": [
+        "@Category:Camera",
+        "CCutsceneNodeTargetCamera"
+      ],
+      "valueTypes": [
+        "Decimal"
+      ],
+      "editorDescriptor": "FOUND_STRING_CLUSTER",
+      "editorEvidence": {
+        "category": "Camera",
+        "schemaObjectType": "@Category:Camera",
+        "property": "targetPositionY",
+        "displayName": "TargetPositionY",
+        "displayKey": "Cutscenes/Property/TargetPositionY",
+        "xmlNameCandidate": "targetPositionY",
+        "xmlNameStatus": "corpus-confirmed",
+        "valueType": "Decimal",
+        "keyframeable": "confirmed",
+        "readOnly": "unknown",
+        "editorOnly": false,
+        "fileOffset": "0x3AF8F90",
+        "rva": "0x3AF9F90",
+        "pointerRvas": [],
+        "xrefRvas": [],
+        "functions": [],
+        "confidence": 1,
+        "evidence": [
+          "SC2Editor property localization key Cutscenes/Property/TargetPositionY",
+          "Exact case-insensitive XML attribute match in Cutscene corpus: targetPositionY"
+        ]
+      },
+      "corpus": {
+        "status": "FOUND",
+        "observations": 66
+      },
+      "runtimeMapping": "NOT_PROVEN",
+      "status": "SUPPORTED_TYPED"
+    },
+    {
+      "property": "targetPositionZ",
+      "nativeTypes": [
+        "@Category:Camera",
+        "CCutsceneNodeTargetCamera"
+      ],
+      "valueTypes": [
+        "Decimal"
+      ],
+      "editorDescriptor": "FOUND_STRING_CLUSTER",
+      "editorEvidence": {
+        "category": "Camera",
+        "schemaObjectType": "@Category:Camera",
+        "property": "targetPositionZ",
+        "displayName": "TargetPositionZ",
+        "displayKey": "Cutscenes/Property/TargetPositionZ",
+        "xmlNameCandidate": "targetPositionZ",
+        "xmlNameStatus": "corpus-confirmed",
+        "valueType": "Decimal",
+        "keyframeable": "confirmed",
+        "readOnly": "unknown",
+        "editorOnly": false,
+        "fileOffset": "0x3AF8FB8",
+        "rva": "0x3AF9FB8",
+        "pointerRvas": [],
+        "xrefRvas": [],
+        "functions": [],
+        "confidence": 1,
+        "evidence": [
+          "SC2Editor property localization key Cutscenes/Property/TargetPositionZ",
+          "Exact case-insensitive XML attribute match in Cutscene corpus: targetPositionZ"
+        ]
+      },
+      "corpus": {
+        "status": "FOUND",
+        "observations": 66
+      },
+      "runtimeMapping": "NOT_PROVEN",
+      "status": "SUPPORTED_TYPED"
+    },
+    {
+      "property": "useSceneRotation",
+      "nativeTypes": [
+        "@Category:Object"
+      ],
+      "valueTypes": [
+        "Vec3"
+      ],
+      "editorDescriptor": "NOT_FOUND_IN_CAMERA_LOCALIZATION_CLUSTER",
+      "corpus": {
+        "status": "NOT_OBSERVED",
+        "observations": 0
+      },
+      "runtimeMapping": "NOT_PROVEN",
+      "status": "PRESERVE_ONLY"
+    },
+    {
+      "property": "verticalFOV",
+      "nativeTypes": [
+        "@Category:Camera",
+        "CCutsceneNodeCamera",
+        "CCutsceneNodeTargetCamera"
+      ],
+      "valueTypes": [
+        "Decimal",
+        "Bool"
+      ],
+      "editorDescriptor": "FOUND_STRING_CLUSTER",
+      "editorEvidence": {
+        "category": "Camera",
+        "schemaObjectType": "@Category:Camera",
+        "property": "verticalFOV",
+        "displayName": "VerticalFOV",
+        "displayKey": "Cutscenes/Property/VerticalFOV",
+        "internalName": "verticalFOV",
+        "xmlNameCandidate": "verticalFOV",
+        "xmlNameStatus": "corpus-confirmed",
+        "valueType": "Decimal",
+        "keyframeable": "unknown",
+        "readOnly": "unknown",
+        "editorOnly": false,
+        "fileOffset": "0x3AF89D8",
+        "rva": "0x3AF99D8",
+        "pointerRvas": [],
+        "xrefRvas": [],
+        "functions": [],
+        "confidence": 1,
+        "evidence": [
+          "SC2Editor property localization key Cutscenes/Property/VerticalFOV",
+          "Adjacent internal token verticalFOV",
+          "Exact case-insensitive XML attribute match in Cutscene corpus: verticalFOV"
+        ]
+      },
+      "corpus": {
+        "status": "FOUND",
+        "observations": 2057
+      },
+      "runtimeMapping": "NOT_PROVEN",
+      "status": "SUPPORTED_TYPED"
+    },
+    {
+      "property": "visible",
+      "nativeTypes": [
+        "@Category:Node"
+      ],
+      "valueTypes": [
+        "Bool"
+      ],
+      "editorDescriptor": "NOT_FOUND_IN_CAMERA_LOCALIZATION_CLUSTER",
+      "corpus": {
+        "status": "NOT_OBSERVED",
+        "observations": 0
+      },
+      "runtimeMapping": "NOT_PROVEN",
+      "status": "PRESERVE_ONLY"
+    },
+    {
+      "property": "yaw",
+      "nativeTypes": [
+        "@Category:Camera",
+        "CCutsceneNodeCamera"
+      ],
+      "valueTypes": [
+        "Decimal"
+      ],
+      "editorDescriptor": "FOUND_STRING_CLUSTER",
+      "editorEvidence": {
+        "category": "Camera",
+        "schemaObjectType": "@Category:Camera",
+        "property": "yaw",
+        "displayName": "Yaw",
+        "displayKey": "Cutscenes/Property/Yaw",
+        "xmlNameCandidate": "yaw",
+        "xmlNameStatus": "corpus-confirmed",
+        "valueType": "Decimal",
+        "keyframeable": "confirmed",
+        "readOnly": "unknown",
+        "editorOnly": false,
+        "fileOffset": "0x3AF8ED0",
+        "rva": "0x3AF9ED0",
+        "pointerRvas": [],
+        "xrefRvas": [],
+        "functions": [],
+        "confidence": 1,
+        "evidence": [
+          "SC2Editor property localization key Cutscenes/Property/Yaw",
+          "Exact case-insensitive XML attribute match in Cutscene corpus: yaw"
+        ]
+      },
+      "corpus": {
+        "status": "FOUND",
+        "observations": 2060
+      },
+      "runtimeMapping": {
+        "status": "CANDIDATE_NAME_MATCH_NOT_PROVEN_EQUIVALENT",
+        "constant": "c_cameraValueYaw"
+      },
+      "status": "SUPPORTED_TYPED"
+    }
+  ]
+}

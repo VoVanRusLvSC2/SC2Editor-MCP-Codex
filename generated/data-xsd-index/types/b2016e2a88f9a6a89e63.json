@@ -1,0 +1,1 @@
+{"name":"simple_EGameResult","kind":"simple","fields":[],"enumValues":["Defeat","Tie","Undecided","Victory"],"facets":[],"base":"xs:string"}

@@ -1,0 +1,1 @@
+{"name":"simple_ECostCategory","kind":"simple","fields":[],"enumValues":["Army","Economy","None","Technology","Upgrade"],"facets":[],"base":"xs:string"}

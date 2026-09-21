@@ -1,0 +1,20 @@
+{
+  "directory": "",
+  "operations": [
+    {
+      "op": "height.raise",
+      "area": { "type": "circle", "center": { "x": 16, "y": 16 }, "radius": 8 },
+      "amount": 1.5,
+      "edgeBlend": 3
+    },
+    {
+      "op": "height.smooth",
+      "area": { "type": "circle", "center": { "x": 16, "y": 16 }, "radius": 10 },
+      "method": "edge_preserving",
+      "radius": 2,
+      "iterations": 2,
+      "strength": 0.4,
+      "edgeBlend": 3
+    }
+  ]
+}

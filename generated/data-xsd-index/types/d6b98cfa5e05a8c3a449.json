@@ -1,0 +1,1 @@
+{"name":"simple_EResponseContinueMethod","kind":"simple","fields":[],"enumValues":["Always","Break","Failure","Success"],"facets":[],"base":"xs:string"}

@@ -1,0 +1,1 @@
+{"name":"SActorMsgLightSetSpecularColor","kind":"complex","fields":[{"kind":"attribute","name":"SpecularColor","type":"simple_CColorRGB"},{"kind":"element","name":"SpecularColor","type":"CColorRGB","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

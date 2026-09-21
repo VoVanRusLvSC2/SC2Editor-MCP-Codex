@@ -1,0 +1,1 @@
+{"name":"SDataCollectionRecord","kind":"complex","fields":[{"kind":"attribute","name":"Entry","type":"simple_CCatalogGameLink"},{"kind":"element","name":"Entry","type":"CCatalogGameLink","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

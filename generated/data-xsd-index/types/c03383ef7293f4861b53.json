@@ -1,0 +1,1 @@
+{"name":"simple_EWeaponOption","kind":"simple","fields":[],"enumValues":["CanInitiateAttackOrder","ContinuousScan","Disabled","DisplayCooldown","Hidden","HoldFileInShrubs","IgnoreAttackPriority","IgnoreThreat","LinkedCooldown","Melee","NeverMiss","OnlyFireAtAttackOrderTarget","OnlyFireWhileInAttackOrder","RequireEnabledAttackAbil"],"facets":[],"base":"xs:string"}

@@ -1,0 +1,101 @@
+{
+  "file": "UI/Layout/TransactionDemo.SC2Layout",
+  "dryRun": false,
+  "stage": true,
+  "validate": true,
+  "operations": [
+    {
+      "op": "create_frame",
+      "as": "buttonTemplate",
+      "type": "Button",
+      "name": "CodexButtonTemplate",
+      "template": "StandardTemplates/StandardButtonTemplate",
+      "properties": [
+        { "tag": "Width", "value": 180 },
+        { "tag": "Height", "value": 48 }
+      ]
+    },
+    { "op": "create_frame", "as": "gameui", "type": "Frame", "name": "GameUI/UIContainer", "frameFile": "GameUI" },
+    {
+      "op": "create_frame",
+      "as": "window",
+      "parentPath": "@gameui",
+      "type": "Frame",
+      "name": "CodexWindow",
+      "properties": [
+        { "tag": "Width", "value": 480 },
+        { "tag": "Height", "value": 240 },
+        { "tag": "Visible", "value": true }
+      ],
+      "anchors": [
+        { "side": "Top", "relative": "$parent", "pos": "Mid", "offset": -120 },
+        { "side": "Left", "relative": "$parent", "pos": "Mid", "offset": -240 }
+      ]
+    },
+    {
+      "op": "create_frame",
+      "as": "primary",
+      "parentPath": "@window",
+      "type": "Button",
+      "name": "Primary",
+      "template": "TransactionDemo/CodexButtonTemplate",
+      "anchors": [
+        { "side": "Bottom", "relative": "$parent", "pos": "Max", "offset": -32 },
+        { "side": "Left", "relative": "$parent", "pos": "Min", "offset": 32 }
+      ]
+    },
+    { "op": "set_property", "framePath": "@primary", "property": "Text", "value": "Primary" },
+    { "op": "set_property", "framePath": "@primary", "property": "Toggleable", "value": true },
+    {
+      "op": "create_frame",
+      "as": "secondary",
+      "parentPath": "@window",
+      "type": "Button",
+      "name": "Secondary",
+      "template": "TransactionDemo/CodexButtonTemplate",
+      "anchors": [
+        { "side": "Bottom", "relative": "$parent", "pos": "Max", "offset": -32 },
+        { "side": "Right", "relative": "$parent", "pos": "Max", "offset": -32 }
+      ]
+    },
+    { "op": "set_property", "framePath": "@secondary", "property": "Text", "value": "Secondary" },
+    {
+      "op": "upsert_state_group",
+      "framePath": "@primary",
+      "stateGroup": {
+        "name": "ToggleState",
+        "defaultState": "NotToggled",
+        "states": [
+          {
+            "name": "Toggled",
+            "when": [{ "type": "Property", "frame": "$this", "attrs": { "toggled": "True" } }],
+            "actions": [{ "type": "SetProperty", "frame": "$parent/Secondary", "attrs": { "enabled": "False" } }]
+          },
+          {
+            "name": "NotToggled",
+            "when": [{ "type": "Property", "frame": "$this", "attrs": { "toggled": "False" } }],
+            "actions": [{ "type": "SetProperty", "frame": "$parent/Secondary", "attrs": { "enabled": "True" } }]
+          }
+        ]
+      }
+    },
+    {
+      "op": "upsert_animation",
+      "framePath": "@primary",
+      "animation": {
+        "name": "Show",
+        "speed": 1,
+        "events": [{ "event": "OnShown", "action": "Reset,Play", "frame": "$this" }],
+        "controllers": [{
+          "type": "Fade",
+          "frame": "$this",
+          "end": "Pause",
+          "keys": [
+            { "type": "Curve", "time": 0, "attrs": { "value": 0, "inout": "Smooth" } },
+            { "type": "Curve", "time": 0.25, "attrs": { "value": 255, "inout": "Smooth" } }
+          ]
+        }]
+      }
+    }
+  ]
+}

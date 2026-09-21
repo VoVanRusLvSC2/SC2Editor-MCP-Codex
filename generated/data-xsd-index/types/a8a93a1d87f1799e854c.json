@@ -1,0 +1,1 @@
+{"name":"SActorMsgAnimSetUserWeight","kind":"complex","fields":[{"kind":"attribute","name":"Weight","type":"simple_real32"},{"kind":"element","name":"Weight","type":"real32","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

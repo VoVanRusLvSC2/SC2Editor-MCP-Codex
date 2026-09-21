@@ -1,0 +1,15 @@
+{
+  "objects": {
+    "milliseconds": 942.634423,
+    "sha256": "1849a3676078fc31a69ae53522e97dcf8990e43639b75bc616bacdc4dc537427"
+  },
+  "scatter": {
+    "milliseconds": 366.953855,
+    "sha256": "60ff1cfca0256dc72274b91a1d17638d4e9d5c321045ed0532ae09811e658208"
+  },
+  "terrain": {
+    "milliseconds": 161.22018200000002,
+    "sha256": "7919164a4c9d6ef6b60932326497712f2f4a52f04a938983d12fd9f103297afb",
+    "texture": "KorhalCityEx2_1"
+  }
+}

@@ -1,0 +1,1 @@
+{"name":"SActorMsgLightSetLightOpaque","kind":"complex","fields":[{"kind":"attribute","name":"LightOpaque","type":"simple_bool"},{"kind":"element","name":"LightOpaque","type":"bool","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

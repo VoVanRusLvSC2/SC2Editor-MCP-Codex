@@ -1,0 +1,59 @@
+{
+  "file": "Cutscenes/VerifiedExample.SC2Cutscene",
+  "name": "VerifiedExample",
+  "version": "1.300000",
+  "director": {
+    "nativeType": "CCutsceneNodeDirector",
+    "attrs": {
+      "guid": "10000000000000000001",
+      "name": "Director",
+      "sortIndex": 0,
+      "interactive": 1
+    },
+    "children": [
+      {
+        "nativeType": "CCutsceneNodeBookmark",
+        "attrs": {
+          "guid": "10000000000000000002",
+          "name": "Bookmarks",
+          "sortIndex": 0
+        },
+        "children": [
+          {
+            "nativeType": "CCutsceneElementBookmark",
+            "attrs": {
+              "guid": "10000000000000000003",
+              "bookmarkName": "Intro"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "objects": [
+    {
+      "nativeType": "CCutsceneNodeActor",
+      "attrs": {
+        "guid": "10000000000000000010",
+        "name": "Marine",
+        "sortIndex": 1,
+        "modelLink": "Marine",
+        "shadowBox": 0,
+        "teamColorDiffuse": "0.000000,0.250000,1.000000,1"
+      },
+      "children": [
+        {
+          "nativeType": "CCutsceneNodeAnimLayer",
+          "attrs": {
+            "guid": "6838240533161910331",
+            "name": "Animation Layer",
+            "enabled": 1
+          }
+        }
+      ]
+    }
+  ],
+  "dryRun": true,
+  "stage": true,
+  "preserveNative": true
+}

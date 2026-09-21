@@ -1,0 +1,94 @@
+{
+  "executable": "/workspace/scratch/bdd6bc72be6a/upload/SC2Editor_x64.exe",
+  "fileName": "SC2Editor_x64.exe",
+  "fileSize": 76470480,
+  "sha256": "9cab25db2b7dcfaaad207978b4eac07ec694f1f7cdbee4257d0db0845e14a164",
+  "architecture": "x64",
+  "machine": "0x8664",
+  "peTimestamp": "2026-07-15T02:29:52.000Z",
+  "peTimestampUnix": 1784082592,
+  "imageBase": "0x140000000",
+  "entryPointRva": "0xAC820",
+  "fileVersion": "5.0.16.97563",
+  "productVersion": "Version 5.0.16.97563",
+  "productName": "SC2Edit (Retail)",
+  "companyName": "Blizzard Entertainment, Inc.",
+  "originalFilename": "SC2Edit.exe",
+  "pdbPath": "D:\\work\\branches\\SC2.5.0.a\\Code\\Bin\\Support64\\SC2Editor_x64.pdb",
+  "inferredBranch": "SC2.5.0.a",
+  "sections": [
+    {
+      "name": ".text",
+      "virtualSize": 55481069,
+      "virtualAddress": 4096,
+      "rawSize": 55482368,
+      "rawOffset": 2048,
+      "characteristics": 1610612768
+    },
+    {
+      "name": ".rdata",
+      "virtualSize": 14298676,
+      "virtualAddress": 55488512,
+      "rawSize": 14299136,
+      "rawOffset": 55484416,
+      "characteristics": 1073741888
+    },
+    {
+      "name": ".data",
+      "virtualSize": 71372104,
+      "virtualAddress": 69787648,
+      "rawSize": 1273856,
+      "rawOffset": 69783552,
+      "characteristics": 3221225536
+    },
+    {
+      "name": ".pdata",
+      "virtualSize": 3599172,
+      "virtualAddress": 141160448,
+      "rawSize": 3600384,
+      "rawOffset": 71057408,
+      "characteristics": 1073741888
+    },
+    {
+      "name": ".tls",
+      "virtualSize": 8673,
+      "virtualAddress": 144760832,
+      "rawSize": 10240,
+      "rawOffset": 74657792,
+      "characteristics": 3221225536
+    },
+    {
+      "name": ".gfids",
+      "virtualSize": 708,
+      "virtualAddress": 144773120,
+      "rawSize": 2048,
+      "rawOffset": 74668032,
+      "characteristics": 1073741888
+    },
+    {
+      "name": "_RDATA",
+      "virtualSize": 45104,
+      "virtualAddress": 144777216,
+      "rawSize": 47104,
+      "rawOffset": 74670080,
+      "characteristics": 1073741888
+    },
+    {
+      "name": ".rsrc",
+      "virtualSize": 961160,
+      "virtualAddress": 144826368,
+      "rawSize": 962560,
+      "rawOffset": 74717184,
+      "characteristics": 1073741888
+    },
+    {
+      "name": ".reloc",
+      "virtualSize": 779212,
+      "virtualAddress": 145788928,
+      "rawSize": 780288,
+      "rawOffset": 75679744,
+      "characteristics": 1107296320
+    }
+  ],
+  "readOnlyAnalysis": true
+}

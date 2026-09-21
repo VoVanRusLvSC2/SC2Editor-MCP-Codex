@@ -1,0 +1,39 @@
+{
+  "version": "1.1.0-alpha.8",
+  "status": "PASS",
+  "regression": {
+    "tests": 178,
+    "pass": 178,
+    "fail": 0,
+    "skipped": 0
+  },
+  "terrainTests": 21,
+  "lint": "PASS",
+  "build": "PASS",
+  "portableBuild": "PASS",
+  "portableHttpSmoke": "PASS",
+  "nativeCorpus": {
+    "maps": 4,
+    "componentFixtures": 44,
+    "sha256Manifest": "src/tests/fixtures/terrain-native/manifest.json"
+  },
+  "editorEvidence": {
+    "sha256": "9cab25db2b7dcfaaad207978b4eac07ec694f1f7cdbee4257d0db0845e14a164",
+    "matchingStrings": 413,
+    "directXrefRecords": 0,
+    "serializationRecovered": false
+  },
+  "guiVisual": "NOT_EXECUTED: Chromium download timeout/502",
+  "windowsLauncherExecution": "NOT_EXECUTED: cross-built on Linux",
+  "sc2EditorOpenSave": "NOT_EXECUTED",
+  "sc2Runtime": "NOT_EXECUTED",
+  "blocked": [
+    "structural native cliff/ramp edits",
+    "pathing painting",
+    "arbitrary water levels",
+    "new map terrain construction",
+    "MPQ write-back"
+  ],
+  "demoReport": "generated/terrain-demo-report.json",
+  "portableReport": "generated/terrain-portable-smoke.json"
+}

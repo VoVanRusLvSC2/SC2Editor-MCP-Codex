@@ -1,0 +1,1 @@
+{"name":"simple_EVariationCommands","kind":"simple","fields":[],"enumValues":["Darker","LessSaturation","Lighter","MoreBlue","MoreCyan","MoreGreen","MoreMagenta","MoreRed","MoreSaturation","MoreYellow","Unknown"],"facets":[],"base":"xs:string"}

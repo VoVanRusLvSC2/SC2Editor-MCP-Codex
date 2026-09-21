@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TerrainRecipe version="1" seed="42">
+  <Area id="forest" shape="rectangle" min="4 4" max="28 28"/>
+  <Generate area="forest" style="forest" relief="0.7" baseTexture="BelShirDirtLight" edgeBlend="3"/>
+  <Road points="6 16;16 16;26 20" width="4" texture="BelShirDirtLight" edgeBlend="1"/>
+  <Smooth area="forest" method="edge_preserving" smoothRadius="2" strength="0.25" preserveCliffs="true" preserveRamps="true"/>
+</TerrainRecipe>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Desc>
+    <!-- A future GUI can expose viewport size, image size, pan offsets, and UV crop. -->
+    <Frame type="Frame" name="ClippedPortraitViewport">
+        <Width val="200"/>
+        <Height val="100"/>
+        <Frame type="Image" name="OversizedPortrait">
+            <Anchor side="Top" relative="$parent" pos="Min" offset="-40"/>
+            <Anchor side="Left" relative="$parent" pos="Min" offset="-120"/>
+            <Width val="640"/>
+            <Height val="360"/>
+            <Unclipped val="false"/>
+            <Texture val="Assets/Portrait.dds" layer="0"/>
+            <TextureType val="Normal" layer="0"/>
+            <TextureCoords top="0.1" left="0.2" bottom="0.9" right="0.8" layer="0"/>
+        </Frame>
+    </Frame>
+
+    <!-- Restricted type through a real, class-compatible Blizzard Button template. -->
+    <Frame type="LaunchURLButton" name="WebsiteButton" template="StandardBattlenetTemplates/BattlenetMediumAlternateButtonTemplate">
+        <Width val="240"/>
+        <Height val="64"/>
+        <Text val="Open website"/>
+        <URL val="https://sc2mapster.com"/>
+    </Frame>
+</Desc>

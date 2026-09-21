@@ -1,0 +1,1 @@
+{"name":"simple_EArtifactType","kind":"simple","fields":[],"enumValues":["Gem","Glyph","Trinket"],"facets":[],"base":"xs:string"}

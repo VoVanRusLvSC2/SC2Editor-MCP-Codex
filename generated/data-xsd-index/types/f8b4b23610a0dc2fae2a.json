@@ -1,0 +1,1 @@
+{"name":"SActorTermAt","kind":"complex","fields":[{"kind":"attribute","name":"At","type":"simple_EActorEffectScope"},{"kind":"element","name":"At","type":"EActorEffectScope","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

@@ -1,0 +1,1 @@
+{"name":"simple_EActorFlag","kind":"simple","fields":[],"enumValues":["AddToExternalFinder","RespondsToUnitPlayerChange","SkipPreload","SuppressCreationErrors","SuppressSaveLoad","VisionTestCenterOnly"],"facets":[],"base":"xs:string"}

@@ -1,0 +1,1 @@
+{"name":"SActorMsgMinimapIcon","kind":"complex","fields":[{"kind":"attribute","name":"Image","type":"simple_CImagePath"},{"kind":"element","name":"Image","type":"CImagePath","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

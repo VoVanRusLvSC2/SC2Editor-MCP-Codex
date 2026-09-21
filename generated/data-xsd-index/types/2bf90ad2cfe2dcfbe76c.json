@@ -1,0 +1,1 @@
+{"name":"simple_EActorEffectLocation","kind":"simple","fields":[],"enumValues":["CasterPoint","CasterUnit","CasterUnitOrPoint","MissileUnitOrPoint","OriginPoint","OriginUnit","OriginUnitOrPoint","OuterPoint","OuterUnit","OuterUnitOrPoint","SourcePoint","SourceUnit","SourceUnitOrPoint","TargetPoint","TargetUnit","TargetUnitOrPoint","Unknown"],"facets":[],"base":"xs:string"}

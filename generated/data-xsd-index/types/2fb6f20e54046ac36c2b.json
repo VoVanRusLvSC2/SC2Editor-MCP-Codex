@@ -1,0 +1,1 @@
+{"name":"SActorTermCap","kind":"complex","fields":[{"kind":"attribute","name":"Cap","type":"simple_uint32"},{"kind":"element","name":"Cap","type":"uint32","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

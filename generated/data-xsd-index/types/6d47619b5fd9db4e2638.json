@@ -1,0 +1,1 @@
+{"name":"simple_EActorActionFlag","kind":"simple","fields":[],"enumValues":["AlignedImpactsAndDamages","IgnoresShields","ImpactForceSite","ImpactMonitorsTeleports","ImpactSuppressUnitSound","LaunchForceSite","VictimRevealsAttacker"],"facets":[],"base":"xs:string"}

@@ -1,0 +1,1 @@
+{"name":"simple_EUnitSound","kind":"simple","fields":[],"enumValues":["Attack","Birth","Board","Click","ClickError","Construction","Help","Highlight","Movement","Pissed","Ready","Turning","Unknown","What","Yes"],"facets":[],"base":"xs:string"}

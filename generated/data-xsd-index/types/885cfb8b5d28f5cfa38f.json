@@ -1,0 +1,1 @@
+{"name":"SActorMsgSetPosition2D","kind":"complex","fields":[{"kind":"attribute","name":"Position2D","type":"simple_C2Vector"},{"kind":"element","name":"Position2D","type":"C2Vector","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

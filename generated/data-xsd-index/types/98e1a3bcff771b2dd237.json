@@ -1,0 +1,1 @@
+{"name":"simple_EActorCloakEffect","kind":"simple","fields":[],"enumValues":["Ally","Detected","Enemy","None"],"facets":[],"base":"xs:string"}

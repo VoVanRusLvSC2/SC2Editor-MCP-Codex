@@ -1,0 +1,1 @@
+{"name":"SUnitBehaviorData","kind":"complex","fields":[{"kind":"attribute","name":"Link","type":"simple_CBehaviorLink"},{"kind":"element","name":"Link","type":"CBehaviorLink","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

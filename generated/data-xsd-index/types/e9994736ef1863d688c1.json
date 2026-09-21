@@ -1,0 +1,1 @@
+{"name":"simple_ECreateUnit","kind":"simple","fields":[],"enumValues":["Birth","DropOff","NormalizeSpawnOffset","OffsetByRadius","OffsetUnitTypeByLevel","Placement","PlacementIgnoreBlockers","PlacementIgnoreCliffTest","PlacementOriginSideOfFootprints","Precursor","ProvideFood","SelectControlGroups","SetFacing","TechComplete","UseFood"],"facets":[],"base":"xs:string"}

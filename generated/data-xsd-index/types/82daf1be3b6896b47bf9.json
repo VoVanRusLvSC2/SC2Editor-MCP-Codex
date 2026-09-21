@@ -1,0 +1,1 @@
+{"name":"simple_EUnitStatus","kind":"simple","fields":[],"enumValues":["Cargo","Charges","Custom","Duration","Energy","GroupAll","GroupAllied","GroupEnemy","GroupOwner","Life","Magazine","Progress","Shields","Unknown","Workers"],"facets":[],"base":"xs:string"}

@@ -1,0 +1,1 @@
+{"name":"SActorTermAge","kind":"complex","fields":[{"kind":"attribute","name":"Age","type":"simple_real32"},{"kind":"element","name":"Age","type":"real32","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

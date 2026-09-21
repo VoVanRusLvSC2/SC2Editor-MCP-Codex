@@ -1,0 +1,1 @@
+{"name":"SActorMsgTextureSelectBySlot","kind":"complex","fields":[{"kind":"attribute","name":"Expression","type":"simple_CTextureExpression"},{"kind":"element","name":"Expression","type":"CTextureExpression","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

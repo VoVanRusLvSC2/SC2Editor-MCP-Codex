@@ -1,0 +1,1 @@
+{"name":"simple_EDamageKind","kind":"simple","fields":[],"enumValues":["Melee","NoProc","Ranged","Spell","Splash"],"facets":[],"base":"xs:string"}

@@ -1,0 +1,1 @@
+{"name":"simple_EBehaviorPowerSourceFlag","kind":"simple","fields":[],"enumValues":["ProvidePowerWhileUnderConstruction"],"facets":[],"base":"xs:string"}

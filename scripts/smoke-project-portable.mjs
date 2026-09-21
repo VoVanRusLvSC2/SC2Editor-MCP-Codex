@@ -1,0 +1,103 @@
+import { promises as fs } from "node:fs";
+import path from "node:path";
+import os from "node:os";
+import assert from "node:assert/strict";
+import { spawn } from "node:child_process";
+import { createInterface } from "node:readline";
+import { pathToFileURL } from "node:url";
+import process from "node:process";
+import { gunzipSync } from "node:zlib";
+import { setTimeout, clearTimeout } from "node:timers";
+
+const app = path.resolve(process.argv[2] ?? "release/SC2-UI-Workbench-Windows/app");
+const root = await fs.mkdtemp(path.join(os.tmpdir(), "sc2-portable-smoke-"));
+const checks = [];
+let child, gui;
+try {
+  await fs.writeFile(path.join(root, "Index.SC2Layout"), "<Desc></Desc>");
+  for(const name of await fs.readdir("src/tests/fixtures/terrain-native/nydus")) await fs.writeFile(path.join(root,name.slice(0,-3)),gunzipSync(await fs.readFile(path.join("src/tests/fixtures/terrain-native/nydus",name))));
+  for(const name of await fs.readdir("src/tests/fixtures/map-native/nydus")) if(name.endsWith(".gz")) await fs.writeFile(path.join(root,name.slice(0,-3)),gunzipSync(await fs.readFile(path.join("src/tests/fixtures/map-native/nydus",name))));
+  await fs.mkdir(path.join(root,"Base.SC2Data/GameData"),{recursive:true});
+  await fs.writeFile(path.join(root,"Base.SC2Data/GameData/LightData.xml"),'<Catalog><CLight id="Base"/></Catalog>');
+  child = spawn(process.execPath, [path.join(app, "dist/index.js")], { env: { ...process.env, SC2_UI_ROOT: root }, cwd: root, stdio: ["pipe", "pipe", "pipe"] });
+  child.stderr.resume();
+  const pending = new Map(); let id = 0;
+  createInterface({ input: child.stdout }).on("line", line => {
+    const response = JSON.parse(line), waiter = pending.get(response.id);
+    if (waiter) { pending.delete(response.id); clearTimeout(waiter.timer); if (response.error) waiter.reject(new Error(JSON.stringify(response.error))); else waiter.resolve(response.result); }
+  });
+  const send = (method, params) => new Promise((resolve, reject) => {
+    const requestId = ++id;
+    const timer = setTimeout(() => { pending.delete(requestId); reject(new Error(`Timeout: ${method}`)); }, 15000);
+    pending.set(requestId, { resolve, reject, timer });
+    child.stdin.write(JSON.stringify({ jsonrpc: "2.0", id: requestId, method, params }) + "\n");
+  });
+  const call = async (name, args = {}) => {
+    const result = await send("tools/call", { name, arguments: args });
+    assert.equal(Boolean(result.isError), false, JSON.stringify(result));
+    return JSON.parse(result.content.find(item => item.type === "text").text);
+  };
+  const initialized = await send("initialize", { protocolVersion: "2025-03-26", capabilities: {}, clientInfo: { name: "portable-smoke", version: "1" } });
+  assert.equal(initialized.serverInfo.version, "1.1.0-alpha.18");
+  child.stdin.write(JSON.stringify({ jsonrpc: "2.0", method: "notifications/initialized" }) + "\n");
+  const tools = await send("tools/list", {});
+  assert.equal(tools.tools.length, 164);
+  assert.ok(tools.tools.some(tool => tool.name === "map.capabilities"));
+  const map = await call("map.capabilities");
+  assert.equal(map.cleanMapCreation, false);
+  checks.push("portable MCP initialize, all 164 tools and Map capabilities");
+  const coverage = await call("ui.project_status");
+  assert.equal(Object.keys(coverage.modules).length, 10); assert.equal(coverage.completeEngineCoverage, false);
+  checks.push("MCP project status covers ten modules without engine completeness claim");
+  await fs.writeFile(path.join(root,"MapScript.galaxy"),'void InitMap () {\n}\n');
+  const script = await call("script.recipe", {file:"Scripts/Custom.galaxy",name:"CustomInit",kind:"init"});
+  await call("script.apply",{planId:script.planId,dryRun:false});
+  await call("script.save",{file:"Scripts/Custom.galaxy",backup:false});
+  const connected = await call("script.connect",{file:"Scripts/Custom.galaxy",init:"CustomInit"});
+  await call("script.apply",{planId:connected.planId,dryRun:false});
+  await call("script.save",{file:"MapScript.galaxy",backup:false});
+  assert.match(await fs.readFile(path.join(root,"MapScript.galaxy"),"utf8"),/CustomInit\(\);/);
+  checks.push("portable Galaxy native schema, recipe and Include/init plan/stage/save");
+  const readiness = await call("ui.test_readiness");
+  assert.equal(readiness.standardFunctionCoverage,"PARTIAL");
+  assert.equal(readiness.targetChecks.galaxyCompiler,"NOT_EXECUTED");
+  checks.push("portable project test readiness exposes static scope and unexecuted target gates");
+  const lighting = await call("terrain.lighting.plan", {operations:[{op:"lighting.preset",id:"PortableNight",parent:"Base",exposure:1.2},{op:"lighting.assign",id:"PortableNight"}]});
+  const staged = await call("terrain.apply",{planId:lighting.id,dryRun:false,stage:true});
+  await call("terrain.save",{transactionId:staged.transaction.transactionId,dryRun:false,backup:false});
+  assert.equal((await call("terrain.lighting.inspect")).localBinding.lighting,"PortableNight");
+  checks.push("portable MCP native lighting plan/stage/save/inspect");
+  await call("ui.create_file", { file: "Created.SC2Layout", kind: "layout", includeIn: "Index.SC2Layout", dryRun: false, stage: true });
+  assert.equal(await fs.stat(path.join(root, "Created.SC2Layout")).then(() => true, () => false), false);
+  const saved = await call("ui.save", { file: "Created.SC2Layout", backup: true });
+  assert.deepEqual(saved.savedFiles.sort(), ["Created.SC2Layout", "Index.SC2Layout"]);
+  assert.match(await fs.readFile(path.join(root, "Index.SC2Layout"), "utf8"), /Created.SC2Layout/);
+  checks.push("MCP joint layout/Include staged group save and backup");
+  const nativeComponents = await call("terrain.components.inspect");
+  assert.equal(nativeComponents.valid,true);
+  await call("map.blueprint.register",{id:"SmokeTemplate",dryRun:false});
+  const createRequest={blueprintId:"SmokeTemplate",destinationDirectory:".sc2mcp-output/created",landscape:{style:"desert",seed:42,relief:0.25}};
+  const mapPreview=await call("map.create",createRequest);
+  const mapCreated=await call("map.create",{...createRequest,dryRun:false});
+  assert.equal(mapCreated.contentSha256,mapPreview.contentSha256);
+  assert.equal((await call("map.inspect",{directory:createRequest.destinationDirectory})).valid,true);
+  const sourceFiles=await call("ui.list_files");
+  assert.equal(JSON.stringify(sourceFiles).includes(".sc2mcp-output"),false);
+  checks.push("portable native template register/create with exact dry-run manifest and isolated output indexing");
+  const { startGuiServer } = await import(pathToFileURL(path.join(app, "dist/gui/server.js")));
+  gui = await startGuiServer({ root, port: 0 });
+  const get = async endpoint => { const response = await globalThis.fetch(gui.url + endpoint); assert.equal(response.status, 200); return response; };
+  assert.equal((await (await get("/api/health")).json()).version, "1.1.0-alpha.18");
+  assert.equal(Object.keys((await (await get("/api/project/status")).json()).modules).length, 10);
+  const html = await (await get("/")).text();
+  assert.match(html, /projectStatusButton/);
+  assert.match(html, /terrainWaterControls/);
+  checks.push("portable HTTP health, project coverage endpoint and GUI button asset");
+  const report = { version: "1.1.0-alpha.18", status: "PASS", checks, windowsLauncherExecution: "NOT_EXECUTED", guiVisual: "NOT_EXECUTED", editor: "NOT_EXECUTED", runtime: "NOT_EXECUTED" };
+  await fs.writeFile("generated/project-portable-smoke.json", JSON.stringify(report, null, 2) + "\n");
+  globalThis.console.log(JSON.stringify(report, null, 2));
+} finally {
+  if (gui) await gui.close();
+  if (child) { child.stdin.end(); child.kill(); }
+  await fs.rm(root, { recursive: true, force: true });
+}

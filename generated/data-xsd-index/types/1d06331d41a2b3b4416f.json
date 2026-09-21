@@ -1,0 +1,1 @@
+{"name":"simple_ETechCountState","kind":"simple","fields":[],"enumValues":["Complete","InProgress","Queued","Revivable"],"facets":[],"base":"xs:string"}

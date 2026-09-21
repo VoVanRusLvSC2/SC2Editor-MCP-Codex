@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<StyleFile>
+    <Style name="KaldirSubtitle" template="StandardExtendedTemplate" font="#FontStandardExtended" height="28" hjustify="Center" vjustify="Middle" textcolor="9fdcff" styleflags="Shadow|Outline" shadowoffset="2" outlinewidth="2" outlinecolor="000000"/>
+</StyleFile>

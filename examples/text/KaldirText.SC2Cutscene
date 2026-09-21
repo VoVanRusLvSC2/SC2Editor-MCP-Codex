@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CutsceneState cutsceneVersion="1.300000" name="KaldirTextDemo">
+    <CCutsceneNodeText guid="12187272666481471784" enabled="1" name="Storm Warning" sortIndex="0" position="0.000000,0.000000,2.000000" text="The storm is coming.">
+        <CCutsceneElementObject guid="5482117717660302006" duration="5000" lockedToEnd="1"/>
+        <CCutsceneNodePropertyValue guid="10639839897788162907" name="Property - Text" propertyName="text">
+            <CCutsceneElementPropertyValue guid="7998801986251688894" value=""/>
+            <CCutsceneElementPropertyValue guid="8134524515122502060" start="1000" value="The storm is coming."/>
+        </CCutsceneNodePropertyValue>
+    </CCutsceneNodeText>
+</CutsceneState>

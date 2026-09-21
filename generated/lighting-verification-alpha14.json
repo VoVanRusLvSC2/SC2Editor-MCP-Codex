@@ -1,0 +1,18 @@
+{
+  "version": "1.1.0-alpha.14",
+  "tools": 144,
+  "terrainTools": 30,
+  "regressionTests": {
+    "fullSuite": 232,
+    "fullSuiteFailures": 0,
+    "lightingFocused": 5,
+    "uniqueTestsIncludingNewLandscapeGuard": 233
+  },
+  "build": "PASS",
+  "lint": "PASS",
+  "portableMcpHttp": "PASS_ON_LINUX_NODE",
+  "windowsLauncher": "NOT_EXECUTED",
+  "editor": "NOT_EXECUTED",
+  "game": "NOT_EXECUTED",
+  "fullTerrainCoverage": false
+}

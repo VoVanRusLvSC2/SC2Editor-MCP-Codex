@@ -1,0 +1,1 @@
+{"name":"simple_EAbilHarvestFlag","kind":"simple","fields":[],"enumValues":["BypassResourceQueue","NoExtract"],"facets":[],"base":"xs:string"}

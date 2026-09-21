@@ -1,0 +1,1 @@
+{"name":"simple_EScoreValueFlag","kind":"simple","fields":[],"enumValues":["DisplayAsPercent","DisplayAsSigned","Hidden","MapMechanic","PerformanceMeasure","PersistToDB","ProfileStat","SpecificHero","TriggerAchievement"],"facets":[],"base":"xs:string"}

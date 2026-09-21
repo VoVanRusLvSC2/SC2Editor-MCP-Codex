@@ -1,0 +1,1 @@
+{"name":"simple_EStatusDisplay","kind":"simple","fields":[],"enumValues":["All","Damaged","None","Selected","Targeting"],"facets":[],"base":"xs:string"}

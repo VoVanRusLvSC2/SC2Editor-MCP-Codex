@@ -1,0 +1,1 @@
+{"name":"CItemClass","kind":"complex","fields":[{"kind":"attribute","name":"Name","type":"simple_CStringLink"},{"kind":"element","name":"Name","type":"CStringLink","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[],"base":"CBase"}

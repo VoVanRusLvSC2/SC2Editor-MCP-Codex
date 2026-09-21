@@ -1,0 +1,9 @@
+node_modules/
+dist/
+dist-runtime/
+release/
+*.pdb
+examples/**/runs/
+generated/*.log
+*.sc2uimcp.bak
+*.sc2uimcp.tmp

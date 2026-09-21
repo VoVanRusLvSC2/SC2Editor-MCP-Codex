@@ -1,0 +1,1 @@
+{"name":"simple_ESplatLayer","kind":"simple","fields":[],"enumValues":["AOELayer","BlobShadowLayer","BuildingLayer","FakeVectorUILayer","Layer0","Layer1","Layer2","Layer3","MaterialUILayer","PowerLayer","VectorUILayer"],"facets":[],"base":"xs:string"}

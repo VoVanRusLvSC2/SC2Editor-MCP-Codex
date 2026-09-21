@@ -1,0 +1,1 @@
+{"name":"simple_EUnitVital","kind":"simple","fields":[],"enumValues":["Energy","Life","Shields","Unknown"],"facets":[],"base":"xs:string"}

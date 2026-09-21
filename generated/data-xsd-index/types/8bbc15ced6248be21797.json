@@ -1,0 +1,1 @@
+{"name":"simple_EActorPhysicsImpactMaterialRelativeHardness","kind":"simple","fields":[],"enumValues":["DontCare","Equal","Harder","HarderOrEqual","Softer","SofterOrEqual"],"facets":[],"base":"xs:string"}

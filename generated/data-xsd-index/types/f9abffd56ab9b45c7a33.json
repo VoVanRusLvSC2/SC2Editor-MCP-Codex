@@ -1,0 +1,1 @@
+{"name":"simple_EEffectUnit","kind":"simple","fields":[],"enumValues":["Caster","CasterOuter","Origin","Outer","Source","Target","TargetOuter","Unknown"],"facets":[],"base":"xs:string"}

@@ -1,0 +1,19 @@
+{
+  "source": "City_of_Tempest_KSP_Production.SC2Map: native extracted Base.SC2Data/GameData catalogs",
+  "files": [
+    {
+      "file": "City-LightData.xml",
+      "sha256": "433aaa8d94c318baf8ab271b429a86922ec54e72d6ca4ea0e0c3cf7d8434d0f8"
+    },
+    {
+      "file": "City-TerrainData.xml",
+      "sha256": "9642a9ba88fe4fd4676c33ad003fc31a604348e0a987d221fd426ee2f6db873f"
+    }
+  ],
+  "upstream": {
+    "repository": "SC2Mapster/SC2GameData",
+    "commit": "6dd323aae4209a01f110719a00b4e8f7a88389bc",
+    "path": "mods/core.sc2mod/base.sc2data/GameData/LightData.xml"
+  },
+  "editorVerified": false
+}

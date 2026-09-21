@@ -1,0 +1,1 @@
+{"name":"simple_EEffectModifyTurret","kind":"simple","fields":[],"enumValues":["ClearTarget","FlagClearTargetOnAimComplete","FlagTracking","SetTarget"],"facets":[],"base":"xs:string"}

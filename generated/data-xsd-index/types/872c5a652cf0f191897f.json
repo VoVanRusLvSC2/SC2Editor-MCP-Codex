@@ -1,0 +1,1 @@
+{"name":"simple_EPausedParticleSystemBehavior","kind":"simple","fields":[],"enumValues":["Automatic","Continuous","Fade","FreezeAll","FreezeEmissionRate"],"facets":[],"base":"xs:string"}

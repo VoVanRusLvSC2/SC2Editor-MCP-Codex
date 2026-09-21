@@ -1,0 +1,18 @@
+{
+  "version": "1.1.0-alpha.9",
+  "status": "PASS",
+  "checks": [
+    "portable dependency imports",
+    "GUI Doodad assets",
+    "weighted ground scatter HTTP",
+    "compact plan response",
+    "dry-run preserves Objects",
+    "commit and backup",
+    "existing-object snap HTTP",
+    "combined location uses Terrain preview"
+  ],
+  "windowsLauncherExecution": "NOT_EXECUTED",
+  "guiVisual": "NOT_EXECUTED",
+  "editor": "NOT_EXECUTED",
+  "runtime": "NOT_EXECUTED"
+}

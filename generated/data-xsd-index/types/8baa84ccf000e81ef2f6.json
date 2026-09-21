@@ -1,0 +1,1 @@
+{"name":"simple_EPlane","kind":"simple","fields":[],"enumValues":["Air","Ground"],"facets":[],"base":"xs:string"}

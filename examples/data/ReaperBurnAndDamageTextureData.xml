@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Catalog>
+    <CEffectDamage id="CodexReaperBurnPeriodicDamage">
+        <EditorCategories value="Race:Terran,AbilityorEffectType:Units"/>
+        <Kind value="Ranged"/>
+        <Amount value="2"/>
+    </CEffectDamage>
+    <CBehaviorBuff id="CodexReaperBurn">
+        <Alignment value="Negative"/>
+        <Duration value="4"/>
+        <Period value="0.5"/>
+        <PeriodicEffect value="CodexReaperBurnPeriodicDamage"/>
+        <BuffFlags index="RefreshStack" value="1"/>
+        <MaxStackCount value="1"/>
+    </CBehaviorBuff>
+    <CEffectApplyBehavior id="CodexReaperBurnApply">
+        <Behavior value="CodexReaperBurn"/>
+    </CEffectApplyBehavior>
+    <CEffectSet id="CodexReaperBurnHitSet">
+        <EffectArray index="0" value="P38ScytheGuassPistol"/>
+        <EffectArray index="1" value="CodexReaperBurnApply"/>
+    </CEffectSet>
+    <CActorModel id="CodexReaperBurnVisual" parent="ModelAnimationStyleOneShot">
+        <Model value="HellionTankAttackFireAddition"/>
+        <Host Subject="_Unit"/>
+        <HostSiteOps Ops="SOpAttachHead"/>
+        <On Terms="Effect.CodexReaperBurnPeriodicDamage.Start; At Target" Send="Create"/>
+    </CActorModel>
+    <CEffectCreatePersistent id="P38ScytheGuassPistolBurst">
+        <PeriodicEffectArray index="0" value="CodexReaperBurnHitSet"/>
+    </CEffectCreatePersistent>
+    <CTexture id="CodexReaperDamageSkinHealthyTexture0">
+        <File value="Assets\Textures\CodexReaper_Healthy.dds"/>
+        <Slot value="main.diffuse"/>
+    </CTexture>
+    <CTexture id="CodexReaperDamageSkinDamagedTexture0">
+        <File value="Assets\Textures\CodexReaper_Damaged.dds"/>
+        <Slot value="main.diffuse"/>
+    </CTexture>
+    <CValidatorUnitCompareVital id="CodexReaperDamageSkinLifeBelow" parent="CasterLifePercent">
+        <Compare value="LT"/>
+        <Value value="0.4"/>
+    </CValidatorUnitCompareVital>
+    <CActorStateMonitor id="CodexReaperDamageSkinMonitor">
+        <On Terms="UnitCreation.Reaper" Send="Create"/>
+        <On Terms="StateChange; StateValid Healthy" Target="_Unit" Send="TextureSelectById CodexReaperDamageSkinHealthyTexture0"/>
+        <On Terms="StateChange; StateValid Damaged" Target="_Unit" Send="TextureSelectById CodexReaperDamageSkinDamagedTexture0"/>
+        <StateThinkInterval value="0.5"/>
+        <StateArray Name="Healthy" Terms="!ValidateUnit CodexReaperDamageSkinLifeBelow"/>
+        <StateArray Name="Damaged" Terms="ValidateUnit CodexReaperDamageSkinLifeBelow"/>
+    </CActorStateMonitor>
+</Catalog>

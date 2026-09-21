@@ -1,0 +1,1 @@
+{"name":"simple_EParticipantType","kind":"simple","fields":[],"enumValues":["Observer","Participant","Referee","Spectator"],"facets":[],"base":"xs:string"}

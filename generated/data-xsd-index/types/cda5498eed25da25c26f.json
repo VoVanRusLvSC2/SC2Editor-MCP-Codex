@@ -1,0 +1,1 @@
+{"name":"SActorTermScope","kind":"complex","fields":[{"kind":"attribute","name":"ScopeType","type":"simple_EActorScopeType"},{"kind":"element","name":"ScopeType","type":"EActorScopeType","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

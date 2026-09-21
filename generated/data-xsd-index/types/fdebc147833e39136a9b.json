@@ -1,0 +1,1 @@
+{"name":"simple_EVoiceOverSkinState","kind":"simple","fields":[],"enumValues":["Disabled","Shared","Unshared"],"facets":[],"base":"xs:string"}

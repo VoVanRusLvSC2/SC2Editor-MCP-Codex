@@ -1,0 +1,1 @@
+{"name":"simple_EDamageResponseHandledValue","kind":"simple","fields":[],"enumValues":["Absorbed","None","Original","Remaining"],"facets":[],"base":"xs:string"}

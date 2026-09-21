@@ -1,0 +1,1 @@
+{"name":"simple_EActorPhysicsImpactSpyType","kind":"simple","fields":[],"enumValues":["Automatic","ModelsOnly","Off","TerrainOnly"],"facets":[],"base":"xs:string"}

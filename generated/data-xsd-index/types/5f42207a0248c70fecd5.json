@@ -1,0 +1,1 @@
+{"name":"simple_EActorSiteOpTerrainAndWaterFlag","kind":"simple","fields":[],"enumValues":["FollowWaves","PassThroughIfNoWater"],"facets":[],"base":"xs:string"}

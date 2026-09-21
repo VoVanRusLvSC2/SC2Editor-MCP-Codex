@@ -1,0 +1,1 @@
+{"name":"simple_EActorTransferFlag","kind":"simple","fields":[],"enumValues":["AnimProps","Animator","FOWColor","FOWShader","Model","ModelMaterials","Position","Rotation","Status","Textures"],"facets":[],"base":"xs:string"}

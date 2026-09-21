@@ -1,0 +1,1 @@
+{"name":"simple_ECooldownLocation","kind":"simple","fields":[],"enumValues":["Abil","Behavior","Global","Player","Unit"],"facets":[],"base":"xs:string"}

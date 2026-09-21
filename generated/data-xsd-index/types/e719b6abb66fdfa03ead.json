@@ -1,0 +1,1 @@
+{"name":"simple_EActorCutsceneStatus","kind":"simple","fields":[],"enumValues":["Live","Paused"],"facets":[],"base":"xs:string"}

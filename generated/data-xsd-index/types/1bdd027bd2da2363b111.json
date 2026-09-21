@@ -1,0 +1,1 @@
+{"name":"simple_EActorVisibilityAtCreation","kind":"simple","fields":[],"enumValues":["Caster","CasterAlly","CasterEnemy","CasterNeutral","Source","SourceAlly","SourceEnemy","SourceNeutral","Target","TargetAlly","TargetEnemy","TargetNeutral"],"facets":[],"base":"xs:string"}

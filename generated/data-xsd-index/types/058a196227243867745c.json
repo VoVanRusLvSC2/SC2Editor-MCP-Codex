@@ -1,0 +1,1 @@
+{"name":"simple_EAchievementFilter","kind":"simple","fields":[],"enumValues":["MapMelee","MapSignature","MatchAnonymous","MatchFFA","MatchMulti","MatchNoAIBuilds","MatchNoExtensions","MatchNoHandicaps","MatchObserver","MatchParticipant","MatchRanked","MatchSingle"],"facets":[],"base":"xs:string"}

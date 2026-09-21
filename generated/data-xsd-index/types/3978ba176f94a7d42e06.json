@@ -1,0 +1,1 @@
+{"name":"SAccumulatedGameTime","kind":"complex","fields":[{"kind":"attribute","name":"index","type":"xs:integer"},{"kind":"attribute","name":"removed","type":"simple_bool"},{"kind":"attribute","name":"value","type":"simple_CGameTime"},{"kind":"element","name":"AccumulatorArray","minOccurs":"0","maxOccurs":"unbounded"}],"enumValues":[],"facets":[],"base":"CAccumulatorLink"}

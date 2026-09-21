@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Desc>
+    <!-- Existing unknown content remains untouched. -->
+    <FutureMetadata owner="user"/>
+    <Frame type="Button" name="CodexButtonTemplate" template="StandardTemplates/StandardButtonTemplate">
+        <Width val="180"/>
+        <Height val="48"/>
+    </Frame>
+    <Frame type="Frame" name="GameUI/UIContainer" file="GameUI">
+        <Frame type="Frame" name="CodexWindow">
+            <Width val="480"/>
+            <Height val="240"/>
+            <Visible val="true"/>
+            <Anchor side="Top" relative="$parent" pos="Mid" offset="-120"/>
+            <Anchor side="Left" relative="$parent" pos="Mid" offset="-240"/>
+            <Frame type="Button" name="Primary" template="TransactionDemo/CodexButtonTemplate">
+                <Text val="Primary"/>
+                <Toggleable val="true"/>
+                <Anchor side="Bottom" relative="$parent" pos="Max" offset="-32"/>
+                <Anchor side="Left" relative="$parent" pos="Min" offset="32"/>
+                <StateGroup name="ToggleState">
+                    <DefaultState val="NotToggled"/>
+                    <State name="Toggled">
+                        <When type="Property" frame="$this" toggled="True"/>
+                        <Action type="SetProperty" frame="$parent/Secondary" enabled="False"/>
+                    </State>
+                    <State name="NotToggled">
+                        <When type="Property" frame="$this" toggled="False"/>
+                        <Action type="SetProperty" frame="$parent/Secondary" enabled="True"/>
+                    </State>
+                </StateGroup>
+                <Animation name="Show" speed="1">
+                    <Event event="OnShown" action="Reset,Play" frame="$this"/>
+                    <Controller type="Fade" frame="$this" end="Pause">
+                        <Key type="Curve" time="0" value="0" inout="Smooth"/>
+                        <Key type="Curve" time="0.25" value="255" inout="Smooth"/>
+                    </Controller>
+                </Animation>
+            </Frame>
+            <Frame type="Button" name="Secondary" template="TransactionDemo/CodexButtonTemplate">
+                <Text val="Secondary"/>
+                <Anchor side="Bottom" relative="$parent" pos="Max" offset="-32"/>
+                <Anchor side="Right" relative="$parent" pos="Max" offset="-32"/>
+            </Frame>
+        </Frame>
+    </Frame>
+</Desc>

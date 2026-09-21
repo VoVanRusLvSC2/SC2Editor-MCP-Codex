@@ -1,0 +1,1 @@
+{"name":"SIconVariation","kind":"complex","fields":[{"kind":"attribute","name":"Image","type":"simple_CImagePath"},{"kind":"attribute","name":"Number","type":"simple_uint32"},{"kind":"element","name":"Image","type":"CImagePath","minOccurs":"0","maxOccurs":"1"},{"kind":"element","name":"Number","type":"uint32","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

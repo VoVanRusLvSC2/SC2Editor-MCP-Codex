@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Catalog>
+    <CEffectDamage id="CodexReaperBurnPeriodicDamage">
+        <EditorCategories value="Race:Terran,AbilityorEffectType:Units"/>
+        <Kind value="Ranged"/>
+        <Amount value="2"/>
+    </CEffectDamage>
+    <CBehaviorBuff id="CodexReaperBurn">
+        <Alignment value="Negative"/>
+        <Duration value="4"/>
+        <Period value="0.5"/>
+        <PeriodicEffect value="CodexReaperBurnPeriodicDamage"/>
+        <BuffFlags index="RefreshStack" value="1"/>
+        <MaxStackCount value="1"/>
+    </CBehaviorBuff>
+    <CEffectApplyBehavior id="CodexReaperBurnApply">
+        <Behavior value="CodexReaperBurn"/>
+    </CEffectApplyBehavior>
+    <CEffectSet id="CodexReaperBurnHitSet">
+        <EffectArray index="0" value="P38ScytheGuassPistol"/>
+        <EffectArray index="1" value="CodexReaperBurnApply"/>
+    </CEffectSet>
+    <CActorModel id="CodexReaperBurnVisual" parent="ModelAnimationStyleOneShot">
+        <Model value="HellionTankAttackFireAddition"/>
+        <Host Subject="_Unit"/>
+        <HostSiteOps Ops="SOpAttachHead"/>
+        <On Terms="Effect.CodexReaperBurnPeriodicDamage.Start; At Target" Send="Create"/>
+    </CActorModel>
+    <CEffectCreatePersistent id="P38ScytheGuassPistolBurst">
+        <PeriodicEffectArray index="0" value="CodexReaperBurnHitSet"/>
+    </CEffectCreatePersistent>
+</Catalog>

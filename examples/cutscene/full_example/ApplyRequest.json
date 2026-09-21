@@ -1,0 +1,21 @@
+{
+  "file": "Cutscenes/VerifiedExample.SC2Cutscene",
+  "operations": [
+    {
+      "op": "property.set",
+      "object": "guid:10000000000000000010",
+      "path": "@modelLink",
+      "value": "MarineMercenary"
+    },
+    {
+      "op": "bookmark.add",
+      "as": "outro",
+      "name": "Outro",
+      "time": "116617",
+      "jumpToBookmarkWhenHit": "Intro"
+    }
+  ],
+  "dryRun": true,
+  "stage": true,
+  "validate": true
+}

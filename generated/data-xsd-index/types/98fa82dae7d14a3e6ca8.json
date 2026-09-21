@@ -1,0 +1,1 @@
+{"name":"SActorMsgSoundAddDSP","kind":"complex","fields":[{"kind":"attribute","name":"DSP","type":"simple_CDSPLink"},{"kind":"element","name":"DSP","type":"CDSPLink","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

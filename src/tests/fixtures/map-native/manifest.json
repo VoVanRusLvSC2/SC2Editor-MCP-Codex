@@ -1,0 +1,58 @@
+[
+  {
+    "map": "ant",
+    "component": "MapInfo",
+    "sha256": "fbdf763ce0c2e3ee074b6ad771a98a44304fbc5e07dff56b5d031ea2244c0d2c",
+    "bytes": 455,
+    "source": "Ant_Colonies_SC2Map"
+  },
+  {
+    "map": "city",
+    "component": "MapInfo",
+    "sha256": "c980fe8f6bce595862d8af6507c7f60dc889500f26a6c109455d9648c5c0f9bd",
+    "bytes": 879,
+    "source": "City_of_Tempest_KSP_Production_SC2Map"
+  },
+  {
+    "map": "nydus",
+    "component": "MapInfo",
+    "sha256": "21ff64431be8ec1adcb0743901d3b0095851fb7ae754be4c55c4e0d2af5a8cf3",
+    "bytes": 534,
+    "source": "Nydus_Conspiracy__3__SC2Map"
+  },
+  {
+    "map": "nydus",
+    "component": "DocumentInfo",
+    "sha256": "03d6f1d2f22f4552171fa724f37a0e8d587c635a6c5c087fdd606dac393c0d2c",
+    "bytes": 1085,
+    "source": "Nydus_Conspiracy__3__SC2Map"
+  },
+  {
+    "map": "nydus",
+    "component": "DocumentHeader",
+    "sha256": "73f78e82d650fca7b867375ee5310c7f73859e333c0ebdf0137684fc0e5215f8",
+    "bytes": 3972,
+    "source": "Nydus_Conspiracy__3__SC2Map"
+  },
+  {
+    "map": "nydus",
+    "component": "ComponentList.SC2Components",
+    "sha256": "b34412f7488e62d056ae2ef642187ef84b69d0d5d00552f166a186650e39826b",
+    "bytes": 579,
+    "source": "Nydus_Conspiracy__3__SC2Map"
+  },
+  {
+    "map": "nydus",
+    "component": "Attributes",
+    "sha256": "c4078f8d59e046e673c36354655e74b5c6e4247e68ed67601eb8657c926ff845",
+    "bytes": 19846,
+    "source": "Nydus_Conspiracy__3__SC2Map"
+  },
+  {
+    "map": "warships",
+    "component": "MapInfo",
+    "sha256": "feb1cf0ff0096de90a9df66a43b28145fb5990a10bd8c59fc718ed18931d6c6f",
+    "bytes": 538,
+    "source": "WarshipsTakeoverMerge_SC2Map"
+  }
+]

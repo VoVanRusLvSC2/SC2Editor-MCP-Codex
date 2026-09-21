@@ -1,0 +1,1 @@
+{"name":"simple_EActorIncomingType","kind":"simple","fields":[],"enumValues":["Direct","Missile"],"facets":[],"base":"xs:string"}

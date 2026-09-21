@@ -1,0 +1,1 @@
+{"name":"CBeamAsyncLinear","kind":"complex","fields":[{"kind":"attribute","name":"Duration","type":"simple_CFixed"},{"kind":"element","name":"Duration","type":"CFixed","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[],"base":"CBase"}

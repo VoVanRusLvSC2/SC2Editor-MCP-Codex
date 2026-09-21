@@ -1,0 +1,1 @@
+{"name":"simple_EMountVO","kind":"simple","fields":[],"enumValues":["Dismounted","Looping","Mounted","Moving","Stationary"],"facets":[],"base":"xs:string"}

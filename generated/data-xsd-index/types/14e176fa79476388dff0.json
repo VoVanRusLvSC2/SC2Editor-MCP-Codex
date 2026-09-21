@@ -1,0 +1,1 @@
+{"name":"simple_EActorHeightTestType","kind":"simple","fields":[],"enumValues":["Average","Highest","Lowest"],"facets":[],"base":"xs:string"}

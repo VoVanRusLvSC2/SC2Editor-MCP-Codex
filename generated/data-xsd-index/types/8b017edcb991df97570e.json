@@ -1,0 +1,1 @@
+{"name":"simple_EAchievementTermFlag","kind":"simple","fields":[],"enumValues":["Hidden","Notify","Persist"],"facets":[],"base":"xs:string"}

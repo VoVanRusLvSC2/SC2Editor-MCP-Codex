@@ -1,0 +1,1 @@
+{"name":"simple_ESelectionTransferFlag","kind":"simple","fields":[],"enumValues":["DeselectSource","IncludeControlGroups","SingleOnly"],"facets":[],"base":"xs:string"}

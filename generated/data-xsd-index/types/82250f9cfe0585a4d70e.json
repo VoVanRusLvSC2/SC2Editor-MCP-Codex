@@ -1,0 +1,1 @@
+{"name":"simple_EMotionOverlayType","kind":"simple","fields":[],"enumValues":["None","Orbit","PolarityAlternating","PolarityNegative","PolarityNone","PolarityPositive","PolarityRandom","Revolver","Wave"],"facets":[],"base":"xs:string"}

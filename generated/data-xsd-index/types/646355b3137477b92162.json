@@ -1,0 +1,1 @@
+{"name":"simple_EAbilAttackCmd","kind":"simple","fields":[],"enumValues":["Barrage","Execute","Towards"],"facets":[],"base":"xs:string"}

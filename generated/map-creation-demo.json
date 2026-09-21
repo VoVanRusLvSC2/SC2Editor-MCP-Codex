@@ -1,0 +1,202 @@
+{
+  "status": "PASS",
+  "template": {
+    "directory": "Nydus_Conspiracy__3__SC2Map/components",
+    "sha256": "188715fc31332bf6fadec43f3e926d68f76cbe54415cc937d804f6c4d5c585d8",
+    "valid": true,
+    "cells": [
+      32,
+      32
+    ],
+    "tileSet": "BelShirEx1",
+    "objectCount": 0,
+    "scriptFiles": [
+      "MapScript.galaxy"
+    ],
+    "entryCount": 44,
+    "issues": [
+      {
+        "severity": "warning",
+        "code": "LOGICAL_COMPONENT_ROOT_UNRESOLVED",
+        "message": "gada: GameData; logical/optimized roots are preserved without guessing a direct file binding"
+      },
+      {
+        "severity": "warning",
+        "code": "LOGICAL_COMPONENT_ROOT_UNRESOLVED",
+        "message": "text: GameText; logical/optimized roots are preserved without guessing a direct file binding"
+      },
+      {
+        "severity": "warning",
+        "code": "LOGICAL_COMPONENT_ROOT_UNRESOLVED",
+        "message": "text: GameText; logical/optimized roots are preserved without guessing a direct file binding"
+      },
+      {
+        "severity": "warning",
+        "code": "OFFLINE_VALIDATION_ONLY",
+        "message": "DocumentHeader payload, player/variant semantics and engine acceptance remain unverified"
+      }
+    ],
+    "terrainProfile": "Conventional complete native terrain bundle; optimized/custom-name/missing-component profiles are not certified as creation templates",
+    "cleanTemplateVerified": false,
+    "inheritedContent": "All objects, scripts, data, dependencies and opaque components are preserved",
+    "editorValidation": "NOT_EXECUTED",
+    "runtimeValidation": "NOT_EXECUTED"
+  },
+  "preview": {
+    "dryRun": true,
+    "blueprintId": "native_188715fc31332bf6fade",
+    "blueprintSha256": "188715fc31332bf6fadec43f3e926d68f76cbe54415cc937d804f6c4d5c585d8",
+    "destinationDirectory": ".sc2mcp-output/alpha18-created",
+    "cells": [
+      32,
+      32
+    ],
+    "entryCount": 44,
+    "changedFiles": [
+      "MapInfo",
+      "t3HeightMap",
+      "t3SyncHeightMap"
+    ],
+    "contentSha256": "8a8f56fb42b9ff856adb5ce899b0c44a532aced0fbf903916fdacd2141fdecec",
+    "cleanMap": false,
+    "inheritedObjects": 0,
+    "inheritedScripts": [
+      "MapScript.galaxy"
+    ],
+    "validationScope": "Known MapInfo core prefix, required document roots, terrain parsers and file manifest; not complete engine semantics",
+    "issues": [
+      {
+        "severity": "warning",
+        "code": "LOGICAL_COMPONENT_ROOT_UNRESOLVED",
+        "message": "gada: GameData; logical/optimized roots are preserved without guessing a direct file binding"
+      },
+      {
+        "severity": "warning",
+        "code": "LOGICAL_COMPONENT_ROOT_UNRESOLVED",
+        "message": "text: GameText; logical/optimized roots are preserved without guessing a direct file binding"
+      },
+      {
+        "severity": "warning",
+        "code": "LOGICAL_COMPONENT_ROOT_UNRESOLVED",
+        "message": "text: GameText; logical/optimized roots are preserved without guessing a direct file binding"
+      },
+      {
+        "severity": "warning",
+        "code": "OFFLINE_VALIDATION_ONLY",
+        "message": "DocumentHeader payload, player/variant semantics and engine acceptance remain unverified"
+      }
+    ],
+    "editorValidation": "NOT_EXECUTED",
+    "runtimeValidation": "NOT_EXECUTED",
+    "nextStep": "Open the created directory as a project, author objects/data/scripts with the existing modules, save all drafts and map.export"
+  },
+  "actual": {
+    "dryRun": false,
+    "blueprintId": "native_188715fc31332bf6fade",
+    "blueprintSha256": "188715fc31332bf6fadec43f3e926d68f76cbe54415cc937d804f6c4d5c585d8",
+    "destinationDirectory": ".sc2mcp-output/alpha18-created",
+    "cells": [
+      32,
+      32
+    ],
+    "entryCount": 44,
+    "changedFiles": [
+      "MapInfo",
+      "t3HeightMap",
+      "t3SyncHeightMap"
+    ],
+    "contentSha256": "8a8f56fb42b9ff856adb5ce899b0c44a532aced0fbf903916fdacd2141fdecec",
+    "cleanMap": false,
+    "inheritedObjects": 0,
+    "inheritedScripts": [
+      "MapScript.galaxy"
+    ],
+    "validationScope": "Known MapInfo core prefix, required document roots, terrain parsers and file manifest; not complete engine semantics",
+    "issues": [
+      {
+        "severity": "warning",
+        "code": "LOGICAL_COMPONENT_ROOT_UNRESOLVED",
+        "message": "gada: GameData; logical/optimized roots are preserved without guessing a direct file binding"
+      },
+      {
+        "severity": "warning",
+        "code": "LOGICAL_COMPONENT_ROOT_UNRESOLVED",
+        "message": "text: GameText; logical/optimized roots are preserved without guessing a direct file binding"
+      },
+      {
+        "severity": "warning",
+        "code": "LOGICAL_COMPONENT_ROOT_UNRESOLVED",
+        "message": "text: GameText; logical/optimized roots are preserved without guessing a direct file binding"
+      },
+      {
+        "severity": "warning",
+        "code": "OFFLINE_VALIDATION_ONLY",
+        "message": "DocumentHeader payload, player/variant semantics and engine acceptance remain unverified"
+      }
+    ],
+    "editorValidation": "NOT_EXECUTED",
+    "runtimeValidation": "NOT_EXECUTED",
+    "nextStep": "Open the created directory as a project, author objects/data/scripts with the existing modules, save all drafts and map.export"
+  },
+  "packed": {
+    "operation": "pack",
+    "archive": "/workspace/scratch/d86e509a81bb/archive-final-alpha12/.sc2mcp-output/alpha18-created/.sc2mcp-output/Created.SC2Map",
+    "componentDirectory": "/workspace/scratch/d86e509a81bb/archive-final-alpha12/.sc2mcp-output/alpha18-created",
+    "adapter": "/workspace/scratch/d86e509a81bb/work/SC2Editor_MCP_Codex/native/bin/linux-x64/sc2-mcp-archive",
+    "verification": {
+      "entryCount": 44,
+      "contentSha256": {
+        "Attributes": "c4078f8d59e046e673c36354655e74b5c6e4247e68ed67601eb8657c926ff845",
+        "Attributes.version": "97748f843706c2dbbfbd1088fcea4df26b5b89b3735829db6c900135e756d294",
+        "BankList.xml": "807f7054ddd4cd8676c7ef40d07877a84db0afa6526afe039556c5cdecd69b77",
+        "ComponentList.SC2Components": "b34412f7488e62d056ae2ef642187ef84b69d0d5d00552f166a186650e39826b",
+        "DocumentHeader": "73f78e82d650fca7b867375ee5310c7f73859e333c0ebdf0137684fc0e5215f8",
+        "DocumentInfo": "03d6f1d2f22f4552171fa724f37a0e8d587c635a6c5c087fdd606dac393c0d2c",
+        "DocumentInfo.version": "d7ad71a2ae6e1a919931d931f66c368a794580dc8c41fcfbbada793a3101a317",
+        "enUS.SC2Data/LocalizedData/GameStrings.txt": "6bb32024fe043f1cda29456ba4f68777d16120eddc01396a18036385f246b30a",
+        "enUS.SC2Data/LocalizedData/TriggerStrings.txt": "bc95211e4fad5648dcb57d6857c3120bf0ddffa1ff53814541102e221becd0df",
+        "GameData.version": "94e4af643c3ff5bc6ee8ea35eb5cd95b0b6c1779bb65191216ff28aaffe85266",
+        "GameText.version": "37c7dc757f83fe0a0f4fa8048d9f8e8e347c86a7efe17ea35c6b0b6aea8de75b",
+        "MapInfo": "cef05221bb52176cf463bcad0c50d8e6963690b7d30cf887abddfb6176660d7d",
+        "MapInfo.version": "62410aecdf367d54de85761bc25e8ac698766dceb22299bcb3577e1169861fca",
+        "MapScript.galaxy": "cf9c37a0fd4cd5ed6d4f7526963cecafd98ffd18bcf93b2da85e28775628289f",
+        "Minimap.tga": "c5928d930f7a611d2f7acc70e30dea4266845ea19e90b8e5935a711df28f2001",
+        "Preload.xml": "af22f8ce9bf90d07e450b8c548498d0bcb703053e7a6af2fc1d95f6a4d7db27d",
+        "PreloadAssetDB.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "ruRU.SC2Data/LocalizedData/GameStrings.txt": "e396ac47064e78bfb02cfcb385bed7dabdaedee0903bfe03a8fd3a78b75ae482",
+        "ruRU.SC2Data/LocalizedData/TriggerStrings.txt": "bc95211e4fad5648dcb57d6857c3120bf0ddffa1ff53814541102e221becd0df",
+        "t3CellFlags": "56d47dee7d3e6c2245a5d69d1421bffa56c4f14ac936574d1ab1e6351c87b55e",
+        "t3FluffDoodad": "3f3f15b8480e7cf37d97bc9c4affe5af1348b352bbc1213a71da32195a88e937",
+        "t3HardTile": "12afa86368acf6158758ce235c2e3879d6edfab41cc2eef6738c939e746b745d",
+        "t3HeightMap": "bf1efa911c80a69f612f0af03c1099d4d1726890e08798d4e491b3b2e618d73d",
+        "t3SyncCliffLevel": "ee6f88f90add90966dc89670499c3120e26d33968a12c26f0ba99d4da7504fd7",
+        "t3SyncHeightMap": "ecf8a3c61276c0a71d4061d6c49df339a73988c0862dcdb85f4970fe28d06440",
+        "t3SyncTextureInfo": "5fdf44defe5df115be5be49de20d822f1dfab785304cfbd228c120aa03f38c0c",
+        "t3Terrain.version": "668e90bae1c33e28defae920972f84bfec17531d7191ed87802c7b2f09138138",
+        "t3Terrain.xml": "1e66a45de6c4c2aa097e6582592c1a8daac504549376c27bb79fa4d11cd832b9",
+        "t3TextureMasks": "901087dbb65e738d774d2517fc694d8508d524c4ca988cc7478efd2e0f48cb99",
+        "t3VertCol": "07e468603720a21465401f31702bea01e69bea5a8aa9606fc672015bcd692a18",
+        "t3Water": "c15e6e4da91564e9349a449302114f4248dfe1f2cebee1a29526cb5f41db5af5",
+        "Triggers": "aaf7640f643cae0a9b0980598154021250648c0f0e66068aee6c313d1f15b73f",
+        "Triggers.version": "3b956928b33c2f6749a1e1d7180b7dcc1c8e51601be2d44a7510511abcd262e1",
+        "Аватарка.png": "18985f7904ec205061100d306e96d3aa4f5f0bd32cf16c18b60cf573ea44768a",
+        "Картинка нидуса(Small).png": "8bf3c0efd447a6d271a92293b3200aadc8f7000821a0ca271eada7e5f0097131",
+        "Картинка-нидуса.dds": "31252cc0ff3fa02c2406e8a8f32627626a83271d49ca754026fe2303ddf6a21d",
+        "Карты для нидус мода.png": "32698ff8c4ab89317e84dcaa790d14fab0f0dbf9cefac2af5d3cdeef6a387c41",
+        "Обучалка на англ.tga": "eaac96a7db4c946c6fa0c191dadf5ce4d5bea96e21fd2f3505a9707ba558c74d",
+        "Обучалка на англ2.png": "e3d29d8886c36bf3c7ce6bb48cacd3d09125cd2d2727a5a4aac0a37e9799e5c7",
+        "Обучалка на русском.tga": "657e2d24352d298bb1a0d31e8bc64be0071f539bb6ef6f9418059656eff6de5b",
+        "Обучалка на русском2.png": "9af29e36621e8ed39bf63565d73504717c80a5c9bde1fb03443657311888e11d",
+        "Обучалка.tga": "03d0cdf9af19e8bdcc26843442c8972d0cbfc3feb8dbf18415bbdaf44b610640",
+        "Обучалка2.tga": "f8b368ff3c88f5ff39976870a4e9d6caec5245e15502c02936d04e5e2f2934d9",
+        "Фотка игры.tga": "57da90adc4a68df725714a14453e9872c7f55f02b7fcd6077e642373cb237ad1"
+      },
+      "reopened": true
+    },
+    "dryRun": false,
+    "validation": "Known MapInfo core prefix, required document roots, terrain parsers and file manifest; not complete engine semantics",
+    "editorValidation": "NOT_EXECUTED",
+    "runtimeValidation": "NOT_EXECUTED"
+  },
+  "scope": "Creation from supplied native scenario, authored relief and map metadata, content-verified MPQ export; not a clean-map or Editor/runtime proof"
+}

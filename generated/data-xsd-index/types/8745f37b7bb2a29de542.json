@@ -1,0 +1,1 @@
+{"name":"simple_ESoundtrackFlag","kind":"simple","fields":[],"enumValues":["Continuous","Instant"],"facets":[],"base":"xs:string"}

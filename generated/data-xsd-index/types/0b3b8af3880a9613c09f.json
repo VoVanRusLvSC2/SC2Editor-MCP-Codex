@@ -1,0 +1,1 @@
+{"name":"simple_EBeaconFlag","kind":"simple","fields":[],"enumValues":["AutoCastOff","AutoCastOn","ClearAll","ClearExtra","CustomBuild","Dropoff","None","ViewNext","ViewPrev"],"facets":[],"base":"xs:string"}

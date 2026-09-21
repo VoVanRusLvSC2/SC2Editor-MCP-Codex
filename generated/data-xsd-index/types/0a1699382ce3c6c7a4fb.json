@@ -1,0 +1,1 @@
+{"name":"simple_EDamageCategory","kind":"simple","fields":[],"enumValues":["Magical","Physical","Universal"],"facets":[],"base":"xs:string"}

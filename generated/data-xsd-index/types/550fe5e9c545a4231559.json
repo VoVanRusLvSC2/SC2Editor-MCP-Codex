@@ -1,0 +1,1 @@
+{"name":"simple_EBehaviorPowerUserFlag","kind":"simple","fields":[],"enumValues":["DisplayPower","HideUnpoweredText","KillIfUnpowered","LevelFromAbilLevel","LevelFromSourceCount"],"facets":[],"base":"xs:string"}

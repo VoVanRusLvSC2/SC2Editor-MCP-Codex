@@ -1,0 +1,1 @@
+{"name":"simple_EClassIdCPreload","kind":"simple","fields":[],"enumValues":["CPreload","CPreloadActor","CPreloadAsset","CPreloadConversation","CPreloadModel","CPreloadScene","CPreloadSound","CPreloadUnit"],"facets":[],"base":"xs:string"}

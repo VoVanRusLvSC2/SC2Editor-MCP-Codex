@@ -1,0 +1,1 @@
+{"name":"simple_EHeroAbilFlag","kind":"simple","fields":[],"enumValues":["AffectedByCooldownReduction","AffectedByOverdrive","Heroic","HideHotkey","MountReplacement","ShowInHeroSelect","Trait","UsesCharges"],"facets":[],"base":"xs:string"}

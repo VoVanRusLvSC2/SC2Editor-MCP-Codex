@@ -1,0 +1,1 @@
+{"name":"simple_EActorUnitFlag","kind":"simple","fields":[],"enumValues":["AutomateWalkDirections","ShowBlobShadow","StandAnimBirthVariation","SuppressDefaultStatusBar","SuppressStandIntro","SuppressWalkIntro","SuppressWalkOutro"],"facets":[],"base":"xs:string"}

@@ -1,0 +1,14 @@
+{
+  "file": "CustomAI",
+  "componentListFile": "ComponentList.SC2Components",
+  "operations": [
+    { "op": "definition.create", "as": "enemyAI", "id": "ZergPlayer3" },
+    { "op": "wave.create", "definition": "@enemyAI", "as": "wave4", "id": "Wave0400", "properties": { "SourcePlayer": 3, "TargetPlayer": 1, "Time": 240 }, "composition": [{ "unit": "Zergling", "quantity": 12 }], "allowUnconfirmedStructure": true },
+    { "op": "wave.create", "definition": "@enemyAI", "as": "wave6", "id": "Wave0600", "properties": { "Time": 360 }, "composition": [{ "unit": "Roach", "quantity": 8 }, { "unit": "Zergling", "quantity": 12 }], "allowUnconfirmedStructure": true },
+    { "op": "wave.clone", "wave": "@wave6", "as": "wave8", "id": "Wave0800" },
+    { "op": "wave.update", "wave": "@wave8", "properties": { "Time": 480 }, "allowUnconfirmedStructure": true }
+  ],
+  "dryRun": true,
+  "stage": true,
+  "validate": true
+}

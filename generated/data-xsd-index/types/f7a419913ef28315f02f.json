@@ -1,0 +1,1 @@
+{"name":"simple_EAbilOrderDisplayType","kind":"simple","fields":[],"enumValues":["Attack","Confirm","Legacy","Move","Rally"],"facets":[],"base":"xs:string"}

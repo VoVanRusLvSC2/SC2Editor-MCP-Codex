@@ -1,0 +1,1 @@
+{"name":"SActorCreepRate","kind":"complex","fields":[{"kind":"attribute","name":"Name","type":"simple_CActorLabelKey"},{"kind":"attribute","name":"Rate","type":"simple_real32"},{"kind":"element","name":"Name","type":"CActorLabelKey","minOccurs":"0","maxOccurs":"1"},{"kind":"element","name":"Rate","type":"real32","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

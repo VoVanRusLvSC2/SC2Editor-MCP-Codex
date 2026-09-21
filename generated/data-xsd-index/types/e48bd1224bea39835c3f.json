@@ -1,0 +1,1 @@
+{"name":"CBankConditionCurrentMap","kind":"complex","fields":[{"kind":"attribute","name":"Map","type":"simple_CString"},{"kind":"element","name":"Map","type":"CString","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[],"base":"CBase"}

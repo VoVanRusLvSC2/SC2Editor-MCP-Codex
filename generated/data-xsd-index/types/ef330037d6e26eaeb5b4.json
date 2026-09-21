@@ -1,0 +1,1 @@
+{"name":"simple_EPlacementTest","kind":"simple","fields":[],"enumValues":["Cliff","Creep","Density","Fog","IgnoreBlockers","IgnoreInvisible","OriginSideOfFootprints","Power","Zone"],"facets":[],"base":"xs:string"}

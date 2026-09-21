@@ -1,0 +1,1 @@
+{"name":"SActorTermPortraitActor","kind":"complex","fields":[{"kind":"attribute","name":"ActorKey","type":"simple_CActorKey"},{"kind":"element","name":"ActorKey","type":"CActorKey","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

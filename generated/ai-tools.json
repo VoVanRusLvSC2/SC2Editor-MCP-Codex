@@ -1,0 +1,1250 @@
+{
+  "version": "1.1.0-alpha.7",
+  "triggerEditing": false,
+  "terrainEditing": false,
+  "tools": {
+    "ai.context": {
+      "description": "One-call selective context for native CustomAI definitions, waves, composition, timing, references, Trigger bindings, dependencies, diagnostics and operation registry.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "file": {
+            "type": "string"
+          },
+          "definitions": {
+            "maxItems": 100,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "waves": {
+            "maxItems": 100,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "units": {
+            "maxItems": 100,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "includeNative": {
+            "default": false,
+            "type": "boolean"
+          },
+          "includeTriggers": {
+            "default": true,
+            "type": "boolean"
+          },
+          "limit": {
+            "default": 100,
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2000
+          }
+        },
+        "required": [
+          "includeNative",
+          "includeTriggers",
+          "limit"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "ai.query": {
+      "description": "Batch-search CustomAI definitions/waves, timing, unit composition, dependency references, Trigger bindings or invalid references.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "file": {
+            "type": "string"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "definitions",
+              "waves",
+              "references",
+              "triggerBindings",
+              "invalid"
+            ]
+          },
+          "text": {
+            "type": "string"
+          },
+          "unit": {
+            "type": "string"
+          },
+          "minTime": {
+            "type": "number",
+            "minimum": 0
+          },
+          "maxTime": {
+            "type": "number",
+            "minimum": 0
+          },
+          "limit": {
+            "default": 100,
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2000
+          }
+        },
+        "required": [
+          "limit"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "ai.describe_type": {
+      "description": "Describe recovered native AI nodes/properties, types, defaults, constraints, reference kinds and exact evidence. Use only for unfamiliar AI fields.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "ai.apply": {
+      "description": "Atomically apply up to 250 CustomAI operations and aliases; validates before committing CustomAI and its sibling ComponentList. Trigger links are read-only; referenced renames/deletes are blocked. Defaults to dry-run.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "file": {
+            "default": "CustomAI",
+            "type": "string"
+          },
+          "componentListFile": {
+            "type": "string"
+          },
+          "operations": {
+            "minItems": 1,
+            "maxItems": 250,
+            "type": "array",
+            "items": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "op": {
+                      "type": "string",
+                      "const": "definition.create"
+                    },
+                    "as": {
+                      "type": "string"
+                    },
+                    "id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "properties": {
+                      "type": "object",
+                      "propertyNames": {
+                        "type": "string"
+                      },
+                      "additionalProperties": {
+                        "type": [
+                          "string",
+                          "number",
+                          "boolean"
+                        ]
+                      }
+                    },
+                    "allowUnconfirmedStructure": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "op",
+                    "id"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "op": {
+                      "type": "string",
+                      "const": "definition.update"
+                    },
+                    "definition": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string"
+                            },
+                            "nodeId": {
+                              "type": "integer",
+                              "minimum": 0,
+                              "maximum": 9007199254740991
+                            },
+                            "nativeType": {
+                              "type": "string"
+                            },
+                            "occurrence": {
+                              "type": "integer",
+                              "minimum": 0,
+                              "maximum": 9007199254740991
+                            }
+                          },
+                          "additionalProperties": false
+                        }
+                      ]
+                    },
+                    "properties": {
+                      "type": "object",
+                      "propertyNames": {
+                        "type": "string"
+                      },
+                      "additionalProperties": {
+                        "type": [
+                          "string",
+                          "number",
+                          "boolean"
+                        ]
+                      }
+                    },
+                    "allowUnconfirmedStructure": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "op",
+                    "definition",
+                    "properties"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "op": {
+                      "type": "string",
+                      "const": "definition.rename"
+                    },
+                    "definition": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string"
+                            },
+                            "nodeId": {
+                              "type": "integer",
+                              "minimum": 0,
+                              "maximum": 9007199254740991
+                            },
+                            "nativeType": {
+                              "type": "string"
+                            },
+                            "occurrence": {
+                              "type": "integer",
+                              "minimum": 0,
+                              "maximum": 9007199254740991
+                            }
+                          },
+                          "additionalProperties": false
+                        }
+                      ]
+                    },
+                    "newId": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "updateReferences": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "op",
+                    "definition",
+                    "newId"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "op": {
+                      "type": "string",
+                      "const": "definition.clone"
+                    },
+                    "definition": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string"
+                            },
+                            "nodeId": {
+                              "type": "integer",
+                              "minimum": 0,
+                              "maximum": 9007199254740991
+                            },
+                            "nativeType": {
+                              "type": "string"
+                            },
+                            "occurrence": {
+                              "type": "integer",
+                              "minimum": 0,
+                              "maximum": 9007199254740991
+                            }
+                          },
+                          "additionalProperties": false
+                        }
+                      ]
+                    },
+                    "id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "as": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "op",
+                    "definition",
+                    "id"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "op": {
+                      "type": "string",
+                      "const": "definition.delete"
+                    },
+                    "definition": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string"
+                            },
+                            "nodeId": {
+                              "type": "integer",
+                              "minimum": 0,
+                              "maximum": 9007199254740991
+                            },
+                            "nativeType": {
+                              "type": "string"
+                            },
+                            "occurrence": {
+                              "type": "integer",
+                              "minimum": 0,
+                              "maximum": 9007199254740991
+                            }
+                          },
+                          "additionalProperties": false
+                        }
+                      ]
+                    },
+                    "force": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "op",
+                    "definition"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "op": {
+                      "type": "string",
+                      "const": "definition.reorder"
+                    },
+                    "definition": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string"
+                            },
+                            "nodeId": {
+                              "type": "integer",
+                              "minimum": 0,
+                              "maximum": 9007199254740991
+                            },
+                            "nativeType": {
+                              "type": "string"
+                            },
+                            "occurrence": {
+                              "type": "integer",
+                              "minimum": 0,
+                              "maximum": 9007199254740991
+                            }
+                          },
+                          "additionalProperties": false
+                        }
+                      ]
+                    },
+                    "before": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string"
+                            },
+                            "nodeId": {
+                              "type": "integer",
+                              "minimum": 0,
+                              "maximum": 9007199254740991
+                            },
+                            "nativeType": {
+                              "type": "string"
+                            },
+                            "occurrence": {
+                              "type": "integer",
+                              "minimum": 0,
+                              "maximum": 9007199254740991
+                            }
+                          },
+                          "additionalProperties": false
+                        }
+                      ]
+                    },
+                    "after": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string"
+                            },
+                            "nodeId": {
+                              "type": "integer",
+                              "minimum": 0,
+                              "maximum": 9007199254740991
+                            },
+                            "nativeType": {
+                              "type": "string"
+                            },
+                            "occurrence": {
+                              "type": "integer",
+                              "minimum": 0,
+                              "maximum": 9007199254740991
+                            }
+                          },
+                          "additionalProperties": false
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "op",
+                    "definition"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "op": {
+                      "type": "string",
+                      "const": "wave.create"
+                    },
+                    "definition": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string"
+                            },
+                            "nodeId": {
+                              "type": "integer",
+                              "minimum": 0,
+                              "maximum": 9007199254740991
+                            },
+                            "nativeType": {
+                              "type": "string"
+                            },
+                            "occurrence": {
+                              "type": "integer",
+                              "minimum": 0,
+                              "maximum": 9007199254740991
+                            }
+                          },
+                          "additionalProperties": false
+                        }
+                      ]
+                    },
+                    "id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "as": {
+                      "type": "string"
+                    },
+                    "properties": {
+                      "type": "object",
+                      "propertyNames": {
+                        "type": "string"
+                      },
+                      "additionalProperties": {
+                        "type": [
+                          "string",
+                          "number",
+                          "boolean"
+                        ]
+                      }
+                    },
+                    "composition": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "unit": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "quantity": {
+                            "type": "integer",
+                            "exclusiveMinimum": 0,
+                            "maximum": 9007199254740991
+                          }
+                        },
+                        "required": [
+                          "unit",
+                          "quantity"
+                        ],
+                        "additionalProperties": false
+                      }
+                    },
+                    "allowUnconfirmedStructure": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "op",
+                    "definition",
+                    "id"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "op": {
+                      "type": "string",
+                      "const": "wave.update"
+                    },
+                    "wave": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string"
+                            },
+                            "nodeId": {
+                              "type": "integer",
+                              "minimum": 0,
+                              "maximum": 9007199254740991
+                            },
+                            "nativeType": {
+                              "type": "string"
+                            },
+                            "occurrence": {
+                              "type": "integer",
+                              "minimum": 0,
+                              "maximum": 9007199254740991
+                            }
+                          },
+                          "additionalProperties": false
+                        }
+                      ]
+                    },
+                    "properties": {
+                      "type": "object",
+                      "propertyNames": {
+                        "type": "string"
+                      },
+                      "additionalProperties": {
+                        "type": [
+                          "string",
+                          "number",
+                          "boolean"
+                        ]
+                      }
+                    },
+                    "allowUnconfirmedStructure": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "op",
+                    "wave",
+                    "properties"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "op": {
+                      "type": "string",
+                      "const": "wave.rename"
+                    },
+                    "wave": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string"
+                            },
+                            "nodeId": {
+                              "type": "integer",
+                              "minimum": 0,
+                              "maximum": 9007199254740991
+                            },
+                            "nativeType": {
+                              "type": "string"
+                            },
+                            "occurrence": {
+                              "type": "integer",
+                              "minimum": 0,
+                              "maximum": 9007199254740991
+                            }
+                          },
+                          "additionalProperties": false
+                        }
+                      ]
+                    },
+                    "newId": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "updateReferences": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "op",
+                    "wave",
+                    "newId"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "op": {
+                      "type": "string",
+                      "const": "wave.clone"
+                    },
+                    "wave": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string"
+                            },
+                            "nodeId": {
+                              "type": "integer",
+                              "minimum": 0,
+                              "maximum": 9007199254740991
+                            },
+                            "nativeType": {
+                              "type": "string"
+                            },
+                            "occurrence": {
+                              "type": "integer",
+                              "minimum": 0,
+                              "maximum": 9007199254740991
+                            }
+                          },
+                          "additionalProperties": false
+                        }
+                      ]
+                    },
+                    "id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "as": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "op",
+                    "wave",
+                    "id"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "op": {
+                      "type": "string",
+                      "const": "wave.delete"
+                    },
+                    "wave": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string"
+                            },
+                            "nodeId": {
+                              "type": "integer",
+                              "minimum": 0,
+                              "maximum": 9007199254740991
+                            },
+                            "nativeType": {
+                              "type": "string"
+                            },
+                            "occurrence": {
+                              "type": "integer",
+                              "minimum": 0,
+                              "maximum": 9007199254740991
+                            }
+                          },
+                          "additionalProperties": false
+                        }
+                      ]
+                    },
+                    "force": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "op",
+                    "wave"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "op": {
+                      "type": "string",
+                      "const": "wave.reorder"
+                    },
+                    "wave": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string"
+                            },
+                            "nodeId": {
+                              "type": "integer",
+                              "minimum": 0,
+                              "maximum": 9007199254740991
+                            },
+                            "nativeType": {
+                              "type": "string"
+                            },
+                            "occurrence": {
+                              "type": "integer",
+                              "minimum": 0,
+                              "maximum": 9007199254740991
+                            }
+                          },
+                          "additionalProperties": false
+                        }
+                      ]
+                    },
+                    "before": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string"
+                            },
+                            "nodeId": {
+                              "type": "integer",
+                              "minimum": 0,
+                              "maximum": 9007199254740991
+                            },
+                            "nativeType": {
+                              "type": "string"
+                            },
+                            "occurrence": {
+                              "type": "integer",
+                              "minimum": 0,
+                              "maximum": 9007199254740991
+                            }
+                          },
+                          "additionalProperties": false
+                        }
+                      ]
+                    },
+                    "after": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string"
+                            },
+                            "nodeId": {
+                              "type": "integer",
+                              "minimum": 0,
+                              "maximum": 9007199254740991
+                            },
+                            "nativeType": {
+                              "type": "string"
+                            },
+                            "occurrence": {
+                              "type": "integer",
+                              "minimum": 0,
+                              "maximum": 9007199254740991
+                            }
+                          },
+                          "additionalProperties": false
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "op",
+                    "wave"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "op": {
+                      "type": "string",
+                      "const": "composition.patch"
+                    },
+                    "wave": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string"
+                            },
+                            "nodeId": {
+                              "type": "integer",
+                              "minimum": 0,
+                              "maximum": 9007199254740991
+                            },
+                            "nativeType": {
+                              "type": "string"
+                            },
+                            "occurrence": {
+                              "type": "integer",
+                              "minimum": 0,
+                              "maximum": 9007199254740991
+                            }
+                          },
+                          "additionalProperties": false
+                        }
+                      ]
+                    },
+                    "mode": {
+                      "type": "string",
+                      "enum": [
+                        "replace",
+                        "add",
+                        "remove"
+                      ]
+                    },
+                    "units": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "unit": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "quantity": {
+                            "type": "integer",
+                            "exclusiveMinimum": 0,
+                            "maximum": 9007199254740991
+                          }
+                        },
+                        "required": [
+                          "unit"
+                        ],
+                        "additionalProperties": false
+                      }
+                    },
+                    "unitTag": {
+                      "type": "string"
+                    },
+                    "allowUnconfirmedStructure": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "op",
+                    "wave",
+                    "mode",
+                    "units"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "op": {
+                      "type": "string",
+                      "const": "native.add"
+                    },
+                    "parent": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string"
+                            },
+                            "nodeId": {
+                              "type": "integer",
+                              "minimum": 0,
+                              "maximum": 9007199254740991
+                            },
+                            "nativeType": {
+                              "type": "string"
+                            },
+                            "occurrence": {
+                              "type": "integer",
+                              "minimum": 0,
+                              "maximum": 9007199254740991
+                            }
+                          },
+                          "additionalProperties": false
+                        }
+                      ]
+                    },
+                    "as": {
+                      "type": "string"
+                    },
+                    "node": {
+                      "$ref": "#/$defs/__schema0"
+                    },
+                    "allowUnconfirmedStructure": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "op",
+                    "node"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "op": {
+                      "type": "string",
+                      "const": "native.set"
+                    },
+                    "node": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string"
+                            },
+                            "nodeId": {
+                              "type": "integer",
+                              "minimum": 0,
+                              "maximum": 9007199254740991
+                            },
+                            "nativeType": {
+                              "type": "string"
+                            },
+                            "occurrence": {
+                              "type": "integer",
+                              "minimum": 0,
+                              "maximum": 9007199254740991
+                            }
+                          },
+                          "additionalProperties": false
+                        }
+                      ]
+                    },
+                    "property": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "value": {
+                      "type": [
+                        "string",
+                        "number",
+                        "boolean"
+                      ]
+                    },
+                    "allowUnknown": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "op",
+                    "node",
+                    "property",
+                    "value"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "op": {
+                      "type": "string",
+                      "const": "native.remove"
+                    },
+                    "node": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string"
+                            },
+                            "nodeId": {
+                              "type": "integer",
+                              "minimum": 0,
+                              "maximum": 9007199254740991
+                            },
+                            "nativeType": {
+                              "type": "string"
+                            },
+                            "occurrence": {
+                              "type": "integer",
+                              "minimum": 0,
+                              "maximum": 9007199254740991
+                            }
+                          },
+                          "additionalProperties": false
+                        }
+                      ]
+                    },
+                    "force": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "op",
+                    "node"
+                  ],
+                  "additionalProperties": false
+                }
+              ]
+            }
+          },
+          "dryRun": {
+            "default": true,
+            "type": "boolean"
+          },
+          "stage": {
+            "default": true,
+            "type": "boolean"
+          },
+          "backup": {
+            "default": true,
+            "type": "boolean"
+          },
+          "validate": {
+            "default": true,
+            "type": "boolean"
+          },
+          "allowInvalid": {
+            "default": false,
+            "type": "boolean"
+          },
+          "expectedSha256": {
+            "type": "object",
+            "propertyNames": {
+              "type": "string"
+            },
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "expectedSourceSha256": {
+            "type": "object",
+            "propertyNames": {
+              "type": "string"
+            },
+            "additionalProperties": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "file",
+          "operations",
+          "dryRun",
+          "stage",
+          "backup",
+          "validate",
+          "allowInvalid"
+        ],
+        "additionalProperties": false,
+        "$defs": {
+          "__schema0": {
+            "type": "object",
+            "properties": {
+              "nativeType": {
+                "type": "string",
+                "pattern": "^[A-Za-z_][\\w:.-]*$"
+              },
+              "attrs": {
+                "type": "object",
+                "propertyNames": {
+                  "type": "string"
+                },
+                "additionalProperties": {
+                  "type": [
+                    "string",
+                    "number",
+                    "boolean"
+                  ]
+                }
+              },
+              "value": {
+                "type": [
+                  "string",
+                  "number",
+                  "boolean"
+                ]
+              },
+              "children": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/__schema0"
+                }
+              }
+            },
+            "required": [
+              "nativeType"
+            ],
+            "additionalProperties": false
+          }
+        }
+      }
+    },
+    "ai.validate": {
+      "description": "Validate CustomAI at L1 syntax, L2 recovered schema, L3 references/Trigger cross-links and L4 semantics. L5 Editor and L6 game runtime remain explicit.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "file": {
+            "default": "CustomAI",
+            "type": "string"
+          }
+        },
+        "required": [
+          "file"
+        ],
+        "additionalProperties": false
+      }
+    }
+  }
+}

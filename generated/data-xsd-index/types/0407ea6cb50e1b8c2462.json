@@ -1,0 +1,1 @@
+{"name":"simple_EAMFilterAttachType","kind":"simple","fields":[],"enumValues":["Any","Point","Volume"],"facets":[],"base":"xs:string"}

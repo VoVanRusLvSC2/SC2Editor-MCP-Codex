@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CutsceneState cutsceneVersion="1.300000" name="VerifiedExample">
+    <CCutsceneNodeDirector guid="10000000000000000001" name="Director" sortIndex="0" interactive="1">
+        <CCutsceneNodeBookmark guid="10000000000000000002" name="Bookmarks" sortIndex="0">
+            <CCutsceneElementBookmark guid="10000000000000000003" bookmarkName="Intro"/>
+        </CCutsceneNodeBookmark>
+    </CCutsceneNodeDirector>
+    <CCutsceneNodeActor guid="10000000000000000010" name="Marine" sortIndex="1" modelLink="Marine" shadowBox="0" teamColorDiffuse="0.000000,0.250000,1.000000,1">
+        <CCutsceneNodeAnimLayer guid="6838240533161910331" name="Animation Layer" enabled="1"/>
+    </CCutsceneNodeActor>
+</CutsceneState>

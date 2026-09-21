@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<Catalog>
+    <CTerrain id="MonlythEx12">
+        <EditorCategories value="Climate:Lunar"/>
+        <Lighting value="Monlyth"/>
+        <LoadingScreen value="Assets\Textures\loading-monlyth.dds"/>
+        <TextureProp value="monlyth"/>
+        <Ambience value="Ambience_Monlyth"/>
+        <ReverbAmbient value="BetaVerb"/>
+        <BlendTextures value="MonlythSand"/>
+        <BlendTextures value="UlaanSand2"/>
+        <BlendTextures value="ShakurasSandDark"/>
+        <BlendTextures value="HybridLabOuter7"/>
+        <BlendTextures value="HybridLabInner6"/>
+        <BlendTextures value="Starship2"/>
+        <BlendTextures value="GoldenTiles"/>
+        <BlendTextures value="PanelsComplex"/>
+        <HardTiles value="MarSaraTile"/>
+        <CliffSets value="StarshipCliff0"/>
+        <CliffSets value="HybridLabXelNagaCliff0"/>
+        <CliffSets value="HybridLabXelNagaCliff1"/>
+        <FogEnabled value="1"/>
+        <FogColor value="255,5,107,190"/>
+        <FogDensity value="0.500000"/>
+        <FogFalloff value="1.300000"/>
+        <FogStartingHeight value="4.200000"/>
+    </CTerrain>
+    <CTerrain id="Tyrador">
+        <Lighting value="MarSaraCampaignDay"/>
+    </CTerrain>
+    <CTerrain id="Citytile">
+        <EditorCategories value="Climate:Urban"/>
+        <Lighting value="Agria"/>
+        <LoadingScreen value="Assets\Textures\loading-tyrador.dds"/>
+        <Ambience value="Ambience_MapTyrador"/>
+        <ReverbAmbient value="BetaVerb"/>
+        <BlendTextures value="TyradorConcreteCracked"/>
+        <BlendTextures value="TyradorRubble"/>
+        <BlendTextures value="Korhal8"/>
+        <BlendTextures value="Valhalla4"/>
+        <BlendTextures value="Korhal6"/>
+        <BlendTextures value="TyradorBigBricks"/>
+        <BlendTextures value="Valhalla5"/>
+        <BlendTextures value="Korhal5"/>
+        <HardTiles value="MarSaraTile"/>
+        <CliffSets value="KorhalCliff1"/>
+        <CliffSets value="KorhalCliff0"/>
+        <FogEnabled value="1"/>
+        <FogColor value="255,45,68,86"/>
+        <FogDensity value="0.060000"/>
+        <FogFalloff value="0.200000"/>
+        <FogStartingHeight value="-0.900000"/>
+    </CTerrain>
+    <CTerrain id="cityb">
+        <EditorCategories value="Climate:Generic"/>
+        <Lighting value="ArcadeCityLight"/>
+        <LoadingScreen value="Assets\Textures\loading-haven.dds"/>
+        <Ambience value="Ambience_Korhal"/>
+        <ReverbAmbient value="City"/>
+        <BlendTextures value="NewFolsomTiles"/>
+        <BlendTextures value="CastanarTiles"/>
+        <BlendTextures value="HavenRockSmooth"/>
+        <BlendTextures value="Korhal3"/>
+        <BlendTextures value="DominionLab3"/>
+        <BlendTextures value="BraxisAlphaMetalDetail"/>
+        <BlendTextures value="UlnarHull3"/>
+        <BlendTextures value="Starship3"/>
+        <HardTiles value="TarsonisRail"/>
+        <CliffSets value="CastanarCliff0"/>
+        <CliffSets value="CastanarCliff1"/>
+        <FogEnabled value="1"/>
+        <FogColor value="255,192,192,192"/>
+        <WindSpeed value="0.000000"/>
+        <WindTurbulencePower value="0.000000"/>
+        <WindTurbulenceSpeed value="0.000000"/>
+        <CreepBaseTexture value="Assets\Textures\Creep_Haven.dds"/>
+    </CTerrain>
+    <CTerrain id="Korhal">
+        <BlendTextures index="2" value="RedstonePanels"/>
+    </CTerrain>
+    <CTerrain id="cityb2">
+        <EditorCategories value="Climate:Generic"/>
+        <Lighting value="ArcadeCityLight"/>
+        <LoadingScreen value="Assets\Textures\loading-haven.dds"/>
+        <Ambience value="Ambience_Korhal"/>
+        <ReverbAmbient value="BetaVerb"/>
+        <BlendTextures value="DominionLab6"/>
+        <BlendTextures value="HybridLabXelNaga2"/>
+        <BlendTextures value="Valhalla5"/>
+        <BlendTextures value="Starship4"/>
+        <BlendTextures value="UlnarHull2"/>
+        <BlendTextures value="DominionLab1"/>
+        <BlendTextures value="UlnarHull3"/>
+        <BlendTextures value="HybridLabXelNaga4"/>
+        <HardTiles value="TarsonisRail"/>
+        <CliffSets value="HybridLabXelNagaCliff1"/>
+        <CliffSets value="AvernusCliff0"/>
+        <FogEnabled value="1"/>
+        <FogColor value="255,192,192,192"/>
+        <WindSpeed value="0.000000"/>
+        <WindTurbulencePower value="0.000000"/>
+        <WindTurbulenceSpeed value="0.000000"/>
+        <CreepBaseTexture value="Assets\Textures\tychus05_briefing_xelnagaworldship_emissive.dds"/>
+        <CreepBaseSpecularMap value="Assets\Textures\tychus05_briefing_xelnagaworldship_emissive.dds"/>
+        <CreepHeightMap value="Assets\Textures\creepcliff1_normal.dds"/>
+        <CreepNoiseMap value="Assets\Textures\planetview_charclouddiffuse2_light.dds"/>
+        <HideLowestLevel value="1"/>
+        <CreepSettingsArray index="Low" CreepNoiseStrength="0.200000" CreepTranslucentPassTint="0.000000,100.000000,0.000000"/>
+        <CreepSettingsArray index="Medium" CreepNoiseStrength="0.200000" CreepTranslucentPassTint="0.000000,100.000000,0.000000"/>
+        <CreepSettingsArray index="High" CreepNoiseStrength="0.200000" CreepTranslucentPassTint="0.000000,100.000000,0.000000"/>
+        <CreepSettingsArray index="Ultra" CreepNoiseStrength="0.200000" CreepTranslucentPassTint="0.000000,100.000000,0.000000"/>
+        <CreepSettingsArray index="Extreme" CreepNoiseStrength="0.200000" CreepTranslucentPassTint="0.000000,100.000000,0.000000"/>
+    </CTerrain>
+</Catalog>

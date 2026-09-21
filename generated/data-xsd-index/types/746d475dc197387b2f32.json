@@ -1,0 +1,1 @@
+{"name":"SRewardCategory","kind":"complex","fields":[{"kind":"attribute","name":"File","type":"simple_CString"},{"kind":"attribute","name":"Tag","type":"simple_CFourCC"},{"kind":"element","name":"File","type":"CString","minOccurs":"0","maxOccurs":"1"},{"kind":"element","name":"Tag","type":"CFourCC","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

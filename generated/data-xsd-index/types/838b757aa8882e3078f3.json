@@ -1,0 +1,1 @@
+{"name":"simple_EAbilStopCmd","kind":"simple","fields":[],"enumValues":["Cheer","Dance","HoldFire","RequestPickup","Stop","Tease"],"facets":[],"base":"xs:string"}

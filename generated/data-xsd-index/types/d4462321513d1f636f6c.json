@@ -1,0 +1,1 @@
+{"name":"simple_EBehaviorSpawnFlag","kind":"simple","fields":[],"enumValues":["HideCount","IgnoreMorph","KillSpawnedOnDeath"],"facets":[],"base":"xs:string"}

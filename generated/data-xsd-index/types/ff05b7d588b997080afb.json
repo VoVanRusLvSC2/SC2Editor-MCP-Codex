@@ -1,0 +1,1 @@
+{"name":"simple_EAbilCmdFlags","kind":"simple","fields":[],"enumValues":["AllowMinimap","AllowSelfCast","Continuous","CreateDefaultButton","Hidden","HidePath","IgnoreUser","ShowInGlossary","StateAvailable","StateRestricted","StateSuppressed","ToSelection","UseDefaultButton"],"facets":[],"base":"xs:string"}

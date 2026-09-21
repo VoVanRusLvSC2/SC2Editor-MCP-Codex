@@ -1,0 +1,1 @@
+{"name":"simple_EAbilArmMagazineInfoFlag","kind":"simple","fields":[],"enumValues":["AutoBuild","AutoBuildOn","External","LeashRetarget"],"facets":[],"base":"xs:string"}

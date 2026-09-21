@@ -1,0 +1,1 @@
+{"name":"SActorTermKeys","kind":"complex","fields":[{"kind":"attribute","name":"Keys","type":"simple_CActorTableKeys4x0"},{"kind":"element","name":"Keys","type":"CActorTableKeys4x0","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

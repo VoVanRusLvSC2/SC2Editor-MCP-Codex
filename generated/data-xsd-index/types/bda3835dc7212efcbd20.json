@@ -1,0 +1,1 @@
+{"name":"simple_EScoreCollapse","kind":"simple","fields":[],"enumValues":["Average","Latest","Maximize"],"facets":[],"base":"xs:string"}

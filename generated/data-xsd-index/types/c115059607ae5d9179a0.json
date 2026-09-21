@@ -1,0 +1,1 @@
+{"name":"simple_EAcquireLevel","kind":"simple","fields":[],"enumValues":["Defensive","None","Offensive","Passive"],"facets":[],"base":"xs:string"}

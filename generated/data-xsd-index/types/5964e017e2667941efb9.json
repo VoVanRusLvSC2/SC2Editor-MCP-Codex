@@ -1,0 +1,1 @@
+{"name":"simple_EAbilMorphSection","kind":"simple","fields":[],"enumValues":["Abils","Actor","Collide","Facing","Mover","Stats"],"facets":[],"base":"xs:string"}

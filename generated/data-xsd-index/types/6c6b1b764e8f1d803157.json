@@ -1,0 +1,1 @@
+{"name":"SActorMsgAnimCopy","kind":"complex","fields":[{"kind":"attribute","name":"Source","type":"simple_CRefKey"},{"kind":"element","name":"Source","type":"CRefKey","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

@@ -1,0 +1,39 @@
+{
+  "file": "Base.SC2Data/GameData/ReaperBurnAndDamageTextureData.xml",
+  "operations": [
+    {
+      "op": "recipe.weaponBurn",
+      "as": "burn",
+      "id": "CodexReaperBurn",
+      "carrierEffect": "P38ScytheGuassPistolBurst",
+      "impactEffect": "P38ScytheGuassPistol",
+      "duration": 4,
+      "period": 0.5,
+      "periodicDamage": 2,
+      "visualModel": "HellionTankAttackFireAddition",
+      "attachSite": "SOpAttachHead",
+      "damageKind": "Ranged",
+      "alignment": "Negative",
+      "editorCategories": "Race:Terran,AbilityorEffectType:Units"
+    },
+    {
+      "op": "recipe.unitTextureByVital",
+      "as": "damageSkin",
+      "id": "CodexReaperDamageSkin",
+      "unit": "Reaper",
+      "threshold": 0.4,
+      "pollInterval": 0.5,
+      "textures": [
+        {
+          "slot": "main.diffuse",
+          "healthyFile": "Assets\\Textures\\CodexReaper_Healthy.dds",
+          "damagedFile": "Assets\\Textures\\CodexReaper_Damaged.dds"
+        }
+      ]
+    }
+  ],
+  "dryRun": false,
+  "stage": false,
+  "backup": true,
+  "validate": true
+}

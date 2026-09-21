@@ -1,0 +1,1 @@
+{"name":"simple_EMotionDriverType","kind":"simple","fields":[],"enumValues":["AdaptableParabola","Ballistic","Guidance","None","Throw"],"facets":[],"base":"xs:string"}

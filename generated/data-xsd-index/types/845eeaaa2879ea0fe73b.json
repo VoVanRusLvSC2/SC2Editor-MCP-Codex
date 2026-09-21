@@ -1,0 +1,1 @@
+{"name":"simple_EConversationStateFlag","kind":"simple","fields":[],"enumValues":["AllowActions","AllowConditions","Sorted"],"facets":[],"base":"xs:string"}

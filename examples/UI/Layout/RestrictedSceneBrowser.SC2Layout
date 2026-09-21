@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Desc>
+    <!-- Core container supplies the six required SceneBrowser hookups. -->
+    <Frame type="SceneBrowserDialog" name="MyBrowser" template="StandardDialog/BrowserDialogTemplate">
+        <!-- Merge-only override of the inherited child. -->
+        <Frame type="SceneBrowser" name="SceneBrowser">
+            <Address val="https://example.invalid"/>
+            <BlocksShortcuts val="true"/>
+        </Frame>
+    </Frame>
+</Desc>

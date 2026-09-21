@@ -1,0 +1,1 @@
+{"name":"SEffectMover","kind":"complex","fields":[{"kind":"attribute","name":"IfRangeLTE","type":"simple_CFixed"},{"kind":"attribute","name":"Link","type":"simple_CMoverLink"},{"kind":"element","name":"IfRangeLTE","type":"CFixed","minOccurs":"0","maxOccurs":"1"},{"kind":"element","name":"Link","type":"CMoverLink","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

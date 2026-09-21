@@ -1,0 +1,1 @@
+{"name":"simple_ECliffLevelCompare","kind":"simple","fields":[],"enumValues":["Equal","Higher","Lower"],"facets":[],"base":"xs:string"}

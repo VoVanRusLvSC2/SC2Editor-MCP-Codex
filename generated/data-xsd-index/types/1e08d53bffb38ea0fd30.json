@@ -1,0 +1,1 @@
+{"name":"SActorMsgSetTextSize","kind":"complex","fields":[{"kind":"attribute","name":"FixedSize","type":"simple_uint32"},{"kind":"element","name":"FixedSize","type":"uint32","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

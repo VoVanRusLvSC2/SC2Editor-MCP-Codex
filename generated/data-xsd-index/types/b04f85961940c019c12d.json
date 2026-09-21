@@ -1,0 +1,1 @@
+{"name":"SPitchShift","kind":"complex","fields":[{"kind":"attribute","name":"Pitch","type":"simple_CPitch"},{"kind":"attribute","name":"Time","type":"simple_uint32"},{"kind":"element","name":"Pitch","type":"CPitch","minOccurs":"0","maxOccurs":"1"},{"kind":"element","name":"Time","type":"uint32","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

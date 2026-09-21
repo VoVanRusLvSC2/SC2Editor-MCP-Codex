@@ -1,0 +1,1 @@
+{"name":"SActorMsgHostedPropDumpAll","kind":"complex","fields":[{"kind":"attribute","name":"IncludeChildren","type":"simple_bool"},{"kind":"element","name":"IncludeChildren","type":"bool","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

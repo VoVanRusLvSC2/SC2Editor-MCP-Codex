@@ -1,0 +1,1 @@
+{"name":"simple_EConversationConditionOp","kind":"simple","fields":[],"enumValues":["Equal","Greater","GreaterEqual","Less","LessEqual","NotEqual","Unknown"],"facets":[],"base":"xs:string"}

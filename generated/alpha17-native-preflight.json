@@ -1,0 +1,118 @@
+{
+  "version": "1.1.0-alpha.17",
+  "readyForEditorTest": true,
+  "validationScope": "Offline checks of known formats and available static rules only",
+  "standardFunctionCoverage": "PARTIAL",
+  "checks": [
+    {
+      "name": "map-and-terrain",
+      "status": "PASS",
+      "errors": 0,
+      "warnings": 4,
+      "samples": [
+        {
+          "severity": "warning",
+          "code": "LOGICAL_COMPONENT_ROOT_UNRESOLVED",
+          "message": "gada: GameData; logical/optimized roots are preserved without guessing a direct file binding"
+        },
+        {
+          "severity": "warning",
+          "code": "LOGICAL_COMPONENT_ROOT_UNRESOLVED",
+          "message": "text: GameText; logical/optimized roots are preserved without guessing a direct file binding"
+        },
+        {
+          "severity": "warning",
+          "code": "LOGICAL_COMPONENT_ROOT_UNRESOLVED",
+          "message": "text: GameText; logical/optimized roots are preserved without guessing a direct file binding"
+        },
+        {
+          "severity": "warning",
+          "code": "OFFLINE_VALIDATION_ONLY",
+          "message": "DocumentHeader payload, player/variant semantics and engine acceptance remain unverified"
+        }
+      ]
+    },
+    {
+      "name": "ui",
+      "status": "NOT_APPLICABLE",
+      "errors": 0,
+      "warnings": 0,
+      "samples": []
+    },
+    {
+      "name": "cutscene",
+      "status": "NOT_APPLICABLE",
+      "errors": 0,
+      "warnings": 0,
+      "samples": []
+    },
+    {
+      "name": "text",
+      "status": "PASS",
+      "errors": 0,
+      "warnings": 0,
+      "samples": []
+    },
+    {
+      "name": "data",
+      "status": "PASS",
+      "errors": 0,
+      "warnings": 0,
+      "samples": []
+    },
+    {
+      "name": "browse",
+      "status": "PASS",
+      "errors": 0,
+      "warnings": 2,
+      "samples": [
+        {
+          "severity": "warning",
+          "message": "Unresolved remote dependency: bnet:Nydus Conspiracy Mod/0.0/337849"
+        },
+        {
+          "severity": "warning",
+          "message": "Unresolved remote dependency: bnet:Nydus Mod Security KSP/1.2/338972"
+        }
+      ]
+    },
+    {
+      "name": "placement",
+      "status": "NOT_APPLICABLE",
+      "errors": 0,
+      "warnings": 0,
+      "samples": []
+    },
+    {
+      "name": "ai",
+      "status": "NOT_APPLICABLE",
+      "errors": 0,
+      "warnings": 0,
+      "samples": []
+    },
+    {
+      "name": "script",
+      "status": "PASS",
+      "errors": 0,
+      "warnings": 0,
+      "samples": []
+    }
+  ],
+  "pendingFiles": [],
+  "targetChecks": {
+    "windowsLauncher": "NOT_EXECUTED",
+    "editorSaveReopen": "NOT_EXECUTED",
+    "galaxyCompiler": "NOT_EXECUTED",
+    "gameRuntime": "NOT_EXECUTED"
+  },
+  "requiredTargetTests": [
+    "Open/save/reopen the chosen map in SC2Editor and compare components",
+    "Compile the Galaxy entry chain",
+    "Run generated behavior, lighting/water/pathing/UI/cutscene probes"
+  ],
+  "limitations": [
+    "PASS does not establish full native semantics or support for every standard function",
+    "Warnings and unresolved dependencies still need review",
+    "No native clean-map/cliff/ramp/pathing/complex-water guarantee"
+  ]
+}

@@ -1,0 +1,1 @@
+{"name":"simple_EAbilTrainFlag","kind":"simple","fields":[],"enumValues":["AutoCastOffOwnerLeave","BestUnit","BypassFoodRestriction","ChargeCasterPlayer","CopyLifePercentage","DisableCollision","IgnoreUnitBuildTime","IgnoreUnitCost","IgnoreUnitStockCharge","KillOnCancel","KillOnFinish","Select","Transient","UnitOrderQueue","WaitForFood"],"facets":[],"base":"xs:string"}

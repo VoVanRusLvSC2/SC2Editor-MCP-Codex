@@ -1,0 +1,1 @@
+{"name":"simple_EAbilInventoryFlag","kind":"simple","fields":[],"enumValues":["CanApplyEquipBehavior","CanStackItem","CanUseItem","ItemDeath","ItemDropOnDeath"],"facets":[],"base":"xs:string"}

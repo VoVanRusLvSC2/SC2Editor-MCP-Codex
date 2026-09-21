@@ -1,0 +1,1 @@
+{"name":"simple_ERewardFlag","kind":"simple","fields":[],"enumValues":["Allowed","AlwaysUseUnearnedDescription","Cloaked","Default","ExcludeInLargeFormatGame","Hidden","Promotion"],"facets":[],"base":"xs:string"}

@@ -1,0 +1,1 @@
+{"name":"simple_EClassIdCWeapon","kind":"simple","fields":[],"enumValues":["CWeapon","CWeaponLegacy","CWeaponStrafe"],"facets":[],"base":"xs:string"}

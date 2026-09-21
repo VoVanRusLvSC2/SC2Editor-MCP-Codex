@@ -1,0 +1,1 @@
+{"name":"simple_int8","kind":"simple","fields":[],"enumValues":[],"facets":[{"kind":"minInclusive","value":"0"},{"kind":"maxInclusive","value":"255"}],"base":"xs:int"}

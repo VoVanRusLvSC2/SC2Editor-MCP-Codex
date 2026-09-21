@@ -1,0 +1,1 @@
+{"name":"simple_ERequirementState","kind":"simple","fields":[],"enumValues":["CompleteOnly","CompleteOnlyAtUnit","InProgressOnly","InProgressOnlyAtUnit","InProgressOrBetter","InProgressOrBetterAtUnit","Killed","Kills","Peak","QueuedOnly","QueuedOnlyAtUnit","QueuedOrBetter","QueuedOrBetterAtUnit","QueuedOrBetterOrRevivable","Revivable","Total"],"facets":[],"base":"xs:string"}

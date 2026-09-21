@@ -1,0 +1,685 @@
+{
+  "scope": "Read-only paired PE and bounded disassembly analysis",
+  "analyses": [
+    {
+      "executable": "SC2Editor_x64(2).exe",
+      "bytes": 76470480,
+      "sha256": "9cab25db2b7dcfaaad207978b4eac07ec694f1f7cdbee4257d0db0845e14a164",
+      "architecture": "x64",
+      "imageBase": "0x140000000",
+      "entryPointRva": 706592,
+      "sections": [
+        {
+          "name": ".text",
+          "virtualSize": 55481069,
+          "virtualAddress": 4096,
+          "rawSize": 55482368,
+          "rawOffset": 2048,
+          "characteristics": 1610612768
+        },
+        {
+          "name": ".rdata",
+          "virtualSize": 14298676,
+          "virtualAddress": 55488512,
+          "rawSize": 14299136,
+          "rawOffset": 55484416,
+          "characteristics": 1073741888
+        },
+        {
+          "name": ".data",
+          "virtualSize": 71372104,
+          "virtualAddress": 69787648,
+          "rawSize": 1273856,
+          "rawOffset": 69783552,
+          "characteristics": 3221225536
+        },
+        {
+          "name": ".pdata",
+          "virtualSize": 3599172,
+          "virtualAddress": 141160448,
+          "rawSize": 3600384,
+          "rawOffset": 71057408,
+          "characteristics": 1073741888
+        },
+        {
+          "name": ".tls",
+          "virtualSize": 8673,
+          "virtualAddress": 144760832,
+          "rawSize": 10240,
+          "rawOffset": 74657792,
+          "characteristics": 3221225536
+        },
+        {
+          "name": ".gfids",
+          "virtualSize": 708,
+          "virtualAddress": 144773120,
+          "rawSize": 2048,
+          "rawOffset": 74668032,
+          "characteristics": 1073741888
+        },
+        {
+          "name": "_RDATA",
+          "virtualSize": 45104,
+          "virtualAddress": 144777216,
+          "rawSize": 47104,
+          "rawOffset": 74670080,
+          "characteristics": 1073741888
+        },
+        {
+          "name": ".rsrc",
+          "virtualSize": 961160,
+          "virtualAddress": 144826368,
+          "rawSize": 962560,
+          "rawOffset": 74717184,
+          "characteristics": 1073741888
+        },
+        {
+          "name": ".reloc",
+          "virtualSize": 779212,
+          "virtualAddress": 145788928,
+          "rawSize": 780288,
+          "rawOffset": 75679744,
+          "characteristics": 1107296320
+        }
+      ],
+      "textEntropySamples": [
+        {
+          "fileOffset": 2048,
+          "entropyBitsPerByte": 7.390397805795298
+        },
+        {
+          "fileOffset": 27743232,
+          "entropyBitsPerByte": 7.997057993026562
+        },
+        {
+          "fileOffset": 55418880,
+          "entropyBitsPerByte": 7.996875681652835
+        }
+      ],
+      "terrainRecords": [
+        {
+          "text": "TerrainPathingMeshEnabled",
+          "encoding": "ascii",
+          "fileOffset": 56084816,
+          "pointerFileOffsets": [
+            56002680
+          ],
+          "pointerRvas": [
+            56006776
+          ],
+          "xrefRvas": [],
+          "containingFunctions": [],
+          "rva": 56088912,
+          "virtualAddress": "0x14357D950"
+        },
+        {
+          "text": "EDSTR_CMDNAME_TerrainPathingMeshEnabled",
+          "encoding": "ascii",
+          "fileOffset": 56084904,
+          "pointerFileOffsets": [
+            56002688
+          ],
+          "pointerRvas": [
+            56006784
+          ],
+          "xrefRvas": [],
+          "containingFunctions": [],
+          "rva": 56089000,
+          "virtualAddress": "0x14357D9A8"
+        },
+        {
+          "text": "EDSTR_CMDDESC_TerrainPathingMeshEnabled",
+          "encoding": "ascii",
+          "fileOffset": 56085008,
+          "pointerFileOffsets": [
+            56002696
+          ],
+          "pointerRvas": [
+            56006792
+          ],
+          "xrefRvas": [],
+          "containingFunctions": [],
+          "rva": 56089104,
+          "virtualAddress": "0x14357DA10"
+        },
+        {
+          "text": "TerrainPathingMeshClimbable",
+          "encoding": "ascii",
+          "fileOffset": 56085120,
+          "pointerFileOffsets": [
+            56002720
+          ],
+          "pointerRvas": [
+            56006816
+          ],
+          "xrefRvas": [],
+          "containingFunctions": [],
+          "rva": 56089216,
+          "virtualAddress": "0x14357DA80"
+        },
+        {
+          "text": "EDSTR_CMDNAME_TerrainPathingMeshClimbable",
+          "encoding": "ascii",
+          "fileOffset": 56085200,
+          "pointerFileOffsets": [
+            56002728
+          ],
+          "pointerRvas": [
+            56006824
+          ],
+          "xrefRvas": [],
+          "containingFunctions": [],
+          "rva": 56089296,
+          "virtualAddress": "0x14357DAD0"
+        },
+        {
+          "text": "EDSTR_CMDDESC_TerrainPathingMeshClimbable",
+          "encoding": "ascii",
+          "fileOffset": 56085312,
+          "pointerFileOffsets": [
+            56002736
+          ],
+          "pointerRvas": [
+            56006832
+          ],
+          "xrefRvas": [],
+          "containingFunctions": [],
+          "rva": 56089408,
+          "virtualAddress": "0x14357DB40"
+        },
+        {
+          "text": "TerrainPathingMeshTerrain",
+          "encoding": "ascii",
+          "fileOffset": 56085432,
+          "pointerFileOffsets": [
+            56002760
+          ],
+          "pointerRvas": [
+            56006856
+          ],
+          "xrefRvas": [],
+          "containingFunctions": [],
+          "rva": 56089528,
+          "virtualAddress": "0x14357DBB8"
+        },
+        {
+          "text": "EDSTR_CMDNAME_TerrainPathingMeshTerrain",
+          "encoding": "ascii",
+          "fileOffset": 56085520,
+          "pointerFileOffsets": [
+            56002768
+          ],
+          "pointerRvas": [
+            56006864
+          ],
+          "xrefRvas": [],
+          "containingFunctions": [],
+          "rva": 56089616,
+          "virtualAddress": "0x14357DC10"
+        },
+        {
+          "text": "EDSTR_CMDDESC_TerrainPathingMeshTerrain",
+          "encoding": "ascii",
+          "fileOffset": 56085616,
+          "pointerFileOffsets": [
+            56002776
+          ],
+          "pointerRvas": [
+            56006872
+          ],
+          "xrefRvas": [],
+          "containingFunctions": [],
+          "rva": 56089712,
+          "virtualAddress": "0x14357DC70"
+        },
+        {
+          "text": "TerrainPathingMeshBuildings",
+          "encoding": "ascii",
+          "fileOffset": 56085720,
+          "pointerFileOffsets": [
+            56002800
+          ],
+          "pointerRvas": [
+            56006896
+          ],
+          "xrefRvas": [],
+          "containingFunctions": [],
+          "rva": 56089816,
+          "virtualAddress": "0x14357DCD8"
+        },
+        {
+          "text": "EDSTR_CMDNAME_TerrainPathingMeshBuildings",
+          "encoding": "ascii",
+          "fileOffset": 56085808,
+          "pointerFileOffsets": [
+            56002808
+          ],
+          "pointerRvas": [
+            56006904
+          ],
+          "xrefRvas": [],
+          "containingFunctions": [],
+          "rva": 56089904,
+          "virtualAddress": "0x14357DD30"
+        },
+        {
+          "text": "EDSTR_CMDDESC_TerrainPathingMeshBuildings",
+          "encoding": "ascii",
+          "fileOffset": 56085920,
+          "pointerFileOffsets": [
+            56002816
+          ],
+          "pointerRvas": [
+            56006912
+          ],
+          "xrefRvas": [],
+          "containingFunctions": [],
+          "rva": 56090016,
+          "virtualAddress": "0x14357DDA0"
+        },
+        {
+          "text": "TerrainPathingMeshGround",
+          "encoding": "ascii",
+          "fileOffset": 56086040,
+          "pointerFileOffsets": [
+            56002840
+          ],
+          "pointerRvas": [
+            56006936
+          ],
+          "xrefRvas": [],
+          "containingFunctions": [],
+          "rva": 56090136,
+          "virtualAddress": "0x14357DE18"
+        },
+        {
+          "text": "EDSTR_CMDNAME_TerrainPathingMeshGround",
+          "encoding": "ascii",
+          "fileOffset": 56086128,
+          "pointerFileOffsets": [
+            56002848
+          ],
+          "pointerRvas": [
+            56006944
+          ],
+          "xrefRvas": [],
+          "containingFunctions": [],
+          "rva": 56090224,
+          "virtualAddress": "0x14357DE70"
+        },
+        {
+          "text": "EDSTR_CMDDESC_TerrainPathingMeshGround",
+          "encoding": "ascii",
+          "fileOffset": 56086232,
+          "pointerFileOffsets": [
+            56002856
+          ],
+          "pointerRvas": [
+            56006952
+          ],
+          "xrefRvas": [],
+          "containingFunctions": [],
+          "rva": 56090328,
+          "virtualAddress": "0x14357DED8"
+        },
+        {
+          "text": "TerrainPathingMeshMisc",
+          "encoding": "ascii",
+          "fileOffset": 56086352,
+          "pointerFileOffsets": [
+            56002880
+          ],
+          "pointerRvas": [
+            56006976
+          ],
+          "xrefRvas": [],
+          "containingFunctions": [],
+          "rva": 56090448,
+          "virtualAddress": "0x14357DF50"
+        },
+        {
+          "text": "EDSTR_CMDNAME_TerrainPathingMeshMisc",
+          "encoding": "ascii",
+          "fileOffset": 56086440,
+          "pointerFileOffsets": [
+            56002888
+          ],
+          "pointerRvas": [
+            56006984
+          ],
+          "xrefRvas": [],
+          "containingFunctions": [],
+          "rva": 56090536,
+          "virtualAddress": "0x14357DFA8"
+        },
+        {
+          "text": "EDSTR_CMDDESC_TerrainPathingMeshMisc",
+          "encoding": "ascii",
+          "fileOffset": 56086544,
+          "pointerFileOffsets": [
+            56002896
+          ],
+          "pointerRvas": [
+            56006992
+          ],
+          "xrefRvas": [],
+          "containingFunctions": [],
+          "rva": 56090640,
+          "virtualAddress": "0x14357E010"
+        },
+        {
+          "text": "TerrainPathingMeshNoFly",
+          "encoding": "ascii",
+          "fileOffset": 56086664,
+          "pointerFileOffsets": [
+            56002920
+          ],
+          "pointerRvas": [
+            56007016
+          ],
+          "xrefRvas": [],
+          "containingFunctions": [],
+          "rva": 56090760,
+          "virtualAddress": "0x14357E088"
+        },
+        {
+          "text": "EDSTR_CMDNAME_TerrainPathingMeshNoFly",
+          "encoding": "ascii",
+          "fileOffset": 56086752,
+          "pointerFileOffsets": [
+            56002928
+          ],
+          "pointerRvas": [
+            56007024
+          ],
+          "xrefRvas": [],
+          "containingFunctions": [],
+          "rva": 56090848,
+          "virtualAddress": "0x14357E0E0"
+        },
+        {
+          "text": "EDSTR_CMDDESC_TerrainPathingMeshNoFly",
+          "encoding": "ascii",
+          "fileOffset": 56086856,
+          "pointerFileOffsets": [
+            56002936
+          ],
+          "pointerRvas": [
+            56007032
+          ],
+          "xrefRvas": [],
+          "containingFunctions": [],
+          "rva": 56090952,
+          "virtualAddress": "0x14357E148"
+        },
+        {
+          "text": "TerrainCliffLevelDialog",
+          "encoding": "ascii",
+          "fileOffset": 56258072,
+          "pointerFileOffsets": [
+            69958736
+          ],
+          "pointerRvas": [
+            69962832
+          ],
+          "xrefRvas": [],
+          "containingFunctions": [],
+          "rva": 56262168,
+          "virtualAddress": "0x1435A7E18"
+        },
+        {
+          "text": "t3Water",
+          "encoding": "ascii",
+          "fileOffset": 57344720,
+          "pointerFileOffsets": [],
+          "pointerRvas": [],
+          "xrefRvas": [],
+          "containingFunctions": [],
+          "rva": 57348816,
+          "virtualAddress": "0x1436B12D0"
+        },
+        {
+          "text": "PaintedPathingLayer",
+          "encoding": "ascii",
+          "fileOffset": 57344776,
+          "pointerFileOffsets": [],
+          "pointerRvas": [],
+          "xrefRvas": [],
+          "containingFunctions": [],
+          "rva": 57348872,
+          "virtualAddress": "0x1436B1308"
+        },
+        {
+          "text": "quantizeBias",
+          "encoding": "ascii",
+          "fileOffset": 58365472,
+          "pointerFileOffsets": [],
+          "pointerRvas": [],
+          "xrefRvas": [],
+          "containingFunctions": [],
+          "rva": 58369568,
+          "virtualAddress": "0x1437AA620"
+        },
+        {
+          "text": "quantizeScale",
+          "encoding": "ascii",
+          "fileOffset": 58365488,
+          "pointerFileOffsets": [],
+          "pointerRvas": [],
+          "xrefRvas": [],
+          "containingFunctions": [],
+          "rva": 58369584,
+          "virtualAddress": "0x1437AA630"
+        },
+        {
+          "text": "standardHeight",
+          "encoding": "ascii",
+          "fileOffset": 58365504,
+          "pointerFileOffsets": [],
+          "pointerRvas": [],
+          "xrefRvas": [],
+          "containingFunctions": [],
+          "rva": 58369600,
+          "virtualAddress": "0x1437AA640"
+        }
+      ],
+      "directStringXrefs": 0,
+      "disassembly": [
+        {
+          "rva": 706592,
+          "status": "EXECUTED",
+          "invalidInstructions": 1,
+          "text": "\n/workspace/scratch/d86e509a81bb/upload/SC2Editor_x64(2).exe:     file format pei-x86-64\n\n\nDisassembly of section .text:\n\n00000001400ac820 <.text+0xab820>:\n   1400ac820:\t48 8b c4             \tmov    rax,rsp\n   1400ac823:\t55                   \tpush   rbp\n   1400ac824:\t48 8d 68 a1          \tlea    rbp,[rax-0x5f]\n   1400ac828:\t48 81 ec a0 00 00 00 \tsub    rsp,0xa0\n   1400ac82f:\t48 89 58 20          \tmov    QWORD PTR [rax+0x20],rbx\n   1400ac833:\t48 89 70 f0          \tmov    QWORD PTR [rax-0x10],rsi\n   1400ac837:\t48 89 78 e8          \tmov    QWORD PTR [rax-0x18],rdi\n   1400ac83b:\t4c 89 60 e0          \tmov    QWORD PTR [rax-0x20],r12\n   1400ac83f:\t4c 89 68 d8          \tmov    QWORD PTR [rax-0x28],r13\n   1400ac843:\t4c 89 70 d0          \tmov    QWORD PTR [rax-0x30],r14\n   1400ac847:\t66 0f 1f 84 00 00 00 \tnop    WORD PTR [rax+rax*1+0x0]\n   1400ac84e:\t00 00 \n   1400ac850:\tf6 c1 38             \ttest   cl,0x38\n   1400ac853:\t86 c9                \txchg   cl,cl\n   1400ac855:\t73 02                \tjae    0x1400ac859\n   1400ac857:\t0f 8a eb 14 01 00    \tjp     0x1400bdd48\n   1400ac85d:\te8 b7 56 00 00       \tcall   0x1400b1f19\n   1400ac862:\t80 c3 e1             \tadd    bl,0xe1\n   1400ac865:\tc7 c2 85 36 b0 28    \tmov    edx,0x28b03685\n   1400ac86b:\tc0 aa e0 14 48 c7 45 \tshr    BYTE PTR [rdx-0x38b7eb20],0x45\n   1400ac872:\t67 1f                \taddr32 (bad)\n   1400ac874:\t0b 11                \tor     edx,DWORD PTR [rcx]\n   1400ac876:\t2a 33                \tsub    dh,BYTE PTR [rbx]\n   1400ac878:\tf6 48 8b 45          \ttest   BYTE PTR [rax-0x75],0x45\n   1400ac87c:\t67 48 35 78 05 00 00 \taddr32 xor rax,0x578\n   1400ac883:\t48 89 45 67          \tmov    QWORD PTR [rbp+0x67],rax\n   1400ac887:\t48 8b 7d 67          \tmov    rdi,QWORD PTR [rbp+0x67]\n   1400ac88b:\tc7 45 67 f7 f0 ff ff \tmov    DWORD PTR [rbp+0x67],0xfffff0f7\n   1400ac892:\t8b 45 67             \tmov    eax,DWORD PTR [rbp+0x67]\n   1400ac895:\t05 05 12 00 00       \tadd    eax,0x1205\n   1400ac89a:\t89 45 67             \tmov    DWORD PTR [rbp+0x67],eax\n   1400ac89d:\t8b 45 67             \tmov    eax,DWORD PTR [rbp+0x67]\n   1400ac8a0:\t35 bc 00 00 00       \txor    eax,0xbc\n   1400ac8a5:\t89 45 67             \tmov    DWORD PTR [rbp+0x67],eax\n   1400ac8a8:\t8b 45 67             \tmov    eax,DWORD PTR [rbp+0x67]\n   1400ac8ab:\t35 20 02 00 00       \txor    eax,0x220\n   1400ac8b0:\t89 45 67             \tmov    DWORD PTR [rbp+0x67],eax\n   1400ac8b3:\t8b 45 67             \tmov    eax,DWORD PTR [rbp+0x67]\n   1400ac8b6:\t89 45 67             \tmov    DWORD PTR [rbp+0x67],eax\n   1400ac8b9:\t8b 45 67             \tmov    eax,DWORD PTR [rbp+0x67]\n   1400ac8bc:\t65 48 8b 18          \tmov    rbx,QWORD PTR gs:[rax]\n   1400ac8c0:\t48 85 db             \ttest   rbx,rbx\n   1400ac8c3:\t74 63                \tje     0x1400ac928\n   1400ac8c5:\t48 8b 5b 18          \tmov    rbx,QWORD PTR [rbx+0x18]\n   1400ac8c9:\t48 83 c3 20          \tadd    rbx,0x20\n   1400ac8cd:\t4c 8b 0b             \tmov    r9,QWORD PTR [rbx]\n   1400ac8d0:\t4c 3b cb             \tcmp    r9,rbx\n   1400ac8d3:\t74 53                \tje     0x1400ac928\n   1400ac8d5:\t66 66 66 0f 1f 84 00 \tdata16 data16 nop WORD PTR [rax+rax*1+0x0]\n   1400ac8dc:\t00 00 00 00 \n"
+        },
+        {
+          "rva": 4096,
+          "status": "EXECUTED",
+          "invalidInstructions": 12,
+          "text": "\n/workspace/scratch/d86e509a81bb/upload/SC2Editor_x64(2).exe:     file format pei-x86-64\n\n\nDisassembly of section .text:\n\n0000000140001000 <.text>:\n   140001000:\t20 7f 76             \tand    BYTE PTR [rdi+0x76],bh\n   140001003:\tdc fd                \tfdiv   st(5),st\n   140001005:\tc5 f9 37             \t(bad)\n   140001008:\tc5 46 ee             \t(bad)\n   14000100b:\t66 00 95 45 d3 73 bb \tdata16 add BYTE PTR [rbp-0x448c2cbb],dl\n   140001012:\t92                   \txchg   edx,eax\n   140001013:\td8 d0                \tfcom   st(0)\n   140001015:\ta6                   \tcmps   BYTE PTR ds:[rsi],BYTE PTR es:[rdi]\n   140001016:\t2d 44 dc 7c 0a       \tsub    eax,0xa7cdc44\n   14000101b:\t8f 29 cd 40          \t(bad)\n   14000101f:\t2b cc                \tsub    ecx,esp\n   140001021:\t0e                   \t(bad)\n   140001022:\t2b 44 37 7a          \tsub    eax,DWORD PTR [rdi+rsi*1+0x7a]\n   140001026:\t0a 1f                \tor     bl,BYTE PTR [rdi]\n   140001028:\t6a ef                \tpush   0xffffffffffffffef\n   14000102a:\t15 16 63 ee 88       \tadc    eax,0x88ee6316\n   14000102f:\t73 3c                \tjae    0x14000106d\n   140001031:\t61                   \t(bad)\n   140001032:\tdf 17                \tfist   WORD PTR [rdi]\n   140001034:\t3c 1f                \tcmp    al,0x1f\n   140001036:\t2d 0c 98 4b af       \tsub    eax,0xaf4b980c\n   14000103b:\td3 d9                \trcr    ecx,cl\n   14000103d:\t30 91 dc 6c c2 e1    \txor    BYTE PTR [rcx-0x1e3d9324],dl\n   140001043:\tdf 3f                \tfistp  QWORD PTR [rdi]\n   140001045:\t37                   \t(bad)\n   140001046:\tac                   \tlods   al,BYTE PTR ds:[rsi]\n   140001047:\t96                   \txchg   esi,eax\n   140001048:\tf5                   \tcmc\n   140001049:\t7c 3a                \tjl     0x140001085\n   14000104b:\t61                   \t(bad)\n   14000104c:\t91                   \txchg   ecx,eax\n   14000104d:\tc6                   \t(bad)\n   14000104e:\t49 5d                \trex.WB pop r13\n   140001050:\t63 e7                \tmovsxd esp,edi\n   140001052:\ta0 0f 01 46 23 02 0e \tmovabs al,ds:0x943a0e022346010f\n   140001059:\t3a 94 \n   14000105b:\t29 95 56 35 91 28    \tsub    DWORD PTR [rbp+0x28913556],edx\n   140001061:\tc1 50 69 a7          \trcl    DWORD PTR [rax+0x69],0xa7\n   140001065:\t2d ab a3 09 06       \tsub    eax,0x609a3ab\n   14000106a:\t95                   \txchg   ebp,eax\n   14000106b:\t26 8d 83 f8 a1 91 f1 \tes lea eax,[rbx-0xe6e5e08]\n   140001072:\t3f                   \t(bad)\n   140001073:\tf4                   \thlt\n   140001074:\t73 66                \tjae    0x1400010dc\n   140001076:\t01 7e a4             \tadd    DWORD PTR [rsi-0x5c],edi\n   140001079:\t2d 3c 66 46 88       \tsub    eax,0x8846663c\n   14000107e:\t2f                   \t(bad)\n   14000107f:\t9e                   \tsahf\n   140001080:\t27                   \t(bad)\n   140001081:\t0f 8e bb cc c5 00    \tjle    0x140c5dd42\n   140001087:\tf2 01 30             \trepnz add DWORD PTR [rax],esi\n   14000108a:\t83 fc 5e             \tcmp    esp,0x5e\n   14000108d:\te0 a1                \tloopne 0x140001030\n   14000108f:\t1b a4 12 b2 76 25 c3 \tsbb    esp,DWORD PTR [rdx+rdx*1-0x3cda894e]\n   140001096:\td4                   \t(bad)\n   140001097:\tfa                   \tcli\n   140001098:\t53                   \tpush   rbx\n   140001099:\tfe 4b ed             \tdec    BYTE PTR [rbx-0x13]\n   14000109c:\ta7                   \tcmps   DWORD PTR ds:[rsi],DWORD PTR es:[rdi]\n   14000109d:\t96                   \txchg   esi,eax\n   14000109e:\t79 52                \tjns    0x1400010f2\n   1400010a0:\tb5 e8                \tmov    ch,0xe8\n   1400010a2:\tf4                   \thlt\n   1400010a3:\ta8 ea                \ttest   al,0xea\n   1400010a5:\t8b ff                \tmov    edi,edi\n   1400010a7:\t2d 8b 13 4f 97       \tsub    eax,0x974f138b\n   1400010ac:\t4b aa                \trex.WXB stos BYTE PTR es:[rdi],al\n   1400010ae:\tfc                   \tcld\n   1400010af:\t68 2b 86 72 44       \tpush   0x4472862b\n   1400010b4:\t01 c0                \tadd    eax,eax\n   1400010b6:\t2e 78 bc             \tcs js  0x140001075\n   1400010b9:\tb0 81                \tmov    al,0x81\n   1400010bb:\t28 23                \tsub    BYTE PTR [rbx],ah\n   1400010bd:\t9e                   \tsahf\n   1400010be:\t04 2d                \tadd    al,0x2d\n"
+        }
+      ],
+      "decompiledBusinessLogic": false,
+      "executableRun": false,
+      "limitations": [
+        "High entropy/invalid instructions can indicate encoded or protected code; the mechanism is not identified",
+        "No decoded memory image, recovered terrain writer or proof of engine semantics is produced",
+        "String evidence does not authorize guessed native records"
+      ]
+    },
+    {
+      "executable": "SC2_x64.exe",
+      "bytes": 65012856,
+      "sha256": "83dc73ea273594fc6d74b496200c5ea80c4e4bc378912fef88d37b4226c20db2",
+      "architecture": "x64",
+      "imageBase": "0x140000000",
+      "entryPointRva": 710368,
+      "sections": [
+        {
+          "name": ".text",
+          "virtualSize": 47248147,
+          "virtualAddress": 4096,
+          "rawSize": 47249408,
+          "rawOffset": 2048,
+          "characteristics": 1610612768
+        },
+        {
+          "name": ".rdata",
+          "virtualSize": 12523622,
+          "virtualAddress": 47255552,
+          "rawSize": 12525568,
+          "rawOffset": 47251456,
+          "characteristics": 1073741888
+        },
+        {
+          "name": ".data",
+          "virtualSize": 69984816,
+          "virtualAddress": 59781120,
+          "rawSize": 946176,
+          "rawOffset": 59777024,
+          "characteristics": 3221225536
+        },
+        {
+          "name": ".pdata",
+          "virtualSize": 3081384,
+          "virtualAddress": 129769472,
+          "rawSize": 3082240,
+          "rawOffset": 60723200,
+          "characteristics": 1073741888
+        },
+        {
+          "name": ".tls",
+          "virtualSize": 8689,
+          "virtualAddress": 132853760,
+          "rawSize": 10240,
+          "rawOffset": 63805440,
+          "characteristics": 3221225536
+        },
+        {
+          "name": ".gfids",
+          "virtualSize": 708,
+          "virtualAddress": 132866048,
+          "rawSize": 2048,
+          "rawOffset": 63815680,
+          "characteristics": 1073741888
+        },
+        {
+          "name": "_RDATA",
+          "virtualSize": 45104,
+          "virtualAddress": 132870144,
+          "rawSize": 47104,
+          "rawOffset": 63817728,
+          "characteristics": 1073741888
+        },
+        {
+          "name": ".rsrc",
+          "virtualSize": 551064,
+          "virtualAddress": 132919296,
+          "rawSize": 552960,
+          "rawOffset": 63864832,
+          "characteristics": 1073741888
+        },
+        {
+          "name": ".reloc",
+          "virtualSize": 584620,
+          "virtualAddress": 133472256,
+          "rawSize": 585728,
+          "rawOffset": 64417792,
+          "characteristics": 1107296320
+        }
+      ],
+      "textEntropySamples": [
+        {
+          "fileOffset": 2048,
+          "entropyBitsPerByte": 7.336095150371248
+        },
+        {
+          "fileOffset": 23626752,
+          "entropyBitsPerByte": 7.997289837619532
+        },
+        {
+          "fileOffset": 47185920,
+          "entropyBitsPerByte": 7.997438517868422
+        }
+      ],
+      "terrainRecords": [
+        {
+          "text": "t3Water",
+          "encoding": "ascii",
+          "fileOffset": 47521408,
+          "pointerFileOffsets": [],
+          "pointerRvas": [],
+          "xrefRvas": [],
+          "containingFunctions": [],
+          "rva": 47525504,
+          "virtualAddress": "0x142D52E80"
+        },
+        {
+          "text": "PaintedPathingLayer",
+          "encoding": "ascii",
+          "fileOffset": 47521496,
+          "pointerFileOffsets": [],
+          "pointerRvas": [],
+          "xrefRvas": [],
+          "containingFunctions": [],
+          "rva": 47525592,
+          "virtualAddress": "0x142D52ED8"
+        },
+        {
+          "text": "quantizeBias",
+          "encoding": "ascii",
+          "fileOffset": 48881736,
+          "pointerFileOffsets": [],
+          "pointerRvas": [],
+          "xrefRvas": [],
+          "containingFunctions": [],
+          "rva": 48885832,
+          "virtualAddress": "0x142E9F048"
+        },
+        {
+          "text": "quantizeScale",
+          "encoding": "ascii",
+          "fileOffset": 48881752,
+          "pointerFileOffsets": [],
+          "pointerRvas": [],
+          "xrefRvas": [],
+          "containingFunctions": [],
+          "rva": 48885848,
+          "virtualAddress": "0x142E9F058"
+        },
+        {
+          "text": "standardHeight",
+          "encoding": "ascii",
+          "fileOffset": 48881768,
+          "pointerFileOffsets": [],
+          "pointerRvas": [],
+          "xrefRvas": [],
+          "containingFunctions": [],
+          "rva": 48885864,
+          "virtualAddress": "0x142E9F068"
+        }
+      ],
+      "directStringXrefs": 0,
+      "disassembly": [
+        {
+          "rva": 710368,
+          "status": "EXECUTED",
+          "invalidInstructions": 0,
+          "text": "\n/workspace/scratch/d86e509a81bb/upload/SC2_x64.exe:     file format pei-x86-64\n\n\nDisassembly of section .text:\n\n00000001400ad6e0 <.text+0xac6e0>:\n   1400ad6e0:\t48 8b c4             \tmov    rax,rsp\n   1400ad6e3:\t55                   \tpush   rbp\n   1400ad6e4:\t48 8d 68 a1          \tlea    rbp,[rax-0x5f]\n   1400ad6e8:\t48 81 ec a0 00 00 00 \tsub    rsp,0xa0\n   1400ad6ef:\t48 89 58 20          \tmov    QWORD PTR [rax+0x20],rbx\n   1400ad6f3:\t48 89 70 f0          \tmov    QWORD PTR [rax-0x10],rsi\n   1400ad6f7:\t48 89 78 e8          \tmov    QWORD PTR [rax-0x18],rdi\n   1400ad6fb:\t4c 89 60 e0          \tmov    QWORD PTR [rax-0x20],r12\n   1400ad6ff:\t4c 89 68 d8          \tmov    QWORD PTR [rax-0x28],r13\n   1400ad703:\t4c 89 70 d0          \tmov    QWORD PTR [rax-0x30],r14\n   1400ad707:\t66 0f 1f 84 00 00 00 \tnop    WORD PTR [rax+rax*1+0x0]\n   1400ad70e:\t00 00 \n   1400ad710:\t85 d0                \ttest   eax,edx\n   1400ad712:\t71 52                \tjno    0x1400ad766\n   1400ad714:\tf6 d9                \tneg    cl\n   1400ad716:\t0f 8a 3b f0 01 00    \tjp     0x1400cc757\n   1400ad71c:\t81 c2 2c 28 21 7e    \tadd    edx,0x7e21282c\n   1400ad722:\t0f 86 fd 1c 00 00    \tjbe    0x1400af425\n   1400ad728:\te8 49 20 01 00       \tcall   0x1400bf776\n   1400ad72d:\t68 a0 08 ea 8f       \tpush   0xffffffff8fea08a0\n   1400ad732:\tc6 c5 0b             \tmov    ch,0xb\n   1400ad735:\t83 c2 8e             \tadd    edx,0xffffff8e\n   1400ad738:\t6a be                \tpush   0xffffffffffffffbe\n   1400ad73a:\tf6 de                \tneg    dh\n   1400ad73c:\t52                   \tpush   rdx\n   1400ad73d:\te8 9e 50 00 00       \tcall   0x1400b27e0\n   1400ad742:\tf6 db                \tneg    bl\n   1400ad744:\t0f 8d d2 ca 00 00    \tjge    0x1400ba21c\n   1400ad74a:\te8 6d 78 00 00       \tcall   0x1400b4fbc\n   1400ad74f:\t81 c5 56 25 52 00    \tadd    ebp,0x522556\n   1400ad755:\tf6 da                \tneg    dl\n   1400ad757:\tf6 df                \tneg    bh\n   1400ad759:\t50                   \tpush   rax\n   1400ad75a:\t58                   \tpop    rax\n   1400ad75b:\t81 c1 bc 95 22 5e    \tadd    ecx,0x5e2295bc\n   1400ad761:\tf6 b8 74 39 ec 48    \tidiv   BYTE PTR [rax+0x48ec3974]\n   1400ad767:\tc7 45 67 67 0e 11 2a \tmov    DWORD PTR [rbp+0x67],0x2a110e67\n   1400ad76e:\t33 f6                \txor    esi,esi\n   1400ad770:\t48 8b 45 67          \tmov    rax,QWORD PTR [rbp+0x67]\n   1400ad774:\t48 89 45 67          \tmov    QWORD PTR [rbp+0x67],rax\n   1400ad778:\t48 8b 7d 67          \tmov    rdi,QWORD PTR [rbp+0x67]\n   1400ad77c:\tc7 45 67 6c f6 ff ff \tmov    DWORD PTR [rbp+0x67],0xfffff66c\n   1400ad783:\t8b 45 67             \tmov    eax,DWORD PTR [rbp+0x67]\n   1400ad786:\t35 6c 07 00 00       \txor    eax,0x76c\n   1400ad78b:\t89 45 67             \tmov    DWORD PTR [rbp+0x67],eax\n   1400ad78e:\t8b 45 67             \tmov    eax,DWORD PTR [rbp+0x67]\n   1400ad791:\t89 45 67             \tmov    DWORD PTR [rbp+0x67],eax\n   1400ad794:\t8b 45 67             \tmov    eax,DWORD PTR [rbp+0x67]\n   1400ad797:\t05 60 0f 00 00       \tadd    eax,0xf60\n   1400ad79c:\t89 45 67             \tmov    DWORD PTR [rbp+0x67],eax\n   1400ad79f:\t8b                   \t.byte 0x8b\n"
+        },
+        {
+          "rva": 4096,
+          "status": "EXECUTED",
+          "invalidInstructions": 4,
+          "text": "\n/workspace/scratch/d86e509a81bb/upload/SC2_x64.exe:     file format pei-x86-64\n\n\nDisassembly of section .text:\n\n0000000140001000 <.text>:\n   140001000:\t50                   \tpush   rax\n   140001001:\t9c                   \tpushf\n   140001002:\t40 76 c8             \trex jbe 0x140000fcd\n   140001005:\tcf                   \tiret\n   140001006:\td2 39                \tsar    BYTE PTR [rcx],cl\n   140001008:\t45                   \trex.RB\n   140001009:\t42 91                \trex.X xchg ecx,eax\n   14000100b:\td9 d3                \t(bad)\n   14000100d:\t96                   \txchg   esi,eax\n   14000100e:\t25 ba 45 2e 29       \tand    eax,0x292e45ba\n   140001013:\tee                   \tout    dx,al\n   140001014:\tf0 8d 33             \tlock lea esi,[rbx]\n   140001017:\t80 d3 da             \tadc    bl,0xda\n   14000101a:\td6                   \t(bad)\n   14000101b:\t29 ee                \tsub    esi,ebp\n   14000101d:\t38 2b                \tcmp    BYTE PTR [rbx],ch\n   14000101f:\t68 95 46 15 11       \tpush   0x11154695\n   140001024:\td6                   \t(bad)\n   140001025:\tf7 66 cb             \tmul    DWORD PTR [rsi-0x35]\n   140001028:\tf3 81 8c f2 92 c1 52 \trepz or DWORD PTR [rdx+rsi*8-0x7ead3e6e],0xbf3a2854\n   14000102f:\t81 54 28 3a bf \n   140001034:\t56                   \tpush   rsi\n   140001035:\ta7                   \tcmps   DWORD PTR ds:[rsi],DWORD PTR es:[rdi]\n   140001036:\t31 a0 f0 f0 e6 9c    \txor    DWORD PTR [rax-0x63190f10],esp\n   14000103c:\ta9 af 95 8f 25       \ttest   eax,0x258f95af\n   140001041:\tf4                   \thlt\n   140001042:\tde 57 4d             \tficom  WORD PTR [rdi+0x4d]\n   140001045:\t9d                   \tpopf\n   140001046:\t04 a2                \tadd    al,0xa2\n   140001048:\tec                   \tin     al,dx\n   140001049:\t1e                   \t(bad)\n   14000104a:\tbb e2 23 f6 f9       \tmov    ebx,0xf9f623e2\n   14000104f:\tf4                   \thlt\n   140001050:\t0d 33 b0 94 ae       \tor     eax,0xae94b033\n   140001055:\tb8 bb 3b 74 71       \tmov    eax,0x71743bbb\n   14000105a:\t6e                   \touts   dx,BYTE PTR ds:[rsi]\n   14000105b:\t42 d0 0b             \trex.X ror BYTE PTR [rbx],1\n   14000105e:\t42                   \trex.X\n   14000105f:\t2e a1 0f 2e 12 21 1e \tcs movabs eax,ds:0x87df3d1e21122e0f\n   140001066:\t3d df 87 \n   140001069:\tad                   \tlods   eax,DWORD PTR ds:[rsi]\n   14000106a:\tdc 0a                \tfmul   QWORD PTR [rdx]\n   14000106c:\t6d                   \tins    DWORD PTR es:[rdi],dx\n   14000106d:\ta2 c3 8b 59 ae 88 80 \tmovabs ds:0x7e938088ae598bc3,al\n   140001074:\t93 7e \n   140001076:\t1b a7 78 9c 07 0b    \tsbb    esp,DWORD PTR [rdi+0xb079c78]\n   14000107c:\t25 4b d7 29 7c       \tand    eax,0x7c29d74b\n   140001081:\t7e de                \tjle    0x140001061\n   140001083:\td7                   \txlat   BYTE PTR ds:[rbx]\n   140001084:\t52                   \tpush   rdx\n   140001085:\t65 cd 89             \tgs int 0x89\n   140001088:\t05 7e f9 4b a7       \tadd    eax,0xa74bf97e\n   14000108d:\t47 20 28             \trex.RXB and BYTE PTR [r8],r13b\n   140001090:\t9d                   \tpopf\n   140001091:\tca 0a 87             \tretf   0x870a\n   140001094:\tdd 5f 1f             \tfstp   QWORD PTR [rdi+0x1f]\n   140001097:\t10 65 4f             \tadc    BYTE PTR [rbp+0x4f],ah\n   14000109a:\t6e                   \touts   dx,BYTE PTR ds:[rsi]\n   14000109b:\t45 c8 4c 72 1f       \trex.RB enter 0x724c,0x1f\n   1400010a0:\t9c                   \tpushf\n   1400010a1:\t6b d9 ac             \timul   ebx,ecx,0xffffffac\n   1400010a4:\t44 d7                \trex.R xlat BYTE PTR ds:[rbx]\n   1400010a6:\t15 8e 78 2e 4a       \tadc    eax,0x4a2e788e\n   1400010ab:\td3 59 50             \trcr    DWORD PTR [rcx+0x50],cl\n   1400010ae:\tb3 8e                \tmov    bl,0x8e\n   1400010b0:\t77 85                \tja     0x140001037\n   1400010b2:\te3 cd                \tjrcxz  0x140001081\n   1400010b4:\t35 5d ce 4e c4       \txor    eax,0xc44ece5d\n   1400010b9:\t81 e5 5e 98 77 22    \tand    ebp,0x2277985e\n   1400010bf:\t97                   \txchg   edi,eax\n"
+        }
+      ],
+      "decompiledBusinessLogic": false,
+      "executableRun": false,
+      "limitations": [
+        "High entropy/invalid instructions can indicate encoded or protected code; the mechanism is not identified",
+        "No decoded memory image, recovered terrain writer or proof of engine semantics is produced",
+        "String evidence does not authorize guessed native records"
+      ]
+    }
+  ]
+}

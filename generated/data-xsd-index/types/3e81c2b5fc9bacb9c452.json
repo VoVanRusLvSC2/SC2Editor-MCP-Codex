@@ -1,0 +1,1 @@
+{"name":"simple_EAbilBuildableCmd","kind":"simple","fields":[],"enumValues":["Cancel","Halt"],"facets":[],"base":"xs:string"}

@@ -1,0 +1,1 @@
+{"name":"simple_ETalentModification","kind":"simple","fields":[],"enumValues":["CatalogReplacement","CooldownReduction","FlatModification","MultiplyLevelModification","None","StringReplacement"],"facets":[],"base":"xs:string"}

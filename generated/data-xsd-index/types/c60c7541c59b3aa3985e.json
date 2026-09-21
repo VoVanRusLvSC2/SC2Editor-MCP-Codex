@@ -1,0 +1,1 @@
+{"name":"simple_ESpeakerMode","kind":"simple","fields":[],"enumValues":["5Point1","7Point1","Mono","ProLogic","Quad","Stereo","Surround","Unknown"],"facets":[],"base":"xs:string"}

@@ -1,0 +1,1 @@
+{"name":"simple_ETurretIdle","kind":"simple","fields":[],"enumValues":["FollowMovement","FollowMovementReverse","Hold","Reset","ResetIfMoving","Spin"],"facets":[],"base":"xs:string"}

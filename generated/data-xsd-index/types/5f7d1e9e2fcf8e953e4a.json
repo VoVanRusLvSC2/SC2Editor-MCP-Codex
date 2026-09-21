@@ -1,0 +1,1 @@
+{"name":"SUserInstanceSound","kind":"complex","fields":[{"kind":"attribute","name":"Sound","type":"simple_CSoundLink"},{"kind":"element","name":"Field","type":"SUserInstanceField","minOccurs":"0","maxOccurs":"1"},{"kind":"element","name":"Sound","type":"CSoundLink","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

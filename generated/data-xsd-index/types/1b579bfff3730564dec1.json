@@ -1,0 +1,1 @@
+{"name":"simple_ETextureSlotComponent","kind":"simple","fields":[],"enumValues":["default","diffuse","emissive","normal","specular"],"facets":[],"base":"xs:string"}

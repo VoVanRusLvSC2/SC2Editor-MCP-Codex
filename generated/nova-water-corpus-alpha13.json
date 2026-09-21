@@ -1,0 +1,92 @@
+[
+  {
+    "source": "mods/novastoryassets.sc2mod/base.sc2maps/maps/campaign/nova/nova01.sc2map/t3Water",
+    "bytes": 32,
+    "version": 110,
+    "entries": 0,
+    "bodies": 0,
+    "flat": true,
+    "sha256": "c15e6e4da91564e9349a449302114f4248dfe1f2cebee1a29526cb5f41db5af5",
+    "revision": "6dd323aae4209a01f110719a00b4e8f7a88389bc"
+  },
+  {
+    "source": "mods/novastoryassets.sc2mod/base.sc2maps/maps/campaign/nova/nova02.sc2map/t3Water",
+    "bytes": 200,
+    "version": 110,
+    "entries": 3,
+    "bodies": 0,
+    "flat": true,
+    "sha256": "0e12bd5ec907f4213b4d0ebb0fbc0521ee0fcf525dfcb8b0aaff37fbb2b51fe4",
+    "revision": "6dd323aae4209a01f110719a00b4e8f7a88389bc"
+  },
+  {
+    "source": "mods/novastoryassets.sc2mod/base.sc2maps/maps/campaign/nova/nova03.sc2map/t3Water",
+    "bytes": 2944,
+    "version": 110,
+    "entries": 52,
+    "bodies": 0,
+    "flat": true,
+    "sha256": "191409a4c5e3f6a93e4ae2f33c854e629e53e5daa47c653f81faa210709c27b5",
+    "revision": "6dd323aae4209a01f110719a00b4e8f7a88389bc"
+  },
+  {
+    "source": "mods/novastoryassets.sc2mod/base2.sc2maps/maps/campaign/nova/nova04.sc2map/t3Water",
+    "bytes": 1824,
+    "version": 110,
+    "entries": 32,
+    "bodies": 0,
+    "flat": true,
+    "sha256": "aac076bfe70338869f416ac6840ad875b62d38cf677f9d1cf13436ef94cd3052",
+    "revision": "6dd323aae4209a01f110719a00b4e8f7a88389bc"
+  },
+  {
+    "source": "mods/novastoryassets.sc2mod/base2.sc2maps/maps/campaign/nova/nova05.sc2map/t3Water",
+    "bytes": 32,
+    "version": 110,
+    "entries": 0,
+    "bodies": 0,
+    "flat": true,
+    "sha256": "c15e6e4da91564e9349a449302114f4248dfe1f2cebee1a29526cb5f41db5af5",
+    "revision": "6dd323aae4209a01f110719a00b4e8f7a88389bc"
+  },
+  {
+    "source": "mods/novastoryassets.sc2mod/base2.sc2maps/maps/campaign/nova/nova06.sc2map/t3Water",
+    "bytes": 2496,
+    "version": 110,
+    "entries": 44,
+    "bodies": 0,
+    "flat": true,
+    "sha256": "21ca327e5c9b5883af5b69d38cb9739fdcc2a61abb0fb67f34a54736043ff37a",
+    "revision": "6dd323aae4209a01f110719a00b4e8f7a88389bc"
+  },
+  {
+    "source": "mods/novastoryassets.sc2mod/base3.sc2maps/maps/campaign/nova/nova07.sc2map/t3Water",
+    "bytes": 1152,
+    "version": 110,
+    "entries": 20,
+    "bodies": 0,
+    "flat": true,
+    "sha256": "7d10b672acb4a363e50579003a326d423cdc65336b21e6d0d22a004765fe7046",
+    "revision": "6dd323aae4209a01f110719a00b4e8f7a88389bc"
+  },
+  {
+    "source": "mods/novastoryassets.sc2mod/base3.sc2maps/maps/campaign/nova/nova08.sc2map/t3Water",
+    "bytes": 1376,
+    "version": 110,
+    "entries": 24,
+    "bodies": 0,
+    "flat": true,
+    "sha256": "f8a9d17957b7b6c10e2e299df801ac9426175d4b71aa182aeb74f302ffcc5b9f",
+    "revision": "6dd323aae4209a01f110719a00b4e8f7a88389bc"
+  },
+  {
+    "source": "mods/novastoryassets.sc2mod/base3.sc2maps/maps/campaign/nova/nova09.sc2map/t3Water",
+    "bytes": 32,
+    "version": 110,
+    "entries": 0,
+    "bodies": 0,
+    "flat": true,
+    "sha256": "c15e6e4da91564e9349a449302114f4248dfe1f2cebee1a29526cb5f41db5af5",
+    "revision": "6dd323aae4209a01f110719a00b4e8f7a88389bc"
+  }
+]

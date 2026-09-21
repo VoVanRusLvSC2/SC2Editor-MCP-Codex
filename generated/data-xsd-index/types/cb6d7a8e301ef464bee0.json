@@ -1,0 +1,1 @@
+{"name":"SActorMsgSetCastShadows","kind":"complex","fields":[{"kind":"attribute","name":"CastShadows","type":"simple_bool"},{"kind":"element","name":"CastShadows","type":"bool","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

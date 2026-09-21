@@ -1,0 +1,1 @@
+{"name":"simple_EBehaviorUnitTracker","kind":"simple","fields":[],"enumValues":["AtMaxRuleIgnore","AtMaxRuleReplaceOldest","SharedListPersistsForever","SnapPlacement","SnapRuleClosest","SnapRuleRandom","SnapUnitToCircumference","UseSharedList"],"facets":[],"base":"xs:string"}

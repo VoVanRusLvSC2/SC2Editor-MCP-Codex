@@ -1,0 +1,1 @@
+{"name":"SPlacementBits","kind":"complex","fields":[{"kind":"attribute","name":"Negative","type":"simple_EPath"},{"kind":"attribute","name":"Positive","type":"simple_EPath"},{"kind":"element","name":"Negative","type":"EPath","minOccurs":"0","maxOccurs":"1"},{"kind":"element","name":"Positive","type":"EPath","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

@@ -1,0 +1,1 @@
+{"name":"SActorTermModelVariation","kind":"complex","fields":[{"kind":"attribute","name":"Variation","type":"simple_uint8"},{"kind":"element","name":"Variation","type":"uint8","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

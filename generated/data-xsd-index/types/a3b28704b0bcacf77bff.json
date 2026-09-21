@@ -1,0 +1,1 @@
+{"name":"simple_EHeroStatState","kind":"simple","fields":[],"enumValues":["Downgrade","Unchanged","Upgrade"],"facets":[],"base":"xs:string"}

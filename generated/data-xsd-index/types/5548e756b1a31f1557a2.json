@@ -1,0 +1,1 @@
+{"name":"SVolumeFade","kind":"complex","fields":[{"kind":"attribute","name":"Time","type":"simple_uint32"},{"kind":"attribute","name":"Volume","type":"simple_CVolume"},{"kind":"element","name":"Time","type":"uint32","minOccurs":"0","maxOccurs":"1"},{"kind":"element","name":"Volume","type":"CVolume","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

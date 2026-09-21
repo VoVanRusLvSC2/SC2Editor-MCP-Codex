@@ -1,0 +1,1 @@
+{"name":"simple_EEquipmentDisplayFlag","kind":"simple","fields":[],"enumValues":["CollapseBuffed","DisplayRounded","ExpandUpgraded"],"facets":[],"base":"xs:string"}

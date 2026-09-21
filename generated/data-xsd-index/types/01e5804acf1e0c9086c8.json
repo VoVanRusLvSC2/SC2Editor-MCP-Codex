@@ -1,0 +1,1 @@
+{"name":"simple_EAbilBehaviorCycleMode","kind":"simple","fields":[],"enumValues":["Normal","Random","RandomNoRepeat"],"facets":[],"base":"xs:string"}

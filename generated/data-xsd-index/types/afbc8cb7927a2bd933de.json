@@ -1,0 +1,1 @@
+{"name":"simple_EActorModelAspectRegardsAs","kind":"simple","fields":[],"enumValues":["Ally","Any","Enemy","Friendly","Neutral","NotSelf","Self","Teammate"],"facets":[],"base":"xs:string"}

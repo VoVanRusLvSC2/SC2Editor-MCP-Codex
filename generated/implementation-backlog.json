@@ -1,0 +1,646 @@
+{
+  "project": "SC2Editor MCP",
+  "auditedVersion": "1.1.0-alpha.14",
+  "date": "2026-09-14",
+  "scope": {
+    "guiTriggerDevelopment": false,
+    "galaxyScriptsPlanned": true,
+    "editorAndGameValidation": "final_gate",
+    "productionCodeChangedByAudit": false
+  },
+  "nextStep": [
+    "M02",
+    "T03",
+    "T04",
+    "T05",
+    "M03",
+    "M04",
+    "P02",
+    "P03",
+    "F11",
+    "D02",
+    "D05",
+    "S01",
+    "S02"
+  ],
+  "fixes": [
+    {
+      "id": "F01",
+      "priority": "P0",
+      "title": "**Воспроизведено:** scanXml принимает `id=\"A\" id=\"B\"` без диагностики и оставляет B. Некавыченный `id=A` тоже не даёт error",
+      "acceptance": "Строгая проверка XML рядом с lossless span model. Повтор атрибута, некавыченное значение и иные нарушения well-formedness должны блокировать запись",
+      "status": "partial",
+      "implementationNote": "Reproduced invalid literal chars, comments, leading tag whitespace and empty/invalid closing syntax rejected; accepted spans preserve exact offsets. Full XML grammar/DTD support is not claimed."
+    },
+    {
+      "id": "F02",
+      "priority": "P0",
+      "title": "**Воспроизведено:** XML id `A&amp;B` читается как строка `A&amp;B`, а не логическое A&B",
+      "acceptance": "Разделить исходное представление и декодированное значение сущностей. Resolve/rename/references работают с логическими значениями, untouched serialization остаётся точной",
+      "status": "done"
+    },
+    {
+      "id": "F03",
+      "priority": "P0",
+      "title": "**Воспроизведено:** rich text `<a href=\"a>b\">text</a>` разбирается с rawOpen `<a href=\"a>` и без syntax error",
+      "acceptance": "Сканировать границы тегов с учётом кавычек. Добавить реальные supported-tag cases, malformed cases и round-trip проверку",
+      "status": "done"
+    },
+    {
+      "id": "F04",
+      "priority": "P1",
+      "title": "**Воспроизведено:** LightingCatalog.list не выводит child AmbientColor и DirectionalLight; CTerrain с атрибутом Lighting тоже выглядит без привязки",
+      "acceptance": "Один нормализованный reader для attribute/child encodings. Inspect возвращает все поддержанные поля и источники, не смешивая local/effective значения",
+      "status": "done"
+    },
+    {
+      "id": "F05",
+      "priority": "P1",
+      "title": "**Воспроизведено:** duplicate CLight блокирует height.raise, хотя освещение не меняется",
+      "acceptance": "Lighting preflight только для соответствующих операций. Чтение диагностики каталога отдельно от unrelated height edit; не скрывать ошибку, но ограничить её область",
+      "status": "done"
+    },
+    {
+      "id": "F06",
+      "priority": "P1",
+      "title": "**Воспроизведено:** landscape с lighting оставляет два сохранённых плана",
+      "acceptance": "Генерировать список операций без промежуточного remember, затем единственный plan. Одна загрузка согласованного snapshot, один результат и один расход памяти",
+      "status": "done"
+    },
+    {
+      "id": "F07",
+      "priority": "P1",
+      "title": "**По коду:** bridgeCapabilities.version — alpha.12 при package/server alpha.14; project-architecture-coverage.json тоже alpha.12",
+      "acceptance": "Один источник версии и сборки. MCP initialize, capabilities, HTTP, reports и BUILD-INFO согласованы. Исторические отчёты явно отделены",
+      "status": "done"
+    },
+    {
+      "id": "F08",
+      "priority": "P1",
+      "title": "**По коду:** MCP landscape допускает отсутствие area, HTTP landscape сначала использует обязательную area из terrainGenerateSchema",
+      "acceptance": "Общая строгая landscape schema для MCP/HTTP/internal method. Одинаковый запрос без area даёт один и тот же план через оба транспорта",
+      "status": "done"
+    },
+    {
+      "id": "F09",
+      "priority": "P1",
+      "title": "**Воспроизведено:** parseCutsceneTime принимает `00:99:99` и возвращает 6039 секунд",
+      "acceptance": "Зафиксировать grammar и отклонять минуты/секунды >59, если это стандартный timecode. Отдельно не угадывать native tick conversion",
+      "status": "done"
+    },
+    {
+      "id": "F10",
+      "priority": "P1",
+      "title": "**По коду:** Data discovery сканирует файлы рекурсивно; активный набор из GameData.xml Includes полностью не воспроизводится",
+      "acceptance": "Отделить исследовательский corpus index от engine-active index. Inactive каталог не должен давать dependencyReady для обычной записи",
+      "status": "partial",
+      "implementationNote": "Disk, text/binary staged catalogs and overrides are indexed; explicit Includes admits nonconventional paths. Inactive parents excluded; full native layer/default/indexed/removal merge remains open."
+    },
+    {
+      "id": "F11",
+      "priority": "P1",
+      "title": "**По коду:** Data effective follows первый подходящий parent и заменяет целые записи поля; Browse сообщает ambiguous duplicate ID across layers",
+      "acceptance": "Построить версионный порядок слоёв и merge semantics. Обычный override из declared dependency не считать случайной коллизией. Проверить parent/default/index/removal fixtures",
+      "status": "planned"
+    },
+    {
+      "id": "F12",
+      "priority": "P1",
+      "title": "**По коду:** valid/PASS ряда валидаторов означает отсутствие найденных error, даже при предупреждениях о unresolved references и ограниченном L4",
+      "acceptance": "Выдавать область проверки, непроверенные правила и BLOCKED/UNKNOWN отдельно. Required references для операции должны блокировать запись; observed candidates не превращать в абсолютный запрет",
+      "status": "partial",
+      "implementationNote": "Частичная семантика и unresolved rules явно отмечены в Data/Text/AI/Cutscene; обязательные native references не полностью типизированы."
+    }
+  ],
+  "additions": [
+    {
+      "id": "U01",
+      "priority": "P1",
+      "title": "Закрыть нормативную схему известных типов.",
+      "details": "Для 18 observed-only типов и 58 observed-only properties собрать происхождение, подтверждённые value types, ограничения и нативные примеры. Где metadata не установлены — оставить UNKNOWN. Критерий: describe_type/describe_property показывает источник каждого правила и ясную область разрешённых операций. [1, 4]",
+      "status": "planned"
+    },
+    {
+      "id": "U02",
+      "priority": "P1",
+      "title": "Проверять реальные связи layouts.",
+      "details": "Поддержать полный active Include graph, duplicate frame identity в контексте descriptor/file, template compatibility и ссылки StateGroup/animation/anchor. Добавить отрицательные примеры, где XML синтаксически корректен, но ссылка неверна. Критерий: ошибка выявляется до staging и указывает точный target.",
+      "status": "planned"
+    },
+    {
+      "id": "U03",
+      "priority": "P2",
+      "title": "Проверить поведение системных контейнеров.",
+      "details": "Составить cases для GameUI/UIContainer и вложенных контейнеров, focus, Enter, shortcuts, clipping, hit test, layer ordering, scale и aspect ratio. Статические проверки делаются заранее; реальные input/render cases выполняются в финальном Editor/game gate. Restricted type нельзя автоматически считать полностью создаваемым только потому, что его имя есть в реестре.",
+      "status": "planned"
+    },
+    {
+      "id": "U04",
+      "priority": "P2",
+      "title": "Сверить источник схемы.",
+      "details": "Старый sc2layout-schema объявлен устаревшим и перенесён в sc2-galaxy-toolkit. Сравнить текущий bundled registry с новым источником, импортировать только проверенный delta с pinned revision. Обновление источника само по себе не доказывает совместимость с EXE 5.0.16.97563. [9]",
+      "status": "planned"
+    },
+    {
+      "id": "C01",
+      "priority": "P1",
+      "title": "Закрыть временную модель.",
+      "details": "Сейчас операции намеренно требуют точные native integer ticks там, где перевод seconds/ms не подтверждён. Нужен native fixture с известным отображением времени в target build, затем явный codec. До подтверждения оставить запрет на guessed conversion. Добавить ordering start/end, duration, overlap и ключи на границах.",
+      "status": "planned"
+    },
+    {
+      "id": "C02",
+      "priority": "P1",
+      "title": "Углубить L2/L4.",
+      "details": "Валидатор проверяет root, GUID и некоторые отрицательные time attributes; этого недостаточно для всех 664 свойств. Добавить известные typed attributes, допустимое nesting, ranges, keyframe interpolation, camera/light activation и внешние references. Не объявлять 118 Editor-only свойств семантически подтверждёнными.",
+      "status": "planned"
+    },
+    {
+      "id": "C03",
+      "priority": "P2",
+      "title": "Развить preserve-only типы по доказательствам.",
+      "details": "Для каждого из девяти типов определить: читать, изменять существующее поле или создавать новый узел. Переход в SUPPORTED требует нативного примера и проверенной операции, а не только EXE string/RTTI.",
+      "status": "planned"
+    },
+    {
+      "id": "C04",
+      "priority": "P2",
+      "title": "Asset-aware recipes.",
+      "details": "Проверять animation names, attachments, model assets, sound references и native light IDs перед генерацией сцены. Добавить компактный сценарий «камера + shot + объект + анимация + свет» с детерминированным diff. Финальная проверка — воспроизведение сцены в игре.",
+      "status": "planned"
+    },
+    {
+      "id": "X01",
+      "priority": "P1",
+      "title": "Завершить supported rich-text model после F03.",
+      "details": "Установить grammar каждого реально поддержанного тега: attributes, void/self-closing form, nesting и placeholder semantics. Наличие тега в CONFIRMED_RICH_TEXT_TAGS пока не означает полноценную семантическую операцию.",
+      "status": "planned"
+    },
+    {
+      "id": "X02",
+      "priority": "P1",
+      "title": "Проверять локализацию и ссылки как единый граф.",
+      "details": "Key usage из UI/Data/Cutscene и будущих scripts; missing key, duplicates, language fallback и safe rename. Переименование обновляет поддержанные ссылки одной транзакцией, opaque использование выдаёт предупреждение и не переписывается эвристически.",
+      "status": "planned"
+    },
+    {
+      "id": "X03",
+      "priority": "P2",
+      "title": "Font coverage.",
+      "details": "Проверять наличие TTF/OTF и покрытие требуемых символов русского, латышского и английского текстов. Fallback chain, requiredToLoad и фактическое отображение проверять отдельно. Наличие font group в индексе не гарантирует правильное отображение всех глифов.",
+      "status": "planned"
+    },
+    {
+      "id": "X04",
+      "priority": "P2",
+      "title": "Объединить нормализованные style/constants readers.",
+      "details": "Собрать все declarations перед reference checking, затем проверить templates/constants cycles и effective styles с источниками. Это также устраняет зависимость результатов от порядка обхода файлов.",
+      "status": "planned"
+    },
+    {
+      "id": "D01",
+      "priority": "P1",
+      "title": "Engine-active catalog resolver — F10/F11.",
+      "details": "DocumentInfo dependency closure, GameData Includes/dataspaces, стабильный порядок слоёв, defaults, parent, overrides, indexed/repeated arrays, removal markers и field provenance. Точные semantics подтвердить нативными fixtures; не подменять их универсальным shallow merge. [6, 8]",
+      "status": "partial"
+    },
+    {
+      "id": "D02",
+      "priority": "P1",
+      "title": "Типизированные обязательные ссылки.",
+      "details": "Из observed registry переносить reference domains в общий resolver; различать exact metadata и candidates. Проверять Unit/Actor/Model/Effect/Behavior/Weapon/Button/Validator/Upgrade/Requirement и существование необходимых ресурсов. Ошибка domain mismatch должна быть отдельной от unknown rule.",
+      "status": "planned"
+    },
+    {
+      "id": "D03",
+      "priority": "P1",
+      "title": "Проверенные связанные recipes.",
+      "details": "Развить текущие Reaper burn и <40% Life texture recipes: input contracts, asset prerequisites, actor event/site operations, reversible teardown, deterministic IDs и повторный вызов без дубликатов. Критерий — корректный graph и точные field encodings; визуальное/боевое поведение подтверждается финальным probe.",
+      "status": "planned"
+    },
+    {
+      "id": "D04",
+      "priority": "P2",
+      "title": "Валидация комбинаций.",
+      "details": "Для основных C-types собрать invalid-combination fixtures и нормативные enum/default/range constraints. Корпусные min/max и enum candidates остаются наблюдениями: значение за observed range не обязательно незаконно.",
+      "status": "planned"
+    },
+    {
+      "id": "D05",
+      "priority": "P2",
+      "title": "Семантический graph rename/delete.",
+      "details": "Разделить typed references, Actor event strings, assets, text keys и arbitrary strings. Safe delete при обязательных incoming references блокируется; cascade rename работает по подтверждённым правилам и сохраняет unrelated XML.",
+      "status": "planned"
+    },
+    {
+      "id": "A01",
+      "priority": "P1",
+      "title": "Подтвердить заполненные waves/composition.",
+      "details": "Нужны нативные AIData с Definition/Wave/Composition из target build, не только пустая оболочка и названия полей. Для каждого gated node/property зафиксировать структуру, index, units, quantity, ссылки и defaults.",
+      "status": "planned"
+    },
+    {
+      "id": "A02",
+      "priority": "P1",
+      "title": "Config/Script сохранять и развивать отдельно.",
+      "details": "Подтверждать редактирование конкретных существующих полей до включения создания. Вкладка AI не равна AI runtime implementation; поведение ботов требует собственных сценариев.",
+      "status": "planned"
+    },
+    {
+      "id": "A03",
+      "priority": "P2",
+      "title": "Устранить неподтверждённое из обычного workflow.",
+      "details": "После получения native evidence перевести соответствующие операции из opt-in в обычные. Для непроверенных оставить явный diagnostic путь. GUI trigger editor сюда не добавлять; чтение существующих bindings допустимо для integrity checks.",
+      "status": "planned"
+    },
+    {
+      "id": "B01",
+      "priority": "P1",
+      "title": "Единый source/dependency resolver с Data.",
+      "details": "Различать «найдено физически», «объявлено», «активно загружается», «ссылка разрешена» и «asset действительно доступен». Поддержать штатные overrides через declared layers.",
+      "status": "partial"
+    },
+    {
+      "id": "B02",
+      "priority": "P1",
+      "title": "Граф по schema metadata.",
+      "details": "catalogForField сейчас использует в том числе регулярные выражения имён полей. Заменять эвристику нормативными reference descriptors там, где они есть, и сохранять INFERRED для остальных. Include incoming usage из supported Objects/text/scripts, а не обещать whole-map usage при сканировании только каталогов.",
+      "status": "planned"
+    },
+    {
+      "id": "B03",
+      "priority": "P2",
+      "title": "Read-only CASC/installed-content adapter.",
+      "details": "Сегодня installed roots ожидают loose-файлы. Для автоматизации на обычной установке SC2 нужна проверенная стратегия доступа к архивному контенту, версия и локаль. Сначала дать read-only adapter interface, затем выбранный backend. Это новая возможность, а не небольшой фикс поиска.",
+      "status": "planned"
+    },
+    {
+      "id": "B04",
+      "priority": "P2",
+      "title": "Resource metadata preview.",
+      "details": "Текстуры, размеры, M3 animations/attachments, audio metadata и зависимости assets. Движковый 3D render — отдельная большая задача; диагностический PNG Terrain его не заменяет.",
+      "status": "planned"
+    },
+    {
+      "id": "P01",
+      "priority": "P1",
+      "title": "ObjectPoint и идентичности.",
+      "details": "В City native Objects подтверждены 74 ObjectPoint наряду с 203 ObjectUnit и 758 ObjectDoodad. Сейчас types разрешают только Unit/Doodad. Добавить create/inspect/update/remove Point с native Id/name/position и references; unit/doodad editing должен сохранять points нетронутыми. [2, 7]",
+      "status": "partial",
+      "implementationNote": "Три MCP-команды для ObjectPoint v27, общий ID space, stage/save Objects+manifest. Incoming references, GUI и связь StartLoc с игроками не завершены."
+    },
+    {
+      "id": "P02",
+      "priority": "P2",
+      "title": "Regions, Cameras и следующие виды.",
+      "details": "Исследовать реальные компоненты и catalogue definitions для regions/cameras и других объектов; это backlog исследования, а не утверждение, что все они записываются в одном Objects XML. Для каждого вида отдельный native codec и доказательства связи с map metadata/scripts.",
+      "status": "planned"
+    },
+    {
+      "id": "P03",
+      "priority": "P1",
+      "title": "Footprints и проходимость.",
+      "details": "Spacing центра объектов не проверяет площадь здания, overlap footprint, pathing mask, выход модели за границы или gameplay collision. Построить отдельный conservative validator по доступным footprint/pathing данным. UNKNOWN не считать разрешённой точкой для строгой игровой расстановки.",
+      "status": "planned"
+    },
+    {
+      "id": "P04",
+      "priority": "P2",
+      "title": "Составные локации.",
+      "details": "Развить create_location: terrain + вода + освещение + Objects + manifest в одной транзакции; роли для леса/пустыни/города и адаптация к реальной palette. Новый location recipe создаёт согласованный план без промежуточных зависших plans; повторяемость проверяется по seed и snapshot.",
+      "status": "planned"
+    },
+    {
+      "id": "T01",
+      "priority": "P1",
+      "title": "Сначала стабилизировать освещение F04–F08.",
+      "details": "Нормализованный inspect, shared schema, scoped preflight, один landscape plan, точная provenance и Unicode/entity IDs. JSON/DSL/HTTP должны иметь явную таблицу доступных возможностей; XML пока не выражает directional settings.",
+      "status": "partial"
+    },
+    {
+      "id": "T02",
+      "priority": "P1",
+      "title": "Полная модель текущего света.",
+      "details": "Добавить native TimePerDay/TimePerLoop/TimeStart, time events и ToD states; state create/update/remove, сохранение порядка и ссылок. Затем подтверждённые fog/sky/ambient environment/bloom/colorization/specular/shadow/SSAO fields из native catalogs. Не угадывать имена и не обещать универсальный postprocess editor.",
+      "status": "partial",
+      "implementationNote": "Нормализованное чтение света, базовые native cycle fields и Dawn/Dusk. Полный ToD renderer, fog/sky и inherited effective states не реализованы."
+    },
+    {
+      "id": "T03",
+      "priority": "P1",
+      "title": "Cliff/ramp/pathing writers.",
+      "details": "Сейчас это явные unsupported operations, protected geometry сохраняется. Требуется карта зависимостей t3HeightMap/t3SyncCliffLevel/t3CellFlags/t3HardTile/painted/sync pathing и других реально затрагиваемых данных. Исследовать маленькие native before/after cases: один cliff, один ramp, одна painted pathing область. Разрабатывать по версии, а не универсальным byte patch.",
+      "status": "planned"
+    },
+    {
+      "id": "T04",
+      "priority": "P2",
+      "title": "Вода за пределами плоского WATR v110.",
+      "details": "Сейчас поддержан ограниченный профиль bodyCount=0 с 8-cell rectangles и CWater settings. Для body/wave/shoreline нужны native schema и connectivity/shore generation. Геометрия прямоугольника не является точным wet-ground или gameplay pathing доказательством.",
+      "status": "planned"
+    },
+    {
+      "id": "T05",
+      "priority": "P2",
+      "title": "Дополнительные surface layers.",
+      "details": "Исследовать native vertex color, fluff doodads, foliage, holes и tileset switching. На каждый writer — версия, dependencies, no-op round trip и отрицательный случай. Palette swap не равен полной замене tileset/cliff geometry.",
+      "status": "planned"
+    },
+    {
+      "id": "T06",
+      "priority": "P2",
+      "title": "Landscape workflow.",
+      "details": "Выбор whole physical map и playable bounds — разные режимы. Добавить явный выбор, protected areas, density/material roles, перечень unresolved style prerequisites и единый составной recipe. Preview остаётся diagnostic, пока engine adapter не проверит результат.",
+      "status": "partial",
+      "implementationNote": "Map create integrates supported Terrain generation before publication; existing joint Placement.createLocation remains available after opening the new project. Topology/pathing authoring not complete."
+    },
+    {
+      "id": "M01",
+      "priority": "P1",
+      "title": "Полный foundation manifest.",
+      "details": "Установить обязательные и необязательные components, версии, Includes и declared dependencies. Проверять consistency между MapInfo, Terrain dimensions, Objects identities и metadata. Не объявлять непрочитанные components семантически проверенными.",
+      "status": "partial",
+      "implementationNote": "Complete conventional Terrain bundle admission for blueprint creation; CellFlags/SyncCliffLevel/VertCol envelopes checked against dimensions and entry boundaries. Full native document semantics remain open."
+    },
+    {
+      "id": "M02",
+      "priority": "P1",
+      "title": "Verified minimal blueprint.",
+      "details": "Для цели «ИИ самостоятельно создаёт карту» это обязательный этап. Нужен разрешённый минимальный native комплект с точными defaults и provenance. До его подтверждения честный режим — clone готового foundation. Исследование/генератор можно делать заранее; доказательство clean-map acceptance выполняется в согласованном финальном Editor gate.",
+      "status": "partial",
+      "implementationNote": "Registered native-template creation, optional landscape/terrain/MapInfo edits before atomic directory publication, full source/metadata/registry hash guards implemented. No bundled verified clean blueprint or clean defaults serializer."
+    },
+    {
+      "id": "M03",
+      "priority": "P2",
+      "title": "Игроки, teams и game variants.",
+      "details": "MapInfo v39 writer сейчас ограничен проверенным prefix. Расширять player slots, стартовые позиции, варианты, DocumentInfo/DocumentHeader и прочие metadata только по установленному формату. Opaque suffix не патчить поиском строк.",
+      "status": "planned"
+    },
+    {
+      "id": "M04",
+      "priority": "P2",
+      "title": "Resize/rebase.",
+      "details": "Пересчитать полный dependency graph terrain layers, MapInfo bounds/base height, Objects/regions/cameras, воды и pathing. Реализация «поменять width/height» недостаточна. Сначала поддержать небольшой набор подтверждённых transform cases.",
+      "status": "planned"
+    },
+    {
+      "id": "M05",
+      "priority": "P2",
+      "title": "Расширение MPQ profiles.",
+      "details": "Отдельно проверить prefixed archives, unnamed entries, locale/platform variants и подписи. Содержимое может быть идентичным при другом archive layout. Изменённую оригинальную подпись нельзя выдавать за валидную; неподдержанный repack остаётся явным отказом. [11]",
+      "status": "planned"
+    },
+    {
+      "id": "S01",
+      "priority": "P1 после текущего фундамента",
+      "title": "Проверка целевой среды",
+      "details": "Добавить отдельный script.* для Galaxy files/include graph, AST, symbols, types, references, syntax diagnostics и безопасных span mutations. GUI trigger serialization и восстановление GUI-триггеров в этот этап не входят. Наличие Galaxy declarations у Cutscene не заменяет общий script module.",
+      "status": "partial",
+      "implementationNote": "script.* foundation: lexical/structural index, context, native arity, plans, Include/init connection, periodic recipe. Full AST/types/resource links and native target validation remain open."
+    },
+    {
+      "id": "S02",
+      "priority": "P2",
+      "title": "Подключение к карте и другим модулям.",
+      "details": "Создание/обновление script включает native loader/manifest в установленном формате и typed references к units, points, regions, AI definitions, text и cutscenes. Нативные API signatures извлекаются из pinned Core sources, а не выдумываются. У grum/sc2-dev есть исходные natives.galaxy, но их версию нужно сопоставлять с target build. [10]",
+      "status": "partial",
+      "implementationNote": "script.* foundation: lexical/structural index, context, native arity, plans, Include/init connection, periodic recipe. Full AST/types/resource links and native target validation remain open."
+    },
+    {
+      "id": "S03",
+      "priority": "финальный gate",
+      "title": "Проверка целевой среды",
+      "details": "Компиляция Galaxy целевым инструментом, открытие карты и игровой запуск сценария. Можно подготовить static corpus до редактора; полную эквивалентность поведению игры до реального выполнения заявлять нельзя.",
+      "status": "planned"
+    }
+  ],
+  "optimizations": [
+    {
+      "id": "O01",
+      "priority": "P1",
+      "title": "SourceSnapshot/read-set с содержимым, existence, active Includes и списком файлов",
+      "acceptance": "Сейчас каталогные, binary и enumeration reads защищены неодинаково. Snapshot собирается до resolve и используется до save; изменение любого обязательного входа блокирует commit",
+      "status": "planned"
+    },
+    {
+      "id": "O02",
+      "priority": "P1",
+      "title": "Нормализованный Catalog reader/writer utility",
+      "acceptance": "Lighting/Water/Data повторяют поиск поля, attribute/child logic, XML escaping и insert. Общими сделать низкоуровневые правила, сохранив отдельные native codecs",
+      "status": "planned"
+    },
+    {
+      "id": "O03",
+      "priority": "P1",
+      "title": "Data parse cache и effective-resolution cache",
+      "acceptance": "catalog/context повторно обходят и парсят источники; parent lookup использует all.find. Cache по revision/content snapshot; negative lookup и dependencies входят в invalidation",
+      "status": "partial",
+      "implementationNote": "Data parse cache ограничен 128 entries/32 MiB исходного текста; полный effective cache не реализован."
+    },
+    {
+      "id": "O04",
+      "priority": "P1",
+      "title": "Индексы по domain/id/layer/key и graph adjacency",
+      "acceptance": "Browse уже индексирует incoming refs через byId при rebuild, но related/usage/validate делают дополнительные full scans. Использовать построенные индексы; diff результата должен быть точным",
+      "status": "partial",
+      "implementationNote": "Parent lookup индексируется в context; полного semantic adjacency graph нет."
+    },
+    {
+      "id": "O05",
+      "priority": "P1",
+      "title": "Список операций recipes отдельно от plan execution",
+      "acceptance": "landscape сейчас делает generate-plan и затем второй plan. Один snapshot, один transform, один remember и один result. При ошибке освещения лишний план не остаётся",
+      "status": "done"
+    },
+    {
+      "id": "O06",
+      "priority": "P1",
+      "title": "Cache parsed Terrain snapshot, copies только изменяемых данных",
+      "acceptance": "plan хранит полные before/next Buffer bundles, несколько раз читает/клонирует компоненты. Сохранять immutable base и changed buffers; hashes/read guards не ослаблять",
+      "status": "planned"
+    },
+    {
+      "id": "O07",
+      "priority": "P1",
+      "title": "Policy памяти plans/undo",
+      "acceptance": "Terrain держит до 8 plans, Map до 16, Placement plans и Binary commits не имеют сопоставимого лимита в просмотренном коде. Лимит байтов, TTL/LRU, pin staged plans, disk-backed undo при необходимости",
+      "status": "partial",
+      "implementationNote": "Исправление ошибки аудита: Binary undo уже ограничен 8 commits. Points plans ограничены 16. Общий byte budget/TTL и Placement plans требуют завершения."
+    },
+    {
+      "id": "O08",
+      "priority": "P1",
+      "title": "Единая registration/schema metadata",
+      "acceptance": "Strict schemas, descriptions, capabilities, DSL и HTTP расходятся. Генерировать описания/registry из общего контракта; native DSL node adapters остаются явными",
+      "status": "planned"
+    },
+    {
+      "id": "O09",
+      "priority": "P1",
+      "title": "Разделить слишком большие orchestration files",
+      "acceptance": "PlacementWorkspace около 1253 строк, TerrainWorkspace около 840, gui/api около 508. Выделить resolver, recipe planner, persistence adapter и HTTP handlers по обязанностям",
+      "status": "planned"
+    },
+    {
+      "id": "O10",
+      "priority": "P1",
+      "title": "Форматирование нового lighting кода и узкие типы",
+      "acceptance": "lighting.ts упакован в длинные строки; ручные repeated filters/не-null assertions мешают review. Развернуть код и представить selected state/field операции явно",
+      "status": "done"
+    },
+    {
+      "id": "O11",
+      "priority": "P2 после замеров",
+      "title": "Bounded worker pool для CPU-heavy чистых вычислений",
+      "acceptance": "Большие smoothing/paint/index operations потенциально блокируют event loop. В worker выносить только расчёт по immutable input; commit/guards/locks остаются в основном процессе",
+      "status": "planned"
+    },
+    {
+      "id": "O12",
+      "priority": "P2",
+      "title": "Компактные MCP projections с pagination",
+      "acceptance": "Не возвращать raw XML, полный effective graph и все diagnostics по умолчанию. summary/context/detail отдельно; полный результат запрашивается явно, без потери информации",
+      "status": "planned"
+    },
+    {
+      "id": "K01",
+      "priority": "P1",
+      "title": "Один version/build manifest.",
+      "details": "package version, server initialize, bridge capabilities, HTTP health, generated reports, SDK revisions и native helper hashes. Сборка должна выдавать release gate failure при рассогласовании. Исторические отчёты остаются history, а не заменой текущего status.",
+      "status": "partial",
+      "implementationNote": "Package version общий для MCP/HTTP/capabilities; остальные build/evidence conventions ещё требуют унификации."
+    },
+    {
+      "id": "K02",
+      "priority": "P1",
+      "title": "Разделить compile configs.",
+      "details": "Сегодня tsconfig включает src/**/*.ts, то есть и tests, а portable копирует весь dist. Выделить application build, test build и dev configuration; production package содержит только нужные runtime outputs. Проверка — portable MCP/HTTP + корректные imports после упаковки. [5]",
+      "status": "done"
+    },
+    {
+      "id": "K03",
+      "priority": "P1",
+      "title": "Incremental dev build, чистый release build.",
+      "details": "Добавить incremental/tsbuildinfo для обычной разработки и измерить clean/cached times. Для release сохранять воспроизводимый clean compile. Project references вводить только если реально улучшают время и зависимости, а не ради дополнительной структуры. TypeScript официально поддерживает оба механизма. [13, 14]",
+      "status": "done"
+    },
+    {
+      "id": "K04",
+      "priority": "P1",
+      "title": "Уменьшить portable payload.",
+      "details": "generated копируется в app и повторно в корень portable; каждая копия сейчас около 16 MiB на диске. Упаковать обязательные runtime schemas по whitelist, отчёты — один раз, историю — в source/research bundle. app/native содержит около 12 MiB, хотя Windows helper примерно 1.31 MiB: проверить debug/build artefacts, ничего нужного не удалять вслепую. [5]",
+      "status": "done"
+    },
+    {
+      "id": "K05",
+      "priority": "P1",
+      "title": "Повторяемая dependency сборка.",
+      "details": "Использовать lockfile/npm ci, фиксированный поддержанный Node runtime, проверку production dependency tree и licenses. Не поднимать SDK/StormLib «до latest» без compatibility gate. Native helpers собирать с pinned revision/flags и проверять hashes/архитектуру.",
+      "status": "planned"
+    },
+    {
+      "id": "K06",
+      "priority": "P2",
+      "title": "Startup budget.",
+      "details": "Ленивые registries/assets там, где они не нужны для tool registration, compact indexes вместо eager full corpus parse. Read-only tool descriptions должны оставаться доступными с первого initialize. Цель задаётся по repeated measurements на целевом Windows компьютере.",
+      "status": "planned"
+    },
+    {
+      "id": "K07",
+      "priority": "финальный gate",
+      "title": "Проверка целевой среды",
+      "details": "Windows launcher и Windows archive helper действительно запускаются, runtime resolution/paths/non-ASCII paths проверяются. Linux cross-build и Linux MCP smoke не заменяют этот шаг. Комплект с Node runtime отличается от нынешнего node-required ZIP и должен называться соответственно.",
+      "status": "planned"
+    }
+  ],
+  "implementedVersion": "1.1.0-alpha.18",
+  "lastUpdated": "2026-09-14",
+  "goalComplete": false,
+  "nativeEvidenceBlocked": [
+    "C01",
+    "A01",
+    "P02",
+    "T03",
+    "T04",
+    "T05",
+    "M01",
+    "M02",
+    "M03",
+    "M04"
+  ],
+  "targetValidation": {
+    "WindowsLauncher": "NOT_EXECUTED",
+    "SC2Editor": "NOT_EXECUTED",
+    "SC2Game": "NOT_EXECUTED"
+  },
+  "scripts": {
+    "stage": "FOUNDATION_IMPLEMENTED",
+    "tools": 11,
+    "nativeSignatures": 2200,
+    "fullAST": false,
+    "fullTypeChecking": false,
+    "targetCompiler": "NOT_EXECUTED",
+    "GUITriggerEditing": false
+  },
+  "readiness": {
+    "supportedOperationsOfflineTests": "PASS",
+    "knownReadinessDefects": "FIXED",
+    "fullStandardFunctionCoverage": "PARTIAL",
+    "SC2Editor": "NOT_EXECUTED",
+    "GalaxyCompiler": "NOT_EXECUTED",
+    "GameRuntime": "NOT_EXECUTED"
+  },
+  "readinessFixes": [
+    {
+      "id": "R01_R02",
+      "status": "done"
+    },
+    {
+      "id": "R03",
+      "status": "done"
+    },
+    {
+      "id": "R04",
+      "status": "done"
+    },
+    {
+      "id": "R06",
+      "status": "done"
+    },
+    {
+      "id": "R07",
+      "status": "done"
+    },
+    {
+      "id": "R08",
+      "status": "done"
+    }
+  ],
+  "convenienceTools": [
+    "ui.test_readiness",
+    "map.blueprint.inspect",
+    "map.blueprint.register",
+    "map.blueprint.list",
+    "map.create",
+    "terrain.components.inspect",
+    "/api/project/preflight",
+    "/api/map/create",
+    "/api/map/blueprint/register"
+  ],
+  "nativeMapCreation": {
+    "fromRegisteredTemplate": true,
+    "cleanFromNothing": false,
+    "inheritedScenarioContent": true,
+    "contentPinnedTemplates": true,
+    "dryRunPerformsRealTransforms": true,
+    "outputIndexIsolation": true,
+    "targetEditor": "NOT_EXECUTED"
+  },
+  "pairedExecutableAnalysis": {
+    "editorSha256": "9cab25db2b7dcfaaad207978b4eac07ec694f1f7cdbee4257d0db0845e14a164",
+    "gameSha256": "83dc73ea273594fc6d74b496200c5ea80c4e4bc378912fef88d37b4226c20db2",
+    "decompiledTerrainBusinessLogic": false,
+    "finding": "High-entropy main .text samples, bounded disassembly, no direct Terrain string xrefs; executable code encoding/protection mechanism not identified"
+  }
+}

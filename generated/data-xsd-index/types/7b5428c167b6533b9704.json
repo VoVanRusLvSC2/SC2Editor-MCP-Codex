@@ -1,0 +1,1 @@
+{"name":"simple_EAllianceId","kind":"simple","fields":[],"enumValues":["Chat","Control","Defeat","GiveHelp","Passive","Power","Pushable","SeekHelp","Spend","Trade","Vision"],"facets":[],"base":"xs:string"}

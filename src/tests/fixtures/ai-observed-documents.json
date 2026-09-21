@@ -1,0 +1,18 @@
+[
+  {
+    "name": "UA3.CustomAI",
+    "source": "/workspace/scratch/0f9999397929/research/customai-samples/UA3.CustomAI",
+    "sha256": "a65627504be38b2f2db8585212356d386d223c688acc2891ec4411cf20ed1ece",
+    "encoding": "base64",
+    "bytes": "PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPEFJRGF0YT4KICAgIDxEZWZpbml0aW9uIElkPSI3MUVFQzFGQSI+CiAgICA8L0RlZmluaXRpb24+CjwvQUlEYXRhPg==",
+    "provenance": "Previously extracted map CustomAI; original extraction provenance inherited from AI audit, no Editor open/save in this run"
+  },
+  {
+    "name": "SC2BW.CustomAI",
+    "source": "/workspace/scratch/0f9999397929/research/customai-samples/SC2BW.CustomAI",
+    "sha256": "871b36549f0b3430cb22dca60c2da0b4796b56ec5c3b8305d3ad7e0c95e11541",
+    "encoding": "base64",
+    "bytes": "PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjxBSURhdGE+DQo8L0FJRGF0YT4=",
+    "provenance": "Previously extracted map CustomAI; original extraction provenance inherited from AI audit, no Editor open/save in this run"
+  }
+]

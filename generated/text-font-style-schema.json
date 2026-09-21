@@ -1,0 +1,365 @@
+{
+  "schemaVersion": "1.0.0-alpha.1",
+  "editorBuild": "5.0.16.97563",
+  "editorSha256": "9cab25db2b7dcfaaad207978b4eac07ec694f1f7cdbee4257d0db0845e14a164",
+  "generatedAt": "2026-09-11T17:54:52.221Z",
+  "properties": [
+    {
+      "property": "characterSpacing",
+      "nativeName": "characterspacing",
+      "valueType": "integer",
+      "minimum": 0,
+      "maximum": 255,
+      "inheritable": true,
+      "editorSupport": true,
+      "runtimeSupport": "UNTESTED",
+      "discoveredFrom": [
+        "Core.SC2Mod/Base.SC2Data/UI/FontStyles.SC2Style (1 observed styles)",
+        "SC2Editor_x64.exe 5.0.16.97563 string evidence"
+      ],
+      "confidence": "CONFIRMED",
+      "coverage": "SUPPORTED"
+    },
+    {
+      "property": "disabledcolor",
+      "nativeName": "disabledcolor",
+      "valueType": "color",
+      "inheritable": true,
+      "editorSupport": true,
+      "runtimeSupport": "UNTESTED",
+      "discoveredFrom": [
+        "Core.SC2Mod/Base.SC2Data/UI/FontStyles.SC2Style (126 observed styles)",
+        "SC2Editor_x64.exe 5.0.16.97563 string evidence"
+      ],
+      "confidence": "CONFIRMED",
+      "coverage": "SUPPORTED"
+    },
+    {
+      "property": "disabledglowcolor",
+      "nativeName": "disabledglowcolor",
+      "valueType": "color",
+      "inheritable": true,
+      "editorSupport": true,
+      "runtimeSupport": "UNTESTED",
+      "discoveredFrom": [
+        "Core.SC2Mod/Base.SC2Data/UI/FontStyles.SC2Style (73 observed styles)",
+        "SC2Editor_x64.exe 5.0.16.97563 string evidence"
+      ],
+      "confidence": "CONFIRMED",
+      "coverage": "SUPPORTED"
+    },
+    {
+      "property": "font",
+      "nativeName": "font",
+      "valueType": "font",
+      "inheritable": true,
+      "editorSupport": true,
+      "runtimeSupport": "UNTESTED",
+      "discoveredFrom": [
+        "Core.SC2Mod/Base.SC2Data/UI/FontStyles.SC2Style (52 observed styles)",
+        "SC2Editor_x64.exe 5.0.16.97563 string evidence"
+      ],
+      "confidence": "CONFIRMED",
+      "coverage": "SUPPORTED"
+    },
+    {
+      "property": "fontflags",
+      "nativeName": "fontflags",
+      "valueType": "flags",
+      "inheritable": true,
+      "editorSupport": true,
+      "runtimeSupport": "UNTESTED",
+      "discoveredFrom": [
+        "Core.SC2Mod/Base.SC2Data/UI/FontStyles.SC2Style (10 observed styles)",
+        "SC2Editor_x64.exe 5.0.16.97563 string evidence"
+      ],
+      "confidence": "CONFIRMED",
+      "coverage": "SUPPORTED"
+    },
+    {
+      "property": "glowcolor",
+      "nativeName": "glowcolor",
+      "valueType": "color",
+      "inheritable": true,
+      "editorSupport": true,
+      "runtimeSupport": "UNTESTED",
+      "discoveredFrom": [
+        "Core.SC2Mod/Base.SC2Data/UI/FontStyles.SC2Style (294 observed styles)",
+        "SC2Editor_x64.exe 5.0.16.97563 string evidence"
+      ],
+      "confidence": "CONFIRMED",
+      "coverage": "SUPPORTED"
+    },
+    {
+      "property": "glowMode",
+      "nativeName": "glowmode",
+      "valueType": "enum",
+      "enumValues": [
+        "Add",
+        "Normal"
+      ],
+      "inheritable": true,
+      "editorSupport": true,
+      "runtimeSupport": "UNTESTED",
+      "discoveredFrom": [
+        "Core.SC2Mod/Base.SC2Data/UI/FontStyles.SC2Style (0 observed styles)",
+        "SC2Editor_x64.exe 5.0.16.97563 string evidence"
+      ],
+      "confidence": "CONFIRMED",
+      "coverage": "SUPPORTED"
+    },
+    {
+      "property": "height",
+      "nativeName": "height",
+      "valueType": "integer",
+      "minimum": 1,
+      "maximum": 256,
+      "inheritable": true,
+      "editorSupport": true,
+      "runtimeSupport": "UNTESTED",
+      "discoveredFrom": [
+        "Core.SC2Mod/Base.SC2Data/UI/FontStyles.SC2Style (1676 observed styles)",
+        "SC2Editor_x64.exe 5.0.16.97563 string evidence"
+      ],
+      "confidence": "CONFIRMED",
+      "coverage": "SUPPORTED"
+    },
+    {
+      "property": "highlightcolor",
+      "nativeName": "highlightcolor",
+      "valueType": "color",
+      "inheritable": true,
+      "editorSupport": true,
+      "runtimeSupport": "UNTESTED",
+      "discoveredFrom": [
+        "Core.SC2Mod/Base.SC2Data/UI/FontStyles.SC2Style (219 observed styles)",
+        "SC2Editor_x64.exe 5.0.16.97563 string evidence"
+      ],
+      "confidence": "CONFIRMED",
+      "coverage": "SUPPORTED"
+    },
+    {
+      "property": "highlightglowcolor",
+      "nativeName": "highlightglowcolor",
+      "valueType": "color",
+      "inheritable": true,
+      "editorSupport": true,
+      "runtimeSupport": "UNTESTED",
+      "discoveredFrom": [
+        "Core.SC2Mod/Base.SC2Data/UI/FontStyles.SC2Style (76 observed styles)",
+        "SC2Editor_x64.exe 5.0.16.97563 string evidence"
+      ],
+      "confidence": "CONFIRMED",
+      "coverage": "SUPPORTED"
+    },
+    {
+      "property": "hJustify",
+      "nativeName": "hjustify",
+      "valueType": "enum",
+      "enumValues": [
+        "Center",
+        "Left",
+        "Right"
+      ],
+      "inheritable": true,
+      "editorSupport": true,
+      "runtimeSupport": "UNTESTED",
+      "discoveredFrom": [
+        "Core.SC2Mod/Base.SC2Data/UI/FontStyles.SC2Style (1510 observed styles)",
+        "SC2Editor_x64.exe 5.0.16.97563 string evidence"
+      ],
+      "confidence": "CONFIRMED",
+      "coverage": "SUPPORTED"
+    },
+    {
+      "property": "hotkeycolor",
+      "nativeName": "hotkeycolor",
+      "valueType": "color",
+      "inheritable": true,
+      "editorSupport": true,
+      "runtimeSupport": "UNTESTED",
+      "discoveredFrom": [
+        "Core.SC2Mod/Base.SC2Data/UI/FontStyles.SC2Style (88 observed styles)",
+        "SC2Editor_x64.exe 5.0.16.97563 string evidence"
+      ],
+      "confidence": "CONFIRMED",
+      "coverage": "SUPPORTED"
+    },
+    {
+      "property": "hyperlinkcolor",
+      "nativeName": "hyperlinkcolor",
+      "valueType": "color",
+      "inheritable": true,
+      "editorSupport": true,
+      "runtimeSupport": "UNTESTED",
+      "discoveredFrom": [
+        "Core.SC2Mod/Base.SC2Data/UI/FontStyles.SC2Style (52 observed styles)",
+        "SC2Editor_x64.exe 5.0.16.97563 string evidence"
+      ],
+      "confidence": "CONFIRMED",
+      "coverage": "SUPPORTED"
+    },
+    {
+      "property": "lineSpacing",
+      "nativeName": "linespacing",
+      "valueType": "decimal",
+      "minimum": 1,
+      "maximum": 4,
+      "inheritable": true,
+      "editorSupport": true,
+      "runtimeSupport": "UNTESTED",
+      "discoveredFrom": [
+        "Core.SC2Mod/Base.SC2Data/UI/FontStyles.SC2Style (15 observed styles)",
+        "SC2Editor_x64.exe 5.0.16.97563 string evidence"
+      ],
+      "confidence": "CONFIRMED",
+      "coverage": "SUPPORTED"
+    },
+    {
+      "property": "outlinecolor",
+      "nativeName": "outlinecolor",
+      "valueType": "color",
+      "inheritable": true,
+      "editorSupport": true,
+      "runtimeSupport": "UNTESTED",
+      "discoveredFrom": [
+        "Core.SC2Mod/Base.SC2Data/UI/FontStyles.SC2Style (2 observed styles)",
+        "SC2Editor_x64.exe 5.0.16.97563 string evidence"
+      ],
+      "confidence": "CONFIRMED",
+      "coverage": "SUPPORTED"
+    },
+    {
+      "property": "outlinewidth",
+      "nativeName": "outlinewidth",
+      "valueType": "integer",
+      "minimum": 0,
+      "maximum": 256,
+      "inheritable": true,
+      "editorSupport": true,
+      "runtimeSupport": "UNTESTED",
+      "discoveredFrom": [
+        "Core.SC2Mod/Base.SC2Data/UI/FontStyles.SC2Style (3 observed styles)",
+        "SC2Editor_x64.exe 5.0.16.97563 string evidence"
+      ],
+      "confidence": "CONFIRMED",
+      "coverage": "SUPPORTED"
+    },
+    {
+      "property": "requiredtoload",
+      "nativeName": "requiredtoload",
+      "valueType": "string",
+      "inheritable": true,
+      "editorSupport": true,
+      "runtimeSupport": "UNTESTED",
+      "discoveredFrom": [
+        "Core.SC2Mod/Base.SC2Data/UI/FontStyles.SC2Style (1 observed styles)",
+        "SC2Editor_x64.exe 5.0.16.97563 string evidence"
+      ],
+      "confidence": "CONFIRMED",
+      "coverage": "SUPPORTED"
+    },
+    {
+      "property": "shadowoffset",
+      "nativeName": "shadowoffset",
+      "valueType": "integer",
+      "minimum": -128,
+      "maximum": 127,
+      "inheritable": true,
+      "editorSupport": true,
+      "runtimeSupport": "UNTESTED",
+      "discoveredFrom": [
+        "Core.SC2Mod/Base.SC2Data/UI/FontStyles.SC2Style (251 observed styles)",
+        "SC2Editor_x64.exe 5.0.16.97563 string evidence"
+      ],
+      "confidence": "CONFIRMED",
+      "coverage": "SUPPORTED"
+    },
+    {
+      "property": "styleflags",
+      "nativeName": "styleflags",
+      "valueType": "flags",
+      "inheritable": true,
+      "editorSupport": true,
+      "runtimeSupport": "UNTESTED",
+      "discoveredFrom": [
+        "Core.SC2Mod/Base.SC2Data/UI/FontStyles.SC2Style (872 observed styles)",
+        "SC2Editor_x64.exe 5.0.16.97563 string evidence"
+      ],
+      "confidence": "CONFIRMED",
+      "coverage": "SUPPORTED"
+    },
+    {
+      "property": "textColor",
+      "nativeName": "textcolor",
+      "valueType": "color",
+      "inheritable": true,
+      "editorSupport": true,
+      "runtimeSupport": "UNTESTED",
+      "discoveredFrom": [
+        "Core.SC2Mod/Base.SC2Data/UI/FontStyles.SC2Style (2378 observed styles)",
+        "SC2Editor_x64.exe 5.0.16.97563 string evidence"
+      ],
+      "confidence": "CONFIRMED",
+      "coverage": "SUPPORTED"
+    },
+    {
+      "property": "vJustify",
+      "nativeName": "vjustify",
+      "valueType": "enum",
+      "enumValues": [
+        "Bottom",
+        "Middle",
+        "Top"
+      ],
+      "inheritable": true,
+      "editorSupport": true,
+      "runtimeSupport": "UNTESTED",
+      "discoveredFrom": [
+        "Core.SC2Mod/Base.SC2Data/UI/FontStyles.SC2Style (1498 observed styles)",
+        "SC2Editor_x64.exe 5.0.16.97563 string evidence"
+      ],
+      "confidence": "CONFIRMED",
+      "coverage": "SUPPORTED"
+    }
+  ],
+  "styleFlags": [
+    "Bold",
+    "Glow",
+    "HintStyleLCD",
+    "HintStyleLCDVertical",
+    "HintStyleLight",
+    "HintStyleNormal",
+    "HintingAuto",
+    "HintingNative",
+    "HintingOff",
+    "InlineJustification",
+    "Italic",
+    "Outline",
+    "Shadow",
+    "TightGradient",
+    "Uppercase"
+  ],
+  "fontFlags": [
+    "Bold",
+    "Outline"
+  ],
+  "horizontalJustify": [
+    "Center",
+    "Left",
+    "Right"
+  ],
+  "verticalJustify": [
+    "Bottom",
+    "Middle",
+    "Top"
+  ],
+  "glowModes": [
+    "Add",
+    "Normal"
+  ],
+  "sources": [
+    "Core.SC2Mod/Base.SC2Data/UI/FontStyles.SC2Style",
+    "SC2Editor_x64.exe 5.0.16.97563 read-only strings"
+  ]
+}

@@ -1,0 +1,1 @@
+{"name":"simple_EHeroRole","kind":"simple","fields":[],"enumValues":["Damage","Specialist","Support","Unknown","Warrior"],"facets":[],"base":"xs:string"}

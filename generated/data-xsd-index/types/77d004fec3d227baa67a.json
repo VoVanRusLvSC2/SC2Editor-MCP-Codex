@@ -1,0 +1,1 @@
+{"name":"simple_EMotionArrivalTestType","kind":"simple","fields":[],"enumValues":["2D","3D","Adaptive","Never"],"facets":[],"base":"xs:string"}

@@ -1,0 +1,1 @@
+{"name":"simple_EActorModelAspectObservingPoV","kind":"simple","fields":[],"enumValues":["Any","DefaultObservedPlayerId","Everyone","PlayerId","TeamId"],"facets":[],"base":"xs:string"}

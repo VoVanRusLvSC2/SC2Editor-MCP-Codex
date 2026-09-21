@@ -1,0 +1,1 @@
+{"name":"simple_EClassIdCDataCollection","kind":"simple","fields":[],"enumValues":["CDataCollection","CDataCollectionAbil","CDataCollectionUnit","CDataCollectionUpgrade"],"facets":[],"base":"xs:string"}

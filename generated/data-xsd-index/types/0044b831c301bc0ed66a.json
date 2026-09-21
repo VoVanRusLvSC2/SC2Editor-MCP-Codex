@@ -1,0 +1,1 @@
+{"name":"SActorMsgStatusSet","kind":"complex","fields":[{"kind":"attribute","name":"Value","type":"simple_uint16"},{"kind":"element","name":"Value","type":"uint16","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

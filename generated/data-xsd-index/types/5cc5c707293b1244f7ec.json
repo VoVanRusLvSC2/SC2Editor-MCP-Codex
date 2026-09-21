@@ -1,0 +1,1 @@
+{"name":"simple_EActorSiteOpTipabilityFlag","kind":"simple","fields":[],"enumValues":["NoLowerThanBaseHeight","NoLowerThanScope"],"facets":[],"base":"xs:string"}

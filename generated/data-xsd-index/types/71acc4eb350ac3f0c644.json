@@ -1,0 +1,1 @@
+{"name":"SHeroSpecificVO","kind":"complex","fields":[{"kind":"attribute","name":"Sound","type":"simple_CSoundLink"},{"kind":"attribute","name":"Target","type":"simple_CUnitLink"},{"kind":"element","name":"Sound","type":"CSoundLink","minOccurs":"0","maxOccurs":"1"},{"kind":"element","name":"Target","type":"CUnitLink","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

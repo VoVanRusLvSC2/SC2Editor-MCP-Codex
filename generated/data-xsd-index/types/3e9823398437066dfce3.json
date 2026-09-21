@@ -1,0 +1,1 @@
+{"name":"simple_EUnitResponse","kind":"simple","fields":[],"enumValues":["Acquire","AcquireNoFlee","Flee","Nothing"],"facets":[],"base":"xs:string"}

@@ -1,0 +1,1 @@
+{"name":"simple_EActorOverkillType","kind":"simple","fields":[],"enumValues":["DamageOverInterval","DamagePastRemainingHealth","TestFixed","TestPercentageOfMaxLife","TestPercentageOfMaxLifePlusShields"],"facets":[],"base":"xs:string"}

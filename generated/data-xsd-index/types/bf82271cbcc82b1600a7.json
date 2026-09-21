@@ -1,0 +1,1 @@
+{"name":"simple_EAbilCmdState","kind":"simple","fields":[],"enumValues":["Available","Restricted","Suppressed"],"facets":[],"base":"xs:string"}

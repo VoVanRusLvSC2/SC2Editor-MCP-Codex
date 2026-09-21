@@ -1,0 +1,1 @@
+{"name":"simple_EClassIdCScoreValue","kind":"simple","fields":[],"enumValues":["CScoreValue","CScoreValueCombine","CScoreValueConstant","CScoreValueCustom","CScoreValueStandard"],"facets":[],"base":"xs:string"}

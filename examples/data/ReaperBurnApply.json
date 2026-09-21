@@ -1,0 +1,67 @@
+{
+  "file": "Base.SC2Data/GameData/CodexReaperBurn.xml",
+  "operations": [
+    {
+      "op": "object.create",
+      "ctype": "CEffectDamage",
+      "id": "CodexReaperBurnPeriodicDamage",
+      "fields": [
+        { "name": "EditorCategories", "value": "Race:Terran,AbilityorEffectType:Units" },
+        { "name": "Kind", "value": "Ranged" },
+        { "name": "Amount", "value": 2 }
+      ]
+    },
+    {
+      "op": "object.create",
+      "ctype": "CBehaviorBuff",
+      "id": "CodexReaperBurn",
+      "fields": [
+        { "name": "Alignment", "value": "Negative" },
+        { "name": "Duration", "value": 4 },
+        { "name": "Period", "value": 0.5 },
+        { "name": "PeriodicEffect", "value": "CodexReaperBurnPeriodicDamage" },
+        { "name": "BuffFlags", "index": "RefreshStack", "value": true },
+        { "name": "MaxStackCount", "value": 1 }
+      ]
+    },
+    {
+      "op": "object.create",
+      "ctype": "CEffectApplyBehavior",
+      "id": "CodexReaperBurnApply",
+      "fields": [{ "name": "Behavior", "value": "CodexReaperBurn" }]
+    },
+    {
+      "op": "object.create",
+      "ctype": "CEffectSet",
+      "id": "CodexReaperBurnHitSet",
+      "fields": [
+        { "name": "EffectArray", "index": 0, "value": "P38ScytheGuassPistol" },
+        { "name": "EffectArray", "index": 1, "value": "CodexReaperBurnApply" }
+      ]
+    },
+    {
+      "op": "object.create",
+      "ctype": "CActorModel",
+      "id": "CodexReaperBurnVisual",
+      "parent": "ModelAnimationStyleOneShot",
+      "fields": [
+        { "name": "Model", "value": "HellionTankAttackFireAddition" },
+        { "name": "Host", "attrs": { "Subject": "_Unit" } },
+        { "name": "HostSiteOps", "attrs": { "Ops": "SOpAttachHead" } },
+        { "name": "On", "attrs": { "Terms": "Effect.CodexReaperBurnPeriodicDamage.Start; At Target", "Send": "Create" } }
+      ]
+    },
+    {
+      "op": "object.create",
+      "ctype": "CEffectCreatePersistent",
+      "id": "P38ScytheGuassPistolBurst",
+      "fields": [
+        { "name": "PeriodicEffectArray", "index": 0, "value": "CodexReaperBurnHitSet" }
+      ]
+    }
+  ],
+  "dryRun": false,
+  "stage": false,
+  "backup": true,
+  "validate": true
+}

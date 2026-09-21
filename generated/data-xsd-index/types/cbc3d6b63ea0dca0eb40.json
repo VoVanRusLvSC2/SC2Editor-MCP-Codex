@@ -1,0 +1,1 @@
+{"name":"simple_EDamageVisibility","kind":"simple","fields":[],"enumValues":["Hidden","Snapshot","Visible"],"facets":[],"base":"xs:string"}

@@ -1,0 +1,1 @@
+{"name":"SActorMsgSoundSetMuted","kind":"complex","fields":[{"kind":"attribute","name":"Fade","type":"simple_bool"},{"kind":"attribute","name":"State","type":"simple_bool"},{"kind":"element","name":"Fade","type":"bool","minOccurs":"0","maxOccurs":"1"},{"kind":"element","name":"State","type":"bool","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

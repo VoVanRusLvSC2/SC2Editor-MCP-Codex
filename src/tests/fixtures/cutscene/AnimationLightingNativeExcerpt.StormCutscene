@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CutsceneState cutsceneVersion="1.300000">
+    <CCutsceneNodeActor guid="11286421485656095169" name="Kaelthas" modelLink="KaelthasPortraitAddition" shadowBox="0">
+        <CCutsceneElementObject guid="7608417729101314497" duration="4000" lockedToEnd="1"/>
+        <CCutsceneNodeAnimLayer guid="12111437312548551105" name="Animation Layer" sortIndex="0">
+            <CCutsceneElementAnim guid="8152848724140112321" duration="4000" anim="Portrait Stand" priority="5" originalDuration="2000" looping="1" blendTime="0" blendOutTime="0" timeScale="0.500000" weight="2.000000"/>
+        </CCutsceneNodeAnimLayer>
+    </CCutsceneNodeActor>
+    <CCutsceneNodeLight guid="12717566291562267789" name="toplight" position="-0.507492,-3.727940,4.544255" rotation="58.487942,-5.647768,0.000000" type="2" colorR="0.196078" colorG="0.196078" colorB="0.686275" colorMultiplier="1.000000" attenuationStart="4.245889" range="5.155717" hotspot="0.000000" falloff="0.500000">
+        <CCutsceneElementObject guid="7454087259043464333" duration="4000" lockedToEnd="1"/>
+        <CCutsceneNodePropertyValue guid="13665015645900440717" name="Property - Color Multiplier" sortIndex="0" propertyName="colorMultiplier">
+            <CCutsceneElementPropertyCurve guid="5225558797938656397" start="1500" value="0.000000" time="1500" curveInValue="1499.000000,0.000000" curveOutValue="1743.333374,0.333333" curveOutType="3" curveInType="3"/>
+            <CCutsceneElementPropertyCurve guid="5506432410508395611" start="2230" value="1.000000" time="2230" curveInValue="1986.666626,0.666667" curveOutValue="2231.000000,1.000000" curveOutType="3" curveInType="3"/>
+        </CCutsceneNodePropertyValue>
+    </CCutsceneNodeLight>
+</CutsceneState>

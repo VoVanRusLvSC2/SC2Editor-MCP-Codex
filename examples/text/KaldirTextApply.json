@@ -1,0 +1,36 @@
+{
+  "styleFile": "Base.SC2Data/UI/FontStyles.SC2Style",
+  "stringFiles": {
+    "enUS": "enUS.SC2Data/LocalizedData/GameStrings.txt",
+    "ruRU": "ruRU.SC2Data/LocalizedData/GameStrings.txt"
+  },
+  "operations": [
+    {
+      "op": "style.add",
+      "id": "KaldirSubtitle",
+      "template": "StandardExtendedTemplate",
+      "values": {
+        "font": "#FontStandardExtended",
+        "height": 28,
+        "hjustify": "Center",
+        "vjustify": "Middle",
+        "textcolor": "9fdcff",
+        "styleflags": ["Shadow", "Outline"],
+        "shadowoffset": 2,
+        "outlinewidth": 2,
+        "outlinecolor": "000000"
+      }
+    },
+    {
+      "op": "text.setLocalized",
+      "key": "Cutscene/Kaldir/StormWarning",
+      "values": {
+        "enUS": "<s val=\"KaldirSubtitle\">The storm is coming.</s>",
+        "ruRU": "<s val=\"KaldirSubtitle\">Приближается буря.</s>"
+      }
+    }
+  ],
+  "validate": true,
+  "dryRun": false,
+  "stage": true
+}

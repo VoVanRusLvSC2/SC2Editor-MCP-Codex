@@ -1,0 +1,1 @@
+{"name":"SActorTermValidateBase","kind":"complex","fields":[{"kind":"attribute","name":"ValidatorLink","type":"simple_CValidatorLink"},{"kind":"element","name":"ValidatorLink","type":"CValidatorLink","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

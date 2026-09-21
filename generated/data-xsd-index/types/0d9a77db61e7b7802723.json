@@ -1,0 +1,1 @@
+{"name":"SActorMsgRefSet","kind":"complex","fields":[{"kind":"attribute","name":"RefSource","type":"simple_CRefKey"},{"kind":"element","name":"RefSource","type":"CRefKey","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

@@ -1,0 +1,1 @@
+{"name":"simple_EPathingType","kind":"simple","fields":[],"enumValues":["Building","Cliff","Ground","None","WaterDeep","WaterShallow"],"facets":[],"base":"xs:string"}

@@ -1,0 +1,1 @@
+{"name":"simple_ECameraParam","kind":"simple","fields":[],"enumValues":["BokehFStop","BokehMaxCoC","DepthOfField","Distance","DoFType","FalloffEnd","FalloffEndNear","FalloffStart","FalloffStartNear","FarClip","FieldOfView","FocalDepth","HeightOffset","NearClip","Pitch","Roll","ShadowClip","Yaw"],"facets":[],"base":"xs:string"}

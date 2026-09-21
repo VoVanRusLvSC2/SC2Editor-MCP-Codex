@@ -1,0 +1,1 @@
+{"name":"EConversationStateFlag","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EConversationStateFlag"}],"enumValues":[],"facets":[]}

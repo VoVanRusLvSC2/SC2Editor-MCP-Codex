@@ -1,0 +1,1 @@
+{"name":"simple_EAMRandomDistribution","kind":"simple","fields":[],"enumValues":["Exponential","Uniform"],"facets":[],"base":"xs:string"}

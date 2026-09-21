@@ -1,0 +1,1 @@
+{"name":"SActorTermAnimBaselineState","kind":"complex","fields":[{"kind":"attribute","name":"State","type":"simple_EActorBaselineState"},{"kind":"element","name":"State","type":"EActorBaselineState","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

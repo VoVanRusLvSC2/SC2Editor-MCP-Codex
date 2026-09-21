@@ -1,0 +1,1 @@
+{"name":"CTacticalSet","kind":"complex","fields":[{"kind":"attribute","name":"index","type":"xs:integer"},{"kind":"attribute","name":"removed","type":"simple_bool"},{"kind":"element","name":"Array","minOccurs":"0","maxOccurs":"unbounded"}],"enumValues":[],"facets":[],"base":"CBase"}

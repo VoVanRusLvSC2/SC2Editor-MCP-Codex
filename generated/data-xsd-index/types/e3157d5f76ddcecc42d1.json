@@ -1,0 +1,1 @@
+{"name":"SActorTermEffectParent","kind":"complex","fields":[{"kind":"attribute","name":"ParentName","type":"simple_CEffectLink"},{"kind":"element","name":"ParentName","type":"CEffectLink","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

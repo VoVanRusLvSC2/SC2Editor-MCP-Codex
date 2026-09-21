@@ -1,0 +1,1 @@
+{"name":"simple_EEffectSearchFlag","kind":"simple","fields":[],"enumValues":["CallForHelp","CenterAtLaunch","ExtendByUnitRadius","Multishot","OffsetAreaByAngle","OffsetByUnitRadius","SameCliff"],"facets":[],"base":"xs:string"}

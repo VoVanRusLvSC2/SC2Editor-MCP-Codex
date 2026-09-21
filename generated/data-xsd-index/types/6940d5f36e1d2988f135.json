@@ -1,0 +1,1 @@
+{"name":"simple_EFoliageLayers","kind":"simple","fields":[],"enumValues":["Grass","Shrubs","Trees","agOperationClear","agOperationSet","agOperationToggle","yerDisplayAll","yerDisplayNone","yerDisplaySelected"],"facets":[],"base":"xs:string"}

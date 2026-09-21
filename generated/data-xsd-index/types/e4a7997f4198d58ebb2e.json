@@ -1,0 +1,1 @@
+{"name":"simple_EActorPropertyCurveTangentType","kind":"simple","fields":[],"enumValues":["Auto","Custom","Fast","Flat","Linear","Slow","Smooth","Step"],"facets":[],"base":"xs:string"}

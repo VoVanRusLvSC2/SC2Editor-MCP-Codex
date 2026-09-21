@@ -1,0 +1,1 @@
+{"name":"simple_ECostDisplay","kind":"simple","fields":[],"enumValues":["Custom","Energy","Life","Minerals","Shields","Terrazine","Vespene"],"facets":[],"base":"xs:string"}

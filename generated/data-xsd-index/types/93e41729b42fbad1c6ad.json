@@ -1,0 +1,1 @@
+{"name":"SActorMsgAnimClearTimeScaleGlobal","kind":"complex","fields":[{"kind":"attribute","name":"Label","type":"simple_CAnimNameKey"},{"kind":"element","name":"Label","type":"CAnimNameKey","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

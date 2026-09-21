@@ -1,0 +1,1 @@
+{"name":"SActorMsgTextureVideoSetFrame","kind":"complex","fields":[{"kind":"attribute","name":"Frame","type":"simple_uint32"},{"kind":"element","name":"Frame","type":"uint32","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

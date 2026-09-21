@@ -1,0 +1,1 @@
+{"name":"SCameraParam","kind":"complex","fields":[{"kind":"attribute","name":"Modify","type":"simple_bool"},{"kind":"attribute","name":"Value","type":"simple_real32"},{"kind":"element","name":"Modify","type":"bool","minOccurs":"0","maxOccurs":"1"},{"kind":"element","name":"Value","type":"real32","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

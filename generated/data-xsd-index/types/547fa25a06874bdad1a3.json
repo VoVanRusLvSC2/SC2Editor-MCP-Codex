@@ -1,0 +1,1 @@
+{"name":"SUserInstanceActor","kind":"complex","fields":[{"kind":"attribute","name":"Actor","type":"simple_CActorLink"},{"kind":"element","name":"Actor","type":"CActorLink","minOccurs":"0","maxOccurs":"1"},{"kind":"element","name":"Field","type":"SUserInstanceField","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

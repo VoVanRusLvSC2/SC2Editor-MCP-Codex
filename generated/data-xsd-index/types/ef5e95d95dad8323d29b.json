@@ -1,0 +1,1 @@
+{"name":"SCommanderAbil","kind":"complex","fields":[{"kind":"attribute","name":"Abil","type":"simple_CAbilLink"},{"kind":"attribute","name":"Button","type":"simple_CButtonLink"},{"kind":"element","name":"Abil","type":"CAbilLink","minOccurs":"0","maxOccurs":"1"},{"kind":"element","name":"Button","type":"CButtonLink","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

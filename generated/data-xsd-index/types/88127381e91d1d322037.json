@@ -1,0 +1,1 @@
+{"name":"simple_EEffectHistory","kind":"simple","fields":[],"enumValues":["Damage","Death","Healing","Modifier","Unknown"],"facets":[],"base":"xs:string"}

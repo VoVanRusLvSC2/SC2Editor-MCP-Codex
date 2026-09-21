@@ -1,0 +1,1 @@
+{"name":"simple_EAbilBuildStage","kind":"simple","fields":[],"enumValues":["Approach","Collide","Construct","Finish","Halt","Resume","Wait"],"facets":[],"base":"xs:string"}

@@ -1,0 +1,1 @@
+{"name":"SActorMsgModelAllowHitTest","kind":"complex","fields":[{"kind":"attribute","name":"Allow","type":"simple_bool"},{"kind":"element","name":"Allow","type":"bool","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

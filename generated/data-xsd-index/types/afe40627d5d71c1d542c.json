@@ -1,0 +1,1 @@
+{"name":"simple_EActorSelectionFilter","kind":"simple","fields":[],"enumValues":["NonTandemPlayers","Observers","TandemFollowers","TandemLeaders"],"facets":[],"base":"xs:string"}

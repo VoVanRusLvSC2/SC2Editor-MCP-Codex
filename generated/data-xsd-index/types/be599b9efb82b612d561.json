@@ -1,0 +1,1 @@
+{"name":"simple_EActorSiteOpTetherEnableType","kind":"simple","fields":[],"enumValues":["Disabled","Max","Min","MinMax"],"facets":[],"base":"xs:string"}

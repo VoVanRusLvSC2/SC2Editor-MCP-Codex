@@ -1,0 +1,15 @@
+{
+  "version": "1.1.0-alpha.14",
+  "status": "PASS",
+  "checks": [
+    "portable MCP initialize, all 144 tools and Map capabilities",
+    "MCP project status covers nine modules without engine completeness claim",
+    "portable MCP native lighting plan/stage/save/inspect",
+    "MCP joint layout/Include staged group save and backup",
+    "portable HTTP health, project coverage endpoint and GUI button asset"
+  ],
+  "windowsLauncherExecution": "NOT_EXECUTED",
+  "guiVisual": "NOT_EXECUTED",
+  "editor": "NOT_EXECUTED",
+  "runtime": "NOT_EXECUTED"
+}

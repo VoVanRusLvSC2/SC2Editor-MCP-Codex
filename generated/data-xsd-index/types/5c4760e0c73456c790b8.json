@@ -1,0 +1,1 @@
+{"name":"simple_EBehaviorHeroicState","kind":"simple","fields":[],"enumValues":["Any","Heroic","NonHeroic"],"facets":[],"base":"xs:string"}

@@ -1,0 +1,1 @@
+{"name":"simple_EBehaviorFlag","kind":"simple","fields":[],"enumValues":["Disabled","EnabledWhileDead","IgnoreInEditor","Permanent"],"facets":[],"base":"xs:string"}

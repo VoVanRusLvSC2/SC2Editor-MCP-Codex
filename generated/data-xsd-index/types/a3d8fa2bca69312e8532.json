@@ -1,0 +1,1 @@
+{"name":"simple_EActorBaselineType","kind":"simple","fields":[],"enumValues":["Stand","StateStand","StateWalk","StateWalkIntro","StateWalkMiddle","StateWalkOutro","Walk"],"facets":[],"base":"xs:string"}

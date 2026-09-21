@@ -1,0 +1,45 @@
+{
+  "version": "1.1.0-alpha.9",
+  "methodology": "One local measured run per task, excluding imports/fixture read. Baseline collected on alpha.8 in this session. Timing depends on workload, machine, JIT and load; not a production throughput guarantee.",
+  "tasks": {
+    "objects": "1000 consecutive Doodad XML adds",
+    "scatter": "5000 seeded centers, distance 1 in 200x200 area",
+    "terrain": "local radius-6 height noise + texture paint on native 137x137 vertex map"
+  },
+  "measurements": {
+    "objects": {
+      "milliseconds": 7.456314999999989,
+      "sha256": "1849a3676078fc31a69ae53522e97dcf8990e43639b75bc616bacdc4dc537427"
+    },
+    "scatter": {
+      "milliseconds": 17.740222000000017,
+      "sha256": "60ff1cfca0256dc72274b91a1d17638d4e9d5c321045ed0532ae09811e658208"
+    },
+    "terrain": {
+      "milliseconds": 41.154668000000015,
+      "sha256": "7919164a4c9d6ef6b60932326497712f2f4a52f04a938983d12fd9f103297afb",
+      "texture": "KorhalCityEx2_1"
+    }
+  },
+  "comparison": {
+    "objects": {
+      "beforeMilliseconds": 942.634423,
+      "afterMilliseconds": 7.456314999999989,
+      "speedup": 126.42094962458015,
+      "exactOutputMatch": true
+    },
+    "scatter": {
+      "beforeMilliseconds": 366.953855,
+      "afterMilliseconds": 17.740222000000017,
+      "speedup": 20.684851350789163,
+      "exactOutputMatch": true
+    },
+    "terrain": {
+      "beforeMilliseconds": 161.22018200000002,
+      "afterMilliseconds": 41.154668000000015,
+      "speedup": 3.9174215182588754,
+      "exactOutputMatch": true
+    }
+  },
+  "nativeEditorRuntime": "NOT_EXECUTED"
+}

@@ -1,0 +1,1 @@
+{"name":"simple_EActorModelAspectPerson","kind":"simple","fields":[],"enumValues":["Any","Observer","Participant","Referee","Spectator"],"facets":[],"base":"xs:string"}

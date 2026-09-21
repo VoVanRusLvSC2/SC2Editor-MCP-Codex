@@ -1,0 +1,37 @@
+{
+  "version": "1.1.0-alpha.12",
+  "modules": 9,
+  "tools": 139,
+  "tests": {
+    "pass": 220,
+    "fail": 0,
+    "skip": 0
+  },
+  "build": "PASS",
+  "lint": "PASS",
+  "nativeArchiveUserEntries": 939,
+  "portableMcpHttpSmoke": "PASS_ON_LINUX_NODE",
+  "processKillRecoveryTests": "PASS",
+  "crossProcessWriteLockTests": "PASS",
+  "windowsExecution": "NOT_EXECUTED",
+  "editor": "NOT_EXECUTED",
+  "game": "NOT_EXECUTED",
+  "scope": {
+    "guiTriggerDevelopment": false,
+    "galaxyScriptsPlanned": true,
+    "cleanMapCreation": false,
+    "fullTerrainComplete": false
+  },
+  "helpers": [
+    {
+      "path": "linux-x64/sc2-mcp-archive",
+      "sha256": "8d32b6fdfdb4519d431de5614c6defaef3c3194617f9a5f25e669a515fc472db",
+      "bytes": 648096
+    },
+    {
+      "path": "windows-x64/sc2-mcp-archive.exe",
+      "sha256": "2b61cc022e16ff7b086bc4a01421ea310b9f451ae7bb2a8337cbeb6ee64aa103",
+      "bytes": 1370624
+    }
+  ]
+}

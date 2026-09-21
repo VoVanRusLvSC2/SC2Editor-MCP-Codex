@@ -1,0 +1,1 @@
+{"name":"simple_real32","kind":"simple","fields":[],"enumValues":[],"facets":[{"kind":"pattern","value":"-?[0-9]+(\\.[0-9]*)?"}],"base":"xs:string"}

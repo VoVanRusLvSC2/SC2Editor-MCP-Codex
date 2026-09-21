@@ -1,0 +1,1 @@
+{"name":"simple_EAchievementTermEvaluate","kind":"simple","fields":[],"enumValues":["Always","Attain","Expand","Failed"],"facets":[],"base":"xs:string"}

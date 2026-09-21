@@ -1,0 +1,1 @@
+{"name":"simple_EClassIdCLoot","kind":"simple","fields":[],"enumValues":["CLoot","CLootEffect","CLootItem","CLootSet","CLootSpawn","CLootUnit"],"facets":[],"base":"xs:string"}

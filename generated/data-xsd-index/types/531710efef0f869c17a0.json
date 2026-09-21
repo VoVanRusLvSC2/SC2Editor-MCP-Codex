@@ -1,0 +1,1 @@
+{"name":"simple_EUnitEffect","kind":"simple","fields":[],"enumValues":["Birth","Create","Death","Revive"],"facets":[],"base":"xs:string"}

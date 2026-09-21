@@ -1,0 +1,385 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SC2 UI Workbench</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark">Ⅱ</div>
+      <div>
+        <strong>SC2 UI Workbench</strong>
+        <span>semantic layout editor</span>
+      </div>
+    </div>
+    <div class="workspace-meta">
+      <span class="status-dot"></span>
+      <span id="workspacePath">Connecting…</span>
+      <span id="coverageBadge" class="badge">schema</span>
+      <span id="runtimeBadge" class="badge warning">runtime: checking</span>
+    </div>
+    <div class="toolbar">
+      <button id="uiModeButton" class="button mode-button active">UI Editor</button>
+      <button id="browseModeButton" class="button mode-button">Browse / Placement</button>
+      <button id="terrainModeButton" class="button mode-button">Terrain</button>
+      <button id="aiModeButton" class="button mode-button">A.I. Module</button>
+      <button id="projectStatusButton" class="button">Project coverage</button>
+      <button id="validateButton" class="button">Validate</button>
+      <button id="diffButton" class="button">Review diff</button>
+      <button id="discardButton" class="button danger">Discard</button>
+      <button id="saveButton" class="button primary">Save + backup</button>
+    </div>
+  </header>
+
+  <main id="uiWorkspace" class="workspace">
+    <aside class="panel files-panel">
+      <div class="panel-heading">
+        <div>
+          <span class="eyebrow">Workspace</span>
+          <h2>Layout files</h2>
+        </div>
+        <button id="refreshButton" class="icon-button" title="Refresh">↻</button>
+      </div>
+      <label class="search">
+        <span>⌕</span>
+        <input id="fileSearch" type="search" placeholder="Filter files">
+      </label>
+      <div id="fileList" class="file-list empty-state">Loading files…</div>
+      <div class="create-file">
+        <h3>New layout</h3>
+        <input id="newFilePath" value="UI/Layout/NewPanel.SC2Layout" aria-label="New file path">
+        <input id="includeFilePath" value="UI/Layout/DescIndex.SC2Layout" aria-label="Include in file">
+        <button id="createFileButton" class="button full">Create staged file + Include</button>
+      </div>
+      <div class="container-picker">
+        <h3>Attach UI container</h3>
+        <input id="containerPath" value="GameUI/UIContainer" list="uiContainers" aria-label="SC2 descriptor path">
+        <datalist id="uiContainers"></datalist>
+        <div class="form-grid two">
+          <input id="containerFile" value="GameUI" aria-label="SC2 descriptor file">
+          <button id="attachContainerButton" class="button" disabled>Attach</button>
+        </div>
+        <span class="muted">Presets or any custom descriptor path</span>
+      </div>
+    </aside>
+
+    <section class="panel frames-panel">
+      <div class="panel-heading frames-heading">
+        <div>
+          <span class="eyebrow">Document</span>
+          <h2 id="currentFile">Select a layout</h2>
+        </div>
+        <span id="draftBadge" class="badge hidden">staged</span>
+      </div>
+      <div class="tabbar" role="tablist">
+        <button class="tab active" data-view="frames">Frames</button>
+        <button class="tab" data-view="source">XML source</button>
+      </div>
+      <label class="search frame-search">
+        <span>⌕</span>
+        <input id="frameSearch" type="search" placeholder="Filter by name, type or path">
+      </label>
+      <div id="framesView" class="view active">
+        <div id="frameList" class="frame-list empty-state">Choose a file on the left.</div>
+      </div>
+      <div id="sourceView" class="view">
+        <pre id="sourceCode" class="code"></pre>
+      </div>
+    </section>
+
+    <aside class="panel inspector-panel">
+      <div class="panel-heading">
+        <div>
+          <span class="eyebrow">Inspector</span>
+          <h2 id="selectedFrameName">No frame selected</h2>
+        </div>
+        <span id="selectedFrameType" class="type-pill">—</span>
+      </div>
+
+      <div id="runtimeNotice" class="notice hidden"></div>
+      <div id="frameSummary" class="summary empty-state">Select a frame to inspect its schema and edit it.</div>
+
+      <section class="editor-section">
+        <div class="section-title">
+          <h3>Set property</h3>
+          <span id="propertyType" class="muted"></span>
+        </div>
+        <select id="propertyName" disabled></select>
+        <div id="scalarPropertyEditor">
+          <input id="propertyValue" placeholder="Value" disabled>
+          <button id="setPropertyButton" class="button full" disabled>Stage scalar property</button>
+        </div>
+        <div id="compoundPropertyEditor" class="hidden">
+          <div class="form-grid two">
+            <input id="propertyIndex" placeholder="table index">
+            <input id="propertyLayer" placeholder="layer">
+          </div>
+          <label class="field-label" for="propertyAttrs">Attributes (JSON object)</label>
+          <textarea id="propertyAttrs" class="json-input" rows="3">{}</textarea>
+          <label class="field-label" for="propertyChildren">Children (ElementSpec[])</label>
+          <textarea id="propertyChildren" class="json-input" rows="3">[]</textarea>
+          <button id="setCompoundPropertyButton" class="button full">Stage compound/table property</button>
+        </div>
+      </section>
+
+      <section class="editor-section">
+        <h3>Set anchor</h3>
+        <div class="form-grid two">
+          <select id="anchorSide" disabled>
+            <option>Top</option><option>Left</option><option>Right</option><option>Bottom</option><option>All</option>
+          </select>
+          <select id="anchorPos" disabled>
+            <option>Min</option><option>Mid</option><option>Max</option>
+          </select>
+        </div>
+        <div class="form-grid two">
+          <input id="anchorRelative" value="$parent" disabled>
+          <input id="anchorOffset" type="number" value="0" disabled>
+        </div>
+        <button id="setAnchorButton" class="button full" disabled>Stage anchor</button>
+      </section>
+
+      <section class="editor-section">
+        <h3>Create child frame</h3>
+        <div class="form-grid two">
+          <input id="childName" placeholder="Frame name" disabled>
+          <input id="childType" value="Frame" placeholder="Frame type" list="frameTypes" disabled>
+          <datalist id="frameTypes"></datalist>
+        </div>
+        <input id="childTemplate" placeholder="Recommended/default template" list="childTemplates" disabled>
+        <datalist id="childTemplates"></datalist>
+        <button id="createChildButton" class="button full" disabled>Create staged child</button>
+      </section>
+
+      <section class="editor-section builder-section">
+        <div class="section-title">
+          <h3>StateGroup builder</h3>
+          <span id="stateCount" class="muted">0 states</span>
+        </div>
+        <div class="form-grid two">
+          <input id="stateGroupName" value="EnabledState" placeholder="Group name" disabled>
+          <input id="stateDefault" value="Enabled" placeholder="Default state" disabled>
+        </div>
+        <input id="stateName" value="Enabled" placeholder="State name" disabled>
+        <div class="form-grid two">
+          <select id="stateWhenType" disabled></select>
+          <input id="stateWhenFrame" value="$this" placeholder="When frame" disabled>
+        </div>
+        <label class="field-label" for="stateWhenAttrs">When attributes</label>
+        <textarea id="stateWhenAttrs" class="json-input" rows="2" disabled>{}</textarea>
+        <div class="form-grid two">
+          <select id="stateActionType" disabled></select>
+          <input id="stateActionFrame" value="$this" placeholder="Action frame" disabled>
+        </div>
+        <label class="field-label" for="stateActionAttrs">Action attributes</label>
+        <textarea id="stateActionAttrs" class="json-input" rows="2" disabled>{"Enabled":true}</textarea>
+        <div class="form-grid two">
+          <button id="addStateButton" class="button" disabled>Add state</button>
+          <button id="clearStatesButton" class="button" disabled>Clear</button>
+        </div>
+        <div id="stateDraftList" class="draft-list muted">No states added.</div>
+        <button id="stageStateGroupButton" class="button full" disabled>Stage StateGroup</button>
+      </section>
+
+      <section class="editor-section builder-section">
+        <div class="section-title">
+          <h3>Animation builder</h3>
+          <span id="controllerCount" class="muted">0 controllers</span>
+        </div>
+        <div class="form-grid two">
+          <input id="animationName" value="Show" placeholder="Animation name" disabled>
+          <input id="animationSpeed" type="number" step="0.1" value="1" placeholder="Speed" disabled>
+        </div>
+        <label class="check-field"><input id="animationOnShown" type="checkbox" checked disabled> Reset + play on OnShown</label>
+        <select id="controllerType" disabled></select>
+        <div class="form-grid two">
+          <input id="controllerFrame" value="$this" placeholder="Controller frame" disabled>
+          <input id="controllerDuration" type="number" step="0.01" value="0.25" placeholder="Duration" disabled>
+        </div>
+        <div class="form-grid two">
+          <input id="controllerFrom" value="0" placeholder="From value" disabled>
+          <input id="controllerTo" value="255" placeholder="To value" disabled>
+        </div>
+        <div class="form-grid two">
+          <input id="controllerEnd" value="Pause" placeholder="End: Pause/Loop/PingPong" disabled>
+          <span class="muted inline-help">Fade alpha uses 0…255</span>
+        </div>
+        <label class="field-label" for="controllerAttrs">Controller attributes</label>
+        <textarea id="controllerAttrs" class="json-input" rows="2" disabled>{}</textarea>
+        <div class="form-grid two">
+          <button id="addControllerButton" class="button" disabled>Add controller</button>
+          <button id="clearControllersButton" class="button" disabled>Clear</button>
+        </div>
+        <div id="controllerDraftList" class="draft-list muted">No controllers added.</div>
+        <button id="stageAnimationButton" class="button full" disabled>Stage animation</button>
+      </section>
+    </aside>
+  </main>
+
+  <main id="aiWorkspace" class="authoring-workspace hidden">
+    <section class="panel browse-panel">
+      <div class="panel-heading"><div><span class="eyebrow">Native CustomAI</span><h2>A.I. Module</h2></div></div>
+      <div class="compact-form">
+        <label class="field-label" for="aiFile">Component path</label><input id="aiFile" value="CustomAI">
+        <label class="field-label" for="aiSearch">Definition / wave filter</label><input id="aiSearch" type="search" placeholder="Personality or wave ID">
+        <button id="aiRefreshButton" class="button full">Load definitions and waves</button>
+        <div id="aiResults" class="browse-results empty-state">Load native CustomAI metadata.</div>
+        <button id="aiSchemaButton" class="button full">Schema + evidence</button>
+        <button id="aiValidateButton" class="button full">Validate L1–L4</button>
+      </div>
+    </section>
+    <section class="panel placement-panel">
+      <div class="panel-heading"><div><span class="eyebrow">Lossless batch editor</span><h2>Definitions / waves</h2></div></div>
+      <div class="notice">Trigger references are read-only. Trigger Editor and Terrain are not included. Populated wave/composition serialization is unconfirmed; Editor/game validation has not run.</div>
+      <div class="compact-form">
+        <label class="field-label" for="aiDefinitionId">Definition ID</label><input id="aiDefinitionId" placeholder="EnemyAI">
+        <button id="aiDefinitionButton" class="button full">Prepare definition.create</button>
+        <label class="field-label" for="aiOperations">AiOperation[] — up to 250 operations</label>
+        <textarea id="aiOperations" class="json-input" rows="12">[]</textarea>
+        <label class="check-field"><input id="aiDryRun" type="checkbox" checked> Dry-run (no disk or draft changes)</label>
+        <div class="form-grid two">
+          <button id="aiPreviewButton" class="button">Preview + diff</button>
+          <button id="aiApplyButton" class="button primary" disabled>Apply reviewed batch + backup</button>
+        </div>
+      </div>
+      <pre id="aiOutput" class="code">No AI preview yet.</pre>
+    </section>
+  </main>
+
+  <main id="browsePlacementWorkspace" class="authoring-workspace hidden">
+    <section class="panel browse-panel">
+      <div class="panel-heading"><div><span class="eyebrow">Browse</span><h2>SC2 objects and assets</h2></div></div>
+      <label class="search"><span>⌕</span><input id="assetSearch" type="search" placeholder="Marine, tree, rock, model path…"></label>
+      <div class="form-grid three compact-form">
+        <input id="browseCatalogType" placeholder="Catalog type">
+        <input id="browseDependency" placeholder="Dependency">
+        <label class="check-field"><input id="browsePlaceable" type="checkbox"> Placeable only</label>
+      </div>
+      <button id="browseSearchButton" class="button primary full">Search indexed objects</button>
+      <div id="browseResults" class="browse-results empty-state">Enter a name, ID or asset path.</div>
+    </section>
+
+    <section class="panel browse-detail-panel">
+      <div class="panel-heading"><div><span class="eyebrow">Evidence</span><h2 id="browseSelectedName">No object selected</h2></div></div>
+      <pre id="browseDetails" class="code browse-code">Select a search result to inspect source, dependency, Actor/Model links and asset paths.</pre>
+      <p class="muted">Metadata only: no 3D asset preview. Catalog references do not prove that the physical model is installed.</p>
+    </section>
+
+    <aside class="panel placement-panel">
+      <div class="panel-heading"><div><span class="eyebrow">Placement</span><h2>Plan and apply</h2></div><span id="placementPlanBadge" class="badge">no plan</span></div>
+      <section class="editor-section">
+        <h3>Selected object</h3>
+        <input id="placementSelectedKey" placeholder="Select a browse result" readonly>
+        <input id="placementObjectFile" value="Objects" aria-label="Objects component">
+        <div class="form-grid three">
+          <input id="placementX" type="number" step="0.1" value="32" placeholder="X">
+          <input id="placementY" type="number" step="0.1" value="32" placeholder="Y">
+          <input id="placementZ" type="number" step="0.1" value="0" placeholder="Z">
+        </div>
+        <div class="form-grid three">
+          <input id="placementRotation" type="number" step="0.1" value="0" placeholder="Rotation">
+          <input id="placementScale" type="number" step="0.05" value="1" placeholder="Scale">
+          <input id="placementOwner" type="number" min="0" max="15" value="0" placeholder="Owner">
+        </div>
+        <div class="form-grid three">
+          <input id="placementCount" type="number" min="1" max="5000" value="1" placeholder="Count">
+          <select id="placementLayout"><option>single</option><option>line</option><option>grid</option><option>circle</option><option>scatter</option></select>
+          <input id="placementSeed" type="number" value="1" placeholder="Seed">
+        </div>
+        <div class="form-grid two">
+          <button id="planUnitButton" class="button">Plan Unit</button>
+          <button id="planDoodadButton" class="button">Plan Doodad</button>
+        </div>
+      </section>
+      <section class="editor-section location-builder">
+        <h3>Create whole location</h3>
+        <select id="locationType"><option>forest</option><option>desert</option><option>city</option><option>village</option><option>industrial</option><option>militaryBase</option><option>ruins</option><option>swamp</option><option>cave</option><option>alien</option><option>terran</option><option>protoss</option><option>zerg</option><option>mixedNature</option><option>custom</option></select>
+        <input id="locationQueries" placeholder="Optional custom search terms, comma-separated">
+        <div class="form-grid three">
+          <input id="locationRadius" type="number" min="1" value="20" placeholder="Radius">
+          <input id="locationCount" type="number" min="1" max="5000" value="30" placeholder="Objects">
+          <input id="locationDistance" type="number" min="0" step="0.1" value="1.5" placeholder="Min distance">
+        </div>
+        <button id="createLocationButton" class="button primary full">Generate location preview</button>
+      </section>
+      <section class="editor-section">
+        <h3>Transaction</h3>
+        <label class="check-field"><input id="placementDryRun" type="checkbox" checked> Dry-run: do not write files</label>
+        <div class="form-grid two">
+          <button id="refreshPlacementPreviewButton" class="button">Refresh preview</button>
+          <button id="applyPlacementButton" class="button primary">Apply + backup</button>
+        </div>
+        <pre id="placementPreview" class="draft-list placement-preview">No placement plan.</pre>
+      </section>
+    </aside>
+  </main>
+
+  <main id="terrainWorkspace" class="terrain-workspace hidden">
+    <aside class="panel terrain-controls">
+      <div class="panel-heading"><h2>Terrain</h2></div>
+      <div class="compact-form">
+        <label>Map component directory<input id="terrainDirectory" placeholder="Current workspace"></label>
+        <button id="terrainInspectButton" class="button full">Inspect map</button>
+        <h3>Selected area</h3>
+        <div class="form-grid two">
+          <label>Min X<input id="terrainMinX" type="number" value="4"></label><label>Min Y<input id="terrainMinY" type="number" value="4"></label>
+          <label>Max X<input id="terrainMaxX" type="number" value="28"></label><label>Max Y<input id="terrainMaxY" type="number" value="28"></label>
+        </div>
+        <label>Action<select id="terrainAction"><option value="lighting.assign">Assign lighting</option><option value="generate">Generate style</option><option value="height.raise">Raise</option><option value="height.lower">Lower</option><option value="height.flatten">Flatten</option><option value="height.smooth">Smooth</option><option value="texture.paint">Paint texture</option><option value="water.create">Add water</option><option value="water.update">Move / change water</option><option value="water.remove">Remove water</option><option value="water.material">Water material settings</option></select></label>
+        <div id="terrainWaterControls" class="hidden">
+          <label>Water material ID<input id="terrainWaterTemplate" list="terrainWaterNames" placeholder="Existing material or new ID"></label>
+          <datalist id="terrainWaterNames"></datalist>
+          <label>Parent for a new material<input id="terrainWaterParent" list="terrainWaterNames" placeholder="Leave empty to use an existing material"></label>
+          <div class="form-grid two"><label>Water index<input id="terrainWaterIndex" type="number" min="0" step="1" value="0"></label><label>Water height<input id="terrainWaterHeight" type="number" min="-256" max="256" step="0.1" value="6"></label></div>
+          <label>RGBA color<input id="terrainWaterColor" value="0.1,0.3,0.5,0.4"></label>
+          <label class="check-field"><input id="terrainWaterLava" type="checkbox"> Lava</label>
+          <button id="terrainWaterAlign" type="button" class="button full">Align area inward to 8 cells</button>
+          <p class="muted">Water edges use multiples of 8. New materials inherit their parent. Material settings affect all water using that ID.</p>
+        </div>
+        <label>Lighting preset ID<input id="terrainLighting" placeholder="Resolved CLight ID; optional for generation"></label>
+        <label>Style<select id="terrainStyle"><option>forest</option><option>desert</option><option>city</option><option>snow</option><option>jungle</option><option>swamp</option><option>volcanic</option><option>badlands</option><option>coastal</option><option>space_platform</option></select></label>
+        <label>Texture from map palette<select id="terrainTexture"><option value="">Automatic style match</option></select></label>
+        <div class="form-grid two"><label>Height change<input id="terrainAmount" type="number" step="0.1" value="0.5"></label><label>Seed<input id="terrainSeed" type="number" value="42"></label></div>
+        <label>Blend edges<input id="terrainEdge" type="number" min="0" step="0.5" value="3"></label>
+        <button id="terrainPlanButton" class="button primary full">Create plan + preview</button>
+        <p class="muted">Cliff boundaries, ramps and holes are protected. Liquid uses existing map templates.</p>
+        <h3>Doodads on selected area</h3>
+        <label>Doodad IDs, comma separated<input id="terrainDoodadIds" placeholder="Choose real IDs from Browse"></label>
+        <div class="form-grid two"><label>Count<input id="terrainDoodadCount" type="number" min="1" max="5000" value="30"></label><label>Minimum distance<input id="terrainDoodadDistance" type="number" min="0" step="0.5" value="2"></label></div>
+        <label>Maximum slope<input id="terrainDoodadSlope" type="number" min="0" step="0.1" value="0.5"></label>
+        <button id="terrainDoodadPlanButton" class="button full">Plan Doodads on ground</button>
+        <button id="terrainDoodadApplyButton" class="button primary full" disabled>Apply Doodads + backup</button>
+        <p class="muted">Uses this area and seed. Avoids water, protected terrain and existing object centers.</p>
+      </div>
+    </aside>
+    <section class="panel terrain-view">
+      <div class="panel-heading"><h2>Map preview</h2><select id="terrainPreviewMode" aria-label="Preview layer"><option value="height">Height</option><option value="texture">Texture layers</option><option value="water">Water</option><option value="cliff">Cliff levels</option></select></div>
+      <div class="terrain-image-wrap"><img id="terrainPreviewImage" class="hidden" alt="Terrain preview, north up"></div>
+      <span class="muted">Diagnostic preview. SC2 materials and models are visible in the game editor.</span>
+    </section>
+    <aside class="panel terrain-review">
+      <div class="panel-heading"><h2>Review changes</h2></div>
+      <pre id="terrainOutput" class="output">Inspect a map or create a terrain plan.</pre>
+      <div class="compact-form"><button id="terrainStageButton" class="button full" disabled>Stage reviewed plan</button><button id="terrainSaveButton" class="button primary full" disabled>Save all + backup</button><button id="terrainRollbackButton" class="button danger full" disabled>Discard staged changes</button></div>
+    </aside>
+  </main>
+
+  <section class="bottom-panel">
+    <div class="bottom-heading">
+      <div class="tabbar compact">
+        <button class="output-tab active" data-output="activity">Activity</button>
+        <button class="output-tab" data-output="validation">Validation</button>
+        <button class="output-tab" data-output="diff">Diff</button>
+      </div>
+      <button id="clearOutputButton" class="text-button">Clear</button>
+    </div>
+    <pre id="output" class="output">SC2 UI Workbench is ready.</pre>
+  </section>
+
+  <div id="toast" class="toast hidden"></div>
+  <script type="module" src="/app.js"></script>
+</body>
+</html>

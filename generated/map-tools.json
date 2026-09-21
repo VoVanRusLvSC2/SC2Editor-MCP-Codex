@@ -1,0 +1,4411 @@
+{
+  "version": "1.1.0-alpha.18",
+  "tools": {
+    "map.blueprint.inspect": {
+      "description": "Check an existing native map as a template: hash the full manifest and archive metadata, report inherited objects/scripts and known foundation defects. Does not certify cleanliness or engine acceptance.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "directory": {
+            "default": "",
+            "type": "string"
+          }
+        },
+        "required": [
+          "directory"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "map.blueprint.list": {
+      "description": "List locally registered native templates and their pinned content hashes. Registry summaries are reverified when creating a map.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      }
+    },
+    "map.blueprint.register": {
+      "description": "Register a valid existing component directory as a content-pinned map template. All scenario content is inherited; no automatic stripping. dryRun defaults true.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_-]{1,64}$"
+          },
+          "directory": {
+            "default": "",
+            "type": "string"
+          },
+          "dryRun": {
+            "default": true,
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "id",
+          "directory",
+          "dryRun"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "map.create": {
+      "description": "Create a new map component directory from a registered native template, optionally generate landscape, apply terrain operations and MapInfo patches before publication. dryRun performs the real transforms privately. Preserves objects/scripts/unknown files; no resize or arbitrary from-scratch guarantee. During creation use existing palette/local catalog dependencies; external asset additions use the normal modules after creation.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "blueprintId": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_-]{1,64}$"
+          },
+          "destinationDirectory": {
+            "type": "string",
+            "minLength": 1
+          },
+          "dryRun": {
+            "default": true,
+            "type": "boolean"
+          },
+          "expectedBlueprintSha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "metadataPatch": {
+            "type": "object",
+            "properties": {
+              "playableBounds": {
+                "type": "object",
+                "properties": {
+                  "left": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 256
+                  },
+                  "bottom": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 256
+                  },
+                  "right": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 256
+                  },
+                  "top": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 256
+                  }
+                },
+                "required": [
+                  "left",
+                  "bottom",
+                  "right",
+                  "top"
+                ],
+                "additionalProperties": false
+              },
+              "fogMaskStyle": {
+                "type": "string",
+                "enum": [
+                  "None",
+                  "Dark",
+                  "Black",
+                  "BlackNoUnhide"
+                ]
+              },
+              "minimapResolution": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 4
+              }
+            },
+            "additionalProperties": false
+          },
+          "landscape": {
+            "type": "object",
+            "properties": {
+              "style": {
+                "type": "string",
+                "enum": [
+                  "forest",
+                  "desert",
+                  "city",
+                  "snow",
+                  "jungle",
+                  "swamp",
+                  "volcanic",
+                  "badlands",
+                  "coastal",
+                  "space_platform"
+                ]
+              },
+              "seed": {
+                "default": 1,
+                "type": "integer",
+                "minimum": -9007199254740991,
+                "maximum": 9007199254740991
+              },
+              "relief": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 128
+              },
+              "wavelength": {
+                "type": "number",
+                "exclusiveMinimum": 0
+              },
+              "edgeBlend": {
+                "type": "number",
+                "minimum": 0
+              },
+              "materials": {
+                "type": "object",
+                "properties": {
+                  "base": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "rock": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "additionalProperties": false
+              },
+              "protectedAreas": {
+                "maxItems": 50,
+                "type": "array",
+                "items": {
+                  "oneOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "const": "rectangle"
+                        },
+                        "minX": {
+                          "type": "number"
+                        },
+                        "minY": {
+                          "type": "number"
+                        },
+                        "maxX": {
+                          "type": "number"
+                        },
+                        "maxY": {
+                          "type": "number"
+                        }
+                      },
+                      "required": [
+                        "type",
+                        "minX",
+                        "minY",
+                        "maxX",
+                        "maxY"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "const": "circle"
+                        },
+                        "center": {
+                          "type": "object",
+                          "properties": {
+                            "x": {
+                              "type": "number"
+                            },
+                            "y": {
+                              "type": "number"
+                            }
+                          },
+                          "required": [
+                            "x",
+                            "y"
+                          ],
+                          "additionalProperties": false
+                        },
+                        "radius": {
+                          "type": "number",
+                          "exclusiveMinimum": 0
+                        }
+                      },
+                      "required": [
+                        "type",
+                        "center",
+                        "radius"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "const": "polygon"
+                        },
+                        "points": {
+                          "minItems": 3,
+                          "maxItems": 100,
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "x": {
+                                "type": "number"
+                              },
+                              "y": {
+                                "type": "number"
+                              }
+                            },
+                            "required": [
+                              "x",
+                              "y"
+                            ],
+                            "additionalProperties": false
+                          }
+                        }
+                      },
+                      "required": [
+                        "type",
+                        "points"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "const": "corridor"
+                        },
+                        "points": {
+                          "minItems": 2,
+                          "maxItems": 100,
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "x": {
+                                "type": "number"
+                              },
+                              "y": {
+                                "type": "number"
+                              }
+                            },
+                            "required": [
+                              "x",
+                              "y"
+                            ],
+                            "additionalProperties": false
+                          }
+                        },
+                        "width": {
+                          "type": "number",
+                          "exclusiveMinimum": 0
+                        }
+                      },
+                      "required": [
+                        "type",
+                        "points",
+                        "width"
+                      ],
+                      "additionalProperties": false
+                    }
+                  ]
+                }
+              },
+              "area": {
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "const": "rectangle"
+                      },
+                      "minX": {
+                        "type": "number"
+                      },
+                      "minY": {
+                        "type": "number"
+                      },
+                      "maxX": {
+                        "type": "number"
+                      },
+                      "maxY": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "type",
+                      "minX",
+                      "minY",
+                      "maxX",
+                      "maxY"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "const": "circle"
+                      },
+                      "center": {
+                        "type": "object",
+                        "properties": {
+                          "x": {
+                            "type": "number"
+                          },
+                          "y": {
+                            "type": "number"
+                          }
+                        },
+                        "required": [
+                          "x",
+                          "y"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "radius": {
+                        "type": "number",
+                        "exclusiveMinimum": 0
+                      }
+                    },
+                    "required": [
+                      "type",
+                      "center",
+                      "radius"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "const": "polygon"
+                      },
+                      "points": {
+                        "minItems": 3,
+                        "maxItems": 100,
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "x": {
+                              "type": "number"
+                            },
+                            "y": {
+                              "type": "number"
+                            }
+                          },
+                          "required": [
+                            "x",
+                            "y"
+                          ],
+                          "additionalProperties": false
+                        }
+                      }
+                    },
+                    "required": [
+                      "type",
+                      "points"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "const": "corridor"
+                      },
+                      "points": {
+                        "minItems": 2,
+                        "maxItems": 100,
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "x": {
+                              "type": "number"
+                            },
+                            "y": {
+                              "type": "number"
+                            }
+                          },
+                          "required": [
+                            "x",
+                            "y"
+                          ],
+                          "additionalProperties": false
+                        }
+                      },
+                      "width": {
+                        "type": "number",
+                        "exclusiveMinimum": 0
+                      }
+                    },
+                    "required": [
+                      "type",
+                      "points",
+                      "width"
+                    ],
+                    "additionalProperties": false
+                  }
+                ]
+              }
+            },
+            "required": [
+              "style",
+              "seed"
+            ],
+            "additionalProperties": false
+          },
+          "terrainOperations": {
+            "minItems": 1,
+            "maxItems": 100,
+            "type": "array",
+            "items": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "op": {
+                      "type": "string",
+                      "enum": [
+                        "height.raise",
+                        "height.lower"
+                      ]
+                    },
+                    "area": {
+                      "oneOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "const": "rectangle"
+                            },
+                            "minX": {
+                              "type": "number"
+                            },
+                            "minY": {
+                              "type": "number"
+                            },
+                            "maxX": {
+                              "type": "number"
+                            },
+                            "maxY": {
+                              "type": "number"
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "minX",
+                            "minY",
+                            "maxX",
+                            "maxY"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "const": "circle"
+                            },
+                            "center": {
+                              "type": "object",
+                              "properties": {
+                                "x": {
+                                  "type": "number"
+                                },
+                                "y": {
+                                  "type": "number"
+                                }
+                              },
+                              "required": [
+                                "x",
+                                "y"
+                              ],
+                              "additionalProperties": false
+                            },
+                            "radius": {
+                              "type": "number",
+                              "exclusiveMinimum": 0
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "center",
+                            "radius"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "const": "polygon"
+                            },
+                            "points": {
+                              "minItems": 3,
+                              "maxItems": 100,
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "x": {
+                                    "type": "number"
+                                  },
+                                  "y": {
+                                    "type": "number"
+                                  }
+                                },
+                                "required": [
+                                  "x",
+                                  "y"
+                                ],
+                                "additionalProperties": false
+                              }
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "points"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "const": "corridor"
+                            },
+                            "points": {
+                              "minItems": 2,
+                              "maxItems": 100,
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "x": {
+                                    "type": "number"
+                                  },
+                                  "y": {
+                                    "type": "number"
+                                  }
+                                },
+                                "required": [
+                                  "x",
+                                  "y"
+                                ],
+                                "additionalProperties": false
+                              }
+                            },
+                            "width": {
+                              "type": "number",
+                              "exclusiveMinimum": 0
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "points",
+                            "width"
+                          ],
+                          "additionalProperties": false
+                        }
+                      ]
+                    },
+                    "strength": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 1
+                    },
+                    "edgeBlend": {
+                      "type": "number",
+                      "minimum": 0
+                    },
+                    "protectedAreas": {
+                      "maxItems": 50,
+                      "type": "array",
+                      "items": {
+                        "oneOf": [
+                          {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "const": "rectangle"
+                              },
+                              "minX": {
+                                "type": "number"
+                              },
+                              "minY": {
+                                "type": "number"
+                              },
+                              "maxX": {
+                                "type": "number"
+                              },
+                              "maxY": {
+                                "type": "number"
+                              }
+                            },
+                            "required": [
+                              "type",
+                              "minX",
+                              "minY",
+                              "maxX",
+                              "maxY"
+                            ],
+                            "additionalProperties": false
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "const": "circle"
+                              },
+                              "center": {
+                                "type": "object",
+                                "properties": {
+                                  "x": {
+                                    "type": "number"
+                                  },
+                                  "y": {
+                                    "type": "number"
+                                  }
+                                },
+                                "required": [
+                                  "x",
+                                  "y"
+                                ],
+                                "additionalProperties": false
+                              },
+                              "radius": {
+                                "type": "number",
+                                "exclusiveMinimum": 0
+                              }
+                            },
+                            "required": [
+                              "type",
+                              "center",
+                              "radius"
+                            ],
+                            "additionalProperties": false
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "const": "polygon"
+                              },
+                              "points": {
+                                "minItems": 3,
+                                "maxItems": 100,
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "x": {
+                                      "type": "number"
+                                    },
+                                    "y": {
+                                      "type": "number"
+                                    }
+                                  },
+                                  "required": [
+                                    "x",
+                                    "y"
+                                  ],
+                                  "additionalProperties": false
+                                }
+                              }
+                            },
+                            "required": [
+                              "type",
+                              "points"
+                            ],
+                            "additionalProperties": false
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "const": "corridor"
+                              },
+                              "points": {
+                                "minItems": 2,
+                                "maxItems": 100,
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "x": {
+                                      "type": "number"
+                                    },
+                                    "y": {
+                                      "type": "number"
+                                    }
+                                  },
+                                  "required": [
+                                    "x",
+                                    "y"
+                                  ],
+                                  "additionalProperties": false
+                                }
+                              },
+                              "width": {
+                                "type": "number",
+                                "exclusiveMinimum": 0
+                              }
+                            },
+                            "required": [
+                              "type",
+                              "points",
+                              "width"
+                            ],
+                            "additionalProperties": false
+                          }
+                        ]
+                      }
+                    },
+                    "amount": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 128
+                    }
+                  },
+                  "required": [
+                    "op",
+                    "area",
+                    "amount"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "op": {
+                      "type": "string",
+                      "enum": [
+                        "height.set",
+                        "height.flatten"
+                      ]
+                    },
+                    "area": {
+                      "oneOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "const": "rectangle"
+                            },
+                            "minX": {
+                              "type": "number"
+                            },
+                            "minY": {
+                              "type": "number"
+                            },
+                            "maxX": {
+                              "type": "number"
+                            },
+                            "maxY": {
+                              "type": "number"
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "minX",
+                            "minY",
+                            "maxX",
+                            "maxY"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "const": "circle"
+                            },
+                            "center": {
+                              "type": "object",
+                              "properties": {
+                                "x": {
+                                  "type": "number"
+                                },
+                                "y": {
+                                  "type": "number"
+                                }
+                              },
+                              "required": [
+                                "x",
+                                "y"
+                              ],
+                              "additionalProperties": false
+                            },
+                            "radius": {
+                              "type": "number",
+                              "exclusiveMinimum": 0
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "center",
+                            "radius"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "const": "polygon"
+                            },
+                            "points": {
+                              "minItems": 3,
+                              "maxItems": 100,
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "x": {
+                                    "type": "number"
+                                  },
+                                  "y": {
+                                    "type": "number"
+                                  }
+                                },
+                                "required": [
+                                  "x",
+                                  "y"
+                                ],
+                                "additionalProperties": false
+                              }
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "points"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "const": "corridor"
+                            },
+                            "points": {
+                              "minItems": 2,
+                              "maxItems": 100,
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "x": {
+                                    "type": "number"
+                                  },
+                                  "y": {
+                                    "type": "number"
+                                  }
+                                },
+                                "required": [
+                                  "x",
+                                  "y"
+                                ],
+                                "additionalProperties": false
+                              }
+                            },
+                            "width": {
+                              "type": "number",
+                              "exclusiveMinimum": 0
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "points",
+                            "width"
+                          ],
+                          "additionalProperties": false
+                        }
+                      ]
+                    },
+                    "strength": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 1
+                    },
+                    "edgeBlend": {
+                      "type": "number",
+                      "minimum": 0
+                    },
+                    "protectedAreas": {
+                      "maxItems": 50,
+                      "type": "array",
+                      "items": {
+                        "oneOf": [
+                          {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "const": "rectangle"
+                              },
+                              "minX": {
+                                "type": "number"
+                              },
+                              "minY": {
+                                "type": "number"
+                              },
+                              "maxX": {
+                                "type": "number"
+                              },
+                              "maxY": {
+                                "type": "number"
+                              }
+                            },
+                            "required": [
+                              "type",
+                              "minX",
+                              "minY",
+                              "maxX",
+                              "maxY"
+                            ],
+                            "additionalProperties": false
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "const": "circle"
+                              },
+                              "center": {
+                                "type": "object",
+                                "properties": {
+                                  "x": {
+                                    "type": "number"
+                                  },
+                                  "y": {
+                                    "type": "number"
+                                  }
+                                },
+                                "required": [
+                                  "x",
+                                  "y"
+                                ],
+                                "additionalProperties": false
+                              },
+                              "radius": {
+                                "type": "number",
+                                "exclusiveMinimum": 0
+                              }
+                            },
+                            "required": [
+                              "type",
+                              "center",
+                              "radius"
+                            ],
+                            "additionalProperties": false
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "const": "polygon"
+                              },
+                              "points": {
+                                "minItems": 3,
+                                "maxItems": 100,
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "x": {
+                                      "type": "number"
+                                    },
+                                    "y": {
+                                      "type": "number"
+                                    }
+                                  },
+                                  "required": [
+                                    "x",
+                                    "y"
+                                  ],
+                                  "additionalProperties": false
+                                }
+                              }
+                            },
+                            "required": [
+                              "type",
+                              "points"
+                            ],
+                            "additionalProperties": false
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "const": "corridor"
+                              },
+                              "points": {
+                                "minItems": 2,
+                                "maxItems": 100,
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "x": {
+                                      "type": "number"
+                                    },
+                                    "y": {
+                                      "type": "number"
+                                    }
+                                  },
+                                  "required": [
+                                    "x",
+                                    "y"
+                                  ],
+                                  "additionalProperties": false
+                                }
+                              },
+                              "width": {
+                                "type": "number",
+                                "exclusiveMinimum": 0
+                              }
+                            },
+                            "required": [
+                              "type",
+                              "points",
+                              "width"
+                            ],
+                            "additionalProperties": false
+                          }
+                        ]
+                      }
+                    },
+                    "height": {
+                      "anyOf": [
+                        {
+                          "type": "number"
+                        },
+                        {
+                          "type": "string",
+                          "const": "currentMedian"
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "op",
+                    "area",
+                    "height"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "op": {
+                      "type": "string",
+                      "const": "height.smooth"
+                    },
+                    "area": {
+                      "oneOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "const": "rectangle"
+                            },
+                            "minX": {
+                              "type": "number"
+                            },
+                            "minY": {
+                              "type": "number"
+                            },
+                            "maxX": {
+                              "type": "number"
+                            },
+                            "maxY": {
+                              "type": "number"
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "minX",
+                            "minY",
+                            "maxX",
+                            "maxY"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "const": "circle"
+                            },
+                            "center": {
+                              "type": "object",
+                              "properties": {
+                                "x": {
+                                  "type": "number"
+                                },
+                                "y": {
+                                  "type": "number"
+                                }
+                              },
+                              "required": [
+                                "x",
+                                "y"
+                              ],
+                              "additionalProperties": false
+                            },
+                            "radius": {
+                              "type": "number",
+                              "exclusiveMinimum": 0
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "center",
+                            "radius"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "const": "polygon"
+                            },
+                            "points": {
+                              "minItems": 3,
+                              "maxItems": 100,
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "x": {
+                                    "type": "number"
+                                  },
+                                  "y": {
+                                    "type": "number"
+                                  }
+                                },
+                                "required": [
+                                  "x",
+                                  "y"
+                                ],
+                                "additionalProperties": false
+                              }
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "points"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "const": "corridor"
+                            },
+                            "points": {
+                              "minItems": 2,
+                              "maxItems": 100,
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "x": {
+                                    "type": "number"
+                                  },
+                                  "y": {
+                                    "type": "number"
+                                  }
+                                },
+                                "required": [
+                                  "x",
+                                  "y"
+                                ],
+                                "additionalProperties": false
+                              }
+                            },
+                            "width": {
+                              "type": "number",
+                              "exclusiveMinimum": 0
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "points",
+                            "width"
+                          ],
+                          "additionalProperties": false
+                        }
+                      ]
+                    },
+                    "strength": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 1
+                    },
+                    "edgeBlend": {
+                      "type": "number",
+                      "minimum": 0
+                    },
+                    "protectedAreas": {
+                      "maxItems": 50,
+                      "type": "array",
+                      "items": {
+                        "oneOf": [
+                          {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "const": "rectangle"
+                              },
+                              "minX": {
+                                "type": "number"
+                              },
+                              "minY": {
+                                "type": "number"
+                              },
+                              "maxX": {
+                                "type": "number"
+                              },
+                              "maxY": {
+                                "type": "number"
+                              }
+                            },
+                            "required": [
+                              "type",
+                              "minX",
+                              "minY",
+                              "maxX",
+                              "maxY"
+                            ],
+                            "additionalProperties": false
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "const": "circle"
+                              },
+                              "center": {
+                                "type": "object",
+                                "properties": {
+                                  "x": {
+                                    "type": "number"
+                                  },
+                                  "y": {
+                                    "type": "number"
+                                  }
+                                },
+                                "required": [
+                                  "x",
+                                  "y"
+                                ],
+                                "additionalProperties": false
+                              },
+                              "radius": {
+                                "type": "number",
+                                "exclusiveMinimum": 0
+                              }
+                            },
+                            "required": [
+                              "type",
+                              "center",
+                              "radius"
+                            ],
+                            "additionalProperties": false
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "const": "polygon"
+                              },
+                              "points": {
+                                "minItems": 3,
+                                "maxItems": 100,
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "x": {
+                                      "type": "number"
+                                    },
+                                    "y": {
+                                      "type": "number"
+                                    }
+                                  },
+                                  "required": [
+                                    "x",
+                                    "y"
+                                  ],
+                                  "additionalProperties": false
+                                }
+                              }
+                            },
+                            "required": [
+                              "type",
+                              "points"
+                            ],
+                            "additionalProperties": false
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "const": "corridor"
+                              },
+                              "points": {
+                                "minItems": 2,
+                                "maxItems": 100,
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "x": {
+                                      "type": "number"
+                                    },
+                                    "y": {
+                                      "type": "number"
+                                    }
+                                  },
+                                  "required": [
+                                    "x",
+                                    "y"
+                                  ],
+                                  "additionalProperties": false
+                                }
+                              },
+                              "width": {
+                                "type": "number",
+                                "exclusiveMinimum": 0
+                              }
+                            },
+                            "required": [
+                              "type",
+                              "points",
+                              "width"
+                            ],
+                            "additionalProperties": false
+                          }
+                        ]
+                      }
+                    },
+                    "radius": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 8
+                    },
+                    "iterations": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 10
+                    },
+                    "method": {
+                      "type": "string",
+                      "enum": [
+                        "gaussian",
+                        "edge_preserving"
+                      ]
+                    },
+                    "edgeThreshold": {
+                      "type": "number",
+                      "exclusiveMinimum": 0
+                    }
+                  },
+                  "required": [
+                    "op",
+                    "area"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "op": {
+                      "type": "string",
+                      "const": "height.noise"
+                    },
+                    "area": {
+                      "oneOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "const": "rectangle"
+                            },
+                            "minX": {
+                              "type": "number"
+                            },
+                            "minY": {
+                              "type": "number"
+                            },
+                            "maxX": {
+                              "type": "number"
+                            },
+                            "maxY": {
+                              "type": "number"
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "minX",
+                            "minY",
+                            "maxX",
+                            "maxY"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "const": "circle"
+                            },
+                            "center": {
+                              "type": "object",
+                              "properties": {
+                                "x": {
+                                  "type": "number"
+                                },
+                                "y": {
+                                  "type": "number"
+                                }
+                              },
+                              "required": [
+                                "x",
+                                "y"
+                              ],
+                              "additionalProperties": false
+                            },
+                            "radius": {
+                              "type": "number",
+                              "exclusiveMinimum": 0
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "center",
+                            "radius"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "const": "polygon"
+                            },
+                            "points": {
+                              "minItems": 3,
+                              "maxItems": 100,
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "x": {
+                                    "type": "number"
+                                  },
+                                  "y": {
+                                    "type": "number"
+                                  }
+                                },
+                                "required": [
+                                  "x",
+                                  "y"
+                                ],
+                                "additionalProperties": false
+                              }
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "points"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "const": "corridor"
+                            },
+                            "points": {
+                              "minItems": 2,
+                              "maxItems": 100,
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "x": {
+                                    "type": "number"
+                                  },
+                                  "y": {
+                                    "type": "number"
+                                  }
+                                },
+                                "required": [
+                                  "x",
+                                  "y"
+                                ],
+                                "additionalProperties": false
+                              }
+                            },
+                            "width": {
+                              "type": "number",
+                              "exclusiveMinimum": 0
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "points",
+                            "width"
+                          ],
+                          "additionalProperties": false
+                        }
+                      ]
+                    },
+                    "strength": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 1
+                    },
+                    "edgeBlend": {
+                      "type": "number",
+                      "minimum": 0
+                    },
+                    "protectedAreas": {
+                      "maxItems": 50,
+                      "type": "array",
+                      "items": {
+                        "oneOf": [
+                          {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "const": "rectangle"
+                              },
+                              "minX": {
+                                "type": "number"
+                              },
+                              "minY": {
+                                "type": "number"
+                              },
+                              "maxX": {
+                                "type": "number"
+                              },
+                              "maxY": {
+                                "type": "number"
+                              }
+                            },
+                            "required": [
+                              "type",
+                              "minX",
+                              "minY",
+                              "maxX",
+                              "maxY"
+                            ],
+                            "additionalProperties": false
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "const": "circle"
+                              },
+                              "center": {
+                                "type": "object",
+                                "properties": {
+                                  "x": {
+                                    "type": "number"
+                                  },
+                                  "y": {
+                                    "type": "number"
+                                  }
+                                },
+                                "required": [
+                                  "x",
+                                  "y"
+                                ],
+                                "additionalProperties": false
+                              },
+                              "radius": {
+                                "type": "number",
+                                "exclusiveMinimum": 0
+                              }
+                            },
+                            "required": [
+                              "type",
+                              "center",
+                              "radius"
+                            ],
+                            "additionalProperties": false
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "const": "polygon"
+                              },
+                              "points": {
+                                "minItems": 3,
+                                "maxItems": 100,
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "x": {
+                                      "type": "number"
+                                    },
+                                    "y": {
+                                      "type": "number"
+                                    }
+                                  },
+                                  "required": [
+                                    "x",
+                                    "y"
+                                  ],
+                                  "additionalProperties": false
+                                }
+                              }
+                            },
+                            "required": [
+                              "type",
+                              "points"
+                            ],
+                            "additionalProperties": false
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "const": "corridor"
+                              },
+                              "points": {
+                                "minItems": 2,
+                                "maxItems": 100,
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "x": {
+                                      "type": "number"
+                                    },
+                                    "y": {
+                                      "type": "number"
+                                    }
+                                  },
+                                  "required": [
+                                    "x",
+                                    "y"
+                                  ],
+                                  "additionalProperties": false
+                                }
+                              },
+                              "width": {
+                                "type": "number",
+                                "exclusiveMinimum": 0
+                              }
+                            },
+                            "required": [
+                              "type",
+                              "points",
+                              "width"
+                            ],
+                            "additionalProperties": false
+                          }
+                        ]
+                      }
+                    },
+                    "amplitude": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 128
+                    },
+                    "wavelength": {
+                      "type": "number",
+                      "exclusiveMinimum": 0
+                    },
+                    "seed": {
+                      "type": "integer",
+                      "minimum": -9007199254740991,
+                      "maximum": 9007199254740991
+                    }
+                  },
+                  "required": [
+                    "op",
+                    "area",
+                    "amplitude"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "op": {
+                      "type": "string",
+                      "const": "height.slope"
+                    },
+                    "area": {
+                      "oneOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "const": "rectangle"
+                            },
+                            "minX": {
+                              "type": "number"
+                            },
+                            "minY": {
+                              "type": "number"
+                            },
+                            "maxX": {
+                              "type": "number"
+                            },
+                            "maxY": {
+                              "type": "number"
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "minX",
+                            "minY",
+                            "maxX",
+                            "maxY"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "const": "circle"
+                            },
+                            "center": {
+                              "type": "object",
+                              "properties": {
+                                "x": {
+                                  "type": "number"
+                                },
+                                "y": {
+                                  "type": "number"
+                                }
+                              },
+                              "required": [
+                                "x",
+                                "y"
+                              ],
+                              "additionalProperties": false
+                            },
+                            "radius": {
+                              "type": "number",
+                              "exclusiveMinimum": 0
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "center",
+                            "radius"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "const": "polygon"
+                            },
+                            "points": {
+                              "minItems": 3,
+                              "maxItems": 100,
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "x": {
+                                    "type": "number"
+                                  },
+                                  "y": {
+                                    "type": "number"
+                                  }
+                                },
+                                "required": [
+                                  "x",
+                                  "y"
+                                ],
+                                "additionalProperties": false
+                              }
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "points"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "const": "corridor"
+                            },
+                            "points": {
+                              "minItems": 2,
+                              "maxItems": 100,
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "x": {
+                                    "type": "number"
+                                  },
+                                  "y": {
+                                    "type": "number"
+                                  }
+                                },
+                                "required": [
+                                  "x",
+                                  "y"
+                                ],
+                                "additionalProperties": false
+                              }
+                            },
+                            "width": {
+                              "type": "number",
+                              "exclusiveMinimum": 0
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "points",
+                            "width"
+                          ],
+                          "additionalProperties": false
+                        }
+                      ]
+                    },
+                    "strength": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 1
+                    },
+                    "edgeBlend": {
+                      "type": "number",
+                      "minimum": 0
+                    },
+                    "protectedAreas": {
+                      "maxItems": 50,
+                      "type": "array",
+                      "items": {
+                        "oneOf": [
+                          {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "const": "rectangle"
+                              },
+                              "minX": {
+                                "type": "number"
+                              },
+                              "minY": {
+                                "type": "number"
+                              },
+                              "maxX": {
+                                "type": "number"
+                              },
+                              "maxY": {
+                                "type": "number"
+                              }
+                            },
+                            "required": [
+                              "type",
+                              "minX",
+                              "minY",
+                              "maxX",
+                              "maxY"
+                            ],
+                            "additionalProperties": false
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "const": "circle"
+                              },
+                              "center": {
+                                "type": "object",
+                                "properties": {
+                                  "x": {
+                                    "type": "number"
+                                  },
+                                  "y": {
+                                    "type": "number"
+                                  }
+                                },
+                                "required": [
+                                  "x",
+                                  "y"
+                                ],
+                                "additionalProperties": false
+                              },
+                              "radius": {
+                                "type": "number",
+                                "exclusiveMinimum": 0
+                              }
+                            },
+                            "required": [
+                              "type",
+                              "center",
+                              "radius"
+                            ],
+                            "additionalProperties": false
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "const": "polygon"
+                              },
+                              "points": {
+                                "minItems": 3,
+                                "maxItems": 100,
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "x": {
+                                      "type": "number"
+                                    },
+                                    "y": {
+                                      "type": "number"
+                                    }
+                                  },
+                                  "required": [
+                                    "x",
+                                    "y"
+                                  ],
+                                  "additionalProperties": false
+                                }
+                              }
+                            },
+                            "required": [
+                              "type",
+                              "points"
+                            ],
+                            "additionalProperties": false
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "const": "corridor"
+                              },
+                              "points": {
+                                "minItems": 2,
+                                "maxItems": 100,
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "x": {
+                                      "type": "number"
+                                    },
+                                    "y": {
+                                      "type": "number"
+                                    }
+                                  },
+                                  "required": [
+                                    "x",
+                                    "y"
+                                  ],
+                                  "additionalProperties": false
+                                }
+                              },
+                              "width": {
+                                "type": "number",
+                                "exclusiveMinimum": 0
+                              }
+                            },
+                            "required": [
+                              "type",
+                              "points",
+                              "width"
+                            ],
+                            "additionalProperties": false
+                          }
+                        ]
+                      }
+                    },
+                    "from": {
+                      "type": "object",
+                      "properties": {
+                        "x": {
+                          "type": "number"
+                        },
+                        "y": {
+                          "type": "number"
+                        }
+                      },
+                      "required": [
+                        "x",
+                        "y"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "to": {
+                      "type": "object",
+                      "properties": {
+                        "x": {
+                          "type": "number"
+                        },
+                        "y": {
+                          "type": "number"
+                        }
+                      },
+                      "required": [
+                        "x",
+                        "y"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "fromHeight": {
+                      "type": "number"
+                    },
+                    "toHeight": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "op",
+                    "area",
+                    "from",
+                    "to",
+                    "fromHeight",
+                    "toHeight"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "op": {
+                      "type": "string",
+                      "enum": [
+                        "texture.paint",
+                        "texture.blend"
+                      ]
+                    },
+                    "area": {
+                      "oneOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "const": "rectangle"
+                            },
+                            "minX": {
+                              "type": "number"
+                            },
+                            "minY": {
+                              "type": "number"
+                            },
+                            "maxX": {
+                              "type": "number"
+                            },
+                            "maxY": {
+                              "type": "number"
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "minX",
+                            "minY",
+                            "maxX",
+                            "maxY"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "const": "circle"
+                            },
+                            "center": {
+                              "type": "object",
+                              "properties": {
+                                "x": {
+                                  "type": "number"
+                                },
+                                "y": {
+                                  "type": "number"
+                                }
+                              },
+                              "required": [
+                                "x",
+                                "y"
+                              ],
+                              "additionalProperties": false
+                            },
+                            "radius": {
+                              "type": "number",
+                              "exclusiveMinimum": 0
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "center",
+                            "radius"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "const": "polygon"
+                            },
+                            "points": {
+                              "minItems": 3,
+                              "maxItems": 100,
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "x": {
+                                    "type": "number"
+                                  },
+                                  "y": {
+                                    "type": "number"
+                                  }
+                                },
+                                "required": [
+                                  "x",
+                                  "y"
+                                ],
+                                "additionalProperties": false
+                              }
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "points"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "const": "corridor"
+                            },
+                            "points": {
+                              "minItems": 2,
+                              "maxItems": 100,
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "x": {
+                                    "type": "number"
+                                  },
+                                  "y": {
+                                    "type": "number"
+                                  }
+                                },
+                                "required": [
+                                  "x",
+                                  "y"
+                                ],
+                                "additionalProperties": false
+                              }
+                            },
+                            "width": {
+                              "type": "number",
+                              "exclusiveMinimum": 0
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "points",
+                            "width"
+                          ],
+                          "additionalProperties": false
+                        }
+                      ]
+                    },
+                    "strength": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 1
+                    },
+                    "edgeBlend": {
+                      "type": "number",
+                      "minimum": 0
+                    },
+                    "protectedAreas": {
+                      "maxItems": 50,
+                      "type": "array",
+                      "items": {
+                        "oneOf": [
+                          {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "const": "rectangle"
+                              },
+                              "minX": {
+                                "type": "number"
+                              },
+                              "minY": {
+                                "type": "number"
+                              },
+                              "maxX": {
+                                "type": "number"
+                              },
+                              "maxY": {
+                                "type": "number"
+                              }
+                            },
+                            "required": [
+                              "type",
+                              "minX",
+                              "minY",
+                              "maxX",
+                              "maxY"
+                            ],
+                            "additionalProperties": false
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "const": "circle"
+                              },
+                              "center": {
+                                "type": "object",
+                                "properties": {
+                                  "x": {
+                                    "type": "number"
+                                  },
+                                  "y": {
+                                    "type": "number"
+                                  }
+                                },
+                                "required": [
+                                  "x",
+                                  "y"
+                                ],
+                                "additionalProperties": false
+                              },
+                              "radius": {
+                                "type": "number",
+                                "exclusiveMinimum": 0
+                              }
+                            },
+                            "required": [
+                              "type",
+                              "center",
+                              "radius"
+                            ],
+                            "additionalProperties": false
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "const": "polygon"
+                              },
+                              "points": {
+                                "minItems": 3,
+                                "maxItems": 100,
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "x": {
+                                      "type": "number"
+                                    },
+                                    "y": {
+                                      "type": "number"
+                                    }
+                                  },
+                                  "required": [
+                                    "x",
+                                    "y"
+                                  ],
+                                  "additionalProperties": false
+                                }
+                              }
+                            },
+                            "required": [
+                              "type",
+                              "points"
+                            ],
+                            "additionalProperties": false
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "const": "corridor"
+                              },
+                              "points": {
+                                "minItems": 2,
+                                "maxItems": 100,
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "x": {
+                                      "type": "number"
+                                    },
+                                    "y": {
+                                      "type": "number"
+                                    }
+                                  },
+                                  "required": [
+                                    "x",
+                                    "y"
+                                  ],
+                                  "additionalProperties": false
+                                }
+                              },
+                              "width": {
+                                "type": "number",
+                                "exclusiveMinimum": 0
+                              }
+                            },
+                            "required": [
+                              "type",
+                              "points",
+                              "width"
+                            ],
+                            "additionalProperties": false
+                          }
+                        ]
+                      }
+                    },
+                    "texture": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "op",
+                    "area",
+                    "texture"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "op": {
+                      "type": "string",
+                      "const": "texture.replace"
+                    },
+                    "area": {
+                      "oneOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "const": "rectangle"
+                            },
+                            "minX": {
+                              "type": "number"
+                            },
+                            "minY": {
+                              "type": "number"
+                            },
+                            "maxX": {
+                              "type": "number"
+                            },
+                            "maxY": {
+                              "type": "number"
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "minX",
+                            "minY",
+                            "maxX",
+                            "maxY"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "const": "circle"
+                            },
+                            "center": {
+                              "type": "object",
+                              "properties": {
+                                "x": {
+                                  "type": "number"
+                                },
+                                "y": {
+                                  "type": "number"
+                                }
+                              },
+                              "required": [
+                                "x",
+                                "y"
+                              ],
+                              "additionalProperties": false
+                            },
+                            "radius": {
+                              "type": "number",
+                              "exclusiveMinimum": 0
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "center",
+                            "radius"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "const": "polygon"
+                            },
+                            "points": {
+                              "minItems": 3,
+                              "maxItems": 100,
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "x": {
+                                    "type": "number"
+                                  },
+                                  "y": {
+                                    "type": "number"
+                                  }
+                                },
+                                "required": [
+                                  "x",
+                                  "y"
+                                ],
+                                "additionalProperties": false
+                              }
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "points"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "const": "corridor"
+                            },
+                            "points": {
+                              "minItems": 2,
+                              "maxItems": 100,
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "x": {
+                                    "type": "number"
+                                  },
+                                  "y": {
+                                    "type": "number"
+                                  }
+                                },
+                                "required": [
+                                  "x",
+                                  "y"
+                                ],
+                                "additionalProperties": false
+                              }
+                            },
+                            "width": {
+                              "type": "number",
+                              "exclusiveMinimum": 0
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "points",
+                            "width"
+                          ],
+                          "additionalProperties": false
+                        }
+                      ]
+                    },
+                    "strength": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 1
+                    },
+                    "edgeBlend": {
+                      "type": "number",
+                      "minimum": 0
+                    },
+                    "protectedAreas": {
+                      "maxItems": 50,
+                      "type": "array",
+                      "items": {
+                        "oneOf": [
+                          {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "const": "rectangle"
+                              },
+                              "minX": {
+                                "type": "number"
+                              },
+                              "minY": {
+                                "type": "number"
+                              },
+                              "maxX": {
+                                "type": "number"
+                              },
+                              "maxY": {
+                                "type": "number"
+                              }
+                            },
+                            "required": [
+                              "type",
+                              "minX",
+                              "minY",
+                              "maxX",
+                              "maxY"
+                            ],
+                            "additionalProperties": false
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "const": "circle"
+                              },
+                              "center": {
+                                "type": "object",
+                                "properties": {
+                                  "x": {
+                                    "type": "number"
+                                  },
+                                  "y": {
+                                    "type": "number"
+                                  }
+                                },
+                                "required": [
+                                  "x",
+                                  "y"
+                                ],
+                                "additionalProperties": false
+                              },
+                              "radius": {
+                                "type": "number",
+                                "exclusiveMinimum": 0
+                              }
+                            },
+                            "required": [
+                              "type",
+                              "center",
+                              "radius"
+                            ],
+                            "additionalProperties": false
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "const": "polygon"
+                              },
+                              "points": {
+                                "minItems": 3,
+                                "maxItems": 100,
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "x": {
+                                      "type": "number"
+                                    },
+                                    "y": {
+                                      "type": "number"
+                                    }
+                                  },
+                                  "required": [
+                                    "x",
+                                    "y"
+                                  ],
+                                  "additionalProperties": false
+                                }
+                              }
+                            },
+                            "required": [
+                              "type",
+                              "points"
+                            ],
+                            "additionalProperties": false
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "const": "corridor"
+                              },
+                              "points": {
+                                "minItems": 2,
+                                "maxItems": 100,
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "x": {
+                                      "type": "number"
+                                    },
+                                    "y": {
+                                      "type": "number"
+                                    }
+                                  },
+                                  "required": [
+                                    "x",
+                                    "y"
+                                  ],
+                                  "additionalProperties": false
+                                }
+                              },
+                              "width": {
+                                "type": "number",
+                                "exclusiveMinimum": 0
+                              }
+                            },
+                            "required": [
+                              "type",
+                              "points",
+                              "width"
+                            ],
+                            "additionalProperties": false
+                          }
+                        ]
+                      }
+                    },
+                    "fromTexture": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "texture": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "op",
+                    "area",
+                    "fromTexture",
+                    "texture"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "op": {
+                      "type": "string",
+                      "const": "texture.smooth"
+                    },
+                    "area": {
+                      "oneOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "const": "rectangle"
+                            },
+                            "minX": {
+                              "type": "number"
+                            },
+                            "minY": {
+                              "type": "number"
+                            },
+                            "maxX": {
+                              "type": "number"
+                            },
+                            "maxY": {
+                              "type": "number"
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "minX",
+                            "minY",
+                            "maxX",
+                            "maxY"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "const": "circle"
+                            },
+                            "center": {
+                              "type": "object",
+                              "properties": {
+                                "x": {
+                                  "type": "number"
+                                },
+                                "y": {
+                                  "type": "number"
+                                }
+                              },
+                              "required": [
+                                "x",
+                                "y"
+                              ],
+                              "additionalProperties": false
+                            },
+                            "radius": {
+                              "type": "number",
+                              "exclusiveMinimum": 0
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "center",
+                            "radius"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "const": "polygon"
+                            },
+                            "points": {
+                              "minItems": 3,
+                              "maxItems": 100,
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "x": {
+                                    "type": "number"
+                                  },
+                                  "y": {
+                                    "type": "number"
+                                  }
+                                },
+                                "required": [
+                                  "x",
+                                  "y"
+                                ],
+                                "additionalProperties": false
+                              }
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "points"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "const": "corridor"
+                            },
+                            "points": {
+                              "minItems": 2,
+                              "maxItems": 100,
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "x": {
+                                    "type": "number"
+                                  },
+                                  "y": {
+                                    "type": "number"
+                                  }
+                                },
+                                "required": [
+                                  "x",
+                                  "y"
+                                ],
+                                "additionalProperties": false
+                              }
+                            },
+                            "width": {
+                              "type": "number",
+                              "exclusiveMinimum": 0
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "points",
+                            "width"
+                          ],
+                          "additionalProperties": false
+                        }
+                      ]
+                    },
+                    "strength": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 1
+                    },
+                    "edgeBlend": {
+                      "type": "number",
+                      "minimum": 0
+                    },
+                    "protectedAreas": {
+                      "maxItems": 50,
+                      "type": "array",
+                      "items": {
+                        "oneOf": [
+                          {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "const": "rectangle"
+                              },
+                              "minX": {
+                                "type": "number"
+                              },
+                              "minY": {
+                                "type": "number"
+                              },
+                              "maxX": {
+                                "type": "number"
+                              },
+                              "maxY": {
+                                "type": "number"
+                              }
+                            },
+                            "required": [
+                              "type",
+                              "minX",
+                              "minY",
+                              "maxX",
+                              "maxY"
+                            ],
+                            "additionalProperties": false
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "const": "circle"
+                              },
+                              "center": {
+                                "type": "object",
+                                "properties": {
+                                  "x": {
+                                    "type": "number"
+                                  },
+                                  "y": {
+                                    "type": "number"
+                                  }
+                                },
+                                "required": [
+                                  "x",
+                                  "y"
+                                ],
+                                "additionalProperties": false
+                              },
+                              "radius": {
+                                "type": "number",
+                                "exclusiveMinimum": 0
+                              }
+                            },
+                            "required": [
+                              "type",
+                              "center",
+                              "radius"
+                            ],
+                            "additionalProperties": false
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "const": "polygon"
+                              },
+                              "points": {
+                                "minItems": 3,
+                                "maxItems": 100,
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "x": {
+                                      "type": "number"
+                                    },
+                                    "y": {
+                                      "type": "number"
+                                    }
+                                  },
+                                  "required": [
+                                    "x",
+                                    "y"
+                                  ],
+                                  "additionalProperties": false
+                                }
+                              }
+                            },
+                            "required": [
+                              "type",
+                              "points"
+                            ],
+                            "additionalProperties": false
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "const": "corridor"
+                              },
+                              "points": {
+                                "minItems": 2,
+                                "maxItems": 100,
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "x": {
+                                      "type": "number"
+                                    },
+                                    "y": {
+                                      "type": "number"
+                                    }
+                                  },
+                                  "required": [
+                                    "x",
+                                    "y"
+                                  ],
+                                  "additionalProperties": false
+                                }
+                              },
+                              "width": {
+                                "type": "number",
+                                "exclusiveMinimum": 0
+                              }
+                            },
+                            "required": [
+                              "type",
+                              "points",
+                              "width"
+                            ],
+                            "additionalProperties": false
+                          }
+                        ]
+                      }
+                    },
+                    "radius": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 4
+                    }
+                  },
+                  "required": [
+                    "op",
+                    "area"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "op": {
+                      "type": "string",
+                      "const": "texture.paint_rules"
+                    },
+                    "area": {
+                      "oneOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "const": "rectangle"
+                            },
+                            "minX": {
+                              "type": "number"
+                            },
+                            "minY": {
+                              "type": "number"
+                            },
+                            "maxX": {
+                              "type": "number"
+                            },
+                            "maxY": {
+                              "type": "number"
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "minX",
+                            "minY",
+                            "maxX",
+                            "maxY"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "const": "circle"
+                            },
+                            "center": {
+                              "type": "object",
+                              "properties": {
+                                "x": {
+                                  "type": "number"
+                                },
+                                "y": {
+                                  "type": "number"
+                                }
+                              },
+                              "required": [
+                                "x",
+                                "y"
+                              ],
+                              "additionalProperties": false
+                            },
+                            "radius": {
+                              "type": "number",
+                              "exclusiveMinimum": 0
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "center",
+                            "radius"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "const": "polygon"
+                            },
+                            "points": {
+                              "minItems": 3,
+                              "maxItems": 100,
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "x": {
+                                    "type": "number"
+                                  },
+                                  "y": {
+                                    "type": "number"
+                                  }
+                                },
+                                "required": [
+                                  "x",
+                                  "y"
+                                ],
+                                "additionalProperties": false
+                              }
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "points"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "const": "corridor"
+                            },
+                            "points": {
+                              "minItems": 2,
+                              "maxItems": 100,
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "x": {
+                                    "type": "number"
+                                  },
+                                  "y": {
+                                    "type": "number"
+                                  }
+                                },
+                                "required": [
+                                  "x",
+                                  "y"
+                                ],
+                                "additionalProperties": false
+                              }
+                            },
+                            "width": {
+                              "type": "number",
+                              "exclusiveMinimum": 0
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "points",
+                            "width"
+                          ],
+                          "additionalProperties": false
+                        }
+                      ]
+                    },
+                    "strength": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 1
+                    },
+                    "edgeBlend": {
+                      "type": "number",
+                      "minimum": 0
+                    },
+                    "protectedAreas": {
+                      "maxItems": 50,
+                      "type": "array",
+                      "items": {
+                        "oneOf": [
+                          {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "const": "rectangle"
+                              },
+                              "minX": {
+                                "type": "number"
+                              },
+                              "minY": {
+                                "type": "number"
+                              },
+                              "maxX": {
+                                "type": "number"
+                              },
+                              "maxY": {
+                                "type": "number"
+                              }
+                            },
+                            "required": [
+                              "type",
+                              "minX",
+                              "minY",
+                              "maxX",
+                              "maxY"
+                            ],
+                            "additionalProperties": false
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "const": "circle"
+                              },
+                              "center": {
+                                "type": "object",
+                                "properties": {
+                                  "x": {
+                                    "type": "number"
+                                  },
+                                  "y": {
+                                    "type": "number"
+                                  }
+                                },
+                                "required": [
+                                  "x",
+                                  "y"
+                                ],
+                                "additionalProperties": false
+                              },
+                              "radius": {
+                                "type": "number",
+                                "exclusiveMinimum": 0
+                              }
+                            },
+                            "required": [
+                              "type",
+                              "center",
+                              "radius"
+                            ],
+                            "additionalProperties": false
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "const": "polygon"
+                              },
+                              "points": {
+                                "minItems": 3,
+                                "maxItems": 100,
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "x": {
+                                      "type": "number"
+                                    },
+                                    "y": {
+                                      "type": "number"
+                                    }
+                                  },
+                                  "required": [
+                                    "x",
+                                    "y"
+                                  ],
+                                  "additionalProperties": false
+                                }
+                              }
+                            },
+                            "required": [
+                              "type",
+                              "points"
+                            ],
+                            "additionalProperties": false
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "const": "corridor"
+                              },
+                              "points": {
+                                "minItems": 2,
+                                "maxItems": 100,
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "x": {
+                                      "type": "number"
+                                    },
+                                    "y": {
+                                      "type": "number"
+                                    }
+                                  },
+                                  "required": [
+                                    "x",
+                                    "y"
+                                  ],
+                                  "additionalProperties": false
+                                }
+                              },
+                              "width": {
+                                "type": "number",
+                                "exclusiveMinimum": 0
+                              }
+                            },
+                            "required": [
+                              "type",
+                              "points",
+                              "width"
+                            ],
+                            "additionalProperties": false
+                          }
+                        ]
+                      }
+                    },
+                    "rules": {
+                      "minItems": 1,
+                      "maxItems": 30,
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "texture": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "minHeight": {
+                            "type": "number"
+                          },
+                          "maxHeight": {
+                            "type": "number"
+                          },
+                          "minSlope": {
+                            "type": "number",
+                            "minimum": 0
+                          },
+                          "maxSlope": {
+                            "type": "number",
+                            "minimum": 0
+                          }
+                        },
+                        "required": [
+                          "texture"
+                        ],
+                        "additionalProperties": false
+                      }
+                    }
+                  },
+                  "required": [
+                    "op",
+                    "area",
+                    "rules"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "op": {
+                      "type": "string",
+                      "const": "palette.update"
+                    },
+                    "replacements": {
+                      "minItems": 1,
+                      "maxItems": 64,
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "slot": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 63
+                          },
+                          "texture": {
+                            "type": "string",
+                            "minLength": 1
+                          }
+                        },
+                        "required": [
+                          "slot",
+                          "texture"
+                        ],
+                        "additionalProperties": false
+                      }
+                    }
+                  },
+                  "required": [
+                    "op",
+                    "replacements"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "op": {
+                      "type": "string",
+                      "const": "lighting.assign"
+                    },
+                    "id": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 255
+                    }
+                  },
+                  "required": [
+                    "op",
+                    "id"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "op": {
+                      "type": "string",
+                      "const": "lighting.preset"
+                    },
+                    "timePerDay": {
+                      "type": "string",
+                      "pattern": "^\\d{1,3}:[0-5]\\d:[0-5]\\d$"
+                    },
+                    "timePerLoop": {
+                      "type": "string",
+                      "pattern": "^\\d+(?::[0-5]\\d:[0-5]\\d)?$"
+                    },
+                    "timeStart": {
+                      "type": "string",
+                      "pattern": "^(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d$"
+                    },
+                    "timeEvents": {
+                      "maxItems": 2,
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "index": {
+                            "type": "string",
+                            "enum": [
+                              "Dawn",
+                              "Dusk"
+                            ]
+                          },
+                          "time": {
+                            "type": "string",
+                            "pattern": "^(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d$"
+                          },
+                          "name": {
+                            "type": "string",
+                            "minLength": 1
+                          }
+                        },
+                        "required": [
+                          "index",
+                          "time"
+                        ],
+                        "additionalProperties": false
+                      }
+                    },
+                    "id": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 255
+                    },
+                    "parent": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 255
+                    },
+                    "stateIndex": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 63
+                    },
+                    "ambientColor": {
+                      "type": "array",
+                      "prefixItems": [
+                        {
+                          "type": "number",
+                          "minimum": 0,
+                          "maximum": 1
+                        },
+                        {
+                          "type": "number",
+                          "minimum": 0,
+                          "maximum": 1
+                        },
+                        {
+                          "type": "number",
+                          "minimum": 0,
+                          "maximum": 1
+                        }
+                      ],
+                      "items": false,
+                      "minItems": 3,
+                      "maxItems": 3
+                    },
+                    "exposure": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 100
+                    },
+                    "whitePoint": {
+                      "type": "number",
+                      "exclusiveMinimum": 0,
+                      "maximum": 100
+                    },
+                    "directional": {
+                      "maxItems": 3,
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "index": {
+                            "type": "string",
+                            "enum": [
+                              "Key",
+                              "Fill",
+                              "Back"
+                            ]
+                          },
+                          "color": {
+                            "type": "array",
+                            "prefixItems": [
+                              {
+                                "type": "number",
+                                "minimum": 0,
+                                "maximum": 1
+                              },
+                              {
+                                "type": "number",
+                                "minimum": 0,
+                                "maximum": 1
+                              },
+                              {
+                                "type": "number",
+                                "minimum": 0,
+                                "maximum": 1
+                              }
+                            ],
+                            "items": false,
+                            "minItems": 3,
+                            "maxItems": 3
+                          },
+                          "direction": {
+                            "type": "array",
+                            "prefixItems": [
+                              {
+                                "type": "number",
+                                "minimum": -1,
+                                "maximum": 1
+                              },
+                              {
+                                "type": "number",
+                                "minimum": -1,
+                                "maximum": 1
+                              },
+                              {
+                                "type": "number",
+                                "minimum": -1,
+                                "maximum": 1
+                              }
+                            ],
+                            "items": false,
+                            "minItems": 3,
+                            "maxItems": 3
+                          },
+                          "intensity": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 100
+                          }
+                        },
+                        "required": [
+                          "index"
+                        ],
+                        "additionalProperties": false
+                      }
+                    }
+                  },
+                  "required": [
+                    "op",
+                    "id"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "op": {
+                      "type": "string",
+                      "const": "water.material"
+                    },
+                    "id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "parent": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "stateIndex": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 63
+                    },
+                    "height": {
+                      "type": "number",
+                      "minimum": -256,
+                      "maximum": 256
+                    },
+                    "color": {
+                      "type": "array",
+                      "prefixItems": [
+                        {
+                          "type": "number",
+                          "minimum": 0,
+                          "maximum": 1
+                        },
+                        {
+                          "type": "number",
+                          "minimum": 0,
+                          "maximum": 1
+                        },
+                        {
+                          "type": "number",
+                          "minimum": 0,
+                          "maximum": 1
+                        },
+                        {
+                          "type": "number",
+                          "minimum": 0,
+                          "maximum": 1
+                        }
+                      ],
+                      "items": false,
+                      "minItems": 4,
+                      "maxItems": 4
+                    },
+                    "uvRate": {
+                      "type": "array",
+                      "prefixItems": [
+                        {
+                          "type": "number"
+                        },
+                        {
+                          "type": "number"
+                        },
+                        {
+                          "type": "number"
+                        },
+                        {
+                          "type": "number"
+                        }
+                      ],
+                      "items": false,
+                      "minItems": 4,
+                      "maxItems": 4
+                    },
+                    "refractionDistortion": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 10
+                    },
+                    "reflectionDistortion": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 10
+                    },
+                    "framesPerSec": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 1000
+                    },
+                    "isLava": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "op",
+                    "id"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "op": {
+                      "type": "string",
+                      "const": "water.create"
+                    },
+                    "area": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "const": "rectangle"
+                        },
+                        "minX": {
+                          "type": "number"
+                        },
+                        "minY": {
+                          "type": "number"
+                        },
+                        "maxX": {
+                          "type": "number"
+                        },
+                        "maxY": {
+                          "type": "number"
+                        }
+                      },
+                      "required": [
+                        "type",
+                        "minX",
+                        "minY",
+                        "maxX",
+                        "maxY"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "sourceIndex": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 9007199254740991
+                    },
+                    "template": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "op",
+                    "area"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "op": {
+                      "type": "string",
+                      "const": "water.update"
+                    },
+                    "template": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "area": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "const": "rectangle"
+                        },
+                        "minX": {
+                          "type": "number"
+                        },
+                        "minY": {
+                          "type": "number"
+                        },
+                        "maxX": {
+                          "type": "number"
+                        },
+                        "maxY": {
+                          "type": "number"
+                        }
+                      },
+                      "required": [
+                        "type",
+                        "minX",
+                        "minY",
+                        "maxX",
+                        "maxY"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "index": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 9007199254740991
+                    }
+                  },
+                  "required": [
+                    "op",
+                    "area",
+                    "index"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "op": {
+                      "type": "string",
+                      "const": "water.remove"
+                    },
+                    "index": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 9007199254740991
+                    }
+                  },
+                  "required": [
+                    "op",
+                    "index"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "op": {
+                      "type": "string",
+                      "const": "stamp.apply"
+                    },
+                    "donorDirectory": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "op",
+                    "donorDirectory"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "op": {
+                      "type": "string",
+                      "enum": [
+                        "cliff.paint",
+                        "ramp.create",
+                        "ramp.remove",
+                        "pathing.paint"
+                      ]
+                    },
+                    "area": {
+                      "oneOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "const": "rectangle"
+                            },
+                            "minX": {
+                              "type": "number"
+                            },
+                            "minY": {
+                              "type": "number"
+                            },
+                            "maxX": {
+                              "type": "number"
+                            },
+                            "maxY": {
+                              "type": "number"
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "minX",
+                            "minY",
+                            "maxX",
+                            "maxY"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "const": "circle"
+                            },
+                            "center": {
+                              "type": "object",
+                              "properties": {
+                                "x": {
+                                  "type": "number"
+                                },
+                                "y": {
+                                  "type": "number"
+                                }
+                              },
+                              "required": [
+                                "x",
+                                "y"
+                              ],
+                              "additionalProperties": false
+                            },
+                            "radius": {
+                              "type": "number",
+                              "exclusiveMinimum": 0
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "center",
+                            "radius"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "const": "polygon"
+                            },
+                            "points": {
+                              "minItems": 3,
+                              "maxItems": 100,
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "x": {
+                                    "type": "number"
+                                  },
+                                  "y": {
+                                    "type": "number"
+                                  }
+                                },
+                                "required": [
+                                  "x",
+                                  "y"
+                                ],
+                                "additionalProperties": false
+                              }
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "points"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "const": "corridor"
+                            },
+                            "points": {
+                              "minItems": 2,
+                              "maxItems": 100,
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "x": {
+                                    "type": "number"
+                                  },
+                                  "y": {
+                                    "type": "number"
+                                  }
+                                },
+                                "required": [
+                                  "x",
+                                  "y"
+                                ],
+                                "additionalProperties": false
+                              }
+                            },
+                            "width": {
+                              "type": "number",
+                              "exclusiveMinimum": 0
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "points",
+                            "width"
+                          ],
+                          "additionalProperties": false
+                        }
+                      ]
+                    },
+                    "parameters": {
+                      "type": "object",
+                      "propertyNames": {
+                        "type": "string"
+                      },
+                      "additionalProperties": {}
+                    }
+                  },
+                  "required": [
+                    "op",
+                    "parameters"
+                  ],
+                  "additionalProperties": false
+                }
+              ]
+            }
+          }
+        },
+        "required": [
+          "blueprintId",
+          "destinationDirectory",
+          "dryRun"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "map.capabilities": {
+      "description": "Report verified archive and MapInfo writers and explicit clean-creation/resize gaps. Read-only.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      }
+    },
+    "map.inspect": {
+      "description": "Inspect component manifest, native MapInfo v39 integrity, document roots and Terrain dimensions. Does not prove Editor acceptance.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "directory": {
+            "default": "",
+            "type": "string"
+          }
+        },
+        "required": [
+          "directory"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "map.validate": {
+      "description": "Validate known map foundation and cross-component dimensions; player/variant/Header semantics remain opaque.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "directory": {
+            "default": "",
+            "type": "string"
+          }
+        },
+        "required": [
+          "directory"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "map.archive.inspect": {
+      "description": "Enumerate packed SC2Map/SC2Mod entries with the bundled StormLib helper, including locales and flags.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "archive": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "archive"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "map.import": {
+      "description": "Extract a packed map into a new component directory, preserve archive entry metadata; existing destinations are rejected. dryRun defaults true.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "archive": {
+            "type": "string",
+            "minLength": 1
+          },
+          "directory": {
+            "type": "string",
+            "minLength": 1
+          },
+          "dryRun": {
+            "default": true,
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "archive",
+          "directory",
+          "dryRun"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "map.export": {
+      "description": "Export committed map snapshot, reopen and compare every entry hash before publishing. Pending drafts block export. Root maps use .sc2mcp-output/result.SC2Map. Paths stay within SC2_UI_ROOT.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "directory": {
+            "default": "",
+            "type": "string"
+          },
+          "archive": {
+            "type": "string",
+            "minLength": 1
+          },
+          "dryRun": {
+            "default": true,
+            "type": "boolean"
+          },
+          "backup": {
+            "default": true,
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "directory",
+          "archive",
+          "dryRun",
+          "backup"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "map.clone": {
+      "description": "Copy a complete native map into a new sibling component directory, preserving scripts and unknown components. A scenario clone is not a clean new map.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "directory": {
+            "default": "",
+            "type": "string"
+          },
+          "destinationDirectory": {
+            "type": "string",
+            "minLength": 1
+          },
+          "dryRun": {
+            "default": true,
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "directory",
+          "destinationDirectory",
+          "dryRun"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "map.metadata.plan": {
+      "description": "Plan lossless MapInfo v39 playable bounds, fog or minimap edits; recompute verified integrity hash and pin the complete file manifest.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "directory": {
+            "default": "",
+            "type": "string"
+          },
+          "patch": {
+            "type": "object",
+            "properties": {
+              "playableBounds": {
+                "type": "object",
+                "properties": {
+                  "left": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 256
+                  },
+                  "bottom": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 256
+                  },
+                  "right": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 256
+                  },
+                  "top": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 256
+                  }
+                },
+                "required": [
+                  "left",
+                  "bottom",
+                  "right",
+                  "top"
+                ],
+                "additionalProperties": false
+              },
+              "fogMaskStyle": {
+                "type": "string",
+                "enum": [
+                  "None",
+                  "Dark",
+                  "Black",
+                  "BlackNoUnhide"
+                ]
+              },
+              "minimapResolution": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 4
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "directory",
+          "patch"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "map.metadata.apply": {
+      "description": "Apply a checked metadata plan through the shared byte transaction coordinator. dryRun and staging default true; dependency guards survive until save.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "planId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "dryRun": {
+            "default": true,
+            "type": "boolean"
+          },
+          "stage": {
+            "default": true,
+            "type": "boolean"
+          },
+          "backup": {
+            "default": true,
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "planId",
+          "dryRun",
+          "stage",
+          "backup"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "map.save": {
+      "description": "Save the complete staged byte group with disk and complete-map dependency guards. dryRun defaults true.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "transactionId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "dryRun": {
+            "default": true,
+            "type": "boolean"
+          },
+          "backup": {
+            "default": true,
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "transactionId",
+          "dryRun",
+          "backup"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "map.discard": {
+      "description": "Discard the complete staged byte group; disk is unchanged. dryRun defaults true.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "transactionId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "dryRun": {
+            "default": true,
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "transactionId",
+          "dryRun"
+        ],
+        "additionalProperties": false
+      }
+    }
+  }
+}

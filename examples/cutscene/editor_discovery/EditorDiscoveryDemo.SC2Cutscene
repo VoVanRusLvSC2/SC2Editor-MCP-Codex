@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CutsceneState cutsceneVersion="1.300000" name="EditorDiscoveryDemo">
+    <CCutsceneNodeDirector guid="5349922639947364487" name="Director" interactive="0" autoDestroyOnEnd="1" waitForResources="1">
+        <CCutsceneNodeActiveCamera guid="16448378482016851488" name="Active Camera" sortIndex="0">
+            <CCutsceneElementActiveCamera guid="364433866524164849" cameraIndex="0" objectGuid="15553154245246994323"/>
+        </CCutsceneNodeActiveCamera>
+    </CCutsceneNodeDirector>
+    <CCutsceneNodeCamera guid="15553154245246994323" name="Wide Camera" position="8.000000,-12.000000,2.000000" fov="45.000000" nearClip="0.100000" farClip="600.000000" shadowClip="75.000000" depthOfField="1.000000" focalDepth="12.000000" falloffStart="1.000000" falloffEnd="8.000000" distance="15.000000" pitch="18.000000" yaw="135.000000" roll="0.000000" heightOffset="1.500000">
+        <CCutsceneElementObject guid="6050567569342577301" duration="6000" lockedToEnd="1"/>
+    </CCutsceneNodeCamera>
+    <CCutsceneNodeActor guid="3999577457183960531" name="Marine" modelLink="Marine" position="0.000000,0.000000,0.000000">
+        <CCutsceneElementObject guid="2045513242895595269" duration="6000" lockedToEnd="1"/>
+        <CCutsceneNodeAnimLayer guid="11376174996012827211" name="Base Animation" enabled="1" sortIndex="0">
+            <CCutsceneElementAnim guid="9795797458869833912" anim="Walk" animId="0" duration="6000" originalDuration="3000" looping="1" blendTime="250" blendOutTime="250" timeScale="0.500000" weight="2.000000" rightAligned="0" lockedToEnd="1"/>
+        </CCutsceneNodeAnimLayer>
+    </CCutsceneNodeActor>
+    <CCutsceneNodeEnvironmentLight guid="8348047237244866203" name="Kaldir Night" timeOfDay="20.000000" hdrExposure="0.800000" hdrBloomThreshold="1.200000" hdrAmbientMultiplier="0.350000" colorizationSaturation="0.700000" ssaoOcclusionRadius="3.500000" ssaoOcclusionPower="1.400000" keyDirectionX="0.200000" keyDirectionY="-0.800000" keyDirectionZ="0.500000"/>
+    <CCutsceneNodeFog guid="16466445446590546988" name="Cold Fog" fogColorX="0.3" fogColorY="0.45" fogColorZ="0.65" fogDensity="0.08" fogFalloff="0.5" fogStartHeight="0">
+        <CCutsceneElementObject guid="9903601955269806732" duration="6000" lockedToEnd="1"/>
+    </CCutsceneNodeFog>
+</CutsceneState>

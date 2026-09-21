@@ -1,0 +1,1 @@
+{"name":"simple_EAlertFlag","kind":"simple","fields":[],"enumValues":["Combine","Hide","Ping","SoundFromLocalPlayer"],"facets":[],"base":"xs:string"}

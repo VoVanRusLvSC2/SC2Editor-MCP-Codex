@@ -1,0 +1,1 @@
+{"name":"simple_EClassIdCPlayerResponse","kind":"simple","fields":[],"enumValues":["CPlayerResponse","CPlayerResponseUnit","CPlayerResponseUnitBirth","CPlayerResponseUnitDamage","CPlayerResponseUnitDeath"],"facets":[],"base":"xs:string"}

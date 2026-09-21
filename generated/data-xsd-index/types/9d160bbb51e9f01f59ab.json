@@ -1,0 +1,1 @@
+{"name":"simple_EUnitGender","kind":"simple","fields":[],"enumValues":["Female","Male","Neutral"],"facets":[],"base":"xs:string"}

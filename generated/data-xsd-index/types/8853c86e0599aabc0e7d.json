@@ -1,0 +1,1 @@
+{"name":"simple_EGraphicsOption","kind":"simple","fields":[],"enumValues":["Effects","Lighting","Model","Movies","Physics","Portraits","PostProc","Reflection","SSAO","Shader","Shadow","Terrain","Texture"],"facets":[],"base":"xs:string"}

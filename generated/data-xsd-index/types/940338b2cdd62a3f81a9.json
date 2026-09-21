@@ -1,0 +1,1 @@
+{"name":"SUserInstanceColor","kind":"complex","fields":[{"kind":"attribute","name":"Color","type":"simple_CColor"},{"kind":"element","name":"Color","type":"CColor","minOccurs":"0","maxOccurs":"1"},{"kind":"element","name":"Field","type":"SUserInstanceField","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

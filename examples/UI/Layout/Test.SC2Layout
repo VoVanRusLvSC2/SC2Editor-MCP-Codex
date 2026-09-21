@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Desc>
+    <Frame type="Frame" name="MCPTestPanel">
+        <Anchor side="Top" relative="$parent" pos="Min" offset="80"/>
+        <Anchor side="Left" relative="$parent" pos="Min" offset="80"/>
+        <Width val="500"/>
+        <Height val="300"/>
+    </Frame>
+</Desc>

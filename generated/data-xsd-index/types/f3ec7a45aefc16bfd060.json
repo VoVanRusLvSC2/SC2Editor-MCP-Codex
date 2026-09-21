@@ -1,0 +1,1 @@
+{"name":"simple_EPointType","kind":"simple","fields":[],"enumValues":["BlockPathing","NoFlyZone","Normal","SoundEmitter","StartLoc","ThreeD"],"facets":[],"base":"xs:string"}

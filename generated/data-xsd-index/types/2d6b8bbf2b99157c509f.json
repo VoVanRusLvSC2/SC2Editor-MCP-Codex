@@ -1,0 +1,1 @@
+{"name":"simple_EExclusivityQueueAction","kind":"simple","fields":[],"enumValues":["Fail","Stomp"],"facets":[],"base":"xs:string"}

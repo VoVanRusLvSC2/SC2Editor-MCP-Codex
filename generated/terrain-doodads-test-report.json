@@ -1,0 +1,52 @@
+{
+  "version": "1.1.0-alpha.9",
+  "regression": {
+    "tests": 186,
+    "pass": 186,
+    "fail": 0,
+    "skipped": 0
+  },
+  "terrainTests": 21,
+  "newTerrainDoodadTests": 8,
+  "mcpStdio": {
+    "status": "PASS",
+    "actualCommands": [
+      "terrain.inspect",
+      "terrain.plan",
+      "terrain.preview",
+      "terrain.apply",
+      "terrain.rollback",
+      "terrain.recipe.plan",
+      "placement.scatterDoodads",
+      "placement.snapToTerrain",
+      "placement.apply"
+    ]
+  },
+  "guiApi": "PASS: Doodad plan/preview and combined-location Terrain dispatch",
+  "exactAlpha8OutputMatch": [
+    "1000-object XML",
+    "5000-point seeded scatter",
+    "native local terrain height+texture brush"
+  ],
+  "nativeCorpus": {
+    "maps": 4,
+    "components": 44
+  },
+  "performanceReport": "generated/terrain-doodads-performance.json",
+  "lint": "PASS",
+  "guiVisual": "NOT_EXECUTED",
+  "windowsLauncherExecution": "NOT_EXECUTED",
+  "nativeEditorOpenSave": "NOT_EXECUTED",
+  "sc2Runtime": "NOT_EXECUTED",
+  "limitations": [
+    "diagnostic bilinear height/slope",
+    "rectangular decoded water coverage only",
+    "native HeightAbsolute semantics not round-tripped",
+    "model collision/pathing unavailable",
+    "structural cliffs/ramps and MPQ writer blocked"
+  ],
+  "build": "PASS",
+  "portableBuild": "PASS",
+  "portableHttpSmoke": "PASS",
+  "portableReport": "generated/terrain-doodads-portable-smoke.json"
+}

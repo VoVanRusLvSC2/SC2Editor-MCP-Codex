@@ -1,0 +1,1 @@
+{"name":"simple_ECommanderMasteryTalentType","kind":"simple","fields":[],"enumValues":["None","Percent","Seconds"],"facets":[],"base":"xs:string"}

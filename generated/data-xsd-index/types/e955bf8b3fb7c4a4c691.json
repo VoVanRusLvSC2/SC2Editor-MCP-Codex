@@ -1,0 +1,1 @@
+{"name":"SUserInstanceGameLink","kind":"complex","fields":[{"kind":"attribute","name":"GameLink","type":"simple_CString"},{"kind":"element","name":"Field","type":"SUserInstanceField","minOccurs":"0","maxOccurs":"1"},{"kind":"element","name":"GameLink","type":"CString","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

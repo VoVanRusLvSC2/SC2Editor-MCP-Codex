@@ -1,0 +1,1 @@
+{"name":"simple_EAMNumericField","kind":"simple","fields":[],"enumValues":["OpEquals","OpGreaterThan","OpGreaterThanOrEqual","OpLessThan","OpLessThanOrEqual","RadiusShield","RadiusTarget"],"facets":[],"base":"xs:string"}

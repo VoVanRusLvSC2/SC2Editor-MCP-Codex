@@ -1,0 +1,9389 @@
+{
+  "build": "5.0.16.97563",
+  "sha256": "9cab25db2b7dcfaaad207978b4eac07ec694f1f7cdbee4257d0db0845e14a164",
+  "schemaCoverage": {
+    "frameTypes": {
+      "total": 892,
+      "described": 892,
+      "communityDeclared": 874,
+      "observedOnly": 18,
+      "restricted": 610,
+      "missingClassDefinitions": [],
+      "inheritanceCycles": []
+    },
+    "properties": {
+      "declared": 1918,
+      "observedOnly": 58,
+      "typedDeclared": 1918,
+      "structurallyEditableDeclared": 1918,
+      "unresolvedTypeReferences": [],
+      "opaqueScalarTypes": []
+    },
+    "guarantees": {
+      "allKnownFrameTypesGenericReadWrite": true,
+      "allDeclaredPropertiesGenericReadWrite": true,
+      "unknownXmlPreservedByLosslessModel": true,
+      "declaredScalarValidationComplete": true,
+      "observedOnlyScalarValidationComplete": false
+    },
+    "limitations": [
+      "Observed-only frame types and properties are structurally editable, but may lack authoritative engine type metadata.",
+      "Unknown future XML remains editable only with explicit allowUnknown/allowUnknownType and is preserved losslessly.",
+      "Only the SC2 runtime/editor can prove version-specific behavior, especially for Blizzard-only/locked frames."
+    ]
+  },
+  "editorFrameClassCandidates": 654,
+  "matchedSchemaClasses": 280,
+  "note": "Supplementary EXE string/RTTI evidence only. The StormLayout schema plus Blizzard UI corpus remains the authoritative UI registry source.",
+  "classes": [
+    {
+      "className": "ABChoiceFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36DEBD0"
+      ],
+      "rvas": [
+        "0x36DFBD0"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "AchievementCategoryFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36DEC28"
+      ],
+      "rvas": [
+        "0x36DFC28"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "AchievementCriteriaFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36DEC60"
+      ],
+      "rvas": [
+        "0x36DFC60"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "AchievementFanfaresFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36DEBF0"
+      ],
+      "rvas": [
+        "0x36DFBF0"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "AchievementFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3653B10"
+      ],
+      "rvas": [
+        "0x3654B10"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "AchievementInfoFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36DEC80"
+      ],
+      "rvas": [
+        "0x36DFC80"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "AchievementShowcaseFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36DECE0"
+      ],
+      "rvas": [
+        "0x36DFCE0"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "AchievementShowcaseSelectionFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36DED00"
+      ],
+      "rvas": [
+        "0x36DFD00"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "AllyPlayerFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x372A198"
+      ],
+      "rvas": [
+        "0x372B198"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "AnchorFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x366C358"
+      ],
+      "rvas": [
+        "0x366D358"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "APMFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3688798"
+      ],
+      "rvas": [
+        "0x3689798"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "ArmyFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3688788"
+      ],
+      "rvas": [
+        "0x3689788"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "AspectRatioFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x37EBC20"
+      ],
+      "rvas": [
+        "0x37ECC20"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "AttachPointFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x367E1E0"
+      ],
+      "rvas": [
+        "0x367F1E0"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "AvatarFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36DEE80"
+      ],
+      "rvas": [
+        "0x36DFE80"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "BackgroundAnchorFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3696740"
+      ],
+      "rvas": [
+        "0x3697740"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "BackgroundFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3672280"
+      ],
+      "rvas": [
+        "0x3673280"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "BatteryFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x369B7A0"
+      ],
+      "rvas": [
+        "0x369C7A0"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "BattleClubFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36DF1D8"
+      ],
+      "rvas": [
+        "0x36E01D8"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "BattleMapFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36DF288"
+      ],
+      "rvas": [
+        "0x36E0288"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "BattleMapPinFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36DF708"
+      ],
+      "rvas": [
+        "0x36E0708"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "BattleMapRatingFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36DF8C0"
+      ],
+      "rvas": [
+        "0x36E08C0"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "BattleMapVariantFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36DF298"
+      ],
+      "rvas": [
+        "0x36E0298"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "BattleQueueFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36DF980"
+      ],
+      "rvas": [
+        "0x36E0980"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "BattleUserFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36DFE28"
+      ],
+      "rvas": [
+        "0x36E0E28"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "BlurFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x37EBC38"
+      ],
+      "rvas": [
+        "0x37ECC38"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "BoardItemProgressFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3671EF8"
+      ],
+      "rvas": [
+        "0x3672EF8"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "BookmarkCountFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36DFF00"
+      ],
+      "rvas": [
+        "0x36E0F00"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "BookmarkSelectionFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36DFF40"
+      ],
+      "rvas": [
+        "0x36E0F40"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "BorderAnchorFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36E0C90"
+      ],
+      "rvas": [
+        "0x36E1C90"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "BottomAnchorFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x366E888"
+      ],
+      "rvas": [
+        "0x366F888"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "BracketFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3787C90"
+      ],
+      "rvas": [
+        "0x3788C90"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "BundleCacheFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36DFF78"
+      ],
+      "rvas": [
+        "0x36E0F78"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "BundleSelectionFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36DFF90"
+      ],
+      "rvas": [
+        "0x36E0F90"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "ButtonFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x38136B8"
+      ],
+      "rvas": [
+        "0x38146B8"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "ButtonHeightFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36EF3C8"
+      ],
+      "rvas": [
+        "0x36F03C8"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "CABChoiceFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x364D4C8",
+        "0x4369E30"
+      ],
+      "rvas": [
+        "0x364E4C8",
+        "0x436AE30"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CAchievementCategoryFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36D63F8",
+        "0x436B618"
+      ],
+      "rvas": [
+        "0x36D73F8",
+        "0x436C618"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CAchievementCriteriaFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36D7FC8",
+        "0x436B4E8"
+      ],
+      "rvas": [
+        "0x36D8FC8",
+        "0x436C4E8"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CAchievementFanfaresFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DD9C8",
+        "0x436C860"
+      ],
+      "rvas": [
+        "0x36DE9C8",
+        "0x436D860"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CAchievementFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36533C8",
+        "0x4364040"
+      ],
+      "rvas": [
+        "0x36543C8",
+        "0x4365040"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CAchievementInfoFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DFFC8",
+        "0x436AF60"
+      ],
+      "rvas": [
+        "0x36E0FC8",
+        "0x436BF60"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CAchievementShowcaseFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36D9998",
+        "0x43683E8"
+      ],
+      "rvas": [
+        "0x36DA998",
+        "0x43693E8"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CAchievementShowcaseSelectionFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36D7FA0",
+        "0x43684B0"
+      ],
+      "rvas": [
+        "0x36D8FA0",
+        "0x43694B0"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CameraViewFrustumFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x368A5F8"
+      ],
+      "rvas": [
+        "0x368B5F8"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "CampaignCacheFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D8D08"
+      ],
+      "rvas": [
+        "0x36D9D08"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "CancelButtonGapFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3661920"
+      ],
+      "rvas": [
+        "0x3662920"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "CAspectRatioFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x37EBAA8",
+        "0x436F448"
+      ],
+      "rvas": [
+        "0x37ECAA8",
+        "0x4370448"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CAvatarBaseFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36FD558",
+        "0x436D3A0"
+      ],
+      "rvas": [
+        "0x36FE558",
+        "0x436E3A0"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CAvatarFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DB2E0",
+        "0x436D2A8"
+      ],
+      "rvas": [
+        "0x36DC2E0",
+        "0x436E2A8"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CBattleClubFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36D7998",
+        "0x436CBF8"
+      ],
+      "rvas": [
+        "0x36D8998",
+        "0x436DBF8"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CBattleMapFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DDAD8",
+        "0x436C838"
+      ],
+      "rvas": [
+        "0x36DEAD8",
+        "0x436D838"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CBattleMapPinFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36D5A80",
+        "0x436C4B8"
+      ],
+      "rvas": [
+        "0x36D6A80",
+        "0x436D4B8"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CBattleMapRatingFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DF798",
+        "0x436BFB0"
+      ],
+      "rvas": [
+        "0x36E0798",
+        "0x436CFB0"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CBattleMapVariantFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DF1E8",
+        "0x436C7D8"
+      ],
+      "rvas": [
+        "0x36E01E8",
+        "0x436D7D8"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CBattleQueueFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36D9CF0",
+        "0x436B5F0"
+      ],
+      "rvas": [
+        "0x36DACF0",
+        "0x436C5F0"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CBattleUserBaseFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3709180",
+        "0x436AFE8"
+      ],
+      "rvas": [
+        "0x370A180",
+        "0x436BFE8"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CBattleUserFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36D74B8",
+        "0x436AEA0"
+      ],
+      "rvas": [
+        "0x36D84B8",
+        "0x436BEA0"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CBlurFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x37EBFB0",
+        "0x436F3F8"
+      ],
+      "rvas": [
+        "0x37ECFB0",
+        "0x43703F8"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CBookmarkCountFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DC3D0",
+        "0x436AAB0"
+      ],
+      "rvas": [
+        "0x36DD3D0",
+        "0x436BAB0"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CBookmarkSelectionFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DB738",
+        "0x436C9B0"
+      ],
+      "rvas": [
+        "0x36DC738",
+        "0x436D9B0"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CBundleCacheFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36D5A68",
+        "0x436AA00"
+      ],
+      "rvas": [
+        "0x36D6A68",
+        "0x436BA00"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CBundleSelectionFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36D7B00",
+        "0x436A238"
+      ],
+      "rvas": [
+        "0x36D8B00",
+        "0x436B238"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CCampaignCacheFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DCB28",
+        "0x4369E98"
+      ],
+      "rvas": [
+        "0x36DDB28",
+        "0x436AE98"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CChallengeCategoryFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DA010",
+        "0x436AC68"
+      ],
+      "rvas": [
+        "0x36DB010",
+        "0x436BC68"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CChallengeFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36E0308",
+        "0x436AEC8"
+      ],
+      "rvas": [
+        "0x36E1308",
+        "0x436BEC8"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CChallengeInfoFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DB8A8",
+        "0x436AB40"
+      ],
+      "rvas": [
+        "0x36DC8A8",
+        "0x436BB40"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CClubProfileEventsEditFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36D8F50",
+        "0x4368610"
+      ],
+      "rvas": [
+        "0x36D9F50",
+        "0x4369610"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CClubProfileEventsFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DC928",
+        "0x4368450"
+      ],
+      "rvas": [
+        "0x36DD928",
+        "0x4369450"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CClubProfileEventsReportFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36D76A8",
+        "0x43686F0"
+      ],
+      "rvas": [
+        "0x36D86A8",
+        "0x43696F0"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CClubProfileInfoEditFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DDA80",
+        "0x4368328"
+      ],
+      "rvas": [
+        "0x36DEA80",
+        "0x4369328"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CClubProfileNewsEditFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36D5A28",
+        "0x4368150"
+      ],
+      "rvas": [
+        "0x36D6A28",
+        "0x4369150"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CClubProfileNewsFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36D8E08",
+        "0x4367F20"
+      ],
+      "rvas": [
+        "0x36D9E08",
+        "0x4368F20"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CClubProfileNewsReportFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DF240",
+        "0x4368248"
+      ],
+      "rvas": [
+        "0x36E0240",
+        "0x4369248"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CClubProfileRosterFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DC470",
+        "0x4367CC8"
+      ],
+      "rvas": [
+        "0x36DD470",
+        "0x4368CC8"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CClubProfileTextListEditFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x37198B8",
+        "0x43688C0"
+      ],
+      "rvas": [
+        "0x371A8B8",
+        "0x43698C0"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CClubProfileTextListFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3719F80",
+        "0x4368788"
+      ],
+      "rvas": [
+        "0x371AF80",
+        "0x4369788"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CClubProfileTextListReportFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3719620",
+        "0x4368980"
+      ],
+      "rvas": [
+        "0x371A620",
+        "0x4369980"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CClubSearchFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36D5EB8",
+        "0x43679B0"
+      ],
+      "rvas": [
+        "0x36D6EB8",
+        "0x43689B0"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CCommanderCacheFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DA100",
+        "0x436E428"
+      ],
+      "rvas": [
+        "0x36DB100",
+        "0x436F428"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CCommanderMasteryLevelFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36D6A98",
+        "0x436DAC8"
+      ],
+      "rvas": [
+        "0x36D7A98",
+        "0x436EAC8"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CCommanderMasteryTalentFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36D9ED0",
+        "0x436D918"
+      ],
+      "rvas": [
+        "0x36DAED0",
+        "0x436E918"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CCommanderPrestigeFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DB300",
+        "0x436E378"
+      ],
+      "rvas": [
+        "0x36DC300",
+        "0x436F378"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CCommandHotkeyFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3656A00",
+        "0x4365B30"
+      ],
+      "rvas": [
+        "0x3657A00",
+        "0x4366B30"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CConsoleSkinCacheFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36D94F0",
+        "0x436D0B8"
+      ],
+      "rvas": [
+        "0x36DA4F0",
+        "0x436E0B8"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CConsoleSkinSelectionFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DBA40",
+        "0x436CEF8"
+      ],
+      "rvas": [
+        "0x36DCA40",
+        "0x436DEF8"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CCooldownFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36523E8",
+        "0x43666B8"
+      ],
+      "rvas": [
+        "0x36533E8",
+        "0x43676B8"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CCoopCampaignMutatorIconFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36D9FA8",
+        "0x436B4B0"
+      ],
+      "rvas": [
+        "0x36DAFA8",
+        "0x436C4B0"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CCoopCampaignPlayerScoreResultFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DB9F8",
+        "0x436B140"
+      ],
+      "rvas": [
+        "0x36DC9F8",
+        "0x436C140"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CCoopMutatorAdvertisementFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DA068",
+        "0x436ACF0"
+      ],
+      "rvas": [
+        "0x36DB068",
+        "0x436BCF0"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CCutsceneFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36699D8",
+        "0x43698E8"
+      ],
+      "rvas": [
+        "0x366A9D8",
+        "0x436A8E8"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CDataRefFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36524C0",
+        "0x4363F88"
+      ],
+      "rvas": [
+        "0x36534C0",
+        "0x4364F88"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CDateFormatFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x37EA908",
+        "0x436FD50"
+      ],
+      "rvas": [
+        "0x37EB908",
+        "0x4370D50"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CDateSelectionFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36E0838",
+        "0x43696F0"
+      ],
+      "rvas": [
+        "0x36E1838",
+        "0x436A6F0"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CDescFrameCountFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x37EB470",
+        "0x436FD20"
+      ],
+      "rvas": [
+        "0x37EC470",
+        "0x4370D20"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CDifficultyLevelFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DCB98",
+        "0x436D540"
+      ],
+      "rvas": [
+        "0x36DDB98",
+        "0x436E540"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CEmoticonAchievementFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36D7940",
+        "0x436B7C8"
+      ],
+      "rvas": [
+        "0x36D8940",
+        "0x436C7C8"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CEmoticonPackSelectionFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DDAB8",
+        "0x436BBE0"
+      ],
+      "rvas": [
+        "0x36DEAB8",
+        "0x436CBE0"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CEnforcedGameResultIndicatorFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36568C0",
+        "0x4363E60"
+      ],
+      "rvas": [
+        "0x36578C0",
+        "0x4364E60"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CFlashFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36660C0",
+        "0x436FC30"
+      ],
+      "rvas": [
+        "0x36670C0",
+        "0x4370C30"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x364CAB0",
+        "0x4363C30"
+      ],
+      "rvas": [
+        "0x364DAB0",
+        "0x4364C30"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CFrameDesc",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36A3B90"
+      ],
+      "rvas": [
+        "0x36A4B90"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "CGameContentFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DA538",
+        "0x436A080"
+      ],
+      "rvas": [
+        "0x36DB538",
+        "0x436B080"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CGraphAxisFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x37FD9C8",
+        "0x436FAD8"
+      ],
+      "rvas": [
+        "0x37FE9C8",
+        "0x4370AD8"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CGraphBarPlotFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x37EB4B8",
+        "0x436FA80"
+      ],
+      "rvas": [
+        "0x37EC4B8",
+        "0x4370A80"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CGraphComponentFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x37FCF58",
+        "0x436FBA8"
+      ],
+      "rvas": [
+        "0x37FDF58",
+        "0x4370BA8"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CGraphDistributedAxisFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x37EB5F0",
+        "0x436FA48"
+      ],
+      "rvas": [
+        "0x37EC5F0",
+        "0x4370A48"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CGraphFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3669A78",
+        "0x436FAB0"
+      ],
+      "rvas": [
+        "0x366AA78",
+        "0x4370AB0"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CGraphIntervalAxisFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x37EB988",
+        "0x436FA18"
+      ],
+      "rvas": [
+        "0x37EC988",
+        "0x4370A18"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CGraphItemFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x37EB9A0",
+        "0x436FB58"
+      ],
+      "rvas": [
+        "0x37EC9A0",
+        "0x4370B58"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CGraphItemPlotFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x37FD728",
+        "0x436FB28"
+      ],
+      "rvas": [
+        "0x37FE728",
+        "0x4370B28"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CGraphLegendFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x37EAD30",
+        "0x436F9C0"
+      ],
+      "rvas": [
+        "0x37EBD30",
+        "0x43709C0"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CGraphLegendItemFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x37EBAE0",
+        "0x436F9E8"
+      ],
+      "rvas": [
+        "0x37ECAE0",
+        "0x43709E8"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CGraphLineItemFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x37EAE30",
+        "0x436F990"
+      ],
+      "rvas": [
+        "0x37EBE30",
+        "0x4370990"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CGraphLinePlotFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x37EAFA0",
+        "0x436F960"
+      ],
+      "rvas": [
+        "0x37EBFA0",
+        "0x4370960"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CGraphPlotFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x37FD210",
+        "0x436FB80"
+      ],
+      "rvas": [
+        "0x37FE210",
+        "0x4370B80"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CGraphPointPlotFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x37EB530",
+        "0x436F930"
+      ],
+      "rvas": [
+        "0x37EC530",
+        "0x4370930"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CGraphTextTickFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x37EB658",
+        "0x436F900"
+      ],
+      "rvas": [
+        "0x37EC658",
+        "0x4370900"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CGraphTickFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x37FD740",
+        "0x436FB00"
+      ],
+      "rvas": [
+        "0x37FE740",
+        "0x4370B00"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "ChallengeCategoryFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36E0178"
+      ],
+      "rvas": [
+        "0x36E1178"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "ChallengeFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36E01D0"
+      ],
+      "rvas": [
+        "0x36E11D0"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "ChallengeInfoFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36E01E0"
+      ],
+      "rvas": [
+        "0x36E11E0"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "CHeroFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3652F48",
+        "0x43665B8"
+      ],
+      "rvas": [
+        "0x3653F48",
+        "0x43675B8"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CIndicatorFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DB900",
+        "0x436E128"
+      ],
+      "rvas": [
+        "0x36DC900",
+        "0x436F128"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CInputMethodCompositionFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x37EC2C0",
+        "0x436F898"
+      ],
+      "rvas": [
+        "0x37ED2C0",
+        "0x4370898"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CInputMethodLanguageFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x37EAD48",
+        "0x436F838"
+      ],
+      "rvas": [
+        "0x37EBD48",
+        "0x4370838"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CInputMethodReadingFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x37EAB50",
+        "0x436F868"
+      ],
+      "rvas": [
+        "0x37EBB50",
+        "0x4370868"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CLadderTeamShowcaseFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DDB08",
+        "0x436CE70"
+      ],
+      "rvas": [
+        "0x36DEB08",
+        "0x436DE70"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CLadderTeamShowcaseSelectionFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DCB00",
+        "0x436CF30"
+      ],
+      "rvas": [
+        "0x36DDB00",
+        "0x436DF30"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CLatencyIndicatorFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36D5B68",
+        "0x436CD48"
+      ],
+      "rvas": [
+        "0x36D6B68",
+        "0x436DD48"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CLeaderPanelAPMFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3651B68",
+        "0x4364918"
+      ],
+      "rvas": [
+        "0x3652B68",
+        "0x4365918"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CLeaderPanelArmyFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3656440",
+        "0x4364A18"
+      ],
+      "rvas": [
+        "0x3657440",
+        "0x4365A18"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CLeaderPanelFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36869B8",
+        "0x4364AE0"
+      ],
+      "rvas": [
+        "0x36879B8",
+        "0x4365AE0"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CLeaderPanelIncomeFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3656B40",
+        "0x43649C0"
+      ],
+      "rvas": [
+        "0x3657B40",
+        "0x43659C0"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CLeaderPanelProductionFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3653390",
+        "0x43646B0"
+      ],
+      "rvas": [
+        "0x3654390",
+        "0x43656B0"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CLeaderPanelResourceFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3654BD8",
+        "0x4364AB0"
+      ],
+      "rvas": [
+        "0x3655BD8",
+        "0x4365AB0"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CLeaderPanelSpendingFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36521D8",
+        "0x4364890"
+      ],
+      "rvas": [
+        "0x36531D8",
+        "0x4365890"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CLeaderPanelUnitFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36525C0",
+        "0x43647D0"
+      ],
+      "rvas": [
+        "0x36535C0",
+        "0x43657D0"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CLeaderPanelUnitsLostFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3652B80",
+        "0x4364770"
+      ],
+      "rvas": [
+        "0x3653B80",
+        "0x4365770"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CLeaderPanelUpgradeFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3654690",
+        "0x4364660"
+      ],
+      "rvas": [
+        "0x3655690",
+        "0x4365660"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CLeagueRatingFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DA330",
+        "0x436C890"
+      ],
+      "rvas": [
+        "0x36DB330",
+        "0x436D890"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CLoadingCoopCampaignPlayerFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DCA78",
+        "0x436C630"
+      ],
+      "rvas": [
+        "0x36DDA78",
+        "0x436D630"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CLobbyListFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36D9668",
+        "0x436C050"
+      ],
+      "rvas": [
+        "0x36DA668",
+        "0x436D050"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CLobbyMatchOptionsFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DB2C8",
+        "0x436BB78"
+      ],
+      "rvas": [
+        "0x36DC2C8",
+        "0x436CB78"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CLobbyPlayerSlotsFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36D8C20",
+        "0x436B588"
+      ],
+      "rvas": [
+        "0x36D9C20",
+        "0x436C588"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CLobbyPlayerSlotsPlayerContainerFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36E0190",
+        "0x436B828"
+      ],
+      "rvas": [
+        "0x36E1190",
+        "0x436C828"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CLobbyPlayerSlotsPlayerFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DE478",
+        "0x436B910"
+      ],
+      "rvas": [
+        "0x36DF478",
+        "0x436C910"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CLobbyPlayerSlotsTeamFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36D7548",
+        "0x436B6E0"
+      ],
+      "rvas": [
+        "0x36D8548",
+        "0x436C6E0"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CLobbyPreviewFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36D6718",
+        "0x436BDA8"
+      ],
+      "rvas": [
+        "0x36D7718",
+        "0x436CDA8"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CLobbyReplayInfoFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DB9E0",
+        "0x436B388"
+      ],
+      "rvas": [
+        "0x36DC9E0",
+        "0x436C388"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CLobbyResumeReplayFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DE980",
+        "0x436B1E8"
+      ],
+      "rvas": [
+        "0x36DF980",
+        "0x436C1E8"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CLookAtFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x37EB558",
+        "0x436F7E8"
+      ],
+      "rvas": [
+        "0x37EC558",
+        "0x43707E8"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "ClubProfileEventsEditFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36E0570"
+      ],
+      "rvas": [
+        "0x36E1570"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "ClubProfileEventsFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36E0590"
+      ],
+      "rvas": [
+        "0x36E1590"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "ClubProfileEventsReportFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36E05E0"
+      ],
+      "rvas": [
+        "0x36E15E0"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "ClubProfileInfoEditFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36E0600"
+      ],
+      "rvas": [
+        "0x36E1600"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "ClubProfileNewsEditFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36E0658"
+      ],
+      "rvas": [
+        "0x36E1658"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "ClubProfileNewsFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36E0690"
+      ],
+      "rvas": [
+        "0x36E1690"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "ClubProfileNewsReportFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36E06C8"
+      ],
+      "rvas": [
+        "0x36E16C8"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "ClubProfileRosterFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36E0710"
+      ],
+      "rvas": [
+        "0x36E1710"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "ClubSearchFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36E0760"
+      ],
+      "rvas": [
+        "0x36E1760"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "CMatchmakingActivityFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36D5E98",
+        "0x4369D28"
+      ],
+      "rvas": [
+        "0x36D6E98",
+        "0x436AD28"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CMatchmakingMapVetoFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DE9B8",
+        "0x4369850"
+      ],
+      "rvas": [
+        "0x36DF9B8",
+        "0x436A850"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CMatchmakingSeasonFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36E0160",
+        "0x43692A8"
+      ],
+      "rvas": [
+        "0x36E1160",
+        "0x436A2A8"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CMathFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x37EB960",
+        "0x436F7C0"
+      ],
+      "rvas": [
+        "0x37EC960",
+        "0x43707C0"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CMercenaryFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36525F8",
+        "0x43643C0"
+      ],
+      "rvas": [
+        "0x36535F8",
+        "0x43653C0"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CMinimapCameraViewFrustumFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3651740",
+        "0x4365D20"
+      ],
+      "rvas": [
+        "0x3652740",
+        "0x4366D20"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CModelFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x365DFC0",
+        "0x436F798"
+      ],
+      "rvas": [
+        "0x365EFC0",
+        "0x4370798"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CModelFrameDesc",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x37F97E0"
+      ],
+      "rvas": [
+        "0x37FA7E0"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "CMovieFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36699E8",
+        "0x436F770"
+      ],
+      "rvas": [
+        "0x366A9E8",
+        "0x4370770"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CMovingFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x364D9F8",
+        "0x436D400"
+      ],
+      "rvas": [
+        "0x364E9F8",
+        "0x436E400"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CMultiplayerLoadingPanelGameUserFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36D7F48",
+        "0x4368C20"
+      ],
+      "rvas": [
+        "0x36D8F48",
+        "0x4369C20"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CMultiplayerLoadingPanelTandemPlayerFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DC408",
+        "0x4368B50"
+      ],
+      "rvas": [
+        "0x36DD408",
+        "0x4369B50"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CMultiplayerTournamentFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DD670",
+        "0x4368A90"
+      ],
+      "rvas": [
+        "0x36DE670",
+        "0x4369A90"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CObserverPreviewFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3655F48",
+        "0x4365A88"
+      ],
+      "rvas": [
+        "0x3656F48",
+        "0x4366A88"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "COffscreenUnitFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3656A58",
+        "0x4365A30"
+      ],
+      "rvas": [
+        "0x3657A58",
+        "0x4366A30"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CommanderCacheFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D8D20"
+      ],
+      "rvas": [
+        "0x36D9D20"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "CommanderMasteryLevelFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36E08E0"
+      ],
+      "rvas": [
+        "0x36E18E0"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "CommanderMasteryTalentFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36E0920"
+      ],
+      "rvas": [
+        "0x36E1920"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "CommanderPrestigeFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D59C0"
+      ],
+      "rvas": [
+        "0x36D69C0"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "CommandHotkeyFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3653DC0"
+      ],
+      "rvas": [
+        "0x3654DC0"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "ConsoleSkinCacheFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D5B10"
+      ],
+      "rvas": [
+        "0x36D6B10"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "ConsoleSkinSelectionFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D5B48"
+      ],
+      "rvas": [
+        "0x36D6B48"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "ContainerFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x368C5F0"
+      ],
+      "rvas": [
+        "0x368D5F0"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "CooldownFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3654240"
+      ],
+      "rvas": [
+        "0x3655240"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "CoopCampaignMutatorIconFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D5FC0"
+      ],
+      "rvas": [
+        "0x36D6FC0"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "CoopCampaignPlayerScoreResultFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D6040"
+      ],
+      "rvas": [
+        "0x36D7040"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "CoopMutatorAdvertisementFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D6120"
+      ],
+      "rvas": [
+        "0x36D7120"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "CParentCenteredFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x37EB620",
+        "0x436F680"
+      ],
+      "rvas": [
+        "0x37EC620",
+        "0x4370680"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CPlanetFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3652F58",
+        "0x4365838"
+      ],
+      "rvas": [
+        "0x3653F58",
+        "0x4366838"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CPlayerBlockFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36569D0",
+        "0x4365628"
+      ],
+      "rvas": [
+        "0x36579D0",
+        "0x4366628"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CPlayerDeathIndicatorFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36516F8",
+        "0x4365598"
+      ],
+      "rvas": [
+        "0x36526F8",
+        "0x4366598"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CPlayerFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36552D8",
+        "0x43656A8"
+      ],
+      "rvas": [
+        "0x36562D8",
+        "0x43666A8"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CPlayerHeroIconFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3651D68",
+        "0x4365510"
+      ],
+      "rvas": [
+        "0x3652D68",
+        "0x4366510"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CPlayerHeroLevelFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3652420",
+        "0x4365480"
+      ],
+      "rvas": [
+        "0x3653420",
+        "0x4366480"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CPlayerHeroNameFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3652620",
+        "0x43653F8"
+      ],
+      "rvas": [
+        "0x3653620",
+        "0x43663F8"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CPlayerHeroSelectedTalentTreeFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3656090",
+        "0x4365388"
+      ],
+      "rvas": [
+        "0x3657090",
+        "0x4366388"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CPlayerInfoFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36520F0",
+        "0x43651F8"
+      ],
+      "rvas": [
+        "0x36530F0",
+        "0x43661F8"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CPlayerLogoImageFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3656AB8",
+        "0x43652F8"
+      ],
+      "rvas": [
+        "0x3657AB8",
+        "0x43662F8"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CPlayerLogoTextFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3651AA8",
+        "0x4365270"
+      ],
+      "rvas": [
+        "0x3652AA8",
+        "0x4366270"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CPlayerNameFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3652178",
+        "0x4365220"
+      ],
+      "rvas": [
+        "0x3653178",
+        "0x4366220"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CPlayerOwnedUnitsFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3654C18",
+        "0x4365118"
+      ],
+      "rvas": [
+        "0x3655C18",
+        "0x4366118"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CPlayerProductionFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36524E8",
+        "0x4364FA0"
+      ],
+      "rvas": [
+        "0x36534E8",
+        "0x4365FA0"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CPlayerRaceIconFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3652AC8",
+        "0x4364F40"
+      ],
+      "rvas": [
+        "0x3653AC8",
+        "0x4365F40"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CPlayerScoreResultFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DBE90",
+        "0x4367EB8"
+      ],
+      "rvas": [
+        "0x36DCE90",
+        "0x4368EB8"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CPlayerScoreValueFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3652FB8",
+        "0x4364ED0"
+      ],
+      "rvas": [
+        "0x3653FB8",
+        "0x4365ED0"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CPlayerScoreValueResultFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x372A070",
+        "0x4367D68"
+      ],
+      "rvas": [
+        "0x372B070",
+        "0x4368D68"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CPlayerScoreValueResultMaxNumberFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36D6438",
+        "0x4367A08"
+      ],
+      "rvas": [
+        "0x36D7438",
+        "0x4368A08"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CPlayerScoreValueResultNameFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DE2F0",
+        "0x4367C20"
+      ],
+      "rvas": [
+        "0x36DF2F0",
+        "0x4368C20"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CPlayerScoreValueResultNumberFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DFE38",
+        "0x4367B10"
+      ],
+      "rvas": [
+        "0x36E0E38",
+        "0x4368B10"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CPlayerScoreValueResultTalentFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DA620",
+        "0x4367700"
+      ],
+      "rvas": [
+        "0x36DB620",
+        "0x4368700"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CPlayerScoreValueResultUniqueTagFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36D7B30",
+        "0x4367930"
+      ],
+      "rvas": [
+        "0x36D8B30",
+        "0x4368930"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CPlayerScoreValueResultUniqueTagNameFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36D8EF8",
+        "0x4367830"
+      ],
+      "rvas": [
+        "0x36D9EF8",
+        "0x4368830"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CPlayerStatFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36533B0",
+        "0x4365178"
+      ],
+      "rvas": [
+        "0x36543B0",
+        "0x4366178"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CPlayerStatNameFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36552E8",
+        "0x43650E8"
+      ],
+      "rvas": [
+        "0x36562E8",
+        "0x43660E8"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CPlayerSupplyFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3653470",
+        "0x4364E68"
+      ],
+      "rvas": [
+        "0x3654470",
+        "0x4365E68"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CPlayerUpgradesFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3651C38",
+        "0x4364D98"
+      ],
+      "rvas": [
+        "0x3652C38",
+        "0x4365D98"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CPlayFromHereSessionUserFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36520A0",
+        "0x4365750"
+      ],
+      "rvas": [
+        "0x36530A0",
+        "0x4366750"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CPMFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36887A8"
+      ],
+      "rvas": [
+        "0x36897A8"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "CPortraitFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3653C20",
+        "0x4364D48"
+      ],
+      "rvas": [
+        "0x3654C20",
+        "0x4365D48"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CPortraitFrameDesc",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3669FC0"
+      ],
+      "rvas": [
+        "0x366AFC0"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "CPortraitTimeOfDayFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3656048",
+        "0x4364CE0"
+      ],
+      "rvas": [
+        "0x3657048",
+        "0x4365CE0"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "CPremiumMapCacheFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DEE18",
+        "0x436E2B0"
+      ],
+      "rvas": [
+        "0x36DFE18",
+        "0x436F2B0"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CProductDiscountFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36D6700",
+        "0x436E1B0"
+      ],
+      "rvas": [
+        "0x36D7700",
+        "0x436F1B0"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CProductionCountFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36569B8",
+        "0x4365090"
+      ],
+      "rvas": [
+        "0x36579B8",
+        "0x4366090"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CPurchaseCategoryFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3654CC0",
+        "0x4364B38"
+      ],
+      "rvas": [
+        "0x3655CC0",
+        "0x4365B38"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CPurchasedIndicatorFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DC498",
+        "0x436D9D8"
+      ],
+      "rvas": [
+        "0x36DD498",
+        "0x436E9D8"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CPurchaseGroupFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36533E0",
+        "0x4364B90"
+      ],
+      "rvas": [
+        "0x36543E0",
+        "0x4365B90"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CPurchaseItemFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3652108",
+        "0x4364C30"
+      ],
+      "rvas": [
+        "0x3653108",
+        "0x4365C30"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CRaceBannerCacheFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DD5B0",
+        "0x436D8E8"
+      ],
+      "rvas": [
+        "0x36DE5B0",
+        "0x436E8E8"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CRaceCacheFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DCFE8",
+        "0x436D6F0"
+      ],
+      "rvas": [
+        "0x36DDFE8",
+        "0x436E6F0"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CRaceLevelFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DDFA8",
+        "0x436D5D8"
+      ],
+      "rvas": [
+        "0x36DEFA8",
+        "0x436E5D8"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CRangeFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x37EAD98",
+        "0x436F5E0"
+      ],
+      "rvas": [
+        "0x37EBD98",
+        "0x43705E0"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CResearchCategoryFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3653830",
+        "0x4364270"
+      ],
+      "rvas": [
+        "0x3654830",
+        "0x4365270"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CResearchItemFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3655FD0",
+        "0x4364440"
+      ],
+      "rvas": [
+        "0x3656FD0",
+        "0x4365440"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CResearchTierFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36523F8",
+        "0x4364338"
+      ],
+      "rvas": [
+        "0x36533F8",
+        "0x4365338"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CResourceFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3652A88",
+        "0x4364148"
+      ],
+      "rvas": [
+        "0x3653A88",
+        "0x4365148"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CRewardCacheFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DBAA0",
+        "0x436C958"
+      ],
+      "rvas": [
+        "0x36DCAA0",
+        "0x436D958"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CRewardListFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3779CE8",
+        "0x43689B8"
+      ],
+      "rvas": [
+        "0x377ACE8",
+        "0x43699B8"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CScoreScreenBaseFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3766518",
+        "0x436C458"
+      ],
+      "rvas": [
+        "0x3767518",
+        "0x436D458"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CScoreScreenBuildOrderFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DF7D0",
+        "0x436C238"
+      ],
+      "rvas": [
+        "0x36E07D0",
+        "0x436D238"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CScoreScreenBuildOrderPlayerFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DBE68",
+        "0x436C2E8"
+      ],
+      "rvas": [
+        "0x36DCE68",
+        "0x436D2E8"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CScoreScreenExperienceFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DD600",
+        "0x436C0B8"
+      ],
+      "rvas": [
+        "0x36DE600",
+        "0x436D0B8"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CScoreScreenGraphsFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36D74A0",
+        "0x436BE48"
+      ],
+      "rvas": [
+        "0x36D84A0",
+        "0x436CE48"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CScoreScreenLadderFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36D9950",
+        "0x436BD48"
+      ],
+      "rvas": [
+        "0x36DA950",
+        "0x436CD48"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CScoreScreenPerformanceAverageFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36D6610",
+        "0x436B750"
+      ],
+      "rvas": [
+        "0x36D7610",
+        "0x436C750"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CScoreScreenPerformanceFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36D7DB0",
+        "0x436B678"
+      ],
+      "rvas": [
+        "0x36D8DB0",
+        "0x436C678"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CScoreScreenPerformanceScoreValueFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DFF18",
+        "0x436B868"
+      ],
+      "rvas": [
+        "0x36E0F18",
+        "0x436C868"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CScoreScreenStatsFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DE2D8",
+        "0x436B988"
+      ],
+      "rvas": [
+        "0x36DF2D8",
+        "0x436C988"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CScoreScreenStatsScoreValueFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DA958",
+        "0x436BC48"
+      ],
+      "rvas": [
+        "0x36DB958",
+        "0x436CC48"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CScoreValueCutsceneFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3653090",
+        "0x4363E30"
+      ],
+      "rvas": [
+        "0x3654090",
+        "0x4364E30"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CScoreValueFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3651B50",
+        "0x4363F60"
+      ],
+      "rvas": [
+        "0x3652B50",
+        "0x4364F60"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CScoreValueImageFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3652608",
+        "0x4363F00"
+      ],
+      "rvas": [
+        "0x3653608",
+        "0x4364F00"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CScoreValueLabelFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3652388",
+        "0x4363F30"
+      ],
+      "rvas": [
+        "0x3653388",
+        "0x4364F30"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CScoreValueProgressBarFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3652BD0",
+        "0x4363E98"
+      ],
+      "rvas": [
+        "0x3653BD0",
+        "0x4364E98"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CScrollableFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x37EA968",
+        "0x436F570"
+      ],
+      "rvas": [
+        "0x37EB968",
+        "0x4370570"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CSelectedBundleFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36D9CC8",
+        "0x4368B18"
+      ],
+      "rvas": [
+        "0x36DACC8",
+        "0x4369B18"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CSelectedDecalPackFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DD8D8",
+        "0x4368920"
+      ],
+      "rvas": [
+        "0x36DE8D8",
+        "0x4369920"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CSelectedEmoticonPackFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DEA40",
+        "0x4368858"
+      ],
+      "rvas": [
+        "0x36DFA40",
+        "0x4369858"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CSelectedPortraitPackFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36E0450",
+        "0x43687B8"
+      ],
+      "rvas": [
+        "0x36E1450",
+        "0x43697B8"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CSelectedRaceBannerPackFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36D6878",
+        "0x4368728"
+      ],
+      "rvas": [
+        "0x36D7878",
+        "0x4369728"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CSelectedSprayPackFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36D9588",
+        "0x4368578"
+      ],
+      "rvas": [
+        "0x36DA588",
+        "0x4369578"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CSelectedVoicePackFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DA750",
+        "0x4368480"
+      ],
+      "rvas": [
+        "0x36DB750",
+        "0x4369480"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CSkinCacheFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DD690",
+        "0x4368280"
+      ],
+      "rvas": [
+        "0x36DE690",
+        "0x4369280"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CSkinPackLargeFormatUnitSelectionFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DCA38",
+        "0x4367E18"
+      ],
+      "rvas": [
+        "0x36DDA38",
+        "0x4368E18"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CSkinPackUnitSelectionFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DEE90",
+        "0x4367BE8"
+      ],
+      "rvas": [
+        "0x36DFE90",
+        "0x4368BE8"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CStarterEditionLockFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36E07F8",
+        "0x436E1E0"
+      ],
+      "rvas": [
+        "0x36E17F8",
+        "0x436F1E0"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CStimpackCacheFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36D8888",
+        "0x436DF68"
+      ],
+      "rvas": [
+        "0x36D9888",
+        "0x436EF68"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CStoreCacheFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DA800",
+        "0x436DE90"
+      ],
+      "rvas": [
+        "0x36DB800",
+        "0x436EE90"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CSystemInfoBatteryFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3651728",
+        "0x4366CB0"
+      ],
+      "rvas": [
+        "0x3652728",
+        "0x4367CB0"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CSystemInfoFramerateFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3652438",
+        "0x4366BE0"
+      ],
+      "rvas": [
+        "0x3653438",
+        "0x4367BE0"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CSystemInfoLocalTimeFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3656A28",
+        "0x4366D10"
+      ],
+      "rvas": [
+        "0x3657A28",
+        "0x4367D10"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CSystemInfoResourceFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3652638",
+        "0x4366B78"
+      ],
+      "rvas": [
+        "0x3653638",
+        "0x4367B78"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CSystemInfoShaderFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3652C00",
+        "0x4366B10"
+      ],
+      "rvas": [
+        "0x3653C00",
+        "0x4367B10"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CSystemInfoWifiFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3651D90",
+        "0x4366C48"
+      ],
+      "rvas": [
+        "0x3652D90",
+        "0x4367C48"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CTalkerFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DE9D8",
+        "0x436DB70"
+      ],
+      "rvas": [
+        "0x36DF9D8",
+        "0x436EB70"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CTeamFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3656A70",
+        "0x43669E0"
+      ],
+      "rvas": [
+        "0x3657A70",
+        "0x43679E0"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CTeamHeroLevelFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3651A70",
+        "0x4366988"
+      ],
+      "rvas": [
+        "0x3652A70",
+        "0x4367988"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CTeamResourceRequestFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3652588",
+        "0x43668A0"
+      ],
+      "rvas": [
+        "0x3653588",
+        "0x43678A0"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CTeamScoreValueFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3651550",
+        "0x43666E0"
+      ],
+      "rvas": [
+        "0x3652550",
+        "0x43676E0"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CTeamVeterancyUnitStatusFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3651BF0",
+        "0x4366658"
+      ],
+      "rvas": [
+        "0x3652BF0",
+        "0x4367658"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CTechTreeConnectorFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36E0780",
+        "0x436D788"
+      ],
+      "rvas": [
+        "0x36E1780",
+        "0x436E788"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CTechTreeStructureFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36D95E8",
+        "0x436D570"
+      ],
+      "rvas": [
+        "0x36DA5E8",
+        "0x436E570"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CTechTreeUnitFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36D70A8",
+        "0x436D690"
+      ],
+      "rvas": [
+        "0x36D80A8",
+        "0x436E690"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CTextFormatFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x37EB5B8",
+        "0x436F420"
+      ],
+      "rvas": [
+        "0x37EC5B8",
+        "0x4370420"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CTimeFormatFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x37EB440",
+        "0x436F378"
+      ],
+      "rvas": [
+        "0x37EC440",
+        "0x4370378"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CTimeSelectionFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36D7EE8",
+        "0x436D118"
+      ],
+      "rvas": [
+        "0x36D8EE8",
+        "0x436E118"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CTipAlertMovingFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DD620",
+        "0x436D308"
+      ],
+      "rvas": [
+        "0x36DE620",
+        "0x436E308"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CTournamentAdvanceRoundFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DD828",
+        "0x436CF68"
+      ],
+      "rvas": [
+        "0x36DE828",
+        "0x436DF68"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CTournamentAlertFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DEB48",
+        "0x436CEA0"
+      ],
+      "rvas": [
+        "0x36DFB48",
+        "0x436DEA0"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CTournamentBracketFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DA0A8",
+        "0x436CDE0"
+      ],
+      "rvas": [
+        "0x36DB0A8",
+        "0x436DDE0"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CTournamentByeIndicatorFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DAAF0",
+        "0x436CD10"
+      ],
+      "rvas": [
+        "0x36DBAF0",
+        "0x436DD10"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CTournamentEliminatedIndicatorFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DD710",
+        "0x436CC20"
+      ],
+      "rvas": [
+        "0x36DE710",
+        "0x436DC20"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CTournamentEntrantPlayerFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36D72A0",
+        "0x436CB90"
+      ],
+      "rvas": [
+        "0x36D82A0",
+        "0x436DB90"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CTournamentFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DDA50",
+        "0x436CB10"
+      ],
+      "rvas": [
+        "0x36DEA50",
+        "0x436DB10"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CTournamentGroupStageFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DC3E8",
+        "0x436CA80"
+      ],
+      "rvas": [
+        "0x36DD3E8",
+        "0x436DA80"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CTournamentGroupStageResultFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36E0250",
+        "0x436C9E0"
+      ],
+      "rvas": [
+        "0x36E1250",
+        "0x436D9E0"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CTournamentMapVetoListFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DA910",
+        "0x436C2B0"
+      ],
+      "rvas": [
+        "0x36DB910",
+        "0x436D2B0"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CTournamentMatchEntrantFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DC3B0",
+        "0x436C200"
+      ],
+      "rvas": [
+        "0x36DD3B0",
+        "0x436D200"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CTournamentMatchFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36E0148",
+        "0x436C198"
+      ],
+      "rvas": [
+        "0x36E1148",
+        "0x436D198"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CTournamentMatchStartingFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36545A0",
+        "0x4366420"
+      ],
+      "rvas": [
+        "0x36555A0",
+        "0x4367420"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CTournamentPortalAdvertisementFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36D69D0",
+        "0x436C0F0"
+      ],
+      "rvas": [
+        "0x36D79D0",
+        "0x436D0F0"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CTournamentPortalClosingFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3656028",
+        "0x43663C0"
+      ],
+      "rvas": [
+        "0x3657028",
+        "0x43673C0"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CTournamentPortalFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DCBF8",
+        "0x436BD78"
+      ],
+      "rvas": [
+        "0x36DDBF8",
+        "0x436CD78"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CTournamentRoundCountdownFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36D64C8",
+        "0x436B9B8"
+      ],
+      "rvas": [
+        "0x36D74C8",
+        "0x436C9B8"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CTournamentScheduleDataFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DBA20",
+        "0x436B8A8"
+      ],
+      "rvas": [
+        "0x36DCA20",
+        "0x436C8A8"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CTournamentScheduleFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36D7050",
+        "0x436B648"
+      ],
+      "rvas": [
+        "0x36D8050",
+        "0x436C648"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CTournamentTrophyTallyFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36D99D8",
+        "0x436B550"
+      ],
+      "rvas": [
+        "0x36DA9D8",
+        "0x436C550"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CTriggerDialogFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3653368",
+        "0x4366308"
+      ],
+      "rvas": [
+        "0x3654368",
+        "0x4367308"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CTrophyCollectionFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DD920",
+        "0x436B278"
+      ],
+      "rvas": [
+        "0x36DE920",
+        "0x436C278"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CTrophyCutsceneFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DEA90",
+        "0x436B180"
+      ],
+      "rvas": [
+        "0x36DFA90",
+        "0x436C180"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CTrophyFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DAA50",
+        "0x436B420"
+      ],
+      "rvas": [
+        "0x36DBA50",
+        "0x436C420"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CUnitCacheFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36E0770",
+        "0x436B088"
+      ],
+      "rvas": [
+        "0x36E1770",
+        "0x436C088"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CUnitCountFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36525E8",
+        "0x43651A0"
+      ],
+      "rvas": [
+        "0x36535E8",
+        "0x43661A0"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CUnitEffectModelFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3652370",
+        "0x43661E0"
+      ],
+      "rvas": [
+        "0x3653370",
+        "0x43671E0"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CUnitFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3656608",
+        "0x4366258"
+      ],
+      "rvas": [
+        "0x3657608",
+        "0x4367258"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CUnitModelFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3651A40",
+        "0x4366210"
+      ],
+      "rvas": [
+        "0x3652A40",
+        "0x4367210"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CUnitSkinSelectionFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36D8930",
+        "0x436AE40"
+      ],
+      "rvas": [
+        "0x36D9930",
+        "0x436BE40"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CUnitStatusControlGroupHotkeyFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3651C10",
+        "0x4364490"
+      ],
+      "rvas": [
+        "0x3652C10",
+        "0x4365490"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CUnitStatusFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3655728",
+        "0x4363FE0"
+      ],
+      "rvas": [
+        "0x3656728",
+        "0x4364FE0"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CUnitStatusFrameDesc",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36A45B8"
+      ],
+      "rvas": [
+        "0x36A55B8"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "CUnitTargetFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3651C68",
+        "0x4366060"
+      ],
+      "rvas": [
+        "0x3652C68",
+        "0x4367060"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CUnlockableFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DCAC8",
+        "0x436AD58"
+      ],
+      "rvas": [
+        "0x36DDAC8",
+        "0x436BD58"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CUpcomingTournamentMatchFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DA6E8",
+        "0x436A8D0"
+      ],
+      "rvas": [
+        "0x36DB6E8",
+        "0x436B8D0"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CUpgradeCountFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3655188",
+        "0x4364E00"
+      ],
+      "rvas": [
+        "0x3656188",
+        "0x4365E00"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CursorAnchorFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x368D4E0"
+      ],
+      "rvas": [
+        "0x368E4E0"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "CUserProfileAchievementsFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DD4D0",
+        "0x436A7C0"
+      ],
+      "rvas": [
+        "0x36DE4D0",
+        "0x436B7C0"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CUserProfileLadderCareerFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36D7FF8",
+        "0x436A4F8"
+      ],
+      "rvas": [
+        "0x36D8FF8",
+        "0x436B4F8"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CUserProfileLadderDivisionFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DC530",
+        "0x436A168"
+      ],
+      "rvas": [
+        "0x36DD530",
+        "0x436B168"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CUserProfileLadderFriendsFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DD798",
+        "0x436A048"
+      ],
+      "rvas": [
+        "0x36DE798",
+        "0x436B048"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CUserProfileLadderPlacementsFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DE520",
+        "0x4369EF8"
+      ],
+      "rvas": [
+        "0x36DF520",
+        "0x436AEF8"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CUserProfileLadderTeamsFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3740938",
+        "0x436D020"
+      ],
+      "rvas": [
+        "0x3741938",
+        "0x436E020"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CUserProfileMapFavoritesSelectionFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DCA10",
+        "0x436C8E8"
+      ],
+      "rvas": [
+        "0x36DDA10",
+        "0x436D8E8"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CUserProfileMapReviewsFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DE3B8",
+        "0x4368020"
+      ],
+      "rvas": [
+        "0x36DF3B8",
+        "0x4369020"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CUserProfileMapStatsFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36D68B0",
+        "0x43682F8"
+      ],
+      "rvas": [
+        "0x36D78B0",
+        "0x43692F8"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CUserProfileMatchHistoryFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DD048",
+        "0x4368118"
+      ],
+      "rvas": [
+        "0x36DE048",
+        "0x4369118"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CUserProfileRaceStatsFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36E0518",
+        "0x4367EE8"
+      ],
+      "rvas": [
+        "0x36E1518",
+        "0x4368EE8"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CUserProfileSummaryCareerFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36D8B50",
+        "0x4367C90"
+      ],
+      "rvas": [
+        "0x36D9B50",
+        "0x4368C90"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CUserProfileSummaryCoopCommanderFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DA4C8",
+        "0x4367B78"
+      ],
+      "rvas": [
+        "0x36DB4C8",
+        "0x4368B78"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CUserProfileSummaryCoopMasteryFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DC508",
+        "0x4367A70"
+      ],
+      "rvas": [
+        "0x36DD508",
+        "0x4368A70"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CUserProfileSummaryCoopMutatorFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DD738",
+        "0x4367970"
+      ],
+      "rvas": [
+        "0x36DE738",
+        "0x4368970"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CUserProfileSummaryTeamsFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DE998",
+        "0x4367870"
+      ],
+      "rvas": [
+        "0x36DF998",
+        "0x4368870"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CustomUnitStatusFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3C2C470"
+      ],
+      "rvas": [
+        "0x3C2D470"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "CutsceneFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36699A8"
+      ],
+      "rvas": [
+        "0x366A9A8"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "CVersionNotificationFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36E0620",
+        "0x4367770"
+      ],
+      "rvas": [
+        "0x36E1620",
+        "0x4368770"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CVoicePackExampleLineFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DFEB0",
+        "0x436E030"
+      ],
+      "rvas": [
+        "0x36E0EB0",
+        "0x436F030"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CVoicePackFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36D7428",
+        "0x436DF10"
+      ],
+      "rvas": [
+        "0x36D8428",
+        "0x436EF10"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CVoicePackSelectionFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DA570",
+        "0x436DCE0"
+      ],
+      "rvas": [
+        "0x36DB570",
+        "0x436ECE0"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CWarChestAdvertisementFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DD6D0",
+        "0x436DB00"
+      ],
+      "rvas": [
+        "0x36DE6D0",
+        "0x436EB00"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CWarChestExperienceFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DE9E8",
+        "0x436DA08"
+      ],
+      "rvas": [
+        "0x36DF9E8",
+        "0x436EA08"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CWarChestFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DCB40",
+        "0x436D8C0"
+      ],
+      "rvas": [
+        "0x36DDB40",
+        "0x436E8C0"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "CWarChestTierFrame",
+      "representations": [
+        "string",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x36DB6D8",
+        "0x436D978"
+      ],
+      "rvas": [
+        "0x36DC6D8",
+        "0x436E978"
+      ],
+      "schemaClass": true
+    },
+    {
+      "className": "DataFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x378C0F0"
+      ],
+      "rvas": [
+        "0x378D0F0"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "DataRefFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3654250"
+      ],
+      "rvas": [
+        "0x3655250"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "DateFormatFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x37EBCC0"
+      ],
+      "rvas": [
+        "0x37ECCC0"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "DateSelectionFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D6348"
+      ],
+      "rvas": [
+        "0x36D7348"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "DecoderFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3BC1730"
+      ],
+      "rvas": [
+        "0x3BC2730"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "DescFrameCountFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x37EBCD0"
+      ],
+      "rvas": [
+        "0x37ECCD0"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "DestFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x38115F8"
+      ],
+      "rvas": [
+        "0x38125F8"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "DifficultyLevelFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D6398"
+      ],
+      "rvas": [
+        "0x36D7398"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "DragConstraintFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x37EF420"
+      ],
+      "rvas": [
+        "0x37F0420"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "DragSlotFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3747A00"
+      ],
+      "rvas": [
+        "0x3748A00"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "DurationPerFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3C4CDF8"
+      ],
+      "rvas": [
+        "0x3C4DDF8"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "EmoticonAchievementFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D6418"
+      ],
+      "rvas": [
+        "0x36D7418"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "EmoticonPackSelectionFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D6460"
+      ],
+      "rvas": [
+        "0x36D7460"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "EncoderFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3BC1E30"
+      ],
+      "rvas": [
+        "0x3BC2E30"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "EnforcedGameResultIndicatorFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36542C0"
+      ],
+      "rvas": [
+        "0x36552C0"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "EntrantFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3789550"
+      ],
+      "rvas": [
+        "0x378A550"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "EntrantPlayerFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x37883B8"
+      ],
+      "rvas": [
+        "0x37893B8"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "FadingFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x372C7C0"
+      ],
+      "rvas": [
+        "0x372D7C0"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "FirstSlotAnchorFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x366E870"
+      ],
+      "rvas": [
+        "0x366F870"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "FlashFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3669958"
+      ],
+      "rvas": [
+        "0x366A958"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "FrameOptionalNameTooltipFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x37EC9D8"
+      ],
+      "rvas": [
+        "0x37ED9D8"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "FramerateFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x369B7B0"
+      ],
+      "rvas": [
+        "0x369C7B0"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "GameContentFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D6650"
+      ],
+      "rvas": [
+        "0x36D7650"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "GASLocalFrame",
+      "representations": [
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x43759A0"
+      ],
+      "rvas": [
+        "0x43769A0"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "GraphBarPlotFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x37EBD98"
+      ],
+      "rvas": [
+        "0x37ECD98"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "GraphDistributedAxisFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x37EBDB0"
+      ],
+      "rvas": [
+        "0x37ECDB0"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "GraphFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36699B8"
+      ],
+      "rvas": [
+        "0x366A9B8"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "GraphIntervalAxisFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x37EBDD0"
+      ],
+      "rvas": [
+        "0x37ECDD0"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "GraphItemFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x37EBDE8"
+      ],
+      "rvas": [
+        "0x37ECDE8"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "GraphLegendFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x37EBDF8"
+      ],
+      "rvas": [
+        "0x37ECDF8"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "GraphLegendItemFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x37EBE10"
+      ],
+      "rvas": [
+        "0x37ECE10"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "GraphLineItemFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x37EBE28"
+      ],
+      "rvas": [
+        "0x37ECE28"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "GraphLinePlotFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x37EBE40"
+      ],
+      "rvas": [
+        "0x37ECE40"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "GraphPointPlotFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x37EBE58"
+      ],
+      "rvas": [
+        "0x37ECE58"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "GraphTextTickFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x37EBE70"
+      ],
+      "rvas": [
+        "0x37ECE70"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "GroupStageFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3787CC8"
+      ],
+      "rvas": [
+        "0x3788CC8"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "GroupStageResultFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3788020"
+      ],
+      "rvas": [
+        "0x3789020"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "HeroFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36544A0"
+      ],
+      "rvas": [
+        "0x36554A0"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "HitTestFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3714800"
+      ],
+      "rvas": [
+        "0x3715800"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "HotkeyFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x365B7D8"
+      ],
+      "rvas": [
+        "0x365C7D8"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "IconHeightFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36EF3E0"
+      ],
+      "rvas": [
+        "0x36F03E0"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "IncomeFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3688728"
+      ],
+      "rvas": [
+        "0x3689728"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "IndicatorFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D9560"
+      ],
+      "rvas": [
+        "0x36DA560"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "InputMethodCompositionFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x37EBEA8"
+      ],
+      "rvas": [
+        "0x37ECEA8"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "InputMethodLanguageFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x37EBEC8"
+      ],
+      "rvas": [
+        "0x37ECEC8"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "InputMethodReadingFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x37EBEE8"
+      ],
+      "rvas": [
+        "0x37ECEE8"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "JumpToFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3785670"
+      ],
+      "rvas": [
+        "0x3786670"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "LabelContainerFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x37FB100"
+      ],
+      "rvas": [
+        "0x37FC100"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "LadderTeamShowcaseFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D73A0"
+      ],
+      "rvas": [
+        "0x36D83A0"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "LadderTeamShowcaseSelectionFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D73B8"
+      ],
+      "rvas": [
+        "0x36D83B8"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "LatencyIndicatorFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D73F8"
+      ],
+      "rvas": [
+        "0x36D83F8"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "LeaderPanelAPMFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3654678"
+      ],
+      "rvas": [
+        "0x3655678"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "LeaderPanelArmyFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3654A50"
+      ],
+      "rvas": [
+        "0x3655A50"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "LeaderPanelIncomeFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3654A68"
+      ],
+      "rvas": [
+        "0x3655A68"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "LeaderPanelProductionFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3654A90"
+      ],
+      "rvas": [
+        "0x3655A90"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "LeaderPanelResourceFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3654AB0"
+      ],
+      "rvas": [
+        "0x3655AB0"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "LeaderPanelSpendingFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3654AD0"
+      ],
+      "rvas": [
+        "0x3655AD0"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "LeaderPanelUnitFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3654B18"
+      ],
+      "rvas": [
+        "0x3655B18"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "LeaderPanelUnitsLostFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3654B48"
+      ],
+      "rvas": [
+        "0x3655B48"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "LeaderPanelUpgradeFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3654B68"
+      ],
+      "rvas": [
+        "0x3655B68"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "LeagueRatingFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D74D0"
+      ],
+      "rvas": [
+        "0x36D84D0"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "LinkedModalFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x369E508"
+      ],
+      "rvas": [
+        "0x369F508"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "LoadingBarDownloadingFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36EF9A8"
+      ],
+      "rvas": [
+        "0x36F09A8"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "LoadingCoopCampaignPlayerFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D7568"
+      ],
+      "rvas": [
+        "0x36D8568"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "LoadLastButtonGapFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3661648"
+      ],
+      "rvas": [
+        "0x3662648"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "LobbyListFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D7620"
+      ],
+      "rvas": [
+        "0x36D8620"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "LobbyMatchOptionsFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D7690"
+      ],
+      "rvas": [
+        "0x36D8690"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "LobbyPlayerSlotsFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D7710"
+      ],
+      "rvas": [
+        "0x36D8710"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "LobbyPlayerSlotsPlayerContainerFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D7768"
+      ],
+      "rvas": [
+        "0x36D8768"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "LobbyPlayerSlotsPlayerFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D7748"
+      ],
+      "rvas": [
+        "0x36D8748"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "LobbyPlayerSlotsTeamFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D7790"
+      ],
+      "rvas": [
+        "0x36D8790"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "LobbyPreviewFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D7660"
+      ],
+      "rvas": [
+        "0x36D8660"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "LobbyReplayInfoFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D7838"
+      ],
+      "rvas": [
+        "0x36D8838"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "LobbyResumeReplayFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D7888"
+      ],
+      "rvas": [
+        "0x36D8888"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "LocalPlayerFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x372A180"
+      ],
+      "rvas": [
+        "0x372B180"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "LocalTimeFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x369B790"
+      ],
+      "rvas": [
+        "0x369C790"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "LookAtFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x37EBF10"
+      ],
+      "rvas": [
+        "0x37ECF10"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "MakeMsgTextureVideoSetFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36371C8"
+      ],
+      "rvas": [
+        "0x36381C8"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "MatchFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3786B90"
+      ],
+      "rvas": [
+        "0x3787B90"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "MatchmakingActivityFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D7A90"
+      ],
+      "rvas": [
+        "0x36D8A90"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "MatchmakingMapVetoFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D7B90"
+      ],
+      "rvas": [
+        "0x36D8B90"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "MatchmakingSeasonFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D7C60"
+      ],
+      "rvas": [
+        "0x36D8C60"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "MathFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x37EBF20"
+      ],
+      "rvas": [
+        "0x37ECF20"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "MercenaryFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3654BA0"
+      ],
+      "rvas": [
+        "0x3655BA0"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "MessageFadeFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3714500"
+      ],
+      "rvas": [
+        "0x3715500"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "MinimapCameraViewFrustumFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3654BF8"
+      ],
+      "rvas": [
+        "0x3655BF8"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "MinimapUnitStatusFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3C2C660"
+      ],
+      "rvas": [
+        "0x3C2D660"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "MinimumHeightFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36EF3B0"
+      ],
+      "rvas": [
+        "0x36F03B0"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "MovieFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3669968"
+      ],
+      "rvas": [
+        "0x366A968"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "MovingFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x37EBF50"
+      ],
+      "rvas": [
+        "0x37ECF50"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "MultiplayerLoadingPanelGameUserFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D7D28"
+      ],
+      "rvas": [
+        "0x36D8D28"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "MultiplayerLoadingPanelTandemPlayerFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D7D50"
+      ],
+      "rvas": [
+        "0x36D8D50"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "MultiplayerTournamentFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D7E20"
+      ],
+      "rvas": [
+        "0x36D8E20"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "NewAnimationFlashFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3689530"
+      ],
+      "rvas": [
+        "0x368A530"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "nextFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3844FF8"
+      ],
+      "rvas": [
+        "0x3845FF8"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "ObserverPreviewFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3654D28"
+      ],
+      "rvas": [
+        "0x3655D28"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "OfflineAvatarFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3758E90"
+      ],
+      "rvas": [
+        "0x3759E90"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "OffscreenUnitFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3654D40"
+      ],
+      "rvas": [
+        "0x3655D40"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "onEnterFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3852910"
+      ],
+      "rvas": [
+        "0x3853910"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "OnEnterFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3785650"
+      ],
+      "rvas": [
+        "0x3786650"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "PageFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3684248"
+      ],
+      "rvas": [
+        "0x3685248"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "ParentCenteredFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x37EBFD8"
+      ],
+      "rvas": [
+        "0x37ECFD8"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "PingFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x368A638"
+      ],
+      "rvas": [
+        "0x368B638"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "PlanetFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3654D88"
+      ],
+      "rvas": [
+        "0x3655D88"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "PlanetGuideFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x368DC80"
+      ],
+      "rvas": [
+        "0x368EC80"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "PlayerBlockFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3654DE0"
+      ],
+      "rvas": [
+        "0x3655DE0"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "PlayerDeathIndicatorFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3654DF8"
+      ],
+      "rvas": [
+        "0x3655DF8"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "PlayerFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3654E18"
+      ],
+      "rvas": [
+        "0x3655E18"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "PlayerHeroIconFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36550C8"
+      ],
+      "rvas": [
+        "0x36560C8"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "PlayerHeroLevelFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36550E0"
+      ],
+      "rvas": [
+        "0x36560E0"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "PlayerHeroNameFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3655108"
+      ],
+      "rvas": [
+        "0x3656108"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "PlayerHeroSelectedTalentTreeFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3655120"
+      ],
+      "rvas": [
+        "0x3656120"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "PlayerLogoImageFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3655148"
+      ],
+      "rvas": [
+        "0x3656148"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "PlayerLogoTextFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3655160"
+      ],
+      "rvas": [
+        "0x3656160"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "PlayerNameFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3655178"
+      ],
+      "rvas": [
+        "0x3656178"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "PlayerOwnedUnitsFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36551A0"
+      ],
+      "rvas": [
+        "0x36561A0"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "PlayerProductionFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36551D0"
+      ],
+      "rvas": [
+        "0x36561D0"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "PlayerRaceIconFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36551E8"
+      ],
+      "rvas": [
+        "0x36561E8"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "PlayerScoreResultFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D8040"
+      ],
+      "rvas": [
+        "0x36D9040"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "PlayerScoreValueFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3655200"
+      ],
+      "rvas": [
+        "0x3656200"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "PlayerScoreValueResultMaxNumberFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D8058"
+      ],
+      "rvas": [
+        "0x36D9058"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "PlayerScoreValueResultNameFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D8080"
+      ],
+      "rvas": [
+        "0x36D9080"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "PlayerScoreValueResultNumberFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D80D0"
+      ],
+      "rvas": [
+        "0x36D90D0"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "PlayerScoreValueResultTalentFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D80F8"
+      ],
+      "rvas": [
+        "0x36D90F8"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "PlayerScoreValueResultUniqueTagFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D84E0"
+      ],
+      "rvas": [
+        "0x36D94E0"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "PlayerScoreValueResultUniqueTagNameFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D8120"
+      ],
+      "rvas": [
+        "0x36D9120"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "PlayerStatFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3655218"
+      ],
+      "rvas": [
+        "0x3656218"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "PlayerStatNameFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3655228"
+      ],
+      "rvas": [
+        "0x3656228"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "PlayerSupplyFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3655250"
+      ],
+      "rvas": [
+        "0x3656250"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "PlayerUpgradesFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3655268"
+      ],
+      "rvas": [
+        "0x3656268"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "PlayFromHereSessionUserFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3654DC0"
+      ],
+      "rvas": [
+        "0x3655DC0"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "PortraitFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36FD570"
+      ],
+      "rvas": [
+        "0x36FE570"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "PremiumMapCacheFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D8550"
+      ],
+      "rvas": [
+        "0x36D9550"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "prevFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3845008"
+      ],
+      "rvas": [
+        "0x3846008"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "PreviewMinimapFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36949C8"
+      ],
+      "rvas": [
+        "0x36959C8"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "ProductDiscountFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D8568"
+      ],
+      "rvas": [
+        "0x36D9568"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "ProductionCountFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36552C0"
+      ],
+      "rvas": [
+        "0x36562C0"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "ProductionFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3688768"
+      ],
+      "rvas": [
+        "0x3689768"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "PromotionCutsceneFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3742390"
+      ],
+      "rvas": [
+        "0x3743390"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "PurchaseAnimationFlashFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3689510"
+      ],
+      "rvas": [
+        "0x368A510"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "PurchaseCategoryFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3655310"
+      ],
+      "rvas": [
+        "0x3656310"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "PurchasedIndicatorFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D86A0"
+      ],
+      "rvas": [
+        "0x36D96A0"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "PurchaseGroupFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3655328"
+      ],
+      "rvas": [
+        "0x3656328"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "PurchaseItemFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3655340"
+      ],
+      "rvas": [
+        "0x3656340"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "RaceBannerCacheFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D86B8"
+      ],
+      "rvas": [
+        "0x36D96B8"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "RaceCacheFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D86D0"
+      ],
+      "rvas": [
+        "0x36D96D0"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "RaceLevelFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D86E0"
+      ],
+      "rvas": [
+        "0x36D96E0"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "RangeFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x37EC060"
+      ],
+      "rvas": [
+        "0x37ED060"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "relativeFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x37F3D38"
+      ],
+      "rvas": [
+        "0x37F4D38"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "ResearchCategoryFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36553C8"
+      ],
+      "rvas": [
+        "0x36563C8"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "ResearchItemFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36553E0"
+      ],
+      "rvas": [
+        "0x36563E0"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "ResearchTierFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3655408"
+      ],
+      "rvas": [
+        "0x3656408"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "ResourceAnchorFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x366C368"
+      ],
+      "rvas": [
+        "0x366D368"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "ResourceFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3655420"
+      ],
+      "rvas": [
+        "0x3656420"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "ReturnButtonGapFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3661760"
+      ],
+      "rvas": [
+        "0x3662760"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "RewardCacheFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D8860"
+      ],
+      "rvas": [
+        "0x36D9860"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "SActorMsgTextureVideoSetFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x38EACC0",
+        "0x3C363B0"
+      ],
+      "rvas": [
+        "0x38EBCC0",
+        "0x3C373B0"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "ScoreScreenBuildOrderFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D7120"
+      ],
+      "rvas": [
+        "0x36D8120"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "ScoreScreenBuildOrderPlayerFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D7140"
+      ],
+      "rvas": [
+        "0x36D8140"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "ScoreScreenExperienceFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D7190"
+      ],
+      "rvas": [
+        "0x36D8190"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "ScoreScreenGraphsFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D7090"
+      ],
+      "rvas": [
+        "0x36D8090"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "ScoreScreenLadderFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D71D0"
+      ],
+      "rvas": [
+        "0x36D81D0"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "ScoreScreenPerformanceAverageFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D7200"
+      ],
+      "rvas": [
+        "0x36D8200"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "ScoreScreenPerformanceFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D7240"
+      ],
+      "rvas": [
+        "0x36D8240"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "ScoreScreenPerformanceScoreValueFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D7260"
+      ],
+      "rvas": [
+        "0x36D8260"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "ScoreScreenStatsFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D7288"
+      ],
+      "rvas": [
+        "0x36D8288"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "ScoreScreenStatsScoreValueFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D7308"
+      ],
+      "rvas": [
+        "0x36D8308"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "ScoreValueCutsceneFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36554D8"
+      ],
+      "rvas": [
+        "0x36564D8"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "ScoreValueFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36554F0"
+      ],
+      "rvas": [
+        "0x36564F0"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "ScoreValueImageFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3655500"
+      ],
+      "rvas": [
+        "0x3656500"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "ScoreValueLabelFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3655530"
+      ],
+      "rvas": [
+        "0x3656530"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "ScoreValueProgressBarFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3655548"
+      ],
+      "rvas": [
+        "0x3656548"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "ScrollableFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x37EC080"
+      ],
+      "rvas": [
+        "0x37ED080"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "ScrollingFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x372C7B0"
+      ],
+      "rvas": [
+        "0x372D7B0"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "SelectedBundleFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D8CB8"
+      ],
+      "rvas": [
+        "0x36D9CB8"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "SelectedDecalPackFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D8D58"
+      ],
+      "rvas": [
+        "0x36D9D58"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "SelectedEmoticonPackFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D8D70"
+      ],
+      "rvas": [
+        "0x36D9D70"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "SelectedPortraitPackFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D8D90"
+      ],
+      "rvas": [
+        "0x36D9D90"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "SelectedRaceBannerPackFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D8DE8"
+      ],
+      "rvas": [
+        "0x36D9DE8"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "SelectedSprayPackFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D8E60"
+      ],
+      "rvas": [
+        "0x36D9E60"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "SelectedVoicePackFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D8E78"
+      ],
+      "rvas": [
+        "0x36D9E78"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "ShaderFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x369B7D0"
+      ],
+      "rvas": [
+        "0x369C7D0"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "ShortenedTextHeightFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36EF400"
+      ],
+      "rvas": [
+        "0x36F0400"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "SizingFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3801ED0"
+      ],
+      "rvas": [
+        "0x3802ED0"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "SkinCacheFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D8F40"
+      ],
+      "rvas": [
+        "0x36D9F40"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "SkinPackLargeFormatUnitSelectionFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D9390"
+      ],
+      "rvas": [
+        "0x36DA390"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "SkinPackUnitSelectionFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D93E8"
+      ],
+      "rvas": [
+        "0x36DA3E8"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "SourceFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x38115E8"
+      ],
+      "rvas": [
+        "0x38125E8"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "SpendingFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3688738"
+      ],
+      "rvas": [
+        "0x3689738"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "StarterEditionLockFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D9508"
+      ],
+      "rvas": [
+        "0x36DA508"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "StatAPMFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x366A880"
+      ],
+      "rvas": [
+        "0x366B880"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "StatArmyLostFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x366A850"
+      ],
+      "rvas": [
+        "0x366B850"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "StatArmySupplyFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x366A820"
+      ],
+      "rvas": [
+        "0x366B820"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "StatCPMFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x366A890"
+      ],
+      "rvas": [
+        "0x366B890"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "StatInfoFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36887C8"
+      ],
+      "rvas": [
+        "0x36897C8"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "StatResourcesFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x366A7F0"
+      ],
+      "rvas": [
+        "0x366B7F0"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "StatResourcesGasFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x366A808"
+      ],
+      "rvas": [
+        "0x366B808"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "StatWorkerLostFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x366A868"
+      ],
+      "rvas": [
+        "0x366B868"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "StatWorkerSupplyFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x366A838"
+      ],
+      "rvas": [
+        "0x366B838"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "StimpackCacheFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D7328"
+      ],
+      "rvas": [
+        "0x36D8328"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "StoreCacheFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D9538"
+      ],
+      "rvas": [
+        "0x36DA538"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "StreamingIndicatorFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x373DCA0"
+      ],
+      "rvas": [
+        "0x373ECA0"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "StructureFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3688748"
+      ],
+      "rvas": [
+        "0x3689748"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "SystemInfoBatteryFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3655650"
+      ],
+      "rvas": [
+        "0x3656650"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "SystemInfoFramerateFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3655668"
+      ],
+      "rvas": [
+        "0x3656668"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "SystemInfoLocalTimeFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3655688"
+      ],
+      "rvas": [
+        "0x3656688"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "SystemInfoResourceFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36556B8"
+      ],
+      "rvas": [
+        "0x36566B8"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "SystemInfoShaderFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36556D0"
+      ],
+      "rvas": [
+        "0x36566D0"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "SystemInfoWifiFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3655700"
+      ],
+      "rvas": [
+        "0x3656700"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "TalentFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3723A20"
+      ],
+      "rvas": [
+        "0x3724A20"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "TalkerFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D95B0"
+      ],
+      "rvas": [
+        "0x36DA5B0"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "TeamFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3655740"
+      ],
+      "rvas": [
+        "0x3656740"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "TeamHeroLevelFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3655758"
+      ],
+      "rvas": [
+        "0x3656758"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "TeamResourceRequestFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36557C8"
+      ],
+      "rvas": [
+        "0x36567C8"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "TeamScoreValueFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3655800"
+      ],
+      "rvas": [
+        "0x3656800"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "TeamVeterancyUnitStatusFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3655BA0"
+      ],
+      "rvas": [
+        "0x3656BA0"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "TechnologyUnitModelFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x368DE68"
+      ],
+      "rvas": [
+        "0x368EE68"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "TechTreeConnectorFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D96C8"
+      ],
+      "rvas": [
+        "0x36DA6C8"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "TechTreeStructureFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D96F0"
+      ],
+      "rvas": [
+        "0x36DA6F0"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "TechTreeUnitFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D9708"
+      ],
+      "rvas": [
+        "0x36DA708"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "TextFormatFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x37EC1F8"
+      ],
+      "rvas": [
+        "0x37ED1F8"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "TextHeightFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36EF3F0"
+      ],
+      "rvas": [
+        "0x36F03F0"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "TextureVideoSetFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36B7F88",
+        "0x3C069A8"
+      ],
+      "rvas": [
+        "0x36B8F88",
+        "0x3C079A8"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "ThrottlingIndicatorFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x373DCB8"
+      ],
+      "rvas": [
+        "0x373ECB8"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "TimeFormatFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x37EC288"
+      ],
+      "rvas": [
+        "0x37ED288"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "TimerProgressFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x369E0D8"
+      ],
+      "rvas": [
+        "0x369F0D8"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "TimeSelectionFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D9798"
+      ],
+      "rvas": [
+        "0x36DA798"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "TipAlertMovingFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D9770"
+      ],
+      "rvas": [
+        "0x36DA770"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "TitleFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3661568"
+      ],
+      "rvas": [
+        "0x3662568"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "TooltipFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3751E70"
+      ],
+      "rvas": [
+        "0x3752E70"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "TooltipHitFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3759938"
+      ],
+      "rvas": [
+        "0x375A938"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "TournamentAdvanceRoundFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D97C8"
+      ],
+      "rvas": [
+        "0x36DA7C8"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "TournamentAlertFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D9808"
+      ],
+      "rvas": [
+        "0x36DA808"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "TournamentBracketFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D9820"
+      ],
+      "rvas": [
+        "0x36DA820"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "TournamentByeIndicatorFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D9838"
+      ],
+      "rvas": [
+        "0x36DA838"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "TournamentEliminatedIndicatorFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D98F8"
+      ],
+      "rvas": [
+        "0x36DA8F8"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "TournamentEntrantPlayerFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D9920"
+      ],
+      "rvas": [
+        "0x36DA920"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "TournamentFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D9940"
+      ],
+      "rvas": [
+        "0x36DA940"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "TournamentGroupStageFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D9968"
+      ],
+      "rvas": [
+        "0x36DA968"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "TournamentGroupStageResultFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D99B8"
+      ],
+      "rvas": [
+        "0x36DA9B8"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "TournamentMapVetoListFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D9A10"
+      ],
+      "rvas": [
+        "0x36DAA10"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "TournamentMatchEntrantFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D9A68"
+      ],
+      "rvas": [
+        "0x36DAA68"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "TournamentMatchFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D9AB0"
+      ],
+      "rvas": [
+        "0x36DAAB0"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "TournamentMatchStartingFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3655C78"
+      ],
+      "rvas": [
+        "0x3656C78"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "TournamentPortalAdvertisementFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D9B18"
+      ],
+      "rvas": [
+        "0x36DAB18"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "TournamentPortalClosingFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3655E40"
+      ],
+      "rvas": [
+        "0x3656E40"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "TournamentPortalFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D9B40"
+      ],
+      "rvas": [
+        "0x36DAB40"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "TournamentRoundCountdownFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D9878"
+      ],
+      "rvas": [
+        "0x36DA878"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "TournamentScheduleDataFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D9BE8"
+      ],
+      "rvas": [
+        "0x36DABE8"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "TournamentScheduleFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D9C08"
+      ],
+      "rvas": [
+        "0x36DAC08"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "TournamentTrophyTallyFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D9C60"
+      ],
+      "rvas": [
+        "0x36DAC60"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "TradingAllowedFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x369CF78"
+      ],
+      "rvas": [
+        "0x369DF78"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "TradingNotAllowedFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x369CF90"
+      ],
+      "rvas": [
+        "0x369DF90"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "TriggerDialogFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3655E70"
+      ],
+      "rvas": [
+        "0x3656E70"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "TrophyCollectionFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D9C80"
+      ],
+      "rvas": [
+        "0x36DAC80"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "TrophyCutsceneFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D9CB0"
+      ],
+      "rvas": [
+        "0x36DACB0"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "TrophyFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D9CE0"
+      ],
+      "rvas": [
+        "0x36DACE0"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "TrophyTallyFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x378AA40"
+      ],
+      "rvas": [
+        "0x378BA40"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "UIEditorLastSelectedFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x35247F8"
+      ],
+      "rvas": [
+        "0x35257F8"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "UIEditorViewFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3524778"
+      ],
+      "rvas": [
+        "0x3525778"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "UncontrollableUnitFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x365D670"
+      ],
+      "rvas": [
+        "0x365E670"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "UnitCacheFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D9D20"
+      ],
+      "rvas": [
+        "0x36DAD20"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "UnitCountFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3655EF0"
+      ],
+      "rvas": [
+        "0x3656EF0"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "UnitEffectModelFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3655F30"
+      ],
+      "rvas": [
+        "0x3656F30"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "UnitFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3655F20"
+      ],
+      "rvas": [
+        "0x3656F20"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "UnitListContainerFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3784828"
+      ],
+      "rvas": [
+        "0x3785828"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "UnitModelFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3655F60"
+      ],
+      "rvas": [
+        "0x3656F60"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "UnitSkinSelectionFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D9D68"
+      ],
+      "rvas": [
+        "0x36DAD68"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "UnitsLostFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3688758"
+      ],
+      "rvas": [
+        "0x3689758"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "UnitStatusControlGroupHotkeyFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3656130"
+      ],
+      "rvas": [
+        "0x3657130"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "UnitStatusFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3656400"
+      ],
+      "rvas": [
+        "0x3657400"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "UnitTargetFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36567C8"
+      ],
+      "rvas": [
+        "0x36577C8"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "UnlockableFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D9DB0"
+      ],
+      "rvas": [
+        "0x36DADB0"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "UpcomingTournamentMatchFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D9E20"
+      ],
+      "rvas": [
+        "0x36DAE20"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "UpgradeCountFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36567E8"
+      ],
+      "rvas": [
+        "0x36577E8"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "UpgradeFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x3688778"
+      ],
+      "rvas": [
+        "0x3689778"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "UserProfileAchievementsFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D9E40"
+      ],
+      "rvas": [
+        "0x36DAE40"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "UserProfileLadderCareerFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D9E88"
+      ],
+      "rvas": [
+        "0x36DAE88"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "UserProfileLadderDivisionFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D9EF0"
+      ],
+      "rvas": [
+        "0x36DAEF0"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "UserProfileLadderFriendsFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D9F60"
+      ],
+      "rvas": [
+        "0x36DAF60"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "UserProfileLadderPlacementsFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D9F80"
+      ],
+      "rvas": [
+        "0x36DAF80"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "UserProfileMapFavoritesSelectionFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D9FC8"
+      ],
+      "rvas": [
+        "0x36DAFC8"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "UserProfileMapReviewsFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36DA048"
+      ],
+      "rvas": [
+        "0x36DB048"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "UserProfileMapStatsFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36D9FF0"
+      ],
+      "rvas": [
+        "0x36DAFF0"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "UserProfileMatchHistoryFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36DA088"
+      ],
+      "rvas": [
+        "0x36DB088"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "UserProfileRaceStatsFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36DA118"
+      ],
+      "rvas": [
+        "0x36DB118"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "UserProfileSummaryCareerFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36DA160"
+      ],
+      "rvas": [
+        "0x36DB160"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "UserProfileSummaryCoopCommanderFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36DA180"
+      ],
+      "rvas": [
+        "0x36DB180"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "UserProfileSummaryCoopMasteryFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36DA1A8"
+      ],
+      "rvas": [
+        "0x36DB1A8"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "UserProfileSummaryCoopMutatorFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36DA1F8"
+      ],
+      "rvas": [
+        "0x36DB1F8"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "UserProfileSummaryTeamsFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36DA240"
+      ],
+      "rvas": [
+        "0x36DB240"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "VersionNotificationFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36DA270"
+      ],
+      "rvas": [
+        "0x36DB270"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "VisualizePerFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36A6F80"
+      ],
+      "rvas": [
+        "0x36A7F80"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "VitalAnchorFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x366C380"
+      ],
+      "rvas": [
+        "0x366D380"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "VoicePackExampleLineFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36DA300"
+      ],
+      "rvas": [
+        "0x36DB300"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "VoicePackFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36DA320"
+      ],
+      "rvas": [
+        "0x36DB320"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "VoicePackSelectionFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36DA348"
+      ],
+      "rvas": [
+        "0x36DB348"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "WarChestAdvertisementFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36DA3B0"
+      ],
+      "rvas": [
+        "0x36DB3B0"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "WarChestExperienceFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36DA3D0"
+      ],
+      "rvas": [
+        "0x36DB3D0"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "WarChestFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36DA3E8"
+      ],
+      "rvas": [
+        "0x36DB3E8"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "WarChestTierFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x36DA4F0"
+      ],
+      "rvas": [
+        "0x36DB4F0"
+      ],
+      "schemaClass": false
+    },
+    {
+      "className": "WifiFrame",
+      "representations": [
+        "string"
+      ],
+      "fileOffsets": [
+        "0x369B7C0"
+      ],
+      "rvas": [
+        "0x369C7C0"
+      ],
+      "schemaClass": false
+    }
+  ]
+}

@@ -1,0 +1,1 @@
+{"name":"simple_EActorRequestScope","kind":"simple","fields":[],"enumValues":["Caster","CasterOuter","Effect","Implicit","Missile","Outer","Source","Target","TargetOuter"],"facets":[],"base":"xs:string"}

@@ -1,0 +1,1 @@
+{"name":"simple_EActorSiteOpShadowFlag","kind":"simple","fields":[],"enumValues":["NoLowerThanBaseHeight","NoLowerThanWater"],"facets":[],"base":"xs:string"}

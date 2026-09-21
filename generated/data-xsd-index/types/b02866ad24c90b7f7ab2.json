@@ -1,0 +1,1 @@
+{"name":"simple_EAbilAttackModifierFlag","kind":"simple","fields":[],"enumValues":["AttackOnce","AutoCast","AutoCastOffOwnerLeave","AutoCastOn","BestUnit","Smart"],"facets":[],"base":"xs:string"}

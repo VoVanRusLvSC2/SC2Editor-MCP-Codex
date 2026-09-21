@@ -1,0 +1,1 @@
+{"name":"SActorTermAIUIMode","kind":"complex","fields":[{"kind":"attribute","name":"Mode","type":"simple_EAIUIMode"},{"kind":"element","name":"Mode","type":"EAIUIMode","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

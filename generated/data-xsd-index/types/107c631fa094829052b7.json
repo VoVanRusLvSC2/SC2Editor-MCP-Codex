@@ -1,0 +1,1 @@
+{"name":"simple_EDamageResponseCategory","kind":"simple","fields":[],"enumValues":["CorpseUsage","Enhancement","Evasion","Proc","Reduction","Shield"],"facets":[],"base":"xs:string"}

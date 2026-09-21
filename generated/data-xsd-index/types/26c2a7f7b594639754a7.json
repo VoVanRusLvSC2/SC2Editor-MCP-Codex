@@ -1,0 +1,1 @@
+{"name":"simple_EEffectTimeScale","kind":"simple","fields":[],"enumValues":["Caster","Global","Target","Unknown"],"facets":[],"base":"xs:string"}

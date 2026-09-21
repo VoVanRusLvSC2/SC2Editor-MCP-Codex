@@ -1,0 +1,1 @@
+{"name":"simple_EClassIdCBeam","kind":"simple","fields":[],"enumValues":["CBeam","CBeamAsync","CBeamAsyncLinear","CBeamAsyncShadow","CBeamSync","CBeamSyncSweeper"],"facets":[],"base":"xs:string"}

@@ -1,0 +1,1 @@
+{"name":"simple_EAbilInteractFlag","kind":"simple","fields":[],"enumValues":["AlwaysShowCommandCard","AutoCast","BestUnit","Exclusive","SameCliffLevel","ShareControl","ShareVision","Smart"],"facets":[],"base":"xs:string"}

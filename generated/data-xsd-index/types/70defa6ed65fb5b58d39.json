@@ -1,0 +1,1 @@
+{"name":"simple_EActorHostDirection","kind":"simple","fields":[],"enumValues":["ToChildren","ToHost"],"facets":[],"base":"xs:string"}

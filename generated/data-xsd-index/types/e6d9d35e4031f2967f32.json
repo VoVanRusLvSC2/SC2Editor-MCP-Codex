@@ -1,0 +1,1 @@
+{"name":"PathCatalog","kind":"complex","fields":[{"kind":"attribute","name":"path","type":"xs:string","use":"required"}],"enumValues":[],"facets":[]}

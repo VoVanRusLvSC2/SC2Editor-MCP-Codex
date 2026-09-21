@@ -1,0 +1,1 @@
+{"name":"simple_EAbilArmMagazineManage","kind":"simple","fields":[],"enumValues":["Destroy","Ignore","Recall"],"facets":[],"base":"xs:string"}

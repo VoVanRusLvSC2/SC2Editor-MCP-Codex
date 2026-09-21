@@ -1,0 +1,1 @@
+{"name":"simple_ELabelExpressionOp","kind":"simple","fields":[],"enumValues":["ExcludeHasAll","ExcludeHasAny","RequireAll","RequireAny"],"facets":[],"base":"xs:string"}

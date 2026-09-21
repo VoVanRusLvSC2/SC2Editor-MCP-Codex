@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Catalog>
+    <CModel id="MarineModel">
+        <File value="Assets\Units\Terran\Marine\Marine.m3"/>
+    </CModel>
+    <CModel id="AgriaTreeModel" parent="Doodad">
+        <File value="Assets\Doodads\Agria\Tree\AgriaTree.m3"/>
+        <Texture value="Assets\Doodads\Agria\Tree\AgriaTree.dds"/>
+    </CModel>
+    <CModel id="CharDuneRockModel" parent="Doodad">
+        <File value="Assets\Doodads\Char\Rocks\CharDuneRock.m3"/>
+    </CModel>
+    <CModel id="CityStreetLightModel" parent="Doodad">
+        <File value="Assets\Doodads\City\StreetLight.m3"/>
+    </CModel>
+</Catalog>

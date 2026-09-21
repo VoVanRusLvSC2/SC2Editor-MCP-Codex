@@ -1,0 +1,1 @@
+{"name":"simple_ESquibType","kind":"simple","fields":[],"enumValues":["Dirt","Flesh","LightArmor","Metal","Miss","None","Rock","Sand","Shield","Snow","Unknown","Water","Wood"],"facets":[],"base":"xs:string"}

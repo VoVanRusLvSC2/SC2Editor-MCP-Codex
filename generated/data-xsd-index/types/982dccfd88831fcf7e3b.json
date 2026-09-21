@@ -1,0 +1,1 @@
+{"name":"simple_EActorHostedProp","kind":"simple","fields":[],"enumValues":["BaseModelScale","CastShadows","CloakEffect","CreepEngulfment","Decal","InheritContinuous","InheritNone","InheritOneShot","LocalTintColor","ModelMaterials","Opacity","Scale","TeamColor","TimeScale","TintColor","Visibility","WarpGroup"],"facets":[],"base":"xs:string"}

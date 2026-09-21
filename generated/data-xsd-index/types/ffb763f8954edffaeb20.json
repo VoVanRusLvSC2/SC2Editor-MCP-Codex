@@ -1,0 +1,1 @@
+{"name":"simple_EDeathType","kind":"simple","fields":[],"enumValues":["Blast","Cancel","Disintegrate","Eat","Electrocute","Eviscerate","Fire","Freeze","Impact","Morph","Normal","Reincarnation","Remove","Salvage","Silentkill","Squish","Timeout","TrainingCancel","TrainingComplete","UnderConstruction","Unknown","Unlink"],"facets":[],"base":"xs:string"}

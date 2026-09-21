@@ -1,0 +1,2407 @@
+{
+  "build": "5.0.16.97563",
+  "summary": {
+    "editorTypes": 61,
+    "editorProperties": 299,
+    "cameraProperties": 24,
+    "directorProperties": 14,
+    "gapsByStatus": {
+      "SUPPORTED_GENERIC": 257,
+      "SUPPORTED_GENERIC_NAME_NEEDS_SERIALIZER_PROOF": 42
+    }
+  },
+  "gaps": [
+    {
+      "category": "Element",
+      "objectType": "@Category:Element",
+      "property": "start",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Element",
+      "objectType": "@Category:Element",
+      "property": "duration",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Element",
+      "objectType": "@Category:Element",
+      "property": "startLinkGuid",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Element",
+      "objectType": "@Category:Element",
+      "property": "startLinkAttachToPoint",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Element",
+      "objectType": "@Category:Element",
+      "property": "startLinkDistance",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Element",
+      "objectType": "@Category:Element",
+      "property": "endLinkGuid",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Element",
+      "objectType": "@Category:Element",
+      "property": "endLinkAttachToPoint",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Element",
+      "objectType": "@Category:Element",
+      "property": "endLinkDistance",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Element",
+      "objectType": "@Category:Element",
+      "property": "lockedToEnd",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Animation",
+      "objectType": "CCutsceneElementAnim",
+      "property": "anim",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Animation",
+      "objectType": "CCutsceneElementAnim",
+      "property": "animId",
+      "xmlNameStatus": "adjacent-internal-string",
+      "editorConfidence": 0.9,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Animation",
+      "objectType": "CCutsceneElementAnim",
+      "property": "priority",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Animation",
+      "objectType": "CCutsceneElementAnim",
+      "property": "originalDuration",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Animation",
+      "objectType": "CCutsceneElementAnim",
+      "property": "originalMoveSpeed",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Animation",
+      "objectType": "CCutsceneElementAnim",
+      "property": "movespeed",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Animation",
+      "objectType": "CCutsceneElementAnim",
+      "property": "looping",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Animation",
+      "objectType": "CCutsceneElementAnim",
+      "property": "playOnce",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Animation",
+      "objectType": "CCutsceneElementAnim",
+      "property": "playForever",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Animation",
+      "objectType": "CCutsceneElementAnim",
+      "property": "blendTime",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Animation",
+      "objectType": "CCutsceneElementAnim",
+      "property": "blendOutTime",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Animation",
+      "objectType": "CCutsceneElementAnim",
+      "property": "startOffset",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Animation",
+      "objectType": "CCutsceneElementAnim",
+      "property": "timeScale",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Animation",
+      "objectType": "CCutsceneElementAnim",
+      "property": "rightAligned",
+      "xmlNameStatus": "adjacent-internal-string",
+      "editorConfidence": 0.9,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Animation",
+      "objectType": "CCutsceneElementAnim",
+      "property": "weight",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Animation",
+      "objectType": "CCutsceneElementAnim",
+      "property": "fullMatchLegacy",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Object",
+      "objectType": "@Category:Object",
+      "property": "blendToTerrain",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Object",
+      "objectType": "@Category:Object",
+      "property": "followTerrainOffset",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Object",
+      "objectType": "@Category:Object",
+      "property": "positionX",
+      "xmlNameStatus": "display-derived",
+      "editorConfidence": 0.7,
+      "mcpStatus": "SUPPORTED_GENERIC_NAME_NEEDS_SERIALIZER_PROOF"
+    },
+    {
+      "category": "Object",
+      "objectType": "@Category:Object",
+      "property": "positionY",
+      "xmlNameStatus": "display-derived",
+      "editorConfidence": 0.7,
+      "mcpStatus": "SUPPORTED_GENERIC_NAME_NEEDS_SERIALIZER_PROOF"
+    },
+    {
+      "category": "Object",
+      "objectType": "@Category:Object",
+      "property": "positionZ",
+      "xmlNameStatus": "display-derived",
+      "editorConfidence": 0.7,
+      "mcpStatus": "SUPPORTED_GENERIC_NAME_NEEDS_SERIALIZER_PROOF"
+    },
+    {
+      "category": "Object",
+      "objectType": "@Category:Object",
+      "property": "scaleX",
+      "xmlNameStatus": "display-derived",
+      "editorConfidence": 0.7,
+      "mcpStatus": "SUPPORTED_GENERIC_NAME_NEEDS_SERIALIZER_PROOF"
+    },
+    {
+      "category": "Object",
+      "objectType": "@Category:Object",
+      "property": "scaleY",
+      "xmlNameStatus": "display-derived",
+      "editorConfidence": 0.7,
+      "mcpStatus": "SUPPORTED_GENERIC_NAME_NEEDS_SERIALIZER_PROOF"
+    },
+    {
+      "category": "Object",
+      "objectType": "@Category:Object",
+      "property": "scaleZ",
+      "xmlNameStatus": "display-derived",
+      "editorConfidence": 0.7,
+      "mcpStatus": "SUPPORTED_GENERIC_NAME_NEEDS_SERIALIZER_PROOF"
+    },
+    {
+      "category": "Object",
+      "objectType": "@Category:Object",
+      "property": "rotation",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Object",
+      "objectType": "@Category:Object",
+      "property": "rotationX",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Object",
+      "objectType": "@Category:Object",
+      "property": "rotationY",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Object",
+      "objectType": "@Category:Object",
+      "property": "rotationZ",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Object",
+      "objectType": "@Category:Object",
+      "property": "fogVisibility",
+      "xmlNameStatus": "adjacent-internal-string",
+      "editorConfidence": 0.9,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Object",
+      "objectType": "@Category:Object",
+      "property": "finderTag",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Object",
+      "objectType": "@Category:Object",
+      "property": "useSceneRotation",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "ActorModel",
+      "objectType": "CCutsceneNodeActor",
+      "property": "modelLink",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "ActorModel",
+      "objectType": "CCutsceneNodeActor",
+      "property": "variation",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "ActorModel",
+      "objectType": "CCutsceneNodeActor",
+      "property": "unitLink",
+      "xmlNameStatus": "display-derived",
+      "editorConfidence": 0.7,
+      "mcpStatus": "SUPPORTED_GENERIC_NAME_NEEDS_SERIALIZER_PROOF"
+    },
+    {
+      "category": "ActorModel",
+      "objectType": "CCutsceneNodeActor",
+      "property": "skinOverride",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "ActorModel",
+      "objectType": "CCutsceneNodeActor",
+      "property": "enableModelEvents",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "ActorModel",
+      "objectType": "CCutsceneNodeActor",
+      "property": "modelPath",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "ActorModel",
+      "objectType": "CCutsceneNodeActor",
+      "property": "debugModelLink",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "ActorModel",
+      "objectType": "CCutsceneNodeActor",
+      "property": "fxaOverridePath",
+      "xmlNameStatus": "display-derived",
+      "editorConfidence": 0.7,
+      "mcpStatus": "SUPPORTED_GENERIC_NAME_NEEDS_SERIALIZER_PROOF"
+    },
+    {
+      "category": "ActorModel",
+      "objectType": "CCutsceneNodeActor",
+      "property": "lensFlaresStartVisible",
+      "xmlNameStatus": "adjacent-internal-string",
+      "editorConfidence": 0.9,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "ActorModel",
+      "objectType": "CCutsceneNodeActor",
+      "property": "actorAlias",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "ActorModel",
+      "objectType": "CCutsceneNodeActor",
+      "property": "actorAliasHide",
+      "xmlNameStatus": "adjacent-internal-string",
+      "editorConfidence": 0.9,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "ActorModel",
+      "objectType": "CCutsceneNodeActor",
+      "property": "halo",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "ActorModel",
+      "objectType": "CCutsceneNodeActor",
+      "property": "hitTest",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "ActorModel",
+      "objectType": "CCutsceneNodeActor",
+      "property": "walk",
+      "xmlNameStatus": "display-derived",
+      "editorConfidence": 0.7,
+      "mcpStatus": "SUPPORTED_GENERIC_NAME_NEEDS_SERIALIZER_PROOF"
+    },
+    {
+      "category": "ActorModel",
+      "objectType": "CCutsceneNodeActor",
+      "property": "useAnimMovespeed",
+      "xmlNameStatus": "adjacent-internal-string",
+      "editorConfidence": 0.9,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "ActorModel",
+      "objectType": "CCutsceneNodeActor",
+      "property": "enablePhysics",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "ActorModel",
+      "objectType": "CCutsceneNodeActor",
+      "property": "speakerTag",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "ActorModel",
+      "objectType": "CCutsceneNodeActor",
+      "property": "textureQuality",
+      "xmlNameStatus": "display-derived",
+      "editorConfidence": 0.7,
+      "mcpStatus": "SUPPORTED_GENERIC_NAME_NEEDS_SERIALIZER_PROOF"
+    },
+    {
+      "category": "ActorModel",
+      "objectType": "CCutsceneNodeActor",
+      "property": "shadowBox",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "ActorModel",
+      "objectType": "CCutsceneNodeActor",
+      "property": "cloaking",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "ActorModel",
+      "objectType": "CCutsceneNodeActor",
+      "property": "opacity",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "ActorModel",
+      "objectType": "CCutsceneNodeActor",
+      "property": "tintColorRed",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "ActorModel",
+      "objectType": "CCutsceneNodeActor",
+      "property": "tintColorGreen",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "ActorModel",
+      "objectType": "CCutsceneNodeActor",
+      "property": "tintColorBlue",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "TeamColor",
+      "objectType": "@Category:TeamColor",
+      "property": "teamColorDiffuseRed",
+      "xmlNameStatus": "adjacent-internal-string",
+      "editorConfidence": 0.9,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "TeamColor",
+      "objectType": "@Category:TeamColor",
+      "property": "teamColorDiffuseGreen",
+      "xmlNameStatus": "adjacent-internal-string",
+      "editorConfidence": 0.9,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "TeamColor",
+      "objectType": "@Category:TeamColor",
+      "property": "teamColorDiffuseBlue",
+      "xmlNameStatus": "adjacent-internal-string",
+      "editorConfidence": 0.9,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "TeamColor",
+      "objectType": "@Category:TeamColor",
+      "property": "teamColorEmissiveRed",
+      "xmlNameStatus": "adjacent-internal-string",
+      "editorConfidence": 0.9,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "TeamColor",
+      "objectType": "@Category:TeamColor",
+      "property": "teamColorEmissiveGreen",
+      "xmlNameStatus": "adjacent-internal-string",
+      "editorConfidence": 0.9,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "TeamColor",
+      "objectType": "@Category:TeamColor",
+      "property": "teamColorEmissiveBlue",
+      "xmlNameStatus": "adjacent-internal-string",
+      "editorConfidence": 0.9,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "TeamColor",
+      "objectType": "@Category:TeamColor",
+      "property": "hdrMultiplierDiffuseRed",
+      "xmlNameStatus": "adjacent-internal-string",
+      "editorConfidence": 0.9,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "TeamColor",
+      "objectType": "@Category:TeamColor",
+      "property": "hdrMultiplierDiffuseGreen",
+      "xmlNameStatus": "adjacent-internal-string",
+      "editorConfidence": 0.9,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "TeamColor",
+      "objectType": "@Category:TeamColor",
+      "property": "hdrMultiplierDiffuseBlue",
+      "xmlNameStatus": "adjacent-internal-string",
+      "editorConfidence": 0.9,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "TeamColor",
+      "objectType": "@Category:TeamColor",
+      "property": "hdrMultiplierEmissiveRed",
+      "xmlNameStatus": "adjacent-internal-string",
+      "editorConfidence": 0.9,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "TeamColor",
+      "objectType": "@Category:TeamColor",
+      "property": "hdrMultiplierEmissiveGreen",
+      "xmlNameStatus": "adjacent-internal-string",
+      "editorConfidence": 0.9,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "TeamColor",
+      "objectType": "@Category:TeamColor",
+      "property": "hdrMultiplierEmissiveBlue",
+      "xmlNameStatus": "adjacent-internal-string",
+      "editorConfidence": 0.9,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Node",
+      "objectType": "@Category:Node",
+      "property": "guide",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Node",
+      "objectType": "@Category:Node",
+      "property": "enabled",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Node",
+      "objectType": "@Category:Node",
+      "property": "filter",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Node",
+      "objectType": "@Category:Node",
+      "property": "locked",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Node",
+      "objectType": "@Category:Node",
+      "property": "visible",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Node",
+      "objectType": "@Category:Node",
+      "property": "name",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Commandable",
+      "objectType": "@Category:Commandable",
+      "property": "referenceGuid",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Commandable",
+      "objectType": "@Category:Commandable",
+      "property": "referenceFile",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Commandable",
+      "objectType": "@Category:Commandable",
+      "property": "parentID",
+      "xmlNameStatus": "display-derived",
+      "editorConfidence": 0.7,
+      "mcpStatus": "SUPPORTED_GENERIC_NAME_NEEDS_SERIALIZER_PROOF"
+    },
+    {
+      "category": "Commandable",
+      "objectType": "@Category:Commandable",
+      "property": "guid",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Director",
+      "objectType": "CCutsceneNodeDirector",
+      "property": "reverb",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Director",
+      "objectType": "CCutsceneNodeDirector",
+      "property": "autoDestroyOnEnd",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Director",
+      "objectType": "CCutsceneNodeDirector",
+      "property": "interactive",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Director",
+      "objectType": "CCutsceneNodeDirector",
+      "property": "waitForResources",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "PathMarker",
+      "objectType": "CCutsceneNodePathMarker",
+      "property": "curveOutType",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "PathMarker",
+      "objectType": "CCutsceneNodePathMarker",
+      "property": "curveInType",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Property",
+      "objectType": "@Category:Property",
+      "property": "property",
+      "xmlNameStatus": "display-derived",
+      "editorConfidence": 0.7,
+      "mcpStatus": "SUPPORTED_GENERIC_NAME_NEEDS_SERIALIZER_PROOF"
+    },
+    {
+      "category": "Attachment",
+      "objectType": "@Category:Attachment",
+      "property": "attachGuid",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Attachment",
+      "objectType": "@Category:Attachment",
+      "property": "attachName",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Attachment",
+      "objectType": "@Category:Attachment",
+      "property": "offsetX",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Attachment",
+      "objectType": "@Category:Attachment",
+      "property": "offsetY",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Attachment",
+      "objectType": "@Category:Attachment",
+      "property": "offsetZ",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Attachment",
+      "objectType": "@Category:Attachment",
+      "property": "inheritScale",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Attachment",
+      "objectType": "@Category:Attachment",
+      "property": "inheritVisibility",
+      "xmlNameStatus": "adjacent-internal-string",
+      "editorConfidence": 0.9,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "LookAt",
+      "objectType": "@Category:LookAt",
+      "property": "lookAtGUID",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "LookAt",
+      "objectType": "@Category:LookAt",
+      "property": "lookAtType",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "LookAt",
+      "objectType": "@Category:LookAt",
+      "property": "lookAtAttachId",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "LookAt",
+      "objectType": "@Category:LookAt",
+      "property": "ignoreEyes",
+      "xmlNameStatus": "adjacent-internal-string",
+      "editorConfidence": 0.9,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "LookAt",
+      "objectType": "@Category:LookAt",
+      "property": "holdFade",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "ActiveLight",
+      "objectType": "@Category:ActiveLight",
+      "property": "minimumLightLevel",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "ActiveLight",
+      "objectType": "@Category:ActiveLight",
+      "property": "maximumLightLevel",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "ActiveShot",
+      "objectType": "@Category:ActiveShot",
+      "property": "cameraGUID",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "ActiveShot",
+      "objectType": "@Category:ActiveShot",
+      "property": "cameraIndex",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Sound",
+      "objectType": "CCutsceneNodeSound",
+      "property": "soundLink",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Sound",
+      "objectType": "CCutsceneNodeSound",
+      "property": "soundIndex",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Sound",
+      "objectType": "CCutsceneNodeSound",
+      "property": "volumeScale",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Sound",
+      "objectType": "CCutsceneNodeSound",
+      "property": "pitch",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Sound",
+      "objectType": "CCutsceneNodeSound",
+      "property": "pan",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Sound",
+      "objectType": "CCutsceneNodeSound",
+      "property": "mode",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Sound",
+      "objectType": "CCutsceneNodeSound",
+      "property": "assetDuration",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Sound",
+      "objectType": "CCutsceneNodeSound",
+      "property": "nonSeeking",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Sound",
+      "objectType": "CCutsceneNodeSound",
+      "property": "fireAndForget",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Sound",
+      "objectType": "CCutsceneNodeSound",
+      "property": "randomOffsetMin",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Sound",
+      "objectType": "CCutsceneNodeSound",
+      "property": "randomOffsetMax",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Sound",
+      "objectType": "CCutsceneNodeSound",
+      "property": "speakerMixFrontLeft",
+      "xmlNameStatus": "adjacent-internal-string",
+      "editorConfidence": 0.9,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Sound",
+      "objectType": "CCutsceneNodeSound",
+      "property": "speakerMixFrontRight",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Sound",
+      "objectType": "CCutsceneNodeSound",
+      "property": "speakerMixCenter",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Sound",
+      "objectType": "CCutsceneNodeSound",
+      "property": "speakerMixLFE",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Sound",
+      "objectType": "CCutsceneNodeSound",
+      "property": "speakerMixBackLeft",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Sound",
+      "objectType": "CCutsceneNodeSound",
+      "property": "speakerMixBackRight",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Sound",
+      "objectType": "CCutsceneNodeSound",
+      "property": "speakerMixSideLeft",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Sound",
+      "objectType": "CCutsceneNodeSound",
+      "property": "speakerMixSideRight",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "SoundGroup",
+      "objectType": "CCutsceneNodeSoundGroup",
+      "property": "volumeAbsolute",
+      "xmlNameStatus": "adjacent-internal-string",
+      "editorConfidence": 0.9,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Cutscene",
+      "objectType": "CutsceneState",
+      "property": "filterTest",
+      "xmlNameStatus": "adjacent-internal-string",
+      "editorConfidence": 0.9,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Camera",
+      "objectType": "@Category:Camera",
+      "property": "fov",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Camera",
+      "objectType": "@Category:Camera",
+      "property": "nearClip",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Camera",
+      "objectType": "@Category:Camera",
+      "property": "farClip",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Camera",
+      "objectType": "@Category:Camera",
+      "property": "shadowClip",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Camera",
+      "objectType": "@Category:Camera",
+      "property": "depthOfField",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Camera",
+      "objectType": "@Category:Camera",
+      "property": "focalDepth",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Camera",
+      "objectType": "@Category:Camera",
+      "property": "falloffStart",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Camera",
+      "objectType": "@Category:Camera",
+      "property": "falloffEnd",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Camera",
+      "objectType": "@Category:Camera",
+      "property": "falloffStartNear",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Camera",
+      "objectType": "@Category:Camera",
+      "property": "falloffEndNear",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Camera",
+      "objectType": "@Category:Camera",
+      "property": "fstop",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Camera",
+      "objectType": "@Category:Camera",
+      "property": "maxcoc",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Camera",
+      "objectType": "@Category:Camera",
+      "property": "doftype",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Camera",
+      "objectType": "@Category:Camera",
+      "property": "roll",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Camera",
+      "objectType": "@Category:Camera",
+      "property": "verticalFOV",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Camera",
+      "objectType": "@Category:Camera",
+      "property": "distance",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Camera",
+      "objectType": "@Category:Camera",
+      "property": "yaw",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Camera",
+      "objectType": "@Category:Camera",
+      "property": "heightOffset",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Camera",
+      "objectType": "@Category:Camera",
+      "property": "eyePositionX",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Camera",
+      "objectType": "@Category:Camera",
+      "property": "eyePositionY",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Camera",
+      "objectType": "@Category:Camera",
+      "property": "eyePositionZ",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Camera",
+      "objectType": "@Category:Camera",
+      "property": "targetPositionX",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Camera",
+      "objectType": "@Category:Camera",
+      "property": "targetPositionY",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Camera",
+      "objectType": "@Category:Camera",
+      "property": "targetPositionZ",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Light",
+      "objectType": "CCutsceneNodeLight",
+      "property": "type",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Light",
+      "objectType": "CCutsceneNodeLight",
+      "property": "colorR",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Light",
+      "objectType": "CCutsceneNodeLight",
+      "property": "colorG",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Light",
+      "objectType": "CCutsceneNodeLight",
+      "property": "colorB",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Light",
+      "objectType": "CCutsceneNodeLight",
+      "property": "shadowCasting",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Light",
+      "objectType": "CCutsceneNodeLight",
+      "property": "specular",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Light",
+      "objectType": "CCutsceneNodeLight",
+      "property": "specularColorR",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Light",
+      "objectType": "CCutsceneNodeLight",
+      "property": "specularColorG",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Light",
+      "objectType": "CCutsceneNodeLight",
+      "property": "specularColorB",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Light",
+      "objectType": "CCutsceneNodeLight",
+      "property": "ambientOcclusion",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Light",
+      "objectType": "CCutsceneNodeLight",
+      "property": "lightOpaque",
+      "xmlNameStatus": "adjacent-internal-string",
+      "editorConfidence": 0.9,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Light",
+      "objectType": "CCutsceneNodeLight",
+      "property": "lightTransparent",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Light",
+      "objectType": "CCutsceneNodeLight",
+      "property": "colorMultiplier",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Light",
+      "objectType": "CCutsceneNodeLight",
+      "property": "specularColorMultiplier",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Light",
+      "objectType": "CCutsceneNodeLight",
+      "property": "attenuationStart",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Light",
+      "objectType": "CCutsceneNodeLight",
+      "property": "attenuationFar",
+      "xmlNameStatus": "display-derived",
+      "editorConfidence": 0.7,
+      "mcpStatus": "SUPPORTED_GENERIC_NAME_NEEDS_SERIALIZER_PROOF"
+    },
+    {
+      "category": "Light",
+      "objectType": "CCutsceneNodeLight",
+      "property": "hotspot",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Light",
+      "objectType": "CCutsceneNodeLight",
+      "property": "falloff",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "LightGlobal",
+      "objectType": "CCutsceneNodeEnvironmentLight",
+      "property": "timeOfDay",
+      "xmlNameStatus": "adjacent-internal-string",
+      "editorConfidence": 0.9,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "LightGlobal",
+      "objectType": "CCutsceneNodeEnvironmentLight",
+      "property": "ambientColorRed",
+      "xmlNameStatus": "adjacent-internal-string",
+      "editorConfidence": 0.9,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "LightGlobal",
+      "objectType": "CCutsceneNodeEnvironmentLight",
+      "property": "ambientColorGreen",
+      "xmlNameStatus": "adjacent-internal-string",
+      "editorConfidence": 0.9,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "LightGlobal",
+      "objectType": "CCutsceneNodeEnvironmentLight",
+      "property": "ambientColorBlue",
+      "xmlNameStatus": "adjacent-internal-string",
+      "editorConfidence": 0.9,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "LightGlobal",
+      "objectType": "CCutsceneNodeEnvironmentLight",
+      "property": "hdrSpecMultiplier",
+      "xmlNameStatus": "display-derived",
+      "editorConfidence": 0.7,
+      "mcpStatus": "SUPPORTED_GENERIC_NAME_NEEDS_SERIALIZER_PROOF"
+    },
+    {
+      "category": "LightGlobal",
+      "objectType": "CCutsceneNodeEnvironmentLight",
+      "property": "hdrEmisMultiplier",
+      "xmlNameStatus": "display-derived",
+      "editorConfidence": 0.7,
+      "mcpStatus": "SUPPORTED_GENERIC_NAME_NEEDS_SERIALIZER_PROOF"
+    },
+    {
+      "category": "LightToneMapping",
+      "objectType": "CCutsceneNodeEnvironmentLight",
+      "property": "hdrExposure",
+      "xmlNameStatus": "display-derived",
+      "editorConfidence": 0.7,
+      "mcpStatus": "SUPPORTED_GENERIC_NAME_NEEDS_SERIALIZER_PROOF"
+    },
+    {
+      "category": "LightToneMapping",
+      "objectType": "CCutsceneNodeEnvironmentLight",
+      "property": "hdrBloomThreshold",
+      "xmlNameStatus": "display-derived",
+      "editorConfidence": 0.7,
+      "mcpStatus": "SUPPORTED_GENERIC_NAME_NEEDS_SERIALIZER_PROOF"
+    },
+    {
+      "category": "LightToneMapping",
+      "objectType": "CCutsceneNodeEnvironmentLight",
+      "property": "hdrAmbientMultiplier",
+      "xmlNameStatus": "display-derived",
+      "editorConfidence": 0.7,
+      "mcpStatus": "SUPPORTED_GENERIC_NAME_NEEDS_SERIALIZER_PROOF"
+    },
+    {
+      "category": "LightToneMapping",
+      "objectType": "CCutsceneNodeEnvironmentLight",
+      "property": "hdrDiffuseMultiplier",
+      "xmlNameStatus": "display-derived",
+      "editorConfidence": 0.7,
+      "mcpStatus": "SUPPORTED_GENERIC_NAME_NEEDS_SERIALIZER_PROOF"
+    },
+    {
+      "category": "LightToneMapping",
+      "objectType": "CCutsceneNodeEnvironmentLight",
+      "property": "hdrWhitePoint",
+      "xmlNameStatus": "exe-internal-cluster",
+      "editorConfidence": 0.9,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "LightToneMapping",
+      "objectType": "CCutsceneNodeEnvironmentLight",
+      "property": "operatorHDR",
+      "xmlNameStatus": "adjacent-internal-string",
+      "editorConfidence": 0.9,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "LightColorization",
+      "objectType": "CCutsceneNodeEnvironmentLight",
+      "property": "colorizationInputLow",
+      "xmlNameStatus": "display-derived",
+      "editorConfidence": 0.7,
+      "mcpStatus": "SUPPORTED_GENERIC_NAME_NEEDS_SERIALIZER_PROOF"
+    },
+    {
+      "category": "LightColorization",
+      "objectType": "CCutsceneNodeEnvironmentLight",
+      "property": "colorizationInputHigh",
+      "xmlNameStatus": "display-derived",
+      "editorConfidence": 0.7,
+      "mcpStatus": "SUPPORTED_GENERIC_NAME_NEEDS_SERIALIZER_PROOF"
+    },
+    {
+      "category": "LightColorization",
+      "objectType": "CCutsceneNodeEnvironmentLight",
+      "property": "colorizationInputGamma",
+      "xmlNameStatus": "display-derived",
+      "editorConfidence": 0.7,
+      "mcpStatus": "SUPPORTED_GENERIC_NAME_NEEDS_SERIALIZER_PROOF"
+    },
+    {
+      "category": "LightColorization",
+      "objectType": "CCutsceneNodeEnvironmentLight",
+      "property": "colorizationOutputLow",
+      "xmlNameStatus": "display-derived",
+      "editorConfidence": 0.7,
+      "mcpStatus": "SUPPORTED_GENERIC_NAME_NEEDS_SERIALIZER_PROOF"
+    },
+    {
+      "category": "LightColorization",
+      "objectType": "CCutsceneNodeEnvironmentLight",
+      "property": "colorizationOutputHigh",
+      "xmlNameStatus": "display-derived",
+      "editorConfidence": 0.7,
+      "mcpStatus": "SUPPORTED_GENERIC_NAME_NEEDS_SERIALIZER_PROOF"
+    },
+    {
+      "category": "LightColorization",
+      "objectType": "CCutsceneNodeEnvironmentLight",
+      "property": "colorizationBrightness",
+      "xmlNameStatus": "display-derived",
+      "editorConfidence": 0.7,
+      "mcpStatus": "SUPPORTED_GENERIC_NAME_NEEDS_SERIALIZER_PROOF"
+    },
+    {
+      "category": "LightColorization",
+      "objectType": "CCutsceneNodeEnvironmentLight",
+      "property": "colorizationContrast",
+      "xmlNameStatus": "display-derived",
+      "editorConfidence": 0.7,
+      "mcpStatus": "SUPPORTED_GENERIC_NAME_NEEDS_SERIALIZER_PROOF"
+    },
+    {
+      "category": "LightColorization",
+      "objectType": "CCutsceneNodeEnvironmentLight",
+      "property": "colorizationHue",
+      "xmlNameStatus": "display-derived",
+      "editorConfidence": 0.7,
+      "mcpStatus": "SUPPORTED_GENERIC_NAME_NEEDS_SERIALIZER_PROOF"
+    },
+    {
+      "category": "LightColorization",
+      "objectType": "CCutsceneNodeEnvironmentLight",
+      "property": "colorizationSaturation",
+      "xmlNameStatus": "display-derived",
+      "editorConfidence": 0.7,
+      "mcpStatus": "SUPPORTED_GENERIC_NAME_NEEDS_SERIALIZER_PROOF"
+    },
+    {
+      "category": "LightColorization",
+      "objectType": "CCutsceneNodeEnvironmentLight",
+      "property": "colorizationLightness",
+      "xmlNameStatus": "display-derived",
+      "editorConfidence": 0.7,
+      "mcpStatus": "SUPPORTED_GENERIC_NAME_NEEDS_SERIALIZER_PROOF"
+    },
+    {
+      "category": "LightColorization",
+      "objectType": "CCutsceneNodeEnvironmentLight",
+      "property": "colorizationBlend",
+      "xmlNameStatus": "display-derived",
+      "editorConfidence": 0.7,
+      "mcpStatus": "SUPPORTED_GENERIC_NAME_NEEDS_SERIALIZER_PROOF"
+    },
+    {
+      "category": "LightColorization",
+      "objectType": "CCutsceneNodeEnvironmentLight",
+      "property": "colorize",
+      "xmlNameStatus": "adjacent-internal-string",
+      "editorConfidence": 0.9,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "LightTerrain",
+      "objectType": "CCutsceneNodeEnvironmentLight",
+      "property": "terrainSpecularExp",
+      "xmlNameStatus": "display-derived",
+      "editorConfidence": 0.7,
+      "mcpStatus": "SUPPORTED_GENERIC_NAME_NEEDS_SERIALIZER_PROOF"
+    },
+    {
+      "category": "LightTerrain",
+      "objectType": "CCutsceneNodeEnvironmentLight",
+      "property": "terrainHDRDiffuse",
+      "xmlNameStatus": "display-derived",
+      "editorConfidence": 0.7,
+      "mcpStatus": "SUPPORTED_GENERIC_NAME_NEEDS_SERIALIZER_PROOF"
+    },
+    {
+      "category": "LightTerrain",
+      "objectType": "CCutsceneNodeEnvironmentLight",
+      "property": "terrainHDRSpecular",
+      "xmlNameStatus": "display-derived",
+      "editorConfidence": 0.7,
+      "mcpStatus": "SUPPORTED_GENERIC_NAME_NEEDS_SERIALIZER_PROOF"
+    },
+    {
+      "category": "LightTerrain",
+      "objectType": "CCutsceneNodeEnvironmentLight",
+      "property": "creepSpecularExp",
+      "xmlNameStatus": "display-derived",
+      "editorConfidence": 0.7,
+      "mcpStatus": "SUPPORTED_GENERIC_NAME_NEEDS_SERIALIZER_PROOF"
+    },
+    {
+      "category": "LightTerrain",
+      "objectType": "CCutsceneNodeEnvironmentLight",
+      "property": "creepHDRDiffuseMultiplier",
+      "xmlNameStatus": "display-derived",
+      "editorConfidence": 0.7,
+      "mcpStatus": "SUPPORTED_GENERIC_NAME_NEEDS_SERIALIZER_PROOF"
+    },
+    {
+      "category": "LightTerrain",
+      "objectType": "CCutsceneNodeEnvironmentLight",
+      "property": "creepHDRSpecMultiplier",
+      "xmlNameStatus": "display-derived",
+      "editorConfidence": 0.7,
+      "mcpStatus": "SUPPORTED_GENERIC_NAME_NEEDS_SERIALIZER_PROOF"
+    },
+    {
+      "category": "LightTerrain",
+      "objectType": "CCutsceneNodeEnvironmentLight",
+      "property": "creepHDREmisMultiplier",
+      "xmlNameStatus": "display-derived",
+      "editorConfidence": 0.7,
+      "mcpStatus": "SUPPORTED_GENERIC_NAME_NEEDS_SERIALIZER_PROOF"
+    },
+    {
+      "category": "LightSSAO",
+      "objectType": "CCutsceneNodeEnvironmentLight",
+      "property": "ssaoOcclusionRadius",
+      "xmlNameStatus": "exe-internal-cluster",
+      "editorConfidence": 0.9,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "LightSSAO",
+      "objectType": "CCutsceneNodeEnvironmentLight",
+      "property": "ssaoNoOcclusion",
+      "xmlNameStatus": "exe-internal-cluster",
+      "editorConfidence": 0.9,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "LightSSAO",
+      "objectType": "CCutsceneNodeEnvironmentLight",
+      "property": "ssaoFullOcclusion",
+      "xmlNameStatus": "exe-internal-cluster",
+      "editorConfidence": 0.9,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "LightSSAO",
+      "objectType": "CCutsceneNodeEnvironmentLight",
+      "property": "ssaoOcclusionPower",
+      "xmlNameStatus": "exe-internal-cluster",
+      "editorConfidence": 0.9,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "LightSSAO",
+      "objectType": "CCutsceneNodeEnvironmentLight",
+      "property": "ssaoDetailOcclusionRadius",
+      "xmlNameStatus": "exe-internal-cluster",
+      "editorConfidence": 0.9,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "LightSSAO",
+      "objectType": "CCutsceneNodeEnvironmentLight",
+      "property": "ssaoDetailNoOcclusion",
+      "xmlNameStatus": "exe-internal-cluster",
+      "editorConfidence": 0.9,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "LightSSAO",
+      "objectType": "CCutsceneNodeEnvironmentLight",
+      "property": "ssaoDetailFullOcclusion",
+      "xmlNameStatus": "exe-internal-cluster",
+      "editorConfidence": 0.9,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "LightSSAO",
+      "objectType": "CCutsceneNodeEnvironmentLight",
+      "property": "ssaoDetailOcclusionPower",
+      "xmlNameStatus": "exe-internal-cluster",
+      "editorConfidence": 0.9,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "LightSSAO",
+      "objectType": "CCutsceneNodeEnvironmentLight",
+      "property": "useSeparateDetailSSAO",
+      "xmlNameStatus": "adjacent-internal-string",
+      "editorConfidence": 0.9,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "LightKey",
+      "objectType": "CCutsceneNodeEnvironmentLight",
+      "property": "keyDiffuseColorRed",
+      "xmlNameStatus": "adjacent-internal-string",
+      "editorConfidence": 0.9,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "LightKey",
+      "objectType": "CCutsceneNodeEnvironmentLight",
+      "property": "keyDiffuseColorGreen",
+      "xmlNameStatus": "adjacent-internal-string",
+      "editorConfidence": 0.9,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "LightKey",
+      "objectType": "CCutsceneNodeEnvironmentLight",
+      "property": "keyDiffuseColorBlue",
+      "xmlNameStatus": "adjacent-internal-string",
+      "editorConfidence": 0.9,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "LightKey",
+      "objectType": "CCutsceneNodeEnvironmentLight",
+      "property": "keyColorMultiplier",
+      "xmlNameStatus": "adjacent-internal-string",
+      "editorConfidence": 0.9,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "LightKey",
+      "objectType": "CCutsceneNodeEnvironmentLight",
+      "property": "keySpecularColorRed",
+      "xmlNameStatus": "adjacent-internal-string",
+      "editorConfidence": 0.9,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "LightKey",
+      "objectType": "CCutsceneNodeEnvironmentLight",
+      "property": "keySpecularColorGreen",
+      "xmlNameStatus": "adjacent-internal-string",
+      "editorConfidence": 0.9,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "LightKey",
+      "objectType": "CCutsceneNodeEnvironmentLight",
+      "property": "keySpecularColorBlue",
+      "xmlNameStatus": "adjacent-internal-string",
+      "editorConfidence": 0.9,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "LightKey",
+      "objectType": "CCutsceneNodeEnvironmentLight",
+      "property": "keySpecularColorMultiplier",
+      "xmlNameStatus": "adjacent-internal-string",
+      "editorConfidence": 0.9,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "LightKey",
+      "objectType": "CCutsceneNodeEnvironmentLight",
+      "property": "keyDirectionX",
+      "xmlNameStatus": "adjacent-internal-string",
+      "editorConfidence": 0.9,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "LightKey",
+      "objectType": "CCutsceneNodeEnvironmentLight",
+      "property": "keyDirectionY",
+      "xmlNameStatus": "adjacent-internal-string",
+      "editorConfidence": 0.9,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "LightKey",
+      "objectType": "CCutsceneNodeEnvironmentLight",
+      "property": "keyDirectionZ",
+      "xmlNameStatus": "adjacent-internal-string",
+      "editorConfidence": 0.9,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "LightFill",
+      "objectType": "CCutsceneNodeEnvironmentLight",
+      "property": "fillDiffuseColorRed",
+      "xmlNameStatus": "adjacent-internal-string",
+      "editorConfidence": 0.9,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "LightFill",
+      "objectType": "CCutsceneNodeEnvironmentLight",
+      "property": "fillDiffuseColorGreen",
+      "xmlNameStatus": "adjacent-internal-string",
+      "editorConfidence": 0.9,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "LightFill",
+      "objectType": "CCutsceneNodeEnvironmentLight",
+      "property": "fillDiffuseColorBlue",
+      "xmlNameStatus": "adjacent-internal-string",
+      "editorConfidence": 0.9,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "LightFill",
+      "objectType": "CCutsceneNodeEnvironmentLight",
+      "property": "fillColorMultiplier",
+      "xmlNameStatus": "adjacent-internal-string",
+      "editorConfidence": 0.9,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "LightFill",
+      "objectType": "CCutsceneNodeEnvironmentLight",
+      "property": "fillDirectionX",
+      "xmlNameStatus": "adjacent-internal-string",
+      "editorConfidence": 0.9,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "LightFill",
+      "objectType": "CCutsceneNodeEnvironmentLight",
+      "property": "fillDirectionY",
+      "xmlNameStatus": "adjacent-internal-string",
+      "editorConfidence": 0.9,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "LightFill",
+      "objectType": "CCutsceneNodeEnvironmentLight",
+      "property": "fillDirectionZ",
+      "xmlNameStatus": "adjacent-internal-string",
+      "editorConfidence": 0.9,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "LightBack",
+      "objectType": "CCutsceneNodeEnvironmentLight",
+      "property": "backDiffuseColorRed",
+      "xmlNameStatus": "adjacent-internal-string",
+      "editorConfidence": 0.9,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "LightBack",
+      "objectType": "CCutsceneNodeEnvironmentLight",
+      "property": "backDiffuseColorGreen",
+      "xmlNameStatus": "adjacent-internal-string",
+      "editorConfidence": 0.9,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "LightBack",
+      "objectType": "CCutsceneNodeEnvironmentLight",
+      "property": "backDiffuseColorBlue",
+      "xmlNameStatus": "adjacent-internal-string",
+      "editorConfidence": 0.9,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "LightBack",
+      "objectType": "CCutsceneNodeEnvironmentLight",
+      "property": "backColorMultiplier",
+      "xmlNameStatus": "adjacent-internal-string",
+      "editorConfidence": 0.9,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "LightBack",
+      "objectType": "CCutsceneNodeEnvironmentLight",
+      "property": "backDirectionX",
+      "xmlNameStatus": "adjacent-internal-string",
+      "editorConfidence": 0.9,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "LightBack",
+      "objectType": "CCutsceneNodeEnvironmentLight",
+      "property": "backDirectionY",
+      "xmlNameStatus": "adjacent-internal-string",
+      "editorConfidence": 0.9,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "LightBack",
+      "objectType": "CCutsceneNodeEnvironmentLight",
+      "property": "backDirectionZ",
+      "xmlNameStatus": "adjacent-internal-string",
+      "editorConfidence": 0.9,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "File",
+      "objectType": "CCutsceneNodeFile",
+      "property": "filePath",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "M3A",
+      "objectType": "CCutsceneNodeM3A",
+      "property": "overriding",
+      "xmlNameStatus": "adjacent-internal-string",
+      "editorConfidence": 0.9,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "RTTChannel",
+      "objectType": "CCutsceneNodeRTTChannel",
+      "property": "RTTChannel",
+      "xmlNameStatus": "adjacent-internal-string",
+      "editorConfidence": 0.9,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Fog",
+      "objectType": "CCutsceneNodeFog",
+      "property": "fogColorX",
+      "xmlNameStatus": "adjacent-internal-string",
+      "editorConfidence": 0.9,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Fog",
+      "objectType": "CCutsceneNodeFog",
+      "property": "fogColorY",
+      "xmlNameStatus": "adjacent-internal-string",
+      "editorConfidence": 0.9,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Fog",
+      "objectType": "CCutsceneNodeFog",
+      "property": "fogColorZ",
+      "xmlNameStatus": "adjacent-internal-string",
+      "editorConfidence": 0.9,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Fog",
+      "objectType": "CCutsceneNodeFog",
+      "property": "fogFalloff",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Fog",
+      "objectType": "CCutsceneNodeFog",
+      "property": "fogDensity",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Fog",
+      "objectType": "CCutsceneNodeFog",
+      "property": "fogStartHeight",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "ConversationDriver",
+      "objectType": "CCutsceneNodeConversationDriver",
+      "property": "conversationLink",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Text",
+      "objectType": "CCutsceneNodeText",
+      "property": "text",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "HaloController",
+      "objectType": "CCutsceneNodeHaloController",
+      "property": "cycleLength",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "HaloController",
+      "objectType": "CCutsceneNodeHaloController",
+      "property": "strobeFalloff",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "HaloController",
+      "objectType": "CCutsceneNodeHaloController",
+      "property": "strobeHalfHeight",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "HaloController",
+      "objectType": "CCutsceneNodeHaloController",
+      "property": "haloEmission",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "HaloController",
+      "objectType": "CCutsceneNodeHaloController",
+      "property": "haloWidth",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "HaloController",
+      "objectType": "CCutsceneNodeHaloController",
+      "property": "highlightColorR",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "HaloController",
+      "objectType": "CCutsceneNodeHaloController",
+      "property": "highlightColorG",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "HaloController",
+      "objectType": "CCutsceneNodeHaloController",
+      "property": "highlightColorB",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "HaloController",
+      "objectType": "CCutsceneNodeHaloController",
+      "property": "startMultiplierR",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "HaloController",
+      "objectType": "CCutsceneNodeHaloController",
+      "property": "startMultiplierG",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "HaloController",
+      "objectType": "CCutsceneNodeHaloController",
+      "property": "startMultiplierB",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "HaloController",
+      "objectType": "CCutsceneNodeHaloController",
+      "property": "peakMultiplierColorR",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "HaloController",
+      "objectType": "CCutsceneNodeHaloController",
+      "property": "peakMultiplierColorG",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "HaloController",
+      "objectType": "CCutsceneNodeHaloController",
+      "property": "peakMultiplierColorB",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "ModelMaterial",
+      "objectType": "CCutsceneNodeModelMaterial",
+      "property": "modelMaterialActorName",
+      "xmlNameStatus": "display-derived",
+      "editorConfidence": 0.7,
+      "mcpStatus": "SUPPORTED_GENERIC_NAME_NEEDS_SERIALIZER_PROOF"
+    },
+    {
+      "category": "ModelMaterial",
+      "objectType": "CCutsceneNodeModelMaterial",
+      "property": "modelMaterialAutomatesGlobalLoops",
+      "xmlNameStatus": "display-derived",
+      "editorConfidence": 0.7,
+      "mcpStatus": "SUPPORTED_GENERIC_NAME_NEEDS_SERIALIZER_PROOF"
+    },
+    {
+      "category": "ModelMaterial",
+      "objectType": "CCutsceneNodeModelMaterial",
+      "property": "modelMaterialModelName",
+      "xmlNameStatus": "display-derived",
+      "editorConfidence": 0.7,
+      "mcpStatus": "SUPPORTED_GENERIC_NAME_NEEDS_SERIALIZER_PROOF"
+    },
+    {
+      "category": "ModelMaterial",
+      "objectType": "CCutsceneNodeModelMaterial",
+      "property": "modelMaterialType",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Bookmark",
+      "objectType": "@Category:Bookmark",
+      "property": "bookmarkName",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Bookmark",
+      "objectType": "@Category:Bookmark",
+      "property": "jumpToBookmarkWhenHit",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Bookmark",
+      "objectType": "@Category:Bookmark",
+      "property": "pauseWhenHit",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Bookmark",
+      "objectType": "@Category:Bookmark",
+      "property": "addFilterWhenHit",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Bookmark",
+      "objectType": "@Category:Bookmark",
+      "property": "removeFilterWhenHit",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Bookmark",
+      "objectType": "@Category:Bookmark",
+      "property": "objectGuid",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Bookmark",
+      "objectType": "@Category:Bookmark",
+      "property": "aspectRatio",
+      "xmlNameStatus": "adjacent-internal-string",
+      "editorConfidence": 0.9,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "PropertyValue",
+      "objectType": "@Category:PropertyValue",
+      "property": "value",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "PropertyValue",
+      "objectType": "@Category:PropertyValue",
+      "property": "time",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "PropertyValue",
+      "objectType": "@Category:PropertyValue",
+      "property": "curveData",
+      "xmlNameStatus": "display-derived",
+      "editorConfidence": 0.7,
+      "mcpStatus": "SUPPORTED_GENERIC_NAME_NEEDS_SERIALIZER_PROOF"
+    },
+    {
+      "category": "PropertyValue",
+      "objectType": "@Category:PropertyValue",
+      "property": "curveInValue",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "PropertyValue",
+      "objectType": "@Category:PropertyValue",
+      "property": "curveOutValue",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "ActiveCamera",
+      "objectType": "@Category:ActiveCamera",
+      "property": "objectGuid",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "ActiveCamera",
+      "objectType": "@Category:ActiveCamera",
+      "property": "lightGUID",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "ActiveCamera",
+      "objectType": "@Category:ActiveCamera",
+      "property": "lightID",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "ActiveCamera",
+      "objectType": "@Category:ActiveCamera",
+      "property": "lightIndex",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "ActiveCamera",
+      "objectType": "@Category:ActiveCamera",
+      "property": "blendTime",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "ActiveCamera",
+      "objectType": "@Category:ActiveCamera",
+      "property": "lineId",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "ActiveCamera",
+      "objectType": "@Category:ActiveCamera",
+      "property": "alternateLineID",
+      "xmlNameStatus": "display-derived",
+      "editorConfidence": 0.7,
+      "mcpStatus": "SUPPORTED_GENERIC_NAME_NEEDS_SERIALIZER_PROOF"
+    },
+    {
+      "category": "ActiveCamera",
+      "objectType": "@Category:ActiveCamera",
+      "property": "endBufferTime",
+      "xmlNameStatus": "adjacent-internal-string",
+      "editorConfidence": 0.9,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Conversation",
+      "objectType": "CCutsceneElementConversation",
+      "property": "conversationLine",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Conversation",
+      "objectType": "CCutsceneElementConversation",
+      "property": "facialGroup",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Conversation",
+      "objectType": "CCutsceneElementConversation",
+      "property": "facialAnim",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Conversation",
+      "objectType": "CCutsceneElementConversation",
+      "property": "durationOffset",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Conversation",
+      "objectType": "CCutsceneElementConversation",
+      "property": "onlyPlayIfLocal",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "PathElement",
+      "objectType": "@Category:PathElement",
+      "property": "pathGuid",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "PathElement",
+      "objectType": "@Category:PathElement",
+      "property": "alwaysPointUp",
+      "xmlNameStatus": "adjacent-internal-string",
+      "editorConfidence": 0.9,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "PathElement",
+      "objectType": "@Category:PathElement",
+      "property": "pathRotationOffsetX",
+      "xmlNameStatus": "adjacent-internal-string",
+      "editorConfidence": 0.9,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "PathElement",
+      "objectType": "@Category:PathElement",
+      "property": "pathRotationOffsetY",
+      "xmlNameStatus": "adjacent-internal-string",
+      "editorConfidence": 0.9,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "PathElement",
+      "objectType": "@Category:PathElement",
+      "property": "pathRotationOffsetZ",
+      "xmlNameStatus": "adjacent-internal-string",
+      "editorConfidence": 0.9,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Fade",
+      "objectType": "CCutsceneElementFade",
+      "property": "amount",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Fade",
+      "objectType": "CCutsceneElementFade",
+      "property": "unfadedAmount",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    },
+    {
+      "category": "Fade",
+      "objectType": "CCutsceneElementFade",
+      "property": "fadeIn",
+      "xmlNameStatus": "corpus-confirmed",
+      "editorConfidence": 1,
+      "mcpStatus": "SUPPORTED_GENERIC"
+    }
+  ]
+}

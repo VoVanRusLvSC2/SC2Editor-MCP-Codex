@@ -1,0 +1,1 @@
+{"name":"SActorMsgAnimProps","kind":"complex","fields":[{"kind":"attribute","name":"Props","type":"simple_CAnimProps"},{"kind":"element","name":"Props","type":"CAnimProps","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

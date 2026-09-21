@@ -1,0 +1,1 @@
+{"name":"SActorMsgSetPosition","kind":"complex","fields":[{"kind":"attribute","name":"Position","type":"simple_C3Vector"},{"kind":"element","name":"Position","type":"C3Vector","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

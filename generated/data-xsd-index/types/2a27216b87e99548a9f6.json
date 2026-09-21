@@ -1,0 +1,1 @@
+{"name":"SActorMsgScenePhysicsImpactSpy","kind":"complex","fields":[{"kind":"attribute","name":"SpyType","type":"simple_EActorPhysicsImpactSpyType"},{"kind":"element","name":"SpyType","type":"EActorPhysicsImpactSpyType","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

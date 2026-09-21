@@ -1,0 +1,1 @@
+{"name":"simple_ECreatePersistent","kind":"simple","fields":[],"enumValues":["Channeled","Channeling","EffectFailure","EffectSuccess","OrphanParams","PersistUntilDestroyed","RandomEffect","RandomOffset","RandomPeriod"],"facets":[],"base":"xs:string"}

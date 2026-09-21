@@ -1,0 +1,1 @@
+{"name":"SActorMsgAnimSetCompletion","kind":"complex","fields":[{"kind":"attribute","name":"Percent","type":"simple_real32"},{"kind":"element","name":"Percent","type":"real32","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

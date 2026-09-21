@@ -1,0 +1,1 @@
+{"name":"SActorMsgLightSetShadowCasting","kind":"complex","fields":[{"kind":"attribute","name":"ShadowCasting","type":"simple_bool"},{"kind":"element","name":"ShadowCasting","type":"bool","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

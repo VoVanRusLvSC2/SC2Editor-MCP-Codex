@@ -1,0 +1,1 @@
+{"name":"simple_EAttackTypeResponse","kind":"simple","fields":[],"enumValues":["Chaos","Hero","Magic","None","Normal","Pierce","Siege","Spell"],"facets":[],"base":"xs:string"}

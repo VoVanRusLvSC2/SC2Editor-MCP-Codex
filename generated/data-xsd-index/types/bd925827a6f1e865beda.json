@@ -1,0 +1,1 @@
+{"name":"SActorMsgSetZ","kind":"complex","fields":[{"kind":"attribute","name":"Z","type":"simple_real32"},{"kind":"element","name":"Z","type":"real32","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

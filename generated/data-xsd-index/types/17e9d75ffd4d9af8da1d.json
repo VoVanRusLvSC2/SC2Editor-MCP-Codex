@@ -1,0 +1,1 @@
+{"name":"SActorMsgTextureSelectById","kind":"complex","fields":[{"kind":"attribute","name":"Id","type":"simple_CTextureLink"},{"kind":"element","name":"Id","type":"CTextureLink","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

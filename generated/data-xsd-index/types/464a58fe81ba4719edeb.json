@@ -1,0 +1,1 @@
+{"name":"SActorTermDeath","kind":"complex","fields":[{"kind":"attribute","name":"Death","type":"simple_EDeathType"},{"kind":"element","name":"Death","type":"EDeathType","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

@@ -1,0 +1,1540 @@
+{
+  "build": "5.0.16.97563",
+  "sha256": "9cab25db2b7dcfaaad207978b4eac07ec694f1f7cdbee4257d0db0845e14a164",
+  "types": [
+    {
+      "nativeId": "CCutsceneCommandable",
+      "displayName": "Commandable",
+      "className": "CCutsceneCommandable",
+      "category": "unknown-native-type",
+      "representations": [
+        "rtti"
+      ],
+      "fileOffsets": [],
+      "rvas": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "vtable": null,
+      "factory": null,
+      "baseClass": null,
+      "confidence": 0.9,
+      "limitations": [
+        "Static string/RTTI evidence confirms the class token; factory, vtable, and inheritance still require targeted RTTI/COL recovery."
+      ]
+    },
+    {
+      "nativeId": "CCutsceneElement",
+      "displayName": "CCutsceneElement",
+      "className": "CCutsceneElement",
+      "category": "timeline-element",
+      "representations": [
+        "rtti"
+      ],
+      "fileOffsets": [],
+      "rvas": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "vtable": null,
+      "factory": null,
+      "baseClass": null,
+      "confidence": 0.9,
+      "limitations": [
+        "Static string/RTTI evidence confirms the class token; factory, vtable, and inheritance still require targeted RTTI/COL recovery."
+      ]
+    },
+    {
+      "nativeId": "CCutsceneElementActiveCamera",
+      "displayName": "Active Camera",
+      "className": "CCutsceneElementActiveCamera",
+      "category": "director-shot",
+      "representations": [
+        "xml-name",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x350D4C0"
+      ],
+      "rvas": [
+        "0x350E4C0"
+      ],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "vtable": null,
+      "factory": null,
+      "baseClass": null,
+      "confidence": 1,
+      "limitations": [
+        "Static string/RTTI evidence confirms the class token; factory, vtable, and inheritance still require targeted RTTI/COL recovery."
+      ]
+    },
+    {
+      "nativeId": "CCutsceneElementActiveLight",
+      "displayName": "Active Light",
+      "className": "CCutsceneElementActiveLight",
+      "category": "director-light-event",
+      "representations": [
+        "xml-name",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3AEEFF0"
+      ],
+      "rvas": [
+        "0x3AEFFF0"
+      ],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "vtable": null,
+      "factory": null,
+      "baseClass": null,
+      "confidence": 1,
+      "limitations": [
+        "Static string/RTTI evidence confirms the class token; factory, vtable, and inheritance still require targeted RTTI/COL recovery."
+      ]
+    },
+    {
+      "nativeId": "CCutsceneElementActorMsg",
+      "displayName": "Actor Msg",
+      "className": "CCutsceneElementActorMsg",
+      "category": "actor",
+      "representations": [
+        "xml-name"
+      ],
+      "fileOffsets": [
+        "0x350D460"
+      ],
+      "rvas": [
+        "0x350E460"
+      ],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "vtable": null,
+      "factory": null,
+      "baseClass": null,
+      "confidence": 0.9,
+      "limitations": [
+        "Static string/RTTI evidence confirms the class token; factory, vtable, and inheritance still require targeted RTTI/COL recovery."
+      ]
+    },
+    {
+      "nativeId": "CCutsceneElementAnim",
+      "displayName": "Anim",
+      "className": "CCutsceneElementAnim",
+      "category": "animation",
+      "representations": [
+        "xml-name",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x350D408"
+      ],
+      "rvas": [
+        "0x350E408"
+      ],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "vtable": null,
+      "factory": null,
+      "baseClass": null,
+      "confidence": 1,
+      "limitations": [
+        "Static string/RTTI evidence confirms the class token; factory, vtable, and inheritance still require targeted RTTI/COL recovery."
+      ]
+    },
+    {
+      "nativeId": "CCutsceneElementAttachment",
+      "displayName": "Attachment",
+      "className": "CCutsceneElementAttachment",
+      "category": "attachment",
+      "representations": [
+        "xml-name",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3AEF010"
+      ],
+      "rvas": [
+        "0x3AF0010"
+      ],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "vtable": null,
+      "factory": null,
+      "baseClass": null,
+      "confidence": 1,
+      "limitations": [
+        "Static string/RTTI evidence confirms the class token; factory, vtable, and inheritance still require targeted RTTI/COL recovery."
+      ]
+    },
+    {
+      "nativeId": "CCutsceneElementBookmark",
+      "displayName": "Bookmark",
+      "className": "CCutsceneElementBookmark",
+      "category": "bookmark",
+      "representations": [
+        "xml-name",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x350D480"
+      ],
+      "rvas": [
+        "0x350E480"
+      ],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "vtable": null,
+      "factory": null,
+      "baseClass": null,
+      "confidence": 1,
+      "limitations": [
+        "Static string/RTTI evidence confirms the class token; factory, vtable, and inheritance still require targeted RTTI/COL recovery."
+      ]
+    },
+    {
+      "nativeId": "CCutsceneElementConversation",
+      "displayName": "Conversation",
+      "className": "CCutsceneElementConversation",
+      "category": "conversation",
+      "representations": [
+        "xml-name",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x350D420"
+      ],
+      "rvas": [
+        "0x350E420"
+      ],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "vtable": null,
+      "factory": null,
+      "baseClass": null,
+      "confidence": 1,
+      "limitations": [
+        "Static string/RTTI evidence confirms the class token; factory, vtable, and inheritance still require targeted RTTI/COL recovery."
+      ]
+    },
+    {
+      "nativeId": "CCutsceneElementConversationDriver",
+      "displayName": "Conversation Driver",
+      "className": "CCutsceneElementConversationDriver",
+      "category": "conversation",
+      "representations": [
+        "xml-name",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3AEF030"
+      ],
+      "rvas": [
+        "0x3AF0030"
+      ],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "vtable": null,
+      "factory": null,
+      "baseClass": null,
+      "confidence": 1,
+      "limitations": [
+        "Static string/RTTI evidence confirms the class token; factory, vtable, and inheritance still require targeted RTTI/COL recovery."
+      ]
+    },
+    {
+      "nativeId": "CCutsceneElementEndScene",
+      "displayName": "End Scene",
+      "className": "CCutsceneElementEndScene",
+      "category": "timeline-element",
+      "representations": [
+        "xml-name",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x350D4A0"
+      ],
+      "rvas": [
+        "0x350E4A0"
+      ],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "vtable": null,
+      "factory": null,
+      "baseClass": null,
+      "confidence": 1,
+      "limitations": [
+        "Static string/RTTI evidence confirms the class token; factory, vtable, and inheritance still require targeted RTTI/COL recovery."
+      ]
+    },
+    {
+      "nativeId": "CCutsceneElementFade",
+      "displayName": "Fade",
+      "className": "CCutsceneElementFade",
+      "category": "timeline-element",
+      "representations": [
+        "xml-name",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3AEF058"
+      ],
+      "rvas": [
+        "0x3AF0058"
+      ],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "vtable": null,
+      "factory": null,
+      "baseClass": null,
+      "confidence": 1,
+      "limitations": [
+        "Static string/RTTI evidence confirms the class token; factory, vtable, and inheritance still require targeted RTTI/COL recovery."
+      ]
+    },
+    {
+      "nativeId": "CCutsceneElementFollowPath",
+      "displayName": "Follow Path",
+      "className": "CCutsceneElementFollowPath",
+      "category": "path",
+      "representations": [
+        "xml-name",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x350D440"
+      ],
+      "rvas": [
+        "0x350E440"
+      ],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "vtable": null,
+      "factory": null,
+      "baseClass": null,
+      "confidence": 1,
+      "limitations": [
+        "Static string/RTTI evidence confirms the class token; factory, vtable, and inheritance still require targeted RTTI/COL recovery."
+      ]
+    },
+    {
+      "nativeId": "CCutsceneElementLookAt",
+      "displayName": "Look At",
+      "className": "CCutsceneElementLookAt",
+      "category": "timeline-element",
+      "representations": [
+        "xml-name",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3AEF070"
+      ],
+      "rvas": [
+        "0x3AF0070"
+      ],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "vtable": null,
+      "factory": null,
+      "baseClass": null,
+      "confidence": 1,
+      "limitations": [
+        "Static string/RTTI evidence confirms the class token; factory, vtable, and inheritance still require targeted RTTI/COL recovery."
+      ]
+    },
+    {
+      "nativeId": "CCutsceneElementModelMaterial",
+      "displayName": "Model Material",
+      "className": "CCutsceneElementModelMaterial",
+      "category": "model",
+      "representations": [
+        "xml-name",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3AEF088"
+      ],
+      "rvas": [
+        "0x3AF0088"
+      ],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "vtable": null,
+      "factory": null,
+      "baseClass": null,
+      "confidence": 1,
+      "limitations": [
+        "Static string/RTTI evidence confirms the class token; factory, vtable, and inheritance still require targeted RTTI/COL recovery."
+      ]
+    },
+    {
+      "nativeId": "CCutsceneElementObject",
+      "displayName": "Object",
+      "className": "CCutsceneElementObject",
+      "category": "timeline-element",
+      "representations": [
+        "xml-name",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3AEF0A8"
+      ],
+      "rvas": [
+        "0x3AF00A8"
+      ],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "vtable": null,
+      "factory": null,
+      "baseClass": null,
+      "confidence": 1,
+      "limitations": [
+        "Static string/RTTI evidence confirms the class token; factory, vtable, and inheritance still require targeted RTTI/COL recovery."
+      ]
+    },
+    {
+      "nativeId": "CCutsceneElementProperty",
+      "displayName": "Property",
+      "className": "CCutsceneElementProperty",
+      "category": "timeline-element",
+      "representations": [
+        "rtti"
+      ],
+      "fileOffsets": [],
+      "rvas": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "vtable": null,
+      "factory": null,
+      "baseClass": null,
+      "confidence": 0.9,
+      "limitations": [
+        "Static string/RTTI evidence confirms the class token; factory, vtable, and inheritance still require targeted RTTI/COL recovery."
+      ]
+    },
+    {
+      "nativeId": "CCutsceneElementPropertyCurve",
+      "displayName": "Property Curve",
+      "className": "CCutsceneElementPropertyCurve",
+      "category": "keyframe",
+      "representations": [
+        "xml-name",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x350D500"
+      ],
+      "rvas": [
+        "0x350E500"
+      ],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "vtable": null,
+      "factory": null,
+      "baseClass": null,
+      "confidence": 1,
+      "limitations": [
+        "Static string/RTTI evidence confirms the class token; factory, vtable, and inheritance still require targeted RTTI/COL recovery."
+      ]
+    },
+    {
+      "nativeId": "CCutsceneElementPropertyValue",
+      "displayName": "Property Value",
+      "className": "CCutsceneElementPropertyValue",
+      "category": "timeline-element",
+      "representations": [
+        "xml-name",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x350D4E0"
+      ],
+      "rvas": [
+        "0x350E4E0"
+      ],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "vtable": null,
+      "factory": null,
+      "baseClass": null,
+      "confidence": 1,
+      "limitations": [
+        "Static string/RTTI evidence confirms the class token; factory, vtable, and inheritance still require targeted RTTI/COL recovery."
+      ]
+    },
+    {
+      "nativeId": "CCutsceneElementRTTChannel",
+      "displayName": "RTTChannel",
+      "className": "CCutsceneElementRTTChannel",
+      "category": "render-to-texture",
+      "representations": [
+        "xml-name",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3AEF0C0"
+      ],
+      "rvas": [
+        "0x3AF00C0"
+      ],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "vtable": null,
+      "factory": null,
+      "baseClass": null,
+      "confidence": 1,
+      "limitations": [
+        "Static string/RTTI evidence confirms the class token; factory, vtable, and inheritance still require targeted RTTI/COL recovery."
+      ]
+    },
+    {
+      "nativeId": "CCutsceneField",
+      "displayName": "Field",
+      "className": "CCutsceneField",
+      "category": "unknown-native-type",
+      "representations": [
+        "rtti"
+      ],
+      "fileOffsets": [],
+      "rvas": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "vtable": null,
+      "factory": null,
+      "baseClass": null,
+      "confidence": 0.9,
+      "limitations": [
+        "Static string/RTTI evidence confirms the class token; factory, vtable, and inheritance still require targeted RTTI/COL recovery."
+      ]
+    },
+    {
+      "nativeId": "CCutsceneFrame",
+      "displayName": "Frame",
+      "className": "CCutsceneFrame",
+      "category": "unknown-native-type",
+      "representations": [
+        "rtti"
+      ],
+      "fileOffsets": [],
+      "rvas": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "vtable": null,
+      "factory": null,
+      "baseClass": null,
+      "confidence": 0.9,
+      "limitations": [
+        "Static string/RTTI evidence confirms the class token; factory, vtable, and inheritance still require targeted RTTI/COL recovery."
+      ]
+    },
+    {
+      "nativeId": "CCutsceneNode",
+      "displayName": "CCutsceneNode",
+      "className": "CCutsceneNode",
+      "category": "timeline-node",
+      "representations": [
+        "rtti"
+      ],
+      "fileOffsets": [],
+      "rvas": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "vtable": null,
+      "factory": null,
+      "baseClass": null,
+      "confidence": 0.9,
+      "limitations": [
+        "Static string/RTTI evidence confirms the class token; factory, vtable, and inheritance still require targeted RTTI/COL recovery."
+      ]
+    },
+    {
+      "nativeId": "CCutsceneNodeActiveCamera",
+      "displayName": "Active Camera",
+      "className": "CCutsceneNodeActiveCamera",
+      "category": "director-camera-track",
+      "representations": [
+        "xml-name",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x350D3B0"
+      ],
+      "rvas": [
+        "0x350E3B0"
+      ],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "vtable": null,
+      "factory": null,
+      "baseClass": null,
+      "confidence": 1,
+      "limitations": [
+        "Static string/RTTI evidence confirms the class token; factory, vtable, and inheritance still require targeted RTTI/COL recovery."
+      ]
+    },
+    {
+      "nativeId": "CCutsceneNodeActiveLight",
+      "displayName": "Active Light",
+      "className": "CCutsceneNodeActiveLight",
+      "category": "director-light-track",
+      "representations": [
+        "xml-name",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3AEEDF0"
+      ],
+      "rvas": [
+        "0x3AEFDF0"
+      ],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "vtable": null,
+      "factory": null,
+      "baseClass": null,
+      "confidence": 1,
+      "limitations": [
+        "Static string/RTTI evidence confirms the class token; factory, vtable, and inheritance still require targeted RTTI/COL recovery."
+      ]
+    },
+    {
+      "nativeId": "CCutsceneNodeActiveShot",
+      "displayName": "Active Shot",
+      "className": "CCutsceneNodeActiveShot",
+      "category": "timeline-node",
+      "representations": [
+        "xml-name",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3AEEE10"
+      ],
+      "rvas": [
+        "0x3AEFE10"
+      ],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "vtable": null,
+      "factory": null,
+      "baseClass": null,
+      "confidence": 1,
+      "limitations": [
+        "Static string/RTTI evidence confirms the class token; factory, vtable, and inheritance still require targeted RTTI/COL recovery."
+      ]
+    },
+    {
+      "nativeId": "CCutsceneNodeActor",
+      "displayName": "Actor",
+      "className": "CCutsceneNodeActor",
+      "category": "actor",
+      "representations": [
+        "xml-name",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x350D2B8"
+      ],
+      "rvas": [
+        "0x350E2B8"
+      ],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "vtable": null,
+      "factory": null,
+      "baseClass": null,
+      "confidence": 1,
+      "limitations": [
+        "Static string/RTTI evidence confirms the class token; factory, vtable, and inheritance still require targeted RTTI/COL recovery."
+      ]
+    },
+    {
+      "nativeId": "CCutsceneNodeActorMsg",
+      "displayName": "Actor Msg",
+      "className": "CCutsceneNodeActorMsg",
+      "category": "actor",
+      "representations": [
+        "xml-name"
+      ],
+      "fileOffsets": [
+        "0x350D368"
+      ],
+      "rvas": [
+        "0x350E368"
+      ],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "vtable": null,
+      "factory": null,
+      "baseClass": null,
+      "confidence": 0.9,
+      "limitations": [
+        "Static string/RTTI evidence confirms the class token; factory, vtable, and inheritance still require targeted RTTI/COL recovery."
+      ]
+    },
+    {
+      "nativeId": "CCutsceneNodeAnimLayer",
+      "displayName": "Anim Layer",
+      "className": "CCutsceneNodeAnimLayer",
+      "category": "animation-layer",
+      "representations": [
+        "xml-name",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x350D318"
+      ],
+      "rvas": [
+        "0x350E318"
+      ],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "vtable": null,
+      "factory": null,
+      "baseClass": null,
+      "confidence": 1,
+      "limitations": [
+        "Static string/RTTI evidence confirms the class token; factory, vtable, and inheritance still require targeted RTTI/COL recovery."
+      ]
+    },
+    {
+      "nativeId": "CCutsceneNodeAttachment",
+      "displayName": "Attachment",
+      "className": "CCutsceneNodeAttachment",
+      "category": "attachment",
+      "representations": [
+        "xml-name",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3AEEE28"
+      ],
+      "rvas": [
+        "0x3AEFE28"
+      ],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "vtable": null,
+      "factory": null,
+      "baseClass": null,
+      "confidence": 1,
+      "limitations": [
+        "Static string/RTTI evidence confirms the class token; factory, vtable, and inheritance still require targeted RTTI/COL recovery."
+      ]
+    },
+    {
+      "nativeId": "CCutsceneNodeBaseCamera",
+      "displayName": "Base Camera",
+      "className": "CCutsceneNodeBaseCamera",
+      "category": "camera",
+      "representations": [
+        "xml-name",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3AEEE40"
+      ],
+      "rvas": [
+        "0x3AEFE40"
+      ],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "vtable": null,
+      "factory": null,
+      "baseClass": null,
+      "confidence": 1,
+      "limitations": [
+        "Static string/RTTI evidence confirms the class token; factory, vtable, and inheritance still require targeted RTTI/COL recovery."
+      ]
+    },
+    {
+      "nativeId": "CCutsceneNodeBookmark",
+      "displayName": "Bookmark",
+      "className": "CCutsceneNodeBookmark",
+      "category": "bookmark",
+      "representations": [
+        "xml-name",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x350D398"
+      ],
+      "rvas": [
+        "0x350E398"
+      ],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "vtable": null,
+      "factory": null,
+      "baseClass": null,
+      "confidence": 1,
+      "limitations": [
+        "Static string/RTTI evidence confirms the class token; factory, vtable, and inheritance still require targeted RTTI/COL recovery."
+      ]
+    },
+    {
+      "nativeId": "CCutsceneNodeCamera",
+      "displayName": "Camera",
+      "className": "CCutsceneNodeCamera",
+      "category": "camera",
+      "representations": [
+        "xml-name",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x350D2E8"
+      ],
+      "rvas": [
+        "0x350E2E8"
+      ],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "vtable": null,
+      "factory": null,
+      "baseClass": null,
+      "confidence": 1,
+      "limitations": [
+        "Static string/RTTI evidence confirms the class token; factory, vtable, and inheritance still require targeted RTTI/COL recovery."
+      ]
+    },
+    {
+      "nativeId": "CCutsceneNodeConversation",
+      "displayName": "Conversation",
+      "className": "CCutsceneNodeConversation",
+      "category": "conversation",
+      "representations": [
+        "xml-name",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x350D330"
+      ],
+      "rvas": [
+        "0x350E330"
+      ],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "vtable": null,
+      "factory": null,
+      "baseClass": null,
+      "confidence": 1,
+      "limitations": [
+        "Static string/RTTI evidence confirms the class token; factory, vtable, and inheritance still require targeted RTTI/COL recovery."
+      ]
+    },
+    {
+      "nativeId": "CCutsceneNodeConversationDriver",
+      "displayName": "Conversation Driver",
+      "className": "CCutsceneNodeConversationDriver",
+      "category": "conversation",
+      "representations": [
+        "xml-name",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3AEEE58"
+      ],
+      "rvas": [
+        "0x3AEFE58"
+      ],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "vtable": null,
+      "factory": null,
+      "baseClass": null,
+      "confidence": 1,
+      "limitations": [
+        "Static string/RTTI evidence confirms the class token; factory, vtable, and inheritance still require targeted RTTI/COL recovery."
+      ]
+    },
+    {
+      "nativeId": "CCutsceneNodeDirector",
+      "displayName": "Director",
+      "className": "CCutsceneNodeDirector",
+      "category": "director",
+      "representations": [
+        "xml-name",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x350D288"
+      ],
+      "rvas": [
+        "0x350E288"
+      ],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "vtable": null,
+      "factory": null,
+      "baseClass": null,
+      "confidence": 1,
+      "limitations": [
+        "Static string/RTTI evidence confirms the class token; factory, vtable, and inheritance still require targeted RTTI/COL recovery."
+      ]
+    },
+    {
+      "nativeId": "CCutsceneNodeElementList",
+      "displayName": "Element List",
+      "className": "CCutsceneNodeElementList",
+      "category": "timeline-element",
+      "representations": [
+        "rtti"
+      ],
+      "fileOffsets": [],
+      "rvas": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "vtable": null,
+      "factory": null,
+      "baseClass": null,
+      "confidence": 0.9,
+      "limitations": [
+        "Static string/RTTI evidence confirms the class token; factory, vtable, and inheritance still require targeted RTTI/COL recovery."
+      ]
+    },
+    {
+      "nativeId": "CCutsceneNodeEndScene",
+      "displayName": "End Scene",
+      "className": "CCutsceneNodeEndScene",
+      "category": "timeline-node",
+      "representations": [
+        "xml-name",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x350D380"
+      ],
+      "rvas": [
+        "0x350E380"
+      ],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "vtable": null,
+      "factory": null,
+      "baseClass": null,
+      "confidence": 1,
+      "limitations": [
+        "Static string/RTTI evidence confirms the class token; factory, vtable, and inheritance still require targeted RTTI/COL recovery."
+      ]
+    },
+    {
+      "nativeId": "CCutsceneNodeEnvironmentLight",
+      "displayName": "Environment Light",
+      "className": "CCutsceneNodeEnvironmentLight",
+      "category": "lighting",
+      "representations": [
+        "xml-name",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3AEEE78"
+      ],
+      "rvas": [
+        "0x3AEFE78"
+      ],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "vtable": null,
+      "factory": null,
+      "baseClass": null,
+      "confidence": 1,
+      "limitations": [
+        "Static string/RTTI evidence confirms the class token; factory, vtable, and inheritance still require targeted RTTI/COL recovery."
+      ]
+    },
+    {
+      "nativeId": "CCutsceneNodeFade",
+      "displayName": "Fade",
+      "className": "CCutsceneNodeFade",
+      "category": "timeline-node",
+      "representations": [
+        "xml-name",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3AEEE98"
+      ],
+      "rvas": [
+        "0x3AEFE98"
+      ],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "vtable": null,
+      "factory": null,
+      "baseClass": null,
+      "confidence": 1,
+      "limitations": [
+        "Static string/RTTI evidence confirms the class token; factory, vtable, and inheritance still require targeted RTTI/COL recovery."
+      ]
+    },
+    {
+      "nativeId": "CCutsceneNodeFile",
+      "displayName": "File",
+      "className": "CCutsceneNodeFile",
+      "category": "timeline-node",
+      "representations": [
+        "rtti"
+      ],
+      "fileOffsets": [],
+      "rvas": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "vtable": null,
+      "factory": null,
+      "baseClass": null,
+      "confidence": 0.9,
+      "limitations": [
+        "Static string/RTTI evidence confirms the class token; factory, vtable, and inheritance still require targeted RTTI/COL recovery."
+      ]
+    },
+    {
+      "nativeId": "CCutsceneNodeFog",
+      "displayName": "Fog",
+      "className": "CCutsceneNodeFog",
+      "category": "fog",
+      "representations": [
+        "xml-name",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3AEEEB0"
+      ],
+      "rvas": [
+        "0x3AEFEB0"
+      ],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "vtable": null,
+      "factory": null,
+      "baseClass": null,
+      "confidence": 1,
+      "limitations": [
+        "Static string/RTTI evidence confirms the class token; factory, vtable, and inheritance still require targeted RTTI/COL recovery."
+      ]
+    },
+    {
+      "nativeId": "CCutsceneNodeFolder",
+      "displayName": "Folder",
+      "className": "CCutsceneNodeFolder",
+      "category": "timeline-node",
+      "representations": [
+        "xml-name",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3AEEEC8"
+      ],
+      "rvas": [
+        "0x3AEFEC8"
+      ],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "vtable": null,
+      "factory": null,
+      "baseClass": null,
+      "confidence": 1,
+      "limitations": [
+        "Static string/RTTI evidence confirms the class token; factory, vtable, and inheritance still require targeted RTTI/COL recovery."
+      ]
+    },
+    {
+      "nativeId": "CCutsceneNodeFollowPath",
+      "displayName": "Follow Path",
+      "className": "CCutsceneNodeFollowPath",
+      "category": "path",
+      "representations": [
+        "xml-name",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x350D350"
+      ],
+      "rvas": [
+        "0x350E350"
+      ],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "vtable": null,
+      "factory": null,
+      "baseClass": null,
+      "confidence": 1,
+      "limitations": [
+        "Static string/RTTI evidence confirms the class token; factory, vtable, and inheritance still require targeted RTTI/COL recovery."
+      ]
+    },
+    {
+      "nativeId": "CCutsceneNodeHaloController",
+      "displayName": "Halo Controller",
+      "className": "CCutsceneNodeHaloController",
+      "category": "timeline-node",
+      "representations": [
+        "xml-name",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3AEEEE0"
+      ],
+      "rvas": [
+        "0x3AEFEE0"
+      ],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "vtable": null,
+      "factory": null,
+      "baseClass": null,
+      "confidence": 1,
+      "limitations": [
+        "Static string/RTTI evidence confirms the class token; factory, vtable, and inheritance still require targeted RTTI/COL recovery."
+      ]
+    },
+    {
+      "nativeId": "CCutsceneNodeLight",
+      "displayName": "Light",
+      "className": "CCutsceneNodeLight",
+      "category": "lighting",
+      "representations": [
+        "xml-name",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3AEEF00"
+      ],
+      "rvas": [
+        "0x3AEFF00"
+      ],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "vtable": null,
+      "factory": null,
+      "baseClass": null,
+      "confidence": 1,
+      "limitations": [
+        "Static string/RTTI evidence confirms the class token; factory, vtable, and inheritance still require targeted RTTI/COL recovery."
+      ]
+    },
+    {
+      "nativeId": "CCutsceneNodeLookAt",
+      "displayName": "Look At",
+      "className": "CCutsceneNodeLookAt",
+      "category": "timeline-node",
+      "representations": [
+        "xml-name",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3AEEF18"
+      ],
+      "rvas": [
+        "0x3AEFF18"
+      ],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "vtable": null,
+      "factory": null,
+      "baseClass": null,
+      "confidence": 1,
+      "limitations": [
+        "Static string/RTTI evidence confirms the class token; factory, vtable, and inheritance still require targeted RTTI/COL recovery."
+      ]
+    },
+    {
+      "nativeId": "CCutsceneNodeM3A",
+      "displayName": "M3A",
+      "className": "CCutsceneNodeM3A",
+      "category": "timeline-node",
+      "representations": [
+        "xml-name",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x350D3F0"
+      ],
+      "rvas": [
+        "0x350E3F0"
+      ],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "vtable": null,
+      "factory": null,
+      "baseClass": null,
+      "confidence": 1,
+      "limitations": [
+        "Static string/RTTI evidence confirms the class token; factory, vtable, and inheritance still require targeted RTTI/COL recovery."
+      ]
+    },
+    {
+      "nativeId": "CCutsceneNodeMasterSound",
+      "displayName": "Master Sound",
+      "className": "CCutsceneNodeMasterSound",
+      "category": "sound",
+      "representations": [
+        "xml-name",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3AEEF30"
+      ],
+      "rvas": [
+        "0x3AEFF30"
+      ],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "vtable": null,
+      "factory": null,
+      "baseClass": null,
+      "confidence": 1,
+      "limitations": [
+        "Static string/RTTI evidence confirms the class token; factory, vtable, and inheritance still require targeted RTTI/COL recovery."
+      ]
+    },
+    {
+      "nativeId": "CCutsceneNodeModelMaterial",
+      "displayName": "Model Material",
+      "className": "CCutsceneNodeModelMaterial",
+      "category": "model",
+      "representations": [
+        "xml-name",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3AEEF50"
+      ],
+      "rvas": [
+        "0x3AEFF50"
+      ],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "vtable": null,
+      "factory": null,
+      "baseClass": null,
+      "confidence": 1,
+      "limitations": [
+        "Static string/RTTI evidence confirms the class token; factory, vtable, and inheritance still require targeted RTTI/COL recovery."
+      ]
+    },
+    {
+      "nativeId": "CCutsceneNodeObject",
+      "displayName": "Object",
+      "className": "CCutsceneNodeObject",
+      "category": "timeline-node",
+      "representations": [
+        "rtti"
+      ],
+      "fileOffsets": [],
+      "rvas": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "vtable": null,
+      "factory": null,
+      "baseClass": null,
+      "confidence": 0.9,
+      "limitations": [
+        "Static string/RTTI evidence confirms the class token; factory, vtable, and inheritance still require targeted RTTI/COL recovery."
+      ]
+    },
+    {
+      "nativeId": "CCutsceneNodePath",
+      "displayName": "Path",
+      "className": "CCutsceneNodePath",
+      "category": "path",
+      "representations": [
+        "xml-name",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x350D2A0"
+      ],
+      "rvas": [
+        "0x350E2A0"
+      ],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "vtable": null,
+      "factory": null,
+      "baseClass": null,
+      "confidence": 1,
+      "limitations": [
+        "Static string/RTTI evidence confirms the class token; factory, vtable, and inheritance still require targeted RTTI/COL recovery."
+      ]
+    },
+    {
+      "nativeId": "CCutsceneNodePathMarker",
+      "displayName": "Path Marker",
+      "className": "CCutsceneNodePathMarker",
+      "category": "path-marker",
+      "representations": [
+        "xml-name",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x350D300"
+      ],
+      "rvas": [
+        "0x350E300"
+      ],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "vtable": null,
+      "factory": null,
+      "baseClass": null,
+      "confidence": 1,
+      "limitations": [
+        "Static string/RTTI evidence confirms the class token; factory, vtable, and inheritance still require targeted RTTI/COL recovery."
+      ]
+    },
+    {
+      "nativeId": "CCutsceneNodeProperty",
+      "displayName": "Property",
+      "className": "CCutsceneNodeProperty",
+      "category": "timeline-node",
+      "representations": [
+        "rtti"
+      ],
+      "fileOffsets": [],
+      "rvas": [],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "vtable": null,
+      "factory": null,
+      "baseClass": null,
+      "confidence": 0.9,
+      "limitations": [
+        "Static string/RTTI evidence confirms the class token; factory, vtable, and inheritance still require targeted RTTI/COL recovery."
+      ]
+    },
+    {
+      "nativeId": "CCutsceneNodePropertyValue",
+      "displayName": "Property Value",
+      "className": "CCutsceneNodePropertyValue",
+      "category": "timeline-node",
+      "representations": [
+        "xml-name",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x350D3D0"
+      ],
+      "rvas": [
+        "0x350E3D0"
+      ],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "vtable": null,
+      "factory": null,
+      "baseClass": null,
+      "confidence": 1,
+      "limitations": [
+        "Static string/RTTI evidence confirms the class token; factory, vtable, and inheritance still require targeted RTTI/COL recovery."
+      ]
+    },
+    {
+      "nativeId": "CCutsceneNodeRoot",
+      "displayName": "Root",
+      "className": "CCutsceneNodeRoot",
+      "category": "timeline-node",
+      "representations": [
+        "xml-name",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3AEEF70"
+      ],
+      "rvas": [
+        "0x3AEFF70"
+      ],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "vtable": null,
+      "factory": null,
+      "baseClass": null,
+      "confidence": 1,
+      "limitations": [
+        "Static string/RTTI evidence confirms the class token; factory, vtable, and inheritance still require targeted RTTI/COL recovery."
+      ]
+    },
+    {
+      "nativeId": "CCutsceneNodeRTTChannel",
+      "displayName": "RTTChannel",
+      "className": "CCutsceneNodeRTTChannel",
+      "category": "render-to-texture",
+      "representations": [
+        "xml-name",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3AEEF88"
+      ],
+      "rvas": [
+        "0x3AEFF88"
+      ],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "vtable": null,
+      "factory": null,
+      "baseClass": null,
+      "confidence": 1,
+      "limitations": [
+        "Static string/RTTI evidence confirms the class token; factory, vtable, and inheritance still require targeted RTTI/COL recovery."
+      ]
+    },
+    {
+      "nativeId": "CCutsceneNodeSound",
+      "displayName": "Sound",
+      "className": "CCutsceneNodeSound",
+      "category": "sound",
+      "representations": [
+        "xml-name",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x350D2D0"
+      ],
+      "rvas": [
+        "0x350E2D0"
+      ],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "vtable": null,
+      "factory": null,
+      "baseClass": null,
+      "confidence": 1,
+      "limitations": [
+        "Static string/RTTI evidence confirms the class token; factory, vtable, and inheritance still require targeted RTTI/COL recovery."
+      ]
+    },
+    {
+      "nativeId": "CCutsceneNodeSoundGroup",
+      "displayName": "Sound Group",
+      "className": "CCutsceneNodeSoundGroup",
+      "category": "sound",
+      "representations": [
+        "xml-name",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3AEEFA0"
+      ],
+      "rvas": [
+        "0x3AEFFA0"
+      ],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "vtable": null,
+      "factory": null,
+      "baseClass": null,
+      "confidence": 1,
+      "limitations": [
+        "Static string/RTTI evidence confirms the class token; factory, vtable, and inheritance still require targeted RTTI/COL recovery."
+      ]
+    },
+    {
+      "nativeId": "CCutsceneNodeTargetCamera",
+      "displayName": "Target Camera",
+      "className": "CCutsceneNodeTargetCamera",
+      "category": "camera",
+      "representations": [
+        "xml-name",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3AEEFB8"
+      ],
+      "rvas": [
+        "0x3AEFFB8"
+      ],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "vtable": null,
+      "factory": null,
+      "baseClass": null,
+      "confidence": 1,
+      "limitations": [
+        "Static string/RTTI evidence confirms the class token; factory, vtable, and inheritance still require targeted RTTI/COL recovery."
+      ]
+    },
+    {
+      "nativeId": "CCutsceneNodeText",
+      "displayName": "Text",
+      "className": "CCutsceneNodeText",
+      "category": "text",
+      "representations": [
+        "xml-name",
+        "rtti"
+      ],
+      "fileOffsets": [
+        "0x3AEEFD8"
+      ],
+      "rvas": [
+        "0x3AEFFD8"
+      ],
+      "pointerRvas": [],
+      "xrefRvas": [],
+      "functions": [],
+      "vtable": null,
+      "factory": null,
+      "baseClass": null,
+      "confidence": 1,
+      "limitations": [
+        "Static string/RTTI evidence confirms the class token; factory, vtable, and inheritance still require targeted RTTI/COL recovery."
+      ]
+    }
+  ]
+}

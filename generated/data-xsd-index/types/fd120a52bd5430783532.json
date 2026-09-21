@@ -1,0 +1,1 @@
+{"name":"simple_EAIUIMode","kind":"simple","fields":[],"enumValues":["Hidden","Selectable","Visible"],"facets":[],"base":"xs:string"}

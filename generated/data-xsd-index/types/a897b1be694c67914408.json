@@ -1,0 +1,1 @@
+{"name":"STimeEvent","kind":"complex","fields":[{"kind":"attribute","name":"Name","type":"simple_CStringLink"},{"kind":"attribute","name":"Time","type":"simple_CTimeOfDay"},{"kind":"element","name":"Name","type":"CStringLink","minOccurs":"0","maxOccurs":"1"},{"kind":"element","name":"Time","type":"CTimeOfDay","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

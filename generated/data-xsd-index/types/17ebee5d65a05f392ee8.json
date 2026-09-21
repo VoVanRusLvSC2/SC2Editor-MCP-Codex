@@ -1,0 +1,1 @@
+{"name":"simple_ECameraShakeRotation","kind":"simple","fields":[],"enumValues":["Pitch","Roll","Yaw"],"facets":[],"base":"xs:string"}

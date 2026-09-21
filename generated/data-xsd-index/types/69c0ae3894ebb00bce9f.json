@@ -1,0 +1,1 @@
+{"name":"simple_EFidget","kind":"simple","fields":[],"enumValues":["Anim","Idle","Move","Turn"],"facets":[],"base":"xs:string"}

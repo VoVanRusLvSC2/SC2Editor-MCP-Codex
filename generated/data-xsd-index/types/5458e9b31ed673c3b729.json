@@ -1,0 +1,1 @@
+{"name":"SActorMsgRefSetRefreshName","kind":"complex","fields":[{"kind":"attribute","name":"RefreshName","type":"simple_CActorKey"},{"kind":"element","name":"RefreshName","type":"CActorKey","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

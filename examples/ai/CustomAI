@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AIData>
+    <Definition Id="ZergPlayer3">
+        <Wave Id="Wave0400">
+            <SourcePlayer Value="3"/>
+            <TargetPlayer Value="1"/>
+            <Time Value="240"/>
+            <CreateUnits>
+                <Unit Type="Zergling" Count="12"/>
+            </CreateUnits>
+        </Wave>
+    </Definition>
+</AIData>

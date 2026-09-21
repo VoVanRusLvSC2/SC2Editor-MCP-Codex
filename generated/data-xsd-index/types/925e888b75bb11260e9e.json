@@ -1,0 +1,1 @@
+{"name":"SActorTermMotionPhase","kind":"complex","fields":[{"kind":"attribute","name":"Index","type":"simple_uint32"},{"kind":"element","name":"Index","type":"uint32","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

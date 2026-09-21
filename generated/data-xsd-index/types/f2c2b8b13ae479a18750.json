@@ -1,0 +1,1 @@
+{"name":"simple_EClassIdCDSP","kind":"simple","fields":[],"enumValues":["CDSP","CDSPChorus","CDSPCompressor","CDSPCustomCompressor","CDSPDistortion","CDSPEcho","CDSPFlange","CDSPHighPass","CDSPLimiter","CDSPLowPass","CDSPLowPassSimple","CDSPNormalize","CDSPOscillator","CDSPParamEQ","CDSPPitchShift","CDSPReverb"],"facets":[],"base":"xs:string"}

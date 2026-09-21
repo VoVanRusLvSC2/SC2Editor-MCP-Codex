@@ -1,0 +1,1 @@
+{"name":"simple_EActorGame","kind":"simple","fields":[],"enumValues":["Local","SpeedFast","SpeedFaster","SpeedNormal","SpeedSlow","SpeedSlower","Sync"],"facets":[],"base":"xs:string"}

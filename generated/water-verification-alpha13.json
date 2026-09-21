@@ -1,0 +1,29 @@
+{
+  "version": "1.1.0-alpha.13",
+  "modules": 9,
+  "tools": 141,
+  "terrainTools": 27,
+  "build": "PASS",
+  "lint": "PASS",
+  "tests": {
+    "pass": 228,
+    "fail": 0,
+    "skip": 0
+  },
+  "nativeWaterTables": 14,
+  "observedRectangleRecords": 199,
+  "novaNoopUpdates": 175,
+  "waterCatalogAndIncludesJointSave": "PASS",
+  "waterMpqReopenHashVerification": "PASS",
+  "stdioWaterPlanning": "PASS",
+  "portableMcpHttpSmoke": "PASS_ON_LINUX_NODE",
+  "guiWaterControls": "IMPLEMENTED_NOT_VISUALLY_TESTED",
+  "windowsExecution": "NOT_EXECUTED",
+  "editor": "NOT_EXECUTED",
+  "game": "NOT_EXECUTED",
+  "complexBodyWaveWriter": false,
+  "cliffRampPathingWriter": false,
+  "cleanMapCreation": false,
+  "galaxyScriptModule": false,
+  "guiTriggerDevelopment": false
+}

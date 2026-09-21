@@ -1,0 +1,1 @@
+{"name":"simple_EPlayerLeaveFlag","kind":"simple","fields":[],"enumValues":["ClearSelection","FinalizeScore","ForcedAlliance","FulfillResourceRequests","ReportScore","SplitResources"],"facets":[],"base":"xs:string"}

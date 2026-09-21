@@ -1,0 +1,1 @@
+{"name":"SActorMsgSetVisibility","kind":"complex","fields":[{"kind":"attribute","name":"Visible","type":"simple_bool"},{"kind":"element","name":"Visible","type":"bool","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

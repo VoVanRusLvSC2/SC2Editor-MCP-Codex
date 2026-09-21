@@ -1,0 +1,1 @@
+{"name":"simple_ETargetModeValidation","kind":"simple","fields":[],"enumValues":["None","Present","Strict"],"facets":[],"base":"xs:string"}

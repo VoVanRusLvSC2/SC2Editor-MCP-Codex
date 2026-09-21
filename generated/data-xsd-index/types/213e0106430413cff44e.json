@@ -1,0 +1,1 @@
+{"name":"simple_EClassIdCScoreResult","kind":"simple","fields":[],"enumValues":["CScoreResult","CScoreResultBuildOrder","CScoreResultCallouts","CScoreResultExperience","CScoreResultGraph","CScoreResultPane","CScoreResultPerformance","CScoreResultRoot","CScoreResultScore"],"facets":[],"base":"xs:string"}

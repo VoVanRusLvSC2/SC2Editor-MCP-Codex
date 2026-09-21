@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PlacedObjects Version="27" CustomRoot="preserve-me">
+    <!-- Real SC2 editor shape: UnitType for units, Type for doodads. -->
+    <ObjectUnit Id="100" Position="10,20,0" Rotation="1.5" UnitType="Marine" Player="1" Unknown="keep"/>
+    <ObjectDoodad Id="101" Position="12,20,0" Rotation="5.514" Scale="1.0583,1.0583,1.0583" Type="AgriaTree">
+        <Flag Index="HeightAbsolute" Value="1"/>
+        <UnknownChild Value="preserve"/>
+    </ObjectDoodad>
+</PlacedObjects>

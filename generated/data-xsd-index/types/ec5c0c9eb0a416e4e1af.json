@@ -1,0 +1,1 @@
+{"name":"simple_EClassIdCReward","kind":"simple","fields":[],"enumValues":["CReward","CRewardBadge","CRewardConsoleSkin","CRewardDecal","CRewardEmoticon","CRewardIcon","CRewardModel","CRewardPoints","CRewardPortrait","CRewardPortraitInGame","CRewardRaceBanner","CRewardSpray","CRewardSprayUseDecal","CRewardStim","CRewardTrophy","CRewardVoicePack"],"facets":[],"base":"xs:string"}

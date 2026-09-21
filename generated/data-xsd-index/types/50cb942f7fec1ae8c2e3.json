@@ -1,0 +1,1 @@
+{"name":"simple_EClassIdCKinetic","kind":"simple","fields":[],"enumValues":["CKinetic","CKineticDistance","CKineticFollow","CKineticRotate","CKineticSequence","CKineticSet","CKineticTranslate"],"facets":[],"base":"xs:string"}

@@ -1,0 +1,1 @@
+{"name":"SActorTermSquib","kind":"complex","fields":[{"kind":"attribute","name":"Squib","type":"simple_ESquibType"},{"kind":"element","name":"Squib","type":"ESquibType","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

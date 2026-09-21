@@ -1,0 +1,1 @@
+{"name":"simple_EResourceType","kind":"simple","fields":[],"enumValues":["Custom","Minerals","Terrazine","Unknown","Vespene"],"facets":[],"base":"xs:string"}

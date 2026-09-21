@@ -1,0 +1,1 @@
+{"name":"simple_EActorSelectionFlag","kind":"simple","fields":[],"enumValues":["IsFlash","IsSyncSelection","UseCheapQuadSplat","UseCrescent"],"facets":[],"base":"xs:string"}

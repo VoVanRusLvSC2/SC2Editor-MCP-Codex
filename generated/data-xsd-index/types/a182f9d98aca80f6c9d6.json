@@ -1,0 +1,1 @@
+{"name":"simple_EAbilTransportFlag","kind":"simple","fields":[],"enumValues":["AllowCorpse","AllowPassengerSmartCmd","AllowSmartCmd","CargoDeath","IgnoreBlockers","PlayerHold","ShowCargoSize","ShowStatus"],"facets":[],"base":"xs:string"}

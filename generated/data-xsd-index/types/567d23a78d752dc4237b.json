@@ -1,0 +1,1 @@
+{"name":"simple_EAbilLearnFlag","kind":"simple","fields":[],"enumValues":["BestUnit","ClearSubmenuOnPointsSpent","HideOnMaxLevel","HideOnPointsSpent","HideSubmenuOnLearnedAll","Transient","UnitOrderQueue"],"facets":[],"base":"xs:string"}

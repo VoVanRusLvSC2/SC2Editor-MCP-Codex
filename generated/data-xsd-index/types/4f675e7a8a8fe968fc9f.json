@@ -1,0 +1,1 @@
+{"name":"simple_EUnitAIFlag","kind":"simple","fields":[],"enumValues":["Campaign","ForceUnburrow","ForcedToMove","ScriptControlled","SuggestBurrow","SuggestUnburrow","Suicide","WantsToMove"],"facets":[],"base":"xs:string"}

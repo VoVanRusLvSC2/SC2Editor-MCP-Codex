@@ -1,0 +1,1 @@
+{"name":"SBehaviorResponse","kind":"complex","fields":[{"kind":"attribute","name":"Chance","type":"simple_CFixed"},{"kind":"element","name":"Chance","type":"CFixed","minOccurs":"0","maxOccurs":"1"},{"kind":"element","name":"Cost","type":"SCost","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

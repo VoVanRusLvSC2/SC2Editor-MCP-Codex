@@ -1,0 +1,1 @@
+{"name":"simple_ESoundSelect","kind":"simple","fields":[],"enumValues":["Random","Sequential","Shuffle"],"facets":[],"base":"xs:string"}

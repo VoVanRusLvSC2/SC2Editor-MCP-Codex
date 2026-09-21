@@ -1,0 +1,1 @@
+{"name":"SUserInstanceField","kind":"complex","fields":[{"kind":"attribute","name":"Id","type":"simple_TUserFieldId"},{"kind":"attribute","name":"Index","type":"simple_uint32"},{"kind":"element","name":"Id","type":"TUserFieldId","minOccurs":"0","maxOccurs":"1"},{"kind":"element","name":"Index","type":"uint32","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

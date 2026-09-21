@@ -1,0 +1,1 @@
+{"name":"simple_EGameTimeEvent","kind":"simple","fields":[],"enumValues":["Dawn","Dusk"],"facets":[],"base":"xs:string"}

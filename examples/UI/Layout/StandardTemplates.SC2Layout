@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Desc>
+    <Frame type="Button" name="MCPButtonTemplate">
+        <NormalImage val="NormalImage"/>
+        <HoverImage val="HoverImage"/>
+        <Label val="Label"/>
+        <Frame type="Image" name="NormalImage">
+            <Anchor relative="$parent"/>
+            <Texture val="@UI/ButtonNormal"/>
+        </Frame>
+        <Frame type="Image" name="HoverImage">
+            <Anchor relative="$parent"/>
+            <Texture val="@UI/ButtonHover"/>
+        </Frame>
+        <Frame type="Label" name="Label">
+            <Anchor relative="$parent"/>
+        </Frame>
+    </Frame>
+</Desc>

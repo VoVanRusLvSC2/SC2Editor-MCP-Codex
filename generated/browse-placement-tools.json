@@ -1,0 +1,3251 @@
+{
+  "version": "1.1.0-alpha.11",
+  "tools": {
+    "browse.index": {
+      "description": "Build or incrementally refresh the deterministic fingerprinted index over current-map, declared-dependency and optional installed SC2 catalog/text/asset roots.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "force": {
+            "default": false,
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "force"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "browse.status": {
+      "description": "Return compact browse-index roots, fingerprint, counts, availability layers and warnings without returning the full catalog.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      }
+    },
+    "browse.search": {
+      "description": "Ranked and paginated search over real SC2 catalog ids, localized names, text keys, filenames, asset paths and related object ids. Results explain ranking and placeability.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string"
+          },
+          "ids": {
+            "maxItems": 500,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "catalogType": {
+            "type": "string"
+          },
+          "objectKind": {
+            "type": "string"
+          },
+          "dependency": {
+            "type": "string"
+          },
+          "sourceLayer": {
+            "type": "string",
+            "enum": [
+              "workspace",
+              "dependency",
+              "installed"
+            ]
+          },
+          "locale": {
+            "type": "string"
+          },
+          "availability": {
+            "type": "string",
+            "enum": [
+              "MAP_LOCAL",
+              "AVAILABLE_THROUGH_DEPENDENCY",
+              "INSTALLED_BUT_NOT_DECLARED",
+              "MISSING_DEPENDENCY",
+              "UNRESOLVED",
+              "UNKNOWN"
+            ]
+          },
+          "hasModel": {
+            "type": "boolean"
+          },
+          "hasTexture": {
+            "type": "boolean"
+          },
+          "placeable": {
+            "type": "boolean"
+          },
+          "limit": {
+            "default": 25,
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 200
+          },
+          "offset": {
+            "default": 0,
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "compact": {
+            "default": true,
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "limit",
+          "offset",
+          "compact"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "browse.get": {
+      "description": "Get source definition, effective inherited definition, provenance, localized keys, references, assets and placeable representation for an exact indexed object.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string",
+            "minLength": 1
+          },
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "catalogType": {
+            "type": "string",
+            "minLength": 1
+          },
+          "dependency": {
+            "type": "string"
+          },
+          "includeRaw": {
+            "default": false,
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "includeRaw"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "browse.resolve": {
+      "description": "Resolve an exact id or ranked user query to one evidence-backed object. Ambiguity is returned, never guessed. Reports dependency readiness and placement representation.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string",
+            "minLength": 1
+          },
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "catalogType": {
+            "type": "string",
+            "minLength": 1
+          },
+          "query": {
+            "type": "string"
+          },
+          "dependency": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "browse.related": {
+      "description": "Traverse incoming/outgoing catalog relations such as Unit↔Actor→Model→asset or Doodad→Model with bounded depth and output.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string",
+            "minLength": 1
+          },
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "catalogType": {
+            "type": "string",
+            "minLength": 1
+          },
+          "direction": {
+            "default": "both",
+            "type": "string",
+            "enum": [
+              "incoming",
+              "outgoing",
+              "both"
+            ]
+          },
+          "depth": {
+            "default": 3,
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 8
+          },
+          "limit": {
+            "default": 100,
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 500
+          }
+        },
+        "required": [
+          "direction",
+          "depth",
+          "limit"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "browse.dependencies": {
+      "description": "List current-map, declared-dependency and installed-but-not-declared roots with indexed file/object counts and explicit availability status.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      }
+    },
+    "browse.catalogs": {
+      "description": "List all observed catalog types, including unknown/generic C* types, with object and placeable counts.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      }
+    },
+    "browse.assets": {
+      "description": "Search physical and catalog-referenced model, texture, icon, sound and video asset paths without treating a bare file as placeable.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "Model",
+              "Texture",
+              "Sound",
+              "Icon",
+              "Animation",
+              "Asset"
+            ]
+          },
+          "dependency": {
+            "type": "string"
+          },
+          "limit": {
+            "default": 25,
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 200
+          },
+          "offset": {
+            "default": 0,
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          }
+        },
+        "required": [
+          "limit",
+          "offset"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "browse.usage": {
+      "description": "Return indexed incoming uses of an exact catalog object across current source layers.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string",
+            "minLength": 1
+          },
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "catalogType": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "browse.validate": {
+      "description": "Validate index determinism inputs and report duplicate ids across layers and unresolved typed references without claiming runtime validation.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      }
+    },
+    "placement.points.inspect": {
+      "description": "Inspect native ObjectPoint entries, preserving all other Objects data.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "directory": {
+            "default": "",
+            "type": "string"
+          }
+        },
+        "required": [
+          "directory"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "placement.points.plan": {
+      "description": "Plan v27 native points create/update/remove. StartLoc is a point marker; assigning it to a player is separate metadata work.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "directory": {
+            "default": "",
+            "type": "string"
+          },
+          "operations": {
+            "minItems": 1,
+            "maxItems": 500,
+            "type": "array",
+            "items": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "op": {
+                      "type": "string",
+                      "const": "create"
+                    },
+                    "name": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 1024
+                    },
+                    "position": {
+                      "type": "object",
+                      "properties": {
+                        "x": {
+                          "type": "number"
+                        },
+                        "y": {
+                          "type": "number"
+                        },
+                        "z": {
+                          "type": "number"
+                        }
+                      },
+                      "required": [
+                        "x",
+                        "y",
+                        "z"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "type": {
+                      "type": "string",
+                      "enum": [
+                        "Normal",
+                        "StartLoc"
+                      ]
+                    },
+                    "objectId": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 2147483647
+                    }
+                  },
+                  "required": [
+                    "op",
+                    "name",
+                    "position"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "op": {
+                      "type": "string",
+                      "const": "update"
+                    },
+                    "id": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 2147483647
+                    },
+                    "name": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 1024
+                    },
+                    "position": {
+                      "type": "object",
+                      "properties": {
+                        "x": {
+                          "type": "number"
+                        },
+                        "y": {
+                          "type": "number"
+                        },
+                        "z": {
+                          "type": "number"
+                        }
+                      },
+                      "required": [
+                        "x",
+                        "y",
+                        "z"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "type": {
+                      "type": "string",
+                      "enum": [
+                        "Normal",
+                        "StartLoc"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "op",
+                    "id"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "op": {
+                      "type": "string",
+                      "const": "remove"
+                    },
+                    "id": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 2147483647
+                    }
+                  },
+                  "required": [
+                    "op",
+                    "id"
+                  ],
+                  "additionalProperties": false
+                }
+              ]
+            }
+          }
+        },
+        "required": [
+          "directory",
+          "operations"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "placement.points.apply": {
+      "description": "Stage a point plan and component manifest together; defaults to dry run. Commit with ui.save on the returned Objects file; discard with ui.discard.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "planId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "dryRun": {
+            "default": true,
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "planId",
+          "dryRun"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "placement.scatterDoodads": {
+      "description": "Plan a seeded weighted mix of real Doodads on sampled Terrain, with height/slope/texture filters, water/native-geometry exclusions and minimum distance from planned and existing object centers. Does not claim model collision/pathing.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "objectFile": {
+            "default": "Objects",
+            "type": "string"
+          },
+          "componentListFile": {
+            "default": "ComponentList.SC2Components",
+            "type": "string"
+          },
+          "terrainDirectory": {
+            "default": "",
+            "type": "string"
+          },
+          "area": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "const": "rectangle"
+                  },
+                  "minX": {
+                    "type": "number"
+                  },
+                  "minY": {
+                    "type": "number"
+                  },
+                  "maxX": {
+                    "type": "number"
+                  },
+                  "maxY": {
+                    "type": "number"
+                  },
+                  "z": {
+                    "default": 0,
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "type",
+                  "minX",
+                  "minY",
+                  "maxX",
+                  "maxY",
+                  "z"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "const": "circle"
+                  },
+                  "center": {
+                    "type": "object",
+                    "properties": {
+                      "x": {
+                        "type": "number"
+                      },
+                      "y": {
+                        "type": "number"
+                      },
+                      "z": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "x",
+                      "y",
+                      "z"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "radius": {
+                    "type": "number",
+                    "exclusiveMinimum": 0
+                  }
+                },
+                "required": [
+                  "type",
+                  "center",
+                  "radius"
+                ],
+                "additionalProperties": false
+              }
+            ]
+          },
+          "objects": {
+            "minItems": 1,
+            "maxItems": 32,
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "key": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "query": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "weight": {
+                  "default": 1,
+                  "type": "number",
+                  "exclusiveMinimum": 0,
+                  "maximum": 1000000
+                }
+              },
+              "required": [
+                "weight"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "count": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 5000
+          },
+          "seed": {
+            "default": 1,
+            "type": "integer",
+            "minimum": -9007199254740991,
+            "maximum": 9007199254740991
+          },
+          "minimumDistance": {
+            "default": 1,
+            "type": "number",
+            "minimum": 0
+          },
+          "avoidExisting": {
+            "default": true,
+            "type": "boolean"
+          },
+          "avoidWater": {
+            "default": true,
+            "type": "boolean"
+          },
+          "avoidProtected": {
+            "default": true,
+            "type": "boolean"
+          },
+          "minHeight": {
+            "type": "number"
+          },
+          "maxHeight": {
+            "type": "number"
+          },
+          "minSlope": {
+            "type": "number",
+            "minimum": 0
+          },
+          "maxSlope": {
+            "default": 0.5,
+            "type": "number",
+            "minimum": 0
+          },
+          "textures": {
+            "minItems": 1,
+            "maxItems": 64,
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "minWeight": {
+                  "default": 1,
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 15
+                }
+              },
+              "required": [
+                "id",
+                "minWeight"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "heightOffset": {
+            "default": 0,
+            "type": "number",
+            "minimum": -128,
+            "maximum": 128
+          },
+          "scaleRange": {
+            "default": {
+              "min": 0.9,
+              "max": 1.1
+            },
+            "type": "object",
+            "properties": {
+              "min": {
+                "type": "number"
+              },
+              "max": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "min",
+              "max"
+            ],
+            "additionalProperties": false
+          },
+          "rotationRange": {
+            "default": {
+              "min": 0,
+              "max": 6.283185307179586
+            },
+            "type": "object",
+            "properties": {
+              "min": {
+                "type": "number"
+              },
+              "max": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "min",
+              "max"
+            ],
+            "additionalProperties": false
+          },
+          "exclusionZones": {
+            "default": [],
+            "maxItems": 100,
+            "type": "array",
+            "items": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "const": "rectangle"
+                    },
+                    "minX": {
+                      "type": "number"
+                    },
+                    "minY": {
+                      "type": "number"
+                    },
+                    "maxX": {
+                      "type": "number"
+                    },
+                    "maxY": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "minX",
+                    "minY",
+                    "maxX",
+                    "maxY"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "const": "circle"
+                    },
+                    "center": {
+                      "type": "object",
+                      "properties": {
+                        "x": {
+                          "type": "number"
+                        },
+                        "y": {
+                          "type": "number"
+                        }
+                      },
+                      "required": [
+                        "x",
+                        "y"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "radius": {
+                      "type": "number",
+                      "exclusiveMinimum": 0
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "center",
+                    "radius"
+                  ],
+                  "additionalProperties": false
+                }
+              ]
+            }
+          },
+          "maxAttempts": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 1250000
+          }
+        },
+        "required": [
+          "objectFile",
+          "componentListFile",
+          "terrainDirectory",
+          "area",
+          "objects",
+          "count",
+          "seed",
+          "minimumDistance",
+          "avoidExisting",
+          "avoidWater",
+          "avoidProtected",
+          "maxSlope",
+          "heightOffset",
+          "scaleRange",
+          "rotationRange",
+          "exclusionZones"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "placement.snapToTerrain": {
+      "description": "Plan ground-height updates for selected existing Unit/Doodad IDs while preserving XY and unknown XML; sets observed Doodad HeightAbsolute=1. Rejects holes, water and excessive slope; never writes until placement.apply.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "objectFile": {
+            "default": "Objects",
+            "type": "string"
+          },
+          "componentListFile": {
+            "default": "ComponentList.SC2Components",
+            "type": "string"
+          },
+          "terrainDirectory": {
+            "default": "",
+            "type": "string"
+          },
+          "objectIds": {
+            "minItems": 1,
+            "maxItems": 5000,
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "exclusiveMinimum": 0,
+              "maximum": 9007199254740991
+            }
+          },
+          "maxSlope": {
+            "default": 0.5,
+            "type": "number",
+            "minimum": 0
+          },
+          "avoidWater": {
+            "default": true,
+            "type": "boolean"
+          },
+          "heightOffset": {
+            "default": 0,
+            "type": "number",
+            "minimum": -128,
+            "maximum": 128
+          }
+        },
+        "required": [
+          "objectFile",
+          "componentListFile",
+          "terrainDirectory",
+          "objectIds",
+          "maxSlope",
+          "avoidWater",
+          "heightOffset"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "placement.scan": {
+      "description": "Parse the real plain-XML Objects component losslessly and report ObjectUnit/ObjectDoodad/generic placed objects, ids and validation.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "objectFile": {
+            "default": "Objects",
+            "type": "string"
+          }
+        },
+        "required": [
+          "objectFile"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "placement.addUnit": {
+      "description": "Resolve one real dependency-ready Unit through browse.*, then create a safe previewable placement plan. Supports single/line/grid/circle/scatter.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "objectFile": {
+            "default": "Objects",
+            "type": "string"
+          },
+          "componentListFile": {
+            "default": "ComponentList.SC2Components",
+            "type": "string"
+          },
+          "query": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "key": {
+            "type": "string"
+          },
+          "catalogType": {
+            "type": "string"
+          },
+          "position": {
+            "type": "object",
+            "properties": {
+              "x": {
+                "type": "number"
+              },
+              "y": {
+                "type": "number"
+              },
+              "z": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "x",
+              "y",
+              "z"
+            ],
+            "additionalProperties": false
+          },
+          "snapToTerrain": {
+            "default": false,
+            "type": "boolean"
+          },
+          "terrainDirectory": {
+            "type": "string"
+          },
+          "maxSlope": {
+            "type": "number",
+            "minimum": 0
+          },
+          "rotation": {
+            "type": "number"
+          },
+          "scale": {
+            "anyOf": [
+              {
+                "type": "number",
+                "exclusiveMinimum": 0
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "x": {
+                    "type": "number",
+                    "exclusiveMinimum": 0
+                  },
+                  "y": {
+                    "type": "number",
+                    "exclusiveMinimum": 0
+                  },
+                  "z": {
+                    "type": "number",
+                    "exclusiveMinimum": 0
+                  }
+                },
+                "required": [
+                  "x",
+                  "y",
+                  "z"
+                ],
+                "additionalProperties": false
+              }
+            ]
+          },
+          "owner": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 15
+          },
+          "variation": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "flags": {
+            "type": "object",
+            "propertyNames": {
+              "type": "string"
+            },
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "count": {
+            "default": 1,
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 5000
+          },
+          "layout": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "const": "single"
+                  }
+                },
+                "required": [
+                  "type"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "const": "line"
+                  },
+                  "spacing": {
+                    "type": "number",
+                    "exclusiveMinimum": 0
+                  },
+                  "angle": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "type",
+                  "spacing"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "const": "grid"
+                  },
+                  "columns": {
+                    "type": "integer",
+                    "exclusiveMinimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "spacingX": {
+                    "type": "number",
+                    "exclusiveMinimum": 0
+                  },
+                  "spacingY": {
+                    "type": "number",
+                    "exclusiveMinimum": 0
+                  }
+                },
+                "required": [
+                  "type",
+                  "columns",
+                  "spacingX",
+                  "spacingY"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "const": "circle"
+                  },
+                  "radius": {
+                    "type": "number",
+                    "exclusiveMinimum": 0
+                  },
+                  "startAngle": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "type",
+                  "radius"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "const": "scatter"
+                  },
+                  "area": {
+                    "oneOf": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "const": "circle"
+                          },
+                          "center": {
+                            "type": "object",
+                            "properties": {
+                              "x": {
+                                "type": "number"
+                              },
+                              "y": {
+                                "type": "number"
+                              },
+                              "z": {
+                                "type": "number"
+                              }
+                            },
+                            "required": [
+                              "x",
+                              "y",
+                              "z"
+                            ],
+                            "additionalProperties": false
+                          },
+                          "radius": {
+                            "type": "number",
+                            "exclusiveMinimum": 0
+                          }
+                        },
+                        "required": [
+                          "type",
+                          "center",
+                          "radius"
+                        ],
+                        "additionalProperties": false
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "const": "rectangle"
+                          },
+                          "minX": {
+                            "type": "number"
+                          },
+                          "minY": {
+                            "type": "number"
+                          },
+                          "maxX": {
+                            "type": "number"
+                          },
+                          "maxY": {
+                            "type": "number"
+                          },
+                          "z": {
+                            "type": "number"
+                          }
+                        },
+                        "required": [
+                          "type",
+                          "minX",
+                          "minY",
+                          "maxX",
+                          "maxY",
+                          "z"
+                        ],
+                        "additionalProperties": false
+                      }
+                    ]
+                  },
+                  "minimumDistance": {
+                    "type": "number",
+                    "minimum": 0
+                  },
+                  "seed": {
+                    "type": "integer",
+                    "minimum": -9007199254740991,
+                    "maximum": 9007199254740991
+                  },
+                  "exclusionZones": {
+                    "maxItems": 100,
+                    "type": "array",
+                    "items": {
+                      "oneOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "const": "circle"
+                            },
+                            "center": {
+                              "type": "object",
+                              "properties": {
+                                "x": {
+                                  "type": "number"
+                                },
+                                "y": {
+                                  "type": "number"
+                                }
+                              },
+                              "required": [
+                                "x",
+                                "y"
+                              ],
+                              "additionalProperties": false
+                            },
+                            "radius": {
+                              "type": "number",
+                              "exclusiveMinimum": 0
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "center",
+                            "radius"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "const": "rectangle"
+                            },
+                            "minX": {
+                              "type": "number"
+                            },
+                            "minY": {
+                              "type": "number"
+                            },
+                            "maxX": {
+                              "type": "number"
+                            },
+                            "maxY": {
+                              "type": "number"
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "minX",
+                            "minY",
+                            "maxX",
+                            "maxY"
+                          ],
+                          "additionalProperties": false
+                        }
+                      ]
+                    }
+                  }
+                },
+                "required": [
+                  "type",
+                  "area"
+                ],
+                "additionalProperties": false
+              }
+            ]
+          },
+          "bounds": {
+            "type": "object",
+            "properties": {
+              "minX": {
+                "type": "number"
+              },
+              "minY": {
+                "type": "number"
+              },
+              "maxX": {
+                "type": "number"
+              },
+              "maxY": {
+                "type": "number"
+              },
+              "minZ": {
+                "type": "number"
+              },
+              "maxZ": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "minX",
+              "minY",
+              "maxX",
+              "maxY"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "objectFile",
+          "componentListFile",
+          "position",
+          "snapToTerrain",
+          "count"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "placement.addDoodad": {
+      "description": "Resolve one real dependency-ready Doodad through browse.*, then create a safe previewable placement plan. Does not guess a Type id.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "objectFile": {
+            "default": "Objects",
+            "type": "string"
+          },
+          "componentListFile": {
+            "default": "ComponentList.SC2Components",
+            "type": "string"
+          },
+          "query": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "key": {
+            "type": "string"
+          },
+          "catalogType": {
+            "type": "string"
+          },
+          "position": {
+            "type": "object",
+            "properties": {
+              "x": {
+                "type": "number"
+              },
+              "y": {
+                "type": "number"
+              },
+              "z": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "x",
+              "y",
+              "z"
+            ],
+            "additionalProperties": false
+          },
+          "snapToTerrain": {
+            "default": false,
+            "type": "boolean"
+          },
+          "terrainDirectory": {
+            "type": "string"
+          },
+          "maxSlope": {
+            "type": "number",
+            "minimum": 0
+          },
+          "rotation": {
+            "type": "number"
+          },
+          "scale": {
+            "anyOf": [
+              {
+                "type": "number",
+                "exclusiveMinimum": 0
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "x": {
+                    "type": "number",
+                    "exclusiveMinimum": 0
+                  },
+                  "y": {
+                    "type": "number",
+                    "exclusiveMinimum": 0
+                  },
+                  "z": {
+                    "type": "number",
+                    "exclusiveMinimum": 0
+                  }
+                },
+                "required": [
+                  "x",
+                  "y",
+                  "z"
+                ],
+                "additionalProperties": false
+              }
+            ]
+          },
+          "owner": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 15
+          },
+          "variation": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "flags": {
+            "type": "object",
+            "propertyNames": {
+              "type": "string"
+            },
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "count": {
+            "default": 1,
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 5000
+          },
+          "layout": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "const": "single"
+                  }
+                },
+                "required": [
+                  "type"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "const": "line"
+                  },
+                  "spacing": {
+                    "type": "number",
+                    "exclusiveMinimum": 0
+                  },
+                  "angle": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "type",
+                  "spacing"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "const": "grid"
+                  },
+                  "columns": {
+                    "type": "integer",
+                    "exclusiveMinimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "spacingX": {
+                    "type": "number",
+                    "exclusiveMinimum": 0
+                  },
+                  "spacingY": {
+                    "type": "number",
+                    "exclusiveMinimum": 0
+                  }
+                },
+                "required": [
+                  "type",
+                  "columns",
+                  "spacingX",
+                  "spacingY"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "const": "circle"
+                  },
+                  "radius": {
+                    "type": "number",
+                    "exclusiveMinimum": 0
+                  },
+                  "startAngle": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "type",
+                  "radius"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "const": "scatter"
+                  },
+                  "area": {
+                    "oneOf": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "const": "circle"
+                          },
+                          "center": {
+                            "type": "object",
+                            "properties": {
+                              "x": {
+                                "type": "number"
+                              },
+                              "y": {
+                                "type": "number"
+                              },
+                              "z": {
+                                "type": "number"
+                              }
+                            },
+                            "required": [
+                              "x",
+                              "y",
+                              "z"
+                            ],
+                            "additionalProperties": false
+                          },
+                          "radius": {
+                            "type": "number",
+                            "exclusiveMinimum": 0
+                          }
+                        },
+                        "required": [
+                          "type",
+                          "center",
+                          "radius"
+                        ],
+                        "additionalProperties": false
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "const": "rectangle"
+                          },
+                          "minX": {
+                            "type": "number"
+                          },
+                          "minY": {
+                            "type": "number"
+                          },
+                          "maxX": {
+                            "type": "number"
+                          },
+                          "maxY": {
+                            "type": "number"
+                          },
+                          "z": {
+                            "type": "number"
+                          }
+                        },
+                        "required": [
+                          "type",
+                          "minX",
+                          "minY",
+                          "maxX",
+                          "maxY",
+                          "z"
+                        ],
+                        "additionalProperties": false
+                      }
+                    ]
+                  },
+                  "minimumDistance": {
+                    "type": "number",
+                    "minimum": 0
+                  },
+                  "seed": {
+                    "type": "integer",
+                    "minimum": -9007199254740991,
+                    "maximum": 9007199254740991
+                  },
+                  "exclusionZones": {
+                    "maxItems": 100,
+                    "type": "array",
+                    "items": {
+                      "oneOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "const": "circle"
+                            },
+                            "center": {
+                              "type": "object",
+                              "properties": {
+                                "x": {
+                                  "type": "number"
+                                },
+                                "y": {
+                                  "type": "number"
+                                }
+                              },
+                              "required": [
+                                "x",
+                                "y"
+                              ],
+                              "additionalProperties": false
+                            },
+                            "radius": {
+                              "type": "number",
+                              "exclusiveMinimum": 0
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "center",
+                            "radius"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "const": "rectangle"
+                            },
+                            "minX": {
+                              "type": "number"
+                            },
+                            "minY": {
+                              "type": "number"
+                            },
+                            "maxX": {
+                              "type": "number"
+                            },
+                            "maxY": {
+                              "type": "number"
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "minX",
+                            "minY",
+                            "maxX",
+                            "maxY"
+                          ],
+                          "additionalProperties": false
+                        }
+                      ]
+                    }
+                  }
+                },
+                "required": [
+                  "type",
+                  "area"
+                ],
+                "additionalProperties": false
+              }
+            ]
+          },
+          "bounds": {
+            "type": "object",
+            "properties": {
+              "minX": {
+                "type": "number"
+              },
+              "minY": {
+                "type": "number"
+              },
+              "maxX": {
+                "type": "number"
+              },
+              "maxY": {
+                "type": "number"
+              },
+              "minZ": {
+                "type": "number"
+              },
+              "maxZ": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "minX",
+              "minY",
+              "maxX",
+              "maxY"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "objectFile",
+          "componentListFile",
+          "position",
+          "snapToTerrain",
+          "count"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "placement.addBatch": {
+      "description": "Resolve and plan up to 5000 mixed Unit/Doodad placements as one atomic transaction.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "objectFile": {
+            "default": "Objects",
+            "type": "string"
+          },
+          "componentListFile": {
+            "default": "ComponentList.SC2Components",
+            "type": "string"
+          },
+          "bounds": {
+            "type": "object",
+            "properties": {
+              "minX": {
+                "type": "number"
+              },
+              "minY": {
+                "type": "number"
+              },
+              "maxX": {
+                "type": "number"
+              },
+              "maxY": {
+                "type": "number"
+              },
+              "minZ": {
+                "type": "number"
+              },
+              "maxZ": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "minX",
+              "minY",
+              "maxX",
+              "maxY"
+            ],
+            "additionalProperties": false
+          },
+          "objects": {
+            "minItems": 1,
+            "maxItems": 5000,
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "enum": [
+                    "Unit",
+                    "Doodad"
+                  ]
+                },
+                "query": {
+                  "type": "string"
+                },
+                "id": {
+                  "type": "string"
+                },
+                "key": {
+                  "type": "string"
+                },
+                "catalogType": {
+                  "type": "string"
+                },
+                "position": {
+                  "type": "object",
+                  "properties": {
+                    "x": {
+                      "type": "number"
+                    },
+                    "y": {
+                      "type": "number"
+                    },
+                    "z": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "x",
+                    "y",
+                    "z"
+                  ],
+                  "additionalProperties": false
+                },
+                "rotation": {
+                  "type": "number"
+                },
+                "scale": {
+                  "anyOf": [
+                    {
+                      "type": "number",
+                      "exclusiveMinimum": 0
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "x": {
+                          "type": "number",
+                          "exclusiveMinimum": 0
+                        },
+                        "y": {
+                          "type": "number",
+                          "exclusiveMinimum": 0
+                        },
+                        "z": {
+                          "type": "number",
+                          "exclusiveMinimum": 0
+                        }
+                      },
+                      "required": [
+                        "x",
+                        "y",
+                        "z"
+                      ],
+                      "additionalProperties": false
+                    }
+                  ]
+                },
+                "owner": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 15
+                },
+                "variation": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "flags": {
+                  "type": "object",
+                  "propertyNames": {
+                    "type": "string"
+                  },
+                  "additionalProperties": {
+                    "type": "string"
+                  }
+                }
+              },
+              "required": [
+                "kind",
+                "position"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "objectFile",
+          "componentListFile",
+          "objects"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "placement.move": {
+      "description": "Create a minimal-diff plan to move one placed object by numeric object Id.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "objectFile": {
+            "default": "Objects",
+            "type": "string"
+          },
+          "componentListFile": {
+            "default": "ComponentList.SC2Components",
+            "type": "string"
+          },
+          "objectId": {
+            "type": "integer",
+            "exclusiveMinimum": 0,
+            "maximum": 9007199254740991
+          },
+          "position": {
+            "type": "object",
+            "properties": {
+              "x": {
+                "type": "number"
+              },
+              "y": {
+                "type": "number"
+              },
+              "z": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "x",
+              "y",
+              "z"
+            ],
+            "additionalProperties": false
+          },
+          "bounds": {
+            "type": "object",
+            "properties": {
+              "minX": {
+                "type": "number"
+              },
+              "minY": {
+                "type": "number"
+              },
+              "maxX": {
+                "type": "number"
+              },
+              "maxY": {
+                "type": "number"
+              },
+              "minZ": {
+                "type": "number"
+              },
+              "maxZ": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "minX",
+              "minY",
+              "maxX",
+              "maxY"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "objectFile",
+          "componentListFile",
+          "objectId",
+          "position"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "placement.rotate": {
+      "description": "Create a minimal-diff plan to rotate one placed object. Rotation is written in the real map's numeric field; real maps demonstrate radian values.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "objectFile": {
+            "default": "Objects",
+            "type": "string"
+          },
+          "componentListFile": {
+            "default": "ComponentList.SC2Components",
+            "type": "string"
+          },
+          "objectId": {
+            "type": "integer",
+            "exclusiveMinimum": 0,
+            "maximum": 9007199254740991
+          },
+          "rotation": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "objectFile",
+          "componentListFile",
+          "objectId",
+          "rotation"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "placement.scale": {
+      "description": "Create a minimal-diff plan to set the real three-component Scale attribute.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "objectFile": {
+            "default": "Objects",
+            "type": "string"
+          },
+          "componentListFile": {
+            "default": "ComponentList.SC2Components",
+            "type": "string"
+          },
+          "objectId": {
+            "type": "integer",
+            "exclusiveMinimum": 0,
+            "maximum": 9007199254740991
+          },
+          "scale": {
+            "anyOf": [
+              {
+                "type": "number",
+                "exclusiveMinimum": 0
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "x": {
+                    "type": "number",
+                    "exclusiveMinimum": 0
+                  },
+                  "y": {
+                    "type": "number",
+                    "exclusiveMinimum": 0
+                  },
+                  "z": {
+                    "type": "number",
+                    "exclusiveMinimum": 0
+                  }
+                },
+                "required": [
+                  "x",
+                  "y",
+                  "z"
+                ],
+                "additionalProperties": false
+              }
+            ]
+          }
+        },
+        "required": [
+          "objectFile",
+          "componentListFile",
+          "objectId",
+          "scale"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "placement.remove": {
+      "description": "Create a minimal source-span removal plan. Trigger/Galaxy references cannot currently be proven and are warned about.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "objectFile": {
+            "default": "Objects",
+            "type": "string"
+          },
+          "componentListFile": {
+            "default": "ComponentList.SC2Components",
+            "type": "string"
+          },
+          "objectId": {
+            "type": "integer",
+            "exclusiveMinimum": 0,
+            "maximum": 9007199254740991
+          }
+        },
+        "required": [
+          "objectFile",
+          "componentListFile",
+          "objectId"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "placement.decorate": {
+      "description": "Build one deterministic custom object-decoration batch from browse-resolved real Doodads. Terrain composition uses placement.createLocation.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "queries": {
+            "maxItems": 30,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "area": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "const": "circle"
+                  },
+                  "center": {
+                    "type": "object",
+                    "properties": {
+                      "x": {
+                        "type": "number"
+                      },
+                      "y": {
+                        "type": "number"
+                      },
+                      "z": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "x",
+                      "y",
+                      "z"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "radius": {
+                    "type": "number",
+                    "exclusiveMinimum": 0
+                  }
+                },
+                "required": [
+                  "type",
+                  "center",
+                  "radius"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "const": "rectangle"
+                  },
+                  "minX": {
+                    "type": "number"
+                  },
+                  "minY": {
+                    "type": "number"
+                  },
+                  "maxX": {
+                    "type": "number"
+                  },
+                  "maxY": {
+                    "type": "number"
+                  },
+                  "z": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "type",
+                  "minX",
+                  "minY",
+                  "maxX",
+                  "maxY",
+                  "z"
+                ],
+                "additionalProperties": false
+              }
+            ]
+          },
+          "objectCount": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 5000
+          },
+          "objectBudget": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 5000
+          },
+          "density": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          },
+          "seed": {
+            "default": 1,
+            "type": "integer",
+            "minimum": -9007199254740991,
+            "maximum": 9007199254740991
+          },
+          "minimumDistance": {
+            "default": 0,
+            "type": "number",
+            "minimum": 0
+          },
+          "scaleRange": {
+            "type": "object",
+            "properties": {
+              "min": {
+                "type": "number",
+                "exclusiveMinimum": 0
+              },
+              "max": {
+                "type": "number",
+                "exclusiveMinimum": 0
+              }
+            },
+            "required": [
+              "min",
+              "max"
+            ],
+            "additionalProperties": false
+          },
+          "rotationRange": {
+            "type": "object",
+            "properties": {
+              "min": {
+                "type": "number"
+              },
+              "max": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "min",
+              "max"
+            ],
+            "additionalProperties": false
+          },
+          "exclusionZones": {
+            "maxItems": 100,
+            "type": "array",
+            "items": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "const": "circle"
+                    },
+                    "center": {
+                      "type": "object",
+                      "properties": {
+                        "x": {
+                          "type": "number"
+                        },
+                        "y": {
+                          "type": "number"
+                        }
+                      },
+                      "required": [
+                        "x",
+                        "y"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "radius": {
+                      "type": "number",
+                      "exclusiveMinimum": 0
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "center",
+                    "radius"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "const": "rectangle"
+                    },
+                    "minX": {
+                      "type": "number"
+                    },
+                    "minY": {
+                      "type": "number"
+                    },
+                    "maxX": {
+                      "type": "number"
+                    },
+                    "maxY": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "minX",
+                    "minY",
+                    "maxX",
+                    "maxY"
+                  ],
+                  "additionalProperties": false
+                }
+              ]
+            }
+          },
+          "candidateOverrides": {
+            "maxItems": 100,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "excludedObjects": {
+            "maxItems": 500,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "dependency": {
+            "type": "string"
+          },
+          "objectFile": {
+            "default": "Objects",
+            "type": "string"
+          },
+          "componentListFile": {
+            "default": "ComponentList.SC2Components",
+            "type": "string"
+          },
+          "bounds": {
+            "type": "object",
+            "properties": {
+              "minX": {
+                "type": "number"
+              },
+              "minY": {
+                "type": "number"
+              },
+              "maxX": {
+                "type": "number"
+              },
+              "maxY": {
+                "type": "number"
+              },
+              "minZ": {
+                "type": "number"
+              },
+              "maxZ": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "minX",
+              "minY",
+              "maxX",
+              "maxY"
+            ],
+            "additionalProperties": false
+          },
+          "landmarkCount": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 100
+          },
+          "includeUnits": {
+            "default": false,
+            "type": "boolean"
+          },
+          "terrain": {
+            "type": "object",
+            "properties": {
+              "directory": {
+                "default": "",
+                "type": "string"
+              },
+              "style": {
+                "type": "string",
+                "enum": [
+                  "forest",
+                  "desert",
+                  "city",
+                  "snow",
+                  "jungle",
+                  "swamp",
+                  "volcanic",
+                  "badlands",
+                  "coastal",
+                  "space_platform"
+                ]
+              },
+              "seed": {
+                "default": 1,
+                "type": "integer",
+                "minimum": -9007199254740991,
+                "maximum": 9007199254740991
+              },
+              "relief": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 128
+              },
+              "wavelength": {
+                "type": "number",
+                "exclusiveMinimum": 0
+              },
+              "edgeBlend": {
+                "type": "number",
+                "minimum": 0
+              },
+              "materials": {
+                "type": "object",
+                "properties": {
+                  "base": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "rock": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "additionalProperties": false
+              },
+              "protectedAreas": {
+                "maxItems": 50,
+                "type": "array",
+                "items": {
+                  "oneOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "const": "rectangle"
+                        },
+                        "minX": {
+                          "type": "number"
+                        },
+                        "minY": {
+                          "type": "number"
+                        },
+                        "maxX": {
+                          "type": "number"
+                        },
+                        "maxY": {
+                          "type": "number"
+                        }
+                      },
+                      "required": [
+                        "type",
+                        "minX",
+                        "minY",
+                        "maxX",
+                        "maxY"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "const": "circle"
+                        },
+                        "center": {
+                          "type": "object",
+                          "properties": {
+                            "x": {
+                              "type": "number"
+                            },
+                            "y": {
+                              "type": "number"
+                            }
+                          },
+                          "required": [
+                            "x",
+                            "y"
+                          ],
+                          "additionalProperties": false
+                        },
+                        "radius": {
+                          "type": "number",
+                          "exclusiveMinimum": 0
+                        }
+                      },
+                      "required": [
+                        "type",
+                        "center",
+                        "radius"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "const": "polygon"
+                        },
+                        "points": {
+                          "minItems": 3,
+                          "maxItems": 100,
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "x": {
+                                "type": "number"
+                              },
+                              "y": {
+                                "type": "number"
+                              }
+                            },
+                            "required": [
+                              "x",
+                              "y"
+                            ],
+                            "additionalProperties": false
+                          }
+                        }
+                      },
+                      "required": [
+                        "type",
+                        "points"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "const": "corridor"
+                        },
+                        "points": {
+                          "minItems": 2,
+                          "maxItems": 100,
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "x": {
+                                "type": "number"
+                              },
+                              "y": {
+                                "type": "number"
+                              }
+                            },
+                            "required": [
+                              "x",
+                              "y"
+                            ],
+                            "additionalProperties": false
+                          }
+                        },
+                        "width": {
+                          "type": "number",
+                          "exclusiveMinimum": 0
+                        }
+                      },
+                      "required": [
+                        "type",
+                        "points",
+                        "width"
+                      ],
+                      "additionalProperties": false
+                    }
+                  ]
+                }
+              }
+            },
+            "required": [
+              "directory",
+              "style",
+              "seed"
+            ],
+            "additionalProperties": false
+          },
+          "maxSlope": {
+            "type": "number",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "area",
+          "seed",
+          "minimumDistance",
+          "objectFile",
+          "componentListFile",
+          "includeUnits"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "placement.createLocation": {
+      "description": "Create one complete object-based forest/desert/city/village/industrial/base/ruins/swamp/cave/alien/Terran/Protoss/Zerg/custom location plan. Uses browse.*, deterministic seed, spacing and exclusions; one plan becomes one atomic transaction.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "locationType": {
+            "type": "string",
+            "enum": [
+              "forest",
+              "desert",
+              "city",
+              "village",
+              "industrial",
+              "militaryBase",
+              "ruins",
+              "swamp",
+              "cave",
+              "alien",
+              "terran",
+              "protoss",
+              "zerg",
+              "mixedNature",
+              "custom"
+            ]
+          },
+          "queries": {
+            "maxItems": 30,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "area": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "const": "circle"
+                  },
+                  "center": {
+                    "type": "object",
+                    "properties": {
+                      "x": {
+                        "type": "number"
+                      },
+                      "y": {
+                        "type": "number"
+                      },
+                      "z": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "x",
+                      "y",
+                      "z"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "radius": {
+                    "type": "number",
+                    "exclusiveMinimum": 0
+                  }
+                },
+                "required": [
+                  "type",
+                  "center",
+                  "radius"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "const": "rectangle"
+                  },
+                  "minX": {
+                    "type": "number"
+                  },
+                  "minY": {
+                    "type": "number"
+                  },
+                  "maxX": {
+                    "type": "number"
+                  },
+                  "maxY": {
+                    "type": "number"
+                  },
+                  "z": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "type",
+                  "minX",
+                  "minY",
+                  "maxX",
+                  "maxY",
+                  "z"
+                ],
+                "additionalProperties": false
+              }
+            ]
+          },
+          "objectCount": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 5000
+          },
+          "objectBudget": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 5000
+          },
+          "density": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          },
+          "seed": {
+            "default": 1,
+            "type": "integer",
+            "minimum": -9007199254740991,
+            "maximum": 9007199254740991
+          },
+          "minimumDistance": {
+            "default": 0,
+            "type": "number",
+            "minimum": 0
+          },
+          "scaleRange": {
+            "type": "object",
+            "properties": {
+              "min": {
+                "type": "number",
+                "exclusiveMinimum": 0
+              },
+              "max": {
+                "type": "number",
+                "exclusiveMinimum": 0
+              }
+            },
+            "required": [
+              "min",
+              "max"
+            ],
+            "additionalProperties": false
+          },
+          "rotationRange": {
+            "type": "object",
+            "properties": {
+              "min": {
+                "type": "number"
+              },
+              "max": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "min",
+              "max"
+            ],
+            "additionalProperties": false
+          },
+          "exclusionZones": {
+            "maxItems": 100,
+            "type": "array",
+            "items": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "const": "circle"
+                    },
+                    "center": {
+                      "type": "object",
+                      "properties": {
+                        "x": {
+                          "type": "number"
+                        },
+                        "y": {
+                          "type": "number"
+                        }
+                      },
+                      "required": [
+                        "x",
+                        "y"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "radius": {
+                      "type": "number",
+                      "exclusiveMinimum": 0
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "center",
+                    "radius"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "const": "rectangle"
+                    },
+                    "minX": {
+                      "type": "number"
+                    },
+                    "minY": {
+                      "type": "number"
+                    },
+                    "maxX": {
+                      "type": "number"
+                    },
+                    "maxY": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "minX",
+                    "minY",
+                    "maxX",
+                    "maxY"
+                  ],
+                  "additionalProperties": false
+                }
+              ]
+            }
+          },
+          "candidateOverrides": {
+            "maxItems": 100,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "excludedObjects": {
+            "maxItems": 500,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "dependency": {
+            "type": "string"
+          },
+          "objectFile": {
+            "default": "Objects",
+            "type": "string"
+          },
+          "componentListFile": {
+            "default": "ComponentList.SC2Components",
+            "type": "string"
+          },
+          "bounds": {
+            "type": "object",
+            "properties": {
+              "minX": {
+                "type": "number"
+              },
+              "minY": {
+                "type": "number"
+              },
+              "maxX": {
+                "type": "number"
+              },
+              "maxY": {
+                "type": "number"
+              },
+              "minZ": {
+                "type": "number"
+              },
+              "maxZ": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "minX",
+              "minY",
+              "maxX",
+              "maxY"
+            ],
+            "additionalProperties": false
+          },
+          "landmarkCount": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 100
+          },
+          "includeUnits": {
+            "default": false,
+            "type": "boolean"
+          },
+          "terrain": {
+            "type": "object",
+            "properties": {
+              "directory": {
+                "default": "",
+                "type": "string"
+              },
+              "style": {
+                "type": "string",
+                "enum": [
+                  "forest",
+                  "desert",
+                  "city",
+                  "snow",
+                  "jungle",
+                  "swamp",
+                  "volcanic",
+                  "badlands",
+                  "coastal",
+                  "space_platform"
+                ]
+              },
+              "seed": {
+                "default": 1,
+                "type": "integer",
+                "minimum": -9007199254740991,
+                "maximum": 9007199254740991
+              },
+              "relief": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 128
+              },
+              "wavelength": {
+                "type": "number",
+                "exclusiveMinimum": 0
+              },
+              "edgeBlend": {
+                "type": "number",
+                "minimum": 0
+              },
+              "materials": {
+                "type": "object",
+                "properties": {
+                  "base": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "rock": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "additionalProperties": false
+              },
+              "protectedAreas": {
+                "maxItems": 50,
+                "type": "array",
+                "items": {
+                  "oneOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "const": "rectangle"
+                        },
+                        "minX": {
+                          "type": "number"
+                        },
+                        "minY": {
+                          "type": "number"
+                        },
+                        "maxX": {
+                          "type": "number"
+                        },
+                        "maxY": {
+                          "type": "number"
+                        }
+                      },
+                      "required": [
+                        "type",
+                        "minX",
+                        "minY",
+                        "maxX",
+                        "maxY"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "const": "circle"
+                        },
+                        "center": {
+                          "type": "object",
+                          "properties": {
+                            "x": {
+                              "type": "number"
+                            },
+                            "y": {
+                              "type": "number"
+                            }
+                          },
+                          "required": [
+                            "x",
+                            "y"
+                          ],
+                          "additionalProperties": false
+                        },
+                        "radius": {
+                          "type": "number",
+                          "exclusiveMinimum": 0
+                        }
+                      },
+                      "required": [
+                        "type",
+                        "center",
+                        "radius"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "const": "polygon"
+                        },
+                        "points": {
+                          "minItems": 3,
+                          "maxItems": 100,
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "x": {
+                                "type": "number"
+                              },
+                              "y": {
+                                "type": "number"
+                              }
+                            },
+                            "required": [
+                              "x",
+                              "y"
+                            ],
+                            "additionalProperties": false
+                          }
+                        }
+                      },
+                      "required": [
+                        "type",
+                        "points"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "const": "corridor"
+                        },
+                        "points": {
+                          "minItems": 2,
+                          "maxItems": 100,
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "x": {
+                                "type": "number"
+                              },
+                              "y": {
+                                "type": "number"
+                              }
+                            },
+                            "required": [
+                              "x",
+                              "y"
+                            ],
+                            "additionalProperties": false
+                          }
+                        },
+                        "width": {
+                          "type": "number",
+                          "exclusiveMinimum": 0
+                        }
+                      },
+                      "required": [
+                        "type",
+                        "points",
+                        "width"
+                      ],
+                      "additionalProperties": false
+                    }
+                  ]
+                }
+              }
+            },
+            "required": [
+              "directory",
+              "style",
+              "seed"
+            ],
+            "additionalProperties": false
+          },
+          "maxSlope": {
+            "type": "number",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "locationType",
+          "area",
+          "seed",
+          "minimumDistance",
+          "objectFile",
+          "componentListFile",
+          "includeUnits"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "placement.preview": {
+      "description": "Render a structured dry-run and minimal source diff for an existing placement plan without changing disk or staged state.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "planId": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "planId"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "placement.validate": {
+      "description": "Validate Objects XML, required ids/types, duplicate ids, plan dependencies, explicit bounds and minimum distance. Pathing/runtime collision remain explicitly unavailable.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "planId": {
+            "type": "string"
+          },
+          "objectFile": {
+            "default": "Objects",
+            "type": "string"
+          }
+        },
+        "required": [
+          "objectFile"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "placement.apply": {
+      "description": "Apply one validated placement plan through the shared lossless atomic transaction layer. Defaults to dry-run; supports staging, backup, reparse and in-session idempotency.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "planId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "dryRun": {
+            "default": true,
+            "type": "boolean"
+          },
+          "stage": {
+            "default": true,
+            "type": "boolean"
+          },
+          "backup": {
+            "default": true,
+            "type": "boolean"
+          },
+          "expectedSha256": {
+            "type": "object",
+            "propertyNames": {
+              "type": "string"
+            },
+            "additionalProperties": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "planId",
+          "dryRun",
+          "stage",
+          "backup"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "placement.rollback": {
+      "description": "Discard staged Objects/ComponentList changes or restore Objects from the shared transaction backup. Backup restore defaults to dry-run.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "objectFile": {
+            "default": "Objects",
+            "type": "string"
+          },
+          "componentListFile": {
+            "default": "ComponentList.SC2Components",
+            "type": "string"
+          },
+          "dryRun": {
+            "default": true,
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "objectFile",
+          "componentListFile",
+          "dryRun"
+        ],
+        "additionalProperties": false
+      }
+    }
+  }
+}

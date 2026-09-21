@@ -1,0 +1,1 @@
+{"name":"simple_EAbilBuildType","kind":"simple","fields":[],"enumValues":["AddOn","Normal","PlacementBuild"],"facets":[],"base":"xs:string"}

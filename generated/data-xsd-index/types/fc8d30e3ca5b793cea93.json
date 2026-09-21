@@ -1,0 +1,1 @@
+{"name":"SVolumeRolloff","kind":"complex","fields":[{"kind":"attribute","name":"Distance","type":"simple_real32"},{"kind":"attribute","name":"Volume","type":"simple_CVolume"},{"kind":"element","name":"Distance","type":"real32","minOccurs":"0","maxOccurs":"1"},{"kind":"element","name":"Volume","type":"CVolume","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

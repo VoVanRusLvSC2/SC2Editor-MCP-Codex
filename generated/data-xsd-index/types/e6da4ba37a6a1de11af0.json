@@ -1,0 +1,1 @@
+{"name":"simple_EAbilSpecializeFlag","kind":"simple","fields":[],"enumValues":["AutoCastOffOwnerLeave","BestUnit","Transient","UnitOrderQueue"],"facets":[],"base":"xs:string"}

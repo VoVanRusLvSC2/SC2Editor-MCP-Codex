@@ -1,0 +1,1 @@
+{"name":"simple_EUnitStatusGroup","kind":"simple","fields":[],"enumValues":["All","Allied","Enemy","Owner"],"facets":[],"base":"xs:string"}

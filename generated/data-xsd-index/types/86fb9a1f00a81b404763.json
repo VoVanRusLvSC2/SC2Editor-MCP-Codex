@@ -1,0 +1,1 @@
+{"name":"simple_EArmorType","kind":"simple","fields":[],"enumValues":["Divine","Fort","Hero","Large","Medium","None","Normal","Small","Unknown"],"facets":[],"base":"xs:string"}

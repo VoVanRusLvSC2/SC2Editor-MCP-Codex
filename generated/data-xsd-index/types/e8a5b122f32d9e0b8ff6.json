@@ -1,0 +1,1 @@
+{"name":"simple_EBehaviorUnitTrackerAtMaxRule","kind":"simple","fields":[],"enumValues":["Ignore","ReplaceOldest"],"facets":[],"base":"xs:string"}

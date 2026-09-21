@@ -1,0 +1,1 @@
+{"name":"simple_EEditorFlag","kind":"simple","fields":[],"enumValues":["AmbientOcclusion","BlockStructures","CanRotate","HostileDefault","NeutralDefault","NoAutoRotate","NoPalettes","NoPlacement"],"facets":[],"base":"xs:string"}

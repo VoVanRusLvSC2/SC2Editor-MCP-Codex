@@ -1,0 +1,1 @@
+{"name":"simple_EBeacon","kind":"simple","fields":[],"enumValues":["Army","Attack","Auto","Claim","Custom1","Custom2","Custom3","Custom4","Defend","Detect","Expand","FlagAutoCastOff","FlagAutoCastOn","FlagClearAll","FlagClearExtra","FlagCustomBuild","FlagDropoff","FlagNone","FlagViewNext","FlagViewPrev","Harass","Idle","Rally","Scout"],"facets":[],"base":"xs:string"}

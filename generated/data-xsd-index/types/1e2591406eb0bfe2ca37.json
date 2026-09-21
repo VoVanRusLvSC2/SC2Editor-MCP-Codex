@@ -1,0 +1,1 @@
+{"name":"simple_EOscillator","kind":"simple","fields":[],"enumValues":["Noise","SawDown","SawUp","Sine","Square","Triangle"],"facets":[],"base":"xs:string"}

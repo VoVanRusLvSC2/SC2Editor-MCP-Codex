@@ -1,0 +1,1 @@
+{"name":"SActorTermPhysicsImpactEnvironment","kind":"complex","fields":[{"kind":"attribute","name":"Environment","type":"simple_EActorPhysicsImpactEnvironment"},{"kind":"element","name":"Environment","type":"EActorPhysicsImpactEnvironment","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

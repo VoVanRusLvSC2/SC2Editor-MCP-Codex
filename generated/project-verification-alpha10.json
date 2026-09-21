@@ -1,0 +1,21 @@
+{
+  "version": "1.1.0-alpha.10",
+  "tests": { "total": 198, "passed": 198, "failed": 0, "newRegressionTests": 12 },
+  "build": "PASS",
+  "lint": "PASS",
+  "uiRegistryAudit": "PASS",
+  "dataHistoricalRegistryConsistencyAudit": "PASS",
+  "portableCrossBuild": "PASS",
+  "portableMcpHttpSmoke": "PASS",
+  "moduleCount": 8,
+  "mcpToolCount": 128,
+  "completeEngineCoverage": false,
+  "historicalFullCorpusSweepRerun": "NOT_EXECUTED",
+  "sc2Editor": "NOT_EXECUTED",
+  "gameRuntime": "NOT_EXECUTED",
+  "windowsLauncherExecution": "NOT_EXECUTED",
+  "guiVisual": "NOT_EXECUTED",
+  "testLog": "project-regression-tests-alpha10.log",
+  "portableSmokeReport": "project-portable-smoke.json",
+  "architectureCoverageReport": "project-architecture-coverage.json"
+}

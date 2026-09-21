@@ -1,0 +1,1 @@
+{"name":"simple_EScoreValueType","kind":"simple","fields":[],"enumValues":["Fixed","Integer","Time"],"facets":[],"base":"xs:string"}

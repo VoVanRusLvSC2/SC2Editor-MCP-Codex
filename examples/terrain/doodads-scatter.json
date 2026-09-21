@@ -1,0 +1,13 @@
+{
+  "terrainDirectory": "",
+  "area": { "type": "rectangle", "minX": 4, "minY": 4, "maxX": 28, "maxY": 28 },
+  "objects": [{ "id": "AgriaTree", "weight": 3 }, { "id": "CharDuneRock", "weight": 1 }],
+  "count": 60,
+  "seed": 42,
+  "minimumDistance": 1.5,
+  "maxSlope": 0.4,
+  "avoidExisting": true,
+  "avoidWater": true,
+  "avoidProtected": true,
+  "scaleRange": { "min": 0.85, "max": 1.15 }
+}

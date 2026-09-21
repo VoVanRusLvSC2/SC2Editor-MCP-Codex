@@ -1,0 +1,1 @@
+{"name":"simple_ETextureExpressionOp","kind":"simple","fields":[],"enumValues":["BestMatch","ExcludeHasAll","ExcludeHasAny","ExcludeMovies","ExcludeRangeSiblings","IGNORE","Innate","RequireAll","RequireAny"],"facets":[],"base":"xs:string"}

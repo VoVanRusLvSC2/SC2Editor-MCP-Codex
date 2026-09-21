@@ -1,0 +1,1 @@
+{"name":"simple_EAbilQueueFlag","kind":"simple","fields":[],"enumValues":["BestUnit","Hidden","NotifyAddOn","Passive"],"facets":[],"base":"xs:string"}

@@ -1,0 +1,1 @@
+{"name":"SActorTermTextureUpdateSlot","kind":"complex","fields":[{"kind":"attribute","name":"Slot","type":"simple_CTextureSlot"},{"kind":"element","name":"Slot","type":"CTextureSlot","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

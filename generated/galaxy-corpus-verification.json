@@ -1,0 +1,51 @@
+{
+  "version": "1.1.0-alpha.16",
+  "status": "PASS",
+  "scope": "Lexical/structural parsing and unchanged source only; no compiler/runtime equivalence claim",
+  "items": [
+    {
+      "file": "/workspace/scratch/d86e509a81bb/archive-final-alpha12/Ant_Colonies_SC2Map/components/MapScript.galaxy",
+      "bytes": 384593,
+      "sha256": "b897ea32bc52b1b259f1430c5aa0e6615207aaeedf61b5ec3ed85ae53e298ee0",
+      "symbols": 609,
+      "calls": 4269,
+      "includes": 1,
+      "diagnostics": [],
+      "unchangedExact": true,
+      "milliseconds": 30.288954999999987
+    },
+    {
+      "file": "/workspace/scratch/d86e509a81bb/archive-final-alpha12/City_of_Tempest_KSP_Production_SC2Map/components/MapScript.galaxy",
+      "bytes": 1080621,
+      "sha256": "3114998bd7f3649b87a04096eefb6d4379547348c16ddf3517178698055b1376",
+      "symbols": 1399,
+      "calls": 15623,
+      "includes": 3,
+      "diagnostics": [],
+      "unchangedExact": true,
+      "milliseconds": 85.083459
+    },
+    {
+      "file": "/workspace/scratch/d86e509a81bb/archive-final-alpha12/Nydus_Conspiracy__3__SC2Map/components/MapScript.galaxy",
+      "bytes": 16851,
+      "sha256": "cf9c37a0fd4cd5ed6d4f7526963cecafd98ffd18bcf93b2da85e28775628289f",
+      "symbols": 15,
+      "calls": 95,
+      "includes": 3,
+      "diagnostics": [],
+      "unchangedExact": true,
+      "milliseconds": 1.4922859999999787
+    },
+    {
+      "file": "/workspace/scratch/d86e509a81bb/archive-final-alpha12/WarshipsTakeoverMerge_SC2Map/components/MapScript.galaxy",
+      "bytes": 2029504,
+      "sha256": "02cff570cdfdc8788ffce735df0b9589cba08c4ca63ea93649d162762e9f5130",
+      "symbols": 1791,
+      "calls": 23745,
+      "includes": 2,
+      "diagnostics": [],
+      "unchangedExact": true,
+      "milliseconds": 110.79186899999996
+    }
+  ]
+}

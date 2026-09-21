@@ -1,0 +1,1 @@
+{"name":"simple_ENotifyAreaFlag","kind":"simple","fields":[],"enumValues":["HelpFriend","HurtEnemy","HurtFriend","MajorDanger","MinorDanger","OnlyWorkers"],"facets":[],"base":"xs:string"}

@@ -1,0 +1,1 @@
+{"name":"simple_EAMArcTestType","kind":"simple","fields":[],"enumValues":["Absolute","FallbackToClosestOnArc","Preference"],"facets":[],"base":"xs:string"}

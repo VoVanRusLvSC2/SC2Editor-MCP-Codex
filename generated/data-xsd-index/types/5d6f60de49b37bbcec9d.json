@@ -1,0 +1,1 @@
+{"name":"simple_EUIColorRelation","kind":"simple","fields":[],"enumValues":["Ally","DefaultNeutral","Enemy","Owner","TeamChaos","TeamHostile","TeamOrder"],"facets":[],"base":"xs:string"}

@@ -1,0 +1,1 @@
+{"name":"SActorTermTaunt","kind":"complex","fields":[{"kind":"attribute","name":"Taunt","type":"simple_EUnitTaunt"},{"kind":"element","name":"Taunt","type":"EUnitTaunt","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

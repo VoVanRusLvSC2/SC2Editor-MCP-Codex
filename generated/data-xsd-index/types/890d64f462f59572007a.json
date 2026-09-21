@@ -1,0 +1,1 @@
+{"name":"SActorTermPropertyCurveName","kind":"complex","fields":[{"kind":"attribute","name":"Name","type":"simple_CCurveNameKey"},{"kind":"element","name":"Name","type":"CCurveNameKey","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

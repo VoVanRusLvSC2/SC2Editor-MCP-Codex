@@ -1,0 +1,1 @@
+{"name":"simple_EListWalkMode","kind":"simple","fields":[],"enumValues":["Random","RandomNoRepeat","Shuffle"],"facets":[],"base":"xs:string"}

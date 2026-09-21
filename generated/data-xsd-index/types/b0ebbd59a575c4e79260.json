@@ -1,0 +1,1 @@
+{"name":"simple_EEffectMissileSearch","kind":"simple","fields":[],"enumValues":["ArriveOnSearchHit","DynamicSearchArea"],"facets":[],"base":"xs:string"}

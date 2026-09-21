@@ -1,0 +1,1 @@
+{"name":"simple_EAttackModifierStage","kind":"simple","fields":[],"enumValues":["Applied","Fired","Idle","Init","Waiting"],"facets":[],"base":"xs:string"}

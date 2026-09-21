@@ -1,0 +1,1 @@
+{"name":"SActorMsgCameraSetActive","kind":"complex","fields":[{"kind":"attribute","name":"Active","type":"simple_bool"},{"kind":"element","name":"Active","type":"bool","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

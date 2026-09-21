@@ -1,0 +1,1 @@
+{"name":"simple_EAMFilterLogic","kind":"simple","fields":[],"enumValues":["AND","FullMatch","NAND","OR","XOR"],"facets":[],"base":"xs:string"}

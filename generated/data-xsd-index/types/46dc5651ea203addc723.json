@@ -1,0 +1,1 @@
+{"name":"simple_EActorHostSiteOpsRemoveDelay","kind":"simple","fields":[],"enumValues":["Delay","Immediate"],"facets":[],"base":"xs:string"}

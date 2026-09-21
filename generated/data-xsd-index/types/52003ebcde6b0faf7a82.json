@@ -1,0 +1,1 @@
+{"name":"simple_EConversationStateInfo","kind":"simple","fields":[],"enumValues":["AbilCmd","Model","Text","Upgrade","Value"],"facets":[],"base":"xs:string"}

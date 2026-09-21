@@ -1,0 +1,1 @@
+{"name":"SActorMsgAttachSetRotation","kind":"complex","fields":[{"kind":"attribute","name":"Rotation","type":"simple_CRotation"},{"kind":"element","name":"Rotation","type":"CRotation","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

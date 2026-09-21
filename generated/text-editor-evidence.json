@@ -1,0 +1,51 @@
+{
+  "editorBuild": "5.0.16.97563",
+  "sha256": "9cab25db2b7dcfaaad207978b4eac07ec694f1f7cdbee4257d0db0845e14a164",
+  "readOnly": true,
+  "matchedPropertyTokens": [
+    "characterSpacing",
+    "disabledcolor",
+    "disabledglowcolor",
+    "font",
+    "fontflags",
+    "glowMode",
+    "glowcolor",
+    "hJustify",
+    "height",
+    "highlightcolor",
+    "highlightglowcolor",
+    "hjustify",
+    "hotkeycolor",
+    "hyperlinkcolor",
+    "lineSpacing",
+    "linespacing",
+    "name",
+    "outlinecolor",
+    "outlinewidth",
+    "requiredtoload",
+    "shadowoffset",
+    "styleflags",
+    "template",
+    "textColor",
+    "textcolor",
+    "vJustify",
+    "vjustify"
+  ],
+  "matchedTypeTokens": [
+    "StyleFile",
+    "Style",
+    "FontGroup",
+    "CodepointRange",
+    "CFontStylePath",
+    "FontStyleFileArray",
+    "CCutsceneNodeText"
+  ],
+  "textErrorTokens": [
+    "InvalidStyleAttribute",
+    "InvalidStyleAttributeValue",
+    "InvalidStyleFontFlag",
+    "InvalidStyleFlag",
+    "StyleInfiniteRecursion",
+    "InlineStyleNotFound"
+  ]
+}

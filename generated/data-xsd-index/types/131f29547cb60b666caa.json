@@ -1,0 +1,1 @@
+{"name":"SActorMsgDestroy","kind":"complex","fields":[{"kind":"attribute","name":"Type","type":"simple_EActorDestroyType"},{"kind":"element","name":"Type","type":"EActorDestroyType","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}

@@ -1,0 +1,1 @@
+{"name":"simple_EAbilAttackStage","kind":"simple","fields":[],"enumValues":["Approach","Attack","Loiter"],"facets":[],"base":"xs:string"}

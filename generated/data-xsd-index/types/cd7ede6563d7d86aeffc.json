@@ -1,0 +1,1 @@
+{"name":"simple_EMapKind","kind":"simple","fields":[],"enumValues":["Mission","Story","Upgrade"],"facets":[],"base":"xs:string"}

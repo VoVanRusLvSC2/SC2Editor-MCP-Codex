@@ -1,0 +1,1 @@
+{"name":"SActorCloakState","kind":"complex","fields":[{"kind":"attribute","name":"Enter","type":"simple_CAnimProps"},{"kind":"attribute","name":"Loop","type":"simple_CAnimProps"},{"kind":"element","name":"Enter","type":"CAnimProps","minOccurs":"0","maxOccurs":"1"},{"kind":"element","name":"Loop","type":"CAnimProps","minOccurs":"0","maxOccurs":"1"}],"enumValues":[],"facets":[]}
