@@ -1,4 +1,5 @@
 import { ScriptWorkspace } from "../modules/script/workspace.js";
+import { TriggerWorkspace } from "../modules/trigger/workspace.js";
 import { Workspace } from "../core/workspace.js";
 import { SchemaRegistry } from "../schema/schemaRegistry.js";
 import { CutsceneSchemaRegistry } from "../modules/cutscene/schemaRegistry.js";
@@ -30,6 +31,7 @@ export async function createProject(root: string) {
   const text = new TextWorkspace(workspace, textSchema);
   const cutscene = new CutsceneWorkspace(workspace, cutsceneSchema), cutsceneAssets = new CutsceneAssetIndex(workspace.root);
   const script = new ScriptWorkspace(workspace);
-  return { script, workspace, schema, data, browse, placement, terrain, map, ai, text, cutscene, cutsceneSchema, cutsceneAssets };
+  const trigger = new TriggerWorkspace(workspace);
+  return { script, trigger, workspace, schema, data, browse, placement, terrain, map, ai, text, cutscene, cutsceneSchema, cutsceneAssets };
 }
 export type Project = Awaited<ReturnType<typeof createProject>>;

@@ -1,5 +1,6 @@
 import { projectPreflight } from "./preflight.js";
 import { registerScriptTools } from "../modules/script/tools.js";
+import { registerTriggerTools } from "../modules/trigger/tools.js";
 import { createUiServer } from "../mcp/uiServer.js";
 import type { Project } from "./project.js";
 import * as z from "zod/v4";
@@ -20,6 +21,7 @@ export function createProjectServer(project: Project) {
     enabled("terrain") ? { workspace: project.terrain } : undefined);
   if (enabled("map")) registerMapTools(server,project.map);
   if (enabled("script")) registerScriptTools(server,project.script);
+  if (enabled("script")) registerTriggerTools(server,project.trigger);
   server.registerTool("modkit.capabilities", {
     description: "Compact public entry point: report enabled SC2 authoring modules and restart profiles before selecting module-specific tools.",
     inputSchema: z.object({}).strict(),

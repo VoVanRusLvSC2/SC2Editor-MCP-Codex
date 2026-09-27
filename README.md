@@ -254,7 +254,7 @@ Terrain alpha.14: lighting preset assignment, ambient/HDR and Key/Fill/Back dire
 
 ## Galaxy scripts — alpha.16
 
-`script.*` is a separate top-level module in the existing composition root. It never edits GUI Triggers. Commands: inspect, symbols, references, context, validate, plan, apply, connect, recipe, save, discard.
+`script.*` edits Galaxy only. Commands: inspect, symbols, references, context, validate, plan, apply, connect, recipe, save, discard. The same `script`, `authoring`, and `all` profiles now expose `trigger.*` for focused GUI Trigger inspection and event/action graph grafts that preserve existing categories and IDs. See [GUI Triggers MCP guide](docs/TRIGGER_MCP_RU.md).
 
 Use `script.context` to request one function plus dependency signatures with a strict serialized character budget. Symbol queries paginate. Parsing caches unchanged files (128 entries/32 MiB source text); plans are limited to 8 and 128 MiB of accounted source text.
 

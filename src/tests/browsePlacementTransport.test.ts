@@ -61,7 +61,8 @@ test("the existing stdio MCP launcher lists and executes browse/placement alongs
     child.stdin.write(JSON.stringify({ jsonrpc: "2.0", method: "notifications/initialized" }) + "\n");
     const listed = await call("tools/list", {}); const names = listed.tools.map((tool: { name: string }) => tool.name);
     for (const name of ["terrain.water.inspect", "terrain.water.plan", "terrain.inspect", "terrain.plan", "terrain.generate", "terrain.apply", "ai.context", "ai.query", "ai.describe_type", "ai.apply", "ai.validate", "browse.search", "browse.resolve", "placement.createLocation", "placement.apply", "data.apply", "text.apply", "cutscene.apply", "ui.apply"]) assert.ok(names.includes(name), name);
-    assert.equal(names.some((name: string) => /^trigger\./.test(name)), false);
+    assert.ok(names.includes('trigger.inspect'));
+    assert.ok(names.includes('trigger.graft'));
     const terrainInspect = await call("tools/call", { name: "terrain.inspect", arguments: {} });
     assert.deepEqual(JSON.parse(terrainInspect.content[0].text).dimensions.vertices, [33, 33]);
     const waterRead = await call("tools/call",{name:"terrain.water.inspect",arguments:{}});
