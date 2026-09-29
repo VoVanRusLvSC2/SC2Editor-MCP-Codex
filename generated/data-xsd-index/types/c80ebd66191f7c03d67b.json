@@ -1,1 +1,1 @@
-{"name":"ERequirement","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_ERequirement"}],"enumValues":[],"facets":[]}
+{"name":"ERequirement","schemaSpan":{"start":1589725,"end":1589838},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1589764,"end":1589819},"namespace":"","name":"value","type":"simple_ERequirement","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

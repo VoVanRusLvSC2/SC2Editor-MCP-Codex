@@ -1,1 +1,1 @@
-{"name":"EEditorTextType","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EEditorTextType"}],"enumValues":[],"facets":[]}
+{"name":"EEditorTextType","schemaSpan":{"start":1326785,"end":1326904},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1326827,"end":1326885},"namespace":"","name":"value","type":"simple_EEditorTextType","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

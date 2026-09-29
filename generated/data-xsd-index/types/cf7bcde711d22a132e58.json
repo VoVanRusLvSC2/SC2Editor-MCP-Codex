@@ -1,1 +1,1 @@
-{"name":"simple_ETeamColor","kind":"simple","fields":[],"enumValues":["Attacked","Diffuse","Emissive","Selected"],"facets":[],"base":"xs:string"}
+{"name":"simple_ETeamColor","schemaSpan":{"start":286743,"end":287555},"namespace":"","kind":"simple","fields":[],"enumValues":["Attacked","Diffuse","Emissive","Selected"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

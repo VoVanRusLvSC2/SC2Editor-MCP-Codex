@@ -1,1 +1,1 @@
-{"name":"simple_ESerpentFlag","kind":"simple","fields":[],"enumValues":["UseAttachDistances"],"facets":[],"base":"xs:string"}
+{"name":"simple_ESerpentFlag","schemaSpan":{"start":1670904,"end":1671649},"namespace":"","kind":"simple","fields":[],"enumValues":["UseAttachDistances"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

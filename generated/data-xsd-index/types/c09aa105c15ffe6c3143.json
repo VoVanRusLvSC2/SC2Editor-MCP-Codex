@@ -1,1 +1,1 @@
-{"name":"EHeroImageFacing","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EHeroImageFacing"}],"enumValues":[],"facets":[]}
+{"name":"EHeroImageFacing","schemaSpan":{"start":413671,"end":413792},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":413714,"end":413773},"namespace":"","name":"value","type":"simple_EHeroImageFacing","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

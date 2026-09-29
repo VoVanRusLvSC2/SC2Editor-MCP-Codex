@@ -1,1 +1,1 @@
-{"name":"ECommanderTalentType","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_ECommanderTalentType"}],"enumValues":[],"facets":[]}
+{"name":"ECommanderTalentType","schemaSpan":{"start":212569,"end":212698},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":212616,"end":212679},"namespace":"","name":"value","type":"simple_ECommanderTalentType","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

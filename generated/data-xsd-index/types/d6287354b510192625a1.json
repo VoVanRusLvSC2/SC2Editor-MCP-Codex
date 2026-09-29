@@ -1,1 +1,1 @@
-{"name":"EUserType","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EUserType"}],"enumValues":[],"facets":[]}
+{"name":"EUserType","schemaSpan":{"start":585752,"end":585859},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":585788,"end":585840},"namespace":"","name":"value","type":"simple_EUserType","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

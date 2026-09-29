@@ -1,1 +1,1 @@
-{"name":"simple_EArmyUpgradeState","kind":"simple","fields":[],"enumValues":["Disabled","Locked","Purchased","Unlocked"],"facets":[],"base":"xs:string"}
+{"name":"simple_EArmyUpgradeState","schemaSpan":{"start":186730,"end":187548},"namespace":"","kind":"simple","fields":[],"enumValues":["Disabled","Locked","Purchased","Unlocked"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

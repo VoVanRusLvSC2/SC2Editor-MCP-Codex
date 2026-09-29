@@ -1,1 +1,1 @@
-{"name":"EActorHostSiteOpsRemoveDelay","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EActorHostSiteOpsRemoveDelay"}],"enumValues":[],"facets":[]}
+{"name":"EActorHostSiteOpsRemoveDelay","schemaSpan":{"start":745891,"end":746036},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":745946,"end":746017},"namespace":"","name":"value","type":"simple_EActorHostSiteOpsRemoveDelay","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

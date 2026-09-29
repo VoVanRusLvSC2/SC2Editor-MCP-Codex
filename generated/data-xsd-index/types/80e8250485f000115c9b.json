@@ -1,1 +1,1 @@
-{"name":"EAbilMergeFlag","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EAbilMergeFlag"}],"enumValues":[],"facets":[]}
+{"name":"EAbilMergeFlag","schemaSpan":{"start":663131,"end":663248},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":663172,"end":663229},"namespace":"","name":"value","type":"simple_EAbilMergeFlag","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

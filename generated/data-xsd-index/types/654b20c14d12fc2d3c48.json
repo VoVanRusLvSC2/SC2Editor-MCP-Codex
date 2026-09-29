@@ -1,1 +1,1 @@
-{"name":"EClassIdCArmyUpgrade","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EClassIdCArmyUpgrade"}],"enumValues":[],"facets":[]}
+{"name":"EClassIdCArmyUpgrade","schemaSpan":{"start":186165,"end":186294},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":186212,"end":186275},"namespace":"","name":"value","type":"simple_EClassIdCArmyUpgrade","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

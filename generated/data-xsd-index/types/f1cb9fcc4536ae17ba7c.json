@@ -1,1 +1,1 @@
-{"name":"ETechCategory","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_ETechCategory"}],"enumValues":[],"facets":[]}
+{"name":"ETechCategory","schemaSpan":{"start":287557,"end":287672},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":287597,"end":287653},"namespace":"","name":"value","type":"simple_ETechCategory","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

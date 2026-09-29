@@ -1,1 +1,1 @@
-{"name":"simple_EActorTextOption","kind":"simple","fields":[],"enumValues":["ConformToTerrain","UseTerrainHeight","UseWalkableHeight"],"facets":[],"base":"xs:string"}
+{"name":"simple_EActorTextOption","schemaSpan":{"start":1028665,"end":1029549},"namespace":"","kind":"simple","fields":[],"enumValues":["ConformToTerrain","UseTerrainHeight","UseWalkableHeight"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

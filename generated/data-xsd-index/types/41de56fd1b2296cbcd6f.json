@@ -1,1 +1,1 @@
-{"name":"EFlagOperation","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EFlagOperation"}],"enumValues":[],"facets":[]}
+{"name":"EFlagOperation","schemaSpan":{"start":235587,"end":235704},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":235628,"end":235685},"namespace":"","name":"value","type":"simple_EFlagOperation","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

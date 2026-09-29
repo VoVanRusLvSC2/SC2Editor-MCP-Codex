@@ -1,1 +1,1 @@
-{"name":"TVoiceOverGroupId","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_TVoiceOverGroupId"}],"enumValues":[],"facets":[]}
+{"name":"TVoiceOverGroupId","schemaSpan":{"start":22772,"end":22895},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":22816,"end":22876},"namespace":"","name":"value","type":"simple_TVoiceOverGroupId","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

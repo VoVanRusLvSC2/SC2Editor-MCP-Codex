@@ -1,1 +1,1 @@
-{"name":"simple_ECameraSave","kind":"simple","fields":[],"enumValues":["0","1","2","3","4","5","6","7"],"facets":[],"base":"xs:string"}
+{"name":"simple_ECameraSave","schemaSpan":{"start":1222050,"end":1223549},"namespace":"","kind":"simple","fields":[],"enumValues":["0","1","2","3","4","5","6","7"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

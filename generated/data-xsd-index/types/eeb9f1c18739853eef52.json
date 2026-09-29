@@ -1,1 +1,1 @@
-{"name":"EPlane","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EPlane"}],"enumValues":[],"facets":[]}
+{"name":"EPlane","schemaSpan":{"start":250240,"end":250341},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":250273,"end":250322},"namespace":"","name":"value","type":"simple_EPlane","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

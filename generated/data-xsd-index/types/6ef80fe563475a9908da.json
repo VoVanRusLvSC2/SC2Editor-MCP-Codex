@@ -1,1 +1,1 @@
-{"name":"ESerpentFlag","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_ESerpentFlag"}],"enumValues":[],"facets":[]}
+{"name":"ESerpentFlag","schemaSpan":{"start":1670789,"end":1670902},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1670828,"end":1670883},"namespace":"","name":"value","type":"simple_ESerpentFlag","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

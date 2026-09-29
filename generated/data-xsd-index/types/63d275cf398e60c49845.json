@@ -1,1 +1,1 @@
-{"name":"CRotation","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CRotation"}],"enumValues":[],"facets":[]}
+{"name":"CRotation","schemaSpan":{"start":33303,"end":33410},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":33339,"end":33391},"namespace":"","name":"value","type":"simple_CRotation","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

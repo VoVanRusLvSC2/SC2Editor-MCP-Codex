@@ -1,1 +1,1 @@
-{"name":"EActorCombatRevealDurationType","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EActorCombatRevealDurationType"}],"enumValues":[],"facets":[]}
+{"name":"EActorCombatRevealDurationType","schemaSpan":{"start":718901,"end":719050},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":718958,"end":719031},"namespace":"","name":"value","type":"simple_EActorCombatRevealDurationType","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

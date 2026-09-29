@@ -1,1 +1,1 @@
-{"name":"EAbilArmMagazineEffect","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EAbilArmMagazineEffect"}],"enumValues":[],"facets":[]}
+{"name":"EAbilArmMagazineEffect","schemaSpan":{"start":626583,"end":626716},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":626632,"end":626697},"namespace":"","name":"value","type":"simple_EAbilArmMagazineEffect","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

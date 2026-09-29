@@ -1,1 +1,1 @@
-{"name":"simple_EOcclusion","kind":"simple","fields":[],"enumValues":["Hide","None","Show"],"facets":[],"base":"xs:string"}
+{"name":"simple_EOcclusion","schemaSpan":{"start":1552540,"end":1553155},"namespace":"","kind":"simple","fields":[],"enumValues":["Hide","None","Show"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Catalog>
+    <CEffectDamage id="HardeningDamage">
+        <Amount value="1"/>
+    </CEffectDamage>
+    <CEffectSet id="HardeningSet">
+        <EffectArray value="HardeningDamage"/>
+    </CEffectSet>
+    <CEffectDamage id="ScenarioBFirst">
+        <Amount value="4"/>
+        <ImpactUnitValidator value="ScenarioBTargetGate"/>
+    </CEffectDamage>
+    <CEffectDamage id="ScenarioBSecond">
+        <Amount value="7"/>
+    </CEffectDamage>
+    <CEffectSet id="ScenarioBSet">
+        <EffectArray index="0" value="ScenarioBFirst"/>
+        <EffectArray index="1" value="ScenarioBSecond"/>
+        <ValidatorArray index="0" value="ScenarioBTargetGate"/>
+    </CEffectSet>
+</Catalog>

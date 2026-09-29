@@ -1,1 +1,1 @@
-{"name":"EActorPropertyCurveTangentType","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EActorPropertyCurveTangentType"}],"enumValues":[],"facets":[]}
+{"name":"EActorPropertyCurveTangentType","schemaSpan":{"start":938555,"end":938704},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":938612,"end":938685},"namespace":"","name":"value","type":"simple_EActorPropertyCurveTangentType","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

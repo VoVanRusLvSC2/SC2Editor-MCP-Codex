@@ -1,1 +1,1 @@
-{"name":"EMotionRotationActorType","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EMotionRotationActorType"}],"enumValues":[],"facets":[]}
+{"name":"EMotionRotationActorType","schemaSpan":{"start":1543381,"end":1543518},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1543432,"end":1543499},"namespace":"","name":"value","type":"simple_EMotionRotationActorType","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

@@ -1,1 +1,1 @@
-{"name":"simple_EAnimMatchType","kind":"simple","fields":[],"enumValues":["Best","Full","NoMismatchQueryProps"],"facets":[],"base":"xs:string"}
+{"name":"simple_EAnimMatchType","schemaSpan":{"start":1064255,"end":1065904},"namespace":"","kind":"simple","fields":[],"enumValues":["Best","Full","NoMismatchQueryProps"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

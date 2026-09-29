@@ -1,1 +1,1 @@
-{"name":"CTacCooldownLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CTacCooldownLink"}],"enumValues":[],"facets":[]}
+{"name":"CTacCooldownLink","schemaSpan":{"start":61642,"end":61763},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":61685,"end":61744},"namespace":"","name":"value","type":"simple_CTacCooldownLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

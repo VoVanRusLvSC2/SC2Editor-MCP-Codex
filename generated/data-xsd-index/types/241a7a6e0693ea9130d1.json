@@ -1,1 +1,1 @@
-{"name":"simple_EClassIdCRace","kind":"simple","fields":[],"enumValues":["CRace"],"facets":[],"base":"xs:string"}
+{"name":"simple_EClassIdCRace","schemaSpan":{"start":494547,"end":494835},"namespace":"","kind":"simple","fields":[],"enumValues":["CRace"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

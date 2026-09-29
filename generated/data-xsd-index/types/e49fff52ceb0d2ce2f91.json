@@ -1,1 +1,1 @@
-{"name":"TCooldownLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_TCooldownLink"}],"enumValues":[],"facets":[]}
+{"name":"TCooldownLink","schemaSpan":{"start":19918,"end":20033},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":19958,"end":20014},"namespace":"","name":"value","type":"simple_TCooldownLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

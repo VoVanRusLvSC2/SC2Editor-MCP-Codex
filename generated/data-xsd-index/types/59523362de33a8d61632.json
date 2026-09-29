@@ -1,1 +1,1 @@
-{"name":"simple_EActorDestroyType","kind":"simple","fields":[],"enumValues":["Immediate","Normal","WhenReady"],"facets":[],"base":"xs:string"}
+{"name":"simple_EActorDestroyType","schemaSpan":{"start":722444,"end":723658},"namespace":"","kind":"simple","fields":[],"enumValues":["Immediate","Normal","WhenReady"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

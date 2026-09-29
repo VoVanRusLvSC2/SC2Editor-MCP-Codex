@@ -1,1 +1,1 @@
-{"name":"ERankDisplay","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_ERankDisplay"}],"enumValues":[],"facets":[]}
+{"name":"ERankDisplay","schemaSpan":{"start":1588979,"end":1589092},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1589018,"end":1589073},"namespace":"","name":"value","type":"simple_ERankDisplay","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

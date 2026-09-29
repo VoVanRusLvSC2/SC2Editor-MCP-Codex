@@ -1,1 +1,1 @@
-{"name":"CYawPitchRoll","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CYawPitchRoll"}],"enumValues":[],"facets":[]}
+{"name":"CYawPitchRoll","schemaSpan":{"start":37046,"end":37161},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":37086,"end":37142},"namespace":"","name":"value","type":"simple_CYawPitchRoll","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

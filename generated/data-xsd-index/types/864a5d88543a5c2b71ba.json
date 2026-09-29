@@ -1,1 +1,1 @@
-{"name":"TFootprintBorders","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_TFootprintBorders"}],"enumValues":[],"facets":[]}
+{"name":"TFootprintBorders","schemaSpan":{"start":38469,"end":38592},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":38513,"end":38573},"namespace":"","name":"value","type":"simple_TFootprintBorders","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

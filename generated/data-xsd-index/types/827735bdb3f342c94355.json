@@ -1,1 +1,1 @@
-{"name":"simple_CRefKey","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string"}
+{"name":"simple_CRefKey","schemaSpan":{"start":14746,"end":14838},"namespace":"","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

@@ -1,1 +1,1 @@
-{"name":"CFangleRate","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CFangleRate"}],"enumValues":[],"facets":[]}
+{"name":"CFangleRate","schemaSpan":{"start":30768,"end":30879},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":30806,"end":30860},"namespace":"","name":"value","type":"simple_CFangleRate","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

@@ -1,1 +1,1 @@
-{"name":"ECursorRangeMode","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_ECursorRangeMode"}],"enumValues":[],"facets":[]}
+{"name":"ECursorRangeMode","schemaSpan":{"start":1304024,"end":1304145},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1304067,"end":1304126},"namespace":"","name":"value","type":"simple_ECursorRangeMode","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

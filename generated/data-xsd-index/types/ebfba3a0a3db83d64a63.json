@@ -1,1 +1,1 @@
-{"name":"EOcclusion","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EOcclusion"}],"enumValues":[],"facets":[]}
+{"name":"EOcclusion","schemaSpan":{"start":1552429,"end":1552538},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1552466,"end":1552519},"namespace":"","name":"value","type":"simple_EOcclusion","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

@@ -1,1 +1,1 @@
-{"name":"simple_ECooldownOperation","kind":"simple","fields":[],"enumValues":["Add","Default","Max","Min","Multiply","Set"],"facets":[],"base":"xs:string"}
+{"name":"simple_ECooldownOperation","schemaSpan":{"start":275528,"end":276673},"namespace":"","kind":"simple","fields":[],"enumValues":["Add","Default","Max","Min","Multiply","Set"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

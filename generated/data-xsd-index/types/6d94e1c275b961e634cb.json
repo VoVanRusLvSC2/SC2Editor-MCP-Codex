@@ -1,1 +1,1 @@
-{"name":"TTechAlias","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_TTechAlias"}],"enumValues":[],"facets":[]}
+{"name":"TTechAlias","schemaSpan":{"start":21440,"end":21549},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":21477,"end":21530},"namespace":"","name":"value","type":"simple_TTechAlias","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

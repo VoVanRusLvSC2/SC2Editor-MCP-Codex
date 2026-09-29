@@ -1,1 +1,1 @@
-{"name":"simple_TPlayerId","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:int"}
+{"name":"simple_TPlayerId","schemaSpan":{"start":5690,"end":5781},"namespace":"","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:int","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

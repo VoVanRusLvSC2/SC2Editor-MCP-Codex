@@ -1,1 +1,1 @@
-{"name":"EAMFilterAttachType","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EAMFilterAttachType"}],"enumValues":[],"facets":[]}
+{"name":"EAMFilterAttachType","schemaSpan":{"start":617720,"end":617847},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":617766,"end":617828},"namespace":"","name":"value","type":"simple_EAMFilterAttachType","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

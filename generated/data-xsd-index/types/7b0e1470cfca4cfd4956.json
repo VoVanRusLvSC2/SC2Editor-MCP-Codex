@@ -1,1 +1,1 @@
-{"name":"CHerdNode","kind":"complex","fields":[],"enumValues":[],"facets":[],"base":"CBase"}
+{"name":"CHerdNode","schemaSpan":{"start":5557491,"end":5557691},"namespace":"","kind":"complex","fields":[],"enumValues":[],"facets":[],"base":"CBase","baseNamespace":"","derivation":"extension"}

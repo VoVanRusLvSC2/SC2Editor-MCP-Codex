@@ -1,1 +1,1 @@
-{"name":"EAbilAttackFlag","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EAbilAttackFlag"}],"enumValues":[],"facets":[]}
+{"name":"EAbilAttackFlag","schemaSpan":{"start":632576,"end":632695},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":632618,"end":632676},"namespace":"","name":"value","type":"simple_EAbilAttackFlag","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

@@ -1,1 +1,1 @@
-{"name":"EModelQuality","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EModelQuality"}],"enumValues":[],"facets":[]}
+{"name":"EModelQuality","schemaSpan":{"start":1533786,"end":1533901},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1533826,"end":1533882},"namespace":"","name":"value","type":"simple_EModelQuality","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

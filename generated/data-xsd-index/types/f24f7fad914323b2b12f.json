@@ -1,1 +1,1 @@
-{"name":"simple_EAbilMorphPhase","kind":"simple","fields":[],"enumValues":["Delay","Duration"],"facets":[],"base":"xs:string"}
+{"name":"simple_EAbilMorphPhase","schemaSpan":{"start":670464,"end":670927},"namespace":"","kind":"simple","fields":[],"enumValues":["Delay","Duration"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

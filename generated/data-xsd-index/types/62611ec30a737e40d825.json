@@ -1,1 +1,1 @@
-{"name":"simple_EClassIdCItemClass","kind":"simple","fields":[],"enumValues":["CItemClass"],"facets":[],"base":"xs:string"}
+{"name":"simple_EClassIdCItemClass","schemaSpan":{"start":419172,"end":419470},"namespace":"","kind":"simple","fields":[],"enumValues":["CItemClass"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

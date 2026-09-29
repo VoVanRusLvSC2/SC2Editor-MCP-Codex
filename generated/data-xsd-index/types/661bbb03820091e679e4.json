@@ -1,1 +1,1 @@
-{"name":"TSoundBalance","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_TSoundBalance"}],"enumValues":[],"facets":[]}
+{"name":"TSoundBalance","schemaSpan":{"start":2063,"end":2178},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":2103,"end":2159},"namespace":"","name":"value","type":"simple_TSoundBalance","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

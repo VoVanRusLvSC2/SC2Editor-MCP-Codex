@@ -1,1 +1,1 @@
-{"name":"EActorTerrainDeformerFlag","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EActorTerrainDeformerFlag"}],"enumValues":[],"facets":[]}
+{"name":"EActorTerrainDeformerFlag","schemaSpan":{"start":1024101,"end":1024240},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1024153,"end":1024221},"namespace":"","name":"value","type":"simple_EActorTerrainDeformerFlag","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

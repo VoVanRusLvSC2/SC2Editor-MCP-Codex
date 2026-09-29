@@ -1,1 +1,1 @@
-{"name":"EFogVisibility","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EFogVisibility"}],"enumValues":[],"facets":[]}
+{"name":"EFogVisibility","schemaSpan":{"start":1360511,"end":1360628},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1360552,"end":1360609},"namespace":"","name":"value","type":"simple_EFogVisibility","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

@@ -1,1 +1,1 @@
-{"name":"EConjoinedFlag","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EConjoinedFlag"}],"enumValues":[],"facets":[]}
+{"name":"EConjoinedFlag","schemaSpan":{"start":1285369,"end":1285486},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1285410,"end":1285467},"namespace":"","name":"value","type":"simple_EConjoinedFlag","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

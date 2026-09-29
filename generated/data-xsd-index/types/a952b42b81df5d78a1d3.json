@@ -1,1 +1,1 @@
-{"name":"EActorRequestCreateSharing","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EActorRequestCreateSharing"}],"enumValues":[],"facets":[]}
+{"name":"EActorRequestCreateSharing","schemaSpan":{"start":958036,"end":958177},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":958089,"end":958158},"namespace":"","name":"value","type":"simple_EActorRequestCreateSharing","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

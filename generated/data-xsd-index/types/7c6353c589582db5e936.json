@@ -1,1 +1,1 @@
-{"name":"EClassIdCEmoticon","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EClassIdCEmoticon"}],"enumValues":[],"facets":[]}
+{"name":"EClassIdCEmoticon","schemaSpan":{"start":230556,"end":230679},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":230600,"end":230660},"namespace":"","name":"value","type":"simple_EClassIdCEmoticon","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

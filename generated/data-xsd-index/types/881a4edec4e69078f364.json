@@ -1,1 +1,1 @@
-{"name":"EValidateCombine","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EValidateCombine"}],"enumValues":[],"facets":[]}
+{"name":"EValidateCombine","schemaSpan":{"start":1787894,"end":1788015},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1787937,"end":1787996},"namespace":"","name":"value","type":"simple_EValidateCombine","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

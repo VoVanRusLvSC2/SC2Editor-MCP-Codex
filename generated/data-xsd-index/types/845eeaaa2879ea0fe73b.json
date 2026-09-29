@@ -1,1 +1,1 @@
-{"name":"simple_EConversationStateFlag","kind":"simple","fields":[],"enumValues":["AllowActions","AllowConditions","Sorted"],"facets":[],"base":"xs:string"}
+{"name":"simple_EConversationStateFlag","schemaSpan":{"start":1292644,"end":1293315},"namespace":"","kind":"simple","fields":[],"enumValues":["AllowActions","AllowConditions","Sorted"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

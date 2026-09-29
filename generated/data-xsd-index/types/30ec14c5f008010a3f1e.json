@@ -1,1 +1,1 @@
-{"name":"EMountVO","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EMountVO"}],"enumValues":[],"facets":[]}
+{"name":"EMountVO","schemaSpan":{"start":485172,"end":485277},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":485207,"end":485258},"namespace":"","name":"value","type":"simple_EMountVO","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

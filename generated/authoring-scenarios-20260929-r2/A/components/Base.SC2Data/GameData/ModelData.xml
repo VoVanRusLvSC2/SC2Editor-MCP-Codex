@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Catalog>
+    <CModel id="ScenarioAModel">
+        <Model value="Assets/Units/Terran/Marine/Marine.m3"/>
+    </CModel>
+</Catalog>

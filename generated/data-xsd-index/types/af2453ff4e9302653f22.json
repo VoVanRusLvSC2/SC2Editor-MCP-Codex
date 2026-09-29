@@ -1,1 +1,1 @@
-{"name":"EActorTiltType","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EActorTiltType"}],"enumValues":[],"facets":[]}
+{"name":"EActorTiltType","schemaSpan":{"start":1030303,"end":1030420},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1030344,"end":1030401},"namespace":"","name":"value","type":"simple_EActorTiltType","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

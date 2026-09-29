@@ -1,1 +1,1 @@
-{"name":"CHerdNodeLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CHerdNodeLink"}],"enumValues":[],"facets":[]}
+{"name":"CHerdNodeLink","schemaSpan":{"start":58559,"end":58674},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":58599,"end":58655},"namespace":"","name":"value","type":"simple_CHerdNodeLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

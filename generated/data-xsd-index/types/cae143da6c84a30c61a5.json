@@ -1,1 +1,1 @@
-{"name":"EAbilBuildStage","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EAbilBuildStage"}],"enumValues":[],"facets":[]}
+{"name":"EAbilBuildStage","schemaSpan":{"start":72983,"end":73102},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":73025,"end":73083},"namespace":"","name":"value","type":"simple_EAbilBuildStage","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

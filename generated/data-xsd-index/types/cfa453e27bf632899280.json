@@ -1,1 +1,1 @@
-{"name":"CBearings","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CBearings"}],"enumValues":[],"facets":[]}
+{"name":"CBearings","schemaSpan":{"start":28854,"end":28961},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":28890,"end":28942},"namespace":"","name":"value","type":"simple_CBearings","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

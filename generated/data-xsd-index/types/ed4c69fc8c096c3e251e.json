@@ -1,1 +1,1 @@
-{"name":"simple_EFootprintLayer","kind":"simple","fields":[],"enumValues":["Check","Pathing","Place"],"facets":[],"base":"xs:string"}
+{"name":"simple_EFootprintLayer","schemaSpan":{"start":1364699,"end":1365329},"namespace":"","kind":"simple","fields":[],"enumValues":["Check","Pathing","Place"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

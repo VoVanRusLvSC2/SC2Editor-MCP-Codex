@@ -1,1 +1,1 @@
-{"name":"CUserReference","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CUserReference"}],"enumValues":[],"facets":[]}
+{"name":"CUserReference","schemaSpan":{"start":35235,"end":35352},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":35276,"end":35333},"namespace":"","name":"value","type":"simple_CUserReference","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

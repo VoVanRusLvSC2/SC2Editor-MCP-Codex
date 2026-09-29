@@ -1,1 +1,1 @@
-{"name":"EAbilOrderDisplayType","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EAbilOrderDisplayType"}],"enumValues":[],"facets":[]}
+{"name":"EAbilOrderDisplayType","schemaSpan":{"start":672812,"end":672943},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":672860,"end":672924},"namespace":"","name":"value","type":"simple_EAbilOrderDisplayType","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

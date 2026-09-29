@@ -1,1 +1,1 @@
-{"name":"EActorThresholdTest","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EActorThresholdTest"}],"enumValues":[],"facets":[]}
+{"name":"EActorThresholdTest","schemaSpan":{"start":1029551,"end":1029678},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1029597,"end":1029659},"namespace":"","name":"value","type":"simple_EActorThresholdTest","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

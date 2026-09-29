@@ -1,1 +1,1 @@
-{"name":"simple_EHerdClosestTo","kind":"simple","fields":[],"enumValues":["Camera","Listener"],"facets":[],"base":"xs:string"}
+{"name":"simple_EHerdClosestTo","schemaSpan":{"start":1508118,"end":1508604},"namespace":"","kind":"simple","fields":[],"enumValues":["Camera","Listener"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

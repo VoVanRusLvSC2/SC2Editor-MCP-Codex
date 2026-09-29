@@ -1,1 +1,1 @@
-{"name":"CFootprintLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CFootprintLink"}],"enumValues":[],"facets":[]}
+{"name":"CFootprintLink","schemaSpan":{"start":41847,"end":41964},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":41888,"end":41945},"namespace":"","name":"value","type":"simple_CFootprintLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

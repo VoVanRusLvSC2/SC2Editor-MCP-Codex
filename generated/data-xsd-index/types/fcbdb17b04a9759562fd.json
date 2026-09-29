@@ -1,1 +1,1 @@
-{"name":"ESkillPoint","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_ESkillPoint"}],"enumValues":[],"facets":[]}
+{"name":"ESkillPoint","schemaSpan":{"start":1672985,"end":1673096},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1673023,"end":1673077},"namespace":"","name":"value","type":"simple_ESkillPoint","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

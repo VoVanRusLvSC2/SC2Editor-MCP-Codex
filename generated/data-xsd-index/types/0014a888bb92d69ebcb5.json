@@ -1,1 +1,1 @@
-{"name":"EMarkerMatch","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EMarkerMatch"}],"enumValues":[],"facets":[]}
+{"name":"EMarkerMatch","schemaSpan":{"start":248579,"end":248692},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":248618,"end":248673},"namespace":"","name":"value","type":"simple_EMarkerMatch","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

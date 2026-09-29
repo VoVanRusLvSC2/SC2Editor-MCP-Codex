@@ -1,1 +1,1 @@
-{"name":"EEffectHealerFlag","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EEffectHealerFlag"}],"enumValues":[],"facets":[]}
+{"name":"EEffectHealerFlag","schemaSpan":{"start":1332018,"end":1332141},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1332062,"end":1332122},"namespace":"","name":"value","type":"simple_EEffectHealerFlag","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

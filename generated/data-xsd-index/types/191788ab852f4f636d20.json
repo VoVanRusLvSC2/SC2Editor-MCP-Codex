@@ -1,1 +1,1 @@
-{"name":"EAbilInteractCmd","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EAbilInteractCmd"}],"enumValues":[],"facets":[]}
+{"name":"EAbilInteractCmd","schemaSpan":{"start":96535,"end":96656},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":96578,"end":96637},"namespace":"","name":"value","type":"simple_EAbilInteractCmd","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

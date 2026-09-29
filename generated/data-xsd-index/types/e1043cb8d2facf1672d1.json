@@ -1,1 +1,1 @@
-{"name":"simple_EAbilEffectInstantCmd","kind":"simple","fields":[],"enumValues":["Cancel","Execute"],"facets":[],"base":"xs:string"}
+{"name":"simple_EAbilEffectInstantCmd","schemaSpan":{"start":94708,"end":95177},"namespace":"","kind":"simple","fields":[],"enumValues":["Cancel","Execute"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

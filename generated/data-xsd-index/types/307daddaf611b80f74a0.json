@@ -1,1 +1,1 @@
-{"name":"CLabelExpression","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CLabelExpression"}],"enumValues":[],"facets":[]}
+{"name":"CLabelExpression","schemaSpan":{"start":39147,"end":39268},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":39190,"end":39249},"namespace":"","name":"value","type":"simple_CLabelExpression","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

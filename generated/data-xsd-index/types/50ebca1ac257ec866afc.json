@@ -1,1 +1,1 @@
-{"name":"CFourCC","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CFourCC"}],"enumValues":[],"facets":[]}
+{"name":"CFourCC","schemaSpan":{"start":23227,"end":23330},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":23261,"end":23311},"namespace":"","name":"value","type":"simple_CFourCC","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

@@ -1,1 +1,1 @@
-{"name":"EClassIdCWeapon","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EClassIdCWeapon"}],"enumValues":[],"facets":[]}
+{"name":"EClassIdCWeapon","schemaSpan":{"start":612696,"end":612815},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":612738,"end":612796},"namespace":"","name":"value","type":"simple_EClassIdCWeapon","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

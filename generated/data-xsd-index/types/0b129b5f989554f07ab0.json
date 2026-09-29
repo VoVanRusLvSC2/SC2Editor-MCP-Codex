@@ -1,1 +1,1 @@
-{"name":"simple_ESoundQualityFlag","kind":"simple","fields":[],"enumValues":["Herds"],"facets":[],"base":"xs:string"}
+{"name":"simple_ESoundQualityFlag","schemaSpan":{"start":1691018,"end":1691314},"namespace":"","kind":"simple","fields":[],"enumValues":["Herds"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

@@ -1,1 +1,1 @@
-{"name":"CEffectOffset","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CEffectOffset"}],"enumValues":[],"facets":[]}
+{"name":"CEffectOffset","schemaSpan":{"start":30316,"end":30431},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":30356,"end":30412},"namespace":"","name":"value","type":"simple_CEffectOffset","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

@@ -1,1 +1,1 @@
-{"name":"EHeroCutsceneSize","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EHeroCutsceneSize"}],"enumValues":[],"facets":[]}
+{"name":"EHeroCutsceneSize","schemaSpan":{"start":395744,"end":395867},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":395788,"end":395848},"namespace":"","name":"value","type":"simple_EHeroCutsceneSize","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

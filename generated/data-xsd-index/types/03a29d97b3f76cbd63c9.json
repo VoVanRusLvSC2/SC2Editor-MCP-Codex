@@ -1,1 +1,1 @@
-{"name":"ETextureSelectByUpdateLinkOp","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_ETextureSelectByUpdateLinkOp"}],"enumValues":[],"facets":[]}
+{"name":"ETextureSelectByUpdateLinkOp","schemaSpan":{"start":1737135,"end":1737280},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1737190,"end":1737261},"namespace":"","name":"value","type":"simple_ETextureSelectByUpdateLinkOp","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

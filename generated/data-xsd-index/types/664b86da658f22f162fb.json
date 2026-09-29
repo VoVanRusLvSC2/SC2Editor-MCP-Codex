@@ -1,1 +1,1 @@
-{"name":"simple_EActorThresholdTest","kind":"simple","fields":[],"enumValues":["Above","Below"],"facets":[],"base":"xs:string"}
+{"name":"simple_EActorThresholdTest","schemaSpan":{"start":1029680,"end":1030301},"namespace":"","kind":"simple","fields":[],"enumValues":["Above","Below"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

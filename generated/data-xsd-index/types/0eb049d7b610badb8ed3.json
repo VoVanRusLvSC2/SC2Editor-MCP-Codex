@@ -1,1 +1,1 @@
-{"name":"EClassIdCVoiceOver","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EClassIdCVoiceOver"}],"enumValues":[],"facets":[]}
+{"name":"EClassIdCVoiceOver","schemaSpan":{"start":610549,"end":610674},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":610594,"end":610655},"namespace":"","name":"value","type":"simple_EClassIdCVoiceOver","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

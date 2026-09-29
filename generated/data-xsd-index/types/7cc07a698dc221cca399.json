@@ -1,1 +1,1 @@
-{"name":"EClassIdCScoreValue","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EClassIdCScoreValue"}],"enumValues":[],"facets":[]}
+{"name":"EClassIdCScoreValue","schemaSpan":{"start":506341,"end":506468},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":506387,"end":506449},"namespace":"","name":"value","type":"simple_EClassIdCScoreValue","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

@@ -1,1 +1,1 @@
-{"name":"simple_EAbilRallyStage","kind":"simple","fields":[],"enumValues":["Place"],"facets":[],"base":"xs:string"}
+{"name":"simple_EAbilRallyStage","schemaSpan":{"start":80622,"end":80914},"namespace":"","kind":"simple","fields":[],"enumValues":["Place"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

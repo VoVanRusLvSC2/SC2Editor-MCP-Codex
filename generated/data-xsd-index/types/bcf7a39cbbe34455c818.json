@@ -1,1 +1,1 @@
-{"name":"EMercenaryPortraitTintColor","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EMercenaryPortraitTintColor"}],"enumValues":[],"facets":[]}
+{"name":"EMercenaryPortraitTintColor","schemaSpan":{"start":1522966,"end":1523109},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1523020,"end":1523090},"namespace":"","name":"value","type":"simple_EMercenaryPortraitTintColor","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

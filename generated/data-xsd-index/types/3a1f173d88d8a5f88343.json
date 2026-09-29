@@ -1,1 +1,1 @@
-{"name":"ELabelExpressionOp","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_ELabelExpressionOp"}],"enumValues":[],"facets":[]}
+{"name":"ELabelExpressionOp","schemaSpan":{"start":1513631,"end":1513756},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1513676,"end":1513737},"namespace":"","name":"value","type":"simple_ELabelExpressionOp","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

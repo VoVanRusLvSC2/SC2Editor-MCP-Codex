@@ -1,1 +1,1 @@
-{"name":"ETeamColor","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_ETeamColor"}],"enumValues":[],"facets":[]}
+{"name":"ETeamColor","schemaSpan":{"start":286632,"end":286741},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":286669,"end":286722},"namespace":"","name":"value","type":"simple_ETeamColor","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

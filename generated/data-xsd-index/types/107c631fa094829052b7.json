@@ -1,1 +1,1 @@
-{"name":"simple_EDamageResponseCategory","kind":"simple","fields":[],"enumValues":["CorpseUsage","Enhancement","Evasion","Proc","Reduction","Shield"],"facets":[],"base":"xs:string"}
+{"name":"simple_EDamageResponseCategory","schemaSpan":{"start":1313771,"end":1314955},"namespace":"","kind":"simple","fields":[],"enumValues":["CorpseUsage","Enhancement","Evasion","Proc","Reduction","Shield"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

@@ -1,1 +1,1 @@
-{"name":"EAbilBuildType","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EAbilBuildType"}],"enumValues":[],"facets":[]}
+{"name":"EAbilBuildType","schemaSpan":{"start":643855,"end":643972},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":643896,"end":643953},"namespace":"","name":"value","type":"simple_EAbilBuildType","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

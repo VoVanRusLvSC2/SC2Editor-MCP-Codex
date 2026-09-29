@@ -1,1 +1,1 @@
-{"name":"simple_EAbilAugmentFlag","kind":"simple","fields":[],"enumValues":["AutoCast","AutoCastOffOwnerLeave","AutoCastOn","BestUnit","Smart"],"facets":[],"base":"xs:string"}
+{"name":"simple_EAbilAugmentFlag","schemaSpan":{"start":634478,"end":635541},"namespace":"","kind":"simple","fields":[],"enumValues":["AutoCast","AutoCastOffOwnerLeave","AutoCastOn","BestUnit","Smart"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

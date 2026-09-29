@@ -1,1 +1,1 @@
-{"name":"EClassIdCShape","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EClassIdCShape"}],"enumValues":[],"facets":[]}
+{"name":"EClassIdCShape","schemaSpan":{"start":507522,"end":507639},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":507563,"end":507620},"namespace":"","name":"value","type":"simple_EClassIdCShape","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

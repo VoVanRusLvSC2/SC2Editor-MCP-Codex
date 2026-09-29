@@ -1,1 +1,1 @@
-{"name":"EAccumulatorApplicationRule","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EAccumulatorApplicationRule"}],"enumValues":[],"facets":[]}
+{"name":"EAccumulatorApplicationRule","schemaSpan":{"start":692855,"end":692998},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":692909,"end":692979},"namespace":"","name":"value","type":"simple_EAccumulatorApplicationRule","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

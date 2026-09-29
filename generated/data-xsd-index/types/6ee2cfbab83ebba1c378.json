@@ -1,1 +1,1 @@
-{"name":"simple_EVitalColor","kind":"simple","fields":[],"enumValues":["Energy","Life","Shields"],"facets":[],"base":"xs:string"}
+{"name":"simple_EVitalColor","schemaSpan":{"start":1791551,"end":1792177},"namespace":"","kind":"simple","fields":[],"enumValues":["Energy","Life","Shields"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

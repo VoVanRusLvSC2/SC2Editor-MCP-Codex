@@ -5,6 +5,15 @@ import { withWorkspaceLock } from "./workspaceLock.js";
 import { prepareFileJournal, commitFileJournal, discardFileJournal, type FileJournal } from "./recoveryJournal.js";
 
 export interface FileSnapshot { bytes: Buffer; exists: boolean }
+export class FileTransactionFailure extends Error {
+  readonly code="FILE_TRANSACTION_FAILED";
+  readonly causeCode:string|null;
+  constructor(readonly state:{written:string[];restored:string[];recoveryRequired:boolean;stagedState:"UNCHANGED_BY_COMMIT"},cause:unknown) {
+    const causeCode=(cause as NodeJS.ErrnoException)?.code??null;
+    super("FILE_TRANSACTION_FAILED: "+String(cause)+"; code="+(causeCode??"unknown")+"; written="+(state.written.join(',')||'none')+"; restored="+(state.restored.join(',')||'none')+"; recoveryRequired="+state.recoveryRequired+"; staged=unchanged",{cause});
+    this.causeCode=causeCode;
+  }
+}
 export class TransactionQueue {
   private pending: Promise<unknown> = Promise.resolve();
   constructor(private readonly root?:string,private readonly recover?:() => Promise<unknown>) {}
@@ -66,19 +75,22 @@ export async function commitFiles(
     }
     await commitFileJournal(journal);
   } catch (error) {
-    if(journal?.committed) throw error;
+    const written=[...renamed],restored:string[]=[];
+    if(journal?.committed)throw new FileTransactionFailure({written,restored,recoveryRequired:false,stagedState:"UNCHANGED_BY_COMMIT"},error);
     const failures: string[] = [];
-    for (const file of renamed.reverse()) {
+    for (const file of [...renamed].reverse()) {
       try {
         const disk = await readSnapshot(resolve(file));
         if (removed.has(file) ? disk.exists : !disk.exists || !disk.bytes.equals(next.get(file)!)) throw new Error("File changed during compensation", { cause: error });
         const original = originals.get(file)!;
         if (original.exists) await fs.writeFile(resolve(file), original.bytes); else if (disk.exists) await fs.unlink(resolve(file));
-      } catch (restoreError) { failures.push(`${file}: ${String(restoreError)}`); }
+        restored.push(file);
+      } catch (restoreError) { failures.push(file+": "+String(restoreError)); }
     }
-    if (failures.length) throw new Error(`Transaction failed; restoration failed for ${failures.join(", ")}`, { cause: error });
-    await discardFileJournal(journal);
-    throw error;
+    if (failures.length) throw new FileTransactionFailure({written,restored,recoveryRequired:true,stagedState:"UNCHANGED_BY_COMMIT"},new Error("Restoration failed for "+failures.join(", "),{cause:error}));
+    try { await discardFileJournal(journal); }
+    catch(cleanupError) { throw new FileTransactionFailure({written,restored,recoveryRequired:true,stagedState:"UNCHANGED_BY_COMMIT"},new Error("Journal cleanup failed: "+String(cleanupError),{cause:error})); }
+    throw new FileTransactionFailure({written,restored,recoveryRequired:false,stagedState:"UNCHANGED_BY_COMMIT"},error);
   } finally {
     for (const temporary of temps.values()) await fs.rm(temporary, { force: true }).catch(() => undefined);
   }

@@ -1,1 +1,1 @@
-{"name":"CScaleVector","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CScaleVector"}],"enumValues":[],"facets":[]}
+{"name":"CScaleVector","schemaSpan":{"start":33508,"end":33621},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":33547,"end":33602},"namespace":"","name":"value","type":"simple_CScaleVector","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

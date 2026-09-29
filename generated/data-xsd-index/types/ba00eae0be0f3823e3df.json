@@ -1,1 +1,1 @@
-{"name":"simple_ECargoSpace","kind":"simple","fields":[],"enumValues":["Free","Load","Size","Used"],"facets":[],"base":"xs:string"}
+{"name":"simple_ECargoSpace","schemaSpan":{"start":1227275,"end":1228058},"namespace":"","kind":"simple","fields":[],"enumValues":["Free","Load","Size","Used"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

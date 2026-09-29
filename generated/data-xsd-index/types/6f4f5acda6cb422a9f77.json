@@ -1,1 +1,1 @@
-{"name":"simple_EActorGame","kind":"simple","fields":[],"enumValues":["Local","SpeedFast","SpeedFaster","SpeedNormal","SpeedSlow","SpeedSlower","Sync"],"facets":[],"base":"xs:string"}
+{"name":"simple_EActorGame","schemaSpan":{"start":739564,"end":740968},"namespace":"","kind":"simple","fields":[],"enumValues":["Local","SpeedFast","SpeedFaster","SpeedNormal","SpeedSlow","SpeedSlower","Sync"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

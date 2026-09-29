@@ -1,1 +1,1 @@
-{"name":"simple_EActorCombatRevealDurationType","kind":"simple","fields":[],"enumValues":["ByVictim","OneShot"],"facets":[],"base":"xs:string"}
+{"name":"simple_EActorCombatRevealDurationType","schemaSpan":{"start":719052,"end":719902},"namespace":"","kind":"simple","fields":[],"enumValues":["ByVictim","OneShot"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

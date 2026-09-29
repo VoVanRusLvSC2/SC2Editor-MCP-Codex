@@ -1,1 +1,1 @@
-{"name":"EHeroFlag","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EHeroFlag"}],"enumValues":[],"facets":[]}
+{"name":"EHeroFlag","schemaSpan":{"start":396501,"end":396608},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":396537,"end":396589},"namespace":"","name":"value","type":"simple_EHeroFlag","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

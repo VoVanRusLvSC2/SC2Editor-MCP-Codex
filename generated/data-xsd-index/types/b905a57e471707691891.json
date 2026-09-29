@@ -1,1 +1,1 @@
-{"name":"simple_EHeroState","kind":"simple","fields":[],"enumValues":["Locked","Unlocked"],"facets":[],"base":"xs:string"}
+{"name":"simple_EHeroState","schemaSpan":{"start":394673,"end":395133},"namespace":"","kind":"simple","fields":[],"enumValues":["Locked","Unlocked"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

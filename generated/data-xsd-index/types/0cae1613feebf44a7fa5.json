@@ -1,1 +1,1 @@
-{"name":"CItemClassLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CItemClassLink"}],"enumValues":[],"facets":[]}
+{"name":"CItemClassLink","schemaSpan":{"start":58776,"end":58893},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":58817,"end":58874},"namespace":"","name":"value","type":"simple_CItemClassLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

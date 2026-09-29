@@ -1,1 +1,1 @@
-{"name":"simple_EHeroImageFacing","kind":"simple","fields":[],"enumValues":["Left","Mid","Right"],"facets":[],"base":"xs:string"}
+{"name":"simple_EHeroImageFacing","schemaSpan":{"start":413794,"end":414415},"namespace":"","kind":"simple","fields":[],"enumValues":["Left","Mid","Right"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

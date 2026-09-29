@@ -1,1 +1,1 @@
-{"name":"simple_TConversationStateInfoId","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string"}
+{"name":"simple_TConversationStateInfoId","schemaSpan":{"start":19078,"end":19187},"namespace":"","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

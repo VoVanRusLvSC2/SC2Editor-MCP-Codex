@@ -1,1 +1,1 @@
-{"name":"EItemAbilFlag","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EItemAbilFlag"}],"enumValues":[],"facets":[]}
+{"name":"EItemAbilFlag","schemaSpan":{"start":1509891,"end":1510006},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1509931,"end":1509987},"namespace":"","name":"value","type":"simple_EItemAbilFlag","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

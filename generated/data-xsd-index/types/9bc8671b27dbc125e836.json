@@ -1,1 +1,1 @@
-{"name":"simple_EHeroUniverse","kind":"simple","fields":[],"enumValues":["Diablo","Heroes","Retro","StarCraft","Warcraft"],"facets":[],"base":"xs:string"}
+{"name":"simple_EHeroUniverse","schemaSpan":{"start":410950,"end":411930},"namespace":"","kind":"simple","fields":[],"enumValues":["Diablo","Heroes","Retro","StarCraft","Warcraft"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

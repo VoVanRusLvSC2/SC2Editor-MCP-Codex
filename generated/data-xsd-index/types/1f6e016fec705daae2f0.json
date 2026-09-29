@@ -1,1 +1,1 @@
-{"name":"simple_EClassIdCSoundExclusivity","kind":"simple","fields":[],"enumValues":["CSoundExclusivity"],"facets":[],"base":"xs:string"}
+{"name":"simple_EClassIdCSoundExclusivity","schemaSpan":{"start":521644,"end":521966},"namespace":"","kind":"simple","fields":[],"enumValues":["CSoundExclusivity"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

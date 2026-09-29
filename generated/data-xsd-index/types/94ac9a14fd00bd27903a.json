@@ -1,1 +1,1 @@
-{"name":"C3Vector","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_C3Vector"}],"enumValues":[],"facets":[]}
+{"name":"C3Vector","schemaSpan":{"start":24442,"end":24547},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":24477,"end":24528},"namespace":"","name":"value","type":"simple_C3Vector","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

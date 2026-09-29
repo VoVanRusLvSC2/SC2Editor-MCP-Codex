@@ -1,1 +1,1 @@
-{"name":"simple_EClassIdCWarChest","kind":"simple","fields":[],"enumValues":["CWarChest"],"facets":[],"base":"xs:string"}
+{"name":"simple_EClassIdCWarChest","schemaSpan":{"start":611531,"end":611829},"namespace":"","kind":"simple","fields":[],"enumValues":["CWarChest"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

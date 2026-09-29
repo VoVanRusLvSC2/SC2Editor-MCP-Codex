@@ -1,1 +1,1 @@
-{"name":"EAbilReviveFlag","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EAbilReviveFlag"}],"enumValues":[],"facets":[]}
+{"name":"EAbilReviveFlag","schemaSpan":{"start":677360,"end":677479},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":677402,"end":677460},"namespace":"","name":"value","type":"simple_EAbilReviveFlag","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

@@ -1,1 +1,1 @@
-{"name":"CCommanderLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CCommanderLink"}],"enumValues":[],"facets":[]}
+{"name":"CCommanderLink","schemaSpan":{"start":45548,"end":45665},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":45589,"end":45646},"namespace":"","name":"value","type":"simple_CCommanderLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

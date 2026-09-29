@@ -1,1 +1,1 @@
-{"name":"CWeaponLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CWeaponLink"}],"enumValues":[],"facets":[]}
+{"name":"CWeaponLink","schemaSpan":{"start":43996,"end":44107},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":44034,"end":44088},"namespace":"","name":"value","type":"simple_CWeaponLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

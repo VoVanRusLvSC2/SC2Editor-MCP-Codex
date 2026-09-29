@@ -1,1 +1,1 @@
-{"name":"simple_CFootprintLink","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string"}
+{"name":"simple_CFootprintLink","schemaSpan":{"start":41966,"end":42065},"namespace":"","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

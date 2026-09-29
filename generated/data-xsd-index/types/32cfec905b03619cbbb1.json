@@ -1,1 +1,1 @@
-{"name":"simple_CDataCollectionLink","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string"}
+{"name":"simple_CDataCollectionLink","schemaSpan":{"start":41274,"end":41378},"namespace":"","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

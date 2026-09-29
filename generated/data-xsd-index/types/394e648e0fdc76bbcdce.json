@@ -1,1 +1,1 @@
-{"name":"simple_CCatalogReference","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string"}
+{"name":"simple_CCatalogReference","schemaSpan":{"start":29184,"end":29286},"namespace":"","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

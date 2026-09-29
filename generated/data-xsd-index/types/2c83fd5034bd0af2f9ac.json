@@ -1,1 +1,1 @@
-{"name":"EMotionActorTrackingType","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EMotionActorTrackingType"}],"enumValues":[],"facets":[]}
+{"name":"EMotionActorTrackingType","schemaSpan":{"start":1534519,"end":1534656},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1534570,"end":1534637},"namespace":"","name":"value","type":"simple_EMotionActorTrackingType","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

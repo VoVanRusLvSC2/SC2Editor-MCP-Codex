@@ -1,1 +1,1 @@
-{"name":"EAccumulatorAttributePointsFlag","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EAccumulatorAttributePointsFlag"}],"enumValues":[],"facets":[]}
+{"name":"EAccumulatorAttributePointsFlag","schemaSpan":{"start":693665,"end":693816},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":693723,"end":693797},"namespace":"","name":"value","type":"simple_EAccumulatorAttributePointsFlag","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

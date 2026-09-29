@@ -1,1 +1,1 @@
-{"name":"simple_TUpgradeEffectValue","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string"}
+{"name":"simple_TUpgradeEffectValue","schemaSpan":{"start":22229,"end":22333},"namespace":"","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

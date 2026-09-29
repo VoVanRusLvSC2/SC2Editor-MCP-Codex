@@ -1,1 +1,1 @@
-{"name":"EAnimSetTimeFromSource","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EAnimSetTimeFromSource"}],"enumValues":[],"facets":[]}
+{"name":"EAnimSetTimeFromSource","schemaSpan":{"start":1067402,"end":1067535},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1067451,"end":1067516},"namespace":"","name":"value","type":"simple_EAnimSetTimeFromSource","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

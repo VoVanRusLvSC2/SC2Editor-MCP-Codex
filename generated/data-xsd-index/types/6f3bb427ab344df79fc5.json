@@ -1,1 +1,1 @@
-{"name":"EBehaviorBuffReplace","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EBehaviorBuffReplace"}],"enumValues":[],"facets":[]}
+{"name":"EBehaviorBuffReplace","schemaSpan":{"start":1174678,"end":1174807},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1174725,"end":1174788},"namespace":"","name":"value","type":"simple_EBehaviorBuffReplace","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

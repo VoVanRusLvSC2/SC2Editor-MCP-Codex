@@ -1,1 +1,1 @@
-{"name":"EFootprintLayer","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EFootprintLayer"}],"enumValues":[],"facets":[]}
+{"name":"EFootprintLayer","schemaSpan":{"start":1364578,"end":1364697},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1364620,"end":1364678},"namespace":"","name":"value","type":"simple_EFootprintLayer","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

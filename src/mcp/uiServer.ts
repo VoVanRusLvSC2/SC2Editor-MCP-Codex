@@ -179,9 +179,10 @@ const layoutOperationSchema = z.discriminatedUnion("op", [
   }),
 ]);
 
-export function createUiServer(workspace: Workspace, schema: SchemaRegistry, cutscene?: CutsceneToolContext, text?: TextToolContext, data?: DataToolContext, browse?: BrowseToolContext, placement?: PlacementToolContext, ai?: AiToolContext, terrain?: TerrainToolContext): McpServer {
+export function createUiServer(workspace: Workspace, schema: SchemaRegistry, cutscene?: CutsceneToolContext, text?: TextToolContext, data?: DataToolContext, browse?: BrowseToolContext, placement?: PlacementToolContext, ai?: AiToolContext, terrain?: TerrainToolContext, includeUi = true): McpServer {
   const server = new McpServer({ name: "sc2editor-mcp", version: APP_VERSION });
 
+  if (includeUi) {
   server.registerTool("ui.list_files", {
     description: "List SC2Layout, StormLayout and SC2Style files in the configured VFS root.",
     inputSchema: z.object({}),
@@ -799,6 +800,7 @@ export function createUiServer(workspace: Workspace, schema: SchemaRegistry, cut
     summary: `Upsert style ${args.name}`,
   }, (doc) => doc.upsertStyle(args.name, args.attrs))));
 
+  }
   if (cutscene) registerCutsceneTools(server, cutscene);
   if (text) registerTextTools(server, text);
   if (data) registerDataTools(server, data);

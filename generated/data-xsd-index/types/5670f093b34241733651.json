@@ -1,1 +1,1 @@
-{"name":"simple_EAbilQueueFlag","kind":"simple","fields":[],"enumValues":["BestUnit","Hidden","NotifyAddOn","Passive"],"facets":[],"base":"xs:string"}
+{"name":"simple_EAbilQueueFlag","schemaSpan":{"start":674688,"end":675509},"namespace":"","kind":"simple","fields":[],"enumValues":["BestUnit","Hidden","NotifyAddOn","Passive"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

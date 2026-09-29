@@ -1,1 +1,1 @@
-{"name":"CAchievementTermLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CAchievementTermLink"}],"enumValues":[],"facets":[]}
+{"name":"CAchievementTermLink","schemaSpan":{"start":56829,"end":56958},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":56876,"end":56939},"namespace":"","name":"value","type":"simple_CAchievementTermLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

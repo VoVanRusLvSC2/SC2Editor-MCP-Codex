@@ -1,1 +1,1 @@
-{"name":"simple_EActorPropertyCurveFlag","kind":"simple","fields":[],"enumValues":["Looping"],"facets":[],"base":"xs:string"}
+{"name":"simple_EActorPropertyCurveFlag","schemaSpan":{"start":938163,"end":938553},"namespace":"","kind":"simple","fields":[],"enumValues":["Looping"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

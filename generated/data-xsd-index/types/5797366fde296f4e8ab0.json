@@ -1,1 +1,1 @@
-{"name":"simple_EAbilTrainLocation","kind":"simple","fields":[],"enumValues":["Rally","Source"],"facets":[],"base":"xs:string"}
+{"name":"simple_EAbilTrainLocation","schemaSpan":{"start":689020,"end":689482},"namespace":"","kind":"simple","fields":[],"enumValues":["Rally","Source"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

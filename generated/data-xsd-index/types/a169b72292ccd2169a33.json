@@ -1,1 +1,1 @@
-{"name":"simple_SProductReleaseDate","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string"}
+{"name":"simple_SProductReleaseDate","schemaSpan":{"start":40141,"end":40245},"namespace":"","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

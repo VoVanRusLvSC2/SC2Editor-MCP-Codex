@@ -1,1 +1,1 @@
-{"name":"ERewardFlag","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_ERewardFlag"}],"enumValues":[],"facets":[]}
+{"name":"ERewardFlag","schemaSpan":{"start":1600852,"end":1600963},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1600890,"end":1600944},"namespace":"","name":"value","type":"simple_ERewardFlag","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

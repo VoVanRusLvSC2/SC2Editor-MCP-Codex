@@ -1,1 +1,1 @@
-{"name":"EEffectRemoveBehaviorAlignment","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EEffectRemoveBehaviorAlignment"}],"enumValues":[],"facets":[]}
+{"name":"EEffectRemoveBehaviorAlignment","schemaSpan":{"start":1348114,"end":1348263},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1348171,"end":1348244},"namespace":"","name":"value","type":"simple_EEffectRemoveBehaviorAlignment","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

@@ -1,1 +1,1 @@
-{"name":"TVoiceOverSkinId","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_TVoiceOverSkinId"}],"enumValues":[],"facets":[]}
+{"name":"TVoiceOverSkinId","schemaSpan":{"start":23001,"end":23122},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":23044,"end":23103},"namespace":"","name":"value","type":"simple_TVoiceOverSkinId","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

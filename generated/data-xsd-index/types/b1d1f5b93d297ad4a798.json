@@ -1,1 +1,1 @@
-{"name":"EBoneID","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EBoneID"}],"enumValues":[],"facets":[]}
+{"name":"EBoneID","schemaSpan":{"start":1208528,"end":1208631},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1208562,"end":1208612},"namespace":"","name":"value","type":"simple_EBoneID","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

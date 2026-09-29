@@ -1,1 +1,1 @@
-{"name":"EPathLocation","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EPathLocation"}],"enumValues":[],"facets":[]}
+{"name":"EPathLocation","schemaSpan":{"start":386254,"end":386369},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":386294,"end":386350},"namespace":"","name":"value","type":"simple_EPathLocation","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

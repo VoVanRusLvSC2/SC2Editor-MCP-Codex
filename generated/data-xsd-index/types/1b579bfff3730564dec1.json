@@ -1,1 +1,1 @@
-{"name":"simple_ETextureSlotComponent","kind":"simple","fields":[],"enumValues":["default","diffuse","emissive","normal","specular"],"facets":[],"base":"xs:string"}
+{"name":"simple_ETextureSlotComponent","schemaSpan":{"start":1744085,"end":1745077},"namespace":"","kind":"simple","fields":[],"enumValues":["default","diffuse","emissive","normal","specular"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

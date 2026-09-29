@@ -1,1 +1,1 @@
-{"name":"EMotionTurnType","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EMotionTurnType"}],"enumValues":[],"facets":[]}
+{"name":"EMotionTurnType","schemaSpan":{"start":1547086,"end":1547205},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1547128,"end":1547186},"namespace":"","name":"value","type":"simple_EMotionTurnType","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

@@ -1,1 +1,1 @@
-{"name":"EAbilMorphPhase","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EAbilMorphPhase"}],"enumValues":[],"facets":[]}
+{"name":"EAbilMorphPhase","schemaSpan":{"start":670343,"end":670462},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":670385,"end":670443},"namespace":"","name":"value","type":"simple_EAbilMorphPhase","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

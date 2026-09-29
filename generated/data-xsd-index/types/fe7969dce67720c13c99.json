@@ -1,1 +1,1 @@
-{"name":"EActorCrossbarDistribution","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EActorCrossbarDistribution"}],"enumValues":[],"facets":[]}
+{"name":"EActorCrossbarDistribution","schemaSpan":{"start":719904,"end":720045},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":719957,"end":720026},"namespace":"","name":"value","type":"simple_EActorCrossbarDistribution","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

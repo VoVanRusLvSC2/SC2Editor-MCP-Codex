@@ -1,1 +1,1 @@
-{"name":"CFacing","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CFacing"}],"enumValues":[],"facets":[]}
+{"name":"CFacing","schemaSpan":{"start":6792,"end":6895},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":6826,"end":6876},"namespace":"","name":"value","type":"simple_CFacing","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

@@ -1,1 +1,1 @@
-{"name":"CActorTerms","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CActorTerms"}],"enumValues":[],"facets":[]}
+{"name":"CActorTerms","schemaSpan":{"start":27302,"end":27413},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":27340,"end":27394},"namespace":"","name":"value","type":"simple_CActorTerms","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

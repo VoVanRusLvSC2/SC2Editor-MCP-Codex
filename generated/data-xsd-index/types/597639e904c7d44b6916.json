@@ -1,1 +1,1 @@
-{"name":"EHaloRastermode","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EHaloRastermode"}],"enumValues":[],"facets":[]}
+{"name":"EHaloRastermode","schemaSpan":{"start":1507238,"end":1507357},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1507280,"end":1507338},"namespace":"","name":"value","type":"simple_EHaloRastermode","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

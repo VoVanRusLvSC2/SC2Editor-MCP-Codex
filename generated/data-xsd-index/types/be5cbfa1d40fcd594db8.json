@@ -1,1 +1,1 @@
-{"name":"EClassIdCHerdNode","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EClassIdCHerdNode"}],"enumValues":[],"facets":[]}
+{"name":"EClassIdCHerdNode","schemaSpan":{"start":393733,"end":393856},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":393777,"end":393837},"namespace":"","name":"value","type":"simple_EClassIdCHerdNode","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

@@ -1,1 +1,1 @@
-{"name":"EImplementionLevel","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EImplementionLevel"}],"enumValues":[],"facets":[]}
+{"name":"EImplementionLevel","schemaSpan":{"start":1508606,"end":1508731},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1508651,"end":1508712},"namespace":"","name":"value","type":"simple_EImplementionLevel","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

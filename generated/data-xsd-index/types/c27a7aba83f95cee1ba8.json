@@ -1,1 +1,1 @@
-{"name":"CDSPLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CDSPLink"}],"enumValues":[],"facets":[]}
+{"name":"CDSPLink","schemaSpan":{"start":47947,"end":48052},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":47982,"end":48033},"namespace":"","name":"value","type":"simple_CDSPLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

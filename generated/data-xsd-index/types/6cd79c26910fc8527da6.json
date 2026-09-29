@@ -1,1 +1,1 @@
-{"name":"uint16","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_uint16"}],"enumValues":[],"facets":[]}
+{"name":"uint16","schemaSpan":{"start":5991,"end":6092},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":6024,"end":6073},"namespace":"","name":"value","type":"simple_uint16","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

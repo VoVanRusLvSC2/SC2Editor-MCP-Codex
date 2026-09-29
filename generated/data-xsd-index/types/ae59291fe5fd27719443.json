@@ -1,1 +1,1 @@
-{"name":"EClassIdCPortraitPack","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EClassIdCPortraitPack"}],"enumValues":[],"facets":[]}
+{"name":"EClassIdCPortraitPack","schemaSpan":{"start":491880,"end":492011},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":491928,"end":491992},"namespace":"","name":"value","type":"simple_EClassIdCPortraitPack","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

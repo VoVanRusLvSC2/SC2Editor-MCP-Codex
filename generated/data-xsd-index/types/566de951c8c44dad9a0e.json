@@ -1,1 +1,1 @@
-{"name":"EHeroAITalentBuildType","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EHeroAITalentBuildType"}],"enumValues":[],"facets":[]}
+{"name":"EHeroAITalentBuildType","schemaSpan":{"start":414417,"end":414550},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":414466,"end":414531},"namespace":"","name":"value","type":"simple_EHeroAITalentBuildType","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

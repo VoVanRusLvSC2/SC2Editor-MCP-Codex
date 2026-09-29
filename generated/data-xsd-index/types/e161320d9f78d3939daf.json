@@ -1,1 +1,1 @@
-{"name":"CVariatorActorAngle","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CVariatorActorAngle"}],"enumValues":[],"facets":[]}
+{"name":"CVariatorActorAngle","schemaSpan":{"start":35455,"end":35582},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":35501,"end":35563},"namespace":"","name":"value","type":"simple_CVariatorActorAngle","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

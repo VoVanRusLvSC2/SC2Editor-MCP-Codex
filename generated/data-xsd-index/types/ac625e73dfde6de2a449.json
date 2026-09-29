@@ -1,1 +1,1 @@
-{"name":"simple_EChargeLocation","kind":"simple","fields":[],"enumValues":["Abil","Behavior","Global","Player","Unit"],"facets":[],"base":"xs:string"}
+{"name":"simple_EChargeLocation","schemaSpan":{"start":1231470,"end":1232443},"namespace":"","kind":"simple","fields":[],"enumValues":["Abil","Behavior","Global","Player","Unit"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

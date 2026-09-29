@@ -1,1 +1,1 @@
-{"name":"simple_EAbilRedirectInstantCmd","kind":"simple","fields":[],"enumValues":["Execute"],"facets":[],"base":"xs:string"}
+{"name":"simple_EAbilRedirectInstantCmd","schemaSpan":{"start":110686,"end":110986},"namespace":"","kind":"simple","fields":[],"enumValues":["Execute"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

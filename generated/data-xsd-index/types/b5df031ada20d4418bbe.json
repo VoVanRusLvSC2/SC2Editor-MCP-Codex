@@ -1,1 +1,1 @@
-{"name":"simple_EActorHostSiteOpsListPosition","kind":"simple","fields":[],"enumValues":["Head","Tail"],"facets":[],"base":"xs:string"}
+{"name":"simple_EActorHostSiteOpsListPosition","schemaSpan":{"start":745298,"end":745889},"namespace":"","kind":"simple","fields":[],"enumValues":["Head","Tail"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

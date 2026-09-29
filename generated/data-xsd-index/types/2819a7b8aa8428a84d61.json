@@ -1,1 +1,1 @@
-{"name":"simple_EActorLookAtStartFlag","kind":"simple","fields":[],"enumValues":["Continue"],"facets":[],"base":"xs:string"}
+{"name":"simple_EActorLookAtStartFlag","schemaSpan":{"start":758003,"end":758452},"namespace":"","kind":"simple","fields":[],"enumValues":["Continue"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

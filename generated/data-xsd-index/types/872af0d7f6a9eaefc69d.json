@@ -1,1 +1,1 @@
-{"name":"EActorTransitionType","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EActorTransitionType"}],"enumValues":[],"facets":[]}
+{"name":"EActorTransitionType","schemaSpan":{"start":1034208,"end":1034337},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1034255,"end":1034318},"namespace":"","name":"value","type":"simple_EActorTransitionType","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

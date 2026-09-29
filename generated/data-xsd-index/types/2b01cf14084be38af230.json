@@ -1,1 +1,1 @@
-{"name":"simple_EAbilWarpTrainFlag","kind":"simple","fields":[],"enumValues":["CmdToMostCharges","IgnoreRampTest","IgnoreUnitCost","WarpTrainersButton"],"facets":[],"base":"xs:string"}
+{"name":"simple_EAbilWarpTrainFlag","schemaSpan":{"start":691953,"end":692853},"namespace":"","kind":"simple","fields":[],"enumValues":["CmdToMostCharges","IgnoreRampTest","IgnoreUnitCost","WarpTrainersButton"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

@@ -1,1 +1,1 @@
-{"name":"EEffectPlayer","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EEffectPlayer"}],"enumValues":[],"facets":[]}
+{"name":"EEffectPlayer","schemaSpan":{"start":282854,"end":282969},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":282894,"end":282950},"namespace":"","name":"value","type":"simple_EEffectPlayer","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

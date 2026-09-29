@@ -1,1 +1,1 @@
-{"name":"CMissileAcceleration","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CMissileAcceleration"}],"enumValues":[],"facets":[]}
+{"name":"CMissileAcceleration","schemaSpan":{"start":8953,"end":9082},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":9000,"end":9063},"namespace":"","name":"value","type":"simple_CMissileAcceleration","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

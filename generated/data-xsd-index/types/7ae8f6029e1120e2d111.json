@@ -1,1 +1,1 @@
-{"name":"simple_ETextureEntryFlag","kind":"simple","fields":[],"enumValues":["UnifyWithInnateModelTextures"],"facets":[],"base":"xs:string"}
+{"name":"simple_ETextureEntryFlag","schemaSpan":{"start":1711156,"end":1711489},"namespace":"","kind":"simple","fields":[],"enumValues":["UnifyWithInnateModelTextures"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

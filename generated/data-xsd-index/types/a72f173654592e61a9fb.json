@@ -1,1 +1,1 @@
-{"name":"CTextureSheetLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CTextureSheetLink"}],"enumValues":[],"facets":[]}
+{"name":"CTextureSheetLink","schemaSpan":{"start":62531,"end":62654},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":62575,"end":62635},"namespace":"","name":"value","type":"simple_CTextureSheetLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

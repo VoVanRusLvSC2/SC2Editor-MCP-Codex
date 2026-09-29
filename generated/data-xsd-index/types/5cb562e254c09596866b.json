@@ -1,1 +1,1 @@
-{"name":"CStyleName","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CStyleName"}],"enumValues":[],"facets":[]}
+{"name":"CStyleName","schemaSpan":{"start":16682,"end":16791},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":16719,"end":16772},"namespace":"","name":"value","type":"simple_CStyleName","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

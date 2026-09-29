@@ -1,1 +1,1 @@
-{"name":"CBehaviorLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CBehaviorLink"}],"enumValues":[],"facets":[]}
+{"name":"CBehaviorLink","schemaSpan":{"start":40928,"end":41043},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":40968,"end":41024},"namespace":"","name":"value","type":"simple_CBehaviorLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

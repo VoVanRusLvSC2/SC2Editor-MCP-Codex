@@ -1,1 +1,1 @@
-{"name":"ECameraHeightMap","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_ECameraHeightMap"}],"enumValues":[],"facets":[]}
+{"name":"ECameraHeightMap","schemaSpan":{"start":1217283,"end":1217404},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1217326,"end":1217385},"namespace":"","name":"value","type":"simple_ECameraHeightMap","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

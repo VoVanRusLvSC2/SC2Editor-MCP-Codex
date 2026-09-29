@@ -1,1 +1,1 @@
-{"name":"EActorForceDirection","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EActorForceDirection"}],"enumValues":[],"facets":[]}
+{"name":"EActorForceDirection","schemaSpan":{"start":735629,"end":735758},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":735676,"end":735739},"namespace":"","name":"value","type":"simple_EActorForceDirection","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

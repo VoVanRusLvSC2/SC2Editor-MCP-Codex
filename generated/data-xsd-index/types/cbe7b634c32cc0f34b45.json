@@ -1,1 +1,1 @@
-{"name":"TAttackTargetPriority","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_TAttackTargetPriority"}],"enumValues":[],"facets":[]}
+{"name":"TAttackTargetPriority","schemaSpan":{"start":4698,"end":4829},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":4746,"end":4810},"namespace":"","name":"value","type":"simple_TAttackTargetPriority","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

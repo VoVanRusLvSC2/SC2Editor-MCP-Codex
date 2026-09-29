@@ -1,1 +1,1 @@
-{"name":"CArmyCategoryLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CArmyCategoryLink"}],"enumValues":[],"facets":[]}
+{"name":"CArmyCategoryLink","schemaSpan":{"start":44207,"end":44330},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":44251,"end":44311},"namespace":"","name":"value","type":"simple_CArmyCategoryLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

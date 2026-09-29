@@ -1,1 +1,1 @@
-{"name":"TUserFieldId","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_TUserFieldId"}],"enumValues":[],"facets":[]}
+{"name":"TUserFieldId","schemaSpan":{"start":22335,"end":22448},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":22374,"end":22429},"namespace":"","name":"value","type":"simple_TUserFieldId","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

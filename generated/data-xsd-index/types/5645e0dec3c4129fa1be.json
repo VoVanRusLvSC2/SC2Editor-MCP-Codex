@@ -1,1 +1,1 @@
-{"name":"EUnitTestState","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EUnitTestState"}],"enumValues":[],"facets":[]}
+{"name":"EUnitTestState","schemaSpan":{"start":1761397,"end":1761514},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1761438,"end":1761495},"namespace":"","name":"value","type":"simple_EUnitTestState","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

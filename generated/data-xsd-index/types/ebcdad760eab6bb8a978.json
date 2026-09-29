@@ -1,1 +1,1 @@
-{"name":"simple_EAbilBatteryFlag","kind":"simple","fields":[],"enumValues":["AutoCast","AutoCastOffOwnerLeave","AutoCastOn"],"facets":[],"base":"xs:string"}
+{"name":"simple_EAbilBatteryFlag","schemaSpan":{"start":635666,"end":636348},"namespace":"","kind":"simple","fields":[],"enumValues":["AutoCast","AutoCastOffOwnerLeave","AutoCastOn"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

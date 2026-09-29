@@ -1,1 +1,1 @@
-{"name":"simple_EAnimLoadFlag","kind":"simple","fields":[],"enumValues":["Override"],"facets":[],"base":"xs:string"}
+{"name":"simple_EAnimLoadFlag","schemaSpan":{"start":1063842,"end":1064134},"namespace":"","kind":"simple","fields":[],"enumValues":["Override"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

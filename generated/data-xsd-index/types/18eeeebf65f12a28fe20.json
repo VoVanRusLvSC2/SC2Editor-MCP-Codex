@@ -1,1 +1,1 @@
-{"name":"simple_EActorScopeFlags","kind":"simple","fields":[],"enumValues":["DisableSoundEmitters"],"facets":[],"base":"xs:string"}
+{"name":"simple_EActorScopeFlags","schemaSpan":{"start":966108,"end":966542},"namespace":"","kind":"simple","fields":[],"enumValues":["DisableSoundEmitters"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

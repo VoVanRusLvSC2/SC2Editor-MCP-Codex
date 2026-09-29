@@ -1,1 +1,1 @@
-{"name":"CTurretLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CTurretLink"}],"enumValues":[],"facets":[]}
+{"name":"CTurretLink","schemaSpan":{"start":43146,"end":43257},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":43184,"end":43238},"namespace":"","name":"value","type":"simple_CTurretLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

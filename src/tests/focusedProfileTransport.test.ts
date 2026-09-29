@@ -19,7 +19,7 @@ test("script profile omits unrelated MCP tool schemas while retaining the public
     while ((end = buffer.indexOf("\n")) >= 0) {
       const line = buffer.slice(0, end); buffer = buffer.slice(end + 1);
       const response = JSON.parse(line), item = pending.get(response.id);
-      if (item) { pending.delete(response.id); response.error ? item.reject(new Error(JSON.stringify(response.error))) : item.resolve(response.result); }
+      if (item) { pending.delete(response.id); if (response.error) item.reject(new Error(JSON.stringify(response.error))); else item.resolve(response.result); }
     }
   });
   child.on("exit", () => { for (const item of pending.values()) item.reject(new Error(`MCP exited: ${stderr}`)); });

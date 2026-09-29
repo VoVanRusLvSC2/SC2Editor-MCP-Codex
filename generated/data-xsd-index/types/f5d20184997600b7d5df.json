@@ -1,1 +1,1 @@
-{"name":"simple_EAbilInventoryAlignment","kind":"simple","fields":[],"enumValues":["Left","Right"],"facets":[],"base":"xs:string"}
+{"name":"simple_EAbilInventoryAlignment","schemaSpan":{"start":658783,"end":659246},"namespace":"","kind":"simple","fields":[],"enumValues":["Left","Right"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

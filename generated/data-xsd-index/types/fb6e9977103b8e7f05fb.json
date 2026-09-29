@@ -1,1 +1,1 @@
-{"name":"TPowerLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_TPowerLink"}],"enumValues":[],"facets":[]}
+{"name":"TPowerLink","schemaSpan":{"start":21232,"end":21341},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":21269,"end":21322},"namespace":"","name":"value","type":"simple_TPowerLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

@@ -1,1 +1,1 @@
-{"name":"EActorForceFlag","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EActorForceFlag"}],"enumValues":[],"facets":[]}
+{"name":"EActorForceFlag","schemaSpan":{"start":737396,"end":737515},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":737438,"end":737496},"namespace":"","name":"value","type":"simple_EActorForceFlag","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

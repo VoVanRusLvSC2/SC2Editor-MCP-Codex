@@ -1,1 +1,1 @@
-{"name":"CAssetLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CAssetLink"}],"enumValues":[],"facets":[]}
+{"name":"CAssetLink","schemaSpan":{"start":28426,"end":28535},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":28463,"end":28516},"namespace":"","name":"value","type":"simple_CAssetLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

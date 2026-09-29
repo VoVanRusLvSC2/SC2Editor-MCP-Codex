@@ -1,1 +1,1 @@
-{"name":"simple_EAttackTypeResponse","kind":"simple","fields":[],"enumValues":["Chaos","Hero","Magic","None","Normal","Pierce","Siege","Spell"],"facets":[],"base":"xs:string"}
+{"name":"simple_EAttackTypeResponse","schemaSpan":{"start":1167597,"end":1169072},"namespace":"","kind":"simple","fields":[],"enumValues":["Chaos","Hero","Magic","None","Normal","Pierce","Siege","Spell"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

@@ -1,1 +1,1 @@
-{"name":"simple_EBehaviorDisplay","kind":"simple","fields":[],"enumValues":["Ally","Enemy","Neutral","Self"],"facets":[],"base":"xs:string"}
+{"name":"simple_EBehaviorDisplay","schemaSpan":{"start":1175442,"end":1176238},"namespace":"","kind":"simple","fields":[],"enumValues":["Ally","Enemy","Neutral","Self"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

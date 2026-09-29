@@ -1,1 +1,1 @@
-{"name":"EAbilTrainCmd","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EAbilTrainCmd"}],"enumValues":[],"facets":[]}
+{"name":"EAbilTrainCmd","schemaSpan":{"start":128102,"end":128217},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":128142,"end":128198},"namespace":"","name":"value","type":"simple_EAbilTrainCmd","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

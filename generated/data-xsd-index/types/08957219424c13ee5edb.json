@@ -1,1 +1,1 @@
-{"name":"simple_EUnitWeapon","kind":"simple","fields":[],"enumValues":["A","B","C","D","E","F","G","H"],"facets":[],"base":"xs:string"}
+{"name":"simple_EUnitWeapon","schemaSpan":{"start":1784664,"end":1786067},"namespace":"","kind":"simple","fields":[],"enumValues":["A","B","C","D","E","F","G","H"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

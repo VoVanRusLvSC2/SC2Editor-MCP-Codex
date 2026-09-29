@@ -1,1 +1,1 @@
-{"name":"C4Vector","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_C4Vector"}],"enumValues":[],"facets":[]}
+{"name":"C4Vector","schemaSpan":{"start":24849,"end":24954},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":24884,"end":24935},"namespace":"","name":"value","type":"simple_C4Vector","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

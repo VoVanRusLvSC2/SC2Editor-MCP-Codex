@@ -1,1 +1,1 @@
-{"name":"EAlliancePlayer","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EAlliancePlayer"}],"enumValues":[],"facets":[]}
+{"name":"EAlliancePlayer","schemaSpan":{"start":235001,"end":235120},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":235043,"end":235101},"namespace":"","name":"value","type":"simple_EAlliancePlayer","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

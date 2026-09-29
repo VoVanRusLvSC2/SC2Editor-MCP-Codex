@@ -1,1 +1,1 @@
-{"name":"CImagePath","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CImagePath"}],"enumValues":[],"facets":[]}
+{"name":"CImagePath","schemaSpan":{"start":13806,"end":13915},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":13843,"end":13896},"namespace":"","name":"value","type":"simple_CImagePath","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

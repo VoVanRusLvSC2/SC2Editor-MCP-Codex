@@ -1,1 +1,1 @@
-{"name":"simple_EImplementionLevel","kind":"simple","fields":[],"enumValues":["Improgress","Locked","Planed","Ready","Reviewed","Rough"],"facets":[],"base":"xs:string"}
+{"name":"simple_EImplementionLevel","schemaSpan":{"start":1508733,"end":1509889},"namespace":"","kind":"simple","fields":[],"enumValues":["Improgress","Locked","Planed","Ready","Reviewed","Rough"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

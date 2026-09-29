@@ -1,1 +1,1 @@
-{"name":"CUserLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CUserLink"}],"enumValues":[],"facets":[]}
+{"name":"CUserLink","schemaSpan":{"start":62971,"end":63078},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":63007,"end":63059},"namespace":"","name":"value","type":"simple_CUserLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

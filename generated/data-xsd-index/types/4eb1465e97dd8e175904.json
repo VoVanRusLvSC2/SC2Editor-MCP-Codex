@@ -1,1 +1,1 @@
-{"name":"CRefKey","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CRefKey"}],"enumValues":[],"facets":[]}
+{"name":"CRefKey","schemaSpan":{"start":14641,"end":14744},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":14675,"end":14725},"namespace":"","name":"value","type":"simple_CRefKey","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

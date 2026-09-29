@@ -1,1 +1,1 @@
-{"name":"simple_EAbilBuildableCmd","kind":"simple","fields":[],"enumValues":["Cancel","Halt"],"facets":[],"base":"xs:string"}
+{"name":"simple_EAbilBuildableCmd","schemaSpan":{"start":94114,"end":94573},"namespace":"","kind":"simple","fields":[],"enumValues":["Cancel","Halt"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

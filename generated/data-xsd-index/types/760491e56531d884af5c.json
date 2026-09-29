@@ -1,1 +1,1 @@
-{"name":"simple_EAMFilterLogic","kind":"simple","fields":[],"enumValues":["AND","FullMatch","NAND","OR","XOR"],"facets":[],"base":"xs:string"}
+{"name":"simple_EAMFilterLogic","schemaSpan":{"start":618598,"end":619566},"namespace":"","kind":"simple","fields":[],"enumValues":["AND","FullMatch","NAND","OR","XOR"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

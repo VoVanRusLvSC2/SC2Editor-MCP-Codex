@@ -1,1 +1,1 @@
-{"name":"CAttachMethod","kind":"complex","fields":[],"enumValues":[],"facets":[],"base":"CBase"}
+{"name":"CAttachMethod","schemaSpan":{"start":4818865,"end":4819069},"namespace":"","kind":"complex","fields":[],"enumValues":[],"facets":[],"base":"CBase","baseNamespace":"","derivation":"extension"}

@@ -1,1 +1,1 @@
-{"name":"ECardButtonType","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_ECardButtonType"}],"enumValues":[],"facets":[]}
+{"name":"ECardButtonType","schemaSpan":{"start":1225280,"end":1225399},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1225322,"end":1225380},"namespace":"","name":"value","type":"simple_ECardButtonType","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

@@ -1,1 +1,1 @@
-{"name":"CLocationLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CLocationLink"}],"enumValues":[],"facets":[]}
+{"name":"CLocationLink","schemaSpan":{"start":46241,"end":46356},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":46281,"end":46337},"namespace":"","name":"value","type":"simple_CLocationLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

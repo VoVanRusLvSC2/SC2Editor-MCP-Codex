@@ -1,1 +1,1 @@
-{"name":"EUnitGender","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EUnitGender"}],"enumValues":[],"facets":[]}
+{"name":"EUnitGender","schemaSpan":{"start":1754053,"end":1754164},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1754091,"end":1754145},"namespace":"","name":"value","type":"simple_EUnitGender","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

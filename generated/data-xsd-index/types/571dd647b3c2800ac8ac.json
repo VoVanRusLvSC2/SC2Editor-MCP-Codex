@@ -1,1 +1,1 @@
-{"name":"CRect","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CRect"}],"enumValues":[],"facets":[]}
+{"name":"CRect","schemaSpan":{"start":33110,"end":33209},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":33142,"end":33190},"namespace":"","name":"value","type":"simple_CRect","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

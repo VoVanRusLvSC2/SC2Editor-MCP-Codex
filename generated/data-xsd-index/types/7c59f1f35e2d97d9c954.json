@@ -1,1 +1,1 @@
-{"name":"EActorPhysicsImpactMaterialRelativeHardness","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EActorPhysicsImpactMaterialRelativeHardness"}],"enumValues":[],"facets":[]}
+{"name":"EActorPhysicsImpactMaterialRelativeHardness","schemaSpan":{"start":930686,"end":930861},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":930756,"end":930842},"namespace":"","name":"value","type":"simple_EActorPhysicsImpactMaterialRelativeHardness","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

@@ -1,1 +1,1 @@
-{"name":"THostedPropPriority","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_THostedPropPriority"}],"enumValues":[],"facets":[]}
+{"name":"THostedPropPriority","schemaSpan":{"start":9811,"end":9938},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":9857,"end":9919},"namespace":"","name":"value","type":"simple_THostedPropPriority","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

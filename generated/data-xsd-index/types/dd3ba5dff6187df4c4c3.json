@@ -1,1 +1,1 @@
-{"name":"CConsoleSkinLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CConsoleSkinLink"}],"enumValues":[],"facets":[]}
+{"name":"CConsoleSkinLink","schemaSpan":{"start":55316,"end":55437},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":55359,"end":55418},"namespace":"","name":"value","type":"simple_CConsoleSkinLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

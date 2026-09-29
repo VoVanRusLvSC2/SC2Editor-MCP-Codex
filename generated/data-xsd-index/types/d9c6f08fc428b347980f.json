@@ -1,1 +1,1 @@
-{"name":"simple_EMotionOverlayPolarity","kind":"simple","fields":[],"enumValues":["Alternating","Negative","None","Positive","Random"],"facets":[],"base":"xs:string"}
+{"name":"simple_EMotionOverlayPolarity","schemaSpan":{"start":1540546,"end":1541541},"namespace":"","kind":"simple","fields":[],"enumValues":["Alternating","Negative","None","Positive","Random"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

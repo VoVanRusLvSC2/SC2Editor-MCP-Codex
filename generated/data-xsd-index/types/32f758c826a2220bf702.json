@@ -1,1 +1,1 @@
-{"name":"EAcquireLevel","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EAcquireLevel"}],"enumValues":[],"facets":[]}
+{"name":"EAcquireLevel","schemaSpan":{"start":706486,"end":706601},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":706526,"end":706582},"namespace":"","name":"value","type":"simple_EAcquireLevel","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

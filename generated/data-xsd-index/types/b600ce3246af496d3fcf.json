@@ -1,1 +1,1 @@
-{"name":"simple_C2Vector","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string"}
+{"name":"simple_C2Vector","schemaSpan":{"start":23937,"end":24030},"namespace":"","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

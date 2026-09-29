@@ -1,1 +1,1 @@
-{"name":"simple_EClassIdCArtifactSlot","kind":"simple","fields":[],"enumValues":["CArtifactSlot"],"facets":[],"base":"xs:string"}
+{"name":"simple_EClassIdCArtifactSlot","schemaSpan":{"start":188107,"end":188417},"namespace":"","kind":"simple","fields":[],"enumValues":["CArtifactSlot"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

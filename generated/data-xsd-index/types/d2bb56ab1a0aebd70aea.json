@@ -1,1 +1,1 @@
-{"name":"EActorRegionFlag","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EActorRegionFlag"}],"enumValues":[],"facets":[]}
+{"name":"EActorRegionFlag","schemaSpan":{"start":956327,"end":956448},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":956370,"end":956429},"namespace":"","name":"value","type":"simple_EActorRegionFlag","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

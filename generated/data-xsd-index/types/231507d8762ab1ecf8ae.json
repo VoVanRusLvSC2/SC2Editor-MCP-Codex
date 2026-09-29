@@ -1,1 +1,1 @@
-{"name":"simple_EDamageTotal","kind":"simple","fields":[],"enumValues":["Combine","Maximum","Minimum"],"facets":[],"base":"xs:string"}
+{"name":"simple_EDamageTotal","schemaSpan":{"start":1317260,"end":1317895},"namespace":"","kind":"simple","fields":[],"enumValues":["Combine","Maximum","Minimum"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

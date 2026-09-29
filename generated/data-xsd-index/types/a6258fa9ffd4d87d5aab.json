@@ -1,1 +1,1 @@
-{"name":"EClassIdCBankCondition","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EClassIdCBankCondition"}],"enumValues":[],"facets":[]}
+{"name":"EClassIdCBankCondition","schemaSpan":{"start":192158,"end":192291},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":192207,"end":192272},"namespace":"","name":"value","type":"simple_EClassIdCBankCondition","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

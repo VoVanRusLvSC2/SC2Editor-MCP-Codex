@@ -1,1 +1,1 @@
-{"name":"simple_EClassIdCBundle","kind":"simple","fields":[],"enumValues":["CBundle"],"facets":[],"base":"xs:string"}
+{"name":"simple_EClassIdCBundle","schemaSpan":{"start":206813,"end":207104},"namespace":"","kind":"simple","fields":[],"enumValues":["CBundle"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

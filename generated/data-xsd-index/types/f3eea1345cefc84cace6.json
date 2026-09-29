@@ -1,1 +1,1 @@
-{"name":"EVitalsAccumulatorModificationType","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EVitalsAccumulatorModificationType"}],"enumValues":[],"facets":[]}
+{"name":"EVitalsAccumulatorModificationType","schemaSpan":{"start":1793096,"end":1793253},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1793157,"end":1793234},"namespace":"","name":"value","type":"simple_EVitalsAccumulatorModificationType","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

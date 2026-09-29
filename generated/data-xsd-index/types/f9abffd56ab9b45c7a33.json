@@ -1,1 +1,1 @@
-{"name":"simple_EEffectUnit","kind":"simple","fields":[],"enumValues":["Caster","CasterOuter","Origin","Outer","Source","Target","TargetOuter","Unknown"],"facets":[],"base":"xs:string"}
+{"name":"simple_EEffectUnit","schemaSpan":{"start":285123,"end":286630},"namespace":"","kind":"simple","fields":[],"enumValues":["Caster","CasterOuter","Origin","Outer","Source","Target","TargetOuter","Unknown"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

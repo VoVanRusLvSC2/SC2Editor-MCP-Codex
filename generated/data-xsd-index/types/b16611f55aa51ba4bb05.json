@@ -1,1 +1,1 @@
-{"name":"ESquibType","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_ESquibType"}],"enumValues":[],"facets":[]}
+{"name":"ESquibType","schemaSpan":{"start":1700761,"end":1700870},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1700798,"end":1700851},"namespace":"","name":"value","type":"simple_ESquibType","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

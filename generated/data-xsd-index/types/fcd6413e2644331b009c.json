@@ -1,1 +1,1 @@
-{"name":"simple_CTextureSlot","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string"}
+{"name":"simple_CTextureSlot","schemaSpan":{"start":34506,"end":34603},"namespace":"","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

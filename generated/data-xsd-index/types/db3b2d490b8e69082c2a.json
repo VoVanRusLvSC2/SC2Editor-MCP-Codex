@@ -1,1 +1,1 @@
-{"name":"EActorIntersectType","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EActorIntersectType"}],"enumValues":[],"facets":[]}
+{"name":"EActorIntersectType","schemaSpan":{"start":755881,"end":756008},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":755927,"end":755989},"namespace":"","name":"value","type":"simple_EActorIntersectType","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

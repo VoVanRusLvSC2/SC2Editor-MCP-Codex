@@ -1,1 +1,1 @@
-{"name":"CFangleArc","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CFangleArc"}],"enumValues":[],"facets":[]}
+{"name":"CFangleArc","schemaSpan":{"start":7318,"end":7427},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":7355,"end":7408},"namespace":"","name":"value","type":"simple_CFangleArc","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

@@ -1,1 +1,1 @@
-{"name":"simple_EEffectModifyTurretFlag","kind":"simple","fields":[],"enumValues":["ClearTargetOnAimComplete","Tracking"],"facets":[],"base":"xs:string"}
+{"name":"simple_EEffectModifyTurretFlag","schemaSpan":{"start":1345996,"end":1346509},"namespace":"","kind":"simple","fields":[],"enumValues":["ClearTargetOnAimComplete","Tracking"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

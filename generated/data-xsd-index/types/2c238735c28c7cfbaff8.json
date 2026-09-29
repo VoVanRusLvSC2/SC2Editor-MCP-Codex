@@ -1,1 +1,1 @@
-{"name":"EAchievementTypeFlag","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EAchievementTypeFlag"}],"enumValues":[],"facets":[]}
+{"name":"EAchievementTypeFlag","schemaSpan":{"start":705452,"end":705581},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":705499,"end":705562},"namespace":"","name":"value","type":"simple_EAchievementTypeFlag","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

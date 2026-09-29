@@ -1,1 +1,1 @@
-{"name":"CCameraLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CCameraLink"}],"enumValues":[],"facets":[]}
+{"name":"CCameraLink","schemaSpan":{"start":55105,"end":55216},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":55143,"end":55197},"namespace":"","name":"value","type":"simple_CCameraLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

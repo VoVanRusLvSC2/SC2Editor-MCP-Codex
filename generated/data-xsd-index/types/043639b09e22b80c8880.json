@@ -1,1 +1,1 @@
-{"name":"simple_EUpgradeFlag","kind":"simple","fields":[],"enumValues":["EnumDataCollectionUnits","IgnoreInvalidReferenceInTemplate","TechTreeCheat","UpgradeCheat"],"facets":[],"base":"xs:string"}
+{"name":"simple_EUpgradeFlag","schemaSpan":{"start":1786184,"end":1787288},"namespace":"","kind":"simple","fields":[],"enumValues":["EnumDataCollectionUnits","IgnoreInvalidReferenceInTemplate","TechTreeCheat","UpgradeCheat"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

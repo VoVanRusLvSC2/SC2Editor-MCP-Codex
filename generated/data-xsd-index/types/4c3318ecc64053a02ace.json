@@ -1,1 +1,1 @@
-{"name":"EMotionArrivalTestType","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EMotionArrivalTestType"}],"enumValues":[],"facets":[]}
+{"name":"EMotionArrivalTestType","schemaSpan":{"start":1537413,"end":1537546},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1537462,"end":1537527},"namespace":"","name":"value","type":"simple_EMotionArrivalTestType","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

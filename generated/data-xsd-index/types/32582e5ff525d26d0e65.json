@@ -1,1 +1,1 @@
-{"name":"EActorModelAspectObservedPlayerType","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EActorModelAspectObservedPlayerType"}],"enumValues":[],"facets":[]}
+{"name":"EActorModelAspectObservedPlayerType","schemaSpan":{"start":761015,"end":761174},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":761077,"end":761155},"namespace":"","name":"value","type":"simple_EActorModelAspectObservedPlayerType","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

@@ -1,1 +1,1 @@
-{"name":"simple_EFlagOperation","kind":"simple","fields":[],"enumValues":["Clear","Set","Toggle"],"facets":[],"base":"xs:string"}
+{"name":"simple_EFlagOperation","schemaSpan":{"start":235706,"end":236329},"namespace":"","kind":"simple","fields":[],"enumValues":["Clear","Set","Toggle"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

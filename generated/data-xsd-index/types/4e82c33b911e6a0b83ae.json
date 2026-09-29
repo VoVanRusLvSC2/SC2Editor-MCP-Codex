@@ -1,1 +1,1 @@
-{"name":"simple_EScoreValueOperation","kind":"simple","fields":[],"enumValues":["Add","Divide","Multiply","Subtract"],"facets":[],"base":"xs:string"}
+{"name":"simple_EScoreValueOperation","schemaSpan":{"start":1666426,"end":1667236},"namespace":"","kind":"simple","fields":[],"enumValues":["Add","Divide","Multiply","Subtract"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

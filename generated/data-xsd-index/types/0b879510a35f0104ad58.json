@@ -1,1 +1,1 @@
-{"name":"ESoundMixSnapshotFlag","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_ESoundMixSnapshotFlag"}],"enumValues":[],"facets":[]}
+{"name":"ESoundMixSnapshotFlag","schemaSpan":{"start":1689047,"end":1689178},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1689095,"end":1689159},"namespace":"","name":"value","type":"simple_ESoundMixSnapshotFlag","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

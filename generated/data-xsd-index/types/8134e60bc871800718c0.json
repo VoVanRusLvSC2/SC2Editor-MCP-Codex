@@ -1,1 +1,1 @@
-{"name":"simple_ETextureSelectByUpdateLinkOp","kind":"simple","fields":[],"enumValues":["Append","Replace"],"facets":[],"base":"xs:string"}
+{"name":"simple_ETextureSelectByUpdateLinkOp","schemaSpan":{"start":1737282,"end":1738137},"namespace":"","kind":"simple","fields":[],"enumValues":["Append","Replace"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

@@ -1,1 +1,1 @@
-{"name":"simple_EDifficultyFlag","kind":"simple","fields":[],"enumValues":["TrialAllowed"],"facets":[],"base":"xs:string"}
+{"name":"simple_EDifficultyFlag","schemaSpan":{"start":1323983,"end":1324286},"namespace":"","kind":"simple","fields":[],"enumValues":["TrialAllowed"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

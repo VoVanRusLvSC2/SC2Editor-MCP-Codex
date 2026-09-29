@@ -1,1 +1,1 @@
-{"name":"simple_EClassIdCBoost","kind":"simple","fields":[],"enumValues":["CBoost"],"facets":[],"base":"xs:string"}
+{"name":"simple_EClassIdCBoost","schemaSpan":{"start":206402,"end":206690},"namespace":"","kind":"simple","fields":[],"enumValues":["CBoost"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

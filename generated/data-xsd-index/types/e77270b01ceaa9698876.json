@@ -1,1 +1,1 @@
-{"name":"EFidget","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EFidget"}],"enumValues":[],"facets":[]}
+{"name":"EFidget","schemaSpan":{"start":1359620,"end":1359723},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1359654,"end":1359704},"namespace":"","name":"value","type":"simple_EFidget","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

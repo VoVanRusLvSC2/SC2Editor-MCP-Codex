@@ -1,1 +1,1 @@
-{"name":"CArmyUnitLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CArmyUnitLink"}],"enumValues":[],"facets":[]}
+{"name":"CArmyUnitLink","schemaSpan":{"start":44436,"end":44551},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":44476,"end":44532},"namespace":"","name":"value","type":"simple_CArmyUnitLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

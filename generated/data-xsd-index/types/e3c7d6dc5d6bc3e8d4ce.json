@@ -1,1 +1,1 @@
-{"name":"EAMOccupancyLogic","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EAMOccupancyLogic"}],"enumValues":[],"facets":[]}
+{"name":"EAMOccupancyLogic","schemaSpan":{"start":622880,"end":623003},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":622924,"end":622984},"namespace":"","name":"value","type":"simple_EAMOccupancyLogic","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

@@ -1,1 +1,1 @@
-{"name":"CSkinPackLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CSkinPackLink"}],"enumValues":[],"facets":[]}
+{"name":"CSkinPackLink","schemaSpan":{"start":60997,"end":61112},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":61037,"end":61093},"namespace":"","name":"value","type":"simple_CSkinPackLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

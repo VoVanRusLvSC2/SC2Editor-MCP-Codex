@@ -1,1 +1,1 @@
-{"name":"simple_EAbilAttackFlag","kind":"simple","fields":[],"enumValues":["UpdateTarget"],"facets":[],"base":"xs:string"}
+{"name":"simple_EAbilAttackFlag","schemaSpan":{"start":632697,"end":633000},"namespace":"","kind":"simple","fields":[],"enumValues":["UpdateTarget"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

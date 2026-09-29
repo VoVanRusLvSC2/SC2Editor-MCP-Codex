@@ -1,1 +1,1 @@
-{"name":"simple_CHotkeyLink","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string"}
+{"name":"simple_CHotkeyLink","schemaSpan":{"start":13497,"end":13593},"namespace":"","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

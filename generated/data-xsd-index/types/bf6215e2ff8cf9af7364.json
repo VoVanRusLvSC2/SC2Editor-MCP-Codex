@@ -1,1 +1,1 @@
-{"name":"simple_EClassIdCConversation","kind":"simple","fields":[],"enumValues":["CConversation"],"facets":[],"base":"xs:string"}
+{"name":"simple_EClassIdCConversation","schemaSpan":{"start":216075,"end":216379},"namespace":"","kind":"simple","fields":[],"enumValues":["CConversation"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

@@ -1,1 +1,1 @@
-{"name":"EMissionState","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EMissionState"}],"enumValues":[],"facets":[]}
+{"name":"EMissionState","schemaSpan":{"start":424196,"end":424311},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":424236,"end":424292},"namespace":"","name":"value","type":"simple_EMissionState","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

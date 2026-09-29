@@ -1,1 +1,1 @@
-{"name":"simple_TCliffLevel","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:int"}
+{"name":"simple_TCliffLevel","schemaSpan":{"start":5266,"end":5359},"namespace":"","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:int","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

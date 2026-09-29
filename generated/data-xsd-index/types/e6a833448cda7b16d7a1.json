@@ -1,1 +1,1 @@
-{"name":"EArtifactType","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EArtifactType"}],"enumValues":[],"facets":[]}
+{"name":"EArtifactType","schemaSpan":{"start":1071080,"end":1071195},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1071120,"end":1071176},"namespace":"","name":"value","type":"simple_EArtifactType","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

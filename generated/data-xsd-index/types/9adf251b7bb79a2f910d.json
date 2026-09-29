@@ -1,1 +1,1 @@
-{"name":"simple_CActorTimeVolumePair","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string"}
+{"name":"simple_CActorTimeVolumePair","schemaSpan":{"start":28111,"end":28216},"namespace":"","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

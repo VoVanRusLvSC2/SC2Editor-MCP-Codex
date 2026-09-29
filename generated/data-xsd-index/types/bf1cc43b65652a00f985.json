@@ -1,1 +1,1 @@
-{"name":"simple_EClassIdCItem","kind":"simple","fields":[],"enumValues":["CItem","CItemAbil","CItemAbilPowerUp","CItemEffect","CItemEffectInstant","CItemEffectTarget"],"facets":[],"base":"xs:string"}
+{"name":"simple_EClassIdCItem","schemaSpan":{"start":417850,"end":419043},"namespace":"","kind":"simple","fields":[],"enumValues":["CItem","CItemAbil","CItemAbilPowerUp","CItemEffect","CItemEffectInstant","CItemEffectTarget"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

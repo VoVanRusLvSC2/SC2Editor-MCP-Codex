@@ -1,1 +1,1 @@
-{"name":"simple_EAbilAlignment","kind":"simple","fields":[],"enumValues":["Negative","Neutral","Positive"],"facets":[],"base":"xs:string"}
+{"name":"simple_EAbilAlignment","schemaSpan":{"start":625755,"end":626581},"namespace":"","kind":"simple","fields":[],"enumValues":["Negative","Neutral","Positive"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

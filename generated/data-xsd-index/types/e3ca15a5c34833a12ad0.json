@@ -1,1 +1,1 @@
-{"name":"EClassIdCTrophy","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EClassIdCTrophy"}],"enumValues":[],"facets":[]}
+{"name":"EClassIdCTrophy","schemaSpan":{"start":537545,"end":537664},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":537587,"end":537645},"namespace":"","name":"value","type":"simple_EClassIdCTrophy","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

@@ -1,1 +1,1 @@
-{"name":"CRewardLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CRewardLink"}],"enumValues":[],"facets":[]}
+{"name":"CRewardLink","schemaSpan":{"start":60337,"end":60448},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":60375,"end":60429},"namespace":"","name":"value","type":"simple_CRewardLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

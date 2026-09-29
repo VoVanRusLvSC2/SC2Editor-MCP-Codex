@@ -1,1 +1,1 @@
-{"name":"ETalentModification","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_ETalentModification"}],"enumValues":[],"facets":[]}
+{"name":"ETalentModification","schemaSpan":{"start":526365,"end":526492},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":526411,"end":526473},"namespace":"","name":"value","type":"simple_ETalentModification","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

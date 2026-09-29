@@ -1,1 +1,1 @@
-{"name":"EHeroAbilFlag","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EHeroAbilFlag"}],"enumValues":[],"facets":[]}
+{"name":"EHeroAbilFlag","schemaSpan":{"start":411932,"end":412047},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":411972,"end":412028},"namespace":"","name":"value","type":"simple_EHeroAbilFlag","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

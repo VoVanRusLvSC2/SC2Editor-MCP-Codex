@@ -1,1 +1,1 @@
-{"name":"CBeam","kind":"complex","fields":[],"enumValues":[],"facets":[],"base":"CBase"}
+{"name":"CBeam","schemaSpan":{"start":4856095,"end":4856291},"namespace":"","kind":"complex","fields":[],"enumValues":[],"facets":[],"base":"CBase","baseNamespace":"","derivation":"extension"}

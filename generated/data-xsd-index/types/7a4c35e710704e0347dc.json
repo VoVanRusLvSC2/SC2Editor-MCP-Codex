@@ -1,1 +1,1 @@
-{"name":"CTextureProps","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CTextureProps"}],"enumValues":[],"facets":[]}
+{"name":"CTextureProps","schemaSpan":{"start":34174,"end":34289},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":34214,"end":34270},"namespace":"","name":"value","type":"simple_CTextureProps","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

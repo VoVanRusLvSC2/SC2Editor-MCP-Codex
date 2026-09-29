@@ -1,1 +1,1 @@
-{"name":"EPortraitOverlayType","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EPortraitOverlayType"}],"enumValues":[],"facets":[]}
+{"name":"EPortraitOverlayType","schemaSpan":{"start":214716,"end":214845},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":214763,"end":214826},"namespace":"","name":"value","type":"simple_EPortraitOverlayType","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

@@ -1,1 +1,1 @@
-{"name":"EBehaviorRate","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EBehaviorRate"}],"enumValues":[],"facets":[]}
+{"name":"EBehaviorRate","schemaSpan":{"start":1183775,"end":1183890},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1183815,"end":1183871},"namespace":"","name":"value","type":"simple_EBehaviorRate","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

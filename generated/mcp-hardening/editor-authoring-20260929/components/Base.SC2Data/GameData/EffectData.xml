@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Catalog>
+    <CEffectDamage id="HardeningDamage">
+        <Amount value="1"/>
+    </CEffectDamage>
+    <CEffectSet id="HardeningSet">
+        <EffectArray value="HardeningDamage"/>
+    </CEffectSet>
+</Catalog>

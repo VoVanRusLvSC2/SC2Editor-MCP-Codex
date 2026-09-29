@@ -1,1 +1,1 @@
-{"name":"EActorSkybox","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EActorSkybox"}],"enumValues":[],"facets":[]}
+{"name":"EActorSkybox","schemaSpan":{"start":991123,"end":991236},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":991162,"end":991217},"namespace":"","name":"value","type":"simple_EActorSkybox","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

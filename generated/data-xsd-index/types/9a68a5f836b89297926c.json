@@ -1,1 +1,1 @@
-{"name":"simple_CUpgradeLink","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string"}
+{"name":"simple_CUpgradeLink","schemaSpan":{"start":43677,"end":43774},"namespace":"","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

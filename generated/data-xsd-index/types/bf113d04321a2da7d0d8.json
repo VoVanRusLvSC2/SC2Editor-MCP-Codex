@@ -1,1 +1,1 @@
-{"name":"NNet__Game__THandicap","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_NNet__Game__THandicap"}],"enumValues":[],"facets":[]}
+{"name":"NNet__Game__THandicap","schemaSpan":{"start":4246,"end":4377},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":4294,"end":4358},"namespace":"","name":"value","type":"simple_NNet__Game__THandicap","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

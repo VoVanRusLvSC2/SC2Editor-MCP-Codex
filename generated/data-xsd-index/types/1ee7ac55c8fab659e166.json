@@ -1,1 +1,1 @@
-{"name":"simple_EBehaviorPowerSourceFlag","kind":"simple","fields":[],"enumValues":["ProvidePowerWhileUnderConstruction"],"facets":[],"base":"xs:string"}
+{"name":"simple_EBehaviorPowerSourceFlag","schemaSpan":{"start":1182187,"end":1182540},"namespace":"","kind":"simple","fields":[],"enumValues":["ProvidePowerWhileUnderConstruction"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

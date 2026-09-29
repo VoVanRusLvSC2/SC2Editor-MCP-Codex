@@ -1,1 +1,1 @@
-{"name":"simple_TSoundWeight","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:int"}
+{"name":"simple_TSoundWeight","schemaSpan":{"start":2392,"end":2486},"namespace":"","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:int","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

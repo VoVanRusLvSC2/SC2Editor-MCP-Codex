@@ -1,1 +1,1 @@
-{"name":"EActorPlayerIdSource","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EActorPlayerIdSource"}],"enumValues":[],"facets":[]}
+{"name":"EActorPlayerIdSource","schemaSpan":{"start":936949,"end":937078},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":936996,"end":937059},"namespace":"","name":"value","type":"simple_EActorPlayerIdSource","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

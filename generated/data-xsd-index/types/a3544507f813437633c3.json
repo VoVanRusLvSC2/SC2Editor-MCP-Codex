@@ -1,1 +1,1 @@
-{"name":"EPreloadTiming","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EPreloadTiming"}],"enumValues":[],"facets":[]}
+{"name":"EPreloadTiming","schemaSpan":{"start":1585153,"end":1585270},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1585194,"end":1585251},"namespace":"","name":"value","type":"simple_EPreloadTiming","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

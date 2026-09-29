@@ -1,1 +1,1 @@
-{"name":"simple_EExclusivityQueueAction","kind":"simple","fields":[],"enumValues":["Fail","Stomp"],"facets":[],"base":"xs:string"}
+{"name":"simple_EExclusivityQueueAction","schemaSpan":{"start":1359155,"end":1359618},"namespace":"","kind":"simple","fields":[],"enumValues":["Fail","Stomp"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

@@ -1,1 +1,1 @@
-{"name":"EGameUIString","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EGameUIString"}],"enumValues":[],"facets":[]}
+{"name":"EGameUIString","schemaSpan":{"start":1463703,"end":1463818},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1463743,"end":1463799},"namespace":"","name":"value","type":"simple_EGameUIString","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

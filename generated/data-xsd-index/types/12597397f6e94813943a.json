@@ -1,1 +1,1 @@
-{"name":"simple_EClassIdCDataCollectionPattern","kind":"simple","fields":[],"enumValues":["CDataCollectionPattern"],"facets":[],"base":"xs:string"}
+{"name":"simple_EClassIdCDataCollectionPattern","schemaSpan":{"start":218413,"end":218751},"namespace":"","kind":"simple","fields":[],"enumValues":["CDataCollectionPattern"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

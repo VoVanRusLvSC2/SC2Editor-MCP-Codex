@@ -1,1 +1,1 @@
-{"name":"simple_CEffectLinks","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string"}
+{"name":"simple_CEffectLinks","schemaSpan":{"start":30217,"end":30314},"namespace":"","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

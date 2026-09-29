@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DocInfo>
+    <ModType>
+        <Value>Interface</Value>
+    </ModType>
+    <Icon>
+        <Value>Аватарка.png</Value>
+    </Icon>
+    <Dependencies>
+        <Value>bnet:Nydus Conspiracy Mod/0.0/337849</Value>
+        <Value>bnet:Nydus Mod Security KSP/1.2/338972</Value>
+    </Dependencies>
+    <Screenshot>
+        <File>
+            <Value>Фотка игры.tga</Value>
+            <Value>Обучалка на англ2.png</Value>
+            <Value>Обучалка на русском2.png</Value>
+            <Value>Карты для нидус мода.png</Value>
+        </File>
+        <CaptionId>
+            <Value>3</Value>
+            <Value>4</Value>
+            <Value>2</Value>
+            <Value>1</Value>
+        </CaptionId>
+        <Flags>
+            <Value> </Value>
+            <Value> </Value>
+            <Value> </Value>
+            <Value> </Value>
+        </Flags>
+    </Screenshot>
+    <Preload>
+        <Value>Bank;GameAttributesKSP</Value>
+    </Preload>
+</DocInfo>

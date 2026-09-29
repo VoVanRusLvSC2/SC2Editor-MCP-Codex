@@ -1,1 +1,1 @@
-{"name":"simple_EPurchaseWarningCondition","kind":"simple","fields":[],"enumValues":["Always","Recruit"],"facets":[],"base":"xs:string"}
+{"name":"simple_EPurchaseWarningCondition","schemaSpan":{"start":1587182,"end":1587655},"namespace":"","kind":"simple","fields":[],"enumValues":["Always","Recruit"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

@@ -1,1 +1,1 @@
-{"name":"simple_EResponseFlag","kind":"simple","fields":[],"enumValues":["Acquire","Flee"],"facets":[],"base":"xs:string"}
+{"name":"simple_EResponseFlag","schemaSpan":{"start":1599057,"end":1599514},"namespace":"","kind":"simple","fields":[],"enumValues":["Acquire","Flee"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

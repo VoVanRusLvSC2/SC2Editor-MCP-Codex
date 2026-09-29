@@ -1,1 +1,1 @@
-{"name":"simple_EUnitStatusGroup","kind":"simple","fields":[],"enumValues":["All","Allied","Enemy","Owner"],"facets":[],"base":"xs:string"}
+{"name":"simple_EUnitStatusGroup","schemaSpan":{"start":177074,"end":178298},"namespace":"","kind":"simple","fields":[],"enumValues":["All","Allied","Enemy","Owner"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

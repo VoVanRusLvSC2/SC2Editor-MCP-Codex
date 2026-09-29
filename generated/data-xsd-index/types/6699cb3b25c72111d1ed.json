@@ -1,1 +1,1 @@
-{"name":"EConversationConditionCheck","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EConversationConditionCheck"}],"enumValues":[],"facets":[]}
+{"name":"EConversationConditionCheck","schemaSpan":{"start":1287640,"end":1287783},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1287694,"end":1287764},"namespace":"","name":"value","type":"simple_EConversationConditionCheck","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

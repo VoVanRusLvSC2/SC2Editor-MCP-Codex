@@ -1,1 +1,1 @@
-{"name":"EArmyCategoryState","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EArmyCategoryState"}],"enumValues":[],"facets":[]}
+{"name":"EArmyCategoryState","schemaSpan":{"start":184206,"end":184331},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":184251,"end":184312},"namespace":"","name":"value","type":"simple_EArmyCategoryState","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

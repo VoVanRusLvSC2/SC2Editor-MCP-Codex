@@ -1,1 +1,1 @@
-{"name":"CGameRate","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CGameRate"}],"enumValues":[],"facets":[]}
+{"name":"CGameRate","schemaSpan":{"start":8143,"end":8250},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":8179,"end":8231},"namespace":"","name":"value","type":"simple_CGameRate","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

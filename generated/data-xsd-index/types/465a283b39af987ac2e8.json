@@ -1,1 +1,1 @@
-{"name":"TPlayerId","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_TPlayerId"}],"enumValues":[],"facets":[]}
+{"name":"TPlayerId","schemaSpan":{"start":5581,"end":5688},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":5617,"end":5669},"namespace":"","name":"value","type":"simple_TPlayerId","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

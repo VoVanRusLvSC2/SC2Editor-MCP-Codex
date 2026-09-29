@@ -1,1 +1,1 @@
-{"name":"simple_EPathingType","kind":"simple","fields":[],"enumValues":["Building","Cliff","Ground","None","WaterDeep","WaterShallow"],"facets":[],"base":"xs:string"}
+{"name":"simple_EPathingType","schemaSpan":{"start":1567438,"end":1568598},"namespace":"","kind":"simple","fields":[],"enumValues":["Building","Cliff","Ground","None","WaterDeep","WaterShallow"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

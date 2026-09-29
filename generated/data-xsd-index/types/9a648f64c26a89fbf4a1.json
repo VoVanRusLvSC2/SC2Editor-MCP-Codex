@@ -1,1 +1,1 @@
-{"name":"EPlacementTest","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EPlacementTest"}],"enumValues":[],"facets":[]}
+{"name":"EPlacementTest","schemaSpan":{"start":250791,"end":250908},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":250832,"end":250889},"namespace":"","name":"value","type":"simple_EPlacementTest","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

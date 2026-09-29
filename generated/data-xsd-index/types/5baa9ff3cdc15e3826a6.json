@@ -1,1 +1,1 @@
-{"name":"simple_EAbilStopFlag","kind":"simple","fields":[],"enumValues":["HoldFire"],"facets":[],"base":"xs:string"}
+{"name":"simple_EAbilStopFlag","schemaSpan":{"start":683479,"end":683772},"namespace":"","kind":"simple","fields":[],"enumValues":["HoldFire"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

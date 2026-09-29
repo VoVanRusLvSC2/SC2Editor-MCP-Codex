@@ -1,1 +1,1 @@
-{"name":"simple_EClassIdCTalent","kind":"simple","fields":[],"enumValues":["CTalent"],"facets":[],"base":"xs:string"}
+{"name":"simple_EClassIdCTalent","schemaSpan":{"start":526071,"end":526363},"namespace":"","kind":"simple","fields":[],"enumValues":["CTalent"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

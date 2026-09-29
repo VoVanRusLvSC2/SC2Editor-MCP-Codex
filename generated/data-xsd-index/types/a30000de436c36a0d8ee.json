@@ -1,1 +1,1 @@
-{"name":"EActorModelPhysicsInitializeOp","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EActorModelPhysicsInitializeOp"}],"enumValues":[],"facets":[]}
+{"name":"EActorModelPhysicsInitializeOp","schemaSpan":{"start":779970,"end":780119},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":780027,"end":780100},"namespace":"","name":"value","type":"simple_EActorModelPhysicsInitializeOp","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

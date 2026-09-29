@@ -1,1 +1,1 @@
-{"name":"simple_ESpeakerMode","kind":"simple","fields":[],"enumValues":["5Point1","7Point1","Mono","ProLogic","Quad","Stereo","Surround","Unknown"],"facets":[],"base":"xs:string"}
+{"name":"simple_ESpeakerMode","schemaSpan":{"start":1697064,"end":1698566},"namespace":"","kind":"simple","fields":[],"enumValues":["5Point1","7Point1","Mono","ProLogic","Quad","Stereo","Surround","Unknown"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

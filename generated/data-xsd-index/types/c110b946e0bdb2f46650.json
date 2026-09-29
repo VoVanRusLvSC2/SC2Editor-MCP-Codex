@@ -1,1 +1,1 @@
-{"name":"EScoreResultFlag","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EScoreResultFlag"}],"enumValues":[],"facets":[]}
+{"name":"EScoreResultFlag","schemaSpan":{"start":1603145,"end":1603266},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1603188,"end":1603247},"namespace":"","name":"value","type":"simple_EScoreResultFlag","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

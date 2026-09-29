@@ -1,1 +1,1 @@
-{"name":"EClassIdCBeam","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EClassIdCBeam"}],"enumValues":[],"facets":[]}
+{"name":"EClassIdCBeam","schemaSpan":{"start":194007,"end":194122},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":194047,"end":194103},"namespace":"","name":"value","type":"simple_EClassIdCBeam","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

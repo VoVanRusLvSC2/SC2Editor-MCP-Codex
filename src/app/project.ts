@@ -17,9 +17,9 @@ import { AiSchemaRegistry } from "../modules/ai/schemaRegistry.js";
 import { AiWorkspace } from "../modules/ai/workspace.js";
 
 /** One composition root for MCP, GUI and integration tests. */
-export async function createProject(root: string) {
+export async function createProject(root: string, options: {loadUiSchema?:boolean} = {}) {
   const [schema, cutsceneSchema, textSchema, dataSchema, aiSchema] = await Promise.all([
-    SchemaRegistry.loadBundled(), CutsceneSchemaRegistry.load(), TextSchemaRegistry.load(), Promise.resolve(DataSchemaRegistry.lazy()), AiSchemaRegistry.load(),
+    options.loadUiSchema===false ? Promise.resolve(new SchemaRegistry()) : SchemaRegistry.loadBundled(), CutsceneSchemaRegistry.load(), TextSchemaRegistry.load(), Promise.resolve(DataSchemaRegistry.lazy()), AiSchemaRegistry.load(),
   ]);
   const workspace = new Workspace(root, schema);
   await workspace.recover();

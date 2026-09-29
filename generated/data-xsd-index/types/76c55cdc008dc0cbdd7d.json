@@ -1,1 +1,1 @@
-{"name":"TCliffLevel","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_TCliffLevel"}],"enumValues":[],"facets":[]}
+{"name":"TCliffLevel","schemaSpan":{"start":5153,"end":5264},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":5191,"end":5245},"namespace":"","name":"value","type":"simple_TCliffLevel","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

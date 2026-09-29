@@ -1,1 +1,1 @@
-{"name":"EActorRadialDistribution","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EActorRadialDistribution"}],"enumValues":[],"facets":[]}
+{"name":"EActorRadialDistribution","schemaSpan":{"start":953074,"end":953211},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":953125,"end":953192},"namespace":"","name":"value","type":"simple_EActorRadialDistribution","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

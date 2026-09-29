@@ -1,1 +1,1 @@
-{"name":"EDamageTotal","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EDamageTotal"}],"enumValues":[],"facets":[]}
+{"name":"EDamageTotal","schemaSpan":{"start":1317145,"end":1317258},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1317184,"end":1317239},"namespace":"","name":"value","type":"simple_EDamageTotal","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

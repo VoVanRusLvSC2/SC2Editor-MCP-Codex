@@ -1,1 +1,1 @@
-{"name":"EClassIdCAbil","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EClassIdCAbil"}],"enumValues":[],"facets":[]}
+{"name":"EClassIdCAbil","schemaSpan":{"start":64539,"end":64654},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":64579,"end":64635},"namespace":"","name":"value","type":"simple_EClassIdCAbil","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

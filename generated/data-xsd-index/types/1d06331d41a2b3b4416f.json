@@ -1,1 +1,1 @@
-{"name":"simple_ETechCountState","kind":"simple","fields":[],"enumValues":["Complete","InProgress","Queued","Revivable"],"facets":[],"base":"xs:string"}
+{"name":"simple_ETechCountState","schemaSpan":{"start":1707346,"end":1708168},"namespace":"","kind":"simple","fields":[],"enumValues":["Complete","InProgress","Queued","Revivable"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

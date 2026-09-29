@@ -1,1 +1,1 @@
-{"name":"EUnitStatusGroup","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EUnitStatusGroup"}],"enumValues":[],"facets":[]}
+{"name":"EUnitStatusGroup","schemaSpan":{"start":176951,"end":177072},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":176994,"end":177053},"namespace":"","name":"value","type":"simple_EUnitStatusGroup","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

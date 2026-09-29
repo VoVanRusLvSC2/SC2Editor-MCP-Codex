@@ -1,1 +1,1 @@
-{"name":"EGlueTheme","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EGlueTheme"}],"enumValues":[],"facets":[]}
+{"name":"EGlueTheme","schemaSpan":{"start":1492815,"end":1492924},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1492852,"end":1492905},"namespace":"","name":"value","type":"simple_EGlueTheme","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

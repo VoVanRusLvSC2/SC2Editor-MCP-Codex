@@ -1,1 +1,1 @@
-{"name":"simple_EBehaviorUnitTrackerSnapRule","kind":"simple","fields":[],"enumValues":["Closest","Random"],"facets":[],"base":"xs:string"}
+{"name":"simple_EBehaviorUnitTrackerSnapRule","schemaSpan":{"start":1206218,"end":1206714},"namespace":"","kind":"simple","fields":[],"enumValues":["Closest","Random"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

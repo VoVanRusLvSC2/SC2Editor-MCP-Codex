@@ -1,1 +1,1 @@
-{"name":"simple_EFootprintShapeMode","kind":"simple","fields":[],"enumValues":["Overlay","Persist","Regular"],"facets":[],"base":"xs:string"}
+{"name":"simple_EFootprintShapeMode","schemaSpan":{"start":1365460,"end":1366102},"namespace":"","kind":"simple","fields":[],"enumValues":["Overlay","Persist","Regular"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

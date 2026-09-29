@@ -1,1 +1,1 @@
-{"name":"EActorPhysicsImpactMember","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EActorPhysicsImpactMember"}],"enumValues":[],"facets":[]}
+{"name":"EActorPhysicsImpactMember","schemaSpan":{"start":932922,"end":933061},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":932974,"end":933042},"namespace":"","name":"value","type":"simple_EActorPhysicsImpactMember","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

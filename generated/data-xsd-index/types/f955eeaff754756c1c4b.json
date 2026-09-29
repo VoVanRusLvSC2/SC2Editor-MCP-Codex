@@ -1,1 +1,1 @@
-{"name":"simple_EObjectiveType","kind":"simple","fields":[],"enumValues":["Optional","Primary"],"facets":[],"base":"xs:string"}
+{"name":"simple_EObjectiveType","schemaSpan":{"start":487953,"end":488419},"namespace":"","kind":"simple","fields":[],"enumValues":["Optional","Primary"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

@@ -1,1 +1,1 @@
-{"name":"EAbilQueueCmd","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EAbilQueueCmd"}],"enumValues":[],"facets":[]}
+{"name":"EAbilQueueCmd","schemaSpan":{"start":109029,"end":109144},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":109069,"end":109125},"namespace":"","name":"value","type":"simple_EAbilQueueCmd","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

@@ -1,1 +1,1 @@
-{"name":"CPremiumMapLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CPremiumMapLink"}],"enumValues":[],"facets":[]}
+{"name":"CPremiumMapLink","schemaSpan":{"start":59671,"end":59790},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":59713,"end":59771},"namespace":"","name":"value","type":"simple_CPremiumMapLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

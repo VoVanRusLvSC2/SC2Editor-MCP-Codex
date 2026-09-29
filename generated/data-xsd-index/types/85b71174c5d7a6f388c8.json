@@ -1,1 +1,1 @@
-{"name":"EActorQuadDecorationFunction","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EActorQuadDecorationFunction"}],"enumValues":[],"facets":[]}
+{"name":"EActorQuadDecorationFunction","schemaSpan":{"start":948878,"end":949023},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":948933,"end":949004},"namespace":"","name":"value","type":"simple_EActorQuadDecorationFunction","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

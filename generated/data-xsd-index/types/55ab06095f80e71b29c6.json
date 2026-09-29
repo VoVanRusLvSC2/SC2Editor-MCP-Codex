@@ -1,1 +1,1 @@
-{"name":"simple_ESoundSelect","kind":"simple","fields":[],"enumValues":["Random","Sequential","Shuffle"],"facets":[],"base":"xs:string"}
+{"name":"simple_ESoundSelect","schemaSpan":{"start":1692351,"end":1693206},"namespace":"","kind":"simple","fields":[],"enumValues":["Random","Sequential","Shuffle"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

@@ -1,1 +1,1 @@
-{"name":"EActorSiteOpTerrainAndWaterFlag","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EActorSiteOpTerrainAndWaterFlag"}],"enumValues":[],"facets":[]}
+{"name":"EActorSiteOpTerrainAndWaterFlag","schemaSpan":{"start":986786,"end":986937},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":986844,"end":986918},"namespace":"","name":"value","type":"simple_EActorSiteOpTerrainAndWaterFlag","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

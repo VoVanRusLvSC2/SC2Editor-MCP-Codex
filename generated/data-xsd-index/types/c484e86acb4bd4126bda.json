@@ -1,1 +1,1 @@
-{"name":"CPitchRange","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CPitchRange"}],"enumValues":[],"facets":[]}
+{"name":"CPitchRange","schemaSpan":{"start":32510,"end":32621},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":32548,"end":32602},"namespace":"","name":"value","type":"simple_CPitchRange","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

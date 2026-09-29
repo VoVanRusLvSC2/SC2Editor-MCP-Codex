@@ -1,1 +1,1 @@
-{"name":"EActorOverkillType","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EActorOverkillType"}],"enumValues":[],"facets":[]}
+{"name":"EActorOverkillType","schemaSpan":{"start":927072,"end":927197},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":927117,"end":927178},"namespace":"","name":"value","type":"simple_EActorOverkillType","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

@@ -1,1 +1,1 @@
-{"name":"EAttackModifierFlag","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EAttackModifierFlag"}],"enumValues":[],"facets":[]}
+{"name":"EAttackModifierFlag","schemaSpan":{"start":1165627,"end":1165754},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1165673,"end":1165735},"namespace":"","name":"value","type":"simple_EAttackModifierFlag","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

@@ -1,1 +1,1 @@
-{"name":"EObjectiveType","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EObjectiveType"}],"enumValues":[],"facets":[]}
+{"name":"EObjectiveType","schemaSpan":{"start":487834,"end":487951},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":487875,"end":487932},"namespace":"","name":"value","type":"simple_EObjectiveType","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

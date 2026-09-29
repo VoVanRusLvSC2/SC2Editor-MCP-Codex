@@ -1,1 +1,1 @@
-{"name":"EActorSelectionFilter","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EActorSelectionFilter"}],"enumValues":[],"facets":[]}
+{"name":"EActorSelectionFilter","schemaSpan":{"start":970254,"end":970385},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":970302,"end":970366},"namespace":"","name":"value","type":"simple_EActorSelectionFilter","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

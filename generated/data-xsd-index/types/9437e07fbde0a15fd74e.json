@@ -1,1 +1,1 @@
-{"name":"ECostCategory","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_ECostCategory"}],"enumValues":[],"facets":[]}
+{"name":"ECostCategory","schemaSpan":{"start":1296329,"end":1296444},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1296369,"end":1296425},"namespace":"","name":"value","type":"simple_ECostCategory","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

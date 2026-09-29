@@ -1,1 +1,1 @@
-{"name":"EAbilInventoryCmd","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EAbilInventoryCmd"}],"enumValues":[],"facets":[]}
+{"name":"EAbilInventoryCmd","schemaSpan":{"start":96957,"end":97080},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":97001,"end":97061},"namespace":"","name":"value","type":"simple_EAbilInventoryCmd","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

@@ -1,1 +1,1 @@
-{"name":"EAbilBeaconCmd","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EAbilBeaconCmd"}],"enumValues":[],"facets":[]}
+{"name":"EAbilBeaconCmd","schemaSpan":{"start":87215,"end":87332},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":87256,"end":87313},"namespace":"","name":"value","type":"simple_EAbilBeaconCmd","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

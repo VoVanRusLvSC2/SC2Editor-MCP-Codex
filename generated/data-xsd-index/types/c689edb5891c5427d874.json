@@ -1,1 +1,1 @@
-{"name":"simple_EFlyerDisplay","kind":"simple","fields":[],"enumValues":["All","None","Selected"],"facets":[],"base":"xs:string"}
+{"name":"simple_EFlyerDisplay","schemaSpan":{"start":182567,"end":183350},"namespace":"","kind":"simple","fields":[],"enumValues":["All","None","Selected"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

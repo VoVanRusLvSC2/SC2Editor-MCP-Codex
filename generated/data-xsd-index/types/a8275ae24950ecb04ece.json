@@ -1,1 +1,1 @@
-{"name":"EClassIdCVoicePack","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EClassIdCVoicePack"}],"enumValues":[],"facets":[]}
+{"name":"EClassIdCVoicePack","schemaSpan":{"start":610976,"end":611101},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":611021,"end":611082},"namespace":"","name":"value","type":"simple_EClassIdCVoicePack","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

@@ -1,1 +1,1 @@
-{"name":"EAnimFlags","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EAnimFlags"}],"enumValues":[],"facets":[]}
+{"name":"EAnimFlags","schemaSpan":{"start":1057700,"end":1057809},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1057737,"end":1057790},"namespace":"","name":"value","type":"simple_EAnimFlags","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

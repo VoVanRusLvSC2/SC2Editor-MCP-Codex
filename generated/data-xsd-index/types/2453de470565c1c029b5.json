@@ -1,1 +1,1 @@
-{"name":"EEffectMorph","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EEffectMorph"}],"enumValues":[],"facets":[]}
+{"name":"EEffectMorph","schemaSpan":{"start":1346511,"end":1346624},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1346550,"end":1346605},"namespace":"","name":"value","type":"simple_EEffectMorph","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

@@ -1,1 +1,1 @@
-{"name":"simple_EAttackPriority","kind":"simple","fields":[],"enumValues":["InRange","InRangeCurrentTarget","IsThreat"],"facets":[],"base":"xs:string"}
+{"name":"simple_EAttackPriority","schemaSpan":{"start":1166795,"end":1167466},"namespace":"","kind":"simple","fields":[],"enumValues":["InRange","InRangeCurrentTarget","IsThreat"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

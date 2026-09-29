@@ -1,1 +1,1 @@
-{"name":"CColorHDR","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CColorHDR"}],"enumValues":[],"facets":[]}
+{"name":"CColorHDR","schemaSpan":{"start":29692,"end":29799},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":29728,"end":29780},"namespace":"","name":"value","type":"simple_CColorHDR","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

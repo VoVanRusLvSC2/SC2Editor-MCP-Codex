@@ -1,1 +1,1 @@
-{"name":"CCardId","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CCardId"}],"enumValues":[],"facets":[]}
+{"name":"CCardId","schemaSpan":{"start":23426,"end":23529},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":23460,"end":23510},"namespace":"","name":"value","type":"simple_CCardId","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

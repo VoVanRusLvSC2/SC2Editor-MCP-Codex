@@ -1,1 +1,1 @@
-{"name":"CButtonLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CButtonLink"}],"enumValues":[],"facets":[]}
+{"name":"CButtonLink","schemaSpan":{"start":47736,"end":47847},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":47774,"end":47828},"namespace":"","name":"value","type":"simple_CButtonLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

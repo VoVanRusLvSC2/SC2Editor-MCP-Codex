@@ -1,1 +1,1 @@
-{"name":"CColorRGB","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CColorRGB"}],"enumValues":[],"facets":[]}
+{"name":"CColorRGB","schemaSpan":{"start":29897,"end":30004},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":29933,"end":29985},"namespace":"","name":"value","type":"simple_CColorRGB","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

@@ -1,1 +1,1 @@
-{"name":"ESoundFormat","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_ESoundFormat"}],"enumValues":[],"facets":[]}
+{"name":"ESoundFormat","schemaSpan":{"start":1686766,"end":1686879},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1686805,"end":1686860},"namespace":"","name":"value","type":"simple_ESoundFormat","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

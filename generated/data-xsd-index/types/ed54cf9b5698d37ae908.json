@@ -1,1 +1,1 @@
-{"name":"EKineticFollow","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EKineticFollow"}],"enumValues":[],"facets":[]}
+{"name":"EKineticFollow","schemaSpan":{"start":1513042,"end":1513159},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1513083,"end":1513140},"namespace":"","name":"value","type":"simple_EKineticFollow","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

@@ -1,1 +1,1 @@
-{"name":"EClassIdCCursor","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EClassIdCCursor"}],"enumValues":[],"facets":[]}
+{"name":"EClassIdCCursor","schemaSpan":{"start":216840,"end":216959},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":216882,"end":216940},"namespace":"","name":"value","type":"simple_EClassIdCCursor","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

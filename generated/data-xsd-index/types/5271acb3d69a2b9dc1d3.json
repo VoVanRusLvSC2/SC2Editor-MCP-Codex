@@ -1,1 +1,1 @@
-{"name":"CArmyUpgradeLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CArmyUpgradeLink"}],"enumValues":[],"facets":[]}
+{"name":"CArmyUpgradeLink","schemaSpan":{"start":44653,"end":44774},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":44696,"end":44755},"namespace":"","name":"value","type":"simple_CArmyUpgradeLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

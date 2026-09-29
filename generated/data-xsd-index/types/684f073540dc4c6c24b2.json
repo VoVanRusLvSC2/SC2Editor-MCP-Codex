@@ -1,1 +1,1 @@
-{"name":"TMarkerCount","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_TMarkerCount"}],"enumValues":[],"facets":[]}
+{"name":"TMarkerCount","schemaSpan":{"start":1852,"end":1965},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1891,"end":1946},"namespace":"","name":"value","type":"simple_TMarkerCount","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

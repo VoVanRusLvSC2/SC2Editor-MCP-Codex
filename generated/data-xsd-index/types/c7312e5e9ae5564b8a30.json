@@ -1,1 +1,1 @@
-{"name":"simple_ESoundMode","kind":"simple","fields":[],"enumValues":["2D","3DHead","3DWorld"],"facets":[],"base":"xs:string"}
+{"name":"simple_ESoundMode","schemaSpan":{"start":1689833,"end":1690891},"namespace":"","kind":"simple","fields":[],"enumValues":["2D","3DHead","3DWorld"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

@@ -1,1 +1,1 @@
-{"name":"simple_ESoundtrackCategory","kind":"simple","fields":[],"enumValues":["Ambience","Music"],"facets":[],"base":"xs:string"}
+{"name":"simple_ESoundtrackCategory","schemaSpan":{"start":522994,"end":523461},"namespace":"","kind":"simple","fields":[],"enumValues":["Ambience","Music"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

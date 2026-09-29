@@ -1,1 +1,1 @@
-{"name":"EGraphicsLevel","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EGraphicsLevel"}],"enumValues":[],"facets":[]}
+{"name":"EGraphicsLevel","schemaSpan":{"start":1497711,"end":1497828},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1497752,"end":1497809},"namespace":"","name":"value","type":"simple_EGraphicsLevel","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

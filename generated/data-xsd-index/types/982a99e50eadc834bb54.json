@@ -1,1 +1,1 @@
-{"name":"EMotionThrowRotationType","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EMotionThrowRotationType"}],"enumValues":[],"facets":[]}
+{"name":"EMotionThrowRotationType","schemaSpan":{"start":1545726,"end":1545863},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1545777,"end":1545844},"namespace":"","name":"value","type":"simple_EMotionThrowRotationType","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

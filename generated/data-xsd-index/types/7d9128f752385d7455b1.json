@@ -1,1 +1,1 @@
-{"name":"ESplatLayer","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_ESplatLayer"}],"enumValues":[],"facets":[]}
+{"name":"ESplatLayer","schemaSpan":{"start":1698568,"end":1698679},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1698606,"end":1698660},"namespace":"","name":"value","type":"simple_ESplatLayer","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

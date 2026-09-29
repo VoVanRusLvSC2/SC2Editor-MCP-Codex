@@ -1,1 +1,1 @@
-{"name":"simple_EMarkerMatch","kind":"simple","fields":[],"enumValues":["CasterPlayer","CasterUnit","Id","Link"],"facets":[],"base":"xs:string"}
+{"name":"simple_EMarkerMatch","schemaSpan":{"start":248694,"end":249506},"namespace":"","kind":"simple","fields":[],"enumValues":["CasterPlayer","CasterUnit","Id","Link"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

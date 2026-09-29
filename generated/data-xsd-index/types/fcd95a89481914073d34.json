@@ -1,1 +1,1 @@
-{"name":"simple_EAbilBuildEffect","kind":"simple","fields":[],"enumValues":["Cancel","Finish","Start"],"facets":[],"base":"xs:string"}
+{"name":"simple_EAbilBuildEffect","schemaSpan":{"start":638982,"end":639613},"namespace":"","kind":"simple","fields":[],"enumValues":["Cancel","Finish","Start"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

@@ -1,1 +1,1 @@
-{"name":"simple_CSoundPath","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string"}
+{"name":"simple_CSoundPath","schemaSpan":{"start":14951,"end":15046},"namespace":"","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

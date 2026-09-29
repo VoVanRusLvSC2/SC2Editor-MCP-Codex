@@ -1,1 +1,1 @@
-{"name":"EEffectCreepFlag","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EEffectCreepFlag"}],"enumValues":[],"facets":[]}
+{"name":"EEffectCreepFlag","schemaSpan":{"start":1331068,"end":1331189},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1331111,"end":1331170},"namespace":"","name":"value","type":"simple_EEffectCreepFlag","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

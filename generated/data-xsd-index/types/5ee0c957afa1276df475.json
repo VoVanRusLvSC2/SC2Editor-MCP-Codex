@@ -1,1 +1,1 @@
-{"name":"CAnimsPath","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CAnimsPath"}],"enumValues":[],"facets":[]}
+{"name":"CAnimsPath","schemaSpan":{"start":11440,"end":11549},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":11477,"end":11530},"namespace":"","name":"value","type":"simple_CAnimsPath","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

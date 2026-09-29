@@ -1,1 +1,1 @@
-{"name":"simple_CTerrainTexLink","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string"}
+{"name":"simple_CTerrainTexLink","schemaSpan":{"start":51775,"end":51875},"namespace":"","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

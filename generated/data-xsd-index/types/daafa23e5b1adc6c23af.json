@@ -1,1 +1,1 @@
-{"name":"CTerrainObjectLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CTerrainObjectLink"}],"enumValues":[],"facets":[]}
+{"name":"CTerrainObjectLink","schemaSpan":{"start":51422,"end":51547},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":51467,"end":51528},"namespace":"","name":"value","type":"simple_CTerrainObjectLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

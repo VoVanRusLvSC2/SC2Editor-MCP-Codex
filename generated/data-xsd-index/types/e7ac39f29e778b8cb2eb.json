@@ -1,1 +1,1 @@
-{"name":"EActorScopeBearingsTrackingType","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EActorScopeBearingsTrackingType"}],"enumValues":[],"facets":[]}
+{"name":"EActorScopeBearingsTrackingType","schemaSpan":{"start":964534,"end":964685},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":964592,"end":964666},"namespace":"","name":"value","type":"simple_EActorScopeBearingsTrackingType","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

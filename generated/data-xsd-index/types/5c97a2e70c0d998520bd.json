@@ -1,1 +1,1 @@
-{"name":"EResourceState","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EResourceState"}],"enumValues":[],"facets":[]}
+{"name":"EResourceState","schemaSpan":{"start":1597233,"end":1597350},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1597274,"end":1597331},"namespace":"","name":"value","type":"simple_EResourceState","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

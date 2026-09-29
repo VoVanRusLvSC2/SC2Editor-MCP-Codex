@@ -1,1 +1,1 @@
-{"name":"ECargoSpace","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_ECargoSpace"}],"enumValues":[],"facets":[]}
+{"name":"ECargoSpace","schemaSpan":{"start":1227162,"end":1227273},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1227200,"end":1227254},"namespace":"","name":"value","type":"simple_ECargoSpace","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

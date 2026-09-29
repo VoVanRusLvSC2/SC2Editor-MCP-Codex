@@ -1,1 +1,1 @@
-{"name":"EActorModelAspectTest","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EActorModelAspectTest"}],"enumValues":[],"facets":[]}
+{"name":"EActorModelAspectTest","schemaSpan":{"start":767965,"end":768096},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":768013,"end":768077},"namespace":"","name":"value","type":"simple_EActorModelAspectTest","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

@@ -1,1 +1,1 @@
-{"name":"CFoWLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CFoWLink"}],"enumValues":[],"facets":[]}
+{"name":"CFoWLink","schemaSpan":{"start":50768,"end":50873},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":50803,"end":50854},"namespace":"","name":"value","type":"simple_CFoWLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

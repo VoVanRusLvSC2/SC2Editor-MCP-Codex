@@ -1,1 +1,1 @@
-{"name":"simple_EActorRequestCreateSharing","kind":"simple","fields":[],"enumValues":["Always","None","PerEffectTree"],"facets":[],"base":"xs:string"}
+{"name":"simple_EActorRequestCreateSharing","schemaSpan":{"start":958179,"end":959003},"namespace":"","kind":"simple","fields":[],"enumValues":["Always","None","PerEffectTree"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

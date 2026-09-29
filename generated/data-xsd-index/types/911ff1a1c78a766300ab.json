@@ -1,1 +1,1 @@
-{"name":"simple_EVitalsAccumulatorModificationType","kind":"simple","fields":[],"enumValues":["PerUnit","PerUnitMaxVital","Relative"],"facets":[],"base":"xs:string"}
+{"name":"simple_EVitalsAccumulatorModificationType","schemaSpan":{"start":1793255,"end":1794027},"namespace":"","kind":"simple","fields":[],"enumValues":["PerUnit","PerUnitMaxVital","Relative"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

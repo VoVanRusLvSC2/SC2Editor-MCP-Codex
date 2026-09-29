@@ -1,1 +1,1 @@
-{"name":"simple_EPathingConfig","kind":"simple","fields":[],"enumValues":["InvulnerableBuildingAsBlocker"],"facets":[],"base":"xs:string"}
+{"name":"simple_EPathingConfig","schemaSpan":{"start":1566977,"end":1567321},"namespace":"","kind":"simple","fields":[],"enumValues":["InvulnerableBuildingAsBlocker"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

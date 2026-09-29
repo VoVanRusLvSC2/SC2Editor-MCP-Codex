@@ -1,1 +1,1 @@
-{"name":"ESerpentType","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_ESerpentType"}],"enumValues":[],"facets":[]}
+{"name":"ESerpentType","schemaSpan":{"start":1671651,"end":1671764},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1671690,"end":1671745},"namespace":"","name":"value","type":"simple_ESerpentType","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

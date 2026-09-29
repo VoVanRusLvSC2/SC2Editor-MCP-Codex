@@ -1,1 +1,1 @@
-{"name":"CStimPackLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CStimPackLink"}],"enumValues":[],"facets":[]}
+{"name":"CStimPackLink","schemaSpan":{"start":63848,"end":63963},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":63888,"end":63944},"namespace":"","name":"value","type":"simple_CStimPackLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

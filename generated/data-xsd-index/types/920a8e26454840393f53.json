@@ -1,1 +1,1 @@
-{"name":"CTargetFindLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CTargetFindLink"}],"enumValues":[],"facets":[]}
+{"name":"CTargetFindLink","schemaSpan":{"start":62085,"end":62204},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":62127,"end":62185},"namespace":"","name":"value","type":"simple_CTargetFindLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

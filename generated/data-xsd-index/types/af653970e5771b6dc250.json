@@ -1,1 +1,1 @@
-{"name":"simple_CSprayPackLink","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string"}
+{"name":"simple_CSprayPackLink","schemaSpan":{"start":61541,"end":61640},"namespace":"","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

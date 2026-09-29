@@ -1,1 +1,1 @@
-{"name":"simple_EArmorType","kind":"simple","fields":[],"enumValues":["Divine","Fort","Hero","Large","Medium","None","Normal","Small","Unknown"],"facets":[],"base":"xs:string"}
+{"name":"simple_EArmorType","schemaSpan":{"start":268583,"end":270222},"namespace":"","kind":"simple","fields":[],"enumValues":["Divine","Fort","Hero","Large","Medium","None","Normal","Small","Unknown"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

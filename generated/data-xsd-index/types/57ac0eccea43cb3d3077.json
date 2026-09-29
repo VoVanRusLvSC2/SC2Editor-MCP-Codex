@@ -1,1 +1,1 @@
-{"name":"simple_EResourceType","kind":"simple","fields":[],"enumValues":["Custom","Minerals","Terrazine","Unknown","Vespene"],"facets":[],"base":"xs:string"}
+{"name":"simple_EResourceType","schemaSpan":{"start":276792,"end":277784},"namespace":"","kind":"simple","fields":[],"enumValues":["Custom","Minerals","Terrazine","Unknown","Vespene"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

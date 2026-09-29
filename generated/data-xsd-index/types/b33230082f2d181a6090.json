@@ -1,1 +1,1 @@
-{"name":"TTriggerLibId","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_TTriggerLibId"}],"enumValues":[],"facets":[]}
+{"name":"TTriggerLibId","schemaSpan":{"start":21648,"end":21763},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":21688,"end":21744},"namespace":"","name":"value","type":"simple_TTriggerLibId","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

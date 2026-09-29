@@ -1,1 +1,1 @@
-{"name":"EAbilMergeCmd","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EAbilMergeCmd"}],"enumValues":[],"facets":[]}
+{"name":"EAbilMergeCmd","schemaSpan":{"start":102500,"end":102615},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":102540,"end":102596},"namespace":"","name":"value","type":"simple_EAbilMergeCmd","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

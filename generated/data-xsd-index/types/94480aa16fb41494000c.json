@@ -1,1 +1,1 @@
-{"name":"EAbilRallyFlag","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EAbilRallyFlag"}],"enumValues":[],"facets":[]}
+{"name":"EAbilRallyFlag","schemaSpan":{"start":675511,"end":675628},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":675552,"end":675609},"namespace":"","name":"value","type":"simple_EAbilRallyFlag","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

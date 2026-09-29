@@ -1,1 +1,1 @@
-{"name":"ETimeOfDayValue","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_ETimeOfDayValue"}],"enumValues":[],"facets":[]}
+{"name":"ETimeOfDayValue","schemaSpan":{"start":422846,"end":422965},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":422888,"end":422946},"namespace":"","name":"value","type":"simple_ETimeOfDayValue","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

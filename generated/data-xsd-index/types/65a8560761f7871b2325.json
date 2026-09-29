@@ -1,1 +1,1 @@
-{"name":"ESoundFlag","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_ESoundFlag"}],"enumValues":[],"facets":[]}
+{"name":"ESoundFlag","schemaSpan":{"start":1680794,"end":1680903},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1680831,"end":1680884},"namespace":"","name":"value","type":"simple_ESoundFlag","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

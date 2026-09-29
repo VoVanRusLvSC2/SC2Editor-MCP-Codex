@@ -1,1 +1,1 @@
-{"name":"simple_EActorViewerTreatsAs","kind":"simple","fields":[],"enumValues":["Detected"],"facets":[],"base":"xs:string"}
+{"name":"simple_EActorViewerTreatsAs","schemaSpan":{"start":1038360,"end":1038849},"namespace":"","kind":"simple","fields":[],"enumValues":["Detected"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

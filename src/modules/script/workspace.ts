@@ -5,6 +5,7 @@ import path from 'node:path';
 import { Workspace } from '../../core/workspace.js';
 import { projectPath } from '../../app/paths.js';
 import { GalaxyDocument, decodeGalaxyString, editSpans } from './document.js';
+import {checkGalaxyTypes} from './typecheck.js';
 const reserved = new Set('if else for while do switch case default break continue return include native static const struct typedef void int fixed bool string true false null'.split(' '));
 const identifier = z.string().regex(/^[A-Za-z_][A-Za-z_0-9]*$/).max(256).refine(v => !reserved.has(v), 'Reserved Galaxy identifier');
 const file = z.string().min(1).max(1024).refine(v => /\.galaxy$/i.test(v), 'Galaxy file required');
@@ -36,11 +37,17 @@ interface NativeApi {
     functions: NativeFunction[];
 }
 interface IndexedNativeApi extends NativeApi {
+    sourceSha256:string;
     byName: ReadonlyMap<string, NativeFunction>;
 }
 let sharedNativeApi: Promise<IndexedNativeApi> | undefined;
-function nativeApi() {
-    return sharedNativeApi ??= fs.readFile(projectPath('generated/galaxy-native-api.json'), 'utf8').then(source => {
+let sharedApiHash:string|undefined;
+let sharedApiFile:string|undefined;
+async function nativeApi(file:string) {
+    const source=await fs.readFile(file,'utf8'),sourceSha256=createHash('sha256').update(source).digest('hex');
+    if(sharedApiHash===sourceSha256&&sharedApiFile===file&&sharedNativeApi)return sharedNativeApi;
+    sharedApiHash=sourceSha256;sharedApiFile=file;
+    return sharedNativeApi=Promise.resolve().then(() => {
         const api = JSON.parse(source) as NativeApi;
         const byName = new Map<string, NativeFunction>();
         for (const fn of api.functions) {
@@ -48,7 +55,7 @@ function nativeApi() {
                 throw new Error(`DUPLICATE_NATIVE_API_FUNCTION: ${fn.name}`);
             byName.set(fn.name, fn);
         }
-        return Object.assign(api, { byName });
+        return Object.assign(api, { byName,sourceSha256 });
     });
 }
 interface Snapshot {
@@ -58,6 +65,7 @@ interface Snapshot {
     fingerprint: string;
 }
 interface Plan {
+    schemaHash:string;
     before: Snapshot;
     after: Map<string, string>;
     changed: string[];
@@ -74,8 +82,8 @@ export class ScriptWorkspace {
         fingerprint: string;
         files: string[];
     }>();
-    constructor(readonly workspace: Workspace) { }
-    private api() { return nativeApi(); }
+    constructor(readonly workspace: Workspace,private readonly apiFile=projectPath('generated/galaxy-native-api.json')) { }
+    private api() { return nativeApi(this.apiFile); }
     private key(file: string) { if (!/\.galaxy$/i.test(file))
         throw new Error('GALAXY_FILE_REQUIRED'); return path.relative(this.workspace.root, this.workspace.resolveUserPath(file)).replaceAll('\\', '/'); }
     private document(file: string, source: string) { const old = this.cache.get(file); if (old?.source === source)
@@ -192,12 +200,16 @@ export class ScriptWorkspace {
                     diagnostics.push({ file, severity: 'error', code: 'NATIVE_ARITY', offset: c.offset, message: `${c.name}: expected ${n.parameters.length} args, got ${count}` });
             }
         }
+        const externalSignatures=[...s.docs.values()].flatMap(d=>d.symbols.filter(x=>x.kind==='function'||x.kind==='prototype').map(x=>({name:x.name,returnType:x.returnType??'',parameters:x.parameters??[]})));
+        const typed=[...s.docs].map(([file,d])=>({file,...checkGalaxyTypes(d,native,externalSignatures)}));
+        for(const item of typed)for(const issue of item.diagnostics)diagnostics.push({file:item.file,...issue});
         const calls = [...s.docs].flatMap(([file, d]) => d.calls().filter(x => !x.member).map(c => ({ file, ...c, resolution: declarations.has(c.name) ? 'LOCAL_CANDIDATE' : native.has(c.name) ? 'PINNED_NATIVE' : 'UNRESOLVED' })));
-        return { valid: !diagnostics.some(x => x.severity === 'error'), validationScope: 'LEXICAL_AND_STRUCTURAL_WITH_SIGNATURE_INDEX', semanticCoverage: 'PARTIAL', diagnostics, includes, callSummary: { total: calls.length, unresolved: calls.filter(x => x.resolution === 'UNRESOLVED').length }, unresolvedCalls: calls.filter(x => x.resolution === 'UNRESOLVED').slice(0, 100), unresolvedRules: ['Expression and assignment type checking', 'Native runtime/target-build compatibility', 'Include activation, local scope binding and external library resolution', 'Dynamic string function references and map resource links'], compiler: 'NOT_EXECUTED' };
+        return { valid: !diagnostics.some(x => x.severity === 'error'), validationScope: 'LEXICAL_STRUCTURAL_AND_BOUNDED_TYPECHECK', semanticCoverage: 'PARTIAL', diagnostics, typecheck:{status:typed.some(x=>x.status==='REJECTED')?'REJECTED':typed.some(x=>x.status==='INCOMPLETE')?'INCOMPLETE':'VERIFIED_SUBSET',files:typed.map(x=>({file:x.file,status:x.status,checked:x.checked,unknown:x.unknown})),scope:typed[0]?.scope??'No Galaxy files'}, includes, callSummary: { total: calls.length, unresolved: calls.filter(x => x.resolution === 'UNRESOLVED').length }, unresolvedCalls: calls.filter(x => x.resolution === 'UNRESOLVED').slice(0, 100), unresolvedRules: ['Complex expression and assignment type checking', 'Native runtime/target-build compatibility', 'Include activation, local scope binding and external library resolution', 'Dynamic string function references and map resource links'], compiler: 'NOT_EXECUTED' };
     }
     async validate() { return this.validation(await this.snapshot()); }
     async plan(input: z.input<typeof scriptPlanSchema>) {
         const args = scriptPlanSchema.parse(input);
+        const schemaHash=(await this.api()).sourceSha256;
         const extra = args.operations.flatMap(o => o.op === 'connect' ? [o.file, o.entryFile ?? 'MapScript.galaxy'] : [o.file]);
         const before = await this.snapshot(extra), after = new Map(before.sources), present = new Map(before.exists);
         for (const op of args.operations) {
@@ -235,17 +247,8 @@ export class ScriptWorkspace {
                     const doc = new GalaxyDocument(s);
                     if (doc.tokens.some(t => t.kind === 'identifier' && t.value === op.newName))
                         throw new Error('SCRIPT_SYMBOL_COLLISION');
-                    const edits = [];
-                    for (let i = 0; i < doc.tokens.length; i++) {
-                        const t = doc.tokens[i]!;
-                        if (t.kind === 'string' && decodeGalaxyString(t.value) === op.name)
-                            throw new Error('DYNAMIC_FUNCTION_REFERENCE: ' + file);
-                        if (t.kind === 'identifier' && t.value === op.name) {
-                            if (doc.tokens[i - 1]?.value === '.' || doc.tokens[i + 1]?.value !== '(')
-                                throw new Error('UNVERIFIED_RENAME_BINDING: ' + file);
-                            edits.push({ start: t.start, end: t.end, text: op.newName });
-                        }
-                    }
+                    for(const token of doc.tokens)if(token.kind === 'string' && decodeGalaxyString(token.value)===op.name)throw new Error('DYNAMIC_FUNCTION_REFERENCE: '+file);
+                    const edits=doc.functionBindings(op.name).bound.map(token=>({start:token.start,end:token.end,text:op.newName}));
                     after.set(file, editSpans(s, edits));
                 }
             }
@@ -287,8 +290,9 @@ export class ScriptWorkspace {
         const changed = [...after].filter(([f, s]) => s !== before.sources.get(f) || present.get(f) !== before.exists.get(f)).map(([f]) => f);
         if (changed.length > 64)
             throw new Error('SCRIPT_TRANSACTION_FILE_LIMIT');
-        const planId = 'script_' + hash(JSON.stringify([before.fingerprint, [...after]])).slice(0, 24);
-        this.plans.set(planId, { before, after, changed });
+        if((await this.api()).sourceSha256!==schemaHash)throw new Error('STALE_SCRIPT_SCHEMA');
+        const planId = 'script_' + hash(JSON.stringify([this.workspace.root,schemaHash,before.fingerprint, [...after]])).slice(0, 24);
+        this.plans.set(planId, { before, after, changed,schemaHash });
         while (this.plans.size > 8 || [...this.plans.values()].reduce((n, p) => n + [...p.before.sources.values(), ...p.after.values()].reduce((m, t) => m + Buffer.byteLength(t), 0), 0) > 128 * 1024 * 1024)
             this.plans.delete(this.plans.keys().next().value!);
         if (!this.plans.has(planId))
@@ -296,11 +300,11 @@ export class ScriptWorkspace {
         return { planId, changedFiles: changed.map(file => ({ file, beforeSha256: hash(before.sources.get(file) ?? ''), afterSha256: hash(after.get(file)!) })), validation: result, generatedMapScriptWarning: 'Editor may regenerate MapScript.galaxy; native save persistence needs target validation', dryRun: true };
     }
     async apply(planId: string, dryRun = true) { const p = this.plans.get(planId); if (!p)
-        throw new Error('SCRIPT_PLAN_NOT_FOUND'); if (!p.changed.length)
-        return { accepted: true, files: [], noChange: true }; const transaction = await this.workspace.applyRawTransaction(p.changed, async (sources) => { const current = await this.snapshot([...p.before.sources.keys()]); if (current.fingerprint !== p.before.fingerprint)
+        throw new Error('SCRIPT_PLAN_NOT_FOUND');if((await this.api()).sourceSha256!==p.schemaHash)throw new Error('STALE_SCRIPT_SCHEMA'); if (!p.changed.length)
+        return { accepted: true, files: [], noChange: true }; const transaction = await this.workspace.applyRawTransaction(this.workspace.coupledDraftFiles(p.changed), async (sources) => { if(hash(await this.workspace.readDependency(this.apiFile))!==p.schemaHash)throw new Error('STALE_SCRIPT_SCHEMA');const current = await this.snapshot([...p.before.sources.keys()]); if (current.fingerprint !== p.before.fingerprint)
         throw new Error('STALE_SCRIPT_PLAN'); for (const file of p.changed)
         if (sources.get(file) !== p.before.sources.get(file))
-            throw new Error('STALE_SCRIPT_PLAN'); return new Map(p.changed.map(file => [file, p.after.get(file)!])); }, { dryRun, stage: true, requireMissing:p.changed.filter(file=>!p.before.exists.get(file)), summary: 'Galaxy token-span plan; structural validation only, target compiler not executed' }); if (!dryRun) {
+            throw new Error('STALE_SCRIPT_PLAN'); return new Map([...sources,...p.changed.map(file => [file, p.after.get(file)!] as [string,string])]); }, { dryRun, stage: true, requireMissing:p.changed.filter(file=>!p.before.exists.get(file)), summary: 'Galaxy token-span plan; structural validation only, target compiler not executed' }); if (!dryRun) {
         const fingerprint = hash(JSON.stringify([...p.after].map(([f, text]) => [f, p.changed.includes(f) ? true : p.before.exists.get(f), hash(text)])));
         for (const file of p.changed)
             this.staged.set(file, { fingerprint, files: [...p.after.keys()] });

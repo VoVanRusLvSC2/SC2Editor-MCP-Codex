@@ -1,1 +1,1 @@
-{"name":"EClassIdCDSP","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EClassIdCDSP"}],"enumValues":[],"facets":[]}
+{"name":"EClassIdCDSP","schemaSpan":{"start":219183,"end":219296},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":219222,"end":219277},"namespace":"","name":"value","type":"simple_EClassIdCDSP","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

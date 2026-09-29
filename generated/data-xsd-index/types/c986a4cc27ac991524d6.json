@@ -1,1 +1,1 @@
-{"name":"simple_EClassIdCWeapon","kind":"simple","fields":[],"enumValues":["CWeapon","CWeaponLegacy","CWeaponStrafe"],"facets":[],"base":"xs:string"}
+{"name":"simple_EClassIdCWeapon","schemaSpan":{"start":612817,"end":613465},"namespace":"","kind":"simple","fields":[],"enumValues":["CWeapon","CWeaponLegacy","CWeaponStrafe"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

@@ -1,1 +1,1 @@
-{"name":"ETeleportReset","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_ETeleportReset"}],"enumValues":[],"facets":[]}
+{"name":"ETeleportReset","schemaSpan":{"start":1708170,"end":1708287},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1708211,"end":1708268},"namespace":"","name":"value","type":"simple_ETeleportReset","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

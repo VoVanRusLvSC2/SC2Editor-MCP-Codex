@@ -1,1 +1,1 @@
-{"name":"EUnitSound","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EUnitSound"}],"enumValues":[],"facets":[]}
+{"name":"EUnitSound","schemaSpan":{"start":1757342,"end":1757451},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1757379,"end":1757432},"namespace":"","name":"value","type":"simple_EUnitSound","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

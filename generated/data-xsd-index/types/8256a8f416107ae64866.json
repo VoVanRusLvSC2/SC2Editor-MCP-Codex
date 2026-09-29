@@ -1,1 +1,1 @@
-{"name":"simple_ERankDisplay","kind":"simple","fields":[],"enumValues":["Always","Default","Never"],"facets":[],"base":"xs:string"}
+{"name":"simple_ERankDisplay","schemaSpan":{"start":1589094,"end":1589723},"namespace":"","kind":"simple","fields":[],"enumValues":["Always","Default","Never"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

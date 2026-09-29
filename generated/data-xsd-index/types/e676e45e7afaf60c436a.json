@@ -1,1 +1,1 @@
-{"name":"EVoiceOverSkinState","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EVoiceOverSkinState"}],"enumValues":[],"facets":[]}
+{"name":"EVoiceOverSkinState","schemaSpan":{"start":1794029,"end":1794156},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1794075,"end":1794137},"namespace":"","name":"value","type":"simple_EVoiceOverSkinState","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

@@ -1,1 +1,1 @@
-{"name":"EClassIdCSound","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EClassIdCSound"}],"enumValues":[],"facets":[]}
+{"name":"EClassIdCSound","schemaSpan":{"start":509109,"end":509226},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":509150,"end":509207},"namespace":"","name":"value","type":"simple_EClassIdCSound","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

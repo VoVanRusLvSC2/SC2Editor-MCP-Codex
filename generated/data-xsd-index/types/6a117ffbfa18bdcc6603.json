@@ -1,1 +1,1 @@
-{"name":"simple_CActorTimeRealPair","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string"}
+{"name":"simple_CActorTimeRealPair","schemaSpan":{"start":27875,"end":27978},"namespace":"","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

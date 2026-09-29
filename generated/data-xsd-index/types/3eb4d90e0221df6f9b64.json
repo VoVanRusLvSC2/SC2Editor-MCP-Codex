@@ -1,1 +1,1 @@
-{"name":"CTextureSlot","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CTextureSlot"}],"enumValues":[],"facets":[]}
+{"name":"CTextureSlot","schemaSpan":{"start":34391,"end":34504},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":34430,"end":34485},"namespace":"","name":"value","type":"simple_CTextureSlot","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

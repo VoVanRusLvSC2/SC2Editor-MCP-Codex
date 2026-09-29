@@ -1,1 +1,1 @@
-{"name":"real32","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_real32"}],"enumValues":[],"facets":[]}
+{"name":"real32","schemaSpan":{"start":10110,"end":10211},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":10143,"end":10192},"namespace":"","name":"value","type":"simple_real32","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

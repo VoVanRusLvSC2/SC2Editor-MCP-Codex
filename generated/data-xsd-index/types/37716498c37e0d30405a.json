@@ -1,1 +1,1 @@
-{"name":"EDetectType","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EDetectType"}],"enumValues":[],"facets":[]}
+{"name":"EDetectType","schemaSpan":{"start":1323292,"end":1323403},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1323330,"end":1323384},"namespace":"","name":"value","type":"simple_EDetectType","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

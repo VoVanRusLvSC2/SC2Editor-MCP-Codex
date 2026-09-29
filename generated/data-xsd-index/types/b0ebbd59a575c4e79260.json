@@ -1,1 +1,1 @@
-{"name":"simple_EEffectMissileSearch","kind":"simple","fields":[],"enumValues":["ArriveOnSearchHit","DynamicSearchArea"],"facets":[],"base":"xs:string"}
+{"name":"simple_EEffectMissileSearch","schemaSpan":{"start":1338322,"end":1338837},"namespace":"","kind":"simple","fields":[],"enumValues":["ArriveOnSearchHit","DynamicSearchArea"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

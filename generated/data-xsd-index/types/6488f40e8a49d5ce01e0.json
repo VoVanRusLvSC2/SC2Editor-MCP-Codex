@@ -1,1 +1,1 @@
-{"name":"ECustomCombinedBuildList","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_ECustomCombinedBuildList"}],"enumValues":[],"facets":[]}
+{"name":"ECustomCombinedBuildList","schemaSpan":{"start":1304790,"end":1304927},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1304841,"end":1304908},"namespace":"","name":"value","type":"simple_ECustomCombinedBuildList","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

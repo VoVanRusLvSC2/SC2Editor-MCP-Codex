@@ -1,1 +1,1 @@
-{"name":"simple_EActorModelAspectDuring","kind":"simple","fields":[],"enumValues":["Any","LiveGame","LiveGameHijacked","LiveGameNotHijacked","Replay"],"facets":[],"base":"xs:string"}
+{"name":"simple_EActorModelAspectDuring","schemaSpan":{"start":758591,"end":759914},"namespace":"","kind":"simple","fields":[],"enumValues":["Any","LiveGame","LiveGameHijacked","LiveGameNotHijacked","Replay"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

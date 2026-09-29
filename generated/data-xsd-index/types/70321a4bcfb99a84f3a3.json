@@ -1,1 +1,1 @@
-{"name":"simple_CTextureSheetLink","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string"}
+{"name":"simple_CTextureSheetLink","schemaSpan":{"start":62656,"end":62758},"namespace":"","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

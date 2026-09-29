@@ -1,1 +1,1 @@
-{"name":"simple_EConversationProductionLevelFlag","kind":"simple","fields":[],"enumValues":["Locked"],"facets":[],"base":"xs:string"}
+{"name":"simple_EConversationProductionLevelFlag","schemaSpan":{"start":1291233,"end":1291540},"namespace":"","kind":"simple","fields":[],"enumValues":["Locked"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

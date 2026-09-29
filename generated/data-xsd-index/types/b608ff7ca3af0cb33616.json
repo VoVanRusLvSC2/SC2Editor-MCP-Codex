@@ -1,1 +1,1 @@
-{"name":"CTimeOfDay","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CTimeOfDay"}],"enumValues":[],"facets":[]}
+{"name":"CTimeOfDay","schemaSpan":{"start":35027,"end":35136},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":35064,"end":35117},"namespace":"","name":"value","type":"simple_CTimeOfDay","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

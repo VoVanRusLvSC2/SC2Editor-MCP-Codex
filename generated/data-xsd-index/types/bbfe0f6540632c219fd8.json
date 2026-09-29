@@ -1,1 +1,1 @@
-{"name":"simple_EParticipantType","kind":"simple","fields":[],"enumValues":["Observer","Participant","Referee","Spectator"],"facets":[],"base":"xs:string"}
+{"name":"simple_EParticipantType","schemaSpan":{"start":1555637,"end":1556888},"namespace":"","kind":"simple","fields":[],"enumValues":["Observer","Participant","Referee","Spectator"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

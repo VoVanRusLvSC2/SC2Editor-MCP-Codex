@@ -1,1 +1,1 @@
-{"name":"CFacialPath","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CFacialPath"}],"enumValues":[],"facets":[]}
+{"name":"CFacialPath","schemaSpan":{"start":12953,"end":13064},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":12991,"end":13045},"namespace":"","name":"value","type":"simple_CFacialPath","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

@@ -1,1 +1,1 @@
-{"name":"EHotkey","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EHotkey"}],"enumValues":[],"facets":[]}
+{"name":"EHotkey","schemaSpan":{"start":323084,"end":323187},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":323118,"end":323168},"namespace":"","name":"value","type":"simple_EHotkey","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

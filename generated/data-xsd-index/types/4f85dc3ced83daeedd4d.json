@@ -1,1 +1,1 @@
-{"name":"CGameSpeed","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CGameSpeed"}],"enumValues":[],"facets":[]}
+{"name":"CGameSpeed","schemaSpan":{"start":8412,"end":8521},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":8449,"end":8502},"namespace":"","name":"value","type":"simple_CGameSpeed","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

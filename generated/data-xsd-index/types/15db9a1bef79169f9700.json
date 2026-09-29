@@ -1,1 +1,1 @@
-{"name":"CAlertLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CAlertLink"}],"enumValues":[],"facets":[]}
+{"name":"CAlertLink","schemaSpan":{"start":54662,"end":54771},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":54699,"end":54752},"namespace":"","name":"value","type":"simple_CAlertLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

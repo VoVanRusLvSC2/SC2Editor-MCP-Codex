@@ -1,1 +1,1 @@
-{"name":"EActorEffectScope","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EActorEffectScope"}],"enumValues":[],"facets":[]}
+{"name":"EActorEffectScope","schemaSpan":{"start":728370,"end":728493},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":728414,"end":728474},"namespace":"","name":"value","type":"simple_EActorEffectScope","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

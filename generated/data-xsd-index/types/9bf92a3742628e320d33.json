@@ -1,1 +1,1 @@
-{"name":"simple_TMountCategory","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string"}
+{"name":"simple_TMountCategory","schemaSpan":{"start":21131,"end":21230},"namespace":"","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

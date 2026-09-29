@@ -1,1 +1,1 @@
-{"name":"simple_EKineticFollow","kind":"simple","fields":[],"enumValues":["Bearings","Position"],"facets":[],"base":"xs:string"}
+{"name":"simple_EKineticFollow","schemaSpan":{"start":1513161,"end":1513629},"namespace":"","kind":"simple","fields":[],"enumValues":["Bearings","Position"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

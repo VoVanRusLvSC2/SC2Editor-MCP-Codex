@@ -1,1 +1,1 @@
-{"name":"EEffectSearchFlag","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EEffectSearchFlag"}],"enumValues":[],"facets":[]}
+{"name":"EEffectSearchFlag","schemaSpan":{"start":1350369,"end":1350492},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1350413,"end":1350473},"namespace":"","name":"value","type":"simple_EEffectSearchFlag","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

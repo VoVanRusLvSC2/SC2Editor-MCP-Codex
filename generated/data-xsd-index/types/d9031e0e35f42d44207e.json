@@ -1,1 +1,1 @@
-{"name":"EClassIdCArtifactSlot","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EClassIdCArtifactSlot"}],"enumValues":[],"facets":[]}
+{"name":"EClassIdCArtifactSlot","schemaSpan":{"start":187974,"end":188105},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":188022,"end":188086},"namespace":"","name":"value","type":"simple_EClassIdCArtifactSlot","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

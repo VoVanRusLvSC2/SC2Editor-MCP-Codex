@@ -1,1 +1,1 @@
-{"name":"EDamageResponseCategory","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EDamageResponseCategory"}],"enumValues":[],"facets":[]}
+{"name":"EDamageResponseCategory","schemaSpan":{"start":1313634,"end":1313769},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1313684,"end":1313750},"namespace":"","name":"value","type":"simple_EDamageResponseCategory","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

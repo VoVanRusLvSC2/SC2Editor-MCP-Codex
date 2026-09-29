@@ -1,1 +1,1 @@
-{"name":"simple_ESoundExclusivityFlag","kind":"simple","fields":[],"enumValues":["SupressionInterrupts"],"facets":[],"base":"xs:string"}
+{"name":"simple_ESoundExclusivityFlag","schemaSpan":{"start":1680378,"end":1680792},"namespace":"","kind":"simple","fields":[],"enumValues":["SupressionInterrupts"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

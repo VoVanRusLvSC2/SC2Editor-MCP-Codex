@@ -1,1 +1,1 @@
-{"name":"simple_TProductHyperlinkId","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string"}
+{"name":"simple_TProductHyperlinkId","schemaSpan":{"start":21994,"end":22098},"namespace":"","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

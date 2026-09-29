@@ -1,1 +1,1 @@
-{"name":"EActorCutsceneStatus","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EActorCutsceneStatus"}],"enumValues":[],"facets":[]}
+{"name":"EActorCutsceneStatus","schemaSpan":{"start":721043,"end":721172},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":721090,"end":721153},"namespace":"","name":"value","type":"simple_EActorCutsceneStatus","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

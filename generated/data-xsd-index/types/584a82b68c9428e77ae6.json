@@ -1,1 +1,1 @@
-{"name":"EClassIdCWarChestSeason","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EClassIdCWarChestSeason"}],"enumValues":[],"facets":[]}
+{"name":"EClassIdCWarChestSeason","schemaSpan":{"start":611831,"end":611966},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":611881,"end":611947},"namespace":"","name":"value","type":"simple_EClassIdCWarChestSeason","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

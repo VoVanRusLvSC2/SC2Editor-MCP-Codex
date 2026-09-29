@@ -1,1 +1,1 @@
-{"name":"CUnitLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CUnitLink"}],"enumValues":[],"facets":[]}
+{"name":"CUnitLink","schemaSpan":{"start":43357,"end":43464},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":43393,"end":43445},"namespace":"","name":"value","type":"simple_CUnitLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

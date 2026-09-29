@@ -1,1 +1,1 @@
-{"name":"ENotifyAreaFlag","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_ENotifyAreaFlag"}],"enumValues":[],"facets":[]}
+{"name":"ENotifyAreaFlag","schemaSpan":{"start":1551103,"end":1551222},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1551145,"end":1551203},"namespace":"","name":"value","type":"simple_ENotifyAreaFlag","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

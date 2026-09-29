@@ -1,1 +1,1 @@
-{"name":"simple_EEffectTimeScale","kind":"simple","fields":[],"enumValues":["Caster","Global","Target","Unknown"],"facets":[],"base":"xs:string"}
+{"name":"simple_EEffectTimeScale","schemaSpan":{"start":1352835,"end":1353638},"namespace":"","kind":"simple","fields":[],"enumValues":["Caster","Global","Target","Unknown"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

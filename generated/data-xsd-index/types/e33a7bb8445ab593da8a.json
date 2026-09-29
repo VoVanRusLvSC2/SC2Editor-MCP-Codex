@@ -1,1 +1,1 @@
-{"name":"C2fVector","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_C2fVector"}],"enumValues":[],"facets":[]}
+{"name":"C2fVector","schemaSpan":{"start":24032,"end":24139},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":24068,"end":24120},"namespace":"","name":"value","type":"simple_C2fVector","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

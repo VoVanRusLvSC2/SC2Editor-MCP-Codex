@@ -1,1 +1,1 @@
-{"name":"EAbilWarpableCmd","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EAbilWarpableCmd"}],"enumValues":[],"facets":[]}
+{"name":"EAbilWarpableCmd","schemaSpan":{"start":134683,"end":134804},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":134726,"end":134785},"namespace":"","name":"value","type":"simple_EAbilWarpableCmd","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

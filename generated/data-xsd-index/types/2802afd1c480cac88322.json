@@ -1,1 +1,1 @@
-{"name":"EAbilLastTarget","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EAbilLastTarget"}],"enumValues":[],"facets":[]}
+{"name":"EAbilLastTarget","schemaSpan":{"start":660439,"end":660558},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":660481,"end":660539},"namespace":"","name":"value","type":"simple_EAbilLastTarget","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

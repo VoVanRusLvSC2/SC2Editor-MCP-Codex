@@ -1,1 +1,1 @@
-{"name":"EAbilInventoryAlignment","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EAbilInventoryAlignment"}],"enumValues":[],"facets":[]}
+{"name":"EAbilInventoryAlignment","schemaSpan":{"start":658646,"end":658781},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":658696,"end":658762},"namespace":"","name":"value","type":"simple_EAbilInventoryAlignment","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

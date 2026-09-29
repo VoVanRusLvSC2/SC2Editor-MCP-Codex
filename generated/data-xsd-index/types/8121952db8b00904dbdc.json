@@ -1,1 +1,1 @@
-{"name":"CActorTimePitchPair","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CActorTimePitchPair"}],"enumValues":[],"facets":[]}
+{"name":"CActorTimePitchPair","schemaSpan":{"start":27513,"end":27640},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":27559,"end":27621},"namespace":"","name":"value","type":"simple_CActorTimePitchPair","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

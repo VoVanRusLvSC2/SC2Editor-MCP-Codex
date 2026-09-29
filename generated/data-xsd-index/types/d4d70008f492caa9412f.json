@@ -1,1 +1,1 @@
-{"name":"simple_EAlertDisplay","kind":"simple","fields":[],"enumValues":["Ally","Enemy","Neutral","Observer","Other","Self"],"facets":[],"base":"xs:string"}
+{"name":"simple_EAlertDisplay","schemaSpan":{"start":1042686,"end":1043871},"namespace":"","kind":"simple","fields":[],"enumValues":["Ally","Enemy","Neutral","Observer","Other","Self"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

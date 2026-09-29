@@ -1,1 +1,1 @@
-{"name":"simple_CActorLabelKey","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string"}
+{"name":"simple_CActorLabelKey","schemaSpan":{"start":11125,"end":11224},"namespace":"","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

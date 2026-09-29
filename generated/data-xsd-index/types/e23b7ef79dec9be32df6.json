@@ -1,1 +1,1 @@
-{"name":"EBundleFlag","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EBundleFlag"}],"enumValues":[],"facets":[]}
+{"name":"EBundleFlag","schemaSpan":{"start":1213491,"end":1213602},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1213529,"end":1213583},"namespace":"","name":"value","type":"simple_EBundleFlag","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

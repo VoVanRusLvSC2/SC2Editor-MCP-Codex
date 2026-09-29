@@ -1,1 +1,1 @@
-{"name":"CActorDeathMembers","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CActorDeathMembers"}],"enumValues":[],"facets":[]}
+{"name":"CActorDeathMembers","schemaSpan":{"start":25937,"end":26062},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":25982,"end":26043},"namespace":"","name":"value","type":"simple_CActorDeathMembers","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

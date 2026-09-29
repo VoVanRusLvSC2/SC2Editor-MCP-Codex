@@ -1,1 +1,1 @@
-{"name":"simple_EClassIdCWater","kind":"simple","fields":[],"enumValues":["CWater"],"facets":[],"base":"xs:string"}
+{"name":"simple_EClassIdCWater","schemaSpan":{"start":612406,"end":612694},"namespace":"","kind":"simple","fields":[],"enumValues":["CWater"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

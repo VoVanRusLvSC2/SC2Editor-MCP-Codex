@@ -1,1 +1,1 @@
-{"name":"EClassIdCAttachMethod","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EClassIdCAttachMethod"}],"enumValues":[],"facets":[]}
+{"name":"EClassIdCAttachMethod","schemaSpan":{"start":188419,"end":188550},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":188467,"end":188531},"namespace":"","name":"value","type":"simple_EClassIdCAttachMethod","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

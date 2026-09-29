@@ -1,1 +1,1 @@
-{"name":"CCmdResult","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CCmdResult"}],"enumValues":[],"facets":[]}
+{"name":"CCmdResult","schemaSpan":{"start":29288,"end":29397},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":29325,"end":29378},"namespace":"","name":"value","type":"simple_CCmdResult","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

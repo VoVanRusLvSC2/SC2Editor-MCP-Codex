@@ -1,1 +1,1 @@
-{"name":"EUnitUserFlag","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EUnitUserFlag"}],"enumValues":[],"facets":[]}
+{"name":"EUnitUserFlag","schemaSpan":{"start":252626,"end":252741},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":252666,"end":252722},"namespace":"","name":"value","type":"simple_EUnitUserFlag","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

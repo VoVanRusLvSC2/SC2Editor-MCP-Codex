@@ -1,1 +1,1 @@
-{"name":"EActorTextOption","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EActorTextOption"}],"enumValues":[],"facets":[]}
+{"name":"EActorTextOption","schemaSpan":{"start":1028542,"end":1028663},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1028585,"end":1028644},"namespace":"","name":"value","type":"simple_EActorTextOption","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

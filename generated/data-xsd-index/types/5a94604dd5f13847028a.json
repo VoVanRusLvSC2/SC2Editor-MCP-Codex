@@ -1,1 +1,1 @@
-{"name":"EActorForceField","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EActorForceField"}],"enumValues":[],"facets":[]}
+{"name":"EActorForceField","schemaSpan":{"start":736353,"end":736474},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":736396,"end":736455},"namespace":"","name":"value","type":"simple_EActorForceField","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

@@ -1,1 +1,1 @@
-{"name":"CActorTableKeys4x0","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CActorTableKeys4x0"}],"enumValues":[],"facets":[]}
+{"name":"CActorTableKeys4x0","schemaSpan":{"start":27070,"end":27195},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":27115,"end":27176},"namespace":"","name":"value","type":"simple_CActorTableKeys4x0","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

@@ -1,1 +1,1 @@
-{"name":"simple_EPreloadFlag","kind":"simple","fields":[],"enumValues":["Automatic","Instantiate","MapCampaign"],"facets":[],"base":"xs:string"}
+{"name":"simple_EPreloadFlag","schemaSpan":{"start":1584052,"end":1584708},"namespace":"","kind":"simple","fields":[],"enumValues":["Automatic","Instantiate","MapCampaign"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

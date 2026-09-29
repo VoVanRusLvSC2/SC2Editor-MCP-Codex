@@ -1,1 +1,1 @@
-{"name":"CUpgradeLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CUpgradeLink"}],"enumValues":[],"facets":[]}
+{"name":"CUpgradeLink","schemaSpan":{"start":43562,"end":43675},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":43601,"end":43656},"namespace":"","name":"value","type":"simple_CUpgradeLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

@@ -1,1 +1,1 @@
-{"name":"simple_ETalentProfileFlag","kind":"simple","fields":[],"enumValues":["Hidden"],"facets":[],"base":"xs:string"}
+{"name":"simple_ETalentProfileFlag","schemaSpan":{"start":528343,"end":528636},"namespace":"","kind":"simple","fields":[],"enumValues":["Hidden"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

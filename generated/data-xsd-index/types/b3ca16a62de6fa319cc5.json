@@ -1,1 +1,1 @@
-{"name":"EHeroAbilCategoryState","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EHeroAbilCategoryState"}],"enumValues":[],"facets":[]}
+{"name":"EHeroAbilCategoryState","schemaSpan":{"start":395135,"end":395268},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":395184,"end":395249},"namespace":"","name":"value","type":"simple_EHeroAbilCategoryState","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

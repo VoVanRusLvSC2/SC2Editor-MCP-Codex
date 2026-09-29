@@ -393,7 +393,7 @@ export function applyCutsceneOperations(
           for (const [name, value] of Object.entries(properties)) doc.setAttribute({ nodeId: fog.id }, name, value);
           target = fog.attrs.guid ? `guid:${fog.attrs.guid}` : undefined;
           if (operation.duration !== undefined) {
-            let block = fog.childIds.map((id) => doc.nodes[id]).find((node) => node.tag === "CCutsceneElementObject");
+            const block = fog.childIds.map((id) => doc.nodes[id]).find((node) => node.tag === "CCutsceneElementObject");
             if (!block) {
               doc.addNode({ nodeId: fog.id }, stableSpec({ nativeType: "CCutsceneElementObject", attrs: { duration: nativeTimeInput(operation.duration), ...(operation.lockedToEnd === undefined ? {} : { lockedToEnd: operation.lockedToEnd }) } }));
             } else {

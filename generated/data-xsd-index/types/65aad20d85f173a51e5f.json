@@ -1,1 +1,1 @@
-{"name":"EUIColorRelation","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EUIColorRelation"}],"enumValues":[],"facets":[]}
+{"name":"EUIColorRelation","schemaSpan":{"start":210664,"end":210785},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":210707,"end":210766},"namespace":"","name":"value","type":"simple_EUIColorRelation","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

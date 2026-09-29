@@ -1,1 +1,1 @@
-{"name":"CRaceBannerPackLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CRaceBannerPackLink"}],"enumValues":[],"facets":[]}
+{"name":"CRaceBannerPackLink","schemaSpan":{"start":54870,"end":54997},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":54916,"end":54978},"namespace":"","name":"value","type":"simple_CRaceBannerPackLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

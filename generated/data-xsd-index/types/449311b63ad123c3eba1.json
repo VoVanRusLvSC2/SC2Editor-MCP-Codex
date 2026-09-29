@@ -1,1 +1,1 @@
-{"name":"simple_EActorShieldFlashType","kind":"simple","fields":[],"enumValues":["Facer","Full","Header","None"],"facets":[],"base":"xs:string"}
+{"name":"simple_EActorShieldFlashType","schemaSpan":{"start":973039,"end":974819},"namespace":"","kind":"simple","fields":[],"enumValues":["Facer","Full","Header","None"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

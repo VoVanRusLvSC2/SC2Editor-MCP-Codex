@@ -1,1 +1,1 @@
-{"name":"simple_TFootprintMask","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string"}
+{"name":"simple_TFootprintMask","schemaSpan":{"start":38817,"end":38916},"namespace":"","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

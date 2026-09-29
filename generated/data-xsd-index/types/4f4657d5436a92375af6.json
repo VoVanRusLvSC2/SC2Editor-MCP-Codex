@@ -1,1 +1,1 @@
-{"name":"CVariatorActorFangle","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CVariatorActorFangle"}],"enumValues":[],"facets":[]}
+{"name":"CVariatorActorFangle","schemaSpan":{"start":35690,"end":35819},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":35737,"end":35800},"namespace":"","name":"value","type":"simple_CVariatorActorFangle","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

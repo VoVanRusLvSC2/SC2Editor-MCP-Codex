@@ -1,1 +1,1 @@
-{"name":"simple_EActorSiteBillboardType","kind":"simple","fields":[],"enumValues":["Unobstructable","UseTowardsCameraDistance"],"facets":[],"base":"xs:string"}
+{"name":"simple_EActorSiteBillboardType","schemaSpan":{"start":974958,"end":975952},"namespace":"","kind":"simple","fields":[],"enumValues":["Unobstructable","UseTowardsCameraDistance"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

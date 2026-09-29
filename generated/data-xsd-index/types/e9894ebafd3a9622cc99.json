@@ -1,1 +1,1 @@
-{"name":"ELightParam","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_ELightParam"}],"enumValues":[],"facets":[]}
+{"name":"ELightParam","schemaSpan":{"start":1514938,"end":1515049},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1514976,"end":1515030},"namespace":"","name":"value","type":"simple_ELightParam","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

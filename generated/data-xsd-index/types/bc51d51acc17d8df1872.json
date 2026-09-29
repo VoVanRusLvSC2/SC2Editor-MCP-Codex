@@ -1,1 +1,1 @@
-{"name":"EUnitMob","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EUnitMob"}],"enumValues":[],"facets":[]}
+{"name":"EUnitMob","schemaSpan":{"start":1754794,"end":1754899},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1754829,"end":1754880},"namespace":"","name":"value","type":"simple_EUnitMob","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

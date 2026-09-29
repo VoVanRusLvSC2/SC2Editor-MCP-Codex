@@ -1,1 +1,1 @@
-{"name":"CMountLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CMountLink"}],"enumValues":[],"facets":[]}
+{"name":"CMountLink","schemaSpan":{"start":53586,"end":53695},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":53623,"end":53676},"namespace":"","name":"value","type":"simple_CMountLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

@@ -1,1 +1,1 @@
-{"name":"EActorCloakEffect","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EActorCloakEffect"}],"enumValues":[],"facets":[]}
+{"name":"EActorCloakEffect","schemaSpan":{"start":717730,"end":717853},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":717774,"end":717834},"namespace":"","name":"value","type":"simple_EActorCloakEffect","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

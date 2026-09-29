@@ -205,6 +205,33 @@ export class GalaxyDocument {
                 out.push(this.source.slice(this.tokens[from]!.start, this.tokens[i - 1]!.end).trim());
             from = i + 1;
         } return out.length === 1 && out[0] === 'void' ? [] : out; }
+    functionBindings(name:string): {bound:Token[];shadowed:Token[]} {
+        const bound:Token[]=[],shadowed:Token[]=[];
+        const scopes:Array<{end:number;declared:Set<string>}>=[];
+        for(let i=0;i<this.tokens.length;i++){
+            const token=this.tokens[i];
+            while(scopes.length && token.start>=scopes.at(-1)!.end)scopes.pop();
+            if(token.value==='{'){
+                const end=this.pairs.get(i);
+                if(end!==undefined){
+                    const fn=this.symbols.find(s=>s.kind==='function'&&s.bodyStart===token.end);
+                    const parameters=new Set((fn?.parameters??[]).map(p=>/[A-Za-z_][A-Za-z_0-9]*\s*(?:\[[^\]]*\])*\s*$/.exec(p)?.[0]?.replace(/\[.*$/,'').trim()).filter((v):v is string=>Boolean(v)));
+                    scopes.push({end:this.tokens[end].end,declared:parameters});
+                }
+            }
+            if(token.kind!=='identifier'||token.value!==name)continue;
+            const previous=this.tokens[i-1],before=this.tokens[i-2];
+            const declaration=previous?.kind==='identifier'&&!['return','else','case'].includes(previous.value)&&[';','{','}','const'].includes(before?.value??'');
+            if(scopes.length&&declaration){scopes.at(-1)!.declared.add(name);shadowed.push(token);continue;}
+            if(scopes.some(s=>s.declared.has(name))){shadowed.push(token);continue;}
+            if(previous?.value==='.')continue;
+            const signature=this.symbols.find(s=>(s.kind==='function'||s.kind==='prototype')&&s.name===name&&token.start>=s.start&&token.end<=s.start+s.signature.length);
+            if(signature||this.tokens[i+1]?.value==='(')bound.push(token);
+            else throw new Error('UNVERIFIED_RENAME_BINDING: '+token.start);
+        }
+        return {bound,shadowed};
+    }
+
     function(name: string) { const matches = this.symbols.filter(s => s.kind === 'function' && s.name === name); if (matches.length !== 1)
         throw new Error('FUNCTION_NOT_UNIQUE: ' + name); return matches[0]!; }
     calls() { if(this.callCache)return this.callCache; const signatures = this.symbols.filter(s => s.kind === 'function' || s.kind === 'prototype'); let cursor = 0; return this.callCache = this.tokens.flatMap((t, i) => { while (cursor < signatures.length && t.start >= signatures[cursor]!.start + signatures[cursor]!.signature.length)

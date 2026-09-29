@@ -1,1 +1,1 @@
-{"name":"EScoreCollapse","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EScoreCollapse"}],"enumValues":[],"facets":[]}
+{"name":"EScoreCollapse","schemaSpan":{"start":1602378,"end":1602495},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1602419,"end":1602476},"namespace":"","name":"value","type":"simple_EScoreCollapse","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

@@ -1,1 +1,1 @@
-{"name":"simple_EAbilHarvestFlag","kind":"simple","fields":[],"enumValues":["BypassResourceQueue","NoExtract"],"facets":[],"base":"xs:string"}
+{"name":"simple_EAbilHarvestFlag","schemaSpan":{"start":656434,"end":656931},"namespace":"","kind":"simple","fields":[],"enumValues":["BypassResourceQueue","NoExtract"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

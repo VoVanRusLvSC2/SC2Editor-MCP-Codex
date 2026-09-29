@@ -1,1 +1,1 @@
-{"name":"EAnimSetTimeFlag","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EAnimSetTimeFlag"}],"enumValues":[],"facets":[]}
+{"name":"EAnimSetTimeFlag","schemaSpan":{"start":1065906,"end":1066027},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1065949,"end":1066008},"namespace":"","name":"value","type":"simple_EAnimSetTimeFlag","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

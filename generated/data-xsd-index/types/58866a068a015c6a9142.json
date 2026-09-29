@@ -1,1 +1,1 @@
-{"name":"ETextureExpressionOp","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_ETextureExpressionOp"}],"enumValues":[],"facets":[]}
+{"name":"ETextureExpressionOp","schemaSpan":{"start":1711491,"end":1711620},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1711538,"end":1711601},"namespace":"","name":"value","type":"simple_ETextureExpressionOp","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

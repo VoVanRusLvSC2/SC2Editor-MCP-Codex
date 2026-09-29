@@ -1,1 +1,1 @@
-{"name":"ESelectionColor","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_ESelectionColor"}],"enumValues":[],"facets":[]}
+{"name":"ESelectionColor","schemaSpan":{"start":1668751,"end":1668870},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1668793,"end":1668851},"namespace":"","name":"value","type":"simple_ESelectionColor","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

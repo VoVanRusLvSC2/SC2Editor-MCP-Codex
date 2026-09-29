@@ -1,1 +1,1 @@
-{"name":"EActorOverkillTestType","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EActorOverkillTestType"}],"enumValues":[],"facets":[]}
+{"name":"EActorOverkillTestType","schemaSpan":{"start":925750,"end":925883},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":925799,"end":925864},"namespace":"","name":"value","type":"simple_EActorOverkillTestType","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

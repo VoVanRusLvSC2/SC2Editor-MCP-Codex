@@ -1,1 +1,1 @@
-{"name":"simple_EAnimTimeVariantType","kind":"simple","fields":[],"enumValues":["AsAutomatic","AsDuration","AsTimeScale","AsTimeScaleAbsolute"],"facets":[],"base":"xs:string"}
+{"name":"simple_EAnimTimeVariantType","schemaSpan":{"start":1068455,"end":1070000},"namespace":"","kind":"simple","fields":[],"enumValues":["AsAutomatic","AsDuration","AsTimeScale","AsTimeScaleAbsolute"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

@@ -1,1 +1,1 @@
-{"name":"simple_EAnimSetTimeFlag","kind":"simple","fields":[],"enumValues":["Scaled","TriggerEventsOnScrub"],"facets":[],"base":"xs:string"}
+{"name":"simple_EAnimSetTimeFlag","schemaSpan":{"start":1066029,"end":1067400},"namespace":"","kind":"simple","fields":[],"enumValues":["Scaled","TriggerEventsOnScrub"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

@@ -1,1 +1,1 @@
-{"name":"EAbilEffectStage","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EAbilEffectStage"}],"enumValues":[],"facets":[]}
+{"name":"EAbilEffectStage","schemaSpan":{"start":74432,"end":74553},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":74475,"end":74534},"namespace":"","name":"value","type":"simple_EAbilEffectStage","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

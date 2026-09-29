@@ -1,1 +1,1 @@
-{"name":"ERaceFlag","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_ERaceFlag"}],"enumValues":[],"facets":[]}
+{"name":"ERaceFlag","schemaSpan":{"start":1588392,"end":1588499},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1588428,"end":1588480},"namespace":"","name":"value","type":"simple_ERaceFlag","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

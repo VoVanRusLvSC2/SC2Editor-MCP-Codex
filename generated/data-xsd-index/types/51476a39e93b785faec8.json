@@ -1,1 +1,1 @@
-{"name":"simple_EActorRegionFlag","kind":"simple","fields":[],"enumValues":["UseEffectRange"],"facets":[],"base":"xs:string"}
+{"name":"simple_EActorRegionFlag","schemaSpan":{"start":956450,"end":956964},"namespace":"","kind":"simple","fields":[],"enumValues":["UseEffectRange"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

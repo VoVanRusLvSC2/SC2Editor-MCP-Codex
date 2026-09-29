@@ -1,1 +1,1 @@
-{"name":"EAttackType","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EAttackType"}],"enumValues":[],"facets":[]}
+{"name":"EAttackType","schemaSpan":{"start":265468,"end":265579},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":265506,"end":265560},"namespace":"","name":"value","type":"simple_EAttackType","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

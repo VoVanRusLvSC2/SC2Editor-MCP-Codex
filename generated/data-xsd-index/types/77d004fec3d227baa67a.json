@@ -1,1 +1,1 @@
-{"name":"simple_EMotionArrivalTestType","kind":"simple","fields":[],"enumValues":["2D","3D","Adaptive","Never"],"facets":[],"base":"xs:string"}
+{"name":"simple_EMotionArrivalTestType","schemaSpan":{"start":1537548,"end":1538344},"namespace":"","kind":"simple","fields":[],"enumValues":["2D","3D","Adaptive","Never"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

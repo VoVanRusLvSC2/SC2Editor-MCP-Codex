@@ -1,1 +1,1 @@
-{"name":"simple_EActorPhysicsImpactMember","kind":"simple","fields":[],"enumValues":["Other","Self"],"facets":[],"base":"xs:string"}
+{"name":"simple_EActorPhysicsImpactMember","schemaSpan":{"start":933063,"end":933847},"namespace":"","kind":"simple","fields":[],"enumValues":["Other","Self"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

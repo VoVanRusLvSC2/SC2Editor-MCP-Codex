@@ -1,1 +1,1 @@
-{"name":"CActorSiteOps","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CActorSiteOps"}],"enumValues":[],"facets":[]}
+{"name":"CActorSiteOps","schemaSpan":{"start":26621,"end":26736},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":26661,"end":26717},"namespace":"","name":"value","type":"simple_CActorSiteOps","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

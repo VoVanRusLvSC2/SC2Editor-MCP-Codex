@@ -1,1 +1,1 @@
-{"name":"simple_ESkinFeature","kind":"simple","fields":[],"enumValues":["AlteredVO","Progression","ReplacedVO","ThemedAbilities","ThemedAnimations","ThemedMount"],"facets":[],"base":"xs:string"}
+{"name":"simple_ESkinFeature","schemaSpan":{"start":1674008,"end":1675243},"namespace":"","kind":"simple","fields":[],"enumValues":["AlteredVO","Progression","ReplacedVO","ThemedAbilities","ThemedAnimations","ThemedMount"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

@@ -1,1 +1,1 @@
-{"name":"simple_EAbilSpecializeInfoFlag","kind":"simple","fields":[],"enumValues":["AutoCast","AutoCastOn"],"facets":[],"base":"xs:string"}
+{"name":"simple_EAbilSpecializeInfoFlag","schemaSpan":{"start":682876,"end":683360},"namespace":"","kind":"simple","fields":[],"enumValues":["AutoCast","AutoCastOn"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

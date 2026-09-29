@@ -1,1 +1,1 @@
-{"name":"EAbilRedirectTargetCmd","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EAbilRedirectTargetCmd"}],"enumValues":[],"facets":[]}
+{"name":"EAbilRedirectTargetCmd","schemaSpan":{"start":110988,"end":111121},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":111037,"end":111102},"namespace":"","name":"value","type":"simple_EAbilRedirectTargetCmd","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

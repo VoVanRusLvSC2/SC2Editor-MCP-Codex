@@ -1,1 +1,1 @@
-{"name":"simple_EAbilInteractCmd","kind":"simple","fields":[],"enumValues":["Designate"],"facets":[],"base":"xs:string"}
+{"name":"simple_EAbilInteractCmd","schemaSpan":{"start":96658,"end":96955},"namespace":"","kind":"simple","fields":[],"enumValues":["Designate"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

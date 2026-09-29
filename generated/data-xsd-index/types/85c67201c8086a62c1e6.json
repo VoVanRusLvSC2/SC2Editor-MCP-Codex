@@ -1,1 +1,1 @@
-{"name":"simple_EActorSiteOpPhysicsImpactType","kind":"simple","fields":[],"enumValues":["Normal"],"facets":[],"base":"xs:string"}
+{"name":"simple_EActorSiteOpPhysicsImpactType","schemaSpan":{"start":984110,"end":984457},"namespace":"","kind":"simple","fields":[],"enumValues":["Normal"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

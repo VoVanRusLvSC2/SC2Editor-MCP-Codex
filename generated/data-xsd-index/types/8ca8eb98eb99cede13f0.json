@@ -1,1 +1,1 @@
-{"name":"EActorHeightSourceType","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EActorHeightSourceType"}],"enumValues":[],"facets":[]}
+{"name":"EActorHeightSourceType","schemaSpan":{"start":742059,"end":742192},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":742108,"end":742173},"namespace":"","name":"value","type":"simple_EActorHeightSourceType","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

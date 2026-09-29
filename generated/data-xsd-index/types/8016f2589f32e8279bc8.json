@@ -1,1 +1,1 @@
-{"name":"simple_EMotionRotationLaunchActorType","kind":"simple","fields":[],"enumValues":["LaunchToTarget","LaunchToTarget2D","None","Supplied"],"facets":[],"base":"xs:string"}
+{"name":"simple_EMotionRotationLaunchActorType","schemaSpan":{"start":1544865,"end":1545724},"namespace":"","kind":"simple","fields":[],"enumValues":["LaunchToTarget","LaunchToTarget2D","None","Supplied"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

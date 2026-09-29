@@ -1,1 +1,1 @@
-{"name":"simple_EClassIdCLoot","kind":"simple","fields":[],"enumValues":["CLoot","CLootEffect","CLootItem","CLootSet","CLootSpawn","CLootUnit"],"facets":[],"base":"xs:string"}
+{"name":"simple_EClassIdCLoot","schemaSpan":{"start":425241,"end":426393},"namespace":"","kind":"simple","fields":[],"enumValues":["CLoot","CLootSpawn","CLootEffect","CLootItem","CLootSet","CLootUnit"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

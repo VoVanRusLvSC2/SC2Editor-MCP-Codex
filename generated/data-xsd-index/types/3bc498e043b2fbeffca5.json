@@ -1,1 +1,1 @@
-{"name":"EConversationSelectionMethod","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EConversationSelectionMethod"}],"enumValues":[],"facets":[]}
+{"name":"EConversationSelectionMethod","schemaSpan":{"start":1291542,"end":1291687},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1291597,"end":1291668},"namespace":"","name":"value","type":"simple_EConversationSelectionMethod","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

@@ -1,1 +1,1 @@
-{"name":"EHeightMap","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EHeightMap"}],"enumValues":[],"facets":[]}
+{"name":"EHeightMap","schemaSpan":{"start":249508,"end":249617},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":249545,"end":249598},"namespace":"","name":"value","type":"simple_EHeightMap","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

@@ -1,1 +1,1 @@
-{"name":"simple_ETurretIdle","kind":"simple","fields":[],"enumValues":["FollowMovement","FollowMovementReverse","Hold","Reset","ResetIfMoving","Spin"],"facets":[],"base":"xs:string"}
+{"name":"simple_ETurretIdle","schemaSpan":{"start":1748775,"end":1749971},"namespace":"","kind":"simple","fields":[],"enumValues":["FollowMovement","FollowMovementReverse","Hold","Reset","ResetIfMoving","Spin"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

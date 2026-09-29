@@ -1,1 +1,1 @@
-{"name":"NNet__Game__TAIBuild","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_NNet__Game__TAIBuild"}],"enumValues":[],"facets":[]}
+{"name":"NNet__Game__TAIBuild","schemaSpan":{"start":3767,"end":3896},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":3814,"end":3877},"namespace":"","name":"value","type":"simple_NNet__Game__TAIBuild","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

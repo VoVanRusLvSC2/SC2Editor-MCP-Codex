@@ -1,1 +1,1 @@
-{"name":"CLightLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CLightLink"}],"enumValues":[],"facets":[]}
+{"name":"CLightLink","schemaSpan":{"start":48378,"end":48487},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":48415,"end":48468},"namespace":"","name":"value","type":"simple_CLightLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

@@ -1,1 +1,1 @@
-{"name":"SProductReleaseDate","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_SProductReleaseDate"}],"enumValues":[],"facets":[]}
+{"name":"SProductReleaseDate","schemaSpan":{"start":40012,"end":40139},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":40058,"end":40120},"namespace":"","name":"value","type":"simple_SProductReleaseDate","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

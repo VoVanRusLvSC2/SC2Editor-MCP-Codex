@@ -1,1 +1,1 @@
-{"name":"CWarChestSeasonLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CWarChestSeasonLink"}],"enumValues":[],"facets":[]}
+{"name":"CWarChestSeasonLink","schemaSpan":{"start":63613,"end":63740},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":63659,"end":63721},"namespace":"","name":"value","type":"simple_CWarChestSeasonLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

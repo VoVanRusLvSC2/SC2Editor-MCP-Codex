@@ -1,1 +1,1 @@
-{"name":"EMotionDriverType","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EMotionDriverType"}],"enumValues":[],"facets":[]}
+{"name":"EMotionDriverType","schemaSpan":{"start":1539291,"end":1539414},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1539335,"end":1539395},"namespace":"","name":"value","type":"simple_EMotionDriverType","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

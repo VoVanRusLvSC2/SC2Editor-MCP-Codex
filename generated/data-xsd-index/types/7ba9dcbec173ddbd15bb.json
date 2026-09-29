@@ -1,1 +1,1 @@
-{"name":"CVariatorGameFangle","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CVariatorGameFangle"}],"enumValues":[],"facets":[]}
+{"name":"CVariatorGameFangle","schemaSpan":{"start":36166,"end":36293},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":36212,"end":36274},"namespace":"","name":"value","type":"simple_CVariatorGameFangle","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

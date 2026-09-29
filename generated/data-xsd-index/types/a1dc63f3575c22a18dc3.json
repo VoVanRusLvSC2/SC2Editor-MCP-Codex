@@ -1,1 +1,1 @@
-{"name":"simple_EClassIdCVoicePack","kind":"simple","fields":[],"enumValues":["CVoicePack"],"facets":[],"base":"xs:string"}
+{"name":"simple_EClassIdCVoicePack","schemaSpan":{"start":611103,"end":611404},"namespace":"","kind":"simple","fields":[],"enumValues":["CVoicePack"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

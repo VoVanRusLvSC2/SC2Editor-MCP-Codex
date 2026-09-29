@@ -1,1 +1,1 @@
-{"name":"EClassIdCHeroAbil","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EClassIdCHeroAbil"}],"enumValues":[],"facets":[]}
+{"name":"EClassIdCHeroAbil","schemaSpan":{"start":415364,"end":415487},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":415408,"end":415468},"namespace":"","name":"value","type":"simple_EClassIdCHeroAbil","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

@@ -1,1 +1,1 @@
-{"name":"CObjectiveLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CObjectiveLink"}],"enumValues":[],"facets":[]}
+{"name":"CObjectiveLink","schemaSpan":{"start":46660,"end":46777},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":46701,"end":46758},"namespace":"","name":"value","type":"simple_CObjectiveLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

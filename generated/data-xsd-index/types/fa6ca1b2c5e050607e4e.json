@@ -1,1 +1,1 @@
-{"name":"ETextTagEdge","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_ETextTagEdge"}],"enumValues":[],"facets":[]}
+{"name":"ETextTagEdge","schemaSpan":{"start":1709956,"end":1710069},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1709995,"end":1710050},"namespace":"","name":"value","type":"simple_ETextTagEdge","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

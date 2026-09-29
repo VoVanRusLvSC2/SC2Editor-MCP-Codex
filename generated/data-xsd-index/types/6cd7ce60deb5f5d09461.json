@@ -1,1 +1,1 @@
-{"name":"CEffectLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CEffectLink"}],"enumValues":[],"facets":[]}
+{"name":"CEffectLink","schemaSpan":{"start":41636,"end":41747},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":41674,"end":41728},"namespace":"","name":"value","type":"simple_CEffectLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

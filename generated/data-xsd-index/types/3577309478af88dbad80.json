@@ -1,1 +1,1 @@
-{"name":"EAbilLearnCmd","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EAbilLearnCmd"}],"enumValues":[],"facets":[]}
+{"name":"EAbilLearnCmd","schemaSpan":{"start":98793,"end":98908},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":98833,"end":98889},"namespace":"","name":"value","type":"simple_EAbilLearnCmd","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

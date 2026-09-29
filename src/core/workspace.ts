@@ -41,7 +41,8 @@ export interface RawTransactionOptions {
   dryRun?: boolean; stage?: boolean; backup?: boolean; expectedSha256?: Record<string, string>; summary?: string;
   backupSuffix?: string; requireMissing?: boolean | string[]; requireExisting?: boolean; accept?: () => boolean;
 }
-type ReadSet = Map<string, FileSnapshot> & { effective: Map<string, string> };
+interface DirectoryRead {directory:string;entries:string[];accept:(entry:import('node:fs').Dirent)=>boolean}
+type ReadSet = Map<string, FileSnapshot> & { effective: Map<string, string>;directories:Map<string,DirectoryRead> };
 
 export class Workspace {
   readonly root: string;
@@ -52,9 +53,10 @@ export class Workspace {
   private readonly draftBases = new Map<string, FileSnapshot>();
   private readonly draftGroups = new Map<string, Set<string>>();
   private readonly draftReadSets = new Map<string, Map<string, FileSnapshot>>();
+  private readonly draftDirectories=new Map<string,Map<string,DirectoryRead>>();
   private readonly draftEffectiveReads = new Map<string, Map<string, string>>();
   private readonly reads = new AsyncLocalStorage<ReadSet>();
-  withReadSet<T>(work: () => Promise<T>): Promise<T> { return this.reads.getStore() ? work() : this.reads.run(Object.assign(new Map<string, FileSnapshot>(), { effective: new Map<string, string>() }), work); }
+  withReadSet<T>(work: () => Promise<T>): Promise<T> { return this.reads.getStore() ? work() : this.reads.run(Object.assign(new Map<string, FileSnapshot>(), { effective: new Map<string, string>(),directories:new Map<string,DirectoryRead>() }), work); }
   get trackingReads(): boolean { return this.reads.getStore() !== undefined; }
   private captureRead(absolute: string, snapshot: FileSnapshot) {
     const reads = this.reads.getStore(); if (!reads) return;
@@ -68,6 +70,12 @@ export class Workspace {
     if (previous !== undefined && previous !== text) throw new Error(`STALE_DEPENDENCY_DRAFT: ${absolute}`);
     reads.effective.set(absolute, text);
   }
+  async readDirectory(directory:string,scope:string,accept:(entry:import('node:fs').Dirent)=>boolean=()=>true) {
+    const absolute=path.resolve(directory),entries=await fs.readdir(absolute,{withFileTypes:true}),reads=this.reads.getStore();
+    if(reads){const key=JSON.stringify([absolute,scope]),snapshot={directory:absolute,entries:entries.filter(accept).map(e=>e.name).sort(),accept},old=reads.directories.get(key);if(old&&JSON.stringify(old.entries)!==JSON.stringify(snapshot.entries))throw new Error('STALE_DIRECTORY_DEPENDENCY: '+absolute);reads.directories.set(key,snapshot);if(reads.directories.size>8192)throw new Error('DIRECTORY_DEPENDENCY_LIMIT');}
+    return entries;
+  }
+
   async readDependency(file: string, optional = false): Promise<string> {
     const absolute = path.resolve(file), snapshot = await readSnapshot(absolute);
     this.captureRead(absolute, snapshot);
@@ -75,8 +83,9 @@ export class Workspace {
     return decodeUtf8(snapshot.bytes, absolute);
   }
   private draftRevision = 0;
+  coupledDraftFiles(files:string[]):string[]{const result=new Set(files.map(file=>this.fileKey(file)));for(const file of result)for(const member of this.draftGroups.get(file)??[])result.add(member);return [...result];}
   draftFiles(): string[] { return [...this.drafts.keys()]; }
-  private clearDraft(file: string) { this.drafts.delete(file); this.draftCreates.delete(file); this.draftBases.delete(file); this.draftGroups.delete(file); this.draftReadSets.delete(file); this.draftEffectiveReads.delete(file); this.draftRevision++; }
+  private clearDraft(file: string) { this.drafts.delete(file); this.draftCreates.delete(file); this.draftBases.delete(file); this.draftGroups.delete(file); this.draftReadSets.delete(file); this.draftEffectiveReads.delete(file);this.draftDirectories.delete(file); this.draftRevision++; }
   private assertCompleteGroup(keys: string[]) {
     for (const key of keys) if ([...(this.draftGroups.get(key) ?? [])].some(file => !keys.includes(file))) throw new Error("PARTIAL_TEXT_TRANSACTION: save/discard the full staged group first");
   }
@@ -226,7 +235,13 @@ export class Workspace {
         for (const file of absoluteKeys) effective.delete(file);
         return effective;
       };
+      const directoryDependencies=()=>{const directories=new Map<string,DirectoryRead>();for(const key of keys)for(const [id,snapshot]of this.draftDirectories.get(key)??[])directories.set(id,snapshot);for(const [id,snapshot]of reads.directories){const old=directories.get(id);if(old&&JSON.stringify(old.entries)!==JSON.stringify(snapshot.entries))throw new Error('STALE_DIRECTORY_DEPENDENCY: '+snapshot.directory);directories.set(id,snapshot);}return directories;};
+      const verifyDirectories=async()=>{for(const snapshot of directoryDependencies().values()){
+        const writable=(name:string)=>{const absolute=path.join(snapshot.directory,name);return [...absoluteKeys].some(key=>key===absolute||key.startsWith(absolute+path.sep));};
+        const before=snapshot.entries.filter(name=>!writable(name)),after=(await fs.readdir(snapshot.directory,{withFileTypes:true})).filter(snapshot.accept).map(e=>e.name).filter(name=>!writable(name)).sort();if(JSON.stringify(before)!==JSON.stringify(after))throw new Error('STALE_DIRECTORY_DEPENDENCY: '+snapshot.directory);
+      }};
       const verify = async () => {
+        await verifyDirectories();
         await assertSnapshots(file => file, dependencyReads());
         for (const [file, text] of effectiveDependencies()) {
           if (decodeUtf8((await this.binary.read(file)).bytes, file) !== text) throw new Error(`STALE_DEPENDENCY_DRAFT: ${file}`);
@@ -257,7 +272,7 @@ export class Workspace {
           const dependencies = dependencyReads(), effective = effectiveDependencies();
           for (const key of changed) if(!disk.get(key)!.exists)this.draftCreates.add(key);
           for (const key of keys) { this.drafts.set(key, next.get(key)!); this.draftBases.set(key, disk.get(key)!); this.draftGroups.set(key, group); }
-          for (const key of keys) this.draftReadSets.set(key, dependencies);
+          for (const key of keys) {this.draftReadSets.set(key, dependencies);this.draftDirectories.set(key,directoryDependencies());}
           for (const key of keys) this.draftEffectiveReads.set(key, effective);
           this.draftRevision++;
         } else {

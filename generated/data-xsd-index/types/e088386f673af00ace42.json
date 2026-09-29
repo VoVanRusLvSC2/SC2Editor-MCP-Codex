@@ -1,1 +1,1 @@
-{"name":"CCatalogReference","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CCatalogReference"}],"enumValues":[],"facets":[]}
+{"name":"CCatalogReference","schemaSpan":{"start":29059,"end":29182},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":29103,"end":29163},"namespace":"","name":"value","type":"simple_CCatalogReference","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

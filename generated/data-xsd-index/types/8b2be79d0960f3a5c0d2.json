@@ -1,1 +1,1 @@
-{"name":"CCurveComponentNameKey","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CCurveComponentNameKey"}],"enumValues":[],"facets":[]}
+{"name":"CCurveComponentNameKey","schemaSpan":{"start":11856,"end":11989},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":11905,"end":11970},"namespace":"","name":"value","type":"simple_CCurveComponentNameKey","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

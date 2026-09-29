@@ -1,1 +1,1 @@
-{"name":"EBehaviorSpawnFlag","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EBehaviorSpawnFlag"}],"enumValues":[],"facets":[]}
+{"name":"EBehaviorSpawnFlag","schemaSpan":{"start":1185855,"end":1185980},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1185900,"end":1185961},"namespace":"","name":"value","type":"simple_EBehaviorSpawnFlag","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

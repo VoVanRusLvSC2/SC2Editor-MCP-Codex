@@ -1,1 +1,1 @@
-{"name":"EAbilReviveVital","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EAbilReviveVital"}],"enumValues":[],"facets":[]}
+{"name":"EAbilReviveVital","schemaSpan":{"start":678530,"end":678651},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":678573,"end":678632},"namespace":"","name":"value","type":"simple_EAbilReviveVital","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

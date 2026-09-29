@@ -1,1 +1,1 @@
-{"name":"ECharacterGender","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_ECharacterGender"}],"enumValues":[],"facets":[]}
+{"name":"ECharacterGender","schemaSpan":{"start":1228060,"end":1228181},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1228103,"end":1228162},"namespace":"","name":"value","type":"simple_ECharacterGender","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

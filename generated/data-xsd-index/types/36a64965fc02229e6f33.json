@@ -1,1 +1,1 @@
-{"name":"simple_TUserInstanceId","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string"}
+{"name":"simple_TUserInstanceId","schemaSpan":{"start":22670,"end":22770},"namespace":"","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

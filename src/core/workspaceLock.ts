@@ -4,14 +4,23 @@ import { randomUUID } from "node:crypto";
 
 interface Owner { pid:number; nonce:string }
 async function owner(file: string): Promise<Owner | undefined> {
-  try {
-    const stat = await fs.lstat(file);
-    if(!stat.isFile() || stat.isSymbolicLink() || stat.size > 8192) throw new Error("INVALID_WORKSPACE_LOCK");
-    if(stat.size === 0) return undefined; // Another process may be initializing its exclusive lock.
-    const parsed = JSON.parse(await fs.readFile(file,"utf8")) as Owner;
-    if(!Number.isInteger(parsed.pid) || parsed.pid < 1 || typeof parsed.nonce !== "string") throw new Error("INVALID_WORKSPACE_LOCK");
-    return parsed;
-  } catch(e) { if((e as NodeJS.ErrnoException).code === "ENOENT") return undefined; throw e; }
+  for(let attempt=0;;attempt++) {
+    try {
+      const stat = await fs.lstat(file);
+      if(!stat.isFile() || stat.isSymbolicLink() || stat.size > 8192) throw new Error("INVALID_WORKSPACE_LOCK");
+      if(stat.size === 0) return undefined; // Another process may be initializing its exclusive lock.
+      const parsed = JSON.parse(await fs.readFile(file,"utf8")) as Owner;
+      if(!Number.isInteger(parsed.pid) || parsed.pid < 1 || typeof parsed.nonce !== "string") throw new Error("INVALID_WORKSPACE_LOCK");
+      return parsed;
+    } catch(e) {
+      const code=(e as NodeJS.ErrnoException).code;
+      if(code === "ENOENT") return undefined;
+      // A peer opening/linking the lock can briefly deny reads on Windows.
+      // Never infer an absent owner from a sharing error.
+      if(!["EPERM","EACCES","EBUSY"].includes(code??"")||attempt>=3)throw e;
+      await new Promise(resolve=>setTimeout(resolve,[20,50,100][attempt]));
+    }
+  }
 }
 function alive(pid: number) {
   try { process.kill(pid,0); return true; }

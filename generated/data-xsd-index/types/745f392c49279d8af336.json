@@ -1,1 +1,1 @@
-{"name":"simple_ETutorialProgressType","kind":"simple","fields":[],"enumValues":["Advanced","Basic","Introduction","Training"],"facets":[],"base":"xs:string"}
+{"name":"simple_ETutorialProgressType","schemaSpan":{"start":1750106,"end":1750933},"namespace":"","kind":"simple","fields":[],"enumValues":["Advanced","Basic","Introduction","Training"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

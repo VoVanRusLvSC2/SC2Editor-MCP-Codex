@@ -1,1 +1,1 @@
-{"name":"simple_EDetectType","kind":"simple","fields":[],"enumValues":["Normal","Radar"],"facets":[],"base":"xs:string"}
+{"name":"simple_EDetectType","schemaSpan":{"start":1323405,"end":1323860},"namespace":"","kind":"simple","fields":[],"enumValues":["Normal","Radar"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

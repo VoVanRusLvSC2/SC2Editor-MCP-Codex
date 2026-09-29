@@ -1,1 +1,1 @@
-{"name":"simple_EAbilBuildType","kind":"simple","fields":[],"enumValues":["AddOn","Normal","PlacementBuild"],"facets":[],"base":"xs:string"}
+{"name":"simple_EAbilBuildType","schemaSpan":{"start":643974,"end":644621},"namespace":"","kind":"simple","fields":[],"enumValues":["AddOn","Normal","PlacementBuild"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

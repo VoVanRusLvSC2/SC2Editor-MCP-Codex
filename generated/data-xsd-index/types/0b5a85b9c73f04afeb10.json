@@ -1,1 +1,1 @@
-{"name":"simple_CVolumeRange","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string"}
+{"name":"simple_CVolumeRange","schemaSpan":{"start":36947,"end":37044},"namespace":"","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

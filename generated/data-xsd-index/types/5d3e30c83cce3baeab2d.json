@@ -1,1 +1,1 @@
-{"name":"EActorViewerTreatsAs","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EActorViewerTreatsAs"}],"enumValues":[],"facets":[]}
+{"name":"EActorViewerTreatsAs","schemaSpan":{"start":1038229,"end":1038358},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1038276,"end":1038339},"namespace":"","name":"value","type":"simple_EActorViewerTreatsAs","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

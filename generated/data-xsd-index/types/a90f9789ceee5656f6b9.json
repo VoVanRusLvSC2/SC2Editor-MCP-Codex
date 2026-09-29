@@ -1,1 +1,1 @@
-{"name":"CActorAgeRealPair","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CActorAgeRealPair"}],"enumValues":[],"facets":[]}
+{"name":"CActorAgeRealPair","schemaSpan":{"start":25265,"end":25388},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":25309,"end":25369},"namespace":"","name":"value","type":"simple_CActorAgeRealPair","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

@@ -1,1 +1,1 @@
-{"name":"EActorSplatHeight","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EActorSplatHeight"}],"enumValues":[],"facets":[]}
+{"name":"EActorSplatHeight","schemaSpan":{"start":994895,"end":995018},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":994939,"end":994999},"namespace":"","name":"value","type":"simple_EActorSplatHeight","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

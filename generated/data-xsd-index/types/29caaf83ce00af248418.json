@@ -1,1 +1,1 @@
-{"name":"EActorHostDirection","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EActorHostDirection"}],"enumValues":[],"facets":[]}
+{"name":"EActorHostDirection","schemaSpan":{"start":744409,"end":744536},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":744455,"end":744517},"namespace":"","name":"value","type":"simple_EActorHostDirection","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

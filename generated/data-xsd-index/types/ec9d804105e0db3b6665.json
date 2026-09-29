@@ -1,1 +1,1 @@
-{"name":"simple_EClassIdCVoiceOver","kind":"simple","fields":[],"enumValues":["CVoiceOver"],"facets":[],"base":"xs:string"}
+{"name":"simple_EClassIdCVoiceOver","schemaSpan":{"start":610676,"end":610974},"namespace":"","kind":"simple","fields":[],"enumValues":["CVoiceOver"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

@@ -1,1 +1,1 @@
-{"name":"EGameDependency","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EGameDependency"}],"enumValues":[],"facets":[]}
+{"name":"EGameDependency","schemaSpan":{"start":1366879,"end":1366998},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1366921,"end":1366979},"namespace":"","name":"value","type":"simple_EGameDependency","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

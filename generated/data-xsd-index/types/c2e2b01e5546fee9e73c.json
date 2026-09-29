@@ -1,1 +1,1 @@
-{"name":"EActorProximity","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EActorProximity"}],"enumValues":[],"facets":[]}
+{"name":"EActorProximity","schemaSpan":{"start":947407,"end":947526},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":947449,"end":947507},"namespace":"","name":"value","type":"simple_EActorProximity","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

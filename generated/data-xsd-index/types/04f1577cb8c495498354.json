@@ -1,1 +1,1 @@
-{"name":"CBoostLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CBoostLink"}],"enumValues":[],"facets":[]}
+{"name":"CBoostLink","schemaSpan":{"start":57067,"end":57176},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":57104,"end":57157},"namespace":"","name":"value","type":"simple_CBoostLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

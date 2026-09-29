@@ -1,1 +1,1 @@
-{"name":"simple_EPortraitOverlayType","kind":"simple","fields":[],"enumValues":["HeroLeague","Level","TeamLeague"],"facets":[],"base":"xs:string"}
+{"name":"simple_EPortraitOverlayType","schemaSpan":{"start":214847,"end":215500},"namespace":"","kind":"simple","fields":[],"enumValues":["HeroLeague","Level","TeamLeague"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

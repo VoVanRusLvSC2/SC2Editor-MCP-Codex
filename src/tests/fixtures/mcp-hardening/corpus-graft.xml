@@ -1,0 +1,4 @@
+<TriggerData><Library Id="Chal"><Element Type="Trigger" Id="FixtureRoot"><Action Type="FunctionCall" Library="Chal" Id="88904EAE"/></Element><Element Type="FunctionCall" Id="88904EAE">
+            <FunctionDef Type="FunctionDef" Library="Ntve" Id="7B4A4D9D"/>
+            <SubFunctionType Type="SubFuncType" Library="Ntve" Id="00000005"/>
+        </Element></Library></TriggerData>

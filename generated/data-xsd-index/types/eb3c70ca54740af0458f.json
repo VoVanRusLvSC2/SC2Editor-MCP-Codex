@@ -1,1 +1,1 @@
-{"name":"CActorMsgSpec","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CActorMsgSpec"}],"enumValues":[],"facets":[]}
+{"name":"CActorMsgSpec","schemaSpan":{"start":26404,"end":26519},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":26444,"end":26500},"namespace":"","name":"value","type":"simple_CActorMsgSpec","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

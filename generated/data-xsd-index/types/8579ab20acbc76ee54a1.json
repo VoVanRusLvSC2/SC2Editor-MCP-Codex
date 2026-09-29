@@ -1,1 +1,1 @@
-{"name":"EUnitWeapon","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EUnitWeapon"}],"enumValues":[],"facets":[]}
+{"name":"EUnitWeapon","schemaSpan":{"start":1784551,"end":1784662},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1784589,"end":1784643},"namespace":"","name":"value","type":"simple_EUnitWeapon","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

@@ -1,1 +1,1 @@
-{"name":"simple_EAMAttachType","kind":"simple","fields":[],"enumValues":["HasKeywords","NoKeywords"],"facets":[],"base":"xs:string"}
+{"name":"simple_EAMAttachType","schemaSpan":{"start":616614,"end":617093},"namespace":"","kind":"simple","fields":[],"enumValues":["HasKeywords","NoKeywords"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

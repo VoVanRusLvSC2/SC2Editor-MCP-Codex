@@ -1,1 +1,1 @@
-{"name":"simple_EBehaviorSpawnFlag","kind":"simple","fields":[],"enumValues":["HideCount","IgnoreMorph","KillSpawnedOnDeath"],"facets":[],"base":"xs:string"}
+{"name":"simple_EBehaviorSpawnFlag","schemaSpan":{"start":1185982,"end":1186660},"namespace":"","kind":"simple","fields":[],"enumValues":["HideCount","IgnoreMorph","KillSpawnedOnDeath"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

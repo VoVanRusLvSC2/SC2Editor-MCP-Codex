@@ -1,1 +1,1 @@
-{"name":"simple_EValidateCombine","kind":"simple","fields":[],"enumValues":["And","Or"],"facets":[],"base":"xs:string"}
+{"name":"simple_EValidateCombine","schemaSpan":{"start":1788017,"end":1788465},"namespace":"","kind":"simple","fields":[],"enumValues":["And","Or"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

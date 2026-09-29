@@ -1,1 +1,1 @@
-{"name":"CAttachMethods","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CAttachMethods"}],"enumValues":[],"facets":[]}
+{"name":"CAttachMethods","schemaSpan":{"start":28634,"end":28751},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":28675,"end":28732},"namespace":"","name":"value","type":"simple_CAttachMethods","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

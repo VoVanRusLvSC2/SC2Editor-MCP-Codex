@@ -1,1 +1,1 @@
-{"name":"EEffectModifyTurretFlag","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EEffectModifyTurretFlag"}],"enumValues":[],"facets":[]}
+{"name":"EEffectModifyTurretFlag","schemaSpan":{"start":1345859,"end":1345994},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1345909,"end":1345975},"namespace":"","name":"value","type":"simple_EEffectModifyTurretFlag","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

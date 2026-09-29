@@ -1,1 +1,1 @@
-{"name":"EAbilCmdState","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EAbilCmdState"}],"enumValues":[],"facets":[]}
+{"name":"EAbilCmdState","schemaSpan":{"start":648200,"end":648315},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":648240,"end":648296},"namespace":"","name":"value","type":"simple_EAbilCmdState","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

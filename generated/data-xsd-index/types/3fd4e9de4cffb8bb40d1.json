@@ -1,1 +1,1 @@
-{"name":"simple_EActorModelMaterialType","kind":"simple","fields":[],"enumValues":["Glaze","Replacement"],"facets":[],"base":"xs:string"}
+{"name":"simple_EActorModelMaterialType","schemaSpan":{"start":778986,"end":779968},"namespace":"","kind":"simple","fields":[],"enumValues":["Glaze","Replacement"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

@@ -1,1 +1,1 @@
-{"name":"simple_EClassIdCCliffMesh","kind":"simple","fields":[],"enumValues":["CCliffMesh"],"facets":[],"base":"xs:string"}
+{"name":"simple_EClassIdCCliffMesh","schemaSpan":{"start":209333,"end":209642},"namespace":"","kind":"simple","fields":[],"enumValues":["CCliffMesh"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

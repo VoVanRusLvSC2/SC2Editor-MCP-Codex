@@ -1,1 +1,1 @@
-{"name":"simple_CPortraitPackLink","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string"}
+{"name":"simple_CPortraitPackLink","schemaSpan":{"start":59567,"end":59669},"namespace":"","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

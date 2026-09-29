@@ -1,1 +1,1 @@
-{"name":"simple_EMinimapShape","kind":"simple","fields":[],"enumValues":["Circle","Quad"],"facets":[],"base":"xs:string"}
+{"name":"simple_EMinimapShape","schemaSpan":{"start":1523913,"end":1524406},"namespace":"","kind":"simple","fields":[],"enumValues":["Circle","Quad"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

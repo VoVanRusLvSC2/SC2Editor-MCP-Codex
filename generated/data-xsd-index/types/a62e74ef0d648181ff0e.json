@@ -1,1 +1,1 @@
-{"name":"simple_EDamageResponseDamageValue","kind":"simple","fields":[],"enumValues":["Original","Remaining"],"facets":[],"base":"xs:string"}
+{"name":"simple_EDamageResponseDamageValue","schemaSpan":{"start":1315100,"end":1315596},"namespace":"","kind":"simple","fields":[],"enumValues":["Original","Remaining"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

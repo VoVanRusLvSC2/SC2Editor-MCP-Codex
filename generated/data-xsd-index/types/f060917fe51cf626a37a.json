@@ -1,1 +1,1 @@
-{"name":"EMotionOverlayType","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EMotionOverlayType"}],"enumValues":[],"facets":[]}
+{"name":"EMotionOverlayType","schemaSpan":{"start":1541543,"end":1541668},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1541588,"end":1541649},"namespace":"","name":"value","type":"simple_EMotionOverlayType","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

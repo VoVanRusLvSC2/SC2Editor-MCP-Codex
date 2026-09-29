@@ -1,1 +1,1 @@
-{"name":"EAbilQueueFlag","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EAbilQueueFlag"}],"enumValues":[],"facets":[]}
+{"name":"EAbilQueueFlag","schemaSpan":{"start":674569,"end":674686},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":674610,"end":674667},"namespace":"","name":"value","type":"simple_EAbilQueueFlag","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

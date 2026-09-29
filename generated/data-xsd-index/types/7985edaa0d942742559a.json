@@ -1,1 +1,1 @@
-{"name":"EBehaviorUnitTracker","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EBehaviorUnitTracker"}],"enumValues":[],"facets":[]}
+{"name":"EBehaviorUnitTracker","schemaSpan":{"start":1203641,"end":1203770},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1203688,"end":1203751},"namespace":"","name":"value","type":"simple_EBehaviorUnitTracker","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

@@ -1,1 +1,1 @@
-{"name":"EActorSiteOpRotatorType","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EActorSiteOpRotatorType"}],"enumValues":[],"facets":[]}
+{"name":"EActorSiteOpRotatorType","schemaSpan":{"start":984459,"end":984594},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":984509,"end":984575},"namespace":"","name":"value","type":"simple_EActorSiteOpRotatorType","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

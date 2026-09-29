@@ -1,1 +1,1 @@
-{"name":"simple_EDirectionalLight","kind":"simple","fields":[],"enumValues":["Back","Fill","Key"],"facets":[],"base":"xs:string"}
+{"name":"simple_EDirectionalLight","schemaSpan":{"start":1324413,"end":1325051},"namespace":"","kind":"simple","fields":[],"enumValues":["Back","Fill","Key"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

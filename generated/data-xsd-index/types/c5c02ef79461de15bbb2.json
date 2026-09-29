@@ -1,1 +1,1 @@
-{"name":"CTargetSortLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CTargetSortLink"}],"enumValues":[],"facets":[]}
+{"name":"CTargetSortLink","schemaSpan":{"start":62308,"end":62427},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":62350,"end":62408},"namespace":"","name":"value","type":"simple_CTargetSortLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

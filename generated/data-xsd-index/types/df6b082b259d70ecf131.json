@@ -1,1 +1,1 @@
-{"name":"EDifficultyFlag","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EDifficultyFlag"}],"enumValues":[],"facets":[]}
+{"name":"EDifficultyFlag","schemaSpan":{"start":1323862,"end":1323981},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1323904,"end":1323962},"namespace":"","name":"value","type":"simple_EDifficultyFlag","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

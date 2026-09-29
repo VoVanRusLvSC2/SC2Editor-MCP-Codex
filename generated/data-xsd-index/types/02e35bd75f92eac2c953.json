@@ -1,1 +1,1 @@
-{"name":"EButtonTooltipFlag","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EButtonTooltipFlag"}],"enumValues":[],"facets":[]}
+{"name":"EButtonTooltipFlag","schemaSpan":{"start":1214676,"end":1214801},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1214721,"end":1214782},"namespace":"","name":"value","type":"simple_EButtonTooltipFlag","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

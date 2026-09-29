@@ -1,1 +1,1 @@
-{"name":"TPreemptLevel","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_TPreemptLevel"}],"enumValues":[],"facets":[]}
+{"name":"TPreemptLevel","schemaSpan":{"start":2488,"end":2603},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":2528,"end":2584},"namespace":"","name":"value","type":"simple_TPreemptLevel","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

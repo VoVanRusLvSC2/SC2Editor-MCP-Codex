@@ -1,1 +1,1 @@
-{"name":"simple_EActorTransitionType","kind":"simple","fields":[],"enumValues":["In","Out"],"facets":[],"base":"xs:string"}
+{"name":"simple_EActorTransitionType","schemaSpan":{"start":1034339,"end":1034980},"namespace":"","kind":"simple","fields":[],"enumValues":["In","Out"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

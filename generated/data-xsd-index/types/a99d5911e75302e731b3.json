@@ -1,1 +1,1 @@
-{"name":"simple_CBehaviorLink","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string"}
+{"name":"simple_CBehaviorLink","schemaSpan":{"start":41045,"end":41143},"namespace":"","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

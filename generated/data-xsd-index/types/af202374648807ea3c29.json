@@ -1,1 +1,1 @@
-{"name":"EActorSiteOpShadowFlag","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EActorSiteOpShadowFlag"}],"enumValues":[],"facets":[]}
+{"name":"EActorSiteOpShadowFlag","schemaSpan":{"start":985945,"end":986078},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":985994,"end":986059},"namespace":"","name":"value","type":"simple_EActorSiteOpShadowFlag","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

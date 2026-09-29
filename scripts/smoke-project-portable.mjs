@@ -10,16 +10,18 @@ import { gunzipSync } from "node:zlib";
 import { setTimeout, clearTimeout } from "node:timers";
 
 const app = path.resolve(process.argv[2] ?? "release/SC2-UI-Workbench-Windows/app");
+const portableNode=path.resolve(app,"../runtime/node.exe");
+const nodeExecutable=await fs.stat(portableNode).then(()=>portableNode,()=>process.execPath);
 const root = await fs.mkdtemp(path.join(os.tmpdir(), "sc2-portable-smoke-"));
 const checks = [];
-let child, gui;
+let child, gui, report;
 try {
   await fs.writeFile(path.join(root, "Index.SC2Layout"), "<Desc></Desc>");
   for(const name of await fs.readdir("src/tests/fixtures/terrain-native/nydus")) await fs.writeFile(path.join(root,name.slice(0,-3)),gunzipSync(await fs.readFile(path.join("src/tests/fixtures/terrain-native/nydus",name))));
   for(const name of await fs.readdir("src/tests/fixtures/map-native/nydus")) if(name.endsWith(".gz")) await fs.writeFile(path.join(root,name.slice(0,-3)),gunzipSync(await fs.readFile(path.join("src/tests/fixtures/map-native/nydus",name))));
   await fs.mkdir(path.join(root,"Base.SC2Data/GameData"),{recursive:true});
   await fs.writeFile(path.join(root,"Base.SC2Data/GameData/LightData.xml"),'<Catalog><CLight id="Base"/></Catalog>');
-  child = spawn(process.execPath, [path.join(app, "dist/index.js")], { env: { ...process.env, SC2_UI_ROOT: root }, cwd: root, stdio: ["pipe", "pipe", "pipe"] });
+  child = spawn(nodeExecutable, [path.join(app, "dist/index.js")], { env: { ...process.env, SC2_UI_ROOT: root,SC2_MCP_PROFILE:"all",SC2_MCP_MODULES:"",SC2_UI_ARCHIVE_ADAPTER:"",SC2_ASSET_ROOTS:"" }, cwd: root, stdio: ["pipe", "pipe", "pipe"] });
   child.stderr.resume();
   const pending = new Map(); let id = 0;
   createInterface({ input: child.stdout }).on("line", line => {
@@ -38,14 +40,20 @@ try {
     return JSON.parse(result.content.find(item => item.type === "text").text);
   };
   const initialized = await send("initialize", { protocolVersion: "2025-03-26", capabilities: {}, clientInfo: { name: "portable-smoke", version: "1" } });
-  assert.equal(initialized.serverInfo.version, "1.1.0-alpha.18");
+  assert.equal(initialized.serverInfo.version, "1.1.0-alpha.20");
   child.stdin.write(JSON.stringify({ jsonrpc: "2.0", method: "notifications/initialized" }) + "\n");
   const tools = await send("tools/list", {});
-  assert.equal(tools.tools.length, 164);
+  assert.equal(tools.tools.length, 187);
+  assert.ok(tools.tools.some(tool => tool.name === "trigger.labels"));
+  assert.ok(tools.tools.some(tool => tool.name === "trigger.search_functions"));
+  assert.ok(tools.tools.some(tool => tool.name === "data.plan"));
+  assert.ok(tools.tools.some(tool => tool.name === "data.batch"));
+  assert.ok(tools.tools.some(tool => tool.name === "data.apply_plan"));
+  assert.ok(tools.tools.some(tool => tool.name === "trigger.label_of"));
   assert.ok(tools.tools.some(tool => tool.name === "map.capabilities"));
   const map = await call("map.capabilities");
   assert.equal(map.cleanMapCreation, false);
-  checks.push("portable MCP initialize, all 164 tools and Map capabilities");
+  checks.push("portable MCP initialize, all 187 tools including strict Data batch/plan and NativeLib discovery and Map capabilities");
   const coverage = await call("ui.project_status");
   assert.equal(Object.keys(coverage.modules).length, 10); assert.equal(coverage.completeEngineCoverage, false);
   checks.push("MCP project status covers ten modules without engine completeness claim");
@@ -58,6 +66,21 @@ try {
   await call("script.save",{file:"MapScript.galaxy",backup:false});
   assert.match(await fs.readFile(path.join(root,"MapScript.galaxy"),"utf8"),/CustomInit\(\);/);
   checks.push("portable Galaxy native schema, recipe and Include/init plan/stage/save");
+  await fs.writeFile(path.join(root,"Triggers"),'<TriggerData><Library Id="Local"><Root/></Library></TriggerData>');
+  const guiFunction=await call("trigger.describe_function",{name:"Wait"});assert.equal(guiFunction.build,97563);assert.equal(guiFunction.parameters[0].id,"00000419");
+  const guiPlan=await call("trigger.plan",{create:{library:"Local",identifier:"PortableInit"},calls:[{kind:"Event",function:"TriggerAddEventMapInit",args:{}},{kind:"Action",function:"Wait",args:{"00000419":{kind:"literal",type:"fixed",value:"0.5"},"00000420":{kind:"preset",id:"00000013"}}}]});
+  await call("trigger.apply",{planId:guiPlan.planId,dryRun:false});await call("trigger.save",{backup:false});assert.equal((await call("trigger.validate")).valid,true);
+  const discovered=await call("trigger.search_functions",{query:"IfThenElse",limit:5});assert.ok(discovered.total>0);
+  const rejected=await call("data.apply",{operations:[{op:"object.create",ctype:"CEffectDamage",id:"PortableBad",fields:[{name:"AuditDefinitelyNotAnSC2Field",value:"x"}]}]});
+  assert.equal(rejected.accepted,false);assert.ok(rejected.authoring.diagnostics.some(d=>d.code==="DATA_AUTHOR_FIELD_UNKNOWN"));
+  const dataPlan=await call("data.plan",{operations:[{op:"object.create",ctype:"CEffectDamage",id:"PortablePlannedDamage",fields:[{name:"Amount",value:2}]}]});
+  assert.equal(dataPlan.readyToApply,true);
+  const dataPreview=await call("data.apply_plan",{planId:dataPlan.planId});assert.equal(dataPreview.authoring.accepted,true);
+  const batch=await call("data.batch",{changes:[{file:"Base.SC2Data/GameData/EffectData.xml",operations:[{op:"object.create",ctype:"CEffectSet",id:"PortableSet",fields:[{name:"EffectArray",value:"PortableDamage"}]}]},{file:"Base.SC2Data/GameData/DamageData.xml",operations:[{op:"object.create",ctype:"CEffectDamage",id:"PortableDamage",fields:[{name:"Amount",value:3}]}]}]});
+  assert.equal(batch.authoring.every(x=>x.authoring.accepted),true);
+  checks.push("portable strict Data rejection, immutable plan and cross-file future-reference batch");
+  const dataType=await call("data.describe_type",{ctype:"CEffectSet"});assert.ok(JSON.stringify(dataType).includes("EffectArray"));
+  checks.push("portable typed GUI authoring registry and declared XSD index resolve outside source checkout");
   const readiness = await call("ui.test_readiness");
   assert.equal(readiness.standardFunctionCoverage,"PARTIAL");
   assert.equal(readiness.targetChecks.galaxyCompiler,"NOT_EXECUTED");
@@ -81,23 +104,34 @@ try {
   const mapCreated=await call("map.create",{...createRequest,dryRun:false});
   assert.equal(mapCreated.contentSha256,mapPreview.contentSha256);
   assert.equal((await call("map.inspect",{directory:createRequest.destinationDirectory})).valid,true);
+  const packed=await call("map.export",{directory:createRequest.destinationDirectory,archive:".sc2mcp-output/portable-created.SC2Map",dryRun:false,backup:false});
+  assert.equal(packed.verification.reopened,true);assert.ok(packed.verification.entryCount>10);
+  const packedInspect=await call("map.archive.inspect",{archive:".sc2mcp-output/portable-created.SC2Map"});assert.ok(packedInspect.entries.length>10);
+  checks.push("bundled native Windows archive backend exports, reopens and verifies every created-map entry");
   const sourceFiles=await call("ui.list_files");
   assert.equal(JSON.stringify(sourceFiles).includes(".sc2mcp-output"),false);
   checks.push("portable native template register/create with exact dry-run manifest and isolated output indexing");
   const { startGuiServer } = await import(pathToFileURL(path.join(app, "dist/gui/server.js")));
   gui = await startGuiServer({ root, port: 0 });
   const get = async endpoint => { const response = await globalThis.fetch(gui.url + endpoint); assert.equal(response.status, 200); return response; };
-  assert.equal((await (await get("/api/health")).json()).version, "1.1.0-alpha.18");
+  assert.equal((await (await get("/api/health")).json()).version, "1.1.0-alpha.20");
   assert.equal(Object.keys((await (await get("/api/project/status")).json()).modules).length, 10);
   const html = await (await get("/")).text();
   assert.match(html, /projectStatusButton/);
   assert.match(html, /terrainWaterControls/);
   checks.push("portable HTTP health, project coverage endpoint and GUI button asset");
-  const report = { version: "1.1.0-alpha.18", status: "PASS", checks, windowsLauncherExecution: "NOT_EXECUTED", guiVisual: "NOT_EXECUTED", editor: "NOT_EXECUTED", runtime: "NOT_EXECUTED" };
-  await fs.writeFile("generated/project-portable-smoke.json", JSON.stringify(report, null, 2) + "\n");
-  globalThis.console.log(JSON.stringify(report, null, 2));
+  report = { nodeExecutable, bundledNodeUsed:nodeExecutable===portableNode, version: "1.1.0-alpha.20", status: "PASS", checks, windowsLauncherExecution: "NOT_EXECUTED", guiVisual: "NOT_EXECUTED", editor: "NOT_EXECUTED", runtime: "NOT_EXECUTED" };
 } finally {
   if (gui) await gui.close();
-  if (child) { child.stdin.end(); child.kill(); }
-  await fs.rm(root, { recursive: true, force: true });
+  if (child) {
+    child.stdin.end();
+    if(child.exitCode===null)await new Promise((resolve,reject)=>{
+      const timer=setTimeout(()=>reject(new Error("PORTABLE_CHILD_EXIT_TIMEOUT")),3000);
+      child.once("exit",()=>{clearTimeout(timer);resolve();});
+      child.kill();
+    });
+  }
+  await fs.rm(root, { recursive: true, force: true, maxRetries: 6, retryDelay: 50 });
 }
+await fs.writeFile("generated/project-portable-smoke.json", JSON.stringify(report, null, 2) + "\n");
+globalThis.console.log(JSON.stringify(report, null, 2));

@@ -1,1 +1,1 @@
-{"name":"simple_ESoundBlend","kind":"simple","fields":[],"enumValues":["Inverse","Linear","Logarithmic","Unknown"],"facets":[],"base":"xs:string"}
+{"name":"simple_ESoundBlend","schemaSpan":{"start":1676274,"end":1677084},"namespace":"","kind":"simple","fields":[],"enumValues":["Inverse","Linear","Logarithmic","Unknown"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

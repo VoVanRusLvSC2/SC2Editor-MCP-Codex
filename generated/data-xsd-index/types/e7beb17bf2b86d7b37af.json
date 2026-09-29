@@ -1,1 +1,1 @@
-{"name":"EAnimGroupApplyFlag","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EAnimGroupApplyFlag"}],"enumValues":[],"facets":[]}
+{"name":"EAnimGroupApplyFlag","schemaSpan":{"start":1062004,"end":1062131},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1062050,"end":1062112},"namespace":"","name":"value","type":"simple_EAnimGroupApplyFlag","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

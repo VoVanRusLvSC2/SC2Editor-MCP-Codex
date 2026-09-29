@@ -1,1 +1,1 @@
-{"name":"simple_EAnimBracketStateExitReason","kind":"simple","fields":[],"enumValues":["Cleared","Complete","ModelSwap"],"facets":[],"base":"xs:string"}
+{"name":"simple_EAnimBracketStateExitReason","schemaSpan":{"start":1056498,"end":1057698},"namespace":"","kind":"simple","fields":[],"enumValues":["Cleared","Complete","ModelSwap"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

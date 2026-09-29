@@ -1,1 +1,1 @@
-{"name":"EAnimBracketStateExitReason","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EAnimBracketStateExitReason"}],"enumValues":[],"facets":[]}
+{"name":"EAnimBracketStateExitReason","schemaSpan":{"start":1056353,"end":1056496},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1056407,"end":1056477},"namespace":"","name":"value","type":"simple_EAnimBracketStateExitReason","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

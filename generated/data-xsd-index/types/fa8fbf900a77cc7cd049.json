@@ -1,1 +1,1 @@
-{"name":"EClassIdCCampaign","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EClassIdCCampaign"}],"enumValues":[],"facets":[]}
+{"name":"EClassIdCCampaign","schemaSpan":{"start":207936,"end":208059},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":207980,"end":208040},"namespace":"","name":"value","type":"simple_EClassIdCCampaign","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

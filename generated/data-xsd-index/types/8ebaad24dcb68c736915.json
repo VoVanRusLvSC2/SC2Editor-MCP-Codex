@@ -1,1 +1,1 @@
-{"name":"simple_EActorRequestScope","kind":"simple","fields":[],"enumValues":["Caster","CasterOuter","Effect","Implicit","Missile","Outer","Source","Target","TargetOuter"],"facets":[],"base":"xs:string"}
+{"name":"simple_EActorRequestScope","schemaSpan":{"start":959132,"end":963761},"namespace":"","kind":"simple","fields":[],"enumValues":["Caster","CasterOuter","Effect","Implicit","Missile","Outer","Source","Target","TargetOuter"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

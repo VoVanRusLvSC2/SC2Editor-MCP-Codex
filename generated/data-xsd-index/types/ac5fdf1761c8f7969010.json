@@ -1,1 +1,1 @@
-{"name":"simple_TPowerLevel","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:int"}
+{"name":"simple_TPowerLevel","schemaSpan":{"start":5896,"end":5989},"namespace":"","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:int","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

@@ -1,1 +1,1 @@
-{"name":"EMuteControl","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EMuteControl"}],"enumValues":[],"facets":[]}
+{"name":"EMuteControl","schemaSpan":{"start":1549263,"end":1549376},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1549302,"end":1549357},"namespace":"","name":"value","type":"simple_EMuteControl","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

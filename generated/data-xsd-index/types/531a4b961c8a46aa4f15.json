@@ -1,1 +1,1 @@
-{"name":"EAbilResearchCmd","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EAbilResearchCmd"}],"enumValues":[],"facets":[]}
+{"name":"EAbilResearchCmd","schemaSpan":{"start":111424,"end":111545},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":111467,"end":111526},"namespace":"","name":"value","type":"simple_EAbilResearchCmd","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

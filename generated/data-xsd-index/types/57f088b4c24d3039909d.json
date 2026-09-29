@@ -1,1 +1,1 @@
-{"name":"simple_EBundleFlag","kind":"simple","fields":[],"enumValues":["ExternalSource","IsFeatured","IsFeaturedLarge","ShowDynamicProductContent","SuppressDiscount"],"facets":[],"base":"xs:string"}
+{"name":"simple_EBundleFlag","schemaSpan":{"start":1213604,"end":1214674},"namespace":"","kind":"simple","fields":[],"enumValues":["ExternalSource","IsFeatured","IsFeaturedLarge","ShowDynamicProductContent","SuppressDiscount"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

@@ -1,1 +1,1 @@
-{"name":"simple_EClassIdCScoreValue","kind":"simple","fields":[],"enumValues":["CScoreValue","CScoreValueCombine","CScoreValueConstant","CScoreValueCustom","CScoreValueStandard"],"facets":[],"base":"xs:string"}
+{"name":"simple_EClassIdCScoreValue","schemaSpan":{"start":506470,"end":507520},"namespace":"","kind":"simple","fields":[],"enumValues":["CScoreValue","CScoreValueCustom","CScoreValueStandard","CScoreValueConstant","CScoreValueCombine"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

@@ -1,1 +1,1 @@
-{"name":"CBankConditionLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CBankConditionLink"}],"enumValues":[],"facets":[]}
+{"name":"CBankConditionLink","schemaSpan":{"start":44879,"end":45004},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":44924,"end":44985},"namespace":"","name":"value","type":"simple_CBankConditionLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

@@ -1,1 +1,1 @@
-{"name":"EWeaponPrioritization","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EWeaponPrioritization"}],"enumValues":[],"facets":[]}
+{"name":"EWeaponPrioritization","schemaSpan":{"start":1802581,"end":1802712},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1802629,"end":1802693},"namespace":"","name":"value","type":"simple_EWeaponPrioritization","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

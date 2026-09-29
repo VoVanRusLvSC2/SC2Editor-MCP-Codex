@@ -1,1 +1,1 @@
-{"name":"simple_EAIUIMode","kind":"simple","fields":[],"enumValues":["Hidden","Selectable","Visible"],"facets":[],"base":"xs:string"}
+{"name":"simple_EAIUIMode","schemaSpan":{"start":613576,"end":614542},"namespace":"","kind":"simple","fields":[],"enumValues":["Hidden","Selectable","Visible"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

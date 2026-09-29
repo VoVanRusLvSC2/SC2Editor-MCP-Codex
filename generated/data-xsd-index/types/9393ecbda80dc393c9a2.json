@@ -1,1 +1,1 @@
-{"name":"ETextureVideoSoundType","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_ETextureVideoSoundType"}],"enumValues":[],"facets":[]}
+{"name":"ETextureVideoSoundType","schemaSpan":{"start":1745916,"end":1746049},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1745965,"end":1746030},"namespace":"","name":"value","type":"simple_ETextureVideoSoundType","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

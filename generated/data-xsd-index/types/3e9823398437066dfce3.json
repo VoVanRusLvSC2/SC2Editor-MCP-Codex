@@ -1,1 +1,1 @@
-{"name":"simple_EUnitResponse","kind":"simple","fields":[],"enumValues":["Acquire","AcquireNoFlee","Flee","Nothing"],"facets":[],"base":"xs:string"}
+{"name":"simple_EUnitResponse","schemaSpan":{"start":1756519,"end":1757340},"namespace":"","kind":"simple","fields":[],"enumValues":["Acquire","AcquireNoFlee","Flee","Nothing"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

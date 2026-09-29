@@ -1,1 +1,1 @@
-{"name":"EAbilHarvestStage","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EAbilHarvestStage"}],"enumValues":[],"facets":[]}
+{"name":"EAbilHarvestStage","schemaSpan":{"start":75867,"end":75990},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":75911,"end":75971},"namespace":"","name":"value","type":"simple_EAbilHarvestStage","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

@@ -1,1 +1,1 @@
-{"name":"EAbilArmMagazineCmd","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EAbilArmMagazineCmd"}],"enumValues":[],"facets":[]}
+{"name":"EAbilArmMagazineCmd","schemaSpan":{"start":80916,"end":81043},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":80962,"end":81024},"namespace":"","name":"value","type":"simple_EAbilArmMagazineCmd","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

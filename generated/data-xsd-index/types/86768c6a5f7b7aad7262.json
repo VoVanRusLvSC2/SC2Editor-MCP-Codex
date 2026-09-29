@@ -1,1 +1,1 @@
-{"name":"uint8","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_uint8"}],"enumValues":[],"facets":[]}
+{"name":"uint8","schemaSpan":{"start":6594,"end":6693},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":6626,"end":6674},"namespace":"","name":"value","type":"simple_uint8","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

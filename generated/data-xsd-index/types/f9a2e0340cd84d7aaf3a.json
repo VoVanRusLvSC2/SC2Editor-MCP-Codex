@@ -1,1 +1,1 @@
-{"name":"simple_EClassIdCPing","kind":"simple","fields":[],"enumValues":["CPing"],"facets":[],"base":"xs:string"}
+{"name":"simple_EClassIdCPing","schemaSpan":{"start":489762,"end":490047},"namespace":"","kind":"simple","fields":[],"enumValues":["CPing"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

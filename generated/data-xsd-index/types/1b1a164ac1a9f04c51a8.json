@@ -1,1 +1,1 @@
-{"name":"simple_EActorModelSwapFlag","kind":"simple","fields":[],"enumValues":["PredecessorDestroyImmediate","PreventAllDynamicTextureTransfers"],"facets":[],"base":"xs:string"}
+{"name":"simple_EActorModelSwapFlag","schemaSpan":{"start":781425,"end":782332},"namespace":"","kind":"simple","fields":[],"enumValues":["PredecessorDestroyImmediate","PreventAllDynamicTextureTransfers"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

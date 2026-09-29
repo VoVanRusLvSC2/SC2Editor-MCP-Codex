@@ -1,1 +1,1 @@
-{"name":"EModelEvent","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EModelEvent"}],"enumValues":[],"facets":[]}
+{"name":"EModelEvent","schemaSpan":{"start":1524408,"end":1524519},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1524446,"end":1524500},"namespace":"","name":"value","type":"simple_EModelEvent","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

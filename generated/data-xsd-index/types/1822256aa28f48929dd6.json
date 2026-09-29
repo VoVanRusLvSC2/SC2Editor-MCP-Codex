@@ -1,1 +1,1 @@
-{"name":"EPausedParticleSystemBehavior","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EPausedParticleSystemBehavior"}],"enumValues":[],"facets":[]}
+{"name":"EPausedParticleSystemBehavior","schemaSpan":{"start":1568600,"end":1568747},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1568656,"end":1568728},"namespace":"","name":"value","type":"simple_EPausedParticleSystemBehavior","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

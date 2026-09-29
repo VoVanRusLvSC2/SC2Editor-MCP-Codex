@@ -1,1 +1,1 @@
-{"name":"simple_CActorAgeRealPair","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string"}
+{"name":"simple_CActorAgeRealPair","schemaSpan":{"start":25390,"end":25492},"namespace":"","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

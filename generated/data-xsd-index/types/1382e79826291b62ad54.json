@@ -1,1 +1,1 @@
-{"name":"TPowerLevel","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_TPowerLevel"}],"enumValues":[],"facets":[]}
+{"name":"TPowerLevel","schemaSpan":{"start":5783,"end":5894},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":5821,"end":5875},"namespace":"","name":"value","type":"simple_TPowerLevel","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

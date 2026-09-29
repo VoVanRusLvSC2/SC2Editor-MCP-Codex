@@ -1,1 +1,1 @@
-{"name":"CEmoticonPackLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CEmoticonPackLink"}],"enumValues":[],"facets":[]}
+{"name":"CEmoticonPackLink","schemaSpan":{"start":57712,"end":57835},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":57756,"end":57816},"namespace":"","name":"value","type":"simple_CEmoticonPackLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

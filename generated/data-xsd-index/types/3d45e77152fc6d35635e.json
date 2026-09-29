@@ -1,1 +1,1 @@
-{"name":"EActorHostSiteOpsListPosition","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EActorHostSiteOpsListPosition"}],"enumValues":[],"facets":[]}
+{"name":"EActorHostSiteOpsListPosition","schemaSpan":{"start":745149,"end":745296},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":745205,"end":745277},"namespace":"","name":"value","type":"simple_EActorHostSiteOpsListPosition","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

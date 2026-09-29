@@ -1,1 +1,1 @@
-{"name":"CMapLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CMapLink"}],"enumValues":[],"facets":[]}
+{"name":"CMapLink","schemaSpan":{"start":46458,"end":46563},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":46493,"end":46544},"namespace":"","name":"value","type":"simple_CMapLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

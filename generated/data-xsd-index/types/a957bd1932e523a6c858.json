@@ -1,1 +1,1 @@
-{"name":"simple_EActorOverkillTestType","kind":"simple","fields":[],"enumValues":["Fixed","PercentageOfMaxLife","PercentageOfMaxLifePlusShields"],"facets":[],"base":"xs:string"}
+{"name":"simple_EActorOverkillTestType","schemaSpan":{"start":925885,"end":927070},"namespace":"","kind":"simple","fields":[],"enumValues":["Fixed","PercentageOfMaxLife","PercentageOfMaxLifePlusShields"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

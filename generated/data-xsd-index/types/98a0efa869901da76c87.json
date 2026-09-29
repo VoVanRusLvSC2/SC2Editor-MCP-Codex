@@ -1,1 +1,1 @@
-{"name":"ETargetModeValidation","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_ETargetModeValidation"}],"enumValues":[],"facets":[]}
+{"name":"ETargetModeValidation","schemaSpan":{"start":1706171,"end":1706302},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1706219,"end":1706283},"namespace":"","name":"value","type":"simple_ETargetModeValidation","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

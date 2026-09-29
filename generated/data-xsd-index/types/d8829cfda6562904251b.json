@@ -1,1 +1,1 @@
-{"name":"simple_EActorSiteOpShadowFlag","kind":"simple","fields":[],"enumValues":["NoLowerThanBaseHeight","NoLowerThanWater"],"facets":[],"base":"xs:string"}
+{"name":"simple_EActorSiteOpShadowFlag","schemaSpan":{"start":986080,"end":986784},"namespace":"","kind":"simple","fields":[],"enumValues":["NoLowerThanBaseHeight","NoLowerThanWater"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

@@ -1,1 +1,1 @@
-{"name":"EConversationConditionOp","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EConversationConditionOp"}],"enumValues":[],"facets":[]}
+{"name":"EConversationConditionOp","schemaSpan":{"start":1288248,"end":1288385},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1288299,"end":1288366},"namespace":"","name":"value","type":"simple_EConversationConditionOp","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

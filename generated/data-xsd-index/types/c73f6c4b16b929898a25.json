@@ -1,1 +1,1 @@
-{"name":"simple_ETeleportReset","kind":"simple","fields":[],"enumValues":["Missile","Weapon"],"facets":[],"base":"xs:string"}
+{"name":"simple_ETeleportReset","schemaSpan":{"start":1708289,"end":1708751},"namespace":"","kind":"simple","fields":[],"enumValues":["Missile","Weapon"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

@@ -1,1 +1,1 @@
-{"name":"simple_ECostDisplay","kind":"simple","fields":[],"enumValues":["Custom","Energy","Life","Minerals","Shields","Terrazine","Vespene"],"facets":[],"base":"xs:string"}
+{"name":"simple_ECostDisplay","schemaSpan":{"start":1297539,"end":1298896},"namespace":"","kind":"simple","fields":[],"enumValues":["Custom","Energy","Life","Minerals","Shields","Terrazine","Vespene"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

@@ -1,1 +1,1 @@
-{"name":"EAbilWarpTrainCmd","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EAbilWarpTrainCmd"}],"enumValues":[],"facets":[]}
+{"name":"EAbilWarpTrainCmd","schemaSpan":{"start":135099,"end":135222},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":135143,"end":135203},"namespace":"","name":"value","type":"simple_EAbilWarpTrainCmd","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

@@ -1,1 +1,1 @@
-{"name":"CThrowBand","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CThrowBand"}],"enumValues":[],"facets":[]}
+{"name":"CThrowBand","schemaSpan":{"start":34605,"end":34714},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":34642,"end":34695},"namespace":"","name":"value","type":"simple_CThrowBand","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

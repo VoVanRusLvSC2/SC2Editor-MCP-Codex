@@ -1,1 +1,1 @@
-{"name":"simple_ETargetFindFlag","kind":"simple","fields":[],"enumValues":["EvaluateCmd"],"facets":[],"base":"xs:string"}
+{"name":"simple_ETargetFindFlag","schemaSpan":{"start":1705075,"end":1705385},"namespace":"","kind":"simple","fields":[],"enumValues":["EvaluateCmd"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

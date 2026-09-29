@@ -1,1 +1,1 @@
-{"name":"EClassIdCConsoleSkin","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EClassIdCConsoleSkin"}],"enumValues":[],"facets":[]}
+{"name":"EClassIdCConsoleSkin","schemaSpan":{"start":215502,"end":215631},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":215549,"end":215612},"namespace":"","name":"value","type":"simple_EClassIdCConsoleSkin","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

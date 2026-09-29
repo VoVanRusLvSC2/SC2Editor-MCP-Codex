@@ -1,1 +1,1 @@
-{"name":"ETurretIdle","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_ETurretIdle"}],"enumValues":[],"facets":[]}
+{"name":"ETurretIdle","schemaSpan":{"start":1748662,"end":1748773},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1748700,"end":1748754},"namespace":"","name":"value","type":"simple_ETurretIdle","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

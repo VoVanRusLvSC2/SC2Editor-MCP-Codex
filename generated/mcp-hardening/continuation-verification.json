@@ -1,0 +1,45 @@
+{
+  "date": "2026-09-29",
+  "head": "df3e0a39454fac7725ff49e306493714a7d0a7a5",
+  "branch": "codex/mcp-hardening-20260927",
+  "node": "24.14.1",
+  "npm": "11.11.0",
+  "tests": {
+    "total": 326,
+    "pass": 325,
+    "fail": 0,
+    "skip": 1,
+    "skipReason": "existing Windows shell fixture"
+  },
+  "recoveryFocused": "11 PASS x 5 runs",
+  "build": "PASS",
+  "lint": "PASS",
+  "releaseBuild": "PASS",
+  "projectAudit": {
+    "tools": 183,
+    "modules": 10,
+    "status": "PASS"
+  },
+  "generation": {
+    "xsd": "149f650ced41c491a001445df4d39148072c8948589c2f277a66e5874c3f8f8d",
+    "native": "dd188ed759bcf5a515edfc82b1b471773c4a89035609e2dae1d55b0ebdaa58e9",
+    "deterministic": true
+  },
+  "portable": "PASS",
+  "manualArchive": {
+    "entries": 18,
+    "reopened": true
+  },
+  "editor": "NOT_RUN",
+  "compile": "NOT_RUN",
+  "runtime": "NOT_RUN",
+  "sourceHashes": {
+    "xsd": "cf5ac8c452a695f9504048481c16422719f8e2a07a898dca0a9802d100390488",
+    "native": "cbb2302825dce57ff9bb8efd44f9b0ed5cb056eee00265e5b711b0824d872396"
+  },
+  "artifacts": {
+    "registry": "dd188ed759bcf5a515edfc82b1b471773c4a89035609e2dae1d55b0ebdaa58e9",
+    "map": "a48419d2f80388216b7b133e97c2997ad3010f45de8d16408158e4738af8d647"
+  },
+  "commit": "NOT_CREATED"
+}

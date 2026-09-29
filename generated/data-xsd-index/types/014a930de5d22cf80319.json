@@ -1,1 +1,1 @@
-{"name":"simple_EAbilHarvestCmd","kind":"simple","fields":[],"enumValues":["Cancel","Gather","Return"],"facets":[],"base":"xs:string"}
+{"name":"simple_EAbilHarvestCmd","schemaSpan":{"start":95901,"end":96533},"namespace":"","kind":"simple","fields":[],"enumValues":["Cancel","Gather","Return"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

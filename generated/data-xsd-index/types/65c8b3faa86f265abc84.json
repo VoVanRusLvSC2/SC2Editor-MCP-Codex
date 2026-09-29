@@ -1,1 +1,1 @@
-{"name":"EClassIdCTargetFind","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EClassIdCTargetFind"}],"enumValues":[],"facets":[]}
+{"name":"EClassIdCTargetFind","schemaSpan":{"start":528638,"end":528765},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":528684,"end":528746},"namespace":"","name":"value","type":"simple_EClassIdCTargetFind","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

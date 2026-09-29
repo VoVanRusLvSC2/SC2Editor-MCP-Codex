@@ -1,5 +1,5 @@
 {
-  "version": "1.1.0-alpha.18",
+  "version": "1.1.0-alpha.20",
   "scope": "Ten implemented modules; current registries plus explicitly labelled historical evidence",
   "completeEngineCoverage": false,
   "overallCoveragePercent": null,
@@ -129,7 +129,13 @@
           },
           "repeatableUnindexedFields": 435,
           "editorClassCandidates": 1062,
-          "editorQualifiedFieldDescriptors": 661
+          "editorQualifiedFieldDescriptors": 661,
+          "declaredXsd": {
+            "complexTypes": 2319,
+            "simpleTypes": 994,
+            "fields": 24642,
+            "enumValues": 7839
+          }
         },
         "gates": {
           "L1Syntax": "PASS",
@@ -265,13 +271,13 @@
     "Run generated behavior probes in StarCraft II and record results per case"
   ],
   "inventory": {
-    "toolCount": 164,
+    "toolCount": 183,
     "counts": {
       "script": 11,
       "ui": 41,
-      "cutscene": 20,
+      "cutscene": 21,
       "text": 6,
-      "data": 5,
+      "data": 8,
       "ai": 5,
       "browse": 11,
       "placement": 19,
@@ -2951,7 +2957,7 @@
         }
       },
       "ui.validate": {
-        "description": "Validate XML, schema types/properties, anchors, states, animations and cross-file references.",
+        "description": "Validate XML, schema types/properties, anchors, states, animations and cross-file references. For image tinting, SC2 uses ColorAdjustMode=Colorize plus AdjustmentColor and a supported BlendMode such as Add; ColorAdjustment and BlendMode=Colorize are invalid.",
         "inputSchema": {
           "$schema": "https://json-schema.org/draft/2020-12/schema",
           "type": "object",
@@ -3111,6 +3117,36 @@
             "stage",
             "name",
             "attrs"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "cutscene.register_document": {
+        "description": "Register existing Base.SC2Data/Cutscenes scenes as the native cuts document component. Preserve all unrelated manifest bytes and existing Index.version; a missing version requires an exact Editor-produced versionTemplate within the workspace. Atomic dry-run/staging supported. Does not certify Editor opening or playback.",
+        "inputSchema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "properties": {
+            "versionTemplate": {
+              "type": "string"
+            },
+            "dryRun": {
+              "default": true,
+              "type": "boolean"
+            },
+            "stage": {
+              "default": true,
+              "type": "boolean"
+            },
+            "backup": {
+              "default": true,
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "dryRun",
+            "stage",
+            "backup"
           ],
           "additionalProperties": false
         }
@@ -4432,6 +4468,81 @@
                     "properties": {
                       "op": {
                         "type": "string",
+                        "const": "actor.face"
+                      },
+                      "actors": {
+                        "minItems": 1,
+                        "type": "array",
+                        "items": {
+                          "anyOf": [
+                            {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "string"
+                                },
+                                "nodeId": {
+                                  "type": "integer",
+                                  "minimum": 0,
+                                  "maximum": 9007199254740991
+                                },
+                                "guid": {
+                                  "type": "string"
+                                },
+                                "name": {
+                                  "type": "string"
+                                },
+                                "nativeType": {
+                                  "type": "string"
+                                },
+                                "occurrence": {
+                                  "type": "integer",
+                                  "minimum": 0,
+                                  "maximum": 9007199254740991
+                                }
+                              },
+                              "additionalProperties": false
+                            }
+                          ]
+                        }
+                      },
+                      "target": {
+                        "type": "array",
+                        "prefixItems": [
+                          {
+                            "type": "number"
+                          },
+                          {
+                            "type": "number"
+                          },
+                          {
+                            "type": "number"
+                          }
+                        ],
+                        "items": false,
+                        "minItems": 3,
+                        "maxItems": 3
+                      },
+                      "axisOffsetDegrees": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "op",
+                      "actors",
+                      "target"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "op": {
+                        "type": "string",
                         "const": "text.add"
                       },
                       "as": {
@@ -5431,6 +5542,115 @@
                     },
                     "required": [
                       "op"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "op": {
+                        "type": "string",
+                        "const": "fog.upsert"
+                      },
+                      "as": {
+                        "type": "string"
+                      },
+                      "fog": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string"
+                              },
+                              "nodeId": {
+                                "type": "integer",
+                                "minimum": 0,
+                                "maximum": 9007199254740991
+                              },
+                              "guid": {
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              },
+                              "nativeType": {
+                                "type": "string"
+                              },
+                              "occurrence": {
+                                "type": "integer",
+                                "minimum": 0,
+                                "maximum": 9007199254740991
+                              }
+                            },
+                            "additionalProperties": false
+                          }
+                        ]
+                      },
+                      "name": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "color": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          {
+                            "type": "array",
+                            "prefixItems": [
+                              {
+                                "type": "number"
+                              },
+                              {
+                                "type": "number"
+                              },
+                              {
+                                "type": "number"
+                              }
+                            ],
+                            "items": false,
+                            "minItems": 3,
+                            "maxItems": 3
+                          }
+                        ]
+                      },
+                      "falloff": {
+                        "type": "number",
+                        "minimum": 0
+                      },
+                      "density": {
+                        "type": "number",
+                        "minimum": 0
+                      },
+                      "startHeight": {
+                        "type": "number"
+                      },
+                      "duration": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 9007199254740991
+                          }
+                        ]
+                      },
+                      "lockedToEnd": {
+                        "type": "boolean"
+                      }
+                    },
+                    "required": [
+                      "op",
+                      "color"
                     ],
                     "additionalProperties": false
                   },
@@ -6750,6 +6970,81 @@
                     "properties": {
                       "op": {
                         "type": "string",
+                        "const": "actor.face"
+                      },
+                      "actors": {
+                        "minItems": 1,
+                        "type": "array",
+                        "items": {
+                          "anyOf": [
+                            {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "string"
+                                },
+                                "nodeId": {
+                                  "type": "integer",
+                                  "minimum": 0,
+                                  "maximum": 9007199254740991
+                                },
+                                "guid": {
+                                  "type": "string"
+                                },
+                                "name": {
+                                  "type": "string"
+                                },
+                                "nativeType": {
+                                  "type": "string"
+                                },
+                                "occurrence": {
+                                  "type": "integer",
+                                  "minimum": 0,
+                                  "maximum": 9007199254740991
+                                }
+                              },
+                              "additionalProperties": false
+                            }
+                          ]
+                        }
+                      },
+                      "target": {
+                        "type": "array",
+                        "prefixItems": [
+                          {
+                            "type": "number"
+                          },
+                          {
+                            "type": "number"
+                          },
+                          {
+                            "type": "number"
+                          }
+                        ],
+                        "items": false,
+                        "minItems": 3,
+                        "maxItems": 3
+                      },
+                      "axisOffsetDegrees": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "op",
+                      "actors",
+                      "target"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "op": {
+                        "type": "string",
                         "const": "text.add"
                       },
                       "as": {
@@ -7749,6 +8044,115 @@
                     },
                     "required": [
                       "op"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "op": {
+                        "type": "string",
+                        "const": "fog.upsert"
+                      },
+                      "as": {
+                        "type": "string"
+                      },
+                      "fog": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string"
+                              },
+                              "nodeId": {
+                                "type": "integer",
+                                "minimum": 0,
+                                "maximum": 9007199254740991
+                              },
+                              "guid": {
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              },
+                              "nativeType": {
+                                "type": "string"
+                              },
+                              "occurrence": {
+                                "type": "integer",
+                                "minimum": 0,
+                                "maximum": 9007199254740991
+                              }
+                            },
+                            "additionalProperties": false
+                          }
+                        ]
+                      },
+                      "name": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "color": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          {
+                            "type": "array",
+                            "prefixItems": [
+                              {
+                                "type": "number"
+                              },
+                              {
+                                "type": "number"
+                              },
+                              {
+                                "type": "number"
+                              }
+                            ],
+                            "items": false,
+                            "minItems": 3,
+                            "maxItems": 3
+                          }
+                        ]
+                      },
+                      "falloff": {
+                        "type": "number",
+                        "minimum": 0
+                      },
+                      "density": {
+                        "type": "number",
+                        "minimum": 0
+                      },
+                      "startHeight": {
+                        "type": "number"
+                      },
+                      "duration": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 9007199254740991
+                          }
+                        ]
+                      },
+                      "lockedToEnd": {
+                        "type": "boolean"
+                      }
+                    },
+                    "required": [
+                      "op",
+                      "color"
                     ],
                     "additionalProperties": false
                   },
@@ -9028,12 +9432,128 @@
           "additionalProperties": false
         }
       },
+      "data.references": {
+        "description": "Paged typed XML references with domains, spans and explicit coverage limits.",
+        "inputSchema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "domain": {
+              "type": "string"
+            },
+            "direction": {
+              "default": "both",
+              "type": "string",
+              "enum": [
+                "incoming",
+                "outgoing",
+                "both"
+              ]
+            },
+            "issueOffset": {
+              "default": 0,
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "issueLimit": {
+              "default": 100,
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 500
+            },
+            "offset": {
+              "default": 0,
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "limit": {
+              "default": 100,
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 500
+            }
+          },
+          "required": [
+            "direction",
+            "issueOffset",
+            "issueLimit",
+            "offset",
+            "limit"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "data.resolve": {
+        "description": "Selective available-parent effective fields and provenance; runtime layer equivalence is not claimed.",
+        "inputSchema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "domain": {
+              "type": "string",
+              "minLength": 1
+            },
+            "fields": {
+              "maxItems": 200,
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "required": [
+            "id",
+            "domain"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "data.explain_usage": {
+        "description": "Explain known incoming references or unknown usage within the loaded XML scope.",
+        "inputSchema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "domain": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "id",
+            "domain"
+          ],
+          "additionalProperties": false
+        }
+      },
       "data.context": {
         "description": "Selective one-call context for SC2 Data Editor Catalog objects, inheritance, fields, references, dependencies and diagnostics.",
         "inputSchema": {
           "$schema": "https://json-schema.org/draft/2020-12/schema",
           "type": "object",
           "properties": {
+            "text": {
+              "type": "string"
+            },
+            "parent": {
+              "type": "string"
+            },
+            "link": {
+              "type": "string"
+            },
             "file": {
               "type": "string"
             },
@@ -9069,6 +9589,12 @@
               "default": false,
               "type": "boolean"
             },
+            "offset": {
+              "default": 0,
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
             "includeRaw": {
               "default": false,
               "type": "boolean"
@@ -9094,6 +9620,7 @@
           },
           "required": [
             "activeOnly",
+            "offset",
             "includeRaw",
             "includeInherited",
             "includeDependencies",
@@ -9146,6 +9673,12 @@
               "default": false,
               "type": "boolean"
             },
+            "offset": {
+              "default": 0,
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
             "includeDependencies": {
               "default": true,
               "type": "boolean"
@@ -9159,6 +9692,7 @@
           },
           "required": [
             "invalidOnly",
+            "offset",
             "includeDependencies",
             "limit"
           ],
@@ -33707,6 +34241,569 @@
           "additionalProperties": false
         }
       },
+      "trigger.describe_function": {
+        "description": "Verified NativeLib 97563 signature, ParamDef IDs, flags and supported argument forms.",
+        "inputSchema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            }
+          },
+          "required": [
+            "name"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "trigger.plan": {
+        "description": "Plan a typed GUI trigger/category and bounded batch of supported calls without staging. Triggers is source of truth; regenerate Galaxy in Editor.",
+        "inputSchema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "properties": {
+            "stringFiles": {
+              "maxItems": 16,
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "targetTrigger": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "create": {
+              "type": "object",
+              "properties": {
+                "library": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "identifier": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "category": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                }
+              },
+              "required": [
+                "library",
+                "identifier"
+              ],
+              "additionalProperties": false
+            },
+            "calls": {
+              "maxItems": 100,
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "kind": {
+                    "type": "string",
+                    "enum": [
+                      "Event",
+                      "Condition",
+                      "Action"
+                    ]
+                  },
+                  "function": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 128
+                  },
+                  "args": {
+                    "type": "object",
+                    "propertyNames": {
+                      "type": "string"
+                    },
+                    "additionalProperties": {
+                      "oneOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "kind": {
+                              "type": "string",
+                              "const": "literal"
+                            },
+                            "type": {
+                              "type": "string",
+                              "enum": [
+                                "int",
+                                "fixed",
+                                "bool",
+                                "string"
+                              ]
+                            },
+                            "value": {
+                              "anyOf": [
+                                {
+                                  "type": "string",
+                                  "maxLength": 16384
+                                },
+                                {
+                                  "type": "number"
+                                },
+                                {
+                                  "type": "boolean"
+                                }
+                              ]
+                            }
+                          },
+                          "required": [
+                            "kind",
+                            "type",
+                            "value"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "kind": {
+                              "type": "string",
+                              "const": "variable"
+                            },
+                            "library": {
+                              "type": "string"
+                            },
+                            "id": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 128
+                            }
+                          },
+                          "required": [
+                            "kind",
+                            "id"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "kind": {
+                              "type": "string",
+                              "const": "preset"
+                            },
+                            "id": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 128
+                            }
+                          },
+                          "required": [
+                            "kind",
+                            "id"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "kind": {
+                              "type": "string",
+                              "const": "gamelink"
+                            },
+                            "domain": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 128
+                            },
+                            "id": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 128
+                            }
+                          },
+                          "required": [
+                            "kind",
+                            "domain",
+                            "id"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "kind": {
+                              "type": "string",
+                              "const": "nativeCall"
+                            },
+                            "function": {
+                              "type": "string",
+                              "const": "PlayerGroupAll"
+                            }
+                          },
+                          "required": [
+                            "kind",
+                            "function"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "kind": {
+                              "type": "string",
+                              "enum": [
+                                "call",
+                                "block",
+                                "customScript"
+                              ]
+                            },
+                            "source": {
+                              "type": "string",
+                              "maxLength": 16384
+                            }
+                          },
+                          "required": [
+                            "kind",
+                            "source"
+                          ],
+                          "additionalProperties": false
+                        }
+                      ]
+                    }
+                  }
+                },
+                "required": [
+                  "kind",
+                  "function",
+                  "args"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": [
+            "calls"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "trigger.validate": {
+        "description": "Validate XML and local typed references; external/compiler validation remains explicit.",
+        "inputSchema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false
+        }
+      },
+      "trigger.apply": {
+        "description": "Apply stored immutable GUI plan through shared coordinator with source/schema guards. Defaults to dry-run.",
+        "inputSchema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "properties": {
+            "planId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "dryRun": {
+              "default": true,
+              "type": "boolean"
+            },
+            "stage": {
+              "default": true,
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "planId",
+            "dryRun",
+            "stage"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "trigger.labels": {
+        "description": "List verified NativeLib97563 and project visual labels with localized names; read-only until Editor-saved assignment format is available.",
+        "inputSchema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "properties": {
+            "query": {
+              "default": "",
+              "type": "string",
+              "maxLength": 128
+            },
+            "offset": {
+              "default": 0,
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "limit": {
+              "default": 100,
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 200
+            }
+          },
+          "required": [
+            "query",
+            "offset",
+            "limit"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "trigger.label_of": {
+        "description": "Read explicit Label on an exact Library/Type/Id element or inherited verified FunctionDef Label; does not assume None/default semantics.",
+        "inputSchema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "properties": {
+            "library": {
+              "type": "string"
+            },
+            "type": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            }
+          },
+          "required": [
+            "library",
+            "type",
+            "id"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "trigger.inspect": {
+        "description": "List GUI Triggers identifiers, IDs, and Event/Action references without regenerating the library.",
+        "inputSchema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "properties": {
+            "query": {
+              "type": "string"
+            },
+            "offset": {
+              "default": 0,
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "limit": {
+              "default": 100,
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 500
+            }
+          },
+          "required": [
+            "offset",
+            "limit"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "trigger.get": {
+        "description": "Read one GUI Trigger and its referenced Event/Action definitions.",
+        "inputSchema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "properties": {
+            "identifier": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "includeRaw": {
+              "default": false,
+              "type": "boolean"
+            },
+            "offset": {
+              "default": 0,
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "limit": {
+              "default": 100,
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 500
+            }
+          },
+          "required": [
+            "identifier",
+            "includeRaw",
+            "offset",
+            "limit"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "trigger.graft": {
+        "description": "Copy one Event or Action and its local dependency graph from another unpacked Triggers file into an existing trigger. Preserves folder tree and existing IDs; dry-run by default.",
+        "inputSchema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "properties": {
+            "sourceFile": {
+              "type": "string",
+              "minLength": 1
+            },
+            "sourceTrigger": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "targetTrigger": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "kind": {
+              "type": "string",
+              "enum": [
+                "Event",
+                "Action"
+              ]
+            },
+            "index": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "dryRun": {
+              "default": true,
+              "type": "boolean"
+            },
+            "stage": {
+              "default": true,
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "sourceFile",
+            "sourceTrigger",
+            "targetTrigger",
+            "kind",
+            "index",
+            "dryRun",
+            "stage"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "trigger.save": {
+        "description": "Save staged GUI Triggers with stale checks and optional backup.",
+        "inputSchema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "properties": {
+            "backup": {
+              "default": true,
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "backup"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "trigger.normalizeScriptLayout": {
+        "description": "Normalize custom-action ScriptCode XML indentation for SC2 Editor without rebuilding the GUI tree, changing IDs, actions, or typed Param expressions. Does not recover already missing code. Dry-run by default.",
+        "inputSchema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "properties": {
+            "dryRun": {
+              "default": true,
+              "type": "boolean"
+            },
+            "stage": {
+              "default": true,
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "dryRun",
+            "stage"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "trigger.discard": {
+        "description": "Discard staged GUI Triggers edits.",
+        "inputSchema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false
+        }
+      },
+      "modkit.save": {
+        "description": "Save complete staged transaction group containing a file, with stale guards and backup.",
+        "inputSchema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "properties": {
+            "file": {
+              "type": "string",
+              "minLength": 1
+            },
+            "backup": {
+              "default": true,
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "file",
+            "backup"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "modkit.discard": {
+        "description": "Discard complete staged group containing a file without disk writes.",
+        "inputSchema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "properties": {
+            "file": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "file"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "modkit.capabilities": {
+        "description": "Compact public entry point: report enabled SC2 authoring modules and restart profiles before selecting module-specific tools.",
+        "inputSchema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false
+        }
+      },
       "ui.project_status": {
         "description": "Audit coverage and limitations of all ten modules; separate registry evidence from actual Editor/runtime validation. Read-only.",
         "inputSchema": {
@@ -33727,5 +34824,5 @@
       }
     }
   },
-  "auditedAt": "2026-09-14T11:23:06.003Z"
+  "auditedAt": "2026-09-29T08:21:06.959Z"
 }

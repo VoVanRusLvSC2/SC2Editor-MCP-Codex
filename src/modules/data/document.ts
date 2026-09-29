@@ -1,3 +1,5 @@
+import {actorEvents} from "./actorEvents.js";
+import { DataXsdRegistry } from "./xsdRegistry.js";
 import { createHash } from "node:crypto";
 import { scanXml } from "../../core/xmlScanner.js";
 import type { XmlNode } from "../../core/types.js";
@@ -33,6 +35,9 @@ function renderField(spec: DataNativeFieldSpec, indent: string, newline: string)
   const children = spec.children.map((child) => renderField(child, childIndent, newline)).join(newline);
   return `${indent}<${spec.name}${attrs}>${newline}${children}${newline}${indent}</${spec.name}>`;
 }
+
+export const referenceSchema = new DataXsdRegistry();
+export interface DocumentReference { object: string; path: string; carrier: string; value: string; targetDomain?: string; sourceSpan: {start:number;end:number}; evidence: "NATIVE_TYPED_ATTRIBUTE" | "TARGET_TYPE_UNRESOLVED"; rule?:{schemaSha256?:string;ownerType:string;member:string;source:string}; rewritePolicy?:"exactSpan"|"unknown"; rawExpression?:string; resolution?:"resolved"|"unknown"; }
 
 export class DataDocument {
   private parsed = scanXml("");
@@ -82,11 +87,23 @@ export class DataDocument {
 
   private children(node: XmlNode): XmlNode[] { return node.childIds.map((id) => this.parsed.nodes[id]); }
 
+  private fieldSegment(node:XmlNode):DataFieldPathSegment {
+    const index=node.attrs.index??node.attrs.Index;
+    const peers=node.parentId===null?[]:this.children(this.parsed.nodes[node.parentId]).filter(n=>n.tag===node.tag&&n.attrs.index===undefined&&n.attrs.Index===undefined);
+    return {name:node.tag,index,ordinal:index===undefined&&peers.length>1?peers.findIndex(n=>n.id===node.id):undefined};
+  }
+  private selectField(parent:XmlNode,segment:DataFieldPathSegment):XmlNode|undefined {
+    const candidates=this.children(parent).filter(node=>node.tag===segment.name&&(node.attrs.index??node.attrs.Index)===segment.index);
+    if(segment.ordinal!==undefined)return candidates[segment.ordinal];
+    if(candidates.length>1)throw new Error('DATA_FIELD_SELECTOR_AMBIGUOUS: '+segment.name+'; use [#ordinal]');
+    return candidates[0];
+  }
+
   private fieldNode(entry: XmlNode, path: string): XmlNode | undefined {
     const segments = parseDataFieldPath(path);
     let parent = entry;
     for (const segment of segments) {
-      const next = this.children(parent).find((node) => node.tag === segment.name && (node.attrs.index ?? node.attrs.Index) === segment.index);
+      const next = this.selectField(parent,segment);
       if (!next) return undefined;
       parent = next;
     }
@@ -137,6 +154,7 @@ export class DataDocument {
     for (const segment of segments) {
       let next = this.children(parent).find((node) => node.tag === segment.name && (node.attrs.index ?? node.attrs.Index) === segment.index);
       if (!next) {
+        if(segment.ordinal!==undefined)throw new Error("DATA_ORDINAL_FIELD_MISSING");
         this.appendTo(parent, renderField({ name: segment.name, index: segment.index }, "", newlineOf(this.source)));
         entry = this.resolve(entrySelector);
         const parentPath = formatDataFieldPath(segments.slice(0, segments.indexOf(segment) + 1));
@@ -231,6 +249,7 @@ export class DataDocument {
       const holderSegments = segments.slice(0, -1);
       const holder = this.ensureParent(selector, holderSegments);
       const last = segments[segments.length - 1];
+      if(last.ordinal!==undefined)throw new Error("DATA_ORDINAL_FIELD_MISSING");
       const spec: DataNativeFieldSpec = { name: last.name, index: last.index };
       if (carrier === "value") spec.value = value;
       else if (carrier === "Link") spec.link = scalar(value);
@@ -269,49 +288,71 @@ export class DataDocument {
     this.appendTo(parent, renderField(field, "", newlineOf(this.source)));
   }
 
-  references(): Array<{ object: string; path: string; carrier: "parent" | "Link"; value: string }> {
-    const references: Array<{ object: string; path: string; carrier: "parent" | "Link"; value: string }> = [];
+  references(tokenResolver?: (entry:XmlNode)=>Record<string,string>): DocumentReference[] {
+    const references: DocumentReference[] = [];
     for (const entry of this.entries()) {
-      if (entry.attrs.parent) references.push({ object: this.objectKey(entry), path: `${this.objectKey(entry)}@parent`, carrier: "parent", value: entry.attrs.parent });
-      const walk = (node: XmlNode, prefix: DataFieldPathSegment[]) => {
-        for (const child of this.children(node)) {
-          const segment = { name: child.tag, index: child.attrs.index ?? child.attrs.Index };
-          const current = [...prefix, segment];
-          if (child.attrs.Link) references.push({ object: this.objectKey(entry), path: `${this.objectKey(entry)}.${formatDataFieldPath(current)}@Link`, carrier: "Link", value: child.attrs.Link });
-          walk(child, current);
+      const tokens={...(tokenResolver?.(entry)??{}),...this.tokens(entry)};
+      for(const id of Object.keys(tokens))if(entry.attrs[id]!==undefined)tokens[id]=entry.attrs[id];
+      const resolve=(raw:string)=>{let value=raw;for(let i=0;i<16&&value.includes("##");i++){const next=value.replace(/##([^#]+)##/g,(whole,id:string)=>tokens[id]??whole);if(next===value)break;value=next;}return value;};
+      const walk = (node: XmlNode, names: string[], prefix: DataFieldPathSegment[]) => {
+        const type = names.length ? referenceSchema.fieldType(entry.tag,names) : entry.tag;
+        const members = type ? referenceSchema.members(type) : [];
+        for (const span of node.attrSpans) {
+          let domain: string | undefined;
+          if (node === entry && span.name === "parent") domain = dataDomainFromType(entry.tag);
+          else {
+            const field = members.find(f=>f.kind === "attribute" && f.name === span.name);
+            domain = referenceSchema.linkDomain(field?.inlineType ?? field?.type,new Set<string>(),field?.typeNamespace);
+            if (!domain && span.name === "value") domain = referenceSchema.linkDomain(type);
+          }
+          if (!domain && span.name !== "Link") continue;
+          references.push({object:this.objectKey(entry),path:this.objectKey(entry)+(prefix.length ? "."+formatDataFieldPath(prefix) : "")+"@"+span.name,carrier:span.name,rule:{schemaSha256:referenceSchema.manifest()?.source.sha256,ownerType:entry.tag,member:[...names,span.name].join("."),source:"Declared XSD scoped member or explicit native Link"},rewritePolicy:resolve(node.attrs[span.name]).includes("##")?"unknown":"exactSpan",value:resolve(node.attrs[span.name]),rawExpression:node.attrs[span.name],resolution:resolve(node.attrs[span.name]).includes("##")?"unknown":"resolved",targetDomain:domain,sourceSpan:{start:span.valueStart,end:span.valueEnd},evidence:domain ? "NATIVE_TYPED_ATTRIBUTE" : "TARGET_TYPE_UNRESOLVED"});
         }
+        for (const child of this.children(node)) walk(child,[...names,child.tag],[...prefix,this.fieldSegment(child)]);
       };
-      walk(entry, []);
+      walk(entry,[],[]);
+      const actor=actorEvents(this.source,entry,this.parsed.nodes,resolve);
+      for(const edge of actor.references)references.push({object:this.objectKey(entry),path:this.objectKey(entry)+'@actorEvent',carrier:'ActorEvent',value:edge.value,rawExpression:edge.raw,resolution:edge.unknown?'unknown':'resolved',targetDomain:edge.domain,sourceSpan:{start:edge.start,end:edge.end},evidence:'NATIVE_TYPED_ATTRIBUTE'});
     }
     return references;
   }
 
-  patchReferences(oldId: string, newId: string, targetDomain?: string, updateLinks = true): number {
-    let count = 0;
-    const candidates = this.entries().flatMap((entry) => {
-      const nodes: Array<{ node: XmlNode; attr: "parent" | "Link" }> = [];
-      if (entry.attrs.parent === oldId && (!targetDomain || dataDomainFromType(entry.tag) === targetDomain)) nodes.push({ node: entry, attr: "parent" });
-      const visit = (node: XmlNode) => { for (const child of this.children(node)) { if (updateLinks && child.attrs.Link === oldId) nodes.push({ node: child, attr: "Link" }); visit(child); } };
-      visit(entry);
-      return nodes;
-    }).sort((left, right) => right.node.start - left.node.start);
-    for (const candidate of candidates) { this.setAttributeOn(this.parsed.nodes.find((node) => node.start === candidate.node.start) ?? candidate.node, candidate.attr, newId); count++; }
-    return count;
+  actorCoverageIssues(tokenResolver?: (entry:XmlNode)=>Record<string,string>){return this.entries().flatMap(entry=>{
+    const tokens={...(tokenResolver?.(entry)??{}),...this.tokens(entry)};for(const id of Object.keys(tokens))if(entry.attrs[id]!==undefined)tokens[id]=entry.attrs[id];
+    const resolve=(raw:string)=>{let value=raw;for(let i=0;i<16&&value.includes('##');i++){const next=value.replace(/##([^#]+)##/g,(whole,id:string)=>tokens[id]??whole);if(next===value)break;value=next;}return value;};
+    return actorEvents(this.source,entry,this.parsed.nodes,resolve).issues;
+  }).map(issue=>({file:this.sourceFile,...issue}));}
+
+  patchReferences(oldId: string, newId: string, targetDomain?: string, updateLinks = true, tokenResolver?: (entry:XmlNode)=>Record<string,string>): number {
+    const candidates = this.references(tokenResolver).filter(r=>r.value === oldId && (updateLinks || r.carrier === "parent") && (!targetDomain || !r.targetDomain || r.targetDomain === targetDomain)).sort((a,b)=>b.sourceSpan.start-a.sourceSpan.start);
+    if(candidates.some(ref=>ref.carrier==='ActorEvent')&&!/^[A-Za-z0-9_:-]+$/.test(newId))throw new Error('DATA_REFERENCE_REWRITE_UNSUPPORTED: actor selector/message ID lexical form');
+    for (const ref of candidates) this.replace(ref.sourceSpan.start,ref.sourceSpan.end,escapeXml(newId));
+    return candidates.length;
   }
 
   private toField(node: XmlNode, prefix: DataFieldPathSegment[], includeRaw: boolean): DataField {
-    const segment = { name: node.tag, index: node.attrs.index ?? node.attrs.Index };
+    const segment = this.fieldSegment(node);
     const path = formatDataFieldPath([...prefix, segment]);
     return {
-      path, name: node.tag, index: segment.index, value: node.attrs.value ?? node.attrs.Value, link: node.attrs.Link ?? node.attrs.link,
+      path, name: node.tag, index: segment.index,ordinal:segment.ordinal,sourceSpan:{start:node.start,end:node.end}, value: node.attrs.value ?? node.attrs.Value, link: node.attrs.Link ?? node.attrs.link,
       attrs: { ...node.attrs }, children: this.children(node).map((child) => this.toField(child, [...prefix, segment], includeRaw)),
       sourcePath: `${this.sourceFile}:${path}`, rawSource: includeRaw ? this.source.slice(node.start, node.end) : undefined,
     };
   }
 
+  private tokens(entry: XmlNode): Record<string,string> {
+    const result:Record<string,string>={};
+    for(const m of this.source.slice(entry.start,entry.end).matchAll(/<!--[\s\S]*?-->|<!\[CDATA\[[\s\S]*?\]\]>|<\?token\s+([\s\S]*?)\?>/g)) {
+      if(m[1]===undefined)continue;
+      const node=scanXml("<token "+m[1]+"/>").nodes[0];
+      if(node?.attrs.id && node.attrs.value!==undefined)result[node.attrs.id]=node.attrs.value;
+    }
+    return result;
+  }
+
   objects(includeRaw = false): DataObject[] {
     return this.entries().map((node) => ({
-      ctype: node.tag, domain: dataDomainFromType(node.tag), id: node.attrs.id, parent: node.attrs.parent,
+      objectIdentity:{domain:dataDomainFromType(node.tag),id:node.attrs.id},declarationKey:{file:this.sourceFile,start:node.start},tokens:this.tokens(node), ctype: node.tag, domain: dataDomainFromType(node.tag), id: node.attrs.id, parent: node.attrs.parent,
       isDefault: node.attrs.default === "1", attrs: { ...node.attrs }, fields: this.children(node).map((child) => this.toField(child, [], includeRaw)),
       sourcePath: this.sourceFile, rawSource: includeRaw ? this.source.slice(node.start, node.end) : undefined,
     }));

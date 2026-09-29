@@ -1,1 +1,1 @@
-{"name":"simple_EAbilAttackStage","kind":"simple","fields":[],"enumValues":["Approach","Attack","Loiter"],"facets":[],"base":"xs:string"}
+{"name":"simple_EAbilAttackStage","schemaSpan":{"start":71743,"end":72380},"namespace":"","kind":"simple","fields":[],"enumValues":["Approach","Attack","Loiter"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

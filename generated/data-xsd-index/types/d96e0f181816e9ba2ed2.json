@@ -1,1 +1,1 @@
-{"name":"EHerdClosestTo","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EHerdClosestTo"}],"enumValues":[],"facets":[]}
+{"name":"EHerdClosestTo","schemaSpan":{"start":1507999,"end":1508116},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1508040,"end":1508097},"namespace":"","name":"value","type":"simple_EHerdClosestTo","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

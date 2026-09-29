@@ -1,1 +1,1 @@
-{"name":"simple_EUnitColorStyle","kind":"simple","fields":[],"enumValues":["Normal","OverrideMinimap","OverrideWorld"],"facets":[],"base":"xs:string"}
+{"name":"simple_EUnitColorStyle","schemaSpan":{"start":322416,"end":323082},"namespace":"","kind":"simple","fields":[],"enumValues":["Normal","OverrideMinimap","OverrideWorld"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

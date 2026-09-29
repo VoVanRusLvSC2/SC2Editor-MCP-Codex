@@ -1,1 +1,1 @@
-{"name":"simple_EActorRadialDistribution","kind":"simple","fields":[],"enumValues":["Exponential","Gaussian","Uniform"],"facets":[],"base":"xs:string"}
+{"name":"simple_EActorRadialDistribution","schemaSpan":{"start":953213,"end":954336},"namespace":"","kind":"simple","fields":[],"enumValues":["Exponential","Gaussian","Uniform"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

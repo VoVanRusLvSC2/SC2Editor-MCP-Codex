@@ -1,1 +1,1 @@
-{"name":"simple_ETargetModeValidation","kind":"simple","fields":[],"enumValues":["None","Present","Strict"],"facets":[],"base":"xs:string"}
+{"name":"simple_ETargetModeValidation","schemaSpan":{"start":1706304,"end":1707223},"namespace":"","kind":"simple","fields":[],"enumValues":["None","Present","Strict"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

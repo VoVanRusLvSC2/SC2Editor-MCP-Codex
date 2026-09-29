@@ -1,1 +1,1 @@
-{"name":"simple_EAbilResearchFlag","kind":"simple","fields":[],"enumValues":["BestUnit","Transient","UnitOrderQueue"],"facets":[],"base":"xs:string"}
+{"name":"simple_EAbilResearchFlag","schemaSpan":{"start":676691,"end":677358},"namespace":"","kind":"simple","fields":[],"enumValues":["BestUnit","Transient","UnitOrderQueue"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

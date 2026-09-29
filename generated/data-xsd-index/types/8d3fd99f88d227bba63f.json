@@ -1,1 +1,1 @@
-{"name":"CTalentLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CTalentLink"}],"enumValues":[],"facets":[]}
+{"name":"CTalentLink","schemaSpan":{"start":53999,"end":54110},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":54037,"end":54091},"namespace":"","name":"value","type":"simple_CTalentLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

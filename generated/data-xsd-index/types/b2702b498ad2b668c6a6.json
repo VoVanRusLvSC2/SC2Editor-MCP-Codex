@@ -1,1 +1,1 @@
-{"name":"EChargeLocation","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EChargeLocation"}],"enumValues":[],"facets":[]}
+{"name":"EChargeLocation","schemaSpan":{"start":1231349,"end":1231468},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1231391,"end":1231449},"namespace":"","name":"value","type":"simple_EChargeLocation","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

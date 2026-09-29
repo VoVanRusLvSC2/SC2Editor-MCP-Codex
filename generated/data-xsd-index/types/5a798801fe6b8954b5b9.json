@@ -1,1 +1,1 @@
-{"name":"simple_EPathAvoid","kind":"simple","fields":[],"enumValues":["Normal","Walker"],"facets":[],"base":"xs:string"}
+{"name":"simple_EPathAvoid","schemaSpan":{"start":1564800,"end":1565256},"namespace":"","kind":"simple","fields":[],"enumValues":["Normal","Walker"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

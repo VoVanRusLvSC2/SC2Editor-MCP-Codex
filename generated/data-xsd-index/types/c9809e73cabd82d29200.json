@@ -1,1 +1,1 @@
-{"name":"EVolumeControl","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EVolumeControl"}],"enumValues":[],"facets":[]}
+{"name":"EVolumeControl","schemaSpan":{"start":1795766,"end":1795883},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1795807,"end":1795864},"namespace":"","name":"value","type":"simple_EVolumeControl","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

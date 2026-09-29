@@ -1,1 +1,1 @@
-{"name":"EArmyUpgradeState","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EArmyUpgradeState"}],"enumValues":[],"facets":[]}
+{"name":"EArmyUpgradeState","schemaSpan":{"start":186605,"end":186728},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":186649,"end":186709},"namespace":"","name":"value","type":"simple_EArmyUpgradeState","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

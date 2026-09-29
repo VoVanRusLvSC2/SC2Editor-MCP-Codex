@@ -1,1 +1,1 @@
-{"name":"simple_CConsoleSkinLink","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string"}
+{"name":"simple_CConsoleSkinLink","schemaSpan":{"start":55439,"end":55540},"namespace":"","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

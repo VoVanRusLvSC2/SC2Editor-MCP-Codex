@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 2,
+  "xsd": {
+    "before": {
+      "files": 3314,
+      "sha256": "149f650ced41c491a001445df4d39148072c8948589c2f277a66e5874c3f8f8d"
+    },
+    "after": {
+      "files": 3314,
+      "sha256": "149f650ced41c491a001445df4d39148072c8948589c2f277a66e5874c3f8f8d"
+    },
+    "deterministic": true
+  },
+  "native": {
+    "before": "dd188ed759bcf5a515edfc82b1b471773c4a89035609e2dae1d55b0ebdaa58e9",
+    "after": "dd188ed759bcf5a515edfc82b1b471773c4a89035609e2dae1d55b0ebdaa58e9",
+    "deterministic": true
+  },
+  "sourceInputs": "Explicit CLI inputs; production runtime uses checked-in generated resources"
+}

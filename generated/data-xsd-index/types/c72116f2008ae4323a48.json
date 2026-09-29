@@ -1,1 +1,1 @@
-{"name":"simple_EPlayerRelationship","kind":"simple","fields":[],"enumValues":["Ally","Enemy","Neutral","Self"],"facets":[],"base":"xs:string"}
+{"name":"simple_EPlayerRelationship","schemaSpan":{"start":1581828,"end":1582627},"namespace":"","kind":"simple","fields":[],"enumValues":["Ally","Enemy","Neutral","Self"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

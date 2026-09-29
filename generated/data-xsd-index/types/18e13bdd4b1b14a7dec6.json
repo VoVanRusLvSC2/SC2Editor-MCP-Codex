@@ -1,1 +1,1 @@
-{"name":"EMoverPatternType","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EMoverPatternType"}],"enumValues":[],"facets":[]}
+{"name":"EMoverPatternType","schemaSpan":{"start":1548673,"end":1548796},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1548717,"end":1548777},"namespace":"","name":"value","type":"simple_EMoverPatternType","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

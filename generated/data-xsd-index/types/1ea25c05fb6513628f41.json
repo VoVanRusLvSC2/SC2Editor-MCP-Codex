@@ -1,1 +1,1 @@
-{"name":"simple_EFoliageLayer","kind":"simple","fields":[],"enumValues":["Brush","Grass","Tree"],"facets":[],"base":"xs:string"}
+{"name":"simple_EFoliageLayer","schemaSpan":{"start":1361557,"end":1362179},"namespace":"","kind":"simple","fields":[],"enumValues":["Brush","Grass","Tree"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

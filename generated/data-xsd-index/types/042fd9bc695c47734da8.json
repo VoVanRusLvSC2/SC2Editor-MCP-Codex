@@ -1,1 +1,1 @@
-{"name":"EClassIdCPremiumMap","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EClassIdCPremiumMap"}],"enumValues":[],"facets":[]}
+{"name":"EClassIdCPremiumMap","schemaSpan":{"start":493995,"end":494122},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":494041,"end":494103},"namespace":"","name":"value","type":"simple_EClassIdCPremiumMap","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

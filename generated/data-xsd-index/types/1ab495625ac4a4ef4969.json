@@ -1,1 +1,1 @@
-{"name":"simple_EHeroAITalentBuildType","kind":"simple","fields":[],"enumValues":["Damage","General","Support","Tank"],"facets":[],"base":"xs:string"}
+{"name":"simple_EHeroAITalentBuildType","schemaSpan":{"start":414552,"end":415362},"namespace":"","kind":"simple","fields":[],"enumValues":["Damage","General","Support","Tank"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

@@ -1,1 +1,1 @@
-{"name":"simple_EAbilBuildStage","kind":"simple","fields":[],"enumValues":["Approach","Collide","Construct","Finish","Halt","Resume","Wait"],"facets":[],"base":"xs:string"}
+{"name":"simple_EAbilBuildStage","schemaSpan":{"start":73104,"end":74430},"namespace":"","kind":"simple","fields":[],"enumValues":["Approach","Collide","Construct","Finish","Halt","Resume","Wait"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

@@ -1,1 +1,1 @@
-{"name":"CWaterLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CWaterLink"}],"enumValues":[],"facets":[]}
+{"name":"CWaterLink","schemaSpan":{"start":52082,"end":52191},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":52119,"end":52172},"namespace":"","name":"value","type":"simple_CWaterLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

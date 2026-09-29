@@ -1,1 +1,1 @@
-{"name":"simple_bool","kind":"simple","fields":[],"enumValues":["0","1"],"facets":[],"base":"xs:string"}
+{"name":"simple_bool","schemaSpan":{"start":1234,"end":1404},"namespace":"","kind":"simple","fields":[],"enumValues":["0","1"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

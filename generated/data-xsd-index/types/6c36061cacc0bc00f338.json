@@ -1,1 +1,1 @@
-{"name":"simple_EWeaponType","kind":"simple","fields":[],"enumValues":["Melee","MeleeOrRanged","Ranged"],"facets":[],"base":"xs:string"}
+{"name":"simple_EWeaponType","schemaSpan":{"start":1803501,"end":1804143},"namespace":"","kind":"simple","fields":[],"enumValues":["Melee","MeleeOrRanged","Ranged"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

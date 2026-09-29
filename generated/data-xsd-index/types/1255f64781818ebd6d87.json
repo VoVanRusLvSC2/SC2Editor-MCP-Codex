@@ -1,1 +1,1 @@
-{"name":"EAccumulatorOperation","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EAccumulatorOperation"}],"enumValues":[],"facets":[]}
+{"name":"EAccumulatorOperation","schemaSpan":{"start":695754,"end":695885},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":695802,"end":695866},"namespace":"","name":"value","type":"simple_EAccumulatorOperation","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

@@ -1,1 +1,1 @@
-{"name":"CVoicePackLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CVoicePackLink"}],"enumValues":[],"facets":[]}
+{"name":"CVoicePackLink","schemaSpan":{"start":63176,"end":63293},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":63217,"end":63274},"namespace":"","name":"value","type":"simple_CVoicePackLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

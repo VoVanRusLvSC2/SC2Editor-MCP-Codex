@@ -1,1 +1,1 @@
-{"name":"CShapeLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CShapeLink"}],"enumValues":[],"facets":[]}
+{"name":"CShapeLink","schemaSpan":{"start":49005,"end":49114},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":49042,"end":49095},"namespace":"","name":"value","type":"simple_CShapeLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

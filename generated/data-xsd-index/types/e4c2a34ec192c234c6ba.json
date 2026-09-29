@@ -1,1 +1,1 @@
-{"name":"simple_ETimeOfDayValue","kind":"simple","fields":[],"enumValues":["Hours","Minutes","Seconds","Value"],"facets":[],"base":"xs:string"}
+{"name":"simple_ETimeOfDayValue","schemaSpan":{"start":422967,"end":423770},"namespace":"","kind":"simple","fields":[],"enumValues":["Hours","Minutes","Seconds","Value"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

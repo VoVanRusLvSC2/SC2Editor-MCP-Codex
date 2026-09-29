@@ -1,1 +1,1 @@
-{"name":"CActorTimeRealPair","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CActorTimeRealPair"}],"enumValues":[],"facets":[]}
+{"name":"CActorTimeRealPair","schemaSpan":{"start":27748,"end":27873},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":27793,"end":27854},"namespace":"","name":"value","type":"simple_CActorTimeRealPair","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

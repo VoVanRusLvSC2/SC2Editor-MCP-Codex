@@ -1,1 +1,1 @@
-{"name":"EAbilAttackStage","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EAbilAttackStage"}],"enumValues":[],"facets":[]}
+{"name":"EAbilAttackStage","schemaSpan":{"start":71620,"end":71741},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":71663,"end":71722},"namespace":"","name":"value","type":"simple_EAbilAttackStage","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

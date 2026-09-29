@@ -1,1 +1,1 @@
-{"name":"simple_EAbilMergeFlag","kind":"simple","fields":[],"enumValues":["BestUnit","IgnoreUnitCost"],"facets":[],"base":"xs:string"}
+{"name":"simple_EAbilMergeFlag","schemaSpan":{"start":663250,"end":663733},"namespace":"","kind":"simple","fields":[],"enumValues":["BestUnit","IgnoreUnitCost"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

@@ -1,1 +1,1 @@
-{"name":"CGameTime","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CGameTime"}],"enumValues":[],"facets":[]}
+{"name":"CGameTime","schemaSpan":{"start":8684,"end":8791},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":8720,"end":8772},"namespace":"","name":"value","type":"simple_CGameTime","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

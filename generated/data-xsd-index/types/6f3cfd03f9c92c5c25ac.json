@@ -1,1 +1,1 @@
-{"name":"EFootprintShapeMode","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EFootprintShapeMode"}],"enumValues":[],"facets":[]}
+{"name":"EFootprintShapeMode","schemaSpan":{"start":1365331,"end":1365458},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1365377,"end":1365439},"namespace":"","name":"value","type":"simple_EFootprintShapeMode","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

@@ -1,1 +1,1 @@
-{"name":"simple_EAbilRallyFlag","kind":"simple","fields":[],"enumValues":["ShowWhileMerging","ShowWhileWarping"],"facets":[],"base":"xs:string"}
+{"name":"simple_EAbilRallyFlag","schemaSpan":{"start":675630,"end":676134},"namespace":"","kind":"simple","fields":[],"enumValues":["ShowWhileMerging","ShowWhileWarping"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

@@ -1,1 +1,1 @@
-{"name":"simple_EClassIdCButton","kind":"simple","fields":[],"enumValues":["CButton"],"facets":[],"base":"xs:string"}
+{"name":"simple_EClassIdCButton","schemaSpan":{"start":207227,"end":207519},"namespace":"","kind":"simple","fields":[],"enumValues":["CButton"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

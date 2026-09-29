@@ -1,1 +1,1 @@
-{"name":"EFootprintFlag","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EFootprintFlag"}],"enumValues":[],"facets":[]}
+{"name":"EFootprintFlag","schemaSpan":{"start":1364163,"end":1364280},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1364204,"end":1364261},"namespace":"","name":"value","type":"simple_EFootprintFlag","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

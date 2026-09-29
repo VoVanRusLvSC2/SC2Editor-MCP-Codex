@@ -1,1 +1,1 @@
-{"name":"simple_EClassIdCModel","kind":"simple","fields":[],"enumValues":["CModel","CModelFoliage"],"facets":[],"base":"xs:string"}
+{"name":"simple_EClassIdCModel","schemaSpan":{"start":427649,"end":428118},"namespace":"","kind":"simple","fields":[],"enumValues":["CModel","CModelFoliage"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

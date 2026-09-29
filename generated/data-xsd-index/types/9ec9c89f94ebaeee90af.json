@@ -1,1 +1,1 @@
-{"name":"EUnitColorStyle","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EUnitColorStyle"}],"enumValues":[],"facets":[]}
+{"name":"EUnitColorStyle","schemaSpan":{"start":322295,"end":322414},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":322337,"end":322395},"namespace":"","name":"value","type":"simple_EUnitColorStyle","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

@@ -1,1 +1,1 @@
-{"name":"CSprayLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CSprayLink"}],"enumValues":[],"facets":[]}
+{"name":"CSprayLink","schemaSpan":{"start":61214,"end":61323},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":61251,"end":61304},"namespace":"","name":"value","type":"simple_CSprayLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

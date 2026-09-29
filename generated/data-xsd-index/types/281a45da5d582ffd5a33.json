@@ -1,1 +1,1 @@
-{"name":"CPingLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CPingLink"}],"enumValues":[],"facets":[]}
+{"name":"CPingLink","schemaSpan":{"start":56175,"end":56282},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":56211,"end":56263},"namespace":"","name":"value","type":"simple_CPingLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

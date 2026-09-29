@@ -1,1 +1,1 @@
-{"name":"EAbilTrainRotation","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EAbilTrainRotation"}],"enumValues":[],"facets":[]}
+{"name":"EAbilTrainRotation","schemaSpan":{"start":689484,"end":689609},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":689529,"end":689590},"namespace":"","name":"value","type":"simple_EAbilTrainRotation","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

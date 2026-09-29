@@ -1,1 +1,1 @@
-{"name":"EHeroDifficulty","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EHeroDifficulty"}],"enumValues":[],"facets":[]}
+{"name":"EHeroDifficulty","schemaSpan":{"start":399297,"end":399416},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":399339,"end":399397},"namespace":"","name":"value","type":"simple_EHeroDifficulty","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

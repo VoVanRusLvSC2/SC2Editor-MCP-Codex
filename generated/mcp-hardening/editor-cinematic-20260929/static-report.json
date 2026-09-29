@@ -1,0 +1,884 @@
+{
+  "status": "STATIC_PASS",
+  "build": 97563,
+  "editor": "NOT_RUN",
+  "compiler": "NOT_EXECUTED",
+  "runtime": "NOT_RUN",
+  "triggerSha256": "3a9b24b3d3e9a587ed9afe1e1088f718af4dd2cc838b66adc07f19db7b4f9a47",
+  "calls": [
+    {
+      "kind": "Event",
+      "function": "TriggerAddEventMapInit",
+      "args": {}
+    },
+    {
+      "kind": "Action",
+      "function": "CinematicMode",
+      "args": {
+        "C016C6E2": {
+          "kind": "preset",
+          "id": "00000538"
+        },
+        "8F9FC828": {
+          "kind": "nativeCall",
+          "function": "PlayerGroupAll"
+        },
+        "5755FC77": {
+          "kind": "literal",
+          "type": "fixed",
+          "value": 0
+        }
+      }
+    },
+    {
+      "kind": "Action",
+      "function": "Wait",
+      "args": {
+        "00000419": {
+          "kind": "literal",
+          "type": "fixed",
+          "value": 0.5
+        },
+        "00000420": {
+          "kind": "preset",
+          "id": "00000013"
+        }
+      }
+    },
+    {
+      "kind": "Action",
+      "function": "CinematicMode",
+      "args": {
+        "C016C6E2": {
+          "kind": "preset",
+          "id": "00000545"
+        },
+        "8F9FC828": {
+          "kind": "nativeCall",
+          "function": "PlayerGroupAll"
+        },
+        "5755FC77": {
+          "kind": "literal",
+          "type": "fixed",
+          "value": 0
+        }
+      }
+    },
+    {
+      "kind": "Action",
+      "function": "GlobalCinematicSetting",
+      "args": {
+        "E095DC31": {
+          "kind": "preset",
+          "id": "00000538"
+        }
+      }
+    },
+    {
+      "kind": "Action",
+      "function": "GlobalCinematicSetting",
+      "args": {
+        "E095DC31": {
+          "kind": "preset",
+          "id": "00000545"
+        }
+      }
+    }
+  ],
+  "gui": {
+    "valid": true,
+    "issues": [],
+    "scope": "XML and local typed graph",
+    "externalLibraries": [
+      "Ntve"
+    ],
+    "compiler": "NOT_EXECUTED"
+  },
+  "map": {
+    "directory": "",
+    "files": [
+      {
+        "file": "Attributes",
+        "size": 19846,
+        "sha256": "c4078f8d59e046e673c36354655e74b5c6e4247e68ed67601eb8657c926ff845"
+      },
+      {
+        "file": "ComponentList.SC2Components",
+        "size": 579,
+        "sha256": "b34412f7488e62d056ae2ef642187ef84b69d0d5d00552f166a186650e39826b"
+      },
+      {
+        "file": "DocumentHeader",
+        "size": 3972,
+        "sha256": "73f78e82d650fca7b867375ee5310c7f73859e333c0ebdf0137684fc0e5215f8"
+      },
+      {
+        "file": "DocumentInfo",
+        "size": 1085,
+        "sha256": "03d6f1d2f22f4552171fa724f37a0e8d587c635a6c5c087fdd606dac393c0d2c"
+      },
+      {
+        "file": "enUS.SC2Data/LocalizedData/TriggerStrings.txt",
+        "size": 106,
+        "sha256": "8789c5428851a2fb5ca696398f58f86cd00eaef59265ae937a1da609c5694f4d"
+      },
+      {
+        "file": "MapInfo",
+        "size": 534,
+        "sha256": "21ff64431be8ec1adcb0743901d3b0095851fb7ae754be4c55c4e0d2af5a8cf3"
+      },
+      {
+        "file": "t3CellFlags",
+        "size": 1056,
+        "sha256": "56d47dee7d3e6c2245a5d69d1421bffa56c4f14ac936574d1ab1e6351c87b55e"
+      },
+      {
+        "file": "t3FluffDoodad",
+        "size": 28,
+        "sha256": "3f3f15b8480e7cf37d97bc9c4affe5af1348b352bbc1213a71da32195a88e937"
+      },
+      {
+        "file": "t3HardTile",
+        "size": 28,
+        "sha256": "12afa86368acf6158758ce235c2e3879d6edfab41cc2eef6738c939e746b745d"
+      },
+      {
+        "file": "t3HeightMap",
+        "size": 6566,
+        "sha256": "397bb71583fbf8c10a4e07ddb718e6783ed442d53d9b4a76cd474e1aa60ae4a6"
+      },
+      {
+        "file": "t3SyncCliffLevel",
+        "size": 2080,
+        "sha256": "ee6f88f90add90966dc89670499c3120e26d33968a12c26f0ba99d4da7504fd7"
+      },
+      {
+        "file": "t3SyncHeightMap",
+        "size": 4420,
+        "sha256": "4725002333adecf4410376331bbbf695b5a613d55b2a5a6b7bda10701e1be3bd"
+      },
+      {
+        "file": "t3SyncTextureInfo",
+        "size": 8236,
+        "sha256": "5fdf44defe5df115be5be49de20d822f1dfab785304cfbd228c120aa03f38c0c"
+      },
+      {
+        "file": "t3Terrain.xml",
+        "size": 4333,
+        "sha256": "1e66a45de6c4c2aa097e6582592c1a8daac504549376c27bb79fa4d11cd832b9"
+      },
+      {
+        "file": "t3TextureMasks",
+        "size": 262208,
+        "sha256": "901087dbb65e738d774d2517fc694d8508d524c4ca988cc7478efd2e0f48cb99"
+      },
+      {
+        "file": "t3VertCol",
+        "size": 3936,
+        "sha256": "07e468603720a21465401f31702bea01e69bea5a8aa9606fc672015bcd692a18"
+      },
+      {
+        "file": "t3Water",
+        "size": 32,
+        "sha256": "c15e6e4da91564e9349a449302114f4248dfe1f2cebee1a29526cb5f41db5af5"
+      },
+      {
+        "file": "Triggers",
+        "size": 3853,
+        "sha256": "3a9b24b3d3e9a587ed9afe1e1088f718af4dd2cc838b66adc07f19db7b4f9a47"
+      }
+    ],
+    "mapInfo": {
+      "version": 39,
+      "cells": [
+        32,
+        32
+      ],
+      "playableBounds": {
+        "left": 7,
+        "bottom": 8,
+        "right": 22,
+        "top": 17
+      },
+      "mapDescription": "BelShirEx1",
+      "fogMaskStyle": "Black",
+      "baseHeightFixed": 30720,
+      "minimapResolution": 1,
+      "gameOptionsFlags": 16384,
+      "integrityHash": "924",
+      "integrityVerified": true,
+      "opaqueTailOffset": 152,
+      "opaqueTailBytes": 382,
+      "sha256": "21ff64431be8ec1adcb0743901d3b0095851fb7ae754be4c55c4e0d2af5a8cf3",
+      "writerScope": [
+        "playableBounds",
+        "fogMaskStyle",
+        "minimapResolution"
+      ],
+      "playerAndVariantEditing": false,
+      "fromScratchSerialization": false
+    },
+    "components": [
+      {
+        "type": "gada",
+        "root": "GameData"
+      },
+      {
+        "type": "text",
+        "root": "GameText",
+        "locale": "ruRU"
+      },
+      {
+        "type": "info",
+        "root": "DocumentInfo"
+      },
+      {
+        "type": "mapi",
+        "root": "MapInfo"
+      },
+      {
+        "type": "trig",
+        "root": "Triggers"
+      },
+      {
+        "type": "terr",
+        "root": "t3Terrain.xml"
+      },
+      {
+        "type": "attr",
+        "root": "Attributes"
+      },
+      {
+        "type": "text",
+        "root": "GameText",
+        "locale": "enUS"
+      }
+    ],
+    "terrain": {
+      "directory": "",
+      "components": [
+        {
+          "name": "t3Terrain.xml",
+          "file": "t3Terrain.xml",
+          "exists": true,
+          "bytes": 4333,
+          "sha256": "1e66a45de6c4c2aa097e6582592c1a8daac504549376c27bb79fa4d11cd832b9"
+        },
+        {
+          "name": "t3HeightMap",
+          "file": "t3HeightMap",
+          "exists": true,
+          "bytes": 6566,
+          "sha256": "397bb71583fbf8c10a4e07ddb718e6783ed442d53d9b4a76cd474e1aa60ae4a6"
+        },
+        {
+          "name": "t3TextureMasks",
+          "file": "t3TextureMasks",
+          "exists": true,
+          "bytes": 262208,
+          "sha256": "901087dbb65e738d774d2517fc694d8508d524c4ca988cc7478efd2e0f48cb99"
+        },
+        {
+          "name": "t3SyncHeightMap",
+          "file": "t3SyncHeightMap",
+          "exists": true,
+          "bytes": 4420,
+          "sha256": "4725002333adecf4410376331bbbf695b5a613d55b2a5a6b7bda10701e1be3bd"
+        },
+        {
+          "name": "t3SyncCliffLevel",
+          "file": "t3SyncCliffLevel",
+          "exists": true,
+          "bytes": 2080,
+          "sha256": "ee6f88f90add90966dc89670499c3120e26d33968a12c26f0ba99d4da7504fd7"
+        },
+        {
+          "name": "t3SyncTextureInfo",
+          "file": "t3SyncTextureInfo",
+          "exists": true,
+          "bytes": 8236,
+          "sha256": "5fdf44defe5df115be5be49de20d822f1dfab785304cfbd228c120aa03f38c0c"
+        },
+        {
+          "name": "t3CellFlags",
+          "file": "t3CellFlags",
+          "exists": true,
+          "bytes": 1056,
+          "sha256": "56d47dee7d3e6c2245a5d69d1421bffa56c4f14ac936574d1ab1e6351c87b55e"
+        },
+        {
+          "name": "t3HardTile",
+          "file": "t3HardTile",
+          "exists": true,
+          "bytes": 28,
+          "sha256": "12afa86368acf6158758ce235c2e3879d6edfab41cc2eef6738c939e746b745d"
+        },
+        {
+          "name": "t3Water",
+          "file": "t3Water",
+          "exists": true,
+          "bytes": 32,
+          "sha256": "c15e6e4da91564e9349a449302114f4248dfe1f2cebee1a29526cb5f41db5af5"
+        },
+        {
+          "name": "Base.SC2Data/GameData/WaterData.xml",
+          "file": "Base.SC2Data/GameData/WaterData.xml",
+          "exists": false,
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "name": "Base.SC2Data/GameData/LightData.xml",
+          "file": "Base.SC2Data/GameData/LightData.xml",
+          "exists": false,
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "name": "Base.SC2Data/GameData/TerrainData.xml",
+          "file": "Base.SC2Data/GameData/TerrainData.xml",
+          "exists": false,
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "name": "Base.SC2Data/GameData.xml",
+          "file": "Base.SC2Data/GameData.xml",
+          "exists": false,
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "name": "ComponentList.SC2Components",
+          "file": "ComponentList.SC2Components",
+          "exists": true,
+          "bytes": 579,
+          "sha256": "b34412f7488e62d056ae2ef642187ef84b69d0d5d00552f166a186650e39826b"
+        },
+        {
+          "name": "t3VertCol",
+          "file": "t3VertCol",
+          "exists": true,
+          "bytes": 3936,
+          "sha256": "07e468603720a21465401f31702bea01e69bea5a8aa9606fc672015bcd692a18"
+        },
+        {
+          "name": "t3FluffDoodad",
+          "file": "t3FluffDoodad",
+          "exists": true,
+          "bytes": 28,
+          "sha256": "3f3f15b8480e7cf37d97bc9c4affe5af1348b352bbc1213a71da32195a88e937"
+        },
+        {
+          "name": "PaintedPathingLayer",
+          "file": "PaintedPathingLayer",
+          "exists": false,
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "name": "t3SyncPathingInfo",
+          "file": "t3SyncPathingInfo",
+          "exists": false,
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "name": "Terrain",
+          "file": "Terrain",
+          "exists": false,
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ],
+      "version": 115,
+      "dimensions": {
+        "vertices": [
+          33,
+          33
+        ],
+        "cells": [
+          32,
+          32
+        ]
+      },
+      "bounds": {
+        "minX": 0,
+        "minY": 0,
+        "maxX": 32,
+        "maxY": 32
+      },
+      "tileSet": "BelShirEx1",
+      "transform": {
+        "offset": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "quantization": {
+        "bias": 1.000153,
+        "scale": 0.0001525902
+      },
+      "textures": [
+        {
+          "slot": 0,
+          "id": "BelShirDirtLight"
+        },
+        {
+          "slot": 1,
+          "id": ""
+        },
+        {
+          "slot": 2,
+          "id": ""
+        },
+        {
+          "slot": 3,
+          "id": ""
+        },
+        {
+          "slot": 4,
+          "id": ""
+        },
+        {
+          "slot": 5,
+          "id": ""
+        },
+        {
+          "slot": 6,
+          "id": ""
+        },
+        {
+          "slot": 7,
+          "id": ""
+        },
+        {
+          "slot": 8,
+          "id": ""
+        },
+        {
+          "slot": 9,
+          "id": ""
+        },
+        {
+          "slot": 10,
+          "id": ""
+        },
+        {
+          "slot": 11,
+          "id": ""
+        },
+        {
+          "slot": 12,
+          "id": ""
+        },
+        {
+          "slot": 13,
+          "id": ""
+        },
+        {
+          "slot": 14,
+          "id": ""
+        },
+        {
+          "slot": 15,
+          "id": ""
+        },
+        {
+          "slot": 16,
+          "id": ""
+        },
+        {
+          "slot": 17,
+          "id": ""
+        },
+        {
+          "slot": 18,
+          "id": ""
+        },
+        {
+          "slot": 19,
+          "id": ""
+        },
+        {
+          "slot": 20,
+          "id": ""
+        },
+        {
+          "slot": 21,
+          "id": ""
+        },
+        {
+          "slot": 22,
+          "id": ""
+        },
+        {
+          "slot": 23,
+          "id": ""
+        },
+        {
+          "slot": 24,
+          "id": ""
+        },
+        {
+          "slot": 25,
+          "id": ""
+        },
+        {
+          "slot": 26,
+          "id": ""
+        },
+        {
+          "slot": 27,
+          "id": ""
+        },
+        {
+          "slot": 28,
+          "id": ""
+        },
+        {
+          "slot": 29,
+          "id": ""
+        },
+        {
+          "slot": 30,
+          "id": ""
+        },
+        {
+          "slot": 31,
+          "id": ""
+        },
+        {
+          "slot": 32,
+          "id": ""
+        },
+        {
+          "slot": 33,
+          "id": ""
+        },
+        {
+          "slot": 34,
+          "id": ""
+        },
+        {
+          "slot": 35,
+          "id": ""
+        },
+        {
+          "slot": 36,
+          "id": ""
+        },
+        {
+          "slot": 37,
+          "id": ""
+        },
+        {
+          "slot": 38,
+          "id": ""
+        },
+        {
+          "slot": 39,
+          "id": ""
+        },
+        {
+          "slot": 40,
+          "id": ""
+        },
+        {
+          "slot": 41,
+          "id": ""
+        },
+        {
+          "slot": 42,
+          "id": ""
+        },
+        {
+          "slot": 43,
+          "id": ""
+        },
+        {
+          "slot": 44,
+          "id": ""
+        },
+        {
+          "slot": 45,
+          "id": ""
+        },
+        {
+          "slot": 46,
+          "id": ""
+        },
+        {
+          "slot": 47,
+          "id": ""
+        },
+        {
+          "slot": 48,
+          "id": ""
+        },
+        {
+          "slot": 49,
+          "id": ""
+        },
+        {
+          "slot": 50,
+          "id": ""
+        },
+        {
+          "slot": 51,
+          "id": ""
+        },
+        {
+          "slot": 52,
+          "id": ""
+        },
+        {
+          "slot": 53,
+          "id": ""
+        },
+        {
+          "slot": 54,
+          "id": ""
+        },
+        {
+          "slot": 55,
+          "id": ""
+        },
+        {
+          "slot": 56,
+          "id": ""
+        },
+        {
+          "slot": 57,
+          "id": ""
+        },
+        {
+          "slot": 58,
+          "id": ""
+        },
+        {
+          "slot": 59,
+          "id": ""
+        },
+        {
+          "slot": 60,
+          "id": ""
+        },
+        {
+          "slot": 61,
+          "id": ""
+        },
+        {
+          "slot": 62,
+          "id": ""
+        },
+        {
+          "slot": 63,
+          "id": ""
+        }
+      ],
+      "tileSets": [
+        {
+          "slot": 0,
+          "id": "BelShirEx1"
+        },
+        {
+          "slot": 1,
+          "id": ""
+        },
+        {
+          "slot": 2,
+          "id": ""
+        },
+        {
+          "slot": 3,
+          "id": ""
+        },
+        {
+          "slot": 4,
+          "id": ""
+        },
+        {
+          "slot": 5,
+          "id": ""
+        },
+        {
+          "slot": 6,
+          "id": ""
+        },
+        {
+          "slot": 7,
+          "id": ""
+        }
+      ],
+      "cliffSets": [],
+      "ramps": 0,
+      "water": {
+        "entries": [],
+        "opaque": false,
+        "coverageKnown": true,
+        "semantics": "unverified",
+        "bodyCount": 0,
+        "count": 0,
+        "version": 110
+      },
+      "nativeIntegrity": {
+        "valid": true,
+        "components": [
+          {
+            "name": "t3CellFlags",
+            "status": "PASS",
+            "details": {
+              "cells": [
+                32,
+                32
+              ],
+              "rawFlags": [
+                {
+                  "rawValue": 2,
+                  "cells": 1024
+                }
+              ],
+              "pathingSemantics": "NOT_VERIFIED"
+            }
+          },
+          {
+            "name": "t3SyncCliffLevel",
+            "status": "PASS",
+            "details": {
+              "cells": [
+                32,
+                32
+              ],
+              "rawLevels": [
+                {
+                  "rawValue": 64,
+                  "cells": 1024
+                }
+              ],
+              "geometryConsistency": "NOT_VERIFIED"
+            }
+          },
+          {
+            "name": "t3VertCol",
+            "status": "PASS",
+            "details": {
+              "version": 104,
+              "entries": 64,
+              "subDataBytes": 1600,
+              "subDataSemantics": "OPAQUE",
+              "writer": false
+            }
+          }
+        ],
+        "issues": [],
+        "validationScope": "Known native envelopes, dimensions and variable-entry boundaries; not cliff geometry, vertex color meaning or engine pathing"
+      },
+      "capabilities": {
+        "read": true,
+        "heightBrush": true,
+        "textureBrush": true,
+        "paletteUpdate": true,
+        "waterTableRead": true,
+        "waterEntries": true,
+        "waterBodyEditing": false,
+        "flatWaterRectangleEditing": true,
+        "waterMaterialEditing": true,
+        "lightingPresetAssignment": true,
+        "lightingAmbientHDRDirectionalEditing": true,
+        "lightingCycleEditing": true,
+        "engineLightingPreview": false,
+        "waterCoverageKnown": true,
+        "proceduralStyles": [
+          "forest",
+          "desert",
+          "city",
+          "snow",
+          "jungle",
+          "swamp",
+          "volcanic",
+          "badlands",
+          "coastal",
+          "space_platform"
+        ],
+        "wholeMapStamp": true,
+        "structuralCliffEditing": false,
+        "nativeRampEditing": false,
+        "pathingPainting": false,
+        "arbitraryWaterLevel": true,
+        "vertexColorPainting": false,
+        "syncStrategy": "preserve native residuals + quantized delta; dominant texture rule",
+        "editorOracle": "not run",
+        "runtimePathingProof": "unavailable"
+      },
+      "nativeEditorVerified": false
+    },
+    "issues": [
+      {
+        "severity": "warning",
+        "code": "LOGICAL_COMPONENT_ROOT_UNRESOLVED",
+        "message": "gada: GameData; logical/optimized roots are preserved without guessing a direct file binding"
+      },
+      {
+        "severity": "warning",
+        "code": "LOGICAL_COMPONENT_ROOT_UNRESOLVED",
+        "message": "text: GameText; logical/optimized roots are preserved without guessing a direct file binding"
+      },
+      {
+        "severity": "warning",
+        "code": "LOGICAL_COMPONENT_ROOT_UNRESOLVED",
+        "message": "text: GameText; logical/optimized roots are preserved without guessing a direct file binding"
+      },
+      {
+        "severity": "warning",
+        "code": "OFFLINE_VALIDATION_ONLY",
+        "message": "DocumentHeader payload, player/variant semantics and engine acceptance remain unverified"
+      }
+    ],
+    "valid": true,
+    "stagedFiles": [],
+    "validationScope": "Known MapInfo core prefix, required document roots, terrain parsers and file manifest; not complete engine semantics",
+    "editorValidation": "NOT_EXECUTED",
+    "runtimeValidation": "NOT_EXECUTED"
+  },
+  "archive": {
+    "operation": "pack",
+    "archive": "E:\\SK2\\SC2Editor_MCP_Codex\\generated\\mcp-hardening\\editor-cinematic-20260929\\components\\.sc2mcp-output\\CinematicAcceptance.SC2Map",
+    "componentDirectory": "E:\\SK2\\SC2Editor_MCP_Codex\\generated\\mcp-hardening\\editor-cinematic-20260929\\components",
+    "adapter": "E:\\SK2\\SC2Editor_MCP_Codex\\native\\bin\\windows-x64\\sc2-mcp-archive.exe",
+    "verification": {
+      "entryCount": 18,
+      "contentSha256": {
+        "Attributes": "c4078f8d59e046e673c36354655e74b5c6e4247e68ed67601eb8657c926ff845",
+        "ComponentList.SC2Components": "b34412f7488e62d056ae2ef642187ef84b69d0d5d00552f166a186650e39826b",
+        "DocumentHeader": "73f78e82d650fca7b867375ee5310c7f73859e333c0ebdf0137684fc0e5215f8",
+        "DocumentInfo": "03d6f1d2f22f4552171fa724f37a0e8d587c635a6c5c087fdd606dac393c0d2c",
+        "enUS.SC2Data/LocalizedData/TriggerStrings.txt": "8789c5428851a2fb5ca696398f58f86cd00eaef59265ae937a1da609c5694f4d",
+        "MapInfo": "21ff64431be8ec1adcb0743901d3b0095851fb7ae754be4c55c4e0d2af5a8cf3",
+        "t3CellFlags": "56d47dee7d3e6c2245a5d69d1421bffa56c4f14ac936574d1ab1e6351c87b55e",
+        "t3FluffDoodad": "3f3f15b8480e7cf37d97bc9c4affe5af1348b352bbc1213a71da32195a88e937",
+        "t3HardTile": "12afa86368acf6158758ce235c2e3879d6edfab41cc2eef6738c939e746b745d",
+        "t3HeightMap": "397bb71583fbf8c10a4e07ddb718e6783ed442d53d9b4a76cd474e1aa60ae4a6",
+        "t3SyncCliffLevel": "ee6f88f90add90966dc89670499c3120e26d33968a12c26f0ba99d4da7504fd7",
+        "t3SyncHeightMap": "4725002333adecf4410376331bbbf695b5a613d55b2a5a6b7bda10701e1be3bd",
+        "t3SyncTextureInfo": "5fdf44defe5df115be5be49de20d822f1dfab785304cfbd228c120aa03f38c0c",
+        "t3Terrain.xml": "1e66a45de6c4c2aa097e6582592c1a8daac504549376c27bb79fa4d11cd832b9",
+        "t3TextureMasks": "901087dbb65e738d774d2517fc694d8508d524c4ca988cc7478efd2e0f48cb99",
+        "t3VertCol": "07e468603720a21465401f31702bea01e69bea5a8aa9606fc672015bcd692a18",
+        "t3Water": "c15e6e4da91564e9349a449302114f4248dfe1f2cebee1a29526cb5f41db5af5",
+        "Triggers": "3a9b24b3d3e9a587ed9afe1e1088f718af4dd2cc838b66adc07f19db7b4f9a47"
+      },
+      "reopened": true
+    },
+    "dryRun": false,
+    "validation": "Known MapInfo core prefix, required document roots, terrain parsers and file manifest; not complete engine semantics",
+    "editorValidation": "NOT_EXECUTED",
+    "runtimeValidation": "NOT_EXECUTED"
+  }
+}

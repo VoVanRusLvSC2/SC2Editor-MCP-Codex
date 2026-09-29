@@ -1,1 +1,1 @@
-{"name":"simple_EActorModelAspectPerson","kind":"simple","fields":[],"enumValues":["Any","Observer","Participant","Referee","Spectator"],"facets":[],"base":"xs:string"}
+{"name":"simple_EActorModelAspectPerson","schemaSpan":{"start":764364,"end":765668},"namespace":"","kind":"simple","fields":[],"enumValues":["Any","Observer","Participant","Referee","Spectator"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

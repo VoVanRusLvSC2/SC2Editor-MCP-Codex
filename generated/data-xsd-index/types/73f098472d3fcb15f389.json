@@ -1,1 +1,1 @@
-{"name":"simple_EActorStepDirection","kind":"simple","fields":[],"enumValues":["Backward","Forward"],"facets":[],"base":"xs:string"}
+{"name":"simple_EActorStepDirection","schemaSpan":{"start":996368,"end":996895},"namespace":"","kind":"simple","fields":[],"enumValues":["Backward","Forward"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

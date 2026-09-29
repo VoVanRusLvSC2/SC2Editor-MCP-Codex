@@ -1,1 +1,1 @@
-{"name":"simple_EBehaviorBuffReplace","kind":"simple","fields":[],"enumValues":["FarthestDistance","ShortestDuration"],"facets":[],"base":"xs:string"}
+{"name":"simple_EBehaviorBuffReplace","schemaSpan":{"start":1174809,"end":1175317},"namespace":"","kind":"simple","fields":[],"enumValues":["FarthestDistance","ShortestDuration"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

@@ -1,1 +1,1 @@
-{"name":"simple_CScoreValueLink","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string"}
+{"name":"simple_CScoreValueLink","schemaSpan":{"start":60895,"end":60995},"namespace":"","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

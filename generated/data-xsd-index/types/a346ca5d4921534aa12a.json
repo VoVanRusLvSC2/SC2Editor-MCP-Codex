@@ -1,1 +1,1 @@
-{"name":"EActorSiteOpBasicType","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EActorSiteOpBasicType"}],"enumValues":[],"facets":[]}
+{"name":"EActorSiteOpBasicType","schemaSpan":{"start":978956,"end":979087},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":979004,"end":979068},"namespace":"","name":"value","type":"simple_EActorSiteOpBasicType","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

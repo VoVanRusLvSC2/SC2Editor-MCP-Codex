@@ -1,1 +1,1 @@
-{"name":"simple_EEffectApplyBehaviorFlag","kind":"simple","fields":[],"enumValues":["SetAttributeBasePoints","SetAttributePoints","SetAttributePointsDelta","UseDuration"],"facets":[],"base":"xs:string"}
+{"name":"simple_EEffectApplyBehaviorFlag","schemaSpan":{"start":1327845,"end":1328766},"namespace":"","kind":"simple","fields":[],"enumValues":["SetAttributeBasePoints","SetAttributePoints","SetAttributePointsDelta","UseDuration"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

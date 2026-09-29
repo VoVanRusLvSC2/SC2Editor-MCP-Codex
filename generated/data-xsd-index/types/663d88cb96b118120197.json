@@ -1,1 +1,1 @@
-{"name":"CModelPath","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CModelPath"}],"enumValues":[],"facets":[]}
+{"name":"CModelPath","schemaSpan":{"start":14225,"end":14334},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":14262,"end":14315},"namespace":"","name":"value","type":"simple_CModelPath","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

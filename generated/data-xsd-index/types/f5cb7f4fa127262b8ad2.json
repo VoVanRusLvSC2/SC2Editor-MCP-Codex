@@ -1,1 +1,1 @@
-{"name":"simple_EClassIdCTextureSheet","kind":"simple","fields":[],"enumValues":["CTextureSheet"],"facets":[],"base":"xs:string"}
+{"name":"simple_EClassIdCTextureSheet","schemaSpan":{"start":536826,"end":537136},"namespace":"","kind":"simple","fields":[],"enumValues":["CTextureSheet"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

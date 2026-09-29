@@ -1,1 +1,1 @@
-{"name":"EDeathReveal","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EDeathReveal"}],"enumValues":[],"facets":[]}
+{"name":"EDeathReveal","schemaSpan":{"start":1322713,"end":1322826},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1322752,"end":1322807},"namespace":"","name":"value","type":"simple_EDeathReveal","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

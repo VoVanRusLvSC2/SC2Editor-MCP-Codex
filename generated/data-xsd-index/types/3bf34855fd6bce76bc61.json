@@ -1,1 +1,1 @@
-{"name":"EClassIdCDecalPack","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EClassIdCDecalPack"}],"enumValues":[],"facets":[]}
+{"name":"EClassIdCDecalPack","schemaSpan":{"start":218753,"end":218878},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":218798,"end":218859},"namespace":"","name":"value","type":"simple_EClassIdCDecalPack","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

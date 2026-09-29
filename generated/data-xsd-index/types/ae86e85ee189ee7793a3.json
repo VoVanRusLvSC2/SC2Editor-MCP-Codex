@@ -1,1 +1,1 @@
-{"name":"simple_EItemAbilFlag","kind":"simple","fields":[],"enumValues":["Transient"],"facets":[],"base":"xs:string"}
+{"name":"simple_EItemAbilFlag","schemaSpan":{"start":1510008,"end":1510302},"namespace":"","kind":"simple","fields":[],"enumValues":["Transient"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

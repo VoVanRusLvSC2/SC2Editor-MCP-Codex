@@ -1,1 +1,1 @@
-{"name":"simple_CRaceBannerPackLink","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string"}
+{"name":"simple_CRaceBannerPackLink","schemaSpan":{"start":54999,"end":55103},"namespace":"","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

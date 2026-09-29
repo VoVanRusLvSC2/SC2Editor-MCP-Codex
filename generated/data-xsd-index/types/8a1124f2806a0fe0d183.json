@@ -1,1 +1,1 @@
-{"name":"SGameContentCreationData","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_SGameContentCreationData"}],"enumValues":[],"facets":[]}
+{"name":"SGameContentCreationData","schemaSpan":{"start":40247,"end":40384},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":40298,"end":40365},"namespace":"","name":"value","type":"simple_SGameContentCreationData","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

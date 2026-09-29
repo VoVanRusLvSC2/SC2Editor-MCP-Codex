@@ -1,1 +1,1 @@
-{"name":"simple_CPlayerResponseLink","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string"}
+{"name":"simple_CPlayerResponseLink","schemaSpan":{"start":42814,"end":42918},"namespace":"","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

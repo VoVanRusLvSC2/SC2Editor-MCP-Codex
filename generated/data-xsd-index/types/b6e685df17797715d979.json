@@ -1,1 +1,1 @@
-{"name":"simple_EConversationConditionOp","kind":"simple","fields":[],"enumValues":["Equal","Greater","GreaterEqual","Less","LessEqual","NotEqual","Unknown"],"facets":[],"base":"xs:string"}
+{"name":"simple_EConversationConditionOp","schemaSpan":{"start":1288387,"end":1289768},"namespace":"","kind":"simple","fields":[],"enumValues":["Equal","Greater","GreaterEqual","Less","LessEqual","NotEqual","Unknown"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

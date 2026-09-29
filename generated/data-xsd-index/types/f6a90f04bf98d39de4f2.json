@@ -1,1 +1,1 @@
-{"name":"EActorLookAtStartFlag","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EActorLookAtStartFlag"}],"enumValues":[],"facets":[]}
+{"name":"EActorLookAtStartFlag","schemaSpan":{"start":757870,"end":758001},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":757918,"end":757982},"namespace":"","name":"value","type":"simple_EActorLookAtStartFlag","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

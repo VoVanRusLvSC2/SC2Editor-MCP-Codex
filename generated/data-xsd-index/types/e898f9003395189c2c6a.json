@@ -1,1 +1,1 @@
-{"name":"simple_EAbilPawnFlag","kind":"simple","fields":[],"enumValues":["BestUnit","Smart"],"facets":[],"base":"xs:string"}
+{"name":"simple_EAbilPawnFlag","schemaSpan":{"start":674097,"end":674567},"namespace":"","kind":"simple","fields":[],"enumValues":["BestUnit","Smart"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

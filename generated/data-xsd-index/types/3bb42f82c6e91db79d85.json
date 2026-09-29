@@ -1,1 +1,1 @@
-{"name":"simple_EClassIdCMap","kind":"simple","fields":[],"enumValues":["CMap"],"facets":[],"base":"xs:string"}
+{"name":"simple_EClassIdCMap","schemaSpan":{"start":426510,"end":426792},"namespace":"","kind":"simple","fields":[],"enumValues":["CMap"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

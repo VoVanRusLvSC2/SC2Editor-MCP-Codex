@@ -1,1 +1,1 @@
-{"name":"simple_EClassIdCDataCollection","kind":"simple","fields":[],"enumValues":["CDataCollection","CDataCollectionAbil","CDataCollectionUnit","CDataCollectionUpgrade"],"facets":[],"base":"xs:string"}
+{"name":"simple_EClassIdCDataCollection","schemaSpan":{"start":217392,"end":218260},"namespace":"","kind":"simple","fields":[],"enumValues":["CDataCollection","CDataCollectionUnit","CDataCollectionUpgrade","CDataCollectionAbil"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

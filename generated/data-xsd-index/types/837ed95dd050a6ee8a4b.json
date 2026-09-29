@@ -1,1 +1,1 @@
-{"name":"EAbilBatteryCmd","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EAbilBatteryCmd"}],"enumValues":[],"facets":[]}
+{"name":"EAbilBatteryCmd","schemaSpan":{"start":86800,"end":86919},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":86842,"end":86900},"namespace":"","name":"value","type":"simple_EAbilBatteryCmd","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

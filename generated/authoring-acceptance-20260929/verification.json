@@ -1,0 +1,44 @@
+﻿{
+    "compiler":  "NOT_RUN",
+    "steps":  [
+                  {
+                      "exitCode":  0,
+                      "command":  "npm.cmd test",
+                      "log":  "npm-test.log"
+                  },
+                  {
+                      "exitCode":  0,
+                      "command":  "npm.cmd run lint",
+                      "log":  "lint.log"
+                  },
+                  {
+                      "exitCode":  0,
+                      "command":  "npm.cmd run build:release",
+                      "log":  "release-build.log"
+                  },
+                  {
+                      "exitCode":  0,
+                      "command":  "node scripts/smoke-project-portable.mjs release/SC2-MCP-Authoring-20260929-r3/app",
+                      "log":  "portable-smoke.log"
+                  }
+              ],
+    "testSummary":  {
+                        "failed":  0,
+                        "skipped":  1,
+                        "total":  345,
+                        "passed":  344
+                    },
+    "date":  "2026-09-29",
+    "portable":  "release/SC2-MCP-Authoring-20260929-r3",
+    "runtime":  "NOT_RUN",
+    "editor":  "NOT_RUN",
+    "tools":  187,
+    "hashes":  {
+                   "generated/trigger-authoring-registry.json":  "f9026c67b2a0af078864e6f251f2888e308856da5ca2c6dbbee5134d00ef9cb3",
+                   "generated/galaxy-native-api.json":  "93cb079b55e6037443a8465421741a956adf49a38e210e3684cd64e3fb740bc2",
+                   "generated/data-xsd-index/manifest.json":  "e9de9bbd80dc4552688b45b8857be3aae92e08e0215f45b87aa72bfeef58eb84",
+                   "generated/authoring-scenarios-20260929-r2/REPORT.json":  "ff2f539d8394b6517eac9d892f4030eb760c63afe04e12fc61f53340c2873c9d",
+                   "release/SC2-MCP-Authoring-20260929-r3/BUILD-INFO.json":  "cdab8f31d7260e9a60ef1b767e2712719c71df7f97831302aaead938caaf910e",
+                   "generated/project-portable-smoke.json":  "b929b7f9f52ef1ff39aeab3e88c77eafc2359cd29bd48c64aff9a03f5ae08c35"
+               }
+}

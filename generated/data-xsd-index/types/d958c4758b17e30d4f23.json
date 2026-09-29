@@ -1,1 +1,1 @@
-{"name":"EAbilSharedFlag","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EAbilSharedFlag"}],"enumValues":[],"facets":[]}
+{"name":"EAbilSharedFlag","schemaSpan":{"start":679288,"end":679407},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":679330,"end":679388},"namespace":"","name":"value","type":"simple_EAbilSharedFlag","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

@@ -1,1 +1,1 @@
-{"name":"EClassIdCGameUI","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EClassIdCGameUI"}],"enumValues":[],"facets":[]}
+{"name":"EClassIdCGameUI","schemaSpan":{"start":321880,"end":321999},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":321922,"end":321980},"namespace":"","name":"value","type":"simple_EClassIdCGameUI","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

@@ -1,1 +1,1 @@
-{"name":"CLayoutPath","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CLayoutPath"}],"enumValues":[],"facets":[]}
+{"name":"CLayoutPath","schemaSpan":{"start":14014,"end":14125},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":14052,"end":14106},"namespace":"","name":"value","type":"simple_CLayoutPath","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

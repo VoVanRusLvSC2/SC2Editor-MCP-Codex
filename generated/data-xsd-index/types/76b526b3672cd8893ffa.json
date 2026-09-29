@@ -1,1 +1,1 @@
-{"name":"EDamageFlag","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EDamageFlag"}],"enumValues":[],"facets":[]}
+{"name":"EDamageFlag","schemaSpan":{"start":1307693,"end":1307804},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1307731,"end":1307785},"namespace":"","name":"value","type":"simple_EDamageFlag","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

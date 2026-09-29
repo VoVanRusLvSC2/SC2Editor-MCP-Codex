@@ -1,1 +1,1 @@
-{"name":"EActorGameSpeed","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EActorGameSpeed"}],"enumValues":[],"facets":[]}
+{"name":"EActorGameSpeed","schemaSpan":{"start":740970,"end":741089},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":741012,"end":741070},"namespace":"","name":"value","type":"simple_EActorGameSpeed","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

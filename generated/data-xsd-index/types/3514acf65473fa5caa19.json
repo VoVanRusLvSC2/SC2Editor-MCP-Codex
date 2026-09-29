@@ -1,1 +1,1 @@
-{"name":"simple_EPlayerID","kind":"simple","fields":[],"enumValues":["0","1","10","11","12","13","14","15","2","3","4","5","6","7","8","9","Unknown"],"facets":[],"base":"xs:string"}
+{"name":"simple_EPlayerID","schemaSpan":{"start":1577317,"end":1580313},"namespace":"","kind":"simple","fields":[],"enumValues":["0","1","10","11","12","13","14","15","2","3","4","5","6","7","8","9","Unknown"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

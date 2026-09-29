@@ -1,1 +1,1 @@
-{"name":"simple_EItemEffectFlag","kind":"simple","fields":[],"enumValues":["Transient"],"facets":[],"base":"xs:string"}
+{"name":"simple_EItemEffectFlag","schemaSpan":{"start":1510425,"end":1510721},"namespace":"","kind":"simple","fields":[],"enumValues":["Transient"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

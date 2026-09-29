@@ -1,1 +1,1 @@
-{"name":"simple_TVoiceOverSkinId","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string"}
+{"name":"simple_TVoiceOverSkinId","schemaSpan":{"start":23124,"end":23225},"namespace":"","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

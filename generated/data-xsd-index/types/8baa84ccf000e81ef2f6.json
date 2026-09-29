@@ -1,1 +1,1 @@
-{"name":"simple_EPlane","kind":"simple","fields":[],"enumValues":["Air","Ground"],"facets":[],"base":"xs:string"}
+{"name":"simple_EPlane","schemaSpan":{"start":250343,"end":250789},"namespace":"","kind":"simple","fields":[],"enumValues":["Air","Ground"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

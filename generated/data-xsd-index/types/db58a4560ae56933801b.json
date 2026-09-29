@@ -1,1 +1,1 @@
-{"name":"EActorScopeType","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EActorScopeType"}],"enumValues":[],"facets":[]}
+{"name":"EActorScopeType","schemaSpan":{"start":966544,"end":966663},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":966586,"end":966644},"namespace":"","name":"value","type":"simple_EActorScopeType","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

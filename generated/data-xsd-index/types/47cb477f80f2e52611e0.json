@@ -1,1 +1,1 @@
-{"name":"simple_EEffectMorph","kind":"simple","fields":[],"enumValues":["Birth","IgnoreFacing","IgnoreMorphing","IgnorePlacement","RallyReset"],"facets":[],"base":"xs:string"}
+{"name":"simple_EEffectMorph","schemaSpan":{"start":1346626,"end":1347653},"namespace":"","kind":"simple","fields":[],"enumValues":["Birth","IgnoreFacing","IgnoreMorphing","IgnorePlacement","RallyReset"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

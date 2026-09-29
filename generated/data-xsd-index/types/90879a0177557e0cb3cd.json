@@ -1,1 +1,1 @@
-{"name":"CActorLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CActorLink"}],"enumValues":[],"facets":[]}
+{"name":"CActorLink","schemaSpan":{"start":47094,"end":47203},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":47131,"end":47184},"namespace":"","name":"value","type":"simple_CActorLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

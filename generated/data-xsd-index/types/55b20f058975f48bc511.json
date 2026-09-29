@@ -1,1 +1,1 @@
-{"name":"simple_EEffectTeleport","kind":"simple","fields":[],"enumValues":["TestCliff","TestFog","TestZone"],"facets":[],"base":"xs:string"}
+{"name":"simple_EEffectTeleport","schemaSpan":{"start":1352063,"end":1352710},"namespace":"","kind":"simple","fields":[],"enumValues":["TestCliff","TestFog","TestZone"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

@@ -1,1 +1,1 @@
-{"name":"EAbilInventoryFlag","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EAbilInventoryFlag"}],"enumValues":[],"facets":[]}
+{"name":"EAbilInventoryFlag","schemaSpan":{"start":659248,"end":659373},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":659293,"end":659354},"namespace":"","name":"value","type":"simple_EAbilInventoryFlag","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

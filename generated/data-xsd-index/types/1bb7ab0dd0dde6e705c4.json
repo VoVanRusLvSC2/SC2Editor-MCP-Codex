@@ -1,1 +1,1 @@
-{"name":"CAttachKeys","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CAttachKeys"}],"enumValues":[],"facets":[]}
+{"name":"CAttachKeys","schemaSpan":{"start":39801,"end":39912},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":39839,"end":39893},"namespace":"","name":"value","type":"simple_CAttachKeys","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

@@ -6,15 +6,20 @@ import { buildPeLauncher } from "./build-pe-launcher.mjs";
 const projectRoot = process.cwd();
 const output = path.resolve(process.argv[2] ?? "release/SC2-UI-Workbench-Windows");
 const app = path.join(output, "app");
+const releaseRoot=path.resolve(projectRoot,"release");
+const relativeOutput=path.relative(releaseRoot,output);
+if(!relativeOutput || relativeOutput.startsWith("..") || path.isAbsolute(relativeOutput) || relativeOutput.includes(path.sep))throw new Error("PORTABLE_OUTPUT_SCOPE_INVALID");
+for(const candidate of [releaseRoot,output]){try{if((await fs.lstat(candidate)).isSymbolicLink())throw new Error("PORTABLE_OUTPUT_SYMLINK");}catch(error){if(error.code!=="ENOENT")throw error;}}
 await fs.rm(output, { recursive: true, force: true });
 await fs.mkdir(app, { recursive: true });
 
 for (const directory of ["dist", "schema"]) {
   await fs.cp(path.join(projectRoot,directory === "dist" ? "dist-runtime" : directory), path.join(app, directory), { recursive: true });
 }
-const runtimeSchemas=["cutscene-schema.json","text-font-style-schema.json","font-style-corpus.json","ai-module-schema.json","data-editor-schema.json","data-observed-schema.json", "galaxy-native-api.json"];
+const runtimeSchemas=["cutscene-schema.json","text-font-style-schema.json","font-style-corpus.json","ai-module-schema.json","data-editor-schema.json","data-observed-schema.json", "galaxy-native-api.json", "trigger-authoring-registry.json"];
 await fs.mkdir(path.join(app,"generated"),{recursive:true});
 for(const file of runtimeSchemas)await fs.copyFile(path.join(projectRoot,"generated",file),path.join(app,"generated",file));
+await fs.cp(path.join(projectRoot,"generated","data-xsd-index"),path.join(app,"generated","data-xsd-index"),{recursive:true});
 await fs.mkdir(path.join(app, "src", "gui"), { recursive: true });
 await fs.cp(path.join(projectRoot, "src", "gui", "public"), path.join(app, "src", "gui", "public"), { recursive: true });
 await fs.copyFile(path.join(projectRoot, "package.json"), path.join(app, "package.json"));
@@ -38,7 +43,9 @@ await fs.copyFile(path.join(projectRoot, "windows", "SC2-UI-Workbench.ps1"), pat
 await fs.copyFile(path.join(projectRoot, "windows", "README-WINDOWS.md"), path.join(output, "README-WINDOWS.md"));
 await fs.copyFile(path.join(projectRoot, "README.md"), path.join(output, "README.md"));
 await fs.copyFile(path.join(projectRoot, "README_RU.md"), path.join(output, "README_RU.md"));
-await fs.cp(path.join(projectRoot, "generated"), path.join(output, "generated"), { recursive: true });
+await fs.mkdir(path.join(output,"generated"),{recursive:true});
+for(const file of runtimeSchemas)await fs.copyFile(path.join(projectRoot,"generated",file),path.join(output,"generated",file));
+await fs.cp(path.join(projectRoot,"generated","data-xsd-index"),path.join(output,"generated","data-xsd-index"),{recursive:true});
 await fs.cp(path.join(projectRoot, "docs"), path.join(output, "docs"), { recursive: true });
 await fs.cp(path.join(projectRoot, "examples"), path.join(output, "examples"), { recursive: true });
 await buildPeLauncher(path.join(output, "SC2-UI-Workbench.exe"));

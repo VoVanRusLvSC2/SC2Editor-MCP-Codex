@@ -1,1 +1,1 @@
-{"name":"EClassIdCReverb","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EClassIdCReverb"}],"enumValues":[],"facets":[]}
+{"name":"EClassIdCReverb","schemaSpan":{"start":500867,"end":500986},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":500909,"end":500967},"namespace":"","name":"value","type":"simple_EClassIdCReverb","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

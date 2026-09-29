@@ -1,1 +1,1 @@
-{"name":"EClassIdCSpray","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EClassIdCSpray"}],"enumValues":[],"facets":[]}
+{"name":"EClassIdCSpray","schemaSpan":{"start":523463,"end":523580},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":523504,"end":523561},"namespace":"","name":"value","type":"simple_EClassIdCSpray","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

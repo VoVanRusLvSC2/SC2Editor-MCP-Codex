@@ -1,1 +1,1 @@
-{"name":"CMoviePath","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CMoviePath"}],"enumValues":[],"facets":[]}
+{"name":"CMoviePath","schemaSpan":{"start":14433,"end":14542},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":14470,"end":14523},"namespace":"","name":"value","type":"simple_CMoviePath","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

@@ -1,0 +1,1 @@
+void ScenarioEUse() { UnitCreate(1, "ScenarioERenamed", 0, 1, null, 0); }

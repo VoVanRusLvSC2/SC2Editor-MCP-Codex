@@ -1,1 +1,1 @@
-{"name":"simple_EActorPhysicsImpactMaterialRelativeHardness","kind":"simple","fields":[],"enumValues":["DontCare","Equal","Harder","HarderOrEqual","Softer","SofterOrEqual"],"facets":[],"base":"xs:string"}
+{"name":"simple_EActorPhysicsImpactMaterialRelativeHardness","schemaSpan":{"start":930863,"end":932920},"namespace":"","kind":"simple","fields":[],"enumValues":["DontCare","Equal","Harder","HarderOrEqual","Softer","SofterOrEqual"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

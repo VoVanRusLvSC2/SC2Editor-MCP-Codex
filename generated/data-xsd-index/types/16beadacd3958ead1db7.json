@@ -1,1 +1,1 @@
-{"name":"simple_CActorCreateKey","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string"}
+{"name":"simple_CActorCreateKey","schemaSpan":{"start":10699,"end":10799},"namespace":"","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

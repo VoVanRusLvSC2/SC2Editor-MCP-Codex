@@ -1,1 +1,1 @@
-{"name":"simple_ECameraShakeRotation","kind":"simple","fields":[],"enumValues":["Pitch","Roll","Yaw"],"facets":[],"base":"xs:string"}
+{"name":"simple_ECameraShakeRotation","schemaSpan":{"start":1223682,"end":1224307},"namespace":"","kind":"simple","fields":[],"enumValues":["Pitch","Roll","Yaw"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

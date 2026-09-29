@@ -1,1 +1,1 @@
-{"name":"CMoverLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CMoverLink"}],"enumValues":[],"facets":[]}
+{"name":"CMoverLink","schemaSpan":{"start":42477,"end":42586},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":42514,"end":42567},"namespace":"","name":"value","type":"simple_CMoverLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

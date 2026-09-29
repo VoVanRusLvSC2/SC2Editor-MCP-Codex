@@ -1,1 +1,1 @@
-{"name":"EUnitCollide","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EUnitCollide"}],"enumValues":[],"facets":[]}
+{"name":"EUnitCollide","schemaSpan":{"start":557771,"end":557884},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":557810,"end":557865},"namespace":"","name":"value","type":"simple_EUnitCollide","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

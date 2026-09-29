@@ -1,0 +1,22 @@
+{
+  "build": 97563,
+  "source": "mods/challenges.sc2mod/Triggers",
+  "sha256": "ef2a3a68fb2f957ede8ef96305bc07df73145fdccc369b52a67bad34d397bea7",
+  "call": {
+    "id": "88904EAE",
+    "functionDef": "7B4A4D9D",
+    "span": {
+      "start": 73621,
+      "end": 73840
+    }
+  },
+  "variable": {
+    "id": "98C069A1",
+    "span": {
+      "start": 1665473,
+      "end": 1665692
+    }
+  },
+  "note": "Payloads extracted verbatim; tiny TriggerData wrapper/FixtureRoot is a test harness, not Editor golden output.",
+  "nativeSha256": "cbb2302825dce57ff9bb8efd44f9b0ed5cb056eee00265e5b711b0824d872396"
+}

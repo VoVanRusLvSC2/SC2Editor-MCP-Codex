@@ -1,1 +1,1 @@
-{"name":"simple_EClassIdCUnit","kind":"simple","fields":[],"enumValues":["CUnit","CUnitHero"],"facets":[],"base":"xs:string"}
+{"name":"simple_EClassIdCUnit","schemaSpan":{"start":538491,"end":538956},"namespace":"","kind":"simple","fields":[],"enumValues":["CUnit","CUnitHero"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

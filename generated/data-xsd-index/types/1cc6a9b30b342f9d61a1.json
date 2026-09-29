@@ -1,1 +1,1 @@
-{"name":"EAbilAlignment","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EAbilAlignment"}],"enumValues":[],"facets":[]}
+{"name":"EAbilAlignment","schemaSpan":{"start":625636,"end":625753},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":625677,"end":625734},"namespace":"","name":"value","type":"simple_EAbilAlignment","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

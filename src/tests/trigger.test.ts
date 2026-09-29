@@ -5,6 +5,47 @@ import os from 'node:os';
 import path from 'node:path';
 import { Workspace } from '../core/workspace.js';
 import { TriggerWorkspace } from '../modules/trigger/workspace.js';
+import { normalizeCustomScriptLayout } from '../modules/trigger/scriptLayout.js';
+
+test('editor ScriptCode layout preserves graph and every executable character', () => {
+  const xml = '<TriggerData>\n    <Library Id="810D62ED">\n        <Root><Item Type="Category" Library="810D62ED" Id="AAAA0001"/></Root>\n        <Element Type="Category" Id="AAAA0001"><Item Type="Trigger" Library="810D62ED" Id="AAAA0002"/></Element>\n        <Element Type="Trigger" Id="AAAA0002"><Action Type="FunctionCall" Library="810D62ED" Id="AAAA0003"/></Element>\n        <Element Type="FunctionCall" Id="AAAA0003">\n            <FunctionDef Type="FunctionDef" Library="Ntve" Id="00000123"/>\n            <ScriptCode>    DialogControlCreate(dialog, c_triggerControlTypeProgressBar);\n    lv_voteFill = DialogControlLastCreated();\n    if (lv_voteFill &gt; 0) {\n        Send("A &amp; B");\n    }</ScriptCode>\n        </Element>\n        <Element Type="Param" Id="AAAA0004"><ScriptCode>Color(0.0, 0.0, 0.0)</ScriptCode></Element>\n    </Library>\n</TriggerData>';
+  const result = normalizeCustomScriptLayout(xml);
+  assert.equal(result.changedScriptBlocks, 1);
+  assert.equal(result.xml.replace(/<ScriptCode>[\s\S]*?<\/ScriptCode>/g, '<ScriptCode/>'), xml.replace(/<ScriptCode>[\s\S]*?<\/ScriptCode>/g, '<ScriptCode/>'));
+  const block = /<ScriptCode>([\s\S]*?)<\/ScriptCode>/.exec(result.xml)![1]!;
+  const editorText = block.split('\n').slice(1, -1).map(line => line.slice(16)).join('\n');
+  assert.equal(editorText, 'DialogControlCreate(dialog, c_triggerControlTypeProgressBar);\nlv_voteFill = DialogControlLastCreated();\nif (lv_voteFill &gt; 0) {\n    Send("A &amp; B");\n}');
+  assert.match(result.xml, /<ScriptCode>Color\(0.0, 0.0, 0.0\)<\/ScriptCode>/);
+  assert.equal(normalizeCustomScriptLayout(result.xml).changedScriptBlocks, 0);
+});
+
+test('ScriptCode layout dry run leaves disk unchanged and save checks stale files', async t => {
+  const root = await fs.mkdtemp(path.join(os.tmpdir(), 'sc2-trigger-layout-'));
+  t.after(() => fs.rm(root, { recursive: true, force: true }));
+  const file = path.join(root, 'Triggers');
+  const xml = '<TriggerData><Library Id="810D62ED"><Element Type="FunctionCall" Id="AAAA0001"><FunctionDef Type="FunctionDef" Library="Ntve" Id="00000123"/><ScriptCode>ReturnCode();</ScriptCode></Element></Library></TriggerData>';
+  await fs.writeFile(file, xml);
+  const workspace = new TriggerWorkspace(new Workspace(root));
+  assert.equal((await workspace.normalizeScriptLayout()).changedScriptBlocks, 1);
+  assert.equal(await fs.readFile(file, 'utf8'), xml);
+  await workspace.normalizeScriptLayout(false);
+  await fs.writeFile(file, xml + '\n');
+  await assert.rejects(workspace.save(false), /STALE/);
+});
+
+test('graft formats imported custom actions without changing existing script payloads', async t => {
+  const root = await fs.mkdtemp(path.join(os.tmpdir(), 'sc2-trigger-graft-layout-'));
+  t.after(() => fs.rm(root, { recursive: true, force: true }));
+  const oldCall = '<Element Type="FunctionCall" Id="AAAA0002"><FunctionDef Type="FunctionDef" Library="Ntve" Id="00000123"/><ScriptCode>Old();</ScriptCode></Element>';
+  await fs.writeFile(path.join(root, 'Triggers'), '<TriggerData><Library Id="810D62ED"><Element Type="Trigger" Id="AAAA0001"><Identifier>Vote</Identifier><Action Type="FunctionCall" Library="810D62ED" Id="AAAA0002"/></Element>' + oldCall + '</Library></TriggerData>');
+  await fs.writeFile(path.join(root, 'source.xml'), '<TriggerData><Library Id="810D62ED"><Element Type="Trigger" Id="BBBB0001"><Identifier>Vote</Identifier><Action Type="FunctionCall" Library="810D62ED" Id="BBBB0002"/></Element><Element Type="FunctionCall" Id="BBBB0002"><FunctionDef Type="FunctionDef" Library="Ntve" Id="00000123"/><ScriptCode>CreateProgress();</ScriptCode></Element></Library></TriggerData>');
+  const workspace = new TriggerWorkspace(new Workspace(root));
+  await workspace.graft({ sourceFile: 'source.xml', sourceTrigger: 'Vote', targetTrigger: 'Vote', kind: 'Action', index: 0, dryRun: false });
+  await workspace.save(false);
+  const saved = await fs.readFile(path.join(root, 'Triggers'), 'utf8');
+  assert.ok(saved.includes(oldCall));
+  assert.match(saved, /<ScriptCode>\n {16}CreateProgress\(\);\n {12}<\/ScriptCode>/);
+});
 
 test('GUI event graft keeps category and trigger IDs while remapping colliding graph IDs', async t => {
   const root = await fs.mkdtemp(path.join(os.tmpdir(), 'sc2-trigger-'));

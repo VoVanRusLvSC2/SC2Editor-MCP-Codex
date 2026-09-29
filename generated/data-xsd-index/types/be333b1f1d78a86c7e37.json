@@ -1,1 +1,1 @@
-{"name":"EAbilBehaviorCmd","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EAbilBehaviorCmd"}],"enumValues":[],"facets":[]}
+{"name":"EAbilBehaviorCmd","schemaSpan":{"start":87792,"end":87913},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":87835,"end":87894},"namespace":"","name":"value","type":"simple_EAbilBehaviorCmd","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

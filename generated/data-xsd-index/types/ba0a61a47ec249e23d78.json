@@ -1,1 +1,1 @@
-{"name":"EEffectMissileSearch","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EEffectMissileSearch"}],"enumValues":[],"facets":[]}
+{"name":"EEffectMissileSearch","schemaSpan":{"start":1338191,"end":1338320},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1338238,"end":1338301},"namespace":"","name":"value","type":"simple_EEffectMissileSearch","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

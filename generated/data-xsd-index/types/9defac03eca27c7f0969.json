@@ -1,1 +1,1 @@
-{"name":"EClassIdCTexture","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EClassIdCTexture"}],"enumValues":[],"facets":[]}
+{"name":"EClassIdCTexture","schemaSpan":{"start":536274,"end":536395},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":536317,"end":536376},"namespace":"","name":"value","type":"simple_EClassIdCTexture","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

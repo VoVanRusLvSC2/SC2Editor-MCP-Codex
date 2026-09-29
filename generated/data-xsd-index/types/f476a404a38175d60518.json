@@ -1,1 +1,1 @@
-{"name":"CColor","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CColor"}],"enumValues":[],"facets":[]}
+{"name":"CColor","schemaSpan":{"start":29496,"end":29597},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":29529,"end":29578},"namespace":"","name":"value","type":"simple_CColor","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

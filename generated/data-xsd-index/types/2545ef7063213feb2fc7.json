@@ -1,1 +1,1 @@
-{"name":"EAbilInteractFlag","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EAbilInteractFlag"}],"enumValues":[],"facets":[]}
+{"name":"EAbilInteractFlag","schemaSpan":{"start":656933,"end":657056},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":656977,"end":657037},"namespace":"","name":"value","type":"simple_EAbilInteractFlag","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

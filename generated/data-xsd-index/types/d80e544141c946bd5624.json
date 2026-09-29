@@ -1,1 +1,1 @@
-{"name":"EMotionAdaptableParabolaSeg","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EMotionAdaptableParabolaSeg"}],"enumValues":[],"facets":[]}
+{"name":"EMotionAdaptableParabolaSeg","schemaSpan":{"start":1536286,"end":1536429},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1536340,"end":1536410},"namespace":"","name":"value","type":"simple_EMotionAdaptableParabolaSeg","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

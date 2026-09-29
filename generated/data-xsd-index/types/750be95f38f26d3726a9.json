@@ -1,1 +1,1 @@
-{"name":"EClassIdCTurret","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EClassIdCTurret"}],"enumValues":[],"facets":[]}
+{"name":"EClassIdCTurret","schemaSpan":{"start":537959,"end":538078},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":538001,"end":538059},"namespace":"","name":"value","type":"simple_EClassIdCTurret","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

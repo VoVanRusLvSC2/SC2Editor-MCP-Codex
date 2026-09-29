@@ -1,1 +1,1 @@
-{"name":"simple_EActorSiteOrbiterType","kind":"simple","fields":[],"enumValues":["Absolute","Relative"],"facets":[],"base":"xs:string"}
+{"name":"simple_EActorSiteOrbiterType","schemaSpan":{"start":990363,"end":991121},"namespace":"","kind":"simple","fields":[],"enumValues":["Absolute","Relative"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

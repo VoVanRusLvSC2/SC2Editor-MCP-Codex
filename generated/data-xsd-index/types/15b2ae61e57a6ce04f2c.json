@@ -1,1 +1,1 @@
-{"name":"CTextureExpression","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CTextureExpression"}],"enumValues":[],"facets":[]}
+{"name":"CTextureExpression","schemaSpan":{"start":33942,"end":34067},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":33987,"end":34048},"namespace":"","name":"value","type":"simple_CTextureExpression","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

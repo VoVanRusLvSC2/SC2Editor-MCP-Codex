@@ -1,1 +1,1 @@
-{"name":"EGameCategoryUsage","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EGameCategoryUsage"}],"enumValues":[],"facets":[]}
+{"name":"EGameCategoryUsage","schemaSpan":{"start":1366104,"end":1366229},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1366149,"end":1366210},"namespace":"","name":"value","type":"simple_EGameCategoryUsage","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

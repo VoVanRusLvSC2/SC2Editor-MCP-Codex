@@ -1,1 +1,1 @@
-{"name":"simple_CHeroAbilLink","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string"}
+{"name":"simple_CHeroAbilLink","schemaSpan":{"start":53269,"end":53367},"namespace":"","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

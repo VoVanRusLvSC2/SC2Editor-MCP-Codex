@@ -1,1 +1,1 @@
-{"name":"simple_EActorScopeBearingsTrackingType","kind":"simple","fields":[],"enumValues":["AutomaticBySituation","ForceOff","ForceOn"],"facets":[],"base":"xs:string"}
+{"name":"simple_EActorScopeBearingsTrackingType","schemaSpan":{"start":964687,"end":965983},"namespace":"","kind":"simple","fields":[],"enumValues":["AutomaticBySituation","ForceOff","ForceOn"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

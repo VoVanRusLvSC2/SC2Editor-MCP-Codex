@@ -1,1 +1,1 @@
-{"name":"simple_EAchievementTagCheck","kind":"simple","fields":[],"enumValues":["Absent","Present"],"facets":[],"base":"xs:string"}
+{"name":"simple_EAchievementTagCheck","schemaSpan":{"start":701641,"end":702109},"namespace":"","kind":"simple","fields":[],"enumValues":["Absent","Present"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

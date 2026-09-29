@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Catalog>
+    <CEffectDamage id="HardeningDamage">
+        <Amount value="1"/>
+    </CEffectDamage>
+    <CEffectSet id="HardeningSet">
+        <EffectArray value="HardeningDamage"/>
+    </CEffectSet>
+    <CEffectDamage id="ScenarioAInitial">
+        <Amount value="5"/>
+    </CEffectDamage>
+    <CEffectDamage id="ScenarioAPeriodic">
+        <Amount value="2"/>
+    </CEffectDamage>
+    <CEffectApplyBehavior id="ScenarioAApply">
+        <Behavior value="ScenarioABuff"/>
+    </CEffectApplyBehavior>
+    <CEffectSet id="ScenarioAHit">
+        <EffectArray index="0" value="ScenarioAInitial"/>
+        <EffectArray index="1" value="ScenarioAApply"/>
+    </CEffectSet>
+</Catalog>

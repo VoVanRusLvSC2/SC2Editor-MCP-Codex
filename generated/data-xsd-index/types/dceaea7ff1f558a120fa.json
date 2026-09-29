@@ -1,1 +1,1 @@
-{"name":"simple_ECommanderMasteryTalentType","kind":"simple","fields":[],"enumValues":["None","Percent","Seconds"],"facets":[],"base":"xs:string"}
+{"name":"simple_ECommanderMasteryTalentType","schemaSpan":{"start":213655,"end":214299},"namespace":"","kind":"simple","fields":[],"enumValues":["None","Percent","Seconds"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

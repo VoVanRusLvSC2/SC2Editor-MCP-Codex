@@ -1,1 +1,1 @@
-{"name":"simple_EAMRandomDistribution","kind":"simple","fields":[],"enumValues":["Exponential","Uniform"],"facets":[],"base":"xs:string"}
+{"name":"simple_EAMRandomDistribution","schemaSpan":{"start":624562,"end":625041},"namespace":"","kind":"simple","fields":[],"enumValues":["Exponential","Uniform"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

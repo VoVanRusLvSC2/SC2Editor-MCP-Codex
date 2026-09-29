@@ -1,1 +1,1 @@
-{"name":"simple_TDifficultyLevel","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:int"}
+{"name":"simple_TDifficultyLevel","schemaSpan":{"start":1752,"end":1850},"namespace":"","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:int","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

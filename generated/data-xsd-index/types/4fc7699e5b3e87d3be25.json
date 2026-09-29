@@ -1,1 +1,1 @@
-{"name":"EActorAnimPropMatchType","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EActorAnimPropMatchType"}],"enumValues":[],"facets":[]}
+{"name":"EActorAnimPropMatchType","schemaSpan":{"start":710429,"end":710564},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":710479,"end":710545},"namespace":"","name":"value","type":"simple_EActorAnimPropMatchType","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

@@ -1,1 +1,1 @@
-{"name":"EUIStatusFlagType","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EUIStatusFlagType"}],"enumValues":[],"facets":[]}
+{"name":"EUIStatusFlagType","schemaSpan":{"start":1750935,"end":1751058},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1750979,"end":1751039},"namespace":"","name":"value","type":"simple_EUIStatusFlagType","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

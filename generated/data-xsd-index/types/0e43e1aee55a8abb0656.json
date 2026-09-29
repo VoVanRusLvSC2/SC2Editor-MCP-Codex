@@ -1,1 +1,1 @@
-{"name":"simple_EClassIdCTile","kind":"simple","fields":[],"enumValues":["CTile"],"facets":[],"base":"xs:string"}
+{"name":"simple_EClassIdCTile","schemaSpan":{"start":537255,"end":537543},"namespace":"","kind":"simple","fields":[],"enumValues":["CTile"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

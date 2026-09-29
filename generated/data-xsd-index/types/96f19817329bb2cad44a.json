@@ -1,1 +1,1 @@
-{"name":"EAMNumericFieldOp","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EAMNumericFieldOp"}],"enumValues":[],"facets":[]}
+{"name":"EAMNumericFieldOp","schemaSpan":{"start":621705,"end":621828},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":621749,"end":621809},"namespace":"","name":"value","type":"simple_EAMNumericFieldOp","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

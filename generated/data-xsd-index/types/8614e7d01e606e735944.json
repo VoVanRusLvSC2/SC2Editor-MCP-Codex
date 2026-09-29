@@ -1,1 +1,1 @@
-{"name":"EActorVisibilityAtCreation","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EActorVisibilityAtCreation"}],"enumValues":[],"facets":[]}
+{"name":"EActorVisibilityAtCreation","schemaSpan":{"start":1038851,"end":1038992},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1038904,"end":1038973},"namespace":"","name":"value","type":"simple_EActorVisibilityAtCreation","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

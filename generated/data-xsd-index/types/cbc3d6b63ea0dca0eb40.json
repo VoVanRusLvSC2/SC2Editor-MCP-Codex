@@ -1,1 +1,1 @@
-{"name":"simple_EDamageVisibility","kind":"simple","fields":[],"enumValues":["Hidden","Snapshot","Visible"],"facets":[],"base":"xs:string"}
+{"name":"simple_EDamageVisibility","schemaSpan":{"start":1322071,"end":1322711},"namespace":"","kind":"simple","fields":[],"enumValues":["Hidden","Snapshot","Visible"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

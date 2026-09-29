@@ -1,1 +1,1 @@
-{"name":"TUnitRadius","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_TUnitRadius"}],"enumValues":[],"facets":[]}
+{"name":"TUnitRadius","schemaSpan":{"start":9536,"end":9647},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":9574,"end":9628},"namespace":"","name":"value","type":"simple_TUnitRadius","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

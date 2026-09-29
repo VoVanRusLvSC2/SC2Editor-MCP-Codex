@@ -1,11 +1,14 @@
 export type DataScalar = string | number | boolean;
 
 export interface DataFieldPathSegment {
+  ordinal?:number;
   name: string;
   index?: string;
 }
 
 export interface DataField {
+  ordinal?:number;
+  sourceSpan?:{start:number;end:number};
   path: string;
   name: string;
   index?: string;
@@ -18,6 +21,9 @@ export interface DataField {
 }
 
 export interface DataObject {
+  objectIdentity?:{domain?:string;id?:string};
+  declarationKey?:{file:string;start:number};
+  tokens?: Record<string,string>;
   ctype: string;
   domain?: string;
   id?: string;
@@ -33,7 +39,13 @@ export interface DataReference {
   file: string;
   object: string;
   path: string;
-  carrier: "parent" | "Link";
+  carrier: string;
+  rule?:{schemaSha256?:string;ownerType:string;member:string;source:string};
+  rewritePolicy?:"exactSpan"|"unknown"|"readOnly";
+  inheritedFrom?:{object:string;file:string};
+  rawExpression?:string;
+  resolution?:"resolved"|"unknown";
+  sourceSpan?: {start:number;end:number};
   value: string;
   targetDomain?: string;
   targetType?: string;

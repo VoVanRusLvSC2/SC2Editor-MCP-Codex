@@ -1,1 +1,1 @@
-{"name":"CAbilCommand","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CAbilCommand"}],"enumValues":[],"facets":[]}
+{"name":"CAbilCommand","schemaSpan":{"start":25051,"end":25164},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":25090,"end":25145},"namespace":"","name":"value","type":"simple_CAbilCommand","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

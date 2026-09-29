@@ -1,1 +1,1 @@
-{"name":"EObjectiveReward","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EObjectiveReward"}],"enumValues":[],"facets":[]}
+{"name":"EObjectiveReward","schemaSpan":{"start":488421,"end":488542},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":488464,"end":488523},"namespace":"","name":"value","type":"simple_EObjectiveReward","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

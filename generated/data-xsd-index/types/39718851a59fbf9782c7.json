@@ -1,1 +1,1 @@
-{"name":"EActorModelAspectModelOwnerType","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EActorModelAspectModelOwnerType"}],"enumValues":[],"facets":[]}
+{"name":"EActorModelAspectModelOwnerType","schemaSpan":{"start":759916,"end":760067},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":759974,"end":760048},"namespace":"","name":"value","type":"simple_EActorModelAspectModelOwnerType","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

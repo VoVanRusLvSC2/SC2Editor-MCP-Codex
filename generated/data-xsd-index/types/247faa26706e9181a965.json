@@ -1,1 +1,1 @@
-{"name":"CFangle","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CFangle"}],"enumValues":[],"facets":[]}
+{"name":"CFangle","schemaSpan":{"start":7055,"end":7158},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":7089,"end":7139},"namespace":"","name":"value","type":"simple_CFangle","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

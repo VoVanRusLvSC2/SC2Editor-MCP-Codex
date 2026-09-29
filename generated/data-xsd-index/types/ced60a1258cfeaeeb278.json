@@ -1,1 +1,1 @@
-{"name":"CTexturePath","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CTexturePath"}],"enumValues":[],"facets":[]}
+{"name":"CTexturePath","schemaSpan":{"start":17333,"end":17446},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":17372,"end":17427},"namespace":"","name":"value","type":"simple_CTexturePath","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

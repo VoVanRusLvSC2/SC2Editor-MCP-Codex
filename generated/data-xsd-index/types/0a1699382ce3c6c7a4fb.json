@@ -1,1 +1,1 @@
-{"name":"simple_EDamageCategory","kind":"simple","fields":[],"enumValues":["Magical","Physical","Universal"],"facets":[],"base":"xs:string"}
+{"name":"simple_EDamageCategory","schemaSpan":{"start":264822,"end":265466},"namespace":"","kind":"simple","fields":[],"enumValues":["Magical","Physical","Universal"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

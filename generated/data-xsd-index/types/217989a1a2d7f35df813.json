@@ -1,1 +1,1 @@
-{"name":"simple_EClassIdCShape","kind":"simple","fields":[],"enumValues":["CShape","CShapeArc","CShapeQuad"],"facets":[],"base":"xs:string"}
+{"name":"simple_EClassIdCShape","schemaSpan":{"start":507641,"end":508275},"namespace":"","kind":"simple","fields":[],"enumValues":["CShape","CShapeArc","CShapeQuad"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

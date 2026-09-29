@@ -1,1 +1,1 @@
-{"name":"TUpgradeEffectValue","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_TUpgradeEffectValue"}],"enumValues":[],"facets":[]}
+{"name":"TUpgradeEffectValue","schemaSpan":{"start":22100,"end":22227},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":22146,"end":22208},"namespace":"","name":"value","type":"simple_TUpgradeEffectValue","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

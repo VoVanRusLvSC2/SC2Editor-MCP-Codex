@@ -1,1 +1,1 @@
-{"name":"EAchievementTagCheck","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EAchievementTagCheck"}],"enumValues":[],"facets":[]}
+{"name":"EAchievementTagCheck","schemaSpan":{"start":701510,"end":701639},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":701557,"end":701620},"namespace":"","name":"value","type":"simple_EAchievementTagCheck","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

@@ -1,1 +1,1 @@
-{"name":"CGameLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CGameLink"}],"enumValues":[],"facets":[]}
+{"name":"CGameLink","schemaSpan":{"start":58149,"end":58256},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":58185,"end":58237},"namespace":"","name":"value","type":"simple_CGameLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

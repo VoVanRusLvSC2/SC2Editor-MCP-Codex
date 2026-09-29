@@ -1,1 +1,1 @@
-{"name":"EAttachmentID","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EAttachmentID"}],"enumValues":[],"facets":[]}
+{"name":"EAttachmentID","schemaSpan":{"start":1087156,"end":1087271},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1087196,"end":1087252},"namespace":"","name":"value","type":"simple_EAttachmentID","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

@@ -1,1 +1,1 @@
-{"name":"EAbilWarpTrainFlag","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EAbilWarpTrainFlag"}],"enumValues":[],"facets":[]}
+{"name":"EAbilWarpTrainFlag","schemaSpan":{"start":691826,"end":691951},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":691871,"end":691932},"namespace":"","name":"value","type":"simple_EAbilWarpTrainFlag","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

@@ -1,1 +1,1 @@
-{"name":"EBehaviorResourceFlag","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EBehaviorResourceFlag"}],"enumValues":[],"facets":[]}
+{"name":"EBehaviorResourceFlag","schemaSpan":{"start":1185216,"end":1185347},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1185264,"end":1185328},"namespace":"","name":"value","type":"simple_EBehaviorResourceFlag","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

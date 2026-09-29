@@ -1,1 +1,1 @@
-{"name":"simple_CVariatorActorReal32","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string"}
+{"name":"simple_CVariatorActorReal32","schemaSpan":{"start":36059,"end":36164},"namespace":"","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

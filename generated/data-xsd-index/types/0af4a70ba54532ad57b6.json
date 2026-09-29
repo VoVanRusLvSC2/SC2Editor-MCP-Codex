@@ -1,1 +1,1 @@
-{"name":"EClassIdCAchievementTerm","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EClassIdCAchievementTerm"}],"enumValues":[],"facets":[]}
+{"name":"EClassIdCAchievementTerm","schemaSpan":{"start":146926,"end":147063},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":146977,"end":147044},"namespace":"","name":"value","type":"simple_EClassIdCAchievementTerm","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

@@ -1,1 +1,1 @@
-{"name":"simple_TPreemptLevel","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:int"}
+{"name":"simple_TPreemptLevel","schemaSpan":{"start":2605,"end":2700},"namespace":"","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:int","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

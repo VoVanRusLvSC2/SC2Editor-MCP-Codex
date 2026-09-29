@@ -1,1 +1,1 @@
-{"name":"TLocaleId","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_TLocaleId"}],"enumValues":[],"facets":[]}
+{"name":"TLocaleId","schemaSpan":{"start":23625,"end":23732},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":23661,"end":23713},"namespace":"","name":"value","type":"simple_TLocaleId","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

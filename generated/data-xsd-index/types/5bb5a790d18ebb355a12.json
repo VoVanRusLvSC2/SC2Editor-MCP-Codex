@@ -1,1 +1,1 @@
-{"name":"CLensFlareSetLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CLensFlareSetLink"}],"enumValues":[],"facets":[]}
+{"name":"CLensFlareSetLink","schemaSpan":{"start":48149,"end":48272},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":48193,"end":48253},"namespace":"","name":"value","type":"simple_CLensFlareSetLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

@@ -1,1 +1,1 @@
-{"name":"TFootprintOffsets","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_TFootprintOffsets"}],"enumValues":[],"facets":[]}
+{"name":"TFootprintOffsets","schemaSpan":{"start":38918,"end":39041},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":38962,"end":39022},"namespace":"","name":"value","type":"simple_TFootprintOffsets","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

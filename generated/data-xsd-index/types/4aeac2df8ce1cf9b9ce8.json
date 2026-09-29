@@ -1,1 +1,1 @@
-{"name":"EAbilStopFlag","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EAbilStopFlag"}],"enumValues":[],"facets":[]}
+{"name":"EAbilStopFlag","schemaSpan":{"start":683362,"end":683477},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":683402,"end":683458},"namespace":"","name":"value","type":"simple_EAbilStopFlag","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

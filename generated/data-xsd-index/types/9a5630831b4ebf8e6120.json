@@ -1,1 +1,1 @@
-{"name":"simple_EClassIdCColorStyle","kind":"simple","fields":[],"enumValues":["CColorStyle"],"facets":[],"base":"xs:string"}
+{"name":"simple_EClassIdCColorStyle","schemaSpan":{"start":209773,"end":210077},"namespace":"","kind":"simple","fields":[],"enumValues":["CColorStyle"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

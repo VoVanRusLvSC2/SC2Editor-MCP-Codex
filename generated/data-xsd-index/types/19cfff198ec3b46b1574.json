@@ -1,1 +1,1 @@
-{"name":"CVoiceOverLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CVoiceOverLink"}],"enumValues":[],"facets":[]}
+{"name":"CVoiceOverLink","schemaSpan":{"start":54442,"end":54559},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":54483,"end":54540},"namespace":"","name":"value","type":"simple_CVoiceOverLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

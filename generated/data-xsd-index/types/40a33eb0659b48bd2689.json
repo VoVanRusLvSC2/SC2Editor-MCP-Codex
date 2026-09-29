@@ -1,1 +1,1 @@
-{"name":"CCliffLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CCliffLink"}],"enumValues":[],"facets":[]}
+{"name":"CCliffLink","schemaSpan":{"start":50340,"end":50449},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":50377,"end":50430},"namespace":"","name":"value","type":"simple_CCliffLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

@@ -1,1 +1,1 @@
-{"name":"simple_EClassIdCEmoticon","kind":"simple","fields":[],"enumValues":["CEmoticon"],"facets":[],"base":"xs:string"}
+{"name":"simple_EClassIdCEmoticon","schemaSpan":{"start":230681,"end":230978},"namespace":"","kind":"simple","fields":[],"enumValues":["CEmoticon"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

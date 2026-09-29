@@ -1,1 +1,1 @@
-{"name":"CLootLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CLootLink"}],"enumValues":[],"facets":[]}
+{"name":"CLootLink","schemaSpan":{"start":42272,"end":42379},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":42308,"end":42360},"namespace":"","name":"value","type":"simple_CLootLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

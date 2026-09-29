@@ -1,1 +1,1 @@
-{"name":"ECampaignProductType","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_ECampaignProductType"}],"enumValues":[],"facets":[]}
+{"name":"ECampaignProductType","schemaSpan":{"start":1224309,"end":1224438},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1224356,"end":1224419},"namespace":"","name":"value","type":"simple_ECampaignProductType","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

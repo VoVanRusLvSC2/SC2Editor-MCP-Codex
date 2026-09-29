@@ -1,1 +1,1 @@
-{"name":"EClassIdCSoundMixSnapshot","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EClassIdCSoundMixSnapshot"}],"enumValues":[],"facets":[]}
+{"name":"EClassIdCSoundMixSnapshot","schemaSpan":{"start":521968,"end":522107},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":522020,"end":522088},"namespace":"","name":"value","type":"simple_EClassIdCSoundMixSnapshot","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

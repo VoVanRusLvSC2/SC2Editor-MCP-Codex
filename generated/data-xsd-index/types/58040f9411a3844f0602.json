@@ -1,1 +1,1 @@
-{"name":"simple_CIdSetPlayers","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string"}
+{"name":"simple_CIdSetPlayers","schemaSpan":{"start":39490,"end":39588},"namespace":"","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

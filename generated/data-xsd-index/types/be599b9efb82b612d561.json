@@ -1,1 +1,1 @@
-{"name":"simple_EActorSiteOpTetherEnableType","kind":"simple","fields":[],"enumValues":["Disabled","Max","Min","MinMax"],"facets":[],"base":"xs:string"}
+{"name":"simple_EActorSiteOpTetherEnableType","schemaSpan":{"start":988157,"end":989131},"namespace":"","kind":"simple","fields":[],"enumValues":["Disabled","Max","Min","MinMax"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

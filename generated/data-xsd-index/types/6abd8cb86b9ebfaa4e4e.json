@@ -1,1 +1,1 @@
-{"name":"simple_EBehaviorAlignment","kind":"simple","fields":[],"enumValues":["Negative","Neutral","Positive"],"facets":[],"base":"xs:string"}
+{"name":"simple_EBehaviorAlignment","schemaSpan":{"start":1171633,"end":1172278},"namespace":"","kind":"simple","fields":[],"enumValues":["Negative","Neutral","Positive"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

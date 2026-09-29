@@ -1,1 +1,1 @@
-{"name":"EModelFlag","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EModelFlag"}],"enumValues":[],"facets":[]}
+{"name":"EModelFlag","schemaSpan":{"start":1525691,"end":1525800},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1525728,"end":1525781},"namespace":"","name":"value","type":"simple_EModelFlag","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

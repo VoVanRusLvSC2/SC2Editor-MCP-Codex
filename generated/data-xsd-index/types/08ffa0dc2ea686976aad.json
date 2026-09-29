@@ -1,1 +1,1 @@
-{"name":"EActorBaselineType","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EActorBaselineType"}],"enumValues":[],"facets":[]}
+{"name":"EActorBaselineType","schemaSpan":{"start":713932,"end":714057},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":713977,"end":714038},"namespace":"","name":"value","type":"simple_EActorBaselineType","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

@@ -1,1 +1,1 @@
-{"name":"simple_EBehaviorFlag","kind":"simple","fields":[],"enumValues":["Disabled","EnabledWhileDead","IgnoreInEditor","Permanent"],"facets":[],"base":"xs:string"}
+{"name":"simple_EBehaviorFlag","schemaSpan":{"start":1176357,"end":1177208},"namespace":"","kind":"simple","fields":[],"enumValues":["Disabled","EnabledWhileDead","IgnoreInEditor","Permanent"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

@@ -1,1 +1,1 @@
-{"name":"simple_EActorSoundValueSource","kind":"simple","fields":[],"enumValues":["Actor","Combine","Sound"],"facets":[],"base":"xs:string"}
+{"name":"simple_EActorSoundValueSource","schemaSpan":{"start":994091,"end":994893},"namespace":"","kind":"simple","fields":[],"enumValues":["Actor","Combine","Sound"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

@@ -1,1 +1,1 @@
-{"name":"simple_EMotionAdaptableParabolaHotspot","kind":"simple","fields":[],"enumValues":["Land","Launch","PostApex","PreApex"],"facets":[],"base":"xs:string"}
+{"name":"simple_EMotionAdaptableParabolaHotspot","schemaSpan":{"start":1535457,"end":1536284},"namespace":"","kind":"simple","fields":[],"enumValues":["Land","Launch","PostApex","PreApex"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

@@ -1,1 +1,1 @@
-{"name":"simple_EAbilAttackModifierFlag","kind":"simple","fields":[],"enumValues":["AttackOnce","AutoCast","AutoCastOffOwnerLeave","AutoCastOn","BestUnit","Smart"],"facets":[],"base":"xs:string"}
+{"name":"simple_EAbilAttackModifierFlag","schemaSpan":{"start":633139,"end":634353},"namespace":"","kind":"simple","fields":[],"enumValues":["AttackOnce","AutoCast","AutoCastOffOwnerLeave","AutoCastOn","BestUnit","Smart"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

@@ -1,1 +1,1 @@
-{"name":"simple_EUnitEffect","kind":"simple","fields":[],"enumValues":["Birth","Create","Death","Revive"],"facets":[],"base":"xs:string"}
+{"name":"simple_EUnitEffect","schemaSpan":{"start":1753256,"end":1754051},"namespace":"","kind":"simple","fields":[],"enumValues":["Birth","Create","Death","Revive"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

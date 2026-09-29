@@ -1,1 +1,1 @@
-{"name":"EClassIdCReward","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EClassIdCReward"}],"enumValues":[],"facets":[]}
+{"name":"EClassIdCReward","schemaSpan":{"start":501282,"end":501401},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":501324,"end":501382},"namespace":"","name":"value","type":"simple_EClassIdCReward","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

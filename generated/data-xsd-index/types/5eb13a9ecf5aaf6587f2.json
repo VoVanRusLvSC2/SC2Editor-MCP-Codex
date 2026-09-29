@@ -1,1 +1,1 @@
-{"name":"ESoundResampler","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_ESoundResampler"}],"enumValues":[],"facets":[]}
+{"name":"ESoundResampler","schemaSpan":{"start":1691316,"end":1691435},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1691358,"end":1691416},"namespace":"","name":"value","type":"simple_ESoundResampler","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

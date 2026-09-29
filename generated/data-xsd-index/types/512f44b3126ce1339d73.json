@@ -1,1 +1,1 @@
-{"name":"TEditorCategories","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_TEditorCategories"}],"enumValues":[],"facets":[]}
+{"name":"TEditorCategories","schemaSpan":{"start":20135,"end":20258},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":20179,"end":20239},"namespace":"","name":"value","type":"simple_TEditorCategories","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

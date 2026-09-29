@@ -1,1 +1,1 @@
-{"name":"EActorQuadDecorationFlag","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EActorQuadDecorationFlag"}],"enumValues":[],"facets":[]}
+{"name":"EActorQuadDecorationFlag","schemaSpan":{"start":948345,"end":948482},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":948396,"end":948463},"namespace":"","name":"value","type":"simple_EActorQuadDecorationFlag","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

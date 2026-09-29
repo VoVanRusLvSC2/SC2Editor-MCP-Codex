@@ -1,1 +1,1 @@
-{"name":"EActorSiteBillboardType","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EActorSiteBillboardType"}],"enumValues":[],"facets":[]}
+{"name":"EActorSiteBillboardType","schemaSpan":{"start":974821,"end":974956},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":974871,"end":974937},"namespace":"","name":"value","type":"simple_EActorSiteBillboardType","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

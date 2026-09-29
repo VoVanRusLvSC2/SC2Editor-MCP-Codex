@@ -1,1 +1,1 @@
-{"name":"simple_EResponseContinueMethod","kind":"simple","fields":[],"enumValues":["Always","Break","Failure","Success"],"facets":[],"base":"xs:string"}
+{"name":"simple_EResponseContinueMethod","schemaSpan":{"start":1598125,"end":1598938},"namespace":"","kind":"simple","fields":[],"enumValues":["Always","Break","Failure","Success"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

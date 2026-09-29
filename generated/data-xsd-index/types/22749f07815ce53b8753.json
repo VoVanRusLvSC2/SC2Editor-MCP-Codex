@@ -1,1 +1,1 @@
-{"name":"simple_EMotionAdaptableParabolaSeg","kind":"simple","fields":[],"enumValues":["Apex","Ascent","Descent","Land","Launch"],"facets":[],"base":"xs:string"}
+{"name":"simple_EMotionAdaptableParabolaSeg","schemaSpan":{"start":1536431,"end":1537411},"namespace":"","kind":"simple","fields":[],"enumValues":["Apex","Ascent","Descent","Land","Launch"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

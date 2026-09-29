@@ -1,1 +1,1 @@
-{"name":"simple_EClassIdCSoundtrack","kind":"simple","fields":[],"enumValues":["CSoundtrack"],"facets":[],"base":"xs:string"}
+{"name":"simple_EClassIdCSoundtrack","schemaSpan":{"start":522563,"end":522863},"namespace":"","kind":"simple","fields":[],"enumValues":["CSoundtrack"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

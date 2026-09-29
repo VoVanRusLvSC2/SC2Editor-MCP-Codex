@@ -1,1 +1,1 @@
-{"name":"EEffectRevealFlag","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EEffectRevealFlag"}],"enumValues":[],"facets":[]}
+{"name":"EEffectRevealFlag","schemaSpan":{"start":1349256,"end":1349379},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1349300,"end":1349360},"namespace":"","name":"value","type":"simple_EEffectRevealFlag","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

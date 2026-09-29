@@ -1,1 +1,1 @@
-{"name":"CActorMsgPayloadPtr","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CActorMsgPayloadPtr"}],"enumValues":[],"facets":[]}
+{"name":"CActorMsgPayloadPtr","schemaSpan":{"start":26169,"end":26296},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":26215,"end":26277},"namespace":"","name":"value","type":"simple_CActorMsgPayloadPtr","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

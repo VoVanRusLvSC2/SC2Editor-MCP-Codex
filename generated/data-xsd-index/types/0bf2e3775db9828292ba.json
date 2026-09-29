@@ -1,1 +1,1 @@
-{"name":"simple_EAMReductionType","kind":"simple","fields":[],"enumValues":["Fixed","Percentage"],"facets":[],"base":"xs:string"}
+{"name":"simple_EAMReductionType","schemaSpan":{"start":625166,"end":625634},"namespace":"","kind":"simple","fields":[],"enumValues":["Fixed","Percentage"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

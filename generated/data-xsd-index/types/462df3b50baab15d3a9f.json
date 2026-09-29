@@ -1,1 +1,1 @@
-{"name":"simple_EHeroDifficulty","kind":"simple","fields":[],"enumValues":["Easy","Hard","Medium","VeryHard"],"facets":[],"base":"xs:string"}
+{"name":"simple_EHeroDifficulty","schemaSpan":{"start":399418,"end":400234},"namespace":"","kind":"simple","fields":[],"enumValues":["Easy","Hard","Medium","VeryHard"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

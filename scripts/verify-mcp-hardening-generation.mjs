@@ -1,0 +1,16 @@
+import {promises as fs} from 'node:fs';
+import path from 'node:path';
+import process from 'node:process';
+import console from 'node:console';
+import {createHash} from 'node:crypto';
+import {execFile} from 'node:child_process';
+import {promisify} from 'node:util';
+const run=promisify(execFile),root=process.cwd(),xsd=process.argv[2],native=process.argv[3];
+if(!xsd||!native)throw new Error('Pass catalogsData.xsd and NativeLib97563 paths');
+const digest=async directory=>{const hashes=[];const walk=async(dir)=>{for(const e of await fs.readdir(dir,{withFileTypes:true})){const file=path.join(dir,e.name);if(e.isDirectory())await walk(file);else hashes.push(path.relative(directory,file).replaceAll('\\','/')+'\0'+createHash('sha256').update(await fs.readFile(file)).digest('hex'));}};await walk(directory);hashes.sort();return {files:hashes.length,sha256:createHash('sha256').update(hashes.join('\n')).digest('hex')};};
+const index=path.join(root,'generated/data-xsd-index'),registry=path.join(root,'generated/trigger-authoring-registry.json'),before=await digest(index),nativeBefore=createHash('sha256').update(await fs.readFile(registry)).digest('hex');
+await run(process.execPath,['--import','tsx','scripts/index-data-xsd.ts',xsd],{cwd:root});
+await run(process.execPath,['scripts/index-trigger-authoring.mjs',native],{cwd:root});
+const after=await digest(index),nativeAfter=createHash('sha256').update(await fs.readFile(registry)).digest('hex');
+const report={schemaVersion:2,xsd:{before,after,deterministic:before.sha256===after.sha256},native:{before:nativeBefore,after:nativeAfter,deterministic:nativeBefore===nativeAfter},sourceInputs:'Explicit CLI inputs; production runtime uses checked-in generated resources'};
+await fs.writeFile(path.join(root,'generated/mcp-hardening/generation-check.json'),JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify(report,null,2));if(!report.xsd.deterministic||!report.native.deterministic)throw new Error('GENERATION_CHANGED');

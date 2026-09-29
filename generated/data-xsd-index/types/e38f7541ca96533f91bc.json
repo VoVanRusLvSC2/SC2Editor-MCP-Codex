@@ -1,1 +1,1 @@
-{"name":"CDecalPackLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CDecalPackLink"}],"enumValues":[],"facets":[]}
+{"name":"CDecalPackLink","schemaSpan":{"start":57275,"end":57392},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":57316,"end":57373},"namespace":"","name":"value","type":"simple_CDecalPackLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

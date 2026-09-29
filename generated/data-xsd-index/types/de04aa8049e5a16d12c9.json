@@ -1,1 +1,1 @@
-{"name":"CHeroStatLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CHeroStatLink"}],"enumValues":[],"facets":[]}
+{"name":"CHeroStatLink","schemaSpan":{"start":53369,"end":53484},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":53409,"end":53465},"namespace":"","name":"value","type":"simple_CHeroStatLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

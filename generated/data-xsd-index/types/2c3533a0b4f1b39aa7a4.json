@@ -1,1 +1,1 @@
-{"name":"EPlayerType","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EPlayerType"}],"enumValues":[],"facets":[]}
+{"name":"EPlayerType","schemaSpan":{"start":236331,"end":236442},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":236369,"end":236423},"namespace":"","name":"value","type":"simple_EPlayerType","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

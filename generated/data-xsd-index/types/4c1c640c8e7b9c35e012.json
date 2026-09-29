@@ -1,1 +1,1 @@
-{"name":"EBehaviorVeterancyFlag","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EBehaviorVeterancyFlag"}],"enumValues":[],"facets":[]}
+{"name":"EBehaviorVeterancyFlag","schemaSpan":{"start":1206716,"end":1206849},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1206765,"end":1206830},"namespace":"","name":"value","type":"simple_EBehaviorVeterancyFlag","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

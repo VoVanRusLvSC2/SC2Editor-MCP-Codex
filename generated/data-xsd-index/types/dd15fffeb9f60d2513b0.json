@@ -1,1 +1,1 @@
-{"name":"EAttackModifierStage","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EAttackModifierStage"}],"enumValues":[],"facets":[]}
+{"name":"EAttackModifierStage","schemaSpan":{"start":204585,"end":204714},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":204632,"end":204695},"namespace":"","name":"value","type":"simple_EAttackModifierStage","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

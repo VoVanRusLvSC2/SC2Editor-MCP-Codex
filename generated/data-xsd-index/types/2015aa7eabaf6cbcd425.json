@@ -1,1 +1,1 @@
-{"name":"EActorSiteOrbiterType","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EActorSiteOrbiterType"}],"enumValues":[],"facets":[]}
+{"name":"EActorSiteOrbiterType","schemaSpan":{"start":990230,"end":990361},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":990278,"end":990342},"namespace":"","name":"value","type":"simple_EActorSiteOrbiterType","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

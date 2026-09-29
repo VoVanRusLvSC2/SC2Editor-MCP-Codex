@@ -1,1 +1,1 @@
-{"name":"simple_EKillDisplay","kind":"simple","fields":[],"enumValues":["Always","Default","Never"],"facets":[],"base":"xs:string"}
+{"name":"simple_EKillDisplay","schemaSpan":{"start":1512411,"end":1513040},"namespace":"","kind":"simple","fields":[],"enumValues":["Always","Default","Never"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

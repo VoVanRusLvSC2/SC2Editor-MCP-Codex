@@ -1,1 +1,1 @@
-{"name":"simple_EActorSplatHeight","kind":"simple","fields":[],"enumValues":["Automatic","MinimumActor","MinimumTerrain","Normal"],"facets":[],"base":"xs:string"}
+{"name":"simple_EActorSplatHeight","schemaSpan":{"start":995020,"end":996237},"namespace":"","kind":"simple","fields":[],"enumValues":["Automatic","MinimumActor","MinimumTerrain","Normal"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

@@ -1,1 +1,1 @@
-{"name":"EEffectMissile","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EEffectMissile"}],"enumValues":[],"facets":[]}
+{"name":"EEffectMissile","schemaSpan":{"start":1334556,"end":1334673},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1334597,"end":1334654},"namespace":"","name":"value","type":"simple_EEffectMissile","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

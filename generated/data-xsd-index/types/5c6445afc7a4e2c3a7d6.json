@@ -1,1 +1,1 @@
-{"name":"CWarChestLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CWarChestLink"}],"enumValues":[],"facets":[]}
+{"name":"CWarChestLink","schemaSpan":{"start":63396,"end":63511},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":63436,"end":63492},"namespace":"","name":"value","type":"simple_CWarChestLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

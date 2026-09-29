@@ -1,1 +1,1 @@
-{"name":"simple_ESoundMixSnapshotFlag","kind":"simple","fields":[],"enumValues":["ApplyCategoryDuckingGlobal","ApplyCategoryDuckingNonLocal"],"facets":[],"base":"xs:string"}
+{"name":"simple_ESoundMixSnapshotFlag","schemaSpan":{"start":1689180,"end":1689720},"namespace":"","kind":"simple","fields":[],"enumValues":["ApplyCategoryDuckingGlobal","ApplyCategoryDuckingNonLocal"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

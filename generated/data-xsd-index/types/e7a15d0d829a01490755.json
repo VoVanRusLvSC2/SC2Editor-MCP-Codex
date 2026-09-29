@@ -1,1 +1,1 @@
-{"name":"CPhaseOutro","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CPhaseOutro"}],"enumValues":[],"facets":[]}
+{"name":"CPhaseOutro","schemaSpan":{"start":31633,"end":31744},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":31671,"end":31725},"namespace":"","name":"value","type":"simple_CPhaseOutro","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

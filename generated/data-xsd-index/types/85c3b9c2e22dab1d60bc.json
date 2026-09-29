@@ -1,1 +1,1 @@
-{"name":"EUnitVital","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EUnitVital"}],"enumValues":[],"facets":[]}
+{"name":"EUnitVital","schemaSpan":{"start":255791,"end":255900},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":255828,"end":255881},"namespace":"","name":"value","type":"simple_EUnitVital","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

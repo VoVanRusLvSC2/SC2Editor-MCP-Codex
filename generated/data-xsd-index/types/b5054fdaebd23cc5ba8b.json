@@ -1,1 +1,1 @@
-{"name":"simple_EAttackModifierStage","kind":"simple","fields":[],"enumValues":["Applied","Fired","Idle","Init","Waiting"],"facets":[],"base":"xs:string"}
+{"name":"simple_EAttackModifierStage","schemaSpan":{"start":204716,"end":205689},"namespace":"","kind":"simple","fields":[],"enumValues":["Applied","Fired","Idle","Init","Waiting"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

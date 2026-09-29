@@ -1,1 +1,1 @@
-{"name":"CfRange","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CfRange"}],"enumValues":[],"facets":[]}
+{"name":"CfRange","schemaSpan":{"start":37263,"end":37366},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":37297,"end":37347},"namespace":"","name":"value","type":"simple_CfRange","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

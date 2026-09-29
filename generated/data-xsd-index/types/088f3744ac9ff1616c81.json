@@ -1,1 +1,1 @@
-{"name":"simple_EBehaviorInfoFlag","kind":"simple","fields":[],"enumValues":["AlwaysUseGameText","Hidden"],"facets":[],"base":"xs:string"}
+{"name":"simple_EBehaviorInfoFlag","schemaSpan":{"start":1178684,"end":1179188},"namespace":"","kind":"simple","fields":[],"enumValues":["AlwaysUseGameText","Hidden"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

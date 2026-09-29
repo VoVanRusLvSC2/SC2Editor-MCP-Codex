@@ -1,1 +1,1 @@
-{"name":"bool","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_bool"}],"enumValues":[],"facets":[]}
+{"name":"bool","schemaSpan":{"start":1135,"end":1232},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1166,"end":1213},"namespace":"","name":"value","type":"simple_bool","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

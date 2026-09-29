@@ -1,1 +1,1 @@
-{"name":"simple_SGameContentCreationData","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string"}
+{"name":"simple_SGameContentCreationData","schemaSpan":{"start":40386,"end":40495},"namespace":"","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

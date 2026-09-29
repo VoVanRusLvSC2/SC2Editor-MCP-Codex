@@ -1,1 +1,1 @@
-{"name":"EListWalkMode","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EListWalkMode"}],"enumValues":[],"facets":[]}
+{"name":"EListWalkMode","schemaSpan":{"start":1522197,"end":1522312},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1522237,"end":1522293},"namespace":"","name":"value","type":"simple_EListWalkMode","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

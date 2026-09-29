@@ -1,1 +1,1 @@
-{"name":"EActorMsgType","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EActorMsgType"}],"enumValues":[],"facets":[]}
+{"name":"EActorMsgType","schemaSpan":{"start":782334,"end":782449},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":782374,"end":782430},"namespace":"","name":"value","type":"simple_EActorMsgType","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

@@ -1,1 +1,1 @@
-{"name":"simple_CPhysicsMaterialLink","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string"}
+{"name":"simple_CPhysicsMaterialLink","schemaSpan":{"start":51101,"end":51206},"namespace":"","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

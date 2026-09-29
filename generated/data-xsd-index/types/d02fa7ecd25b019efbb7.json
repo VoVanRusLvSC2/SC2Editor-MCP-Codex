@@ -1,1 +1,1 @@
-{"name":"simple_EAnimGroupApplyFlag","kind":"simple","fields":[],"enumValues":["ClosingFull","Instant"],"facets":[],"base":"xs:string"}
+{"name":"simple_EAnimGroupApplyFlag","schemaSpan":{"start":1062133,"end":1063723},"namespace":"","kind":"simple","fields":[],"enumValues":["ClosingFull","Instant"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

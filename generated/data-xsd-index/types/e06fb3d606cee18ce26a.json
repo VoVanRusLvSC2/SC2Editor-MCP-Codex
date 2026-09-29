@@ -1,1 +1,1 @@
-{"name":"simple_EAMNumericFieldOp","kind":"simple","fields":[],"enumValues":["Equals","GreaterThan","GreaterThanOrEqual","LessThan","LessThanOrEqual"],"facets":[],"base":"xs:string"}
+{"name":"simple_EAMNumericFieldOp","schemaSpan":{"start":621830,"end":622878},"namespace":"","kind":"simple","fields":[],"enumValues":["Equals","GreaterThan","GreaterThanOrEqual","LessThan","LessThanOrEqual"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

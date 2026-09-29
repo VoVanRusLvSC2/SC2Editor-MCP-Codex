@@ -1,1 +1,1 @@
-{"name":"simple_EClassIdCFoW","kind":"simple","fields":[],"enumValues":["CFoW"],"facets":[],"base":"xs:string"}
+{"name":"simple_EClassIdCFoW","schemaSpan":{"start":232187,"end":232473},"namespace":"","kind":"simple","fields":[],"enumValues":["CFoW"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

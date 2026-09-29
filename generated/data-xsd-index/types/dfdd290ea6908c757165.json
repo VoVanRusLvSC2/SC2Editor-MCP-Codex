@@ -1,1 +1,1 @@
-{"name":"EAbilArmMagazineFlag","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EAbilArmMagazineFlag"}],"enumValues":[],"facets":[]}
+{"name":"EAbilArmMagazineFlag","schemaSpan":{"start":628047,"end":628176},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":628094,"end":628157},"namespace":"","name":"value","type":"simple_EAbilArmMagazineFlag","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

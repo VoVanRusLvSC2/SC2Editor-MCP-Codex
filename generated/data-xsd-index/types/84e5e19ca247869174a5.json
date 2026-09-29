@@ -1,1 +1,1 @@
-{"name":"EModelLinkSpecial","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EModelLinkSpecial"}],"enumValues":[],"facets":[]}
+{"name":"EModelLinkSpecial","schemaSpan":{"start":1533260,"end":1533383},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1533304,"end":1533364},"namespace":"","name":"value","type":"simple_EModelLinkSpecial","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

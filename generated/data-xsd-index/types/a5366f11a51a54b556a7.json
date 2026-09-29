@@ -1,1 +1,1 @@
-{"name":"ETextureEntryFlag","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_ETextureEntryFlag"}],"enumValues":[],"facets":[]}
+{"name":"ETextureEntryFlag","schemaSpan":{"start":1711031,"end":1711154},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1711075,"end":1711135},"namespace":"","name":"value","type":"simple_ETextureEntryFlag","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

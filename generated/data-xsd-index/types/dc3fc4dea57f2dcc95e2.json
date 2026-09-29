@@ -1,1 +1,1 @@
-{"name":"simple_CWeaponLink","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string"}
+{"name":"simple_CWeaponLink","schemaSpan":{"start":44109,"end":44205},"namespace":"","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

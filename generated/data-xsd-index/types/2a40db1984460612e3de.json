@@ -1,1 +1,1 @@
-{"name":"CTalentProfileLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CTalentProfileLink"}],"enumValues":[],"facets":[]}
+{"name":"CTalentProfileLink","schemaSpan":{"start":54210,"end":54335},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":54255,"end":54316},"namespace":"","name":"value","type":"simple_CTalentProfileLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

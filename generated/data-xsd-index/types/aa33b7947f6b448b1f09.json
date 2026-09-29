@@ -1,1 +1,1 @@
-{"name":"simple_EActorPlayerIdSource","kind":"simple","fields":[],"enumValues":["Auto","ContainingScope"],"facets":[],"base":"xs:string"}
+{"name":"simple_EActorPlayerIdSource","schemaSpan":{"start":937080,"end":938024},"namespace":"","kind":"simple","fields":[],"enumValues":["Auto","ContainingScope"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

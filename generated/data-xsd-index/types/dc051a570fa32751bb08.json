@@ -1,1 +1,1 @@
-{"name":"simple_uint64","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:unsignedInt"}
+{"name":"simple_uint64","schemaSpan":{"start":6496,"end":6592},"namespace":"","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:unsignedInt","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

@@ -1,1 +1,1 @@
-{"name":"EBehaviorUnitTrackerSnapRule","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EBehaviorUnitTrackerSnapRule"}],"enumValues":[],"facets":[]}
+{"name":"EBehaviorUnitTrackerSnapRule","schemaSpan":{"start":1206071,"end":1206216},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1206126,"end":1206197},"namespace":"","name":"value","type":"simple_EBehaviorUnitTrackerSnapRule","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

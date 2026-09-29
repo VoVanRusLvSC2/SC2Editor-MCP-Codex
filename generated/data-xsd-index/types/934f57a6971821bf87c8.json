@@ -1,1 +1,1 @@
-{"name":"EActorStepDirection","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EActorStepDirection"}],"enumValues":[],"facets":[]}
+{"name":"EActorStepDirection","schemaSpan":{"start":996239,"end":996366},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":996285,"end":996347},"namespace":"","name":"value","type":"simple_EActorStepDirection","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

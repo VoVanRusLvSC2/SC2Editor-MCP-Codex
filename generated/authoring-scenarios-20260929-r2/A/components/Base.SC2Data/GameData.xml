@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Includes>
+
+    <Catalog path="GameData/EffectData.xml"/>
+
+    <Catalog path="GameData/BehaviorData.xml"/>
+
+    <Catalog path="GameData/ValidatorData.xml"/>
+
+    <Catalog path="GameData/WeaponData.xml"/>
+
+    <Catalog path="GameData/UnitData.xml"/>
+
+    <Catalog path="GameData/ModelData.xml"/>
+
+    <Catalog path="GameData/ActorData.xml"/>
+</Includes>

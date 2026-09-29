@@ -1,1 +1,1 @@
-{"name":"simple_EAMOccupancyLogic","kind":"simple","fields":[],"enumValues":["PreferAny","PreferNone","RequireAny","RequireNone"],"facets":[],"base":"xs:string"}
+{"name":"simple_EAMOccupancyLogic","schemaSpan":{"start":623005,"end":623846},"namespace":"","kind":"simple","fields":[],"enumValues":["PreferAny","PreferNone","RequireAny","RequireNone"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

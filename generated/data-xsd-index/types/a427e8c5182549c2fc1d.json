@@ -1,1 +1,1 @@
-{"name":"EActorModelAspectPerson","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EActorModelAspectPerson"}],"enumValues":[],"facets":[]}
+{"name":"EActorModelAspectPerson","schemaSpan":{"start":764227,"end":764362},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":764277,"end":764343},"namespace":"","name":"value","type":"simple_EActorModelAspectPerson","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

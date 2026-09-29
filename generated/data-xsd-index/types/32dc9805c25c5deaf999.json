@@ -1,1 +1,1 @@
-{"name":"TFootprintMask","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_TFootprintMask"}],"enumValues":[],"facets":[]}
+{"name":"TFootprintMask","schemaSpan":{"start":38698,"end":38815},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":38739,"end":38796},"namespace":"","name":"value","type":"simple_TFootprintMask","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

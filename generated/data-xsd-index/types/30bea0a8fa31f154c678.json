@@ -1,1 +1,1 @@
-{"name":"simple_EEditorTextType","kind":"simple","fields":[],"enumValues":["Name","Prefix","Suffix","Unknown"],"facets":[],"base":"xs:string"}
+{"name":"simple_EEditorTextType","schemaSpan":{"start":1326906,"end":1327704},"namespace":"","kind":"simple","fields":[],"enumValues":["Name","Prefix","Suffix","Unknown"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

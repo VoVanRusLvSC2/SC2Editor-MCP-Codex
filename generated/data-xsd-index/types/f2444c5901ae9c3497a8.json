@@ -1,1 +1,1 @@
-{"name":"CAttachMethodVolumesTargets","kind":"complex","fields":[],"enumValues":[],"facets":[],"base":"CBase"}
+{"name":"CAttachMethodVolumesTargets","schemaSpan":{"start":4837101,"end":4837319},"namespace":"","kind":"complex","fields":[],"enumValues":[],"facets":[],"base":"CBase","baseNamespace":"","derivation":"extension"}

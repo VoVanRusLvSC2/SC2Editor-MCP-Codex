@@ -1,1 +1,1 @@
-{"name":"EBehaviorDisplay","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EBehaviorDisplay"}],"enumValues":[],"facets":[]}
+{"name":"EBehaviorDisplay","schemaSpan":{"start":1175319,"end":1175440},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1175362,"end":1175421},"namespace":"","name":"value","type":"simple_EBehaviorDisplay","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

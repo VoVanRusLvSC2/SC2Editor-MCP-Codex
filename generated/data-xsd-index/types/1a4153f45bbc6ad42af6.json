@@ -1,1 +1,1 @@
-{"name":"EQuickCastMode","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EQuickCastMode"}],"enumValues":[],"facets":[]}
+{"name":"EQuickCastMode","schemaSpan":{"start":1587657,"end":1587774},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1587698,"end":1587755},"namespace":"","name":"value","type":"simple_EQuickCastMode","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

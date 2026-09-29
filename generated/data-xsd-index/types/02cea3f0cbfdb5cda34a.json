@@ -1,1 +1,1 @@
-{"name":"EAbilReviveCmd","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EAbilReviveCmd"}],"enumValues":[],"facets":[]}
+{"name":"EAbilReviveCmd","schemaSpan":{"start":117060,"end":117177},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":117101,"end":117158},"namespace":"","name":"value","type":"simple_EAbilReviveCmd","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

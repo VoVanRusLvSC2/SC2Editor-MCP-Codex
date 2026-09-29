@@ -1,1 +1,1 @@
-{"name":"EBehaviorVeterancyXP","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EBehaviorVeterancyXP"}],"enumValues":[],"facets":[]}
+{"name":"EBehaviorVeterancyXP","schemaSpan":{"start":1207738,"end":1207867},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1207785,"end":1207848},"namespace":"","name":"value","type":"simple_EBehaviorVeterancyXP","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

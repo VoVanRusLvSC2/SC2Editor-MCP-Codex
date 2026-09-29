@@ -1,1 +1,1 @@
-{"name":"EEffectHistory","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EEffectHistory"}],"enumValues":[],"facets":[]}
+{"name":"EEffectHistory","schemaSpan":{"start":301058,"end":301175},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":301099,"end":301156},"namespace":"","name":"value","type":"simple_EEffectHistory","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

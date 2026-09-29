@@ -1,1 +1,1 @@
-{"name":"EClassIdCButton","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EClassIdCButton"}],"enumValues":[],"facets":[]}
+{"name":"EClassIdCButton","schemaSpan":{"start":207106,"end":207225},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":207148,"end":207206},"namespace":"","name":"value","type":"simple_EClassIdCButton","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

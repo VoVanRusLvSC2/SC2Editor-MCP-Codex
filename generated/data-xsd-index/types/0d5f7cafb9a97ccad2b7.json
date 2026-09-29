@@ -1,1 +1,1 @@
-{"name":"EActorGame","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EActorGame"}],"enumValues":[],"facets":[]}
+{"name":"EActorGame","schemaSpan":{"start":739453,"end":739562},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":739490,"end":739543},"namespace":"","name":"value","type":"simple_EActorGame","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

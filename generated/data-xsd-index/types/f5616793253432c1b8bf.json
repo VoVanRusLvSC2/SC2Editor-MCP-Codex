@@ -1,1 +1,1 @@
-{"name":"EClassIdCCliffMesh","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EClassIdCCliffMesh"}],"enumValues":[],"facets":[]}
+{"name":"EClassIdCCliffMesh","schemaSpan":{"start":209206,"end":209331},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":209251,"end":209312},"namespace":"","name":"value","type":"simple_EClassIdCCliffMesh","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

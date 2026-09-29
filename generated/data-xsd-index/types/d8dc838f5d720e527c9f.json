@@ -1,1 +1,1 @@
-{"name":"EConversationProductionLevelFlag","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EConversationProductionLevelFlag"}],"enumValues":[],"facets":[]}
+{"name":"EConversationProductionLevelFlag","schemaSpan":{"start":1291078,"end":1291231},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1291137,"end":1291212},"namespace":"","name":"value","type":"simple_EConversationProductionLevelFlag","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

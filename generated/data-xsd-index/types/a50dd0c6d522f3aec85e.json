@@ -1,1 +1,1 @@
-{"name":"ECameraMode","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_ECameraMode"}],"enumValues":[],"facets":[]}
+{"name":"ECameraMode","schemaSpan":{"start":1217864,"end":1217975},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1217902,"end":1217956},"namespace":"","name":"value","type":"simple_ECameraMode","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

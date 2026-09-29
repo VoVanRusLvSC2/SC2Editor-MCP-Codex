@@ -1,1 +1,1 @@
-{"name":"TAbilCmdIndex","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_TAbilCmdIndex"}],"enumValues":[],"facets":[]}
+{"name":"TAbilCmdIndex","schemaSpan":{"start":4484,"end":4599},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":4524,"end":4580},"namespace":"","name":"value","type":"simple_TAbilCmdIndex","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

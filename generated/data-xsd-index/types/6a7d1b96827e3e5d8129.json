@@ -1,1 +1,1 @@
-{"name":"simple_EActorFilter","kind":"simple","fields":[],"enumValues":["All","Ally","Enemy","Neutral","Self"],"facets":[],"base":"xs:string"}
+{"name":"simple_EActorFilter","schemaSpan":{"start":731808,"end":733292},"namespace":"","kind":"simple","fields":[],"enumValues":["All","Ally","Enemy","Neutral","Self"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

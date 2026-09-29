@@ -1,1 +1,1 @@
-{"name":"EAbilityCategory","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EAbilityCategory"}],"enumValues":[],"facets":[]}
+{"name":"EAbilityCategory","schemaSpan":{"start":138798,"end":138919},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":138841,"end":138900},"namespace":"","name":"value","type":"simple_EAbilityCategory","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

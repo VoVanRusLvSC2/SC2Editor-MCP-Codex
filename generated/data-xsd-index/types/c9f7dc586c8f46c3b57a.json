@@ -1,1 +1,1 @@
-{"name":"EAIUIMode","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EAIUIMode"}],"enumValues":[],"facets":[]}
+{"name":"EAIUIMode","schemaSpan":{"start":613467,"end":613574},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":613503,"end":613555},"namespace":"","name":"value","type":"simple_EAIUIMode","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

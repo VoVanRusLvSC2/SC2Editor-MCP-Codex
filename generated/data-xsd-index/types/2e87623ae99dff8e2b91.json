@@ -1,1 +1,1 @@
-{"name":"CCampaignLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CCampaignLink"}],"enumValues":[],"facets":[]}
+{"name":"CCampaignLink","schemaSpan":{"start":45111,"end":45226},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":45151,"end":45207},"namespace":"","name":"value","type":"simple_CCampaignLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

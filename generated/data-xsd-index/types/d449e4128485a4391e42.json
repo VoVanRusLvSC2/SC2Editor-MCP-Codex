@@ -1,1 +1,1 @@
-{"name":"simple_EActorModelAspectObservingPoV","kind":"simple","fields":[],"enumValues":["Any","DefaultObservedPlayerId","Everyone","PlayerId","TeamId"],"facets":[],"base":"xs:string"}
+{"name":"simple_EActorModelAspectObservingPoV","schemaSpan":{"start":762841,"end":764225},"namespace":"","kind":"simple","fields":[],"enumValues":["Any","DefaultObservedPlayerId","Everyone","PlayerId","TeamId"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

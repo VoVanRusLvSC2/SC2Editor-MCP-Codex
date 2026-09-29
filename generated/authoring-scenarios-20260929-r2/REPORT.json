@@ -1,0 +1,609 @@
+{
+  "base": "E:\\SK2\\SC2Editor_MCP_Codex\\generated\\mcp-hardening\\editor-authoring-20260929\\components",
+  "scenarios": {
+    "A": {
+      "structural": true,
+      "authoring": [
+        {
+          "file": "Base.SC2Data/GameData/EffectData.xml",
+          "status": "INCOMPLETE",
+          "accepted": true,
+          "completeness": "INCOMPLETE"
+        },
+        {
+          "file": "Base.SC2Data/GameData/BehaviorData.xml",
+          "status": "INCOMPLETE",
+          "accepted": true,
+          "completeness": "INCOMPLETE"
+        },
+        {
+          "file": "Base.SC2Data/GameData/ValidatorData.xml",
+          "status": "INCOMPLETE",
+          "accepted": true,
+          "completeness": "INCOMPLETE"
+        },
+        {
+          "file": "Base.SC2Data/GameData/WeaponData.xml",
+          "status": "INCOMPLETE",
+          "accepted": true,
+          "completeness": "INCOMPLETE"
+        },
+        {
+          "file": "Base.SC2Data/GameData/UnitData.xml",
+          "status": "INCOMPLETE",
+          "accepted": true,
+          "completeness": "INCOMPLETE"
+        },
+        {
+          "file": "Base.SC2Data/GameData/ModelData.xml",
+          "status": "INCOMPLETE",
+          "accepted": true,
+          "completeness": "INCOMPLETE"
+        },
+        {
+          "file": "Base.SC2Data/GameData/ActorData.xml",
+          "status": "INCOMPLETE",
+          "accepted": true,
+          "completeness": "INCOMPLETE"
+        }
+      ],
+      "negative": {
+        "status": "REJECTED",
+        "message": "Error: DATA_AUTHORING_INCOMPLETE: DATA_AUTHOR_REFERENCE_SCOPE_INCOMPLETE CEffectSet:ScenarioABroken.EffectArray@value: Authored Effect reference 'MissingPrerequisite' does not resolve in the active catalog (catalog scope incomplete)"
+      },
+      "asset": "Marine.m3 path is schema-valid but asset presence and Editor rendering are NOT_RUN",
+      "compiler": "NOT_RUN",
+      "components": "E:\\SK2\\SC2Editor_MCP_Codex\\generated\\authoring-scenarios-20260929-r2\\A\\components",
+      "files": [
+        {
+          "file": ".sc2mcp-output/TypedGui.SC2Map",
+          "sha256": "567bdbaed902e8d2b160958734e067b591c09441c889f53a5e9f5e2a308dfb58"
+        },
+        {
+          "file": "Attributes",
+          "sha256": "c4078f8d59e046e673c36354655e74b5c6e4247e68ed67601eb8657c926ff845"
+        },
+        {
+          "file": "Base.SC2Data/GameData/ActorData.xml",
+          "sha256": "f2bb98fbdf6c266922e1af1b82add8c68b4b867304184d35ff1636abbb6c247a"
+        },
+        {
+          "file": "Base.SC2Data/GameData/BehaviorData.xml",
+          "sha256": "1fab90e56cdb2ba4af89a9ed40e08274f62178710914c4eade845b9371fdee9a"
+        },
+        {
+          "file": "Base.SC2Data/GameData/EffectData.xml",
+          "sha256": "9025fb3f3af96538a1dce76d1818e9243335ee2579b26ca5b57def6cb259b365"
+        },
+        {
+          "file": "Base.SC2Data/GameData/ModelData.xml",
+          "sha256": "accc8ed61818577bc4b3b36b62e23e661faa7807189ae9b50d257611aeff54a9"
+        },
+        {
+          "file": "Base.SC2Data/GameData/UnitData.xml",
+          "sha256": "a26ae587ed699b4c2203bd601246e729f53ad40bf7659ffe8bc2001e840b3940"
+        },
+        {
+          "file": "Base.SC2Data/GameData/ValidatorData.xml",
+          "sha256": "56f4094ad8401ee6bbe6543bc6246b5e62eb8aee2aa484a658cedf1ebf16d808"
+        },
+        {
+          "file": "Base.SC2Data/GameData/WeaponData.xml",
+          "sha256": "cd3ac2f2521373acebc3b2237ba9dc383de9fcf82d2cacbd3a2270d155c2e438"
+        },
+        {
+          "file": "Base.SC2Data/GameData.xml",
+          "sha256": "89abf5b0182f1a3e07e0fe44c76c517a8289e02809b883c0a0635fa2bf5b798a"
+        },
+        {
+          "file": "ComponentList.SC2Components",
+          "sha256": "b34412f7488e62d056ae2ef642187ef84b69d0d5d00552f166a186650e39826b"
+        },
+        {
+          "file": "DocumentHeader",
+          "sha256": "73f78e82d650fca7b867375ee5310c7f73859e333c0ebdf0137684fc0e5215f8"
+        },
+        {
+          "file": "DocumentInfo",
+          "sha256": "03d6f1d2f22f4552171fa724f37a0e8d587c635a6c5c087fdd606dac393c0d2c"
+        },
+        {
+          "file": "enUS.SC2Data/LocalizedData/TriggerStrings.txt",
+          "sha256": "8ada30eb791ee1adfebdd0f7087ccd6d745cebc8dc7e0fc9c131bf4df38f1eb8"
+        },
+        {
+          "file": "MapInfo",
+          "sha256": "21ff64431be8ec1adcb0743901d3b0095851fb7ae754be4c55c4e0d2af5a8cf3"
+        },
+        {
+          "file": "t3CellFlags",
+          "sha256": "56d47dee7d3e6c2245a5d69d1421bffa56c4f14ac936574d1ab1e6351c87b55e"
+        },
+        {
+          "file": "t3FluffDoodad",
+          "sha256": "3f3f15b8480e7cf37d97bc9c4affe5af1348b352bbc1213a71da32195a88e937"
+        },
+        {
+          "file": "t3HardTile",
+          "sha256": "12afa86368acf6158758ce235c2e3879d6edfab41cc2eef6738c939e746b745d"
+        },
+        {
+          "file": "t3HeightMap",
+          "sha256": "397bb71583fbf8c10a4e07ddb718e6783ed442d53d9b4a76cd474e1aa60ae4a6"
+        },
+        {
+          "file": "t3SyncCliffLevel",
+          "sha256": "ee6f88f90add90966dc89670499c3120e26d33968a12c26f0ba99d4da7504fd7"
+        },
+        {
+          "file": "t3SyncHeightMap",
+          "sha256": "4725002333adecf4410376331bbbf695b5a613d55b2a5a6b7bda10701e1be3bd"
+        },
+        {
+          "file": "t3SyncTextureInfo",
+          "sha256": "5fdf44defe5df115be5be49de20d822f1dfab785304cfbd228c120aa03f38c0c"
+        },
+        {
+          "file": "t3Terrain.xml",
+          "sha256": "1e66a45de6c4c2aa097e6582592c1a8daac504549376c27bb79fa4d11cd832b9"
+        },
+        {
+          "file": "t3TextureMasks",
+          "sha256": "901087dbb65e738d774d2517fc694d8508d524c4ca988cc7478efd2e0f48cb99"
+        },
+        {
+          "file": "t3VertCol",
+          "sha256": "07e468603720a21465401f31702bea01e69bea5a8aa9606fc672015bcd692a18"
+        },
+        {
+          "file": "t3Water",
+          "sha256": "c15e6e4da91564e9349a449302114f4248dfe1f2cebee1a29526cb5f41db5af5"
+        },
+        {
+          "file": "Triggers",
+          "sha256": "70d8c3faebb6ba60dcc48e4f9dec605ede4887c0997a1ab9dc808509807fac63"
+        }
+      ]
+    },
+    "B": {
+      "structural": true,
+      "authoring": [
+        {
+          "file": "Base.SC2Data/GameData/EffectData.xml",
+          "status": "INCOMPLETE",
+          "accepted": true
+        },
+        {
+          "file": "Base.SC2Data/GameData/ValidatorData.xml",
+          "status": "INCOMPLETE",
+          "accepted": true
+        },
+        {
+          "file": "Base.SC2Data/GameData/AbilData.xml",
+          "status": "INCOMPLETE",
+          "accepted": true
+        },
+        {
+          "file": "Base.SC2Data/GameData/UnitData.xml",
+          "status": "INCOMPLETE",
+          "accepted": true
+        }
+      ],
+      "negative": {
+        "status": "REJECTED",
+        "message": "Error: DATA_AUTHORING_INCOMPLETE: DATA_AUTHOR_REFERENCE_SCOPE_INCOMPLETE CAbilEffectInstant:ScenarioBBad.Effect@value: Authored Effect reference 'AbsentEffect' does not resolve in the active catalog (catalog scope incomplete)"
+      },
+      "compiler": "NOT_RUN",
+      "components": "E:\\SK2\\SC2Editor_MCP_Codex\\generated\\authoring-scenarios-20260929-r2\\B\\components",
+      "files": [
+        {
+          "file": ".sc2mcp-output/TypedGui.SC2Map",
+          "sha256": "567bdbaed902e8d2b160958734e067b591c09441c889f53a5e9f5e2a308dfb58"
+        },
+        {
+          "file": "Attributes",
+          "sha256": "c4078f8d59e046e673c36354655e74b5c6e4247e68ed67601eb8657c926ff845"
+        },
+        {
+          "file": "Base.SC2Data/GameData/AbilData.xml",
+          "sha256": "86ba79f859efdb3ff940c047e53b8e0f82994e4735313b81b2fad4efc469d4c7"
+        },
+        {
+          "file": "Base.SC2Data/GameData/EffectData.xml",
+          "sha256": "4afa5001006665758b2309170c7d3f968a27277a78b48ff4073b112fb2556877"
+        },
+        {
+          "file": "Base.SC2Data/GameData/UnitData.xml",
+          "sha256": "a9a141fcbded271e0a428b53b859489faff6dfd92eb78c9f3872893f315f401a"
+        },
+        {
+          "file": "Base.SC2Data/GameData/ValidatorData.xml",
+          "sha256": "9e7040225c7d29e5babf9832fe3506c0f38a8b7b9aeca0cffefd31e2121d9ace"
+        },
+        {
+          "file": "Base.SC2Data/GameData.xml",
+          "sha256": "ff6472b71b299433168641bace8ea2a95dd65da26c07bb50527b4764f35845df"
+        },
+        {
+          "file": "ComponentList.SC2Components",
+          "sha256": "b34412f7488e62d056ae2ef642187ef84b69d0d5d00552f166a186650e39826b"
+        },
+        {
+          "file": "DocumentHeader",
+          "sha256": "73f78e82d650fca7b867375ee5310c7f73859e333c0ebdf0137684fc0e5215f8"
+        },
+        {
+          "file": "DocumentInfo",
+          "sha256": "03d6f1d2f22f4552171fa724f37a0e8d587c635a6c5c087fdd606dac393c0d2c"
+        },
+        {
+          "file": "enUS.SC2Data/LocalizedData/TriggerStrings.txt",
+          "sha256": "8ada30eb791ee1adfebdd0f7087ccd6d745cebc8dc7e0fc9c131bf4df38f1eb8"
+        },
+        {
+          "file": "MapInfo",
+          "sha256": "21ff64431be8ec1adcb0743901d3b0095851fb7ae754be4c55c4e0d2af5a8cf3"
+        },
+        {
+          "file": "t3CellFlags",
+          "sha256": "56d47dee7d3e6c2245a5d69d1421bffa56c4f14ac936574d1ab1e6351c87b55e"
+        },
+        {
+          "file": "t3FluffDoodad",
+          "sha256": "3f3f15b8480e7cf37d97bc9c4affe5af1348b352bbc1213a71da32195a88e937"
+        },
+        {
+          "file": "t3HardTile",
+          "sha256": "12afa86368acf6158758ce235c2e3879d6edfab41cc2eef6738c939e746b745d"
+        },
+        {
+          "file": "t3HeightMap",
+          "sha256": "397bb71583fbf8c10a4e07ddb718e6783ed442d53d9b4a76cd474e1aa60ae4a6"
+        },
+        {
+          "file": "t3SyncCliffLevel",
+          "sha256": "ee6f88f90add90966dc89670499c3120e26d33968a12c26f0ba99d4da7504fd7"
+        },
+        {
+          "file": "t3SyncHeightMap",
+          "sha256": "4725002333adecf4410376331bbbf695b5a613d55b2a5a6b7bda10701e1be3bd"
+        },
+        {
+          "file": "t3SyncTextureInfo",
+          "sha256": "5fdf44defe5df115be5be49de20d822f1dfab785304cfbd228c120aa03f38c0c"
+        },
+        {
+          "file": "t3Terrain.xml",
+          "sha256": "1e66a45de6c4c2aa097e6582592c1a8daac504549376c27bb79fa4d11cd832b9"
+        },
+        {
+          "file": "t3TextureMasks",
+          "sha256": "901087dbb65e738d774d2517fc694d8508d524c4ca988cc7478efd2e0f48cb99"
+        },
+        {
+          "file": "t3VertCol",
+          "sha256": "07e468603720a21465401f31702bea01e69bea5a8aa9606fc672015bcd692a18"
+        },
+        {
+          "file": "t3Water",
+          "sha256": "c15e6e4da91564e9349a449302114f4248dfe1f2cebee1a29526cb5f41db5af5"
+        },
+        {
+          "file": "Triggers",
+          "sha256": "70d8c3faebb6ba60dcc48e4f9dec605ede4887c0997a1ab9dc808509807fac63"
+        }
+      ]
+    },
+    "C": {
+      "structural": true,
+      "typecheck": {
+        "status": "VERIFIED_SUBSET",
+        "files": [
+          {
+            "file": "Scripts/ScenarioC.galaxy",
+            "status": "VERIFIED_SUBSET",
+            "checked": 9,
+            "unknown": 0
+          }
+        ],
+        "scope": "Bounded expression, local scope, if/while, assignment, return and pinned call types; arrays, members, for/do/switch and full Galaxy grammar remain unverified"
+      },
+      "compiler": "NOT_EXECUTED",
+      "initConnection": "NOT_RUN: native map foundation does not include MapScript.galaxy",
+      "negative": "GALAXY_CALL_TYPE and GALAXY_RETURN_TYPE regression cases in src/tests/galaxyTypecheck.test.ts",
+      "components": "E:\\SK2\\SC2Editor_MCP_Codex\\generated\\authoring-scenarios-20260929-r2\\C\\components",
+      "files": [
+        {
+          "file": ".sc2mcp-output/TypedGui.SC2Map",
+          "sha256": "567bdbaed902e8d2b160958734e067b591c09441c889f53a5e9f5e2a308dfb58"
+        },
+        {
+          "file": "Attributes",
+          "sha256": "c4078f8d59e046e673c36354655e74b5c6e4247e68ed67601eb8657c926ff845"
+        },
+        {
+          "file": "Base.SC2Data/GameData/EffectData.xml",
+          "sha256": "415dd3581711540530f48d4e03272e15ee4f7e7d9e4ac99ad631ae4b0798bdf5"
+        },
+        {
+          "file": "Base.SC2Data/GameData.xml",
+          "sha256": "9076e2870540740a7422a15d00a8489ce2fecd59a0457680c98992237c5f46ad"
+        },
+        {
+          "file": "ComponentList.SC2Components",
+          "sha256": "b34412f7488e62d056ae2ef642187ef84b69d0d5d00552f166a186650e39826b"
+        },
+        {
+          "file": "DocumentHeader",
+          "sha256": "73f78e82d650fca7b867375ee5310c7f73859e333c0ebdf0137684fc0e5215f8"
+        },
+        {
+          "file": "DocumentInfo",
+          "sha256": "03d6f1d2f22f4552171fa724f37a0e8d587c635a6c5c087fdd606dac393c0d2c"
+        },
+        {
+          "file": "enUS.SC2Data/LocalizedData/TriggerStrings.txt",
+          "sha256": "8ada30eb791ee1adfebdd0f7087ccd6d745cebc8dc7e0fc9c131bf4df38f1eb8"
+        },
+        {
+          "file": "MapInfo",
+          "sha256": "21ff64431be8ec1adcb0743901d3b0095851fb7ae754be4c55c4e0d2af5a8cf3"
+        },
+        {
+          "file": "Scripts/ScenarioC.galaxy",
+          "sha256": "4a2f488f9fd99d58d7f44c6a800db3e2f63f21a22f894bed2863aad8a7cb8c02"
+        },
+        {
+          "file": "t3CellFlags",
+          "sha256": "56d47dee7d3e6c2245a5d69d1421bffa56c4f14ac936574d1ab1e6351c87b55e"
+        },
+        {
+          "file": "t3FluffDoodad",
+          "sha256": "3f3f15b8480e7cf37d97bc9c4affe5af1348b352bbc1213a71da32195a88e937"
+        },
+        {
+          "file": "t3HardTile",
+          "sha256": "12afa86368acf6158758ce235c2e3879d6edfab41cc2eef6738c939e746b745d"
+        },
+        {
+          "file": "t3HeightMap",
+          "sha256": "397bb71583fbf8c10a4e07ddb718e6783ed442d53d9b4a76cd474e1aa60ae4a6"
+        },
+        {
+          "file": "t3SyncCliffLevel",
+          "sha256": "ee6f88f90add90966dc89670499c3120e26d33968a12c26f0ba99d4da7504fd7"
+        },
+        {
+          "file": "t3SyncHeightMap",
+          "sha256": "4725002333adecf4410376331bbbf695b5a613d55b2a5a6b7bda10701e1be3bd"
+        },
+        {
+          "file": "t3SyncTextureInfo",
+          "sha256": "5fdf44defe5df115be5be49de20d822f1dfab785304cfbd228c120aa03f38c0c"
+        },
+        {
+          "file": "t3Terrain.xml",
+          "sha256": "1e66a45de6c4c2aa097e6582592c1a8daac504549376c27bb79fa4d11cd832b9"
+        },
+        {
+          "file": "t3TextureMasks",
+          "sha256": "901087dbb65e738d774d2517fc694d8508d524c4ca988cc7478efd2e0f48cb99"
+        },
+        {
+          "file": "t3VertCol",
+          "sha256": "07e468603720a21465401f31702bea01e69bea5a8aa9606fc672015bcd692a18"
+        },
+        {
+          "file": "t3Water",
+          "sha256": "c15e6e4da91564e9349a449302114f4248dfe1f2cebee1a29526cb5f41db5af5"
+        },
+        {
+          "file": "Triggers",
+          "sha256": "70d8c3faebb6ba60dcc48e4f9dec605ede4887c0997a1ab9dc808509807fac63"
+        }
+      ]
+    },
+    "D": {
+      "structural": true,
+      "compiler": "NOT_EXECUTED",
+      "loop": "NOT_IMPLEMENTED",
+      "localVariable": "NOT_IMPLEMENTED",
+      "customFunction": "NOT_IMPLEMENTED",
+      "negative": "GUI_CONDITION_REQUIRED and GUI_TYPE_MISMATCH regressions in src/tests/triggerAuthoringDiscovery.test.ts",
+      "components": "E:\\SK2\\SC2Editor_MCP_Codex\\generated\\authoring-scenarios-20260929-r2\\D\\components",
+      "files": [
+        {
+          "file": ".sc2mcp-output/TypedGui.SC2Map",
+          "sha256": "567bdbaed902e8d2b160958734e067b591c09441c889f53a5e9f5e2a308dfb58"
+        },
+        {
+          "file": "Attributes",
+          "sha256": "c4078f8d59e046e673c36354655e74b5c6e4247e68ed67601eb8657c926ff845"
+        },
+        {
+          "file": "Base.SC2Data/GameData/EffectData.xml",
+          "sha256": "415dd3581711540530f48d4e03272e15ee4f7e7d9e4ac99ad631ae4b0798bdf5"
+        },
+        {
+          "file": "Base.SC2Data/GameData.xml",
+          "sha256": "9076e2870540740a7422a15d00a8489ce2fecd59a0457680c98992237c5f46ad"
+        },
+        {
+          "file": "ComponentList.SC2Components",
+          "sha256": "b34412f7488e62d056ae2ef642187ef84b69d0d5d00552f166a186650e39826b"
+        },
+        {
+          "file": "DocumentHeader",
+          "sha256": "73f78e82d650fca7b867375ee5310c7f73859e333c0ebdf0137684fc0e5215f8"
+        },
+        {
+          "file": "DocumentInfo",
+          "sha256": "03d6f1d2f22f4552171fa724f37a0e8d587c635a6c5c087fdd606dac393c0d2c"
+        },
+        {
+          "file": "enUS.SC2Data/LocalizedData/TriggerStrings.txt",
+          "sha256": "0bff5539766e52fe184a13b43eac3518cb9f90c5eec245442ba7aba8bcb235ae"
+        },
+        {
+          "file": "MapInfo",
+          "sha256": "21ff64431be8ec1adcb0743901d3b0095851fb7ae754be4c55c4e0d2af5a8cf3"
+        },
+        {
+          "file": "t3CellFlags",
+          "sha256": "56d47dee7d3e6c2245a5d69d1421bffa56c4f14ac936574d1ab1e6351c87b55e"
+        },
+        {
+          "file": "t3FluffDoodad",
+          "sha256": "3f3f15b8480e7cf37d97bc9c4affe5af1348b352bbc1213a71da32195a88e937"
+        },
+        {
+          "file": "t3HardTile",
+          "sha256": "12afa86368acf6158758ce235c2e3879d6edfab41cc2eef6738c939e746b745d"
+        },
+        {
+          "file": "t3HeightMap",
+          "sha256": "397bb71583fbf8c10a4e07ddb718e6783ed442d53d9b4a76cd474e1aa60ae4a6"
+        },
+        {
+          "file": "t3SyncCliffLevel",
+          "sha256": "ee6f88f90add90966dc89670499c3120e26d33968a12c26f0ba99d4da7504fd7"
+        },
+        {
+          "file": "t3SyncHeightMap",
+          "sha256": "4725002333adecf4410376331bbbf695b5a613d55b2a5a6b7bda10701e1be3bd"
+        },
+        {
+          "file": "t3SyncTextureInfo",
+          "sha256": "5fdf44defe5df115be5be49de20d822f1dfab785304cfbd228c120aa03f38c0c"
+        },
+        {
+          "file": "t3Terrain.xml",
+          "sha256": "1e66a45de6c4c2aa097e6582592c1a8daac504549376c27bb79fa4d11cd832b9"
+        },
+        {
+          "file": "t3TextureMasks",
+          "sha256": "901087dbb65e738d774d2517fc694d8508d524c4ca988cc7478efd2e0f48cb99"
+        },
+        {
+          "file": "t3VertCol",
+          "sha256": "07e468603720a21465401f31702bea01e69bea5a8aa9606fc672015bcd692a18"
+        },
+        {
+          "file": "t3Water",
+          "sha256": "c15e6e4da91564e9349a449302114f4248dfe1f2cebee1a29526cb5f41db5af5"
+        },
+        {
+          "file": "Triggers",
+          "sha256": "fa29b4f57532b049315f27911d38a7eff7cfdd5f1442d9175adb372f90a5e28c"
+        }
+      ]
+    },
+    "E": {
+      "structural": true,
+      "authoring": [
+        "VERIFIED_STATIC"
+      ],
+      "typedGalaxyRename": true,
+      "jointPlan": "NOT_IMPLEMENTED: sequential Data and Galaxy plans with shared rename coordinator",
+      "compiler": "NOT_RUN",
+      "negative": "cross-reference and stale-plan regressions in mcpHardening tests",
+      "components": "E:\\SK2\\SC2Editor_MCP_Codex\\generated\\authoring-scenarios-20260929-r2\\E\\components",
+      "files": [
+        {
+          "file": ".sc2mcp-output/TypedGui.SC2Map",
+          "sha256": "567bdbaed902e8d2b160958734e067b591c09441c889f53a5e9f5e2a308dfb58"
+        },
+        {
+          "file": "Attributes",
+          "sha256": "c4078f8d59e046e673c36354655e74b5c6e4247e68ed67601eb8657c926ff845"
+        },
+        {
+          "file": "Base.SC2Data/GameData/EffectData.xml",
+          "sha256": "415dd3581711540530f48d4e03272e15ee4f7e7d9e4ac99ad631ae4b0798bdf5"
+        },
+        {
+          "file": "Base.SC2Data/GameData/UnitData.xml",
+          "sha256": "33d01eef2fc84154c96834bde86a09a831fe51b66cfc4f9c51a88359a0afe94c"
+        },
+        {
+          "file": "Base.SC2Data/GameData.xml",
+          "sha256": "742138a08910bd2a92fed805ef2d31734190b4c53270e1e1185319aac191b26f"
+        },
+        {
+          "file": "ComponentList.SC2Components",
+          "sha256": "b34412f7488e62d056ae2ef642187ef84b69d0d5d00552f166a186650e39826b"
+        },
+        {
+          "file": "DocumentHeader",
+          "sha256": "73f78e82d650fca7b867375ee5310c7f73859e333c0ebdf0137684fc0e5215f8"
+        },
+        {
+          "file": "DocumentInfo",
+          "sha256": "710e45ffbeaa006c228d6e7b490452ed5f2d02564010c77964fc8b9605abdccc"
+        },
+        {
+          "file": "enUS.SC2Data/LocalizedData/TriggerStrings.txt",
+          "sha256": "8ada30eb791ee1adfebdd0f7087ccd6d745cebc8dc7e0fc9c131bf4df38f1eb8"
+        },
+        {
+          "file": "MapInfo",
+          "sha256": "21ff64431be8ec1adcb0743901d3b0095851fb7ae754be4c55c4e0d2af5a8cf3"
+        },
+        {
+          "file": "Scripts/ScenarioE.galaxy",
+          "sha256": "7b7b3a5b294dc37a09076a924cc63348cd754e358c774a5d39c5c9204bc1daca"
+        },
+        {
+          "file": "t3CellFlags",
+          "sha256": "56d47dee7d3e6c2245a5d69d1421bffa56c4f14ac936574d1ab1e6351c87b55e"
+        },
+        {
+          "file": "t3FluffDoodad",
+          "sha256": "3f3f15b8480e7cf37d97bc9c4affe5af1348b352bbc1213a71da32195a88e937"
+        },
+        {
+          "file": "t3HardTile",
+          "sha256": "12afa86368acf6158758ce235c2e3879d6edfab41cc2eef6738c939e746b745d"
+        },
+        {
+          "file": "t3HeightMap",
+          "sha256": "397bb71583fbf8c10a4e07ddb718e6783ed442d53d9b4a76cd474e1aa60ae4a6"
+        },
+        {
+          "file": "t3SyncCliffLevel",
+          "sha256": "ee6f88f90add90966dc89670499c3120e26d33968a12c26f0ba99d4da7504fd7"
+        },
+        {
+          "file": "t3SyncHeightMap",
+          "sha256": "4725002333adecf4410376331bbbf695b5a613d55b2a5a6b7bda10701e1be3bd"
+        },
+        {
+          "file": "t3SyncTextureInfo",
+          "sha256": "5fdf44defe5df115be5be49de20d822f1dfab785304cfbd228c120aa03f38c0c"
+        },
+        {
+          "file": "t3Terrain.xml",
+          "sha256": "1e66a45de6c4c2aa097e6582592c1a8daac504549376c27bb79fa4d11cd832b9"
+        },
+        {
+          "file": "t3TextureMasks",
+          "sha256": "901087dbb65e738d774d2517fc694d8508d524c4ca988cc7478efd2e0f48cb99"
+        },
+        {
+          "file": "t3VertCol",
+          "sha256": "07e468603720a21465401f31702bea01e69bea5a8aa9606fc672015bcd692a18"
+        },
+        {
+          "file": "t3Water",
+          "sha256": "c15e6e4da91564e9349a449302114f4248dfe1f2cebee1a29526cb5f41db5af5"
+        },
+        {
+          "file": "Triggers",
+          "sha256": "70d8c3faebb6ba60dcc48e4f9dec605ede4887c0997a1ab9dc808509807fac63"
+        }
+      ]
+    }
+  },
+  "editor": "NOT_RUN",
+  "runtime": "NOT_RUN"
+}

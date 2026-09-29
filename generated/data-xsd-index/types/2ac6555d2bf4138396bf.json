@@ -1,1 +1,1 @@
-{"name":"simple_EBehaviorRate","kind":"simple","fields":[],"enumValues":["Charge","Cooldown","Creep","Morph","Progress","Queueable","Spawn"],"facets":[],"base":"xs:string"}
+{"name":"simple_EBehaviorRate","schemaSpan":{"start":1183892,"end":1185214},"namespace":"","kind":"simple","fields":[],"enumValues":["Charge","Cooldown","Creep","Morph","Progress","Queueable","Spawn"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

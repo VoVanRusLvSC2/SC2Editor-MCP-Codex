@@ -1,1 +1,1 @@
-{"name":"CBeamLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CBeamLink"}],"enumValues":[],"facets":[]}
+{"name":"CBeamLink","schemaSpan":{"start":47531,"end":47638},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":47567,"end":47619},"namespace":"","name":"value","type":"simple_CBeamLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

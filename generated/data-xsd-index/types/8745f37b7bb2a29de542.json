@@ -1,1 +1,1 @@
-{"name":"simple_ESoundtrackFlag","kind":"simple","fields":[],"enumValues":["Continuous","Instant"],"facets":[],"base":"xs:string"}
+{"name":"simple_ESoundtrackFlag","schemaSpan":{"start":1693329,"end":1693888},"namespace":"","kind":"simple","fields":[],"enumValues":["Continuous","Instant"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

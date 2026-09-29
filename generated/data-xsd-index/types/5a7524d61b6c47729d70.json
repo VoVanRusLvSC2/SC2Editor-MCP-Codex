@@ -1,1 +1,1 @@
-{"name":"CCliffMeshLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CCliffMeshLink"}],"enumValues":[],"facets":[]}
+{"name":"CCliffMeshLink","schemaSpan":{"start":50548,"end":50665},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":50589,"end":50646},"namespace":"","name":"value","type":"simple_CCliffMeshLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

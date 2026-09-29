@@ -1,1 +1,1 @@
-{"name":"EVoiceOverSoundType","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EVoiceOverSoundType"}],"enumValues":[],"facets":[]}
+{"name":"EVoiceOverSoundType","schemaSpan":{"start":1794804,"end":1794931},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1794850,"end":1794912},"namespace":"","name":"value","type":"simple_EVoiceOverSoundType","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

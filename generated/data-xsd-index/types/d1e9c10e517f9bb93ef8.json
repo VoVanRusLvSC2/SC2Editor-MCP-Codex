@@ -1,1 +1,1 @@
-{"name":"simple_EConversationActionOp","kind":"simple","fields":[],"enumValues":["Add","Set","Subtract","Unknown"],"facets":[],"base":"xs:string"}
+{"name":"simple_EConversationActionOp","schemaSpan":{"start":1286838,"end":1287638},"namespace":"","kind":"simple","fields":[],"enumValues":["Add","Set","Subtract","Unknown"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

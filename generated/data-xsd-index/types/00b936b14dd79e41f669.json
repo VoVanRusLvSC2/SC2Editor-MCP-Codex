@@ -1,1 +1,1 @@
-{"name":"simple_EPlayerLeaveFlag","kind":"simple","fields":[],"enumValues":["ClearSelection","FinalizeScore","ForcedAlliance","FulfillResourceRequests","ReportScore","SplitResources"],"facets":[],"base":"xs:string"}
+{"name":"simple_EPlayerLeaveFlag","schemaSpan":{"start":1580438,"end":1581697},"namespace":"","kind":"simple","fields":[],"enumValues":["ClearSelection","FinalizeScore","ForcedAlliance","FulfillResourceRequests","ReportScore","SplitResources"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Catalog>
+    <CBehaviorBuff id="ScenarioABuff">
+        <Duration value="4"/>
+        <Period value="0.5"/>
+        <PeriodicEffect value="ScenarioAPeriodic"/>
+    </CBehaviorBuff>
+</Catalog>

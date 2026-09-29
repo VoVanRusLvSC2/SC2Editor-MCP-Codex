@@ -1,1 +1,1 @@
-{"name":"simple_EScoreValueReport","kind":"simple","fields":[],"enumValues":["Average","Final","Samples"],"facets":[],"base":"xs:string"}
+{"name":"simple_EScoreValueReport","schemaSpan":{"start":1667363,"end":1667999},"namespace":"","kind":"simple","fields":[],"enumValues":["Average","Final","Samples"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

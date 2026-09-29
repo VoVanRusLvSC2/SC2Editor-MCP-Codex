@@ -1,1 +1,1 @@
-{"name":"CIdSetPlayers","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CIdSetPlayers"}],"enumValues":[],"facets":[]}
+{"name":"CIdSetPlayers","schemaSpan":{"start":39373,"end":39488},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":39413,"end":39469},"namespace":"","name":"value","type":"simple_CIdSetPlayers","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

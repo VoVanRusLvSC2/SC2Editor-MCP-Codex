@@ -1,1 +1,1 @@
-{"name":"CRange","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CRange"}],"enumValues":[],"facets":[]}
+{"name":"CRange","schemaSpan":{"start":32914,"end":33015},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":32947,"end":32996},"namespace":"","name":"value","type":"simple_CRange","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

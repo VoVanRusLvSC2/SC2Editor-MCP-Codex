@@ -1,1 +1,1 @@
-{"name":"simple_EMercenaryPortraitTintColor","kind":"simple","fields":[],"enumValues":["Available","InsufficientCredits","Purchased"],"facets":[],"base":"xs:string"}
+{"name":"simple_EMercenaryPortraitTintColor","schemaSpan":{"start":1523111,"end":1523794},"namespace":"","kind":"simple","fields":[],"enumValues":["Available","InsufficientCredits","Purchased"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

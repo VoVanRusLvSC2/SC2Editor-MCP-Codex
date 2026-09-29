@@ -1,1 +1,1 @@
-{"name":"simple_EPreloadModelFlag","kind":"simple","fields":[],"enumValues":["Require3DPortrait"],"facets":[],"base":"xs:string"}
+{"name":"simple_EPreloadModelFlag","schemaSpan":{"start":1584835,"end":1585151},"namespace":"","kind":"simple","fields":[],"enumValues":["Require3DPortrait"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

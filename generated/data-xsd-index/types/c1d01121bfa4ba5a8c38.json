@@ -1,1 +1,1 @@
-{"name":"EActorModelAspectObservingPoV","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EActorModelAspectObservingPoV"}],"enumValues":[],"facets":[]}
+{"name":"EActorModelAspectObservingPoV","schemaSpan":{"start":762692,"end":762839},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":762748,"end":762820},"namespace":"","name":"value","type":"simple_EActorModelAspectObservingPoV","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

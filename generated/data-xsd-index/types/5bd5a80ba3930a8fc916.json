@@ -1,1 +1,1 @@
-{"name":"EAchievementTermEvaluate","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EAchievementTermEvaluate"}],"enumValues":[],"facets":[]}
+{"name":"EAchievementTermEvaluate","schemaSpan":{"start":702919,"end":703056},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":702970,"end":703037},"namespace":"","name":"value","type":"simple_EAchievementTermEvaluate","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

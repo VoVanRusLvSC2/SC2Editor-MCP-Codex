@@ -1,1 +1,1 @@
-{"name":"EAllianceId","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EAllianceId"}],"enumValues":[],"facets":[]}
+{"name":"EAllianceId","schemaSpan":{"start":232882,"end":232993},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":232920,"end":232974},"namespace":"","name":"value","type":"simple_EAllianceId","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

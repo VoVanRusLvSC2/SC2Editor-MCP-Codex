@@ -1,1 +1,1 @@
-{"name":"simple_EActorModelAspectTest","kind":"simple","fields":[],"enumValues":["Message","None"],"facets":[],"base":"xs:string"}
+{"name":"simple_EActorModelAspectTest","schemaSpan":{"start":768098,"end":768959},"namespace":"","kind":"simple","fields":[],"enumValues":["Message","None"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

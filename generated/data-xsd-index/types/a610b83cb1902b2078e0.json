@@ -1,1 +1,1 @@
-{"name":"CTacticalLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CTacticalLink"}],"enumValues":[],"facets":[]}
+{"name":"CTacticalLink","schemaSpan":{"start":61868,"end":61983},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":61908,"end":61964},"namespace":"","name":"value","type":"simple_CTacticalLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

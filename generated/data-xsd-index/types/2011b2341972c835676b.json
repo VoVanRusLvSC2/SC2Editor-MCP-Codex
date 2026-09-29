@@ -1,1 +1,1 @@
-{"name":"simple_EPathLocation","kind":"simple","fields":[],"enumValues":["Minimap","World"],"facets":[],"base":"xs:string"}
+{"name":"simple_EPathLocation","schemaSpan":{"start":386371,"end":386830},"namespace":"","kind":"simple","fields":[],"enumValues":["Minimap","World"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

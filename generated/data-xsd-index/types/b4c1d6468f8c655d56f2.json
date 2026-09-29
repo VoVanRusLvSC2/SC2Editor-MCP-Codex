@@ -1,1 +1,1 @@
-{"name":"EEffectApplyBehaviorFlag","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EEffectApplyBehaviorFlag"}],"enumValues":[],"facets":[]}
+{"name":"EEffectApplyBehaviorFlag","schemaSpan":{"start":1327706,"end":1327843},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1327757,"end":1327824},"namespace":"","name":"value","type":"simple_EEffectApplyBehaviorFlag","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

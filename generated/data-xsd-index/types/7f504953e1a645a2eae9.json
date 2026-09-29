@@ -1,1 +1,1 @@
-{"name":"simple_EClassIdCCharacter","kind":"simple","fields":[],"enumValues":["CCharacter"],"facets":[],"base":"xs:string"}
+{"name":"simple_EClassIdCCharacter","schemaSpan":{"start":208487,"end":208787},"namespace":"","kind":"simple","fields":[],"enumValues":["CCharacter"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

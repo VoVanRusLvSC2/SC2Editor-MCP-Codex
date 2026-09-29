@@ -1,1 +1,1 @@
-{"name":"EMapKind","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EMapKind"}],"enumValues":[],"facets":[]}
+{"name":"EMapKind","schemaSpan":{"start":426794,"end":426899},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":426829,"end":426880},"namespace":"","name":"value","type":"simple_EMapKind","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

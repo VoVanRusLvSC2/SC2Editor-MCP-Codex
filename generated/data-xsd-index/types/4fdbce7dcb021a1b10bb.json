@@ -1,1 +1,1 @@
-{"name":"TCargoCapacity","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_TCargoCapacity"}],"enumValues":[],"facets":[]}
+{"name":"TCargoCapacity","schemaSpan":{"start":4936,"end":5053},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":4977,"end":5034},"namespace":"","name":"value","type":"simple_TCargoCapacity","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

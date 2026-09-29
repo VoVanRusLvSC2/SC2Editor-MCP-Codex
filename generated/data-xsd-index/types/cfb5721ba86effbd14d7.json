@@ -1,1 +1,1 @@
-{"name":"CRequirementLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CRequirementLink"}],"enumValues":[],"facets":[]}
+{"name":"CRequirementLink","schemaSpan":{"start":42920,"end":43041},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":42963,"end":43022},"namespace":"","name":"value","type":"simple_CRequirementLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

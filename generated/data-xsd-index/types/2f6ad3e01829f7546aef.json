@@ -1,1 +1,1 @@
-{"name":"ECameraShakeRotation","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_ECameraShakeRotation"}],"enumValues":[],"facets":[]}
+{"name":"ECameraShakeRotation","schemaSpan":{"start":1223551,"end":1223680},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1223598,"end":1223661},"namespace":"","name":"value","type":"simple_ECameraShakeRotation","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

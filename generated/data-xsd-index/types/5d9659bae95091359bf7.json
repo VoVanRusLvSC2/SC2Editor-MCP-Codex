@@ -1,1 +1,1 @@
-{"name":"simple_EShieldImpact","kind":"simple","fields":[],"enumValues":["Damage","Fizzle"],"facets":[],"base":"xs:string"}
+{"name":"simple_EShieldImpact","schemaSpan":{"start":1672524,"end":1672983},"namespace":"","kind":"simple","fields":[],"enumValues":["Damage","Fizzle"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

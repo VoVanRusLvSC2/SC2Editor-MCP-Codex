@@ -1,1 +1,1 @@
-{"name":"EBehaviorHeight","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EBehaviorHeight"}],"enumValues":[],"facets":[]}
+{"name":"EBehaviorHeight","schemaSpan":{"start":1177210,"end":1177329},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1177252,"end":1177310},"namespace":"","name":"value","type":"simple_EBehaviorHeight","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

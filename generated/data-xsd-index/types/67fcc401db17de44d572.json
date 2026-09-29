@@ -1,1 +1,1 @@
-{"name":"ECharacterRelevance","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_ECharacterRelevance"}],"enumValues":[],"facets":[]}
+{"name":"ECharacterRelevance","schemaSpan":{"start":1229740,"end":1229867},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1229786,"end":1229848},"namespace":"","name":"value","type":"simple_ECharacterRelevance","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

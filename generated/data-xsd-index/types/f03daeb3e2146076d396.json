@@ -1,1 +1,1 @@
-{"name":"EKillDisplay","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EKillDisplay"}],"enumValues":[],"facets":[]}
+{"name":"EKillDisplay","schemaSpan":{"start":1512296,"end":1512409},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1512335,"end":1512390},"namespace":"","name":"value","type":"simple_EKillDisplay","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

@@ -1,1 +1,1 @@
-{"name":"EActorTextAlignment","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EActorTextAlignment"}],"enumValues":[],"facets":[]}
+{"name":"EActorTextAlignment","schemaSpan":{"start":1027119,"end":1027246},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1027165,"end":1027227},"namespace":"","name":"value","type":"simple_EActorTextAlignment","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

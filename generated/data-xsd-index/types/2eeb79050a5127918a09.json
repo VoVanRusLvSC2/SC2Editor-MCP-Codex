@@ -1,1 +1,1 @@
-{"name":"EActorPropertyCurveFlag","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EActorPropertyCurveFlag"}],"enumValues":[],"facets":[]}
+{"name":"EActorPropertyCurveFlag","schemaSpan":{"start":938026,"end":938161},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":938076,"end":938142},"namespace":"","name":"value","type":"simple_EActorPropertyCurveFlag","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

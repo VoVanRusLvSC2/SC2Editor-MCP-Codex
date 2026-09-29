@@ -1,1 +1,1 @@
-{"name":"simple_CTexturePath","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string"}
+{"name":"simple_CTexturePath","schemaSpan":{"start":17448,"end":17545},"namespace":"","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

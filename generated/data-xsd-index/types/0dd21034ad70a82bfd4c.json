@@ -1,1 +1,1 @@
-{"name":"EActorEffectLocation","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EActorEffectLocation"}],"enumValues":[],"facets":[]}
+{"name":"EActorEffectLocation","schemaSpan":{"start":724961,"end":725090},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":725008,"end":725071},"namespace":"","name":"value","type":"simple_EActorEffectLocation","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

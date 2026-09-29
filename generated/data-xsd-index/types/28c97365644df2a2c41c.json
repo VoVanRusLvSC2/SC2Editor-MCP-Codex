@@ -1,1 +1,1 @@
-{"name":"EActorTransferFlag","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EActorTransferFlag"}],"enumValues":[],"facets":[]}
+{"name":"EActorTransferFlag","schemaSpan":{"start":1031294,"end":1031419},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1031339,"end":1031400},"namespace":"","name":"value","type":"simple_EActorTransferFlag","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

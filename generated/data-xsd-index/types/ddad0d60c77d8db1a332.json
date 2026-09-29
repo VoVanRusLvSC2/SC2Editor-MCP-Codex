@@ -1,1 +1,1 @@
-{"name":"ECooldownOperation","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_ECooldownOperation"}],"enumValues":[],"facets":[]}
+{"name":"ECooldownOperation","schemaSpan":{"start":275401,"end":275526},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":275446,"end":275507},"namespace":"","name":"value","type":"simple_ECooldownOperation","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

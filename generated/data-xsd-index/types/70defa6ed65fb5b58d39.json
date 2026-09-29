@@ -1,1 +1,1 @@
-{"name":"simple_EActorHostDirection","kind":"simple","fields":[],"enumValues":["ToChildren","ToHost"],"facets":[],"base":"xs:string"}
+{"name":"simple_EActorHostDirection","schemaSpan":{"start":744538,"end":745147},"namespace":"","kind":"simple","fields":[],"enumValues":["ToChildren","ToHost"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

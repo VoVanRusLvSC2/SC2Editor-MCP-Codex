@@ -1,1 +1,1 @@
-{"name":"EWeaponLegacyOption","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EWeaponLegacyOption"}],"enumValues":[],"facets":[]}
+{"name":"EWeaponLegacyOption","schemaSpan":{"start":1798028,"end":1798155},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1798074,"end":1798136},"namespace":"","name":"value","type":"simple_EWeaponLegacyOption","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

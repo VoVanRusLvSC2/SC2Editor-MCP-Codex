@@ -1,1 +1,1 @@
-{"name":"CArtifactSlotLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CArtifactSlotLink"}],"enumValues":[],"facets":[]}
+{"name":"CArtifactSlotLink","schemaSpan":{"start":52507,"end":52630},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":52551,"end":52611},"namespace":"","name":"value","type":"simple_CArtifactSlotLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

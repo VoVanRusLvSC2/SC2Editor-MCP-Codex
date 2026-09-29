@@ -1,1 +1,1 @@
-{"name":"CObjectStringLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CObjectStringLink"}],"enumValues":[],"facets":[]}
+{"name":"CObjectStringLink","schemaSpan":{"start":906,"end":1029},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":950,"end":1010},"namespace":"","name":"value","type":"simple_CObjectStringLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

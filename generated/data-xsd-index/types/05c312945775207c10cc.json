@@ -1,1 +1,1 @@
-{"name":"int32","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_int32"}],"enumValues":[],"facets":[]}
+{"name":"int32","schemaSpan":{"start":3305,"end":3404},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":3337,"end":3385},"namespace":"","name":"value","type":"simple_int32","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

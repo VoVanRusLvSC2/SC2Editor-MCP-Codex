@@ -1,1 +1,1 @@
-{"name":"CBundleLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CBundleLink"}],"enumValues":[],"facets":[]}
+{"name":"CBundleLink","schemaSpan":{"start":55964,"end":56075},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":56002,"end":56056},"namespace":"","name":"value","type":"simple_CBundleLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

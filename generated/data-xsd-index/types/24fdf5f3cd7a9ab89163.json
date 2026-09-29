@@ -1,1 +1,1 @@
-{"name":"EMountFlag","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EMountFlag"}],"enumValues":[],"facets":[]}
+{"name":"EMountFlag","schemaSpan":{"start":484587,"end":484696},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":484624,"end":484677},"namespace":"","name":"value","type":"simple_EMountFlag","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

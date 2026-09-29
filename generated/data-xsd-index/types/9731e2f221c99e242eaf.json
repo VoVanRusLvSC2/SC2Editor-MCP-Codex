@@ -1,1 +1,1 @@
-{"name":"CPortraitPackLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CPortraitPackLink"}],"enumValues":[],"facets":[]}
+{"name":"CPortraitPackLink","schemaSpan":{"start":59442,"end":59565},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":59486,"end":59546},"namespace":"","name":"value","type":"simple_CPortraitPackLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

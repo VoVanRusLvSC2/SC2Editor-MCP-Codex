@@ -1,1 +1,1 @@
-{"name":"ESoundtrackCategory","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_ESoundtrackCategory"}],"enumValues":[],"facets":[]}
+{"name":"ESoundtrackCategory","schemaSpan":{"start":522865,"end":522992},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":522911,"end":522973},"namespace":"","name":"value","type":"simple_ESoundtrackCategory","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

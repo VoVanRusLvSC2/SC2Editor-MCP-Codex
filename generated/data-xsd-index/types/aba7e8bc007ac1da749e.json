@@ -1,1 +1,1 @@
-{"name":"ECustomBuildOpening","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_ECustomBuildOpening"}],"enumValues":[],"facets":[]}
+{"name":"ECustomBuildOpening","schemaSpan":{"start":294508,"end":294635},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":294554,"end":294616},"namespace":"","name":"value","type":"simple_ECustomBuildOpening","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

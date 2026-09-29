@@ -1,1 +1,1 @@
-{"name":"EAchievementTermPrevious","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EAchievementTermPrevious"}],"enumValues":[],"facets":[]}
+{"name":"EAchievementTermPrevious","schemaSpan":{"start":704649,"end":704786},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":704700,"end":704767},"namespace":"","name":"value","type":"simple_EAchievementTermPrevious","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

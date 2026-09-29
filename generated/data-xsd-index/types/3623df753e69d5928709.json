@@ -1,1 +1,1 @@
-{"name":"CAnimProps","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CAnimProps"}],"enumValues":[],"facets":[]}
+{"name":"CAnimProps","schemaSpan":{"start":28218,"end":28327},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":28255,"end":28308},"namespace":"","name":"value","type":"simple_CAnimProps","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

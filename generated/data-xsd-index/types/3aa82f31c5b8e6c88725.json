@@ -1,1 +1,1 @@
-{"name":"EEffectLocationType","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EEffectLocationType"}],"enumValues":[],"facets":[]}
+{"name":"EEffectLocationType","schemaSpan":{"start":1333610,"end":1333737},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1333656,"end":1333718},"namespace":"","name":"value","type":"simple_EEffectLocationType","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

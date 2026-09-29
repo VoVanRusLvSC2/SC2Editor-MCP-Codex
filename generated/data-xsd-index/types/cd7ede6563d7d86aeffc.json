@@ -1,1 +1,1 @@
-{"name":"simple_EMapKind","kind":"simple","fields":[],"enumValues":["Mission","Story","Upgrade"],"facets":[],"base":"xs:string"}
+{"name":"simple_EMapKind","schemaSpan":{"start":426901,"end":427528},"namespace":"","kind":"simple","fields":[],"enumValues":["Mission","Story","Upgrade"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

@@ -1,1 +1,1 @@
-{"name":"simple_EOverrideColor","kind":"simple","fields":[],"enumValues":["Ally","Hostile","Neutral","Self","SelfMinimap"],"facets":[],"base":"xs:string"}
+{"name":"simple_EOverrideColor","schemaSpan":{"start":1554532,"end":1555512},"namespace":"","kind":"simple","fields":[],"enumValues":["Ally","Hostile","Neutral","Self","SelfMinimap"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

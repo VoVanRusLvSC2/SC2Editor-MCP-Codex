@@ -1,1 +1,1 @@
-{"name":"EPingFlag","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EPingFlag"}],"enumValues":[],"facets":[]}
+{"name":"EPingFlag","schemaSpan":{"start":490049,"end":490156},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":490085,"end":490137},"namespace":"","name":"value","type":"simple_EPingFlag","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

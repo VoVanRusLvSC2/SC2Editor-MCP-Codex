@@ -1,1 +1,1 @@
-{"name":"EAbilTechPlayer","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EAbilTechPlayer"}],"enumValues":[],"facets":[]}
+{"name":"EAbilTechPlayer","schemaSpan":{"start":683774,"end":683893},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":683816,"end":683874},"namespace":"","name":"value","type":"simple_EAbilTechPlayer","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

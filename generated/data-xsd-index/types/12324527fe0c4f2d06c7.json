@@ -1,1 +1,1 @@
-{"name":"EAMArcTestType","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EAMArcTestType"}],"enumValues":[],"facets":[]}
+{"name":"EAMArcTestType","schemaSpan":{"start":615703,"end":615820},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":615744,"end":615801},"namespace":"","name":"value","type":"simple_EAMArcTestType","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

@@ -1,1 +1,1 @@
-{"name":"CHeroAbilLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CHeroAbilLink"}],"enumValues":[],"facets":[]}
+{"name":"CHeroAbilLink","schemaSpan":{"start":53152,"end":53267},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":53192,"end":53248},"namespace":"","name":"value","type":"simple_CHeroAbilLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

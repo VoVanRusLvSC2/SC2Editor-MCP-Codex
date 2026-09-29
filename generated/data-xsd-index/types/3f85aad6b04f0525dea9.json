@@ -1,1 +1,1 @@
-{"name":"CTerrainLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CTerrainLink"}],"enumValues":[],"facets":[]}
+{"name":"CTerrainLink","schemaSpan":{"start":51208,"end":51321},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":51247,"end":51302},"namespace":"","name":"value","type":"simple_CTerrainLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

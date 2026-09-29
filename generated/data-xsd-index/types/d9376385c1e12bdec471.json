@@ -1,1 +1,1 @@
-{"name":"EClassIdCHeroStat","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EClassIdCHeroStat"}],"enumValues":[],"facets":[]}
+{"name":"EClassIdCHeroStat","schemaSpan":{"start":416542,"end":416665},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":416586,"end":416646},"namespace":"","name":"value","type":"simple_EClassIdCHeroStat","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

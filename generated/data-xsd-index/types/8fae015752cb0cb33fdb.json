@@ -1,1 +1,1 @@
-{"name":"ESelectionTransferFlag","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_ESelectionTransferFlag"}],"enumValues":[],"facets":[]}
+{"name":"ESelectionTransferFlag","schemaSpan":{"start":1669679,"end":1669812},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1669728,"end":1669793},"namespace":"","name":"value","type":"simple_ESelectionTransferFlag","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

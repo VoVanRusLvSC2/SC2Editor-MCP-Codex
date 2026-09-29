@@ -1,1 +1,1 @@
-{"name":"CColorStyleLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CColorStyleLink"}],"enumValues":[],"facets":[]}
+{"name":"CColorStyleLink","schemaSpan":{"start":56380,"end":56499},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":56422,"end":56480},"namespace":"","name":"value","type":"simple_CColorStyleLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

@@ -1,1 +1,1 @@
-{"name":"EGameTimeEvent","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EGameTimeEvent"}],"enumValues":[],"facets":[]}
+{"name":"EGameTimeEvent","schemaSpan":{"start":422273,"end":422390},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":422314,"end":422371},"namespace":"","name":"value","type":"simple_EGameTimeEvent","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

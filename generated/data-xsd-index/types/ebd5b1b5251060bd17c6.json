@@ -1,1 +1,1 @@
-{"name":"CTrophyLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CTrophyLink"}],"enumValues":[],"facets":[]}
+{"name":"CTrophyLink","schemaSpan":{"start":62760,"end":62871},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":62798,"end":62852},"namespace":"","name":"value","type":"simple_CTrophyLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

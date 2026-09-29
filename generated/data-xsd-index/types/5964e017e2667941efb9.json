@@ -1,1 +1,1 @@
-{"name":"simple_EAbilMorphSection","kind":"simple","fields":[],"enumValues":["Abils","Actor","Collide","Facing","Mover","Stats"],"facets":[],"base":"xs:string"}
+{"name":"simple_EAbilMorphSection","schemaSpan":{"start":671054,"end":672201},"namespace":"","kind":"simple","fields":[],"enumValues":["Abils","Actor","Collide","Facing","Mover","Stats"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

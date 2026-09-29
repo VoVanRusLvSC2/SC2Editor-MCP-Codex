@@ -1,1 +1,1 @@
-{"name":"EUserFieldFlag","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EUserFieldFlag"}],"enumValues":[],"facets":[]}
+{"name":"EUserFieldFlag","schemaSpan":{"start":1787290,"end":1787407},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1787331,"end":1787388},"namespace":"","name":"value","type":"simple_EUserFieldFlag","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

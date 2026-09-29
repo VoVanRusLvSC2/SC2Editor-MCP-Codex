@@ -1,1 +1,1 @@
-{"name":"ENydusLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_ENydusLink"}],"enumValues":[],"facets":[]}
+{"name":"ENydusLink","schemaSpan":{"start":386832,"end":386941},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":386869,"end":386922},"namespace":"","name":"value","type":"simple_ENydusLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

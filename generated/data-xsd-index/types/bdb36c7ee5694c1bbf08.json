@@ -1,1 +1,1 @@
-{"name":"EAbilAttackCmd","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EAbilAttackCmd"}],"enumValues":[],"facets":[]}
+{"name":"EAbilAttackCmd","schemaSpan":{"start":84601,"end":84718},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":84642,"end":84699},"namespace":"","name":"value","type":"simple_EAbilAttackCmd","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

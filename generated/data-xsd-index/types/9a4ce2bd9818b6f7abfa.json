@@ -1,1 +1,1 @@
-{"name":"CKineticLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CKineticLink"}],"enumValues":[],"facets":[]}
+{"name":"CKineticLink","schemaSpan":{"start":59228,"end":59341},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":59267,"end":59322},"namespace":"","name":"value","type":"simple_CKineticLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

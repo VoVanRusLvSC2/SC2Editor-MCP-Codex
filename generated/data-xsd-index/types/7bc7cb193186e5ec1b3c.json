@@ -1,1 +1,1 @@
-{"name":"simple_EAbilAttackModifierCmd","kind":"simple","fields":[],"enumValues":["Execute"],"facets":[],"base":"xs:string"}
+{"name":"simple_EAbilAttackModifierCmd","schemaSpan":{"start":86084,"end":86383},"namespace":"","kind":"simple","fields":[],"enumValues":["Execute"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

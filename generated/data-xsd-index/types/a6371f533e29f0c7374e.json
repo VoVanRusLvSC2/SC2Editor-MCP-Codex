@@ -1,1 +1,1 @@
-{"name":"simple_EAlertFlag","kind":"simple","fields":[],"enumValues":["Combine","Hide","Ping","SoundFromLocalPlayer"],"facets":[],"base":"xs:string"}
+{"name":"simple_EAlertFlag","schemaSpan":{"start":1043984,"end":1044807},"namespace":"","kind":"simple","fields":[],"enumValues":["Combine","Hide","Ping","SoundFromLocalPlayer"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

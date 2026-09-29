@@ -1,1 +1,1 @@
-{"name":"EEventID","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EEventID"}],"enumValues":[],"facets":[]}
+{"name":"EEventID","schemaSpan":{"start":1354456,"end":1354561},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1354491,"end":1354542},"namespace":"","name":"value","type":"simple_EEventID","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

@@ -1,1 +1,1 @@
-{"name":"simple_EPingFlag","kind":"simple","fields":[],"enumValues":["UseUnitTeamColor","UseUnitVisibility"],"facets":[],"base":"xs:string"}
+{"name":"simple_EPingFlag","schemaSpan":{"start":490158,"end":490660},"namespace":"","kind":"simple","fields":[],"enumValues":["UseUnitTeamColor","UseUnitVisibility"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

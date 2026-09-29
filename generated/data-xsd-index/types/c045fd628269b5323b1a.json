@@ -1,1 +1,1 @@
-{"name":"simple_CVoicePackLink","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string"}
+{"name":"simple_CVoicePackLink","schemaSpan":{"start":63295,"end":63394},"namespace":"","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

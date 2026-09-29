@@ -1,1 +1,1 @@
-{"name":"simple_EScoreCollapse","kind":"simple","fields":[],"enumValues":["Average","Latest","Maximize"],"facets":[],"base":"xs:string"}
+{"name":"simple_EScoreCollapse","schemaSpan":{"start":1602497,"end":1603143},"namespace":"","kind":"simple","fields":[],"enumValues":["Average","Latest","Maximize"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

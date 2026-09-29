@@ -1,1 +1,1 @@
-{"name":"EActorSiteOpActionLocation","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EActorSiteOpActionLocation"}],"enumValues":[],"facets":[]}
+{"name":"EActorSiteOpActionLocation","schemaSpan":{"start":976597,"end":976738},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":976650,"end":976719},"namespace":"","name":"value","type":"simple_EActorSiteOpActionLocation","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

@@ -1,1 +1,1 @@
-{"name":"EOverrideColor","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EOverrideColor"}],"enumValues":[],"facets":[]}
+{"name":"EOverrideColor","schemaSpan":{"start":1554413,"end":1554530},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1554454,"end":1554511},"namespace":"","name":"value","type":"simple_EOverrideColor","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

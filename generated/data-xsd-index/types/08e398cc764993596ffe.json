@@ -1,1 +1,1 @@
-{"name":"EValueCompare","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EValueCompare"}],"enumValues":[],"facets":[]}
+{"name":"EValueCompare","schemaSpan":{"start":288811,"end":288926},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":288851,"end":288907},"namespace":"","name":"value","type":"simple_EValueCompare","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

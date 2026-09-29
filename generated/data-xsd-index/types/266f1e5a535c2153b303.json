@@ -1,1 +1,1 @@
-{"name":"CModelLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CModelLink"}],"enumValues":[],"facets":[]}
+{"name":"CModelLink","schemaSpan":{"start":48586,"end":48695},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":48623,"end":48676},"namespace":"","name":"value","type":"simple_CModelLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

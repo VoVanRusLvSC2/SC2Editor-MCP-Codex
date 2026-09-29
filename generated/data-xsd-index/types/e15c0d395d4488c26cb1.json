@@ -1,1 +1,1 @@
-{"name":"simple_EAbilMorphEffect","kind":"simple","fields":[],"enumValues":["Cancel","Finish","Start"],"facets":[],"base":"xs:string"}
+{"name":"simple_EAbilMorphEffect","schemaSpan":{"start":663858,"end":664489},"namespace":"","kind":"simple","fields":[],"enumValues":["Cancel","Finish","Start"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

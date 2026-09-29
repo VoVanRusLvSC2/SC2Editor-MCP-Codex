@@ -1,1 +1,1 @@
-{"name":"EClassIdCLensFlareSet","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EClassIdCLensFlareSet"}],"enumValues":[],"facets":[]}
+{"name":"EClassIdCLensFlareSet","schemaSpan":{"start":421416,"end":421547},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":421464,"end":421528},"namespace":"","name":"value","type":"simple_EClassIdCLensFlareSet","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

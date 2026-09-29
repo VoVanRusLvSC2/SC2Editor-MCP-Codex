@@ -1,1 +1,1 @@
-{"name":"simple_ECustomBuildLateGame","kind":"simple","fields":[],"enumValues":["Five","Four","Invalid","One","Three","Two"],"facets":[],"base":"xs:string"}
+{"name":"simple_ECustomBuildLateGame","schemaSpan":{"start":295899,"end":297029},"namespace":"","kind":"simple","fields":[],"enumValues":["Five","Four","Invalid","One","Three","Two"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

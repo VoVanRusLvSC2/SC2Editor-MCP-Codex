@@ -1,1 +1,1 @@
-{"name":"simple_EMotionRotationActorType","kind":"simple","fields":[],"enumValues":["Docking","LookAtTarget","LookAtTarget2D","None","Upright","ZeroRoll"],"facets":[],"base":"xs:string"}
+{"name":"simple_EMotionRotationActorType","schemaSpan":{"start":1543520,"end":1544712},"namespace":"","kind":"simple","fields":[],"enumValues":["Docking","LookAtTarget","LookAtTarget2D","None","Upright","ZeroRoll"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

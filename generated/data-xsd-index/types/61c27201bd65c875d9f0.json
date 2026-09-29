@@ -1,1 +1,1 @@
-{"name":"EResponseUnitBirthType","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EResponseUnitBirthType"}],"enumValues":[],"facets":[]}
+{"name":"EResponseUnitBirthType","schemaSpan":{"start":1599516,"end":1599649},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1599565,"end":1599630},"namespace":"","name":"value","type":"simple_EResponseUnitBirthType","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

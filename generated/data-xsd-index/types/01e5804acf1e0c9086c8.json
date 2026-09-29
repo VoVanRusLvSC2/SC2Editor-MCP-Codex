@@ -1,1 +1,1 @@
-{"name":"simple_EAbilBehaviorCycleMode","kind":"simple","fields":[],"enumValues":["Normal","Random","RandomNoRepeat"],"facets":[],"base":"xs:string"}
+{"name":"simple_EAbilBehaviorCycleMode","schemaSpan":{"start":636485,"end":637142},"namespace":"","kind":"simple","fields":[],"enumValues":["Normal","Random","RandomNoRepeat"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

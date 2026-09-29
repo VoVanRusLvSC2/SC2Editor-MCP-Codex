@@ -1,1 +1,1 @@
-{"name":"EUnitResponse","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EUnitResponse"}],"enumValues":[],"facets":[]}
+{"name":"EUnitResponse","schemaSpan":{"start":1756402,"end":1756517},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1756442,"end":1756498},"namespace":"","name":"value","type":"simple_EUnitResponse","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

@@ -1,1 +1,1 @@
-{"name":"simple_EMuteControl","kind":"simple","fields":[],"enumValues":["Music","Sound","SoundAmbience","SoundEffects","SoundMovement","SoundReady","SoundUI","SoundVoices","Unknown"],"facets":[],"base":"xs:string"}
+{"name":"simple_EMuteControl","schemaSpan":{"start":1549378,"end":1551101},"namespace":"","kind":"simple","fields":[],"enumValues":["Music","Sound","SoundAmbience","SoundEffects","SoundMovement","SoundReady","SoundUI","SoundVoices","Unknown"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

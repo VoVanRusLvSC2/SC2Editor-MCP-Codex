@@ -1,1 +1,1 @@
-{"name":"CVolume","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CVolume"}],"enumValues":[],"facets":[]}
+{"name":"CVolume","schemaSpan":{"start":36633,"end":36736},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":36667,"end":36717},"namespace":"","name":"value","type":"simple_CVolume","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

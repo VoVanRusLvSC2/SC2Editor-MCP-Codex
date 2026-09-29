@@ -1,1 +1,1 @@
-{"name":"EActorResponseScope","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EActorResponseScope"}],"enumValues":[],"facets":[]}
+{"name":"EActorResponseScope","schemaSpan":{"start":963763,"end":963890},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":963809,"end":963871},"namespace":"","name":"value","type":"simple_EActorResponseScope","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

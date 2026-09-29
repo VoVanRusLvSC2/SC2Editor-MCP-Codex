@@ -1,1 +1,1 @@
-{"name":"simple_EConjoinedFlag","kind":"simple","fields":[],"enumValues":["ShareAcquire","ShareEnergy","ShareLife","ShareSelect","ShareShields","ShareVisible"],"facets":[],"base":"xs:string"}
+{"name":"simple_EConjoinedFlag","schemaSpan":{"start":1285488,"end":1286703},"namespace":"","kind":"simple","fields":[],"enumValues":["ShareAcquire","ShareEnergy","ShareLife","ShareSelect","ShareShields","ShareVisible"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

@@ -1,1 +1,1 @@
-{"name":"simple_EBehaviorVeterancyFlag","kind":"simple","fields":[],"enumValues":["CombineNumericModifications","CombineXP","Global","MaxLevelLeech"],"facets":[],"base":"xs:string"}
+{"name":"simple_EBehaviorVeterancyFlag","schemaSpan":{"start":1206851,"end":1207736},"namespace":"","kind":"simple","fields":[],"enumValues":["CombineNumericModifications","CombineXP","Global","MaxLevelLeech"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

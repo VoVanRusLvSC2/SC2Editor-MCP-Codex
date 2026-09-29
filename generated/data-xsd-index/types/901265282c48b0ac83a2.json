@@ -1,1 +1,1 @@
-{"name":"simple_EAMArcTestType","kind":"simple","fields":[],"enumValues":["Absolute","FallbackToClosestOnArc","Preference"],"facets":[],"base":"xs:string"}
+{"name":"simple_EAMArcTestType","schemaSpan":{"start":615822,"end":616495},"namespace":"","kind":"simple","fields":[],"enumValues":["Absolute","FallbackToClosestOnArc","Preference"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

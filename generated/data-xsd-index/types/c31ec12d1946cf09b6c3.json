@@ -1,1 +1,1 @@
-{"name":"EActorModelSwapFlag","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EActorModelSwapFlag"}],"enumValues":[],"facets":[]}
+{"name":"EActorModelSwapFlag","schemaSpan":{"start":781296,"end":781423},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":781342,"end":781404},"namespace":"","name":"value","type":"simple_EActorModelSwapFlag","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

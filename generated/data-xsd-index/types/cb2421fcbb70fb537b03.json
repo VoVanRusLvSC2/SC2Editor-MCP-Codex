@@ -1,1 +1,1 @@
-{"name":"simple_EActorForceOrigin","kind":"simple","fields":[],"enumValues":["AtBottom","AtCenter"],"facets":[],"base":"xs:string"}
+{"name":"simple_EActorForceOrigin","schemaSpan":{"start":738825,"end":739451},"namespace":"","kind":"simple","fields":[],"enumValues":["AtBottom","AtCenter"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

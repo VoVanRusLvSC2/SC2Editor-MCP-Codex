@@ -1,1 +1,1 @@
-{"name":"THyperlinkId","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_THyperlinkId"}],"enumValues":[],"facets":[]}
+{"name":"THyperlinkId","schemaSpan":{"start":20587,"end":20700},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":20626,"end":20681},"namespace":"","name":"value","type":"simple_THyperlinkId","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

@@ -1,1 +1,1 @@
-{"name":"CTileLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CTileLink"}],"enumValues":[],"facets":[]}
+{"name":"CTileLink","schemaSpan":{"start":51877,"end":51984},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":51913,"end":51965},"namespace":"","name":"value","type":"simple_CTileLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

@@ -1,1 +1,1 @@
-{"name":"EItemFlag","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EItemFlag"}],"enumValues":[],"facets":[]}
+{"name":"EItemFlag","schemaSpan":{"start":1510723,"end":1510830},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1510759,"end":1510811},"namespace":"","name":"value","type":"simple_EItemFlag","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

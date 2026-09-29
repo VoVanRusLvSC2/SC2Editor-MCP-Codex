@@ -1,1 +1,1 @@
-{"name":"EArmorType","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EArmorType"}],"enumValues":[],"facets":[]}
+{"name":"EArmorType","schemaSpan":{"start":268472,"end":268581},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":268509,"end":268562},"namespace":"","name":"value","type":"simple_EArmorType","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

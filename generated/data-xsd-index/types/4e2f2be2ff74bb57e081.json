@@ -1,1 +1,1 @@
-{"name":"EAbilPawnCmd","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EAbilPawnCmd"}],"enumValues":[],"facets":[]}
+{"name":"EAbilPawnCmd","schemaSpan":{"start":105365,"end":105478},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":105404,"end":105459},"namespace":"","name":"value","type":"simple_EAbilPawnCmd","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

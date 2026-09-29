@@ -1,1 +1,1 @@
-{"name":"EAbilSpecializeInfoFlag","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EAbilSpecializeInfoFlag"}],"enumValues":[],"facets":[]}
+{"name":"EAbilSpecializeInfoFlag","schemaSpan":{"start":682739,"end":682874},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":682789,"end":682855},"namespace":"","name":"value","type":"simple_EAbilSpecializeInfoFlag","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

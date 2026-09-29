@@ -1,1 +1,1 @@
-{"name":"EActorIncomingType","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EActorIncomingType"}],"enumValues":[],"facets":[]}
+{"name":"EActorIncomingType","schemaSpan":{"start":755020,"end":755145},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":755065,"end":755126},"namespace":"","name":"value","type":"simple_EActorIncomingType","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

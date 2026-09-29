@@ -1,1 +1,1 @@
-{"name":"EVariationContext","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EVariationContext"}],"enumValues":[],"facets":[]}
+{"name":"EVariationContext","schemaSpan":{"start":1790674,"end":1790797},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1790718,"end":1790778},"namespace":"","name":"value","type":"simple_EVariationContext","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

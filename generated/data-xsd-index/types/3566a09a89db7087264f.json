@@ -1,1 +1,1 @@
-{"name":"EUnitTaunt","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EUnitTaunt"}],"enumValues":[],"facets":[]}
+{"name":"EUnitTaunt","schemaSpan":{"start":297031,"end":297140},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":297068,"end":297121},"namespace":"","name":"value","type":"simple_EUnitTaunt","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

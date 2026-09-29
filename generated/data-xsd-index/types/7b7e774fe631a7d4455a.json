@@ -1,1 +1,1 @@
-{"name":"simple_EUnitVital","kind":"simple","fields":[],"enumValues":["Energy","Life","Shields","Unknown"],"facets":[],"base":"xs:string"}
+{"name":"simple_EUnitVital","schemaSpan":{"start":255902,"end":256697},"namespace":"","kind":"simple","fields":[],"enumValues":["Energy","Life","Shields","Unknown"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

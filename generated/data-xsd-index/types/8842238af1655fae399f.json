@@ -1,1 +1,1 @@
-{"name":"simple_CFacialPath","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string"}
+{"name":"simple_CFacialPath","schemaSpan":{"start":13066,"end":13162},"namespace":"","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

@@ -1,1 +1,1 @@
-{"name":"simple_EBeaconFlag","kind":"simple","fields":[],"enumValues":["AutoCastOff","AutoCastOn","ClearAll","ClearExtra","CustomBuild","Dropoff","None","ViewNext","ViewPrev"],"facets":[],"base":"xs:string"}
+{"name":"simple_EBeaconFlag","schemaSpan":{"start":1169791,"end":1171504},"namespace":"","kind":"simple","fields":[],"enumValues":["AutoCastOff","AutoCastOn","ClearAll","ClearExtra","CustomBuild","Dropoff","None","ViewNext","ViewPrev"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

@@ -1,1 +1,1 @@
-{"name":"simple_EActorPhysicsImpactSpyType","kind":"simple","fields":[],"enumValues":["Automatic","ModelsOnly","Off","TerrainOnly"],"facets":[],"base":"xs:string"}
+{"name":"simple_EActorPhysicsImpactSpyType","schemaSpan":{"start":935398,"end":936947},"namespace":"","kind":"simple","fields":[],"enumValues":["Automatic","ModelsOnly","Off","TerrainOnly"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

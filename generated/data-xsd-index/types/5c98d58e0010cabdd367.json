@@ -1,1 +1,1 @@
-{"name":"simple_EAbilMergeCmd","kind":"simple","fields":[],"enumValues":["SelectedUnits","WithTarget"],"facets":[],"base":"xs:string"}
+{"name":"simple_EAbilMergeCmd","schemaSpan":{"start":102617,"end":103095},"namespace":"","kind":"simple","fields":[],"enumValues":["SelectedUnits","WithTarget"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

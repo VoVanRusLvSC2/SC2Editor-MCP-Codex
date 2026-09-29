@@ -1,1 +1,1 @@
-{"name":"ECreatePersistent","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_ECreatePersistent"}],"enumValues":[],"facets":[]}
+{"name":"ECreatePersistent","schemaSpan":{"start":1298898,"end":1299021},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1298942,"end":1299002},"namespace":"","name":"value","type":"simple_ECreatePersistent","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

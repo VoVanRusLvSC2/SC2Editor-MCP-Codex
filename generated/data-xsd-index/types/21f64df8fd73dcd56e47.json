@@ -1,1 +1,1 @@
-{"name":"EMotionAdaptableParabolaHotspot","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EMotionAdaptableParabolaHotspot"}],"enumValues":[],"facets":[]}
+{"name":"EMotionAdaptableParabolaHotspot","schemaSpan":{"start":1535304,"end":1535455},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1535362,"end":1535436},"namespace":"","name":"value","type":"simple_EMotionAdaptableParabolaHotspot","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

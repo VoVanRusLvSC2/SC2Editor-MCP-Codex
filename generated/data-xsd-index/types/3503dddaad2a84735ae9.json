@@ -1,1 +1,1 @@
-{"name":"simple_TAttachPropIndex","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:int"}
+{"name":"simple_TAttachPropIndex","schemaSpan":{"start":1529,"end":1627},"namespace":"","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:int","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

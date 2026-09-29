@@ -1,1 +1,1 @@
-{"name":"EUpgradeOperation","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EUpgradeOperation"}],"enumValues":[],"facets":[]}
+{"name":"EUpgradeOperation","schemaSpan":{"start":583852,"end":583975},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":583896,"end":583956},"namespace":"","name":"value","type":"simple_EUpgradeOperation","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

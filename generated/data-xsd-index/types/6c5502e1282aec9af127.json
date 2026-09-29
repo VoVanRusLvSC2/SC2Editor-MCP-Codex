@@ -1,1 +1,1 @@
-{"name":"simple_EActorSiteOpRotatorType","kind":"simple","fields":[],"enumValues":["AccumulateAndSetRotation","AddRotationChange"],"facets":[],"base":"xs:string"}
+{"name":"simple_EActorSiteOpRotatorType","schemaSpan":{"start":984596,"end":985943},"namespace":"","kind":"simple","fields":[],"enumValues":["AccumulateAndSetRotation","AddRotationChange"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

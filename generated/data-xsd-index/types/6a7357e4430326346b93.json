@@ -1,1 +1,1 @@
-{"name":"simple_int8","kind":"simple","fields":[],"enumValues":[],"facets":[{"kind":"minInclusive","value":"0"},{"kind":"maxInclusive","value":"255"}],"base":"xs:int"}
+{"name":"simple_int8","schemaSpan":{"start":3594,"end":3765},"namespace":"","kind":"simple","fields":[],"enumValues":[],"facets":[{"kind":"minInclusive","value":"0"},{"kind":"maxInclusive","value":"255"}],"base":"xs:int","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

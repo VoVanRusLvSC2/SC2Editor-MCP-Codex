@@ -1,1 +1,1 @@
-{"name":"CActorCreateKey","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CActorCreateKey"}],"enumValues":[],"facets":[]}
+{"name":"CActorCreateKey","schemaSpan":{"start":10578,"end":10697},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":10620,"end":10678},"namespace":"","name":"value","type":"simple_CActorCreateKey","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

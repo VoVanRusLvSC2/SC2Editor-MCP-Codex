@@ -1,1 +1,1 @@
-{"name":"simple_EClassIdCCursor","kind":"simple","fields":[],"enumValues":["CCursor"],"facets":[],"base":"xs:string"}
+{"name":"simple_EClassIdCCursor","schemaSpan":{"start":216961,"end":217253},"namespace":"","kind":"simple","fields":[],"enumValues":["CCursor"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

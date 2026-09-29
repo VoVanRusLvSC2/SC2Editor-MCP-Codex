@@ -1,1 +1,1 @@
-{"name":"simple_EAccumulatorOperation","kind":"simple","fields":[],"enumValues":["Add","Divide","Maximum","Minimum","Multiply","Power","Subtract"],"facets":[],"base":"xs:string"}
+{"name":"simple_EAccumulatorOperation","schemaSpan":{"start":695887,"end":697213},"namespace":"","kind":"simple","fields":[],"enumValues":["Add","Divide","Maximum","Minimum","Multiply","Power","Subtract"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

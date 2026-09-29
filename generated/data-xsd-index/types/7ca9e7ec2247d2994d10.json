@@ -1,1 +1,1 @@
-{"name":"EClassIdCWarChest","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EClassIdCWarChest"}],"enumValues":[],"facets":[]}
+{"name":"EClassIdCWarChest","schemaSpan":{"start":611406,"end":611529},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":611450,"end":611510},"namespace":"","name":"value","type":"simple_EClassIdCWarChest","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

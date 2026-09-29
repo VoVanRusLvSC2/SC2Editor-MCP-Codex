@@ -1,1 +1,1 @@
-{"name":"CConfigLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CConfigLink"}],"enumValues":[],"facets":[]}
+{"name":"CConfigLink","schemaSpan":{"start":52736,"end":52847},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":52774,"end":52828},"namespace":"","name":"value","type":"simple_CConfigLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

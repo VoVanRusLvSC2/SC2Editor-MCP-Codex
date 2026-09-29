@@ -1,1 +1,1 @@
-{"name":"EUpgradeFlag","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EUpgradeFlag"}],"enumValues":[],"facets":[]}
+{"name":"EUpgradeFlag","schemaSpan":{"start":1786069,"end":1786182},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1786108,"end":1786163},"namespace":"","name":"value","type":"simple_EUpgradeFlag","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

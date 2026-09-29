@@ -1,1 +1,1 @@
-{"name":"EClassIdCPhysicsMaterial","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EClassIdCPhysicsMaterial"}],"enumValues":[],"facets":[]}
+{"name":"EClassIdCPhysicsMaterial","schemaSpan":{"start":489185,"end":489322},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":489236,"end":489303},"namespace":"","name":"value","type":"simple_EClassIdCPhysicsMaterial","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

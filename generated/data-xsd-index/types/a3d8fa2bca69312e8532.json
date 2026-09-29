@@ -1,1 +1,1 @@
-{"name":"simple_EActorBaselineType","kind":"simple","fields":[],"enumValues":["Stand","StateStand","StateWalk","StateWalkIntro","StateWalkMiddle","StateWalkOutro","Walk"],"facets":[],"base":"xs:string"}
+{"name":"simple_EActorBaselineType","schemaSpan":{"start":714059,"end":715829},"namespace":"","kind":"simple","fields":[],"enumValues":["Stand","StateStand","StateWalk","StateWalkIntro","StateWalkMiddle","StateWalkOutro","Walk"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

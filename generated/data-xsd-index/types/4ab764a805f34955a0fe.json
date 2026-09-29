@@ -1,1 +1,1 @@
-{"name":"simple_EMotionTurnType","kind":"simple","fields":[],"enumValues":["Default","Optimal","RevertToUp"],"facets":[],"base":"xs:string"}
+{"name":"simple_EMotionTurnType","schemaSpan":{"start":1547207,"end":1547853},"namespace":"","kind":"simple","fields":[],"enumValues":["Default","Optimal","RevertToUp"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

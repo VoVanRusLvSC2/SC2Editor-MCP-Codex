@@ -1,1 +1,1 @@
-{"name":"simple_EClassIdCObjective","kind":"simple","fields":[],"enumValues":["CObjective"],"facets":[],"base":"xs:string"}
+{"name":"simple_EClassIdCObjective","schemaSpan":{"start":487532,"end":487832},"namespace":"","kind":"simple","fields":[],"enumValues":["CObjective"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

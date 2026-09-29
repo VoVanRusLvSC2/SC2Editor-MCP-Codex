@@ -1,1 +1,1 @@
-{"name":"simple_EEffectRedirectMissile","kind":"simple","fields":[],"enumValues":["OriginalValidation"],"facets":[],"base":"xs:string"}
+{"name":"simple_EEffectRedirectMissile","schemaSpan":{"start":1347790,"end":1348112},"namespace":"","kind":"simple","fields":[],"enumValues":["OriginalValidation"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

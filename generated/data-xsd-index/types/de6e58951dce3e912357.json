@@ -1,1 +1,1 @@
-{"name":"EEffectModifyFacing","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EEffectModifyFacing"}],"enumValues":[],"facets":[]}
+{"name":"EEffectModifyFacing","schemaSpan":{"start":1344244,"end":1344371},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1344290,"end":1344352},"namespace":"","name":"value","type":"simple_EEffectModifyFacing","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

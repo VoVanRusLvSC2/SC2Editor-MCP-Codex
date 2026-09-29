@@ -1,1 +1,1 @@
-{"name":"CAbilLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CAbilLink"}],"enumValues":[],"facets":[]}
+{"name":"CAbilLink","schemaSpan":{"start":40497,"end":40604},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":40533,"end":40585},"namespace":"","name":"value","type":"simple_CAbilLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

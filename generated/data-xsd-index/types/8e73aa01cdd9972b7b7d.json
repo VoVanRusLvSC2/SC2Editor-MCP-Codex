@@ -1,1 +1,1 @@
-{"name":"TCatalogFieldPath","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_TCatalogFieldPath"}],"enumValues":[],"facets":[]}
+{"name":"TCatalogFieldPath","schemaSpan":{"start":17779,"end":17902},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":17823,"end":17883},"namespace":"","name":"value","type":"simple_TCatalogFieldPath","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

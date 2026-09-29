@@ -1,1 +1,1 @@
-{"name":"simple_CCutscenePath","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string"}
+{"name":"simple_CCutscenePath","schemaSpan":{"start":12434,"end":12532},"namespace":"","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

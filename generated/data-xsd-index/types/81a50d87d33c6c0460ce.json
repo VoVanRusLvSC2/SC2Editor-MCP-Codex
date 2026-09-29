@@ -1,1 +1,1 @@
-{"name":"CAccumulatorLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CAccumulatorLink"}],"enumValues":[],"facets":[]}
+{"name":"CAccumulatorLink","schemaSpan":{"start":40702,"end":40823},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":40745,"end":40804},"namespace":"","name":"value","type":"simple_CAccumulatorLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

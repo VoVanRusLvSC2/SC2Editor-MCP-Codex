@@ -1,1 +1,1 @@
-{"name":"EActorModelMaterialRemoveAllTarget","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EActorModelMaterialRemoveAllTarget"}],"enumValues":[],"facets":[]}
+{"name":"EActorModelMaterialRemoveAllTarget","schemaSpan":{"start":776663,"end":776820},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":776724,"end":776801},"namespace":"","name":"value","type":"simple_EActorModelMaterialRemoveAllTarget","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

@@ -1,1 +1,1 @@
-{"name":"CfQuad","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CfQuad"}],"enumValues":[],"facets":[]}
+{"name":"CfQuad","schemaSpan":{"start":37462,"end":37563},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":37495,"end":37544},"namespace":"","name":"value","type":"simple_CfQuad","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

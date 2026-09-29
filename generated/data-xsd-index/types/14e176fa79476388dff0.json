@@ -1,1 +1,1 @@
-{"name":"simple_EActorHeightTestType","kind":"simple","fields":[],"enumValues":["Average","Highest","Lowest"],"facets":[],"base":"xs:string"}
+{"name":"simple_EActorHeightTestType","schemaSpan":{"start":743629,"end":744407},"namespace":"","kind":"simple","fields":[],"enumValues":["Average","Highest","Lowest"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

@@ -1,1 +1,1 @@
-{"name":"simple_EConversationConditionCheck","kind":"simple","fields":[],"enumValues":["All","Any"],"facets":[],"base":"xs:string"}
+{"name":"simple_EConversationConditionCheck","schemaSpan":{"start":1287785,"end":1288246},"namespace":"","kind":"simple","fields":[],"enumValues":["All","Any"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

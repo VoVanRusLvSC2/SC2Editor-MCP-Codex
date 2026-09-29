@@ -1,1 +1,1 @@
-{"name":"simple_EAnimTransitionFlag","kind":"simple","fields":[],"enumValues":["Instant"],"facets":[],"base":"xs:string"}
+{"name":"simple_EAnimTransitionFlag","schemaSpan":{"start":1070131,"end":1070659},"namespace":"","kind":"simple","fields":[],"enumValues":["Instant"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

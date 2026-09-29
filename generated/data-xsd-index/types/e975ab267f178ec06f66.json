@@ -1,1 +1,1 @@
-{"name":"CIdentifier","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CIdentifier"}],"enumValues":[],"facets":[]}
+{"name":"CIdentifier","schemaSpan":{"start":13595,"end":13706},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":13633,"end":13687},"namespace":"","name":"value","type":"simple_CIdentifier","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

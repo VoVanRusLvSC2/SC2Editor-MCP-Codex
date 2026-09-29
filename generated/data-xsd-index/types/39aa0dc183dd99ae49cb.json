@@ -1,1 +1,1 @@
-{"name":"simple_ESoundFormat","kind":"simple","fields":[],"enumValues":["PCM16","PCM24","PCM32","PCM8","PCMFLOAT"],"facets":[],"base":"xs:string"}
+{"name":"simple_ESoundFormat","schemaSpan":{"start":1686881,"end":1687851},"namespace":"","kind":"simple","fields":[],"enumValues":["PCM16","PCM24","PCM32","PCM8","PCMFLOAT"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

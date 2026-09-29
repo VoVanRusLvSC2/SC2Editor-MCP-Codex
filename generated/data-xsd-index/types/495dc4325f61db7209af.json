@@ -1,1 +1,1 @@
-{"name":"simple_EClassIdCSkinPack","kind":"simple","fields":[],"enumValues":["CSkinPack"],"facets":[],"base":"xs:string"}
+{"name":"simple_EClassIdCSkinPack","schemaSpan":{"start":508809,"end":509107},"namespace":"","kind":"simple","fields":[],"enumValues":["CSkinPack"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

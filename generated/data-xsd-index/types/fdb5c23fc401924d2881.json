@@ -1,1 +1,1 @@
-{"name":"EActorRefSpace","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EActorRefSpace"}],"enumValues":[],"facets":[]}
+{"name":"EActorRefSpace","schemaSpan":{"start":955029,"end":955146},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":955070,"end":955127},"namespace":"","name":"value","type":"simple_EActorRefSpace","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

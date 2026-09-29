@@ -1,1 +1,1 @@
-{"name":"simple_EConversationStateInfo","kind":"simple","fields":[],"enumValues":["AbilCmd","Model","Text","Upgrade","Value"],"facets":[],"base":"xs:string"}
+{"name":"simple_EConversationStateInfo","schemaSpan":{"start":1293452,"end":1294437},"namespace":"","kind":"simple","fields":[],"enumValues":["AbilCmd","Model","Text","Upgrade","Value"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

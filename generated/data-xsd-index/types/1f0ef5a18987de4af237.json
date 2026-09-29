@@ -1,1 +1,1 @@
-{"name":"EFlyerDisplay","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EFlyerDisplay"}],"enumValues":[],"facets":[]}
+{"name":"EFlyerDisplay","schemaSpan":{"start":182450,"end":182565},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":182490,"end":182546},"namespace":"","name":"value","type":"simple_EFlyerDisplay","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

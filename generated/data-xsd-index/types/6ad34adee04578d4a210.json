@@ -1,1 +1,1 @@
-{"name":"CiRange","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CiRange"}],"enumValues":[],"facets":[]}
+{"name":"CiRange","schemaSpan":{"start":37854,"end":37957},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":37888,"end":37938},"namespace":"","name":"value","type":"simple_CiRange","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

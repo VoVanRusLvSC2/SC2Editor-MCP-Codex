@@ -1,1 +1,1 @@
-{"name":"simple_EActorModelAspectRegardsAs","kind":"simple","fields":[],"enumValues":["Ally","Any","Enemy","Friendly","Neutral","NotSelf","Self","Teammate"],"facets":[],"base":"xs:string"}
+{"name":"simple_EActorModelAspectRegardsAs","schemaSpan":{"start":765813,"end":767963},"namespace":"","kind":"simple","fields":[],"enumValues":["Ally","Any","Enemy","Friendly","Neutral","NotSelf","Self","Teammate"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

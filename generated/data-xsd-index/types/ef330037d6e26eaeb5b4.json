@@ -1,1 +1,1 @@
-{"name":"simple_EPlacementTest","kind":"simple","fields":[],"enumValues":["Cliff","Creep","Density","Fog","IgnoreBlockers","IgnoreInvisible","OriginSideOfFootprints","Power","Zone"],"facets":[],"base":"xs:string"}
+{"name":"simple_EPlacementTest","schemaSpan":{"start":250910,"end":252624},"namespace":"","kind":"simple","fields":[],"enumValues":["Cliff","Creep","Density","Fog","IgnoreBlockers","IgnoreInvisible","OriginSideOfFootprints","Power","Zone"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

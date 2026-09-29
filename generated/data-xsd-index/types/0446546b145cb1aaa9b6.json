@@ -1,1 +1,1 @@
-{"name":"EActorSiteOpAttachSource","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EActorSiteOpAttachSource"}],"enumValues":[],"facets":[]}
+{"name":"EActorSiteOpAttachSource","schemaSpan":{"start":977671,"end":977808},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":977722,"end":977789},"namespace":"","name":"value","type":"simple_EActorSiteOpAttachSource","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

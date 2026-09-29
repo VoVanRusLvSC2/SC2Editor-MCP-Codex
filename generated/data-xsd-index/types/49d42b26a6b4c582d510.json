@@ -1,1 +1,1 @@
-{"name":"EAbilBatteryFlag","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EAbilBatteryFlag"}],"enumValues":[],"facets":[]}
+{"name":"EAbilBatteryFlag","schemaSpan":{"start":635543,"end":635664},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":635586,"end":635645},"namespace":"","name":"value","type":"simple_EAbilBatteryFlag","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

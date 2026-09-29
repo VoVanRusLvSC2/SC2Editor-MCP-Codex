@@ -30,7 +30,7 @@ test("GameData open/parse is byte-identical and preserves unknown extensions", (
 
 test("data.apply creates a missing Catalog and registers the native gada component", async () => {
   const { root, data } = await fixture();
-  const result = await data.apply({ operations: [{ op: "object.create", ctype: "CUnit", id: "CodexMarine", parent: "Marine" }], dryRun: false, stage: false });
+  const result = await data.apply({ operations: [{ op: "object.create", ctype: "CUnit", id: "CodexMarine", parent: "Marine" }], dryRun: false, stage: false, authoringPolicy:"compatibility" });
   assert.equal(result.accepted, true);
   assert.match(await fs.readFile(path.join(root, "Base.SC2Data/GameData/UnitData.xml"), "utf8"), /<CUnit id="CodexMarine" parent="Marine"\/>/);
   assert.match(await fs.readFile(path.join(root, "ComponentList.SC2Components"), "utf8"), /<DataComponent Type="gada">GameData<\/DataComponent>/);
@@ -64,7 +64,7 @@ test("one batch creates and patches nested/indexed fields through an alias", asy
     { op: "field.set", object: "@unit", path: "FlagArray[ArmySelect]", value: true },
     { op: "field.setLink", object: "@unit", path: "WeaponArray[0]", link: "HeroWeapon" },
     { op: "native.add", object: "@unit", field: { name: "Future", attrs: { opaque: "yes" }, children: [{ name: "Nested", value: 7 }] } },
-  ], dryRun: false, stage: true, allowInvalid: true });
+  ], dryRun: false, stage: true, allowInvalid: true, authoringPolicy:"compatibility" });
   assert.equal(result.aliases["@unit"], "CUnit:Hero");
   const text = (await data.workspace.readRaw("Base.SC2Data/GameData/UnitData.xml")).text;
   assert.match(text, /<LifeMax value="500"\/>/);
@@ -75,13 +75,13 @@ test("one batch creates and patches nested/indexed fields through an alias", asy
 
 test("array.append uses the next numeric index and preserves token indexes", async () => {
   const { data } = await fixture({ "Base.SC2Data/GameData/UnitData.xml": `<Catalog><CUnit id="X"><AbilArray index="0" Link="A"/><AbilArray index="2" Link="B"/><AbilArray index="Named" Link="C"/></CUnit></Catalog>` });
-  await data.apply({ operations: [{ op: "array.append", object: "X", path: "AbilArray", link: "D" }], dryRun: false, stage: true, allowInvalid: true });
+  await data.apply({ operations: [{ op: "array.append", object: "X", path: "AbilArray", link: "D" }], dryRun: false, stage: true, allowInvalid: true, authoringPolicy:"compatibility" });
   assert.match((await data.workspace.readRaw("Base.SC2Data/GameData/UnitData.xml")).text, /<AbilArray index="3" Link="D"\/>/);
 });
 
 test("clone carries unknown native XML and allows a new parent", async () => {
   const { data } = await fixture({ "Base.SC2Data/GameData/UnitData.xml": `<Catalog>\n    <CUnit id="A"><Unknown x="1"/></CUnit>\n</Catalog>` });
-  await data.apply({ operations: [{ op: "object.clone", object: "A", id: "B", parent: "Marine" }], dryRun: false, stage: true, allowInvalid: true });
+  await data.apply({ operations: [{ op: "object.clone", object: "A", id: "B", parent: "Marine" }], dryRun: false, stage: true, allowInvalid: true, authoringPolicy:"compatibility" });
   const text = (await data.workspace.readRaw("Base.SC2Data/GameData/UnitData.xml")).text;
   assert.match(text, /<CUnit parent="Marine" id="B"><Unknown x="1"\/><\/CUnit>/);
 });
@@ -161,7 +161,7 @@ test("generic object/field attributes can be set and removed without rewriting u
     { op: "field.setAttribute", object: "X", path: "LifeMax", attribute: "future", value: "new" },
     { op: "field.removeAttribute", object: "X", path: "LifeMax", attribute: "future" },
     { op: "object.removeAttribute", object: "X", attribute: "editorOnly" },
-  ], dryRun: false, stage: true, allowInvalid: true });
+  ], dryRun: false, stage: true, allowInvalid: true, authoringPolicy:"compatibility" });
   const text = (await data.workspace.readRaw("Base.SC2Data/GameData/UnitData.xml")).text;
   assert.match(text, /<CUnit id="X" custom="keep">/);
   assert.match(text, /<LifeMax value="10"\/>/);
@@ -189,7 +189,7 @@ test("weapon burn recipe expands one semantic operation into the native linked D
     carrierEffect: "P38ScytheGuassPistolBurst", impactEffect: "P38ScytheGuassPistol",
     duration: 4, period: 0.5, periodicDamage: 2,
     visualModel: "HellionTankAttackFireAddition",
-  }], dryRun: false, stage: true });
+  }], dryRun: false, stage: true, authoringPolicy:"compatibility" });
   assert.equal(result.aliases["@burn"], "CBehaviorBuff:CodexReaperBurn");
   const source = (await data.workspace.readRaw("Base.SC2Data/GameData/UnitData.xml")).text;
   assert.match(source, /<CBehaviorBuff id="CodexReaperBurn">[\s\S]*<Period value="0.5"\/>[\s\S]*<PeriodicEffect value="CodexReaperBurnPeriodicDamage"\/>/);
@@ -207,7 +207,7 @@ test("vital texture recipe creates reversible multi-slot texture states at an ex
       { slot: "main.diffuse", healthyFile: "Assets\\Textures\\codex_reaper_normal.dds", damagedFile: "Assets\\Textures\\codex_reaper_burned.dds" },
       { slot: "main.emissive", healthyFile: "Assets\\Textures\\codex_reaper_normal_emissive.dds", damagedFile: "Assets\\Textures\\codex_reaper_burned_emissive.dds" },
     ],
-  }], dryRun: false, stage: true });
+  }], dryRun: false, stage: true, authoringPolicy:"compatibility" });
   assert.equal(result.aliases["@skin"], "CActorStateMonitor:CodexReaperDamageSkinMonitor");
   const source = (await data.workspace.readRaw("Base.SC2Data/GameData/UnitData.xml")).text;
   assert.match(source, /<CValidatorUnitCompareVital id="CodexReaperDamageSkinLifeBelow" parent="CasterLifePercent">[\s\S]*<Compare value="LT"\/>[\s\S]*<Value value="0.4"\/>/);

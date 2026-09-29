@@ -1,1 +1,1 @@
-{"name":"EActorShieldFlashType","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EActorShieldFlashType"}],"enumValues":[],"facets":[]}
+{"name":"EActorShieldFlashType","schemaSpan":{"start":972906,"end":973037},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":972954,"end":973018},"namespace":"","name":"value","type":"simple_EActorShieldFlashType","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

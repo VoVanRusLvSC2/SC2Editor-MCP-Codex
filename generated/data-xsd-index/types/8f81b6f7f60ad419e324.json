@@ -1,1 +1,1 @@
-{"name":"EClassIdCUpgrade","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EClassIdCUpgrade"}],"enumValues":[],"facets":[]}
+{"name":"EClassIdCUpgrade","schemaSpan":{"start":583433,"end":583554},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":583476,"end":583535},"namespace":"","name":"value","type":"simple_EClassIdCUpgrade","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

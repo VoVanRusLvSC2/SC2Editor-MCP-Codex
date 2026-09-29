@@ -1,1 +1,1 @@
-{"name":"simple_EUIStatusFlagType","kind":"simple","fields":[],"enumValues":["Incapacitated"],"facets":[],"base":"xs:string"}
+{"name":"simple_EUIStatusFlagType","schemaSpan":{"start":1751060,"end":1751437},"namespace":"","kind":"simple","fields":[],"enumValues":["Incapacitated"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

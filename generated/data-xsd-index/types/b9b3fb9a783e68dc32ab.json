@@ -1,1 +1,1 @@
-{"name":"EMinimapShape","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EMinimapShape"}],"enumValues":[],"facets":[]}
+{"name":"EMinimapShape","schemaSpan":{"start":1523796,"end":1523911},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1523836,"end":1523892},"namespace":"","name":"value","type":"simple_EMinimapShape","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

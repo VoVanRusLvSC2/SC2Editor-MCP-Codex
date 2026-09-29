@@ -1,1 +1,1 @@
-{"name":"EResponseFlag","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EResponseFlag"}],"enumValues":[],"facets":[]}
+{"name":"EResponseFlag","schemaSpan":{"start":1598940,"end":1599055},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1598980,"end":1599036},"namespace":"","name":"value","type":"simple_EResponseFlag","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

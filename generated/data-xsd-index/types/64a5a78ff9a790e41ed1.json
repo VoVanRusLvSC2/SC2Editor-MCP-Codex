@@ -1,1 +1,1 @@
-{"name":"EActorHostedPropInheritType","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EActorHostedPropInheritType"}],"enumValues":[],"facets":[]}
+{"name":"EActorHostedPropInheritType","schemaSpan":{"start":754038,"end":754181},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":754092,"end":754162},"namespace":"","name":"value","type":"simple_EActorHostedPropInheritType","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

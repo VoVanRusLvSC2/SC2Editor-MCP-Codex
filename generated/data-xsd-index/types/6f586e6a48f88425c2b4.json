@@ -1,1 +1,1 @@
-{"name":"ESoundDupePriority","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_ESoundDupePriority"}],"enumValues":[],"facets":[]}
+{"name":"ESoundDupePriority","schemaSpan":{"start":1679650,"end":1679775},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1679695,"end":1679756},"namespace":"","name":"value","type":"simple_ESoundDupePriority","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

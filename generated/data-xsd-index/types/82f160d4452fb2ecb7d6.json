@@ -1,1 +1,1 @@
-{"name":"EAMRandomDistribution","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EAMRandomDistribution"}],"enumValues":[],"facets":[]}
+{"name":"EAMRandomDistribution","schemaSpan":{"start":624429,"end":624560},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":624477,"end":624541},"namespace":"","name":"value","type":"simple_EAMRandomDistribution","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

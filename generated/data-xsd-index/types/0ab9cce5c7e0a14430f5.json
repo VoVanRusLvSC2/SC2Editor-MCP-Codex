@@ -1,1 +1,1 @@
-{"name":"EClassIdCSkinPack","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EClassIdCSkinPack"}],"enumValues":[],"facets":[]}
+{"name":"EClassIdCSkinPack","schemaSpan":{"start":508684,"end":508807},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":508728,"end":508788},"namespace":"","name":"value","type":"simple_EClassIdCSkinPack","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

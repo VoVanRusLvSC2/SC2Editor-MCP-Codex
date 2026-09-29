@@ -1,1 +1,1 @@
-{"name":"CBeamSync","kind":"complex","fields":[],"enumValues":[],"facets":[],"base":"CBase"}
+{"name":"CBeamSync","schemaSpan":{"start":4856293,"end":4856493},"namespace":"","kind":"complex","fields":[],"enumValues":[],"facets":[],"base":"CBase","baseNamespace":"","derivation":"extension"}

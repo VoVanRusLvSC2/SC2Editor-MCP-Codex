@@ -1,1 +1,1 @@
-{"name":"simple_EActorQuadDecorationFunction","kind":"simple","fields":[],"enumValues":["Bias","Gain","Linear"],"facets":[],"base":"xs:string"}
+{"name":"simple_EActorQuadDecorationFunction","schemaSpan":{"start":949025,"end":950157},"namespace":"","kind":"simple","fields":[],"enumValues":["Bias","Gain","Linear"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

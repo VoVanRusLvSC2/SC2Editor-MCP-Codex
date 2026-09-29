@@ -1,1 +1,1 @@
-{"name":"PathCatalog","kind":"complex","fields":[{"kind":"attribute","name":"path","type":"xs:string","use":"required"}],"enumValues":[],"facets":[]}
+{"name":"PathCatalog","schemaSpan":{"start":8500373,"end":8500489},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":8500411,"end":8500470},"namespace":"","name":"path","type":"xs:string","use":"required","typeNamespace":"http://www.w3.org/2001/XMLSchema","particle":[]}],"enumValues":[],"facets":[]}

@@ -1,1 +1,1 @@
-{"name":"EOscillator","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EOscillator"}],"enumValues":[],"facets":[]}
+{"name":"EOscillator","schemaSpan":{"start":1553157,"end":1553268},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1553195,"end":1553249},"namespace":"","name":"value","type":"simple_EOscillator","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

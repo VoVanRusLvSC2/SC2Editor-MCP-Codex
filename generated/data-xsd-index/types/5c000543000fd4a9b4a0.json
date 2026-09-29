@@ -1,1 +1,1 @@
-{"name":"simple_EActorCameraShakeTarget","kind":"simple","fields":[],"enumValues":["PlayerAll","PlayerOwner"],"facets":[],"base":"xs:string"}
+{"name":"simple_EActorCameraShakeTarget","schemaSpan":{"start":717111,"end":717728},"namespace":"","kind":"simple","fields":[],"enumValues":["PlayerAll","PlayerOwner"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

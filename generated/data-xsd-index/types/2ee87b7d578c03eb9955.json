@@ -1,1 +1,1 @@
-{"name":"EStatusDisplay","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EStatusDisplay"}],"enumValues":[],"facets":[]}
+{"name":"EStatusDisplay","schemaSpan":{"start":1703858,"end":1703975},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1703899,"end":1703956},"namespace":"","name":"value","type":"simple_EStatusDisplay","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

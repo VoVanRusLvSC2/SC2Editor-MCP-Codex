@@ -1,1 +1,1 @@
-{"name":"EAMReductionType","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EAMReductionType"}],"enumValues":[],"facets":[]}
+{"name":"EAMReductionType","schemaSpan":{"start":625043,"end":625164},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":625086,"end":625145},"namespace":"","name":"value","type":"simple_EAMReductionType","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

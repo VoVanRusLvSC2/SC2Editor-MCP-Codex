@@ -1,1 +1,1 @@
-{"name":"CPlayerResponseLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CPlayerResponseLink"}],"enumValues":[],"facets":[]}
+{"name":"CPlayerResponseLink","schemaSpan":{"start":42685,"end":42812},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":42731,"end":42793},"namespace":"","name":"value","type":"simple_CPlayerResponseLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

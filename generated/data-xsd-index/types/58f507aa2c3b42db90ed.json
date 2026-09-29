@@ -1,1 +1,1 @@
-{"name":"EActorSiteOpDeltaSumFlag","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EActorSiteOpDeltaSumFlag"}],"enumValues":[],"facets":[]}
+{"name":"EActorSiteOpDeltaSumFlag","schemaSpan":{"start":981473,"end":981610},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":981524,"end":981591},"namespace":"","name":"value","type":"simple_EActorSiteOpDeltaSumFlag","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

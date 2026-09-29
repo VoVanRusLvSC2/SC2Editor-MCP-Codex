@@ -1,1 +1,1 @@
-{"name":"EAttackPriority","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EAttackPriority"}],"enumValues":[],"facets":[]}
+{"name":"EAttackPriority","schemaSpan":{"start":1166674,"end":1166793},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1166716,"end":1166774},"namespace":"","name":"value","type":"simple_EAttackPriority","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

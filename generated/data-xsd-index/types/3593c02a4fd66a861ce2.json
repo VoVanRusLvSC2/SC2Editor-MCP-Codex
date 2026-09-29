@@ -1,1 +1,1 @@
-{"name":"simple_ESerpentType","kind":"simple","fields":[],"enumValues":["Basic","Swimming"],"facets":[],"base":"xs:string"}
+{"name":"simple_ESerpentType","schemaSpan":{"start":1671766,"end":1672405},"namespace":"","kind":"simple","fields":[],"enumValues":["Basic","Swimming"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

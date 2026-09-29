@@ -1,1 +1,1 @@
-{"name":"simple_ESelectionTransferFlag","kind":"simple","fields":[],"enumValues":["DeselectSource","IncludeControlGroups","SingleOnly"],"facets":[],"base":"xs:string"}
+{"name":"simple_ESelectionTransferFlag","schemaSpan":{"start":1669814,"end":1670787},"namespace":"","kind":"simple","fields":[],"enumValues":["DeselectSource","IncludeControlGroups","SingleOnly"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

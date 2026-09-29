@@ -1,1 +1,1 @@
-{"name":"simple_ESoundMaxPrioritization","kind":"simple","fields":[],"enumValues":["Age","Distance"],"facets":[],"base":"xs:string"}
+{"name":"simple_ESoundMaxPrioritization","schemaSpan":{"start":1688578,"end":1689045},"namespace":"","kind":"simple","fields":[],"enumValues":["Age","Distance"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

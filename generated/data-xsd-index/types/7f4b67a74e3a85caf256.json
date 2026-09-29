@@ -1,1 +1,1 @@
-{"name":"simple_EHeroAbilState","kind":"simple","fields":[],"enumValues":["Locked","New","Unlocked"],"facets":[],"base":"xs:string"}
+{"name":"simple_EHeroAbilState","schemaSpan":{"start":415911,"end":416540},"namespace":"","kind":"simple","fields":[],"enumValues":["Locked","New","Unlocked"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

@@ -1,1 +1,1 @@
-{"name":"EActorHeightTestType","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EActorHeightTestType"}],"enumValues":[],"facets":[]}
+{"name":"EActorHeightTestType","schemaSpan":{"start":743498,"end":743627},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":743545,"end":743608},"namespace":"","name":"value","type":"simple_EActorHeightTestType","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

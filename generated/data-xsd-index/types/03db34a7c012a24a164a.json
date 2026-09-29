@@ -1,1 +1,1 @@
-{"name":"EVitalColor","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EVitalColor"}],"enumValues":[],"facets":[]}
+{"name":"EVitalColor","schemaSpan":{"start":1791438,"end":1791549},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1791476,"end":1791530},"namespace":"","name":"value","type":"simple_EVitalColor","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

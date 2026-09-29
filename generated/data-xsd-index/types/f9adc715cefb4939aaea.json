@@ -1,1 +1,1 @@
-{"name":"EActorSoundPlayMode","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EActorSoundPlayMode"}],"enumValues":[],"facets":[]}
+{"name":"EActorSoundPlayMode","schemaSpan":{"start":993058,"end":993185},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":993104,"end":993166},"namespace":"","name":"value","type":"simple_EActorSoundPlayMode","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

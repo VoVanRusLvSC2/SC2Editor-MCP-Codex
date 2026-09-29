@@ -1,1 +1,1 @@
-{"name":"simple_CActorMsgSpec","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string"}
+{"name":"simple_CActorMsgSpec","schemaSpan":{"start":26521,"end":26619},"namespace":"","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

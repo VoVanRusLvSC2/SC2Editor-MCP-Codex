@@ -1,1 +1,1 @@
-{"name":"simple_EAMPatternType","kind":"simple","fields":[],"enumValues":["Bounce","Stripe"],"facets":[],"base":"xs:string"}
+{"name":"simple_EAMPatternType","schemaSpan":{"start":623967,"end":624427},"namespace":"","kind":"simple","fields":[],"enumValues":["Bounce","Stripe"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

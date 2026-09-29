@@ -1,1 +1,1 @@
-{"name":"simple_EAchievementTermPrevious","kind":"simple","fields":[],"enumValues":["Add","Expand","Ignore"],"facets":[],"base":"xs:string"}
+{"name":"simple_EAchievementTermPrevious","schemaSpan":{"start":704788,"end":705450},"namespace":"","kind":"simple","fields":[],"enumValues":["Add","Expand","Ignore"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

@@ -1,1 +1,1 @@
-{"name":"simple_EEffectLocationType","kind":"simple","fields":[],"enumValues":["Point","Unit","UnitOrPoint","Unknown"],"facets":[],"base":"xs:string"}
+{"name":"simple_EEffectLocationType","schemaSpan":{"start":1333739,"end":1334554},"namespace":"","kind":"simple","fields":[],"enumValues":["Point","Unit","UnitOrPoint","Unknown"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

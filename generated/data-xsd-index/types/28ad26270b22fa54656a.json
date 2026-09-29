@@ -1,1 +1,1 @@
-{"name":"EAbilBuildCmd","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EAbilBuildCmd"}],"enumValues":[],"facets":[]}
+{"name":"EAbilBuildCmd","schemaSpan":{"start":88375,"end":88490},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":88415,"end":88471},"namespace":"","name":"value","type":"simple_EAbilBuildCmd","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

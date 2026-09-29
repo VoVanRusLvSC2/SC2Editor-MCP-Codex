@@ -1,1 +1,1 @@
-{"name":"CDataCollectionPatternLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CDataCollectionPatternLink"}],"enumValues":[],"facets":[]}
+{"name":"CDataCollectionPatternLink","schemaSpan":{"start":41380,"end":41521},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":41433,"end":41502},"namespace":"","name":"value","type":"simple_CDataCollectionPatternLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

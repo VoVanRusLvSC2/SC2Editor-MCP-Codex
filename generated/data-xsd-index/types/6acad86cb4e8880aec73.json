@@ -1,1 +1,1 @@
-{"name":"simple_EAccumulatorApplicationRule","kind":"simple","fields":[],"enumValues":["Add","AdditiveMultiply","Multiply"],"facets":[],"base":"xs:string"}
+{"name":"simple_EAccumulatorApplicationRule","schemaSpan":{"start":693000,"end":693663},"namespace":"","kind":"simple","fields":[],"enumValues":["Add","AdditiveMultiply","Multiply"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

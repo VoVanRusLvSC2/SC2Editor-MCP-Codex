@@ -1,1 +1,1 @@
-{"name":"simple_EActorIntersectType","kind":"simple","fields":[],"enumValues":["AgainstCenter","AgainstCenterGame","AgainstRadiusContact","AgainstRadiusGame","AgainstRadiusVisual"],"facets":[],"base":"xs:string"}
+{"name":"simple_EActorIntersectType","schemaSpan":{"start":756010,"end":757868},"namespace":"","kind":"simple","fields":[],"enumValues":["AgainstCenter","AgainstCenterGame","AgainstRadiusContact","AgainstRadiusGame","AgainstRadiusVisual"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

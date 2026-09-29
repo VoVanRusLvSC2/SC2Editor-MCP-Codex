@@ -1,1 +1,1 @@
-{"name":"simple_EDamageResponseHandledValue","kind":"simple","fields":[],"enumValues":["Absorbed","None","Original","Remaining"],"facets":[],"base":"xs:string"}
+{"name":"simple_EDamageResponseHandledValue","schemaSpan":{"start":1315743,"end":1316568},"namespace":"","kind":"simple","fields":[],"enumValues":["Absorbed","None","Original","Remaining"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

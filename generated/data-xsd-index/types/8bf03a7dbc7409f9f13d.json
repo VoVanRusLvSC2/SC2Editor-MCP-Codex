@@ -1,1 +1,1 @@
-{"name":"simple_ECostCategory","kind":"simple","fields":[],"enumValues":["Army","Economy","None","Technology","Upgrade"],"facets":[],"base":"xs:string"}
+{"name":"simple_ECostCategory","schemaSpan":{"start":1296446,"end":1297422},"namespace":"","kind":"simple","fields":[],"enumValues":["Army","Economy","None","Technology","Upgrade"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

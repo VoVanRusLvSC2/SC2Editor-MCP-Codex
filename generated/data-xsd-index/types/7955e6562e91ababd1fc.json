@@ -1,1 +1,1 @@
-{"name":"EEffectCombine","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EEffectCombine"}],"enumValues":[],"facets":[]}
+{"name":"EEffectCombine","schemaSpan":{"start":1329562,"end":1329679},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1329603,"end":1329660},"namespace":"","name":"value","type":"simple_EEffectCombine","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

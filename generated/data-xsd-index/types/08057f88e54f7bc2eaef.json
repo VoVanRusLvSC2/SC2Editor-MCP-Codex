@@ -1,1 +1,1 @@
-{"name":"EVitalType","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EVitalType"}],"enumValues":[],"facets":[]}
+{"name":"EVitalType","schemaSpan":{"start":1792179,"end":1792288},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1792216,"end":1792269},"namespace":"","name":"value","type":"simple_EVitalType","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

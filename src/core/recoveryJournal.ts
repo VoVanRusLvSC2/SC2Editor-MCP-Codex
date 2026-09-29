@@ -20,11 +20,35 @@ async function cleanup(journal: FileJournal) {
   await fs.rmdir(journal.root).catch(e => { if(!["ENOENT","ENOTEMPTY","EEXIST"].includes((e as NodeJS.ErrnoException).code ?? "")) throw e; });
 }
 async function manifestWrite(journal: FileJournal, manifest: JournalManifest) {
+  const target = path.join(journal.directory,"manifest.json");
   const temporary = path.join(journal.directory,`manifest-${randomUUID()}.tmp`);
-  await durable(temporary,JSON.stringify(manifest)+"\n");
-  await fs.rename(temporary,path.join(journal.directory,"manifest.json"));
+  const previous = await readOptional(target);
+  const desired = Buffer.from(JSON.stringify(manifest)+"\n");
+  await durable(temporary,desired);
+  try {
+    // Windows may briefly deny replacing an opened manifest. Retrying the same
+    // atomic rename is safe only while the destination is still our old value.
+    for(let attempt=0;;attempt++) {
+      const current=await readOptional(target);
+      if(!sameBytes(current,previous))throw new Error("JOURNAL_MANIFEST_CONFLICT: destination changed");
+      try { await fs.rename(temporary,target);break; }
+      catch(error) {
+        const actual=await readOptional(target),temp=await readOptional(temporary);
+        // An injected/post-rename failure must not cause a second replacement.
+        if(!temp&&sameBytes(actual,desired))break;
+        if(!sameBytes(actual,previous))throw new Error("JOURNAL_MANIFEST_CONFLICT: destination changed",{cause:error});
+        if(!temp||!sameBytes(temp,desired))throw new Error("JOURNAL_MANIFEST_TEMP_CHANGED",{cause:error});
+        if(!["EPERM","EACCES","EBUSY"].includes((error as NodeJS.ErrnoException).code??"")||attempt>=3)throw error;
+        await new Promise(resolve=>setTimeout(resolve,[20,50,100][attempt]));
+      }
+    }
+  } finally { await fs.rm(temporary,{force:true}).catch(()=>undefined); }
   journal.manifest = manifest; journal.committed = manifest.state === "committed";
 }
+async function readOptional(file:string):Promise<Buffer|undefined> {
+  try{return await fs.readFile(file);}catch(e){if((e as NodeJS.ErrnoException).code==='ENOENT')return undefined;throw e;}
+}
+const sameBytes=(a:Buffer|undefined,b:Buffer|undefined)=>a===undefined?b===undefined:b!==undefined&&a.equals(b);
 export async function prepareFileJournal(root: string, resolve: (file:string) => string, originals: ReadonlyMap<string,FileSnapshot>, next: ReadonlyMap<string,Buffer>, removed: ReadonlySet<string>): Promise<FileJournal | undefined> {
   if(!next.size) return undefined;
   const journalRoot = path.join(root,".sc2mcp-journal"); await noSymlink(journalRoot); await fs.mkdir(journalRoot,{ recursive:true });
@@ -71,11 +95,13 @@ export async function recoverFileJournals(root: string, resolve: (file:string) =
       await fs.rm(directory,{ recursive:true,force:true }); continue;
     }
     if(bytes.length > 1024*1024) throw new Error("INVALID_RECOVERY_JOURNAL_SIZE");
-    const manifest = JSON.parse(bytes.toString("utf8")) as JournalManifest;
+    let manifest:JournalManifest;
+    try { manifest = JSON.parse(bytes.toString("utf8")) as JournalManifest; }
+    catch(e) { throw new Error("INVALID_RECOVERY_JOURNAL_JSON: manual inspection required",{cause:e}); }
     if(manifest.version !== 1 || !["prepared","committed"].includes(manifest.state) || !Array.isArray(manifest.entries) || !manifest.entries.length || manifest.entries.length > 64) throw new Error("INVALID_RECOVERY_JOURNAL");
     const journal = { root:journalRoot,directory,manifest,committed:manifest.state === "committed" };
     const seen = new Set<string>();
-    const originals: Array<{ target:string; bytes:Buffer; exists:boolean }> = [];
+    const originals: Array<{ target:string; bytes:Buffer; exists:boolean; disk:Buffer; diskExists:boolean }> = [];
     for(const entry of manifest.entries) {
       if(typeof entry.file !== "string" || !entry.file || entry.file.includes("\\") || entry.file.split("/").some(p => !p || p === "." || p === ".." || p.startsWith(".sc2mcp-")) || path.isAbsolute(entry.file) || !/^\d+\.before$/.test(entry.before) || !/^[a-f0-9]{64}$/.test(entry.originalSha256) || !/^[a-f0-9]{64}$/.test(entry.afterSha256) || typeof entry.originalExists !== "boolean" || typeof entry.afterExists !== "boolean" || seen.has(entry.file)) throw new Error("INVALID_RECOVERY_ENTRY");
       seen.add(entry.file); const target = resolve(entry.file);
@@ -88,9 +114,13 @@ export async function recoverFileJournals(root: string, resolve: (file:string) =
       const unchanged = exists === entry.originalExists && diskHash === entry.originalSha256;
       const written = exists === entry.afterExists && (!exists || diskHash === entry.afterSha256);
       if(!unchanged && !written) throw new Error(`RECOVERY_CONFLICT: ${entry.file}; external content preserved`);
-      originals.push({ target,bytes:original,exists:entry.originalExists });
+      originals.push({ target,bytes:original,exists:entry.originalExists,disk,diskExists:exists });
     }
     for(const original of originals) {
+      // A non-MCP writer can race after the group preflight. Verify again
+      // immediately before each restore; retain the journal on conflict.
+      const current=await readOptional(original.target);
+      if((current!==undefined)!==original.diskExists||!sameBytes(current,original.diskExists?original.disk:undefined))throw new Error("RECOVERY_CONFLICT: "+path.relative(root,original.target)+"; external content preserved");
       if(!original.exists) { await fs.rm(original.target,{ force:true }); continue; }
       await fs.mkdir(path.dirname(original.target),{ recursive:true });
       const temporary = `${original.target}.sc2uimcp.recover.${randomUUID()}.tmp`;

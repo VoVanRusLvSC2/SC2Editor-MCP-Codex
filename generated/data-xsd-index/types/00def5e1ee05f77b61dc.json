@@ -1,1 +1,1 @@
-{"name":"simple_EEquipmentDisplayFlag","kind":"simple","fields":[],"enumValues":["CollapseBuffed","DisplayRounded","ExpandUpgraded"],"facets":[],"base":"xs:string"}
+{"name":"simple_EEquipmentDisplayFlag","schemaSpan":{"start":1353773,"end":1354454},"namespace":"","kind":"simple","fields":[],"enumValues":["CollapseBuffed","DisplayRounded","ExpandUpgraded"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

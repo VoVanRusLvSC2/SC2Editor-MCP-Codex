@@ -1,1 +1,1 @@
-{"name":"EActorCameraShakeTarget","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EActorCameraShakeTarget"}],"enumValues":[],"facets":[]}
+{"name":"EActorCameraShakeTarget","schemaSpan":{"start":716974,"end":717109},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":717024,"end":717090},"namespace":"","name":"value","type":"simple_EActorCameraShakeTarget","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

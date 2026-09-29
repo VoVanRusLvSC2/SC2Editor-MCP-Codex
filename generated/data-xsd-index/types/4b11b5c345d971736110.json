@@ -1,1 +1,1 @@
-{"name":"CRaceLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CRaceLink"}],"enumValues":[],"facets":[]}
+{"name":"CRaceLink","schemaSpan":{"start":59894,"end":60001},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":59930,"end":59982},"namespace":"","name":"value","type":"simple_CRaceLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

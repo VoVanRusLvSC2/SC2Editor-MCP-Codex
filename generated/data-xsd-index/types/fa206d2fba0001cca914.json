@@ -1,1 +1,1 @@
-{"name":"CCutscenePath","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CCutscenePath"}],"enumValues":[],"facets":[]}
+{"name":"CCutscenePath","schemaSpan":{"start":12317,"end":12432},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":12357,"end":12413},"namespace":"","name":"value","type":"simple_CCutscenePath","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

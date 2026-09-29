@@ -1,1 +1,1 @@
-{"name":"EEquipmentDisplayFlag","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EEquipmentDisplayFlag"}],"enumValues":[],"facets":[]}
+{"name":"EEquipmentDisplayFlag","schemaSpan":{"start":1353640,"end":1353771},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1353688,"end":1353752},"namespace":"","name":"value","type":"simple_EEquipmentDisplayFlag","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

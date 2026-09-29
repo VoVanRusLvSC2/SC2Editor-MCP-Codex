@@ -1,1 +1,1 @@
-{"name":"ESkinFeature","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_ESkinFeature"}],"enumValues":[],"facets":[]}
+{"name":"ESkinFeature","schemaSpan":{"start":1673893,"end":1674006},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1673932,"end":1673987},"namespace":"","name":"value","type":"simple_ESkinFeature","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

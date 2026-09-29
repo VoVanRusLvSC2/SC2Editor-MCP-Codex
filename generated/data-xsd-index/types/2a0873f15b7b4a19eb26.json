@@ -1,1 +1,1 @@
-{"name":"EMotionBlendType","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EMotionBlendType"}],"enumValues":[],"facets":[]}
+{"name":"EMotionBlendType","schemaSpan":{"start":1538346,"end":1538467},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1538389,"end":1538448},"namespace":"","name":"value","type":"simple_EMotionBlendType","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

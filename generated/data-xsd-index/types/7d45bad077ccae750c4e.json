@@ -1,1 +1,1 @@
-{"name":"EPointType","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EPointType"}],"enumValues":[],"facets":[]}
+{"name":"EPointType","schemaSpan":{"start":1582629,"end":1582738},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1582666,"end":1582719},"namespace":"","name":"value","type":"simple_EPointType","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

@@ -1,1 +1,1 @@
-{"name":"CFangleAccelMissile","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CFangleAccelMissile"}],"enumValues":[],"facets":[]}
+{"name":"CFangleAccelMissile","schemaSpan":{"start":30533,"end":30660},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":30579,"end":30641},"namespace":"","name":"value","type":"simple_CFangleAccelMissile","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

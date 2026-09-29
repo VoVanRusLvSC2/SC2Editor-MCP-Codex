@@ -1,1 +1,1 @@
-{"name":"TConversationStateVariation","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_TConversationStateVariation"}],"enumValues":[],"facets":[]}
+{"name":"TConversationStateVariation","schemaSpan":{"start":19433,"end":19576},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":19487,"end":19557},"namespace":"","name":"value","type":"simple_TConversationStateVariation","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

@@ -1,1 +1,1 @@
-{"name":"EAbilRallyStage","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EAbilRallyStage"}],"enumValues":[],"facets":[]}
+{"name":"EAbilRallyStage","schemaSpan":{"start":80501,"end":80620},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":80543,"end":80601},"namespace":"","name":"value","type":"simple_EAbilRallyStage","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

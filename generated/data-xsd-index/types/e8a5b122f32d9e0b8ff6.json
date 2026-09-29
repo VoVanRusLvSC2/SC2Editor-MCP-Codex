@@ -1,1 +1,1 @@
-{"name":"simple_EBehaviorUnitTrackerAtMaxRule","kind":"simple","fields":[],"enumValues":["Ignore","ReplaceOldest"],"facets":[],"base":"xs:string"}
+{"name":"simple_EBehaviorUnitTrackerAtMaxRule","schemaSpan":{"start":1205587,"end":1206069},"namespace":"","kind":"simple","fields":[],"enumValues":["Ignore","ReplaceOldest"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

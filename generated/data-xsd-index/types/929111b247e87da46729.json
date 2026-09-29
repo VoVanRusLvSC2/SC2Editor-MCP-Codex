@@ -1,1 +1,1 @@
-{"name":"TDifficultyLevel","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_TDifficultyLevel"}],"enumValues":[],"facets":[]}
+{"name":"TDifficultyLevel","schemaSpan":{"start":1629,"end":1750},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1672,"end":1731},"namespace":"","name":"value","type":"simple_TDifficultyLevel","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

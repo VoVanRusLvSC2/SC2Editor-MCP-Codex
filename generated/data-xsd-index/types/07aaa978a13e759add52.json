@@ -1,1 +1,1 @@
-{"name":"simple_EAttackModifierFlag","kind":"simple","fields":[],"enumValues":["Critical","HallucinationVisualOnly","NeverMiss","OnlyApplyDamageBonusToValidTargets"],"facets":[],"base":"xs:string"}
+{"name":"simple_EAttackModifierFlag","schemaSpan":{"start":1165756,"end":1166672},"namespace":"","kind":"simple","fields":[],"enumValues":["Critical","HallucinationVisualOnly","NeverMiss","OnlyApplyDamageBonusToValidTargets"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

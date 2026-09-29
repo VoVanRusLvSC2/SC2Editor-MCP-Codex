@@ -1,1 +1,1 @@
-{"name":"simple_EClassIdCDecalPack","kind":"simple","fields":[],"enumValues":["CDecalPack"],"facets":[],"base":"xs:string"}
+{"name":"simple_EClassIdCDecalPack","schemaSpan":{"start":218880,"end":219181},"namespace":"","kind":"simple","fields":[],"enumValues":["CDecalPack"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

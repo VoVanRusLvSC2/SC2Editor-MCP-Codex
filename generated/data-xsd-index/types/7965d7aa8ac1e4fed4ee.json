@@ -1,1 +1,1 @@
-{"name":"EClassIdCCliff","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EClassIdCCliff"}],"enumValues":[],"facets":[]}
+{"name":"EClassIdCCliff","schemaSpan":{"start":208789,"end":208906},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":208830,"end":208887},"namespace":"","name":"value","type":"simple_EClassIdCCliff","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

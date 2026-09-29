@@ -1,1 +1,1 @@
-{"name":"EClassIdCCamera","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EClassIdCCamera"}],"enumValues":[],"facets":[]}
+{"name":"EClassIdCCamera","schemaSpan":{"start":207521,"end":207640},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":207563,"end":207621},"namespace":"","name":"value","type":"simple_EClassIdCCamera","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

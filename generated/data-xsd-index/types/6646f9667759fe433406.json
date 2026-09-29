@@ -1,1 +1,1 @@
-{"name":"simple_EAccumulatorAttributePointsFlag","kind":"simple","fields":[],"enumValues":["UseBasePoints","UseMainAttribute"],"facets":[],"base":"xs:string"}
+{"name":"simple_EAccumulatorAttributePointsFlag","schemaSpan":{"start":693818,"end":694333},"namespace":"","kind":"simple","fields":[],"enumValues":["UseBasePoints","UseMainAttribute"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

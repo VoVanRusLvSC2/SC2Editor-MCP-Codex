@@ -1,1 +1,1 @@
-{"name":"ESoundMaxPrioritization","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_ESoundMaxPrioritization"}],"enumValues":[],"facets":[]}
+{"name":"ESoundMaxPrioritization","schemaSpan":{"start":1688441,"end":1688576},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1688491,"end":1688557},"namespace":"","name":"value","type":"simple_ESoundMaxPrioritization","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

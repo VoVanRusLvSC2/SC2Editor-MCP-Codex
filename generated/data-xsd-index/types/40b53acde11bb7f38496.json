@@ -1,1 +1,1 @@
-{"name":"simple_EActorIncomingType","kind":"simple","fields":[],"enumValues":["Direct","Missile"],"facets":[],"base":"xs:string"}
+{"name":"simple_EActorIncomingType","schemaSpan":{"start":755147,"end":755879},"namespace":"","kind":"simple","fields":[],"enumValues":["Direct","Missile"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

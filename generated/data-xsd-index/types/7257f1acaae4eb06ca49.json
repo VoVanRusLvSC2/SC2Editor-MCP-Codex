@@ -1,1 +1,1 @@
-{"name":"EAbilStopCmd","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EAbilStopCmd"}],"enumValues":[],"facets":[]}
+{"name":"EAbilStopCmd","schemaSpan":{"start":126833,"end":126946},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":126872,"end":126927},"namespace":"","name":"value","type":"simple_EAbilStopCmd","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

@@ -1,1 +1,1 @@
-{"name":"EParticipantType","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EParticipantType"}],"enumValues":[],"facets":[]}
+{"name":"EParticipantType","schemaSpan":{"start":1555514,"end":1555635},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1555557,"end":1555616},"namespace":"","name":"value","type":"simple_EParticipantType","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

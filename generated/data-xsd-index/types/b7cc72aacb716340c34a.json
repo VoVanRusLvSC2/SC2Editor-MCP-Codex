@@ -1,1 +1,1 @@
-{"name":"simple_EUnitTaunt","kind":"simple","fields":[],"enumValues":["Cheer","Dance","Tease"],"facets":[],"base":"xs:string"}
+{"name":"simple_EUnitTaunt","schemaSpan":{"start":297142,"end":297763},"namespace":"","kind":"simple","fields":[],"enumValues":["Cheer","Dance","Tease"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

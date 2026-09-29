@@ -1,1 +1,1 @@
-{"name":"EBehaviorUnitTrackerAtMaxRule","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EBehaviorUnitTrackerAtMaxRule"}],"enumValues":[],"facets":[]}
+{"name":"EBehaviorUnitTrackerAtMaxRule","schemaSpan":{"start":1205438,"end":1205585},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1205494,"end":1205566},"namespace":"","name":"value","type":"simple_EBehaviorUnitTrackerAtMaxRule","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

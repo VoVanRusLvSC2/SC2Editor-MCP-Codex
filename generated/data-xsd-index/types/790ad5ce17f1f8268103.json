@@ -1,1 +1,1 @@
-{"name":"EAbilTrainLocation","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EAbilTrainLocation"}],"enumValues":[],"facets":[]}
+{"name":"EAbilTrainLocation","schemaSpan":{"start":688893,"end":689018},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":688938,"end":688999},"namespace":"","name":"value","type":"simple_EAbilTrainLocation","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

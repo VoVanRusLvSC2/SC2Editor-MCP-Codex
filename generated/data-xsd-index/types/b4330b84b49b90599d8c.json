@@ -1,1 +1,1 @@
-{"name":"EFoliageLayers","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EFoliageLayers"}],"enumValues":[],"facets":[]}
+{"name":"EFoliageLayers","schemaSpan":{"start":1362181,"end":1362298},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1362222,"end":1362279},"namespace":"","name":"value","type":"simple_EFoliageLayers","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

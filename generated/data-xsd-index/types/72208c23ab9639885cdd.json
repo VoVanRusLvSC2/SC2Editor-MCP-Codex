@@ -1,1 +1,1 @@
-{"name":"simple_CRequirementNodeLink","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string"}
+{"name":"simple_CRequirementNodeLink","schemaSpan":{"start":60230,"end":60335},"namespace":"","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

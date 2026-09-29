@@ -1,1 +1,1 @@
-{"name":"CActorAngle","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CActorAngle"}],"enumValues":[],"facets":[]}
+{"name":"CActorAngle","schemaSpan":{"start":25494,"end":25605},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":25532,"end":25586},"namespace":"","name":"value","type":"simple_CActorAngle","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

@@ -1,1 +1,1 @@
-{"name":"ECmdFlags","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_ECmdFlags"}],"enumValues":[],"facets":[]}
+{"name":"ECmdFlags","schemaSpan":{"start":578060,"end":578167},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":578096,"end":578148},"namespace":"","name":"value","type":"simple_ECmdFlags","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

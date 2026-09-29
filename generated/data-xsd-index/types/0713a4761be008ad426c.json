@@ -1,1 +1,1 @@
-{"name":"simple_EAnimSetTimeFromSource","kind":"simple","fields":[],"enumValues":["CloakChangeStart","MorphStart"],"facets":[],"base":"xs:string"}
+{"name":"simple_EAnimSetTimeFromSource","schemaSpan":{"start":1067537,"end":1068322},"namespace":"","kind":"simple","fields":[],"enumValues":["CloakChangeStart","MorphStart"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

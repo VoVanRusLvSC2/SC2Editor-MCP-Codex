@@ -1,1 +1,1 @@
-{"name":"EClassIdCFootprint","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EClassIdCFootprint"}],"enumValues":[],"facets":[]}
+{"name":"EClassIdCFootprint","schemaSpan":{"start":231645,"end":231770},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":231690,"end":231751},"namespace":"","name":"value","type":"simple_EClassIdCFootprint","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

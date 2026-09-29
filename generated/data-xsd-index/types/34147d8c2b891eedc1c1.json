@@ -1,1 +1,1 @@
-{"name":"EPathingType","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EPathingType"}],"enumValues":[],"facets":[]}
+{"name":"EPathingType","schemaSpan":{"start":1567323,"end":1567436},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1567362,"end":1567417},"namespace":"","name":"value","type":"simple_EPathingType","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

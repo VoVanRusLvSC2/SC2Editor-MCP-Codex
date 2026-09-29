@@ -1,1 +1,1 @@
-{"name":"EExclusivityAction","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EExclusivityAction"}],"enumValues":[],"facets":[]}
+{"name":"EExclusivityAction","schemaSpan":{"start":1358262,"end":1358387},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1358307,"end":1358368},"namespace":"","name":"value","type":"simple_EExclusivityAction","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

@@ -1,1 +1,1 @@
-{"name":"CTextureLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CTextureLink"}],"enumValues":[],"facets":[]}
+{"name":"CTextureLink","schemaSpan":{"start":50126,"end":50239},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":50165,"end":50220},"namespace":"","name":"value","type":"simple_CTextureLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

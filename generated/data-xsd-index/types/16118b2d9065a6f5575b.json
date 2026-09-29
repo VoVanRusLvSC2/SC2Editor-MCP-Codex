@@ -1,1 +1,1 @@
-{"name":"EClassIdCTerrainObject","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EClassIdCTerrainObject"}],"enumValues":[],"facets":[]}
+{"name":"EClassIdCTerrainObject","schemaSpan":{"start":535210,"end":535343},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":535259,"end":535324},"namespace":"","name":"value","type":"simple_EClassIdCTerrainObject","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

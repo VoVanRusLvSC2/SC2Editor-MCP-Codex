@@ -1,1 +1,1 @@
-{"name":"CActorLabelKey","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CActorLabelKey"}],"enumValues":[],"facets":[]}
+{"name":"CActorLabelKey","schemaSpan":{"start":11006,"end":11123},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":11047,"end":11104},"namespace":"","name":"value","type":"simple_CActorLabelKey","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

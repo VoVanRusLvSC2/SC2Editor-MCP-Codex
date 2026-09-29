@@ -1,1 +1,1 @@
-{"name":"EAbilRallyCmd","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EAbilRallyCmd"}],"enumValues":[],"facets":[]}
+{"name":"EAbilRallyCmd","schemaSpan":{"start":109625,"end":109740},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":109665,"end":109721},"namespace":"","name":"value","type":"simple_EAbilRallyCmd","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

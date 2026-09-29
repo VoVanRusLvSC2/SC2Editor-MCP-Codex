@@ -1,1 +1,1 @@
-{"name":"simple_ERewardFlag","kind":"simple","fields":[],"enumValues":["Allowed","AlwaysUseUnearnedDescription","Cloaked","Default","ExcludeInLargeFormatGame","Hidden","Promotion"],"facets":[],"base":"xs:string"}
+{"name":"simple_ERewardFlag","schemaSpan":{"start":1600965,"end":1602376},"namespace":"","kind":"simple","fields":[],"enumValues":["Allowed","AlwaysUseUnearnedDescription","Cloaked","Default","ExcludeInLargeFormatGame","Hidden","Promotion"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

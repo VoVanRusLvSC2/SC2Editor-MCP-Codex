@@ -1,1 +1,1 @@
-{"name":"EActorBlendType","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EActorBlendType"}],"enumValues":[],"facets":[]}
+{"name":"EActorBlendType","schemaSpan":{"start":715831,"end":715950},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":715873,"end":715931},"namespace":"","name":"value","type":"simple_EActorBlendType","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

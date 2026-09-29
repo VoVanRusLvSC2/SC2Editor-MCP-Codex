@@ -1,1 +1,1 @@
-{"name":"simple_EClassIdCGameUI","kind":"simple","fields":[],"enumValues":["CGameUI"],"facets":[],"base":"xs:string"}
+{"name":"simple_EClassIdCGameUI","schemaSpan":{"start":322001,"end":322293},"namespace":"","kind":"simple","fields":[],"enumValues":["CGameUI"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

@@ -1,1 +1,1 @@
-{"name":"TProductHyperlinkId","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_TProductHyperlinkId"}],"enumValues":[],"facets":[]}
+{"name":"TProductHyperlinkId","schemaSpan":{"start":21865,"end":21992},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":21911,"end":21973},"namespace":"","name":"value","type":"simple_TProductHyperlinkId","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

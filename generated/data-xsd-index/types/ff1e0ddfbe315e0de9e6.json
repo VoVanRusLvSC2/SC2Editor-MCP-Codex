@@ -1,1 +1,1 @@
-{"name":"simple_ESoundDupePriority","kind":"simple","fields":[],"enumValues":["Default","Oldest"],"facets":[],"base":"xs:string"}
+{"name":"simple_ESoundDupePriority","schemaSpan":{"start":1679777,"end":1680243},"namespace":"","kind":"simple","fields":[],"enumValues":["Default","Oldest"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

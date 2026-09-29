@@ -1,1 +1,1 @@
-{"name":"ETimeSource","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_ETimeSource"}],"enumValues":[],"facets":[]}
+{"name":"ETimeSource","schemaSpan":{"start":1747111,"end":1747222},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1747149,"end":1747203},"namespace":"","name":"value","type":"simple_ETimeSource","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

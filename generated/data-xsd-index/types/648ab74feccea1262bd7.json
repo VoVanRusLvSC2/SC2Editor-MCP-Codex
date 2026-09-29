@@ -1,1 +1,1 @@
-{"name":"CErrorLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CErrorLink"}],"enumValues":[],"facets":[]}
+{"name":"CErrorLink","schemaSpan":{"start":57941,"end":58050},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":57978,"end":58031},"namespace":"","name":"value","type":"simple_CErrorLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

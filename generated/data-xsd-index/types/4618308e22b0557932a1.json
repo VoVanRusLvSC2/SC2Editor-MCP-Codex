@@ -1,1 +1,1 @@
-{"name":"simple_CTargetSortLink","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string"}
+{"name":"simple_CTargetSortLink","schemaSpan":{"start":62429,"end":62529},"namespace":"","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

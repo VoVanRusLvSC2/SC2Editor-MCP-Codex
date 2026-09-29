@@ -1,1 +1,1 @@
-{"name":"simple_EClassIdCReverb","kind":"simple","fields":[],"enumValues":["CReverb"],"facets":[],"base":"xs:string"}
+{"name":"simple_EClassIdCReverb","schemaSpan":{"start":500988,"end":501280},"namespace":"","kind":"simple","fields":[],"enumValues":["CReverb"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

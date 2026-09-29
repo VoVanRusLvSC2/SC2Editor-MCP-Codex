@@ -1,1 +1,1 @@
-{"name":"CAttachMethodLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CAttachMethodLink"}],"enumValues":[],"facets":[]}
+{"name":"CAttachMethodLink","schemaSpan":{"start":47302,"end":47425},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":47346,"end":47406},"namespace":"","name":"value","type":"simple_CAttachMethodLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

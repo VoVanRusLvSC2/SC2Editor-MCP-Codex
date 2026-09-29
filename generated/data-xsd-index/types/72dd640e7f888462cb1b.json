@@ -1,1 +1,1 @@
-{"name":"EAbilHarvestCmd","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EAbilHarvestCmd"}],"enumValues":[],"facets":[]}
+{"name":"EAbilHarvestCmd","schemaSpan":{"start":95780,"end":95899},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":95822,"end":95880},"namespace":"","name":"value","type":"simple_EAbilHarvestCmd","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

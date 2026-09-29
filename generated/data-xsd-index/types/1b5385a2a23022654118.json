@@ -1,1 +1,1 @@
-{"name":"simple_CHeroStatLink","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string"}
+{"name":"simple_CHeroStatLink","schemaSpan":{"start":53486,"end":53584},"namespace":"","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

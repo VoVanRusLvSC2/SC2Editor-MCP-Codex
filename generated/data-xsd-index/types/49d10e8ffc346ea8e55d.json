@@ -1,1 +1,1 @@
-{"name":"EMoverFlag","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EMoverFlag"}],"enumValues":[],"facets":[]}
+{"name":"EMoverFlag","schemaSpan":{"start":1547855,"end":1547964},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1547892,"end":1547945},"namespace":"","name":"value","type":"simple_EMoverFlag","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

@@ -1,1 +1,1 @@
-{"name":"EWeaponLegacyMovement","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EWeaponLegacyMovement"}],"enumValues":[],"facets":[]}
+{"name":"EWeaponLegacyMovement","schemaSpan":{"start":1797257,"end":1797388},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1797305,"end":1797369},"namespace":"","name":"value","type":"simple_EWeaponLegacyMovement","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

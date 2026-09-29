@@ -1,1 +1,1 @@
-{"name":"TSoundWeight","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_TSoundWeight"}],"enumValues":[],"facets":[]}
+{"name":"TSoundWeight","schemaSpan":{"start":2277,"end":2390},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":2316,"end":2371},"namespace":"","name":"value","type":"simple_TSoundWeight","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

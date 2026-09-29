@@ -1,1 +1,1 @@
-{"name":"EHeroUniverse","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EHeroUniverse"}],"enumValues":[],"facets":[]}
+{"name":"EHeroUniverse","schemaSpan":{"start":410833,"end":410948},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":410873,"end":410929},"namespace":"","name":"value","type":"simple_EHeroUniverse","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

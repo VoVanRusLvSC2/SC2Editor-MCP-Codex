@@ -1,1 +1,1 @@
-{"name":"CSoundtrackLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CSoundtrackLink"}],"enumValues":[],"facets":[]}
+{"name":"CSoundtrackLink","schemaSpan":{"start":49903,"end":50022},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":49945,"end":50003},"namespace":"","name":"value","type":"simple_CSoundtrackLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

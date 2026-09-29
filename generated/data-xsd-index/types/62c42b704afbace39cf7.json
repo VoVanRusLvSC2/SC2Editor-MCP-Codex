@@ -1,1 +1,1 @@
-{"name":"simple_EActorDeathSequenceFlag","kind":"simple","fields":[],"enumValues":["PreventKill"],"facets":[],"base":"xs:string"}
+{"name":"simple_EActorDeathSequenceFlag","schemaSpan":{"start":721870,"end":722317},"namespace":"","kind":"simple","fields":[],"enumValues":["PreventKill"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

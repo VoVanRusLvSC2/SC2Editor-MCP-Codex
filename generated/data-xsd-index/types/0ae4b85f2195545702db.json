@@ -1,1 +1,1 @@
-{"name":"simple_EStartingUnitFlag","kind":"simple","fields":[],"enumValues":["ResourceRally","ResourceSetRally"],"facets":[],"base":"xs:string"}
+{"name":"simple_EStartingUnitFlag","schemaSpan":{"start":1703313,"end":1703856},"namespace":"","kind":"simple","fields":[],"enumValues":["ResourceRally","ResourceSetRally"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

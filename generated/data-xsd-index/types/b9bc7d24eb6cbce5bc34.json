@@ -1,1 +1,1 @@
-{"name":"EActorModelAspectRegardsAs","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EActorModelAspectRegardsAs"}],"enumValues":[],"facets":[]}
+{"name":"EActorModelAspectRegardsAs","schemaSpan":{"start":765670,"end":765811},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":765723,"end":765792},"namespace":"","name":"value","type":"simple_EActorModelAspectRegardsAs","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

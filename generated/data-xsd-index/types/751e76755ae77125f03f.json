@@ -1,1 +1,1 @@
-{"name":"simple_EArtifactType","kind":"simple","fields":[],"enumValues":["Gem","Glyph","Trinket"],"facets":[],"base":"xs:string"}
+{"name":"simple_EArtifactType","schemaSpan":{"start":1071197,"end":1071821},"namespace":"","kind":"simple","fields":[],"enumValues":["Gem","Glyph","Trinket"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

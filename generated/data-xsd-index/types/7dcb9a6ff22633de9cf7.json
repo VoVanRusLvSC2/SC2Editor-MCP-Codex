@@ -1,1 +1,1 @@
-{"name":"EWeaponOption","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EWeaponOption"}],"enumValues":[],"facets":[]}
+{"name":"EWeaponOption","schemaSpan":{"start":1799672,"end":1799787},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1799712,"end":1799768},"namespace":"","name":"value","type":"simple_EWeaponOption","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

@@ -1,1 +1,1 @@
-{"name":"simple_EAMFilterType","kind":"simple","fields":[],"enumValues":["Absolute","Preference"],"facets":[],"base":"xs:string"}
+{"name":"simple_EAMFilterType","schemaSpan":{"start":619685,"end":620156},"namespace":"","kind":"simple","fields":[],"enumValues":["Absolute","Preference"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

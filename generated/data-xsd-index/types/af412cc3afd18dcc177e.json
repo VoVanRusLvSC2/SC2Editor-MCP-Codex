@@ -1,1 +1,1 @@
-{"name":"simple_CAssetPath","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string"}
+{"name":"simple_CAssetPath","schemaSpan":{"start":11759,"end":11854},"namespace":"","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

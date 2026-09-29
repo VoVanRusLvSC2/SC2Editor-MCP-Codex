@@ -1,1 +1,1 @@
-{"name":"EAbilMoveFlag","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EAbilMoveFlag"}],"enumValues":[],"facets":[]}
+{"name":"EAbilMoveFlag","schemaSpan":{"start":672203,"end":672318},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":672243,"end":672299},"namespace":"","name":"value","type":"simple_EAbilMoveFlag","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

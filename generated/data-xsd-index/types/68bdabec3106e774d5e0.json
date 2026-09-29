@@ -1,1 +1,1 @@
-{"name":"TCommanderLevel","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_TCommanderLevel"}],"enumValues":[],"facets":[]}
+{"name":"TCommanderLevel","schemaSpan":{"start":5361,"end":5480},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":5403,"end":5461},"namespace":"","name":"value","type":"simple_TCommanderLevel","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

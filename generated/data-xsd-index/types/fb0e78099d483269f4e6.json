@@ -1,1 +1,1 @@
-{"name":"simple_EActorPhysicsDataFlag","kind":"simple","fields":[],"enumValues":["ExpectsOtherForces"],"facets":[],"base":"xs:string"}
+{"name":"simple_EActorPhysicsDataFlag","schemaSpan":{"start":929230,"end":929677},"namespace":"","kind":"simple","fields":[],"enumValues":["ExpectsOtherForces"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

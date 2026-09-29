@@ -1,1 +1,1 @@
-{"name":"CString8","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CString8"}],"enumValues":[],"facets":[]}
+{"name":"CString8","schemaSpan":{"start":16064,"end":16169},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":16099,"end":16150},"namespace":"","name":"value","type":"simple_CString8","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

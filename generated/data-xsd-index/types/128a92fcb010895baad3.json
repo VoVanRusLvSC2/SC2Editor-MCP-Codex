@@ -1,1 +1,1 @@
-{"name":"simple_EActorQuadDecorationFlag","kind":"simple","fields":[],"enumValues":["UseLaunchActorScale"],"facets":[],"base":"xs:string"}
+{"name":"simple_EActorQuadDecorationFlag","schemaSpan":{"start":948484,"end":948876},"namespace":"","kind":"simple","fields":[],"enumValues":["UseLaunchActorScale"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

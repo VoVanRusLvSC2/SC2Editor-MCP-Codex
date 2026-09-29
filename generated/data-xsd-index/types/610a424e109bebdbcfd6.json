@@ -1,1 +1,1 @@
-{"name":"simple_ECharacterGender","kind":"simple","fields":[],"enumValues":["Female","Male"],"facets":[],"base":"xs:string"}
+{"name":"simple_ECharacterGender","schemaSpan":{"start":1228183,"end":1228641},"namespace":"","kind":"simple","fields":[],"enumValues":["Female","Male"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

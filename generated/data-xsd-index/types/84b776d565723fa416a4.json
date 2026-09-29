@@ -1,1 +1,1 @@
-{"name":"ETalentProfileFlag","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_ETalentProfileFlag"}],"enumValues":[],"facets":[]}
+{"name":"ETalentProfileFlag","schemaSpan":{"start":528216,"end":528341},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":528261,"end":528322},"namespace":"","name":"value","type":"simple_ETalentProfileFlag","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

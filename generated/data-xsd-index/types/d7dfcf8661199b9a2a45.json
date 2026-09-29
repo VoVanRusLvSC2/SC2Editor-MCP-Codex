@@ -1,1 +1,1 @@
-{"name":"EActorDoodadFlag","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EActorDoodadFlag"}],"enumValues":[],"facets":[]}
+{"name":"EActorDoodadFlag","schemaSpan":{"start":723660,"end":723781},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":723703,"end":723762},"namespace":"","name":"value","type":"simple_EActorDoodadFlag","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

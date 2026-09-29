@@ -1,1 +1,1 @@
-{"name":"simple_EActorPropertyCurveTangentType","kind":"simple","fields":[],"enumValues":["Auto","Custom","Fast","Flat","Linear","Slow","Smooth","Step"],"facets":[],"base":"xs:string"}
+{"name":"simple_EActorPropertyCurveTangentType","schemaSpan":{"start":938706,"end":941661},"namespace":"","kind":"simple","fields":[],"enumValues":["Auto","Custom","Fast","Flat","Linear","Slow","Smooth","Step"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

@@ -1,1 +1,1 @@
-{"name":"CCharacterLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CCharacterLink"}],"enumValues":[],"facets":[]}
+{"name":"CCharacterLink","schemaSpan":{"start":45328,"end":45445},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":45369,"end":45426},"namespace":"","name":"value","type":"simple_CCharacterLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

@@ -1,1 +1,1 @@
-{"name":"simple_EClassIdCActorSupport","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string"}
+{"name":"simple_EClassIdCActorSupport","schemaSpan":{"start":178433,"end":178539},"namespace":"","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

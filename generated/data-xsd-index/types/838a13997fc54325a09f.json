@@ -1,1 +1,1 @@
-{"name":"EActorSoundFlag","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EActorSoundFlag"}],"enumValues":[],"facets":[]}
+{"name":"EActorSoundFlag","schemaSpan":{"start":992223,"end":992342},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":992265,"end":992323},"namespace":"","name":"value","type":"simple_EActorSoundFlag","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

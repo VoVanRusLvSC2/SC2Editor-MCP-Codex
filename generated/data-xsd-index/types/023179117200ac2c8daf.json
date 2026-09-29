@@ -1,1 +1,1 @@
-{"name":"EAbilEffectFlag","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EAbilEffectFlag"}],"enumValues":[],"facets":[]}
+{"name":"EAbilEffectFlag","schemaSpan":{"start":649205,"end":649324},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":649247,"end":649305},"namespace":"","name":"value","type":"simple_EAbilEffectFlag","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

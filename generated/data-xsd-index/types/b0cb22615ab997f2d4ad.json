@@ -1,1 +1,1 @@
-{"name":"simple_CArmyUpgradeLink","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string"}
+{"name":"simple_CArmyUpgradeLink","schemaSpan":{"start":44776,"end":44877},"namespace":"","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

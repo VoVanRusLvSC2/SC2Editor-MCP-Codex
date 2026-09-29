@@ -1,1 +1,1 @@
-{"name":"simple_EClassIdCCampaign","kind":"simple","fields":[],"enumValues":["CCampaign"],"facets":[],"base":"xs:string"}
+{"name":"simple_EClassIdCCampaign","schemaSpan":{"start":208061,"end":208358},"namespace":"","kind":"simple","fields":[],"enumValues":["CCampaign"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

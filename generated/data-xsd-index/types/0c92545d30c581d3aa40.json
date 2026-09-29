@@ -1,1 +1,1 @@
-{"name":"simple_EActorSiteFlag","kind":"simple","fields":[],"enumValues":["RequiresManualKill"],"facets":[],"base":"xs:string"}
+{"name":"simple_EActorSiteFlag","schemaSpan":{"start":976073,"end":976595},"namespace":"","kind":"simple","fields":[],"enumValues":["RequiresManualKill"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

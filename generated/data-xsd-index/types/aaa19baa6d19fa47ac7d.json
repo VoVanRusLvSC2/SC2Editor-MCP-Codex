@@ -1,1 +1,1 @@
-{"name":"EScoreValueOperation","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EScoreValueOperation"}],"enumValues":[],"facets":[]}
+{"name":"EScoreValueOperation","schemaSpan":{"start":1666295,"end":1666424},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1666342,"end":1666405},"namespace":"","name":"value","type":"simple_EScoreValueOperation","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

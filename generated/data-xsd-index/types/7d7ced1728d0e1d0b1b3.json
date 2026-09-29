@@ -1,1 +1,1 @@
-{"name":"CVariatorActorReal32","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CVariatorActorReal32"}],"enumValues":[],"facets":[]}
+{"name":"CVariatorActorReal32","schemaSpan":{"start":35928,"end":36057},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":35975,"end":36038},"namespace":"","name":"value","type":"simple_CVariatorActorReal32","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

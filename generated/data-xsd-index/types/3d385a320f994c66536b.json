@@ -1,1 +1,1 @@
-{"name":"simple_EClassIdCLensFlareSet","kind":"simple","fields":[],"enumValues":["CLensFlareSet"],"facets":[],"base":"xs:string"}
+{"name":"simple_EClassIdCLensFlareSet","schemaSpan":{"start":421549,"end":421860},"namespace":"","kind":"simple","fields":[],"enumValues":["CLensFlareSet"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

@@ -1,1 +1,1 @@
-{"name":"simple_CDecalPackLink","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string"}
+{"name":"simple_CDecalPackLink","schemaSpan":{"start":57394,"end":57493},"namespace":"","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

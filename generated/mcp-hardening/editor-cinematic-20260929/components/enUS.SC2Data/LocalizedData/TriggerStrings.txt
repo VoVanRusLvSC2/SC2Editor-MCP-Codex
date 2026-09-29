@@ -1,0 +1,2 @@
+Trigger/Name/lib_A1000001_CDAB663A=CinematicAcceptance
+Category/Name/lib_A1000001_A9C3F5DA=MCP Acceptance

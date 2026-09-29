@@ -1,1 +1,1 @@
-{"name":"simple_EArmyCategoryFlag","kind":"simple","fields":[],"enumValues":["Hidden"],"facets":[],"base":"xs:string"}
+{"name":"simple_EArmyCategoryFlag","schemaSpan":{"start":1070786,"end":1071078},"namespace":"","kind":"simple","fields":[],"enumValues":["Hidden"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

@@ -1,1 +1,1 @@
-{"name":"EDirectionalLight","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EDirectionalLight"}],"enumValues":[],"facets":[]}
+{"name":"EDirectionalLight","schemaSpan":{"start":1324288,"end":1324411},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1324332,"end":1324392},"namespace":"","name":"value","type":"simple_EDirectionalLight","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

@@ -1,1 +1,1 @@
-{"name":"simple_EGameVariantOption","kind":"simple","fields":[],"enumValues":["Coop","Custom","Default","FreeForAll","Premade"],"facets":[],"base":"xs:string"}
+{"name":"simple_EGameVariantOption","schemaSpan":{"start":1491825,"end":1492813},"namespace":"","kind":"simple","fields":[],"enumValues":["Coop","Custom","Default","FreeForAll","Premade"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

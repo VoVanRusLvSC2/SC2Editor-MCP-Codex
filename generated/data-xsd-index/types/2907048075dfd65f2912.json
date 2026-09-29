@@ -1,1 +1,1 @@
-{"name":"NNet__Game__TDifficulty","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_NNet__Game__TDifficulty"}],"enumValues":[],"facets":[]}
+{"name":"NNet__Game__TDifficulty","schemaSpan":{"start":4002,"end":4137},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":4052,"end":4118},"namespace":"","name":"value","type":"simple_NNet__Game__TDifficulty","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

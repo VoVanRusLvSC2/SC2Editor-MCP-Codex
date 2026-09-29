@@ -1,1 +1,1 @@
-{"name":"simple_EVitalType","kind":"simple","fields":[],"enumValues":["Current","Delta","Fraction","Maximum"],"facets":[],"base":"xs:string"}
+{"name":"simple_EVitalType","schemaSpan":{"start":1792290,"end":1793094},"namespace":"","kind":"simple","fields":[],"enumValues":["Current","Delta","Fraction","Maximum"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

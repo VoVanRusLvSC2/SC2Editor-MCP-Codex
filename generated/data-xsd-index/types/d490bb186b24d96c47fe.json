@@ -1,1 +1,1 @@
-{"name":"simple_EDamageSound","kind":"simple","fields":[],"enumValues":["Impact","Launch"],"facets":[],"base":"xs:string"}
+{"name":"simple_EDamageSound","schemaSpan":{"start":1316685,"end":1317143},"namespace":"","kind":"simple","fields":[],"enumValues":["Impact","Launch"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

@@ -1,1 +1,1 @@
-{"name":"EEffectCancelOrderFlag","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EEffectCancelOrderFlag"}],"enumValues":[],"facets":[]}
+{"name":"EEffectCancelOrderFlag","schemaSpan":{"start":1328768,"end":1328901},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1328817,"end":1328882},"namespace":"","name":"value","type":"simple_EEffectCancelOrderFlag","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

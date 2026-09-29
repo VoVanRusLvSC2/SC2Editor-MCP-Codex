@@ -1,1 +1,1 @@
-{"name":"EDeathType","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EDeathType"}],"enumValues":[],"facets":[]}
+{"name":"EDeathType","schemaSpan":{"start":271306,"end":271415},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":271343,"end":271396},"namespace":"","name":"value","type":"simple_EDeathType","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

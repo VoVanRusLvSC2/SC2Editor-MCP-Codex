@@ -1,1 +1,1 @@
-{"name":"EResponseContinueMethod","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EResponseContinueMethod"}],"enumValues":[],"facets":[]}
+{"name":"EResponseContinueMethod","schemaSpan":{"start":1597988,"end":1598123},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1598038,"end":1598104},"namespace":"","name":"value","type":"simple_EResponseContinueMethod","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

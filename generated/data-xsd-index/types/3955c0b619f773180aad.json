@@ -1,1 +1,1 @@
-{"name":"simple_EActorBlendType","kind":"simple","fields":[],"enumValues":["Bounce","Cycle","OneShot"],"facets":[],"base":"xs:string"}
+{"name":"simple_EActorBlendType","schemaSpan":{"start":715952,"end":716972},"namespace":"","kind":"simple","fields":[],"enumValues":["Bounce","Cycle","OneShot"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

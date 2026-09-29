@@ -1,1 +1,1 @@
-{"name":"simple_EAbilBehaviorFlag","kind":"simple","fields":[],"enumValues":["AutoCast","AutoCastOffOwnerLeave","AutoCastOn","AutomaticOn","BestUnit","Toggle","ToggledOn","Transient"],"facets":[],"base":"xs:string"}
+{"name":"simple_EAbilBehaviorFlag","schemaSpan":{"start":637269,"end":638857},"namespace":"","kind":"simple","fields":[],"enumValues":["AutoCast","AutoCastOffOwnerLeave","AutoCastOn","AutomaticOn","BestUnit","Toggle","ToggledOn","Transient"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

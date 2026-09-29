@@ -1,1 +1,1 @@
-{"name":"CConversationStateLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CConversationStateLink"}],"enumValues":[],"facets":[]}
+{"name":"CConversationStateLink","schemaSpan":{"start":45997,"end":46130},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":46046,"end":46111},"namespace":"","name":"value","type":"simple_CConversationStateLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

@@ -1,1 +1,1 @@
-{"name":"EChargeFlag","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EChargeFlag"}],"enumValues":[],"facets":[]}
+{"name":"EChargeFlag","schemaSpan":{"start":1230503,"end":1230614},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1230541,"end":1230595},"namespace":"","name":"value","type":"simple_EChargeFlag","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

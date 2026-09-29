@@ -1,1 +1,1 @@
-{"name":"TBattleProductId","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_TBattleProductId"}],"enumValues":[],"facets":[]}
+{"name":"TBattleProductId","schemaSpan":{"start":2702,"end":2823},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":2745,"end":2804},"namespace":"","name":"value","type":"simple_TBattleProductId","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

@@ -1,1 +1,1 @@
-{"name":"ECliffLevelCompare","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_ECliffLevelCompare"}],"enumValues":[],"facets":[]}
+{"name":"ECliffLevelCompare","schemaSpan":{"start":1232445,"end":1232570},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1232490,"end":1232551},"namespace":"","name":"value","type":"simple_ECliffLevelCompare","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

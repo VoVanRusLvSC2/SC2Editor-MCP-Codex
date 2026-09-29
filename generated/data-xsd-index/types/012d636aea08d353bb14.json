@@ -1,1 +1,1 @@
-{"name":"simple_CIdSetTeams","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string"}
+{"name":"simple_CIdSetTeams","schemaSpan":{"start":39703,"end":39799},"namespace":"","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

@@ -1,1 +1,1 @@
-{"name":"ETechCountState","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_ETechCountState"}],"enumValues":[],"facets":[]}
+{"name":"ETechCountState","schemaSpan":{"start":1707225,"end":1707344},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1707267,"end":1707325},"namespace":"","name":"value","type":"simple_ETechCountState","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

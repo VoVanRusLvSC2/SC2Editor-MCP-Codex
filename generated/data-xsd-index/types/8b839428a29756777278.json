@@ -1,1 +1,1 @@
-{"name":"ETextureProp","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_ETextureProp"}],"enumValues":[],"facets":[]}
+{"name":"ETextureProp","schemaSpan":{"start":1713389,"end":1713502},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1713428,"end":1713483},"namespace":"","name":"value","type":"simple_ETextureProp","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

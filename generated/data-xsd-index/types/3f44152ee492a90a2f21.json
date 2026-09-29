@@ -1,1 +1,1 @@
-{"name":"CSoundMixSnapshotLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CSoundMixSnapshotLink"}],"enumValues":[],"facets":[]}
+{"name":"CSoundMixSnapshotLink","schemaSpan":{"start":49662,"end":49793},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":49710,"end":49774},"namespace":"","name":"value","type":"simple_CSoundMixSnapshotLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

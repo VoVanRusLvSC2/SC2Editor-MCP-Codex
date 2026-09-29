@@ -1,1 +1,1 @@
-{"name":"CAssetPath","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CAssetPath"}],"enumValues":[],"facets":[]}
+{"name":"CAssetPath","schemaSpan":{"start":11648,"end":11757},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":11685,"end":11738},"namespace":"","name":"value","type":"simple_CAssetPath","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

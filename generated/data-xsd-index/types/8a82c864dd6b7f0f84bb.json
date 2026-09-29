@@ -1,1 +1,1 @@
-{"name":"simple_ESkillPoint","kind":"simple","fields":[],"enumValues":["Current","Extra","Total","Used"],"facets":[],"base":"xs:string"}
+{"name":"simple_ESkillPoint","schemaSpan":{"start":1673098,"end":1673891},"namespace":"","kind":"simple","fields":[],"enumValues":["Current","Extra","Total","Used"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

@@ -1,1 +1,1 @@
-{"name":"simple_CSoundMixSnapshotLink","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string"}
+{"name":"simple_CSoundMixSnapshotLink","schemaSpan":{"start":49795,"end":49901},"namespace":"","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

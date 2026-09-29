@@ -1,1 +1,1 @@
-{"name":"simple_CCommanderLink","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string"}
+{"name":"simple_CCommanderLink","schemaSpan":{"start":45667,"end":45766},"namespace":"","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

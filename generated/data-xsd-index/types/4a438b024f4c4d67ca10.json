@@ -1,1 +1,1 @@
-{"name":"simple_CColorHDR","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string"}
+{"name":"simple_CColorHDR","schemaSpan":{"start":29801,"end":29895},"namespace":"","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

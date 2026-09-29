@@ -1,1 +1,1 @@
-{"name":"ETextureSlotComponent","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_ETextureSlotComponent"}],"enumValues":[],"facets":[]}
+{"name":"ETextureSlotComponent","schemaSpan":{"start":1743952,"end":1744083},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1744000,"end":1744064},"namespace":"","name":"value","type":"simple_ETextureSlotComponent","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

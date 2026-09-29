@@ -1,1 +1,1 @@
-{"name":"simple_EClassIdCArmyCategory","kind":"simple","fields":[],"enumValues":["CArmyCategory"],"facets":[],"base":"xs:string"}
+{"name":"simple_EClassIdCArmyCategory","schemaSpan":{"start":183894,"end":184204},"namespace":"","kind":"simple","fields":[],"enumValues":["CArmyCategory"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

@@ -1,1 +1,1 @@
-{"name":"simple_EPathMode","kind":"simple","fields":[],"enumValues":["Amphibious","Builder","Digger","Float","Flying","Ground","Jumper","Scaler"],"facets":[],"base":"xs:string"}
+{"name":"simple_EPathMode","schemaSpan":{"start":1565367,"end":1566856},"namespace":"","kind":"simple","fields":[],"enumValues":["Amphibious","Builder","Digger","Float","Flying","Ground","Jumper","Scaler"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

@@ -1,1 +1,1 @@
-{"name":"EAbilBehaviorCycleMode","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EAbilBehaviorCycleMode"}],"enumValues":[],"facets":[]}
+{"name":"EAbilBehaviorCycleMode","schemaSpan":{"start":636350,"end":636483},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":636399,"end":636464},"namespace":"","name":"value","type":"simple_EAbilBehaviorCycleMode","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

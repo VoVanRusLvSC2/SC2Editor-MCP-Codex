@@ -1,1 +1,1 @@
-{"name":"EClassIdCStimPack","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EClassIdCStimPack"}],"enumValues":[],"facets":[]}
+{"name":"EClassIdCStimPack","schemaSpan":{"start":524302,"end":524425},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":524346,"end":524406},"namespace":"","name":"value","type":"simple_EClassIdCStimPack","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

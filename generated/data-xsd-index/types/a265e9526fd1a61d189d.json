@@ -1,1 +1,1 @@
-{"name":"TMountCategory","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_TMountCategory"}],"enumValues":[],"facets":[]}
+{"name":"TMountCategory","schemaSpan":{"start":21012,"end":21129},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":21053,"end":21110},"namespace":"","name":"value","type":"simple_TMountCategory","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

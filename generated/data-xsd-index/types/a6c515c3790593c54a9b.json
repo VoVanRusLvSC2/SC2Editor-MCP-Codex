@@ -1,1 +1,1 @@
-{"name":"CScoreValueLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CScoreValueLink"}],"enumValues":[],"facets":[]}
+{"name":"CScoreValueLink","schemaSpan":{"start":60774,"end":60893},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":60816,"end":60874},"namespace":"","name":"value","type":"simple_CScoreValueLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

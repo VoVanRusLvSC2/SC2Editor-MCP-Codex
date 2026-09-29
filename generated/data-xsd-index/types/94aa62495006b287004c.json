@@ -1,1 +1,1 @@
-{"name":"EAMBestMatchFlag","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EAMBestMatchFlag"}],"enumValues":[],"facets":[]}
+{"name":"EAMBestMatchFlag","schemaSpan":{"start":617095,"end":617216},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":617138,"end":617197},"namespace":"","name":"value","type":"simple_EAMBestMatchFlag","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

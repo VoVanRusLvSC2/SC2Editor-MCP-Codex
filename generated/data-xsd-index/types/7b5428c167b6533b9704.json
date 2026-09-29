@@ -1,1 +1,1 @@
-{"name":"simple_EAllianceId","kind":"simple","fields":[],"enumValues":["Chat","Control","Defeat","GiveHelp","Passive","Power","Pushable","SeekHelp","Spend","Trade","Vision"],"facets":[],"base":"xs:string"}
+{"name":"simple_EAllianceId","schemaSpan":{"start":232995,"end":234999},"namespace":"","kind":"simple","fields":[],"enumValues":["Chat","Control","Defeat","GiveHelp","Passive","Power","Pushable","SeekHelp","Spend","Trade","Vision"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

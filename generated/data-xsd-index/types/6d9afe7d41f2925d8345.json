@@ -1,1 +1,1 @@
-{"name":"simple_EClassIdCConfig","kind":"simple","fields":[],"enumValues":["CConfig"],"facets":[],"base":"xs:string"}
+{"name":"simple_EClassIdCConfig","schemaSpan":{"start":214422,"end":214714},"namespace":"","kind":"simple","fields":[],"enumValues":["CConfig"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

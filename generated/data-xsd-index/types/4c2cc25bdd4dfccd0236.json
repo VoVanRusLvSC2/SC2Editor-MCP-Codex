@@ -1,1 +1,1 @@
-{"name":"CFixed","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CFixed"}],"enumValues":[],"facets":[]}
+{"name":"CFixed","schemaSpan":{"start":7590,"end":7691},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":7623,"end":7672},"namespace":"","name":"value","type":"simple_CFixed","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

@@ -1,1 +1,1 @@
-{"name":"simple_EQuickCastMode","kind":"simple","fields":[],"enumValues":["Off","On","OnUp"],"facets":[],"base":"xs:string"}
+{"name":"simple_EQuickCastMode","schemaSpan":{"start":1587776,"end":1588390},"namespace":"","kind":"simple","fields":[],"enumValues":["Off","On","OnUp"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

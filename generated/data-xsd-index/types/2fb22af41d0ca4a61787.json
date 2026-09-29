@@ -1,1 +1,1 @@
-{"name":"EEffectRedirectMissile","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EEffectRedirectMissile"}],"enumValues":[],"facets":[]}
+{"name":"EEffectRedirectMissile","schemaSpan":{"start":1347655,"end":1347788},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1347704,"end":1347769},"namespace":"","name":"value","type":"simple_EEffectRedirectMissile","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

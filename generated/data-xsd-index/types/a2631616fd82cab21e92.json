@@ -1,1 +1,1 @@
-{"name":"CStringLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CStringLink"}],"enumValues":[],"facets":[]}
+{"name":"CStringLink","schemaSpan":{"start":16471,"end":16582},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":16509,"end":16563},"namespace":"","name":"value","type":"simple_CStringLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

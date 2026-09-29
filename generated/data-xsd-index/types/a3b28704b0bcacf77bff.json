@@ -1,1 +1,1 @@
-{"name":"simple_EHeroStatState","kind":"simple","fields":[],"enumValues":["Downgrade","Unchanged","Upgrade"],"facets":[],"base":"xs:string"}
+{"name":"simple_EHeroStatState","schemaSpan":{"start":417086,"end":417731},"namespace":"","kind":"simple","fields":[],"enumValues":["Downgrade","Unchanged","Upgrade"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

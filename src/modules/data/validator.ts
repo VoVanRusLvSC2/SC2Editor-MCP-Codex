@@ -1,10 +1,10 @@
 import { DataDocument } from "./document.js";
 import type { DataSchemaRegistry } from "./schemaRegistry.js";
-import type { DataDiagnostic, DataObject, DataValidationReport } from "./types.js";
+import type { DataDiagnostic, DataReference, DataObject, DataValidationReport } from "./types.js";
 
 export interface IndexedDataObject extends DataObject { file: string; layer: "workspace" | "dependency" }
 
-export function validateDataDocuments(primaryFile: string, documents: Array<{ file: string; document: DataDocument; layer: "workspace" | "dependency" }>, schema?: DataSchemaRegistry): DataValidationReport {
+export function validateDataDocuments(primaryFile: string, documents: Array<{ file: string; document: DataDocument; layer: "workspace" | "dependency" }>, schema?: DataSchemaRegistry,referenceEdges?:DataReference[]): DataValidationReport {
   const diagnostics: DataDiagnostic[] = [];
   const objects: IndexedDataObject[] = [];
   for (const record of documents) {
@@ -28,7 +28,7 @@ export function validateDataDocuments(primaryFile: string, documents: Array<{ fi
       if (!object.isDefault) diagnostics.push({ level: "L2", severity: "warning", code: "DATA_ID_MISSING", message: `${object.ctype} has no id and is not marked default`, file: object.file, path: object.ctype });
       continue;
     }
-    const domainKey = `${object.domain ?? object.ctype}\0${object.id}`.toLowerCase();
+    const domainKey = `${object.domain ?? object.ctype}\0${object.id}`;
     byDomainId.set(domainKey, [...(byDomainId.get(domainKey) ?? []), object]);
     const idKey = object.id.toLowerCase();
     byId.set(idKey, [...(byId.get(idKey) ?? []), object]);
@@ -40,7 +40,7 @@ export function validateDataDocuments(primaryFile: string, documents: Array<{ fi
 
   for (const object of objects.filter((entry) => entry.layer === "workspace")) {
     if (object.parent) {
-      const key = `${object.domain ?? object.ctype}\0${object.parent}`.toLowerCase();
+      const key = `${object.domain ?? object.ctype}\0${object.parent}`;
       if (!(byDomainId.get(key)?.length)) diagnostics.push({ level: "L3", severity: "warning", code: "DATA_PARENT_UNRESOLVED", message: `Parent '${object.parent}' was not found in domain ${object.domain ?? object.ctype}`, file: object.file, path: `${object.ctype}:${object.id ?? "<default>"}@parent`, reference: { kind: object.domain ?? object.ctype, value: object.parent } });
     }
     const walk = (fields: DataObject["fields"], parentPath = "") => {
@@ -98,12 +98,19 @@ export function validateDataDocuments(primaryFile: string, documents: Array<{ fi
     checkObserved(object.fields);
   }
 
+  const typedEdges=referenceEdges??documents.filter(r=>r.layer === "workspace").flatMap(record=>record.document.references().map(ref=>({...ref,file:record.file})));
+  for(const ref of typedEdges){
+    if(!ref.targetDomain||!ref.value)continue;
+    const targets=objects.filter(o=>o.id===ref.value&&o.domain===ref.targetDomain);
+    if(!targets.length)diagnostics.push({level:"L3",severity:"warning",code:"DATA_TYPED_REFERENCE_UNRESOLVED",message:"Typed reference not found in loaded catalog scope",file:ref.file,path:ref.path,reference:{kind:ref.targetDomain,value:ref.value}});
+  }
+
   // Parent-cycle detection follows domain-scoped inheritance exactly.
   for (const object of objects.filter((entry) => entry.layer === "workspace" && entry.id && entry.parent)) {
     const visited = new Set<string>();
     let current: IndexedDataObject | undefined = object;
     while (current?.parent) {
-      const key = `${current.domain ?? current.ctype}\0${current.parent}`.toLowerCase();
+      const key: string = `${current.domain ?? current.ctype}\0${current.parent}`;
       if (visited.has(key)) {
         diagnostics.push({ level: "L4", severity: "error", code: "DATA_PARENT_CYCLE", message: `Inheritance cycle reaches '${current.parent}'`, file: object.file, path: `${object.ctype}:${object.id}@parent` });
         break;

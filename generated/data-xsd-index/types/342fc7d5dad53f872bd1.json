@@ -1,1 +1,1 @@
-{"name":"simple_TBattleLicenseName","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string"}
+{"name":"simple_TBattleLicenseName","schemaSpan":{"start":17674,"end":17777},"namespace":"","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

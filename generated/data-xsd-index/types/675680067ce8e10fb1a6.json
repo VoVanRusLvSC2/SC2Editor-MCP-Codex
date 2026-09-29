@@ -1,1 +1,1 @@
-{"name":"simple_EActorResponseScope","kind":"simple","fields":[],"enumValues":["QueryDirector","QuerySubject"],"facets":[],"base":"xs:string"}
+{"name":"simple_EActorResponseScope","schemaSpan":{"start":963892,"end":964532},"namespace":"","kind":"simple","fields":[],"enumValues":["QueryDirector","QuerySubject"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

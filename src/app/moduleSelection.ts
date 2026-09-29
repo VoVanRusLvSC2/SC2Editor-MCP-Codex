@@ -2,6 +2,10 @@ export const publicModules = ["ui", "cutscene", "text", "data", "browse", "place
 export type PublicModule = typeof publicModules[number];
 
 const profiles: Record<string, PublicModule[]> = {
+  minimal: [],
+  "focused-data": ["data"],
+  "focused-script": ["script"],
+  "focused-authoring": ["data", "script"],
   all: [...publicModules],
   ui: ["ui", "text"],
   cutscene: ["ui", "cutscene", "browse", "data"],

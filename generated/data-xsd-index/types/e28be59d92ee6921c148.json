@@ -1,1 +1,1 @@
-{"name":"simple_EEffectContainer","kind":"simple","fields":[],"enumValues":["Any","Inventory","Magazine","Transport"],"facets":[],"base":"xs:string"}
+{"name":"simple_EEffectContainer","schemaSpan":{"start":1330252,"end":1331066},"namespace":"","kind":"simple","fields":[],"enumValues":["Any","Inventory","Magazine","Transport"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

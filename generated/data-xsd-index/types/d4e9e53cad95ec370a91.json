@@ -1,1 +1,1 @@
-{"name":"simple_EPlayerType","kind":"simple","fields":[],"enumValues":["Computer","Hostile","Neutral","None","User"],"facets":[],"base":"xs:string"}
+{"name":"simple_EPlayerType","schemaSpan":{"start":236444,"end":237414},"namespace":"","kind":"simple","fields":[],"enumValues":["Computer","Hostile","Neutral","None","User"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

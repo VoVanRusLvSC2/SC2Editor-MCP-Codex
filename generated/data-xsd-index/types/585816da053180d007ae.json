@@ -1,1 +1,1 @@
-{"name":"EGameSync","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EGameSync"}],"enumValues":[],"facets":[]}
+{"name":"EGameSync","schemaSpan":{"start":1450261,"end":1450368},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1450297,"end":1450349},"namespace":"","name":"value","type":"simple_EGameSync","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

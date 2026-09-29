@@ -1,1 +1,1 @@
-{"name":"simple_EPausedParticleSystemBehavior","kind":"simple","fields":[],"enumValues":["Automatic","Continuous","Fade","FreezeAll","FreezeEmissionRate"],"facets":[],"base":"xs:string"}
+{"name":"simple_EPausedParticleSystemBehavior","schemaSpan":{"start":1568749,"end":1570958},"namespace":"","kind":"simple","fields":[],"enumValues":["Automatic","Continuous","Fade","FreezeAll","FreezeEmissionRate"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

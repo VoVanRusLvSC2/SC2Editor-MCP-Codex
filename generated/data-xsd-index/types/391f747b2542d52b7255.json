@@ -1,1 +1,1 @@
-{"name":"EAnimProp","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EAnimProp"}],"enumValues":[],"facets":[]}
+{"name":"EAnimProp","schemaSpan":{"start":428120,"end":428227},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":428156,"end":428208},"namespace":"","name":"value","type":"simple_EAnimProp","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

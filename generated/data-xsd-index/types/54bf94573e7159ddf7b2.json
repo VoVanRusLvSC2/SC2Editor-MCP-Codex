@@ -1,1 +1,1 @@
-{"name":"EAMAttachType","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EAMAttachType"}],"enumValues":[],"facets":[]}
+{"name":"EAMAttachType","schemaSpan":{"start":616497,"end":616612},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":616537,"end":616593},"namespace":"","name":"value","type":"simple_EAMAttachType","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

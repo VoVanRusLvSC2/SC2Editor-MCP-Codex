@@ -1,1 +1,1 @@
-{"name":"simple_EUIColorRelation","kind":"simple","fields":[],"enumValues":["Ally","DefaultNeutral","Enemy","Owner","TeamChaos","TeamHostile","TeamOrder"],"facets":[],"base":"xs:string"}
+{"name":"simple_EUIColorRelation","schemaSpan":{"start":210787,"end":212138},"namespace":"","kind":"simple","fields":[],"enumValues":["Ally","DefaultNeutral","Enemy","Owner","TeamChaos","TeamHostile","TeamOrder"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

@@ -1,1 +1,1 @@
-{"name":"simple_EAchievementTermEvaluate","kind":"simple","fields":[],"enumValues":["Always","Attain","Expand","Failed"],"facets":[],"base":"xs:string"}
+{"name":"simple_EAchievementTermEvaluate","schemaSpan":{"start":703058,"end":703870},"namespace":"","kind":"simple","fields":[],"enumValues":["Always","Attain","Expand","Failed"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

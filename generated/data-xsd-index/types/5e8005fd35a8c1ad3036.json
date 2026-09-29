@@ -1,1 +1,1 @@
-{"name":"simple_CActorTableKeys4x0","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string"}
+{"name":"simple_CActorTableKeys4x0","schemaSpan":{"start":27197,"end":27300},"namespace":"","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

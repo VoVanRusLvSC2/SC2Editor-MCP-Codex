@@ -1,1 +1,1 @@
-{"name":"simple_EClassIdCUser","kind":"simple","fields":[],"enumValues":["CUser"],"facets":[],"base":"xs:string"}
+{"name":"simple_EClassIdCUser","schemaSpan":{"start":585460,"end":585750},"namespace":"","kind":"simple","fields":[],"enumValues":["CUser"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

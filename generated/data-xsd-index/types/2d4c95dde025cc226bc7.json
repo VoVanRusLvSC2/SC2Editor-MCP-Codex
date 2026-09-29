@@ -1,1 +1,1 @@
-{"name":"CGamePoint","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CGamePoint"}],"enumValues":[],"facets":[]}
+{"name":"CGamePoint","schemaSpan":{"start":31211,"end":31320},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":31248,"end":31301},"namespace":"","name":"value","type":"simple_CGamePoint","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

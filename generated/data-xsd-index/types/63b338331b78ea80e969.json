@@ -1,1 +1,1 @@
-{"name":"simple_CPreloadLink","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string"}
+{"name":"simple_CPreloadLink","schemaSpan":{"start":46995,"end":47092},"namespace":"","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

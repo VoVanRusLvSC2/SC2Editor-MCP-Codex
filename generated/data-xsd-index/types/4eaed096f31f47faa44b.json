@@ -1,1 +1,1 @@
-{"name":"EBankConditionCombine","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EBankConditionCombine"}],"enumValues":[],"facets":[]}
+{"name":"EBankConditionCombine","schemaSpan":{"start":1169074,"end":1169205},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1169122,"end":1169186},"namespace":"","name":"value","type":"simple_EBankConditionCombine","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

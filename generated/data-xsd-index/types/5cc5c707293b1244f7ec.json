@@ -1,1 +1,1 @@
-{"name":"simple_EActorSiteOpTipabilityFlag","kind":"simple","fields":[],"enumValues":["NoLowerThanBaseHeight","NoLowerThanScope"],"facets":[],"base":"xs:string"}
+{"name":"simple_EActorSiteOpTipabilityFlag","schemaSpan":{"start":989276,"end":990228},"namespace":"","kind":"simple","fields":[],"enumValues":["NoLowerThanBaseHeight","NoLowerThanScope"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

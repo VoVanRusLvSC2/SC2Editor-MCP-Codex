@@ -1,1 +1,1 @@
-{"name":"CVariatorGameFixed","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CVariatorGameFixed"}],"enumValues":[],"facets":[]}
+{"name":"CVariatorGameFixed","schemaSpan":{"start":36401,"end":36526},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":36446,"end":36507},"namespace":"","name":"value","type":"simple_CVariatorGameFixed","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

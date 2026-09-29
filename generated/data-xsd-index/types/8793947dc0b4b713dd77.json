@@ -1,1 +1,1 @@
-{"name":"simple_EActorSiteOpActionLocation","kind":"simple","fields":[],"enumValues":["Center","Impact","Launch"],"facets":[],"base":"xs:string"}
+{"name":"simple_EActorSiteOpActionLocation","schemaSpan":{"start":976740,"end":977669},"namespace":"","kind":"simple","fields":[],"enumValues":["Center","Impact","Launch"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

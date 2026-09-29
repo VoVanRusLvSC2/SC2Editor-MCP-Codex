@@ -1,1 +1,1 @@
-{"name":"simple_EHaloRastermode","kind":"simple","fields":[],"enumValues":["Add","AlphaBlend","Multiply"],"facets":[],"base":"xs:string"}
+{"name":"simple_EHaloRastermode","schemaSpan":{"start":1507359,"end":1507997},"namespace":"","kind":"simple","fields":[],"enumValues":["Add","AlphaBlend","Multiply"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

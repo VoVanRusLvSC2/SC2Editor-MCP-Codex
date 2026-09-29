@@ -1,1 +1,1 @@
-{"name":"ETutorialProgressType","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_ETutorialProgressType"}],"enumValues":[],"facets":[]}
+{"name":"ETutorialProgressType","schemaSpan":{"start":1749973,"end":1750104},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1750021,"end":1750085},"namespace":"","name":"value","type":"simple_ETutorialProgressType","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

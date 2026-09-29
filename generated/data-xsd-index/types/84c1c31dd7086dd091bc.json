@@ -1,1 +1,1 @@
-{"name":"TAttachPropIndex","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_TAttachPropIndex"}],"enumValues":[],"facets":[]}
+{"name":"TAttachPropIndex","schemaSpan":{"start":1406,"end":1527},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1449,"end":1508},"namespace":"","name":"value","type":"simple_TAttachPropIndex","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

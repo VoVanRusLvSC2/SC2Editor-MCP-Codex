@@ -1,1 +1,1 @@
-{"name":"CCursorLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CCursorLink"}],"enumValues":[],"facets":[]}
+{"name":"CCursorLink","schemaSpan":{"start":55542,"end":55653},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":55580,"end":55634},"namespace":"","name":"value","type":"simple_CCursorLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

@@ -1,1 +1,1 @@
-{"name":"CiQuad","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CiQuad"}],"enumValues":[],"facets":[]}
+{"name":"CiQuad","schemaSpan":{"start":37658,"end":37759},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":37691,"end":37740},"namespace":"","name":"value","type":"simple_CiQuad","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

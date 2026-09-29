@@ -1,1 +1,1 @@
-{"name":"simple_ETerrainTileFlag","kind":"simple","fields":[],"enumValues":["Conform","Elevated","Reversed"],"facets":[],"base":"xs:string"}
+{"name":"simple_ETerrainTileFlag","schemaSpan":{"start":1709311,"end":1709954},"namespace":"","kind":"simple","fields":[],"enumValues":["Conform","Elevated","Reversed"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

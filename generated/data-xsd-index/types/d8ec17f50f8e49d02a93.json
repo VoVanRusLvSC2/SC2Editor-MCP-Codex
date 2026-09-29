@@ -1,1 +1,1 @@
-{"name":"simple_TCmdResult","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string"}
+{"name":"simple_TCmdResult","schemaSpan":{"start":38372,"end":38467},"namespace":"","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

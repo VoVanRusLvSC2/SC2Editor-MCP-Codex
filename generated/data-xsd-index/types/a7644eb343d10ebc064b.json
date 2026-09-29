@@ -1,1 +1,1 @@
-{"name":"CTactical","kind":"complex","fields":[],"enumValues":[],"facets":[],"base":"CBase"}
+{"name":"CTactical","schemaSpan":{"start":6022395,"end":6022595},"namespace":"","kind":"complex","fields":[],"enumValues":[],"facets":[],"base":"CBase","baseNamespace":"","derivation":"extension"}

@@ -1,1 +1,1 @@
-{"name":"EAbilEffectInstantCmd","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EAbilEffectInstantCmd"}],"enumValues":[],"facets":[]}
+{"name":"EAbilEffectInstantCmd","schemaSpan":{"start":94575,"end":94706},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":94623,"end":94687},"namespace":"","name":"value","type":"simple_EAbilEffectInstantCmd","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

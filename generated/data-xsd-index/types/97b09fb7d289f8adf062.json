@@ -1,1 +1,1 @@
-{"name":"flag8","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_flag8"}],"enumValues":[],"facets":[]}
+{"name":"flag8","schemaSpan":{"start":2925,"end":3024},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":2957,"end":3005},"namespace":"","name":"value","type":"simple_flag8","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

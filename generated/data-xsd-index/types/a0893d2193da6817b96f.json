@@ -1,1 +1,1 @@
-{"name":"EActorSiteOpTipabilityFlag","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EActorSiteOpTipabilityFlag"}],"enumValues":[],"facets":[]}
+{"name":"EActorSiteOpTipabilityFlag","schemaSpan":{"start":989133,"end":989274},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":989186,"end":989255},"namespace":"","name":"value","type":"simple_EActorSiteOpTipabilityFlag","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

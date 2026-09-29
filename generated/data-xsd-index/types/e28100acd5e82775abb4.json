@@ -1,1 +1,1 @@
-{"name":"EClassIdCMover","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EClassIdCMover"}],"enumValues":[],"facets":[]}
+{"name":"EClassIdCMover","schemaSpan":{"start":486292,"end":486409},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":486333,"end":486390},"namespace":"","name":"value","type":"simple_EClassIdCMover","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

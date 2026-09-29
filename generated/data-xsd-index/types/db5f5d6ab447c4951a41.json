@@ -1,1 +1,1 @@
-{"name":"ECameraSave","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_ECameraSave"}],"enumValues":[],"facets":[]}
+{"name":"ECameraSave","schemaSpan":{"start":1221937,"end":1222048},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1221975,"end":1222029},"namespace":"","name":"value","type":"simple_ECameraSave","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

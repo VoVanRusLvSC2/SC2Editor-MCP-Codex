@@ -1,1 +1,1 @@
-{"name":"ESpeakerMode","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_ESpeakerMode"}],"enumValues":[],"facets":[]}
+{"name":"ESpeakerMode","schemaSpan":{"start":1696949,"end":1697062},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1696988,"end":1697043},"namespace":"","name":"value","type":"simple_ESpeakerMode","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

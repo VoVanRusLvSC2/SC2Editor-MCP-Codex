@@ -1,1 +1,1 @@
-{"name":"EDamageSound","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EDamageSound"}],"enumValues":[],"facets":[]}
+{"name":"EDamageSound","schemaSpan":{"start":1316570,"end":1316683},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1316609,"end":1316664},"namespace":"","name":"value","type":"simple_EDamageSound","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

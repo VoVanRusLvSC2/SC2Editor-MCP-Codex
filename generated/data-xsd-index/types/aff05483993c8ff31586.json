@@ -1,1 +1,1 @@
-{"name":"EActorModelMaterialType","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EActorModelMaterialType"}],"enumValues":[],"facets":[]}
+{"name":"EActorModelMaterialType","schemaSpan":{"start":778849,"end":778984},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":778899,"end":778965},"namespace":"","name":"value","type":"simple_EActorModelMaterialType","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

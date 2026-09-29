@@ -1,1 +1,1 @@
-{"name":"simple_EActorRequestActor","kind":"simple","fields":[],"enumValues":["Create","Find","Implicit"],"facets":[],"base":"xs:string"}
+{"name":"simple_EActorRequestActor","schemaSpan":{"start":957093,"end":958034},"namespace":"","kind":"simple","fields":[],"enumValues":["Create","Find","Implicit"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

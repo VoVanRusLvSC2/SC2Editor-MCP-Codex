@@ -1,1 +1,1 @@
-{"name":"simple_EModelQuality","kind":"simple","fields":[],"enumValues":["Any","High","Low"],"facets":[],"base":"xs:string"}
+{"name":"simple_EModelQuality","schemaSpan":{"start":1533903,"end":1534517},"namespace":"","kind":"simple","fields":[],"enumValues":["Any","High","Low"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

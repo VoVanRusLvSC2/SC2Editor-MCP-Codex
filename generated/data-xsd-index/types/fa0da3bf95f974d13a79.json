@@ -1,1 +1,1 @@
-{"name":"CHotkeyLink","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CHotkeyLink"}],"enumValues":[],"facets":[]}
+{"name":"CHotkeyLink","schemaSpan":{"start":13384,"end":13495},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":13422,"end":13476},"namespace":"","name":"value","type":"simple_CHotkeyLink","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

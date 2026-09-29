@@ -1,1 +1,1 @@
-{"name":"EAlertFlag","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EAlertFlag"}],"enumValues":[],"facets":[]}
+{"name":"EAlertFlag","schemaSpan":{"start":1043873,"end":1043982},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1043910,"end":1043963},"namespace":"","name":"value","type":"simple_EAlertFlag","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

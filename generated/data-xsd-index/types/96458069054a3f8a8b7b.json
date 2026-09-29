@@ -1,1 +1,1 @@
-{"name":"EVariationCommands","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EVariationCommands"}],"enumValues":[],"facets":[]}
+{"name":"EVariationCommands","schemaSpan":{"start":1788467,"end":1788592},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1788512,"end":1788573},"namespace":"","name":"value","type":"simple_EVariationCommands","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

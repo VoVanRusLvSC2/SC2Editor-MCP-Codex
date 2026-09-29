@@ -1,1 +1,1 @@
-{"name":"simple_CTerrainObjectLink","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string"}
+{"name":"simple_CTerrainObjectLink","schemaSpan":{"start":51549,"end":51652},"namespace":"","kind":"simple","fields":[],"enumValues":[],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

@@ -1,1 +1,1 @@
-{"name":"EHeroVO","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EHeroVO"}],"enumValues":[],"facets":[]}
+{"name":"EHeroVO","schemaSpan":{"start":400236,"end":400339},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":400270,"end":400320},"namespace":"","name":"value","type":"simple_EHeroVO","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

@@ -1,1 +1,1 @@
-{"name":"CDescPath","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_CDescPath"}],"enumValues":[],"facets":[]}
+{"name":"CDescPath","schemaSpan":{"start":12748,"end":12855},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":12784,"end":12836},"namespace":"","name":"value","type":"simple_CDescPath","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

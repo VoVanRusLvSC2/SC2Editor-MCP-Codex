@@ -1,1 +1,1 @@
-{"name":"ECameraParam","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_ECameraParam"}],"enumValues":[],"facets":[]}
+{"name":"ECameraParam","schemaSpan":{"start":1218436,"end":1218549},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1218475,"end":1218530},"namespace":"","name":"value","type":"simple_ECameraParam","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

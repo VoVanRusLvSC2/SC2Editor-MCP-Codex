@@ -1,1 +1,1 @@
-{"name":"ECostDisplay","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_ECostDisplay"}],"enumValues":[],"facets":[]}
+{"name":"ECostDisplay","schemaSpan":{"start":1297424,"end":1297537},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1297463,"end":1297518},"namespace":"","name":"value","type":"simple_ECostDisplay","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

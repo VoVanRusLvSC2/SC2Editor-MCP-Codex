@@ -1,1 +1,1 @@
-{"name":"EActorModelAspectDuring","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EActorModelAspectDuring"}],"enumValues":[],"facets":[]}
+{"name":"EActorModelAspectDuring","schemaSpan":{"start":758454,"end":758589},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":758504,"end":758570},"namespace":"","name":"value","type":"simple_EActorModelAspectDuring","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

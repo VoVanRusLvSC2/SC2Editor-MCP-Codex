@@ -1,1 +1,1 @@
-{"name":"EAbilPawnFlag","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_EAbilPawnFlag"}],"enumValues":[],"facets":[]}
+{"name":"EAbilPawnFlag","schemaSpan":{"start":673980,"end":674095},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":674020,"end":674076},"namespace":"","name":"value","type":"simple_EAbilPawnFlag","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}

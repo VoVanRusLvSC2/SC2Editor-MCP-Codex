@@ -1,1 +1,1 @@
-{"name":"simple_EConversationStateObject","kind":"simple","fields":[],"enumValues":["Camera","Listener","Speaker"],"facets":[],"base":"xs:string"}
+{"name":"simple_EConversationStateObject","schemaSpan":{"start":1294578,"end":1295225},"namespace":"","kind":"simple","fields":[],"enumValues":["Camera","Listener","Speaker"],"facets":[],"base":"xs:string","baseNamespace":"http://www.w3.org/2001/XMLSchema","derivation":"restriction"}

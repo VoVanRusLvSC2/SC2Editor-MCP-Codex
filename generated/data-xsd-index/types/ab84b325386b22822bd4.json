@@ -1,1 +1,1 @@
-{"name":"ETerrainTileFlag","kind":"complex","fields":[{"kind":"attribute","name":"value","type":"simple_ETerrainTileFlag"}],"enumValues":[],"facets":[]}
+{"name":"ETerrainTileFlag","schemaSpan":{"start":1709188,"end":1709309},"namespace":"","kind":"complex","fields":[{"kind":"attribute","schemaSpan":{"start":1709231,"end":1709290},"namespace":"","name":"value","type":"simple_ETerrainTileFlag","typeNamespace":"","particle":[]}],"enumValues":[],"facets":[]}
