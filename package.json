@@ -12,7 +12,7 @@
     "dev": "tsx src/index.ts",
     "gui": "npm run build && node dist/gui/main.js",
     "gui:dev": "node --import tsx src/gui/main.ts",
-    "test": "npm run build && node --test dist/tests/*.test.js",
+    "test": "npm run build && node --test dist/tests/*.test.js tests/terrain-surface/*.test.mjs",
     "ai:discover": "node --import tsx scripts/discover-ai-module.ts",
     "benchmark:ai": "node --import tsx scripts/benchmark-ai-efficiency.ts",
     "ai:schemas": "node --import tsx scripts/generate-ai-schemas.ts",
@@ -53,14 +53,17 @@
     "build:release": "tsc -p tsconfig.release.json",
     "build:incremental": "tsc -p tsconfig.dev.json",
     "script:api": "node --import tsx scripts/generate-galaxy-api.ts",
-    "map:discover:executables": "node --import tsx scripts/analyze-map-executables.ts"
+    "map:discover:executables": "node --import tsx scripts/analyze-map-executables.ts",
+    "terrain:catalog:scan": "node scripts/scan-terrain-catalogs.mjs"
   },
   "dependencies": {
     "@modelcontextprotocol/server": "^2.0.0",
+    "@xmldom/xmldom": "0.9.12",
     "zod": "^4.0.0"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@modelcontextprotocol/client": "2.0.0",
     "@types/node": "^22.0.0",
     "eslint": "^10.10.0",
     "tsx": "^4.19.0",

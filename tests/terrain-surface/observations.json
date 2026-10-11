@@ -1,0 +1,2189 @@
+{
+  "schema": "sc2gamedata-selected-observations/1",
+  "scope": "Selected observed catalog fields; omitted fields are not claims of absence",
+  "sourceRevision": "master-unpinned",
+  "originalBytesAvailable": false,
+  "nativeCompatibilityTested": false,
+  "sources": {
+    "core.water": {
+      "path": "mods/core.sc2mod/base.sc2data/GameData/WaterData.xml",
+      "url": "https://raw.githubusercontent.com/SC2Mapster/SC2GameData/master/mods/core.sc2mod/base.sc2data/GameData/WaterData.xml",
+      "revision": "master",
+      "commit": null,
+      "originalByteSha256": null,
+      "readScope": "visible file",
+      "collection": "web-visible XML text; not a downloaded byte-identical snapshot",
+      "verifiedAgainstCasc": false
+    },
+    "core.cliffmesh": {
+      "path": "mods/core.sc2mod/base.sc2data/GameData/CliffMeshData.xml",
+      "url": "https://raw.githubusercontent.com/SC2Mapster/SC2GameData/master/mods/core.sc2mod/base.sc2data/GameData/CliffMeshData.xml",
+      "revision": "master",
+      "commit": null,
+      "originalByteSha256": null,
+      "readScope": "visible file",
+      "collection": "web-visible XML text; not a downloaded byte-identical snapshot",
+      "verifiedAgainstCasc": false
+    },
+    "core.cliff": {
+      "path": "mods/core.sc2mod/base.sc2data/GameData/CliffData.xml",
+      "url": "https://raw.githubusercontent.com/SC2Mapster/SC2GameData/master/mods/core.sc2mod/base.sc2data/GameData/CliffData.xml",
+      "revision": "master",
+      "commit": null,
+      "originalByteSha256": null,
+      "readScope": "visible file",
+      "collection": "web-visible XML text; not a downloaded byte-identical snapshot",
+      "verifiedAgainstCasc": false
+    },
+    "core.texture": {
+      "path": "mods/core.sc2mod/base.sc2data/GameData/TextureData.xml",
+      "url": "https://raw.githubusercontent.com/SC2Mapster/SC2GameData/master/mods/core.sc2mod/base.sc2data/GameData/TextureData.xml",
+      "revision": "master",
+      "commit": null,
+      "originalByteSha256": null,
+      "readScope": "visible file",
+      "collection": "web-visible XML text; not a downloaded byte-identical snapshot",
+      "verifiedAgainstCasc": false
+    },
+    "core.texturesheet": {
+      "path": "mods/core.sc2mod/base.sc2data/GameData/TextureSheetData.xml",
+      "url": "https://raw.githubusercontent.com/SC2Mapster/SC2GameData/master/mods/core.sc2mod/base.sc2data/GameData/TextureSheetData.xml",
+      "revision": "master",
+      "commit": null,
+      "originalByteSha256": null,
+      "readScope": "visible file",
+      "collection": "web-visible XML text; not a downloaded byte-identical snapshot",
+      "verifiedAgainstCasc": false
+    },
+    "core.terraintex": {
+      "path": "mods/core.sc2mod/base.sc2data/GameData/TerrainTexData.xml",
+      "url": "https://raw.githubusercontent.com/SC2Mapster/SC2GameData/master/mods/core.sc2mod/base.sc2data/GameData/TerrainTexData.xml",
+      "revision": "master",
+      "commit": null,
+      "originalByteSha256": null,
+      "readScope": "visible file",
+      "collection": "web-visible XML text; not a downloaded byte-identical snapshot",
+      "verifiedAgainstCasc": false
+    },
+    "core.terrain": {
+      "path": "mods/core.sc2mod/base.sc2data/GameData/TerrainData.xml",
+      "url": "https://raw.githubusercontent.com/SC2Mapster/SC2GameData/master/mods/core.sc2mod/base.sc2data/GameData/TerrainData.xml",
+      "revision": "master",
+      "commit": null,
+      "originalByteSha256": null,
+      "readScope": "visible file",
+      "collection": "web-visible XML text; not a downloaded byte-identical snapshot",
+      "verifiedAgainstCasc": false
+    },
+    "core.terrainobject": {
+      "path": "mods/core.sc2mod/base.sc2data/GameData/TerrainObjectData.xml",
+      "url": "https://raw.githubusercontent.com/SC2Mapster/SC2GameData/master/mods/core.sc2mod/base.sc2data/GameData/TerrainObjectData.xml",
+      "revision": "master",
+      "commit": null,
+      "originalByteSha256": null,
+      "readScope": "visible file",
+      "collection": "web-visible XML text; not a downloaded byte-identical snapshot",
+      "verifiedAgainstCasc": false
+    },
+    "core.tile": {
+      "path": "mods/core.sc2mod/base.sc2data/GameData/TileData.xml",
+      "url": "https://raw.githubusercontent.com/SC2Mapster/SC2GameData/master/mods/core.sc2mod/base.sc2data/GameData/TileData.xml",
+      "revision": "master",
+      "commit": null,
+      "originalByteSha256": null,
+      "readScope": "visible file",
+      "collection": "web-visible XML text; not a downloaded byte-identical snapshot",
+      "verifiedAgainstCasc": false
+    },
+    "core.physics": {
+      "path": "mods/core.sc2mod/base.sc2data/GameData/PhysicsMaterialData.xml",
+      "url": "https://raw.githubusercontent.com/SC2Mapster/SC2GameData/master/mods/core.sc2mod/base.sc2data/GameData/PhysicsMaterialData.xml",
+      "revision": "master",
+      "commit": null,
+      "originalByteSha256": null,
+      "readScope": "selected materials",
+      "collection": "web-visible XML text; not a downloaded byte-identical snapshot",
+      "verifiedAgainstCasc": false
+    },
+    "core.model": {
+      "path": "mods/core.sc2mod/base.sc2data/GameData/ModelData.xml",
+      "url": "https://raw.githubusercontent.com/SC2Mapster/SC2GameData/master/mods/core.sc2mod/base.sc2data/GameData/ModelData.xml",
+      "revision": "master",
+      "commit": null,
+      "originalByteSha256": null,
+      "readScope": "selected templates",
+      "collection": "web-visible XML text; not a downloaded byte-identical snapshot",
+      "verifiedAgainstCasc": false
+    },
+    "core.actor": {
+      "path": "mods/core.sc2mod/base.sc2data/GameData/ActorData.xml",
+      "url": "https://raw.githubusercontent.com/SC2Mapster/SC2GameData/master/mods/core.sc2mod/base.sc2data/GameData/ActorData.xml",
+      "revision": "master",
+      "commit": null,
+      "originalByteSha256": null,
+      "readScope": "selected terrain deformer records",
+      "collection": "web-visible XML text; not a downloaded byte-identical snapshot",
+      "verifiedAgainstCasc": false
+    },
+    "lib.terrain": {
+      "path": "mods/liberty.sc2mod/base.sc2data/GameData/TerrainData.xml",
+      "url": "https://raw.githubusercontent.com/SC2Mapster/SC2GameData/master/mods/liberty.sc2mod/base.sc2data/GameData/TerrainData.xml",
+      "revision": "master",
+      "commit": null,
+      "originalByteSha256": null,
+      "readScope": "Agria and Avernus excerpts",
+      "collection": "web-visible XML text; not a downloaded byte-identical snapshot",
+      "verifiedAgainstCasc": false
+    },
+    "lib.cliff": {
+      "path": "mods/liberty.sc2mod/base.sc2data/GameData/CliffData.xml",
+      "url": "https://raw.githubusercontent.com/SC2Mapster/SC2GameData/master/mods/liberty.sc2mod/base.sc2data/GameData/CliffData.xml",
+      "revision": "master",
+      "commit": null,
+      "originalByteSha256": null,
+      "readScope": "selected records",
+      "collection": "web-visible XML text; not a downloaded byte-identical snapshot",
+      "verifiedAgainstCasc": false
+    },
+    "lib.cliffmesh": {
+      "path": "mods/liberty.sc2mod/base.sc2data/GameData/CliffMeshData.xml",
+      "url": "https://raw.githubusercontent.com/SC2Mapster/SC2GameData/master/mods/liberty.sc2mod/base.sc2data/GameData/CliffMeshData.xml",
+      "revision": "master",
+      "commit": null,
+      "originalByteSha256": null,
+      "readScope": "selected records",
+      "collection": "web-visible XML text; not a downloaded byte-identical snapshot",
+      "verifiedAgainstCasc": false
+    },
+    "lib.tile": {
+      "path": "mods/liberty.sc2mod/base.sc2data/GameData/TileData.xml",
+      "url": "https://raw.githubusercontent.com/SC2Mapster/SC2GameData/master/mods/liberty.sc2mod/base.sc2data/GameData/TileData.xml",
+      "revision": "master",
+      "commit": null,
+      "originalByteSha256": null,
+      "readScope": "visible file",
+      "collection": "web-visible XML text; not a downloaded byte-identical snapshot",
+      "verifiedAgainstCasc": false
+    },
+    "lib.terraintex": {
+      "path": "mods/liberty.sc2mod/base.sc2data/GameData/TerrainTexData.xml",
+      "url": "https://raw.githubusercontent.com/SC2Mapster/SC2GameData/master/mods/liberty.sc2mod/base.sc2data/GameData/TerrainTexData.xml",
+      "revision": "master",
+      "commit": null,
+      "originalByteSha256": null,
+      "readScope": "template and Agria excerpts",
+      "collection": "web-visible XML text; not a downloaded byte-identical snapshot",
+      "verifiedAgainstCasc": false
+    },
+    "lib.water": {
+      "path": "mods/liberty.sc2mod/base.sc2data/GameData/WaterData.xml",
+      "url": "https://raw.githubusercontent.com/SC2Mapster/SC2GameData/master/mods/liberty.sc2mod/base.sc2data/GameData/WaterData.xml",
+      "revision": "master",
+      "commit": null,
+      "originalByteSha256": null,
+      "readScope": "BelShir and Char excerpts",
+      "collection": "web-visible XML text; not a downloaded byte-identical snapshot",
+      "verifiedAgainstCasc": false
+    },
+    "lib.model": {
+      "path": "mods/liberty.sc2mod/base.sc2data/GameData/ModelData.xml",
+      "url": "https://raw.githubusercontent.com/SC2Mapster/SC2GameData/master/mods/liberty.sc2mod/base.sc2data/GameData/ModelData.xml",
+      "revision": "master",
+      "commit": null,
+      "originalByteSha256": null,
+      "readScope": "Foliage and shoreline excerpts",
+      "collection": "web-visible XML text; not a downloaded byte-identical snapshot",
+      "verifiedAgainstCasc": false
+    },
+    "lib.texturesheet": {
+      "path": "mods/liberty.sc2mod/base.sc2data/GameData/TextureSheetData.xml",
+      "url": "https://raw.githubusercontent.com/SC2Mapster/SC2GameData/master/mods/liberty.sc2mod/base.sc2data/GameData/TextureSheetData.xml",
+      "revision": "master",
+      "commit": null,
+      "originalByteSha256": null,
+      "readScope": "visible file",
+      "collection": "web-visible XML text; not a downloaded byte-identical snapshot",
+      "verifiedAgainstCasc": false
+    },
+    "swarm.terrainobject": {
+      "path": "mods/swarm.sc2mod/base.sc2data/GameData/TerrainObjectData.xml",
+      "url": "https://raw.githubusercontent.com/SC2Mapster/SC2GameData/master/mods/swarm.sc2mod/base.sc2data/GameData/TerrainObjectData.xml",
+      "revision": "master",
+      "commit": null,
+      "originalByteSha256": null,
+      "readScope": "DefensiveWall451HMerge1Mirror excerpt",
+      "collection": "web-visible XML text; not a downloaded byte-identical snapshot",
+      "verifiedAgainstCasc": false
+    }
+  },
+  "records": [
+    {
+      "source": "core.water",
+      "sourceLines1Based": [
+        3,
+        31
+      ],
+      "type": "CWater",
+      "attributes": {
+        "default": "1"
+      },
+      "fields": [
+        {
+          "name": "TextureKey",
+          "attributes": {
+            "value": "Assets/Textures/DefaultWater.dds"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "TilingFreq",
+          "attributes": {
+            "value": "0.125000,0.125000,0.125000,0.125000"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "ScrollVectors",
+          "attributes": {
+            "value": "0.030000,0.030000,-0.030000,-0.030000"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "CausticsTilingFreq",
+          "attributes": {
+            "value": "0.225000,0.225000"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "CausticsFPS",
+          "attributes": {
+            "value": "15.000000"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "FramesPerSec",
+          "attributes": {
+            "value": "15.000000"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "LavaModel",
+          "attributes": {
+            "value": "DefaultLava"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "Sound",
+          "attributes": {
+            "value": "Emitter_WaterCalm"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "Density",
+          "attributes": {
+            "value": "1000.000000"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "Drag",
+          "attributes": {
+            "value": "4.000000"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "AngularDamping",
+          "attributes": {
+            "value": "2.500000"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "MaxLinearVelocity",
+          "attributes": {
+            "value": "5.000000"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "State",
+          "attributes": {},
+          "children": [
+            {
+              "name": "Height",
+              "attributes": {
+                "value": "9.000000"
+              },
+              "children": [],
+              "text": ""
+            },
+            {
+              "name": "Color",
+              "attributes": {
+                "value": "0.100000,0.350000,0.500000,0.300000"
+              },
+              "children": [],
+              "text": ""
+            },
+            {
+              "name": "ColorFallOff",
+              "attributes": {
+                "value": "0.100000"
+              },
+              "children": [],
+              "text": ""
+            },
+            {
+              "name": "Specularity",
+              "attributes": {
+                "value": "100.000000"
+              },
+              "children": [],
+              "text": ""
+            },
+            {
+              "name": "SpecularScaler",
+              "attributes": {
+                "value": "2.450000"
+              },
+              "children": [],
+              "text": ""
+            },
+            {
+              "name": "UvRate",
+              "attributes": {
+                "value": "0.000000,-1.000000,0.000000,0.000000"
+              },
+              "children": [],
+              "text": ""
+            },
+            {
+              "name": "ReflectionDistortion",
+              "attributes": {
+                "value": "0.012000"
+              },
+              "children": [],
+              "text": ""
+            },
+            {
+              "name": "RefractionDistortion",
+              "attributes": {
+                "value": "0.025000"
+              },
+              "children": [],
+              "text": ""
+            },
+            {
+              "name": "MinReflection",
+              "attributes": {
+                "value": "0.300000"
+              },
+              "children": [],
+              "text": ""
+            },
+            {
+              "name": "ReflectivityPower",
+              "attributes": {
+                "value": "8.000000"
+              },
+              "children": [],
+              "text": ""
+            }
+          ],
+          "text": ""
+        }
+      ],
+      "selectedFieldsOnly": true
+    },
+    {
+      "source": "core.cliffmesh",
+      "sourceLines1Based": [
+        3,
+        21
+      ],
+      "type": "CCliffMesh",
+      "attributes": {
+        "default": "1"
+      },
+      "fields": [
+        {
+          "name": "ModelPath",
+          "attributes": {
+            "value": "Assets\\Cliffs\\##id##\\"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "WeldNormals",
+          "attributes": {
+            "value": "1"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "CliffHeights",
+          "attributes": {
+            "index": "0",
+            "value": "-4.000000"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "CliffHeights",
+          "attributes": {
+            "index": "2",
+            "value": "2.000000"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "CliffHeights",
+          "attributes": {
+            "index": "3",
+            "value": "4.000000"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "CliffHeights",
+          "attributes": {
+            "index": "4",
+            "value": "6.000000"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "CliffHeights",
+          "attributes": {
+            "index": "5",
+            "value": "8.000000"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "CliffHeights",
+          "attributes": {
+            "index": "6",
+            "value": "10.000000"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "CliffHeights",
+          "attributes": {
+            "index": "7",
+            "value": "12.000000"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "CliffHeights",
+          "attributes": {
+            "index": "8",
+            "value": "14.000000"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "CliffHeights",
+          "attributes": {
+            "index": "9",
+            "value": "16.000000"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "CliffHeights",
+          "attributes": {
+            "index": "10",
+            "value": "18.000000"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "CliffHeights",
+          "attributes": {
+            "index": "11",
+            "value": "20.000000"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "CliffHeights",
+          "attributes": {
+            "index": "12",
+            "value": "22.000000"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "CliffHeights",
+          "attributes": {
+            "index": "13",
+            "value": "24.000000"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "CliffHeights",
+          "attributes": {
+            "index": "14",
+            "value": "26.000000"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "CliffHeights",
+          "attributes": {
+            "index": "15",
+            "value": "28.000000"
+          },
+          "children": [],
+          "text": ""
+        }
+      ],
+      "selectedFieldsOnly": true
+    },
+    {
+      "source": "core.cliff",
+      "sourceLines1Based": [
+        3,
+        7
+      ],
+      "type": "CCliff",
+      "attributes": {
+        "default": "1"
+      },
+      "fields": [
+        {
+          "name": "CliffMesh",
+          "attributes": {
+            "value": "##id##"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "CliffMaterial",
+          "attributes": {
+            "value": "Assets\\Cliffs\\##id##_Material\\##id##_Material.m3"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "EditorIcon",
+          "attributes": {
+            "value": "TerrainCliffDef/EditorIcon/##id##"
+          },
+          "children": [],
+          "text": ""
+        }
+      ],
+      "selectedFieldsOnly": true
+    },
+    {
+      "source": "core.texture",
+      "sourceLines1Based": [
+        3,
+        5
+      ],
+      "type": "CTexture",
+      "attributes": {
+        "default": "1"
+      },
+      "fields": [
+        {
+          "name": "File",
+          "attributes": {
+            "value": "Assets\\Textures\\##id##.dds"
+          },
+          "children": [],
+          "text": ""
+        }
+      ],
+      "selectedFieldsOnly": true
+    },
+    {
+      "source": "core.texturesheet",
+      "sourceLines1Based": [
+        3,
+        7
+      ],
+      "type": "CTextureSheet",
+      "attributes": {
+        "default": "1"
+      },
+      "fields": [
+        {
+          "name": "Image",
+          "attributes": {
+            "value": "Assets\\Textures\\UI_texturesheet_##id##.dds"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "Rows",
+          "attributes": {
+            "value": "1"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "Columns",
+          "attributes": {
+            "value": "1"
+          },
+          "children": [],
+          "text": ""
+        }
+      ],
+      "selectedFieldsOnly": true
+    },
+    {
+      "source": "core.terraintex",
+      "sourceLines1Based": [
+        3,
+        8
+      ],
+      "type": "CTerrainTex",
+      "attributes": {
+        "default": "1"
+      },
+      "fields": [
+        {
+          "name": "Texture",
+          "attributes": {
+            "value": "TerrainTexDef/Texture/##id##"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "EditorIcon",
+          "attributes": {
+            "value": "TerrainTexDef/Icon/##id##"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "Normalmap",
+          "attributes": {
+            "value": "TerrainTexDef/Normalmap/NOTA"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "PhysicsMaterial",
+          "attributes": {
+            "value": "Dirt"
+          },
+          "children": [],
+          "text": ""
+        }
+      ],
+      "selectedFieldsOnly": true
+    },
+    {
+      "source": "core.terrain",
+      "sourceLines1Based": [
+        3,
+        65
+      ],
+      "type": "CTerrain",
+      "attributes": {
+        "default": "1"
+      },
+      "fields": [
+        {
+          "name": "TilingFreq",
+          "attributes": {
+            "value": "4.000000"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "POMScale",
+          "attributes": {
+            "value": "0.030000"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "Gravity",
+          "attributes": {
+            "value": "-9.800000"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "PhysicsTimeScale",
+          "attributes": {
+            "value": "1.000000"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "WindSpeed",
+          "attributes": {
+            "value": "0.750000"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "CreepBaseTexture",
+          "attributes": {
+            "value": "Assets\\Textures\\Creep.dds"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "CreepBaseSpecularMap",
+          "attributes": {
+            "value": "Assets\\Textures\\CreepSpecularMask.dds"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "CreepEdgeNormalMap",
+          "attributes": {
+            "value": "Assets\\Textures\\CreepEdgeNormal.dds"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "CreepHeightMap",
+          "attributes": {
+            "value": "Assets\\Textures\\CreepHeight.dds"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "CreepNoiseMap",
+          "attributes": {
+            "value": "Assets\\Textures\\CreepNoise.dds"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "HeightFlags",
+          "attributes": {
+            "index": "AirSmoothing",
+            "value": "1"
+          },
+          "children": [],
+          "text": ""
+        }
+      ],
+      "selectedFieldsOnly": true
+    },
+    {
+      "source": "core.terrainobject",
+      "sourceLines1Based": [
+        3,
+        5
+      ],
+      "type": "CTerrainObject",
+      "attributes": {
+        "default": "1"
+      },
+      "fields": [
+        {
+          "name": "EditorCursorOffset",
+          "attributes": {
+            "value": "0.5"
+          },
+          "children": [],
+          "text": ""
+        }
+      ],
+      "selectedFieldsOnly": true
+    },
+    {
+      "source": "core.terrainobject",
+      "sourceLines1Based": [
+        6,
+        8
+      ],
+      "type": "CCliffDoodad",
+      "attributes": {
+        "default": "1"
+      },
+      "fields": [
+        {
+          "name": "OccludeHeight",
+          "attributes": {
+            "value": "0.75"
+          },
+          "children": [],
+          "text": ""
+        }
+      ],
+      "selectedFieldsOnly": true
+    },
+    {
+      "source": "core.tile",
+      "sourceLines1Based": [
+        3,
+        13
+      ],
+      "type": "CTile",
+      "attributes": {
+        "default": "1"
+      },
+      "fields": [
+        {
+          "name": "Material",
+          "attributes": {
+            "value": "TerrainTileDef/Material/##id##"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "EditorIcon",
+          "attributes": {
+            "value": "TerrainTileDef/EditorIcon/##id##"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "TesselationDistance",
+          "attributes": {
+            "value": "1.000000"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "TileWidthDistance",
+          "attributes": {
+            "value": "2.000000"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "TileHeightRepetitions",
+          "attributes": {
+            "value": "1"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "CapLength",
+          "attributes": {
+            "value": "1.000000"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "DefaultSplineWidth",
+          "attributes": {
+            "value": "1.000000"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "DefaultWingWidth",
+          "attributes": {
+            "value": "1.000000"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "Flags",
+          "attributes": {
+            "index": "Conform",
+            "value": "1"
+          },
+          "children": [],
+          "text": ""
+        }
+      ],
+      "selectedFieldsOnly": true
+    },
+    {
+      "source": "core.physics",
+      "sourceLines1Based": [
+        36,
+        42
+      ],
+      "type": "CPhysicsMaterial",
+      "attributes": {
+        "id": "Dirt"
+      },
+      "fields": [
+        {
+          "name": "Density",
+          "attributes": {
+            "value": "1600.000000"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "Friction",
+          "attributes": {
+            "value": "0.400000"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "Restitution",
+          "attributes": {
+            "value": "0.100000"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "LinearDamping",
+          "attributes": {
+            "value": "0.010000"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "AngularDamping",
+          "attributes": {
+            "value": "0.010000"
+          },
+          "children": [],
+          "text": ""
+        }
+      ],
+      "selectedFieldsOnly": true
+    },
+    {
+      "source": "core.physics",
+      "sourceLines1Based": [
+        113,
+        119
+      ],
+      "type": "CPhysicsMaterial",
+      "attributes": {
+        "id": "Rock"
+      },
+      "fields": [
+        {
+          "name": "Density",
+          "attributes": {
+            "value": "2600.000000"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "Friction",
+          "attributes": {
+            "value": "0.500000"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "Restitution",
+          "attributes": {
+            "value": "0.100000"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "LinearDamping",
+          "attributes": {
+            "value": "0.010000"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "AngularDamping",
+          "attributes": {
+            "value": "0.010000"
+          },
+          "children": [],
+          "text": ""
+        }
+      ],
+      "selectedFieldsOnly": true
+    },
+    {
+      "source": "core.model",
+      "sourceLines1Based": [
+        78,
+        83
+      ],
+      "type": "CModel",
+      "attributes": {
+        "default": "1",
+        "id": "Unit"
+      },
+      "fields": [
+        {
+          "name": "EditorCategories",
+          "attributes": {
+            "value": "Race:##Race##"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "Model",
+          "attributes": {
+            "value": "Assets\\##Prefix####Race##\\##id##\\##id##.m3"
+          },
+          "children": [],
+          "text": ""
+        }
+      ],
+      "selectedFieldsOnly": true,
+      "processingInstructions": [
+        {
+          "target": "token",
+          "data": "id=\"Race\" value=\"Neutral\"",
+          "beforeChildIndex": 0
+        },
+        {
+          "target": "token",
+          "data": "id=\"Prefix\" value=\"Units\\\"",
+          "beforeChildIndex": 0
+        }
+      ]
+    },
+    {
+      "source": "core.actor",
+      "sourceLines1Based": [
+        97,
+        101
+      ],
+      "type": "CActorTerrainDeformer",
+      "attributes": {
+        "default": "1"
+      },
+      "fields": [
+        {
+          "name": "Host",
+          "attributes": {
+            "Subject": "_Selectable"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "TerrainDeformerFlags",
+          "attributes": {
+            "index": "DestroysFoliage",
+            "value": "1"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "FoliageFXDeathSpawnTarget",
+          "attributes": {
+            "value": "FoliageFXDefault"
+          },
+          "children": [],
+          "text": ""
+        }
+      ],
+      "selectedFieldsOnly": true
+    },
+    {
+      "source": "core.actor",
+      "sourceLines1Based": [
+        3604,
+        3610
+      ],
+      "type": "CActorTerrainDeformer",
+      "attributes": {
+        "id": "BuildingTerrainFlatten"
+      },
+      "fields": [
+        {
+          "name": "Aliases",
+          "attributes": {
+            "value": "_BuildingTerrainFlatten"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "InfluenceRange",
+          "attributes": {
+            "value": "2.000000"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "BlendTime",
+          "attributes": {
+            "value": "0.500000"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "TerrainDeformerFlags",
+          "attributes": {
+            "index": "UseUnitFootprint",
+            "value": "1"
+          },
+          "children": [],
+          "text": ""
+        }
+      ],
+      "selectedFieldsOnly": true
+    },
+    {
+      "source": "core.actor",
+      "sourceLines1Based": [
+        3615,
+        3619
+      ],
+      "type": "CActorTerrainDeformer",
+      "attributes": {
+        "parent": "BuildingTerrainFlatten",
+        "id": "BuildingTerrainFlattenEditor"
+      },
+      "fields": [
+        {
+          "name": "BlendTime",
+          "attributes": {
+            "value": "0.000000"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "FoliageFXDeathSpawnTarget",
+          "attributes": {
+            "value": ""
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "TerrainDeformerFlags",
+          "attributes": {
+            "index": "RestoreOnMovement",
+            "value": "1"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "TerrainDeformerFlags",
+          "attributes": {
+            "index": "RestoreOnDestroy",
+            "value": "1"
+          },
+          "children": [],
+          "text": ""
+        }
+      ],
+      "selectedFieldsOnly": true
+    },
+    {
+      "source": "lib.terrain",
+      "sourceLines1Based": [
+        3,
+        24
+      ],
+      "type": "CTerrain",
+      "attributes": {
+        "id": "Agria"
+      },
+      "fields": [
+        {
+          "name": "BlendTextures",
+          "attributes": {
+            "value": "AgriaDirt"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "BlendTextures",
+          "attributes": {
+            "value": "AgriaDirtRough"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "BlendTextures",
+          "attributes": {
+            "value": "AgriaRock"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "BlendTextures",
+          "attributes": {
+            "value": "AgriaGrassYellow"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "BlendTextures",
+          "attributes": {
+            "value": "AgriaGrassGreen"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "BlendTextures",
+          "attributes": {
+            "value": "AgriaFoliage"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "BlendTextures",
+          "attributes": {
+            "value": "AgriaCrops"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "BlendTextures",
+          "attributes": {
+            "value": "AgriaConcrete"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "CliffSets",
+          "attributes": {
+            "value": "AgriaCliff0"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "CliffSets",
+          "attributes": {
+            "value": "AgriaCliff1"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "HardTiles",
+          "attributes": {
+            "value": "KorhalTile"
+          },
+          "children": [],
+          "text": ""
+        }
+      ],
+      "selectedFieldsOnly": true
+    },
+    {
+      "source": "lib.terrain",
+      "sourceLines1Based": [
+        47,
+        72
+      ],
+      "type": "CTerrain",
+      "attributes": {
+        "id": "Avernus"
+      },
+      "fields": [
+        {
+          "name": "HideLowestLevel",
+          "attributes": {
+            "value": "1"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "FixedSkyboxModel",
+          "attributes": {
+            "value": "AvernusSkybox"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "NonFixedSkyboxModel",
+          "attributes": {
+            "value": "AvernusSkyParallax"
+          },
+          "children": [],
+          "text": ""
+        }
+      ],
+      "selectedFieldsOnly": true
+    },
+    {
+      "source": "lib.cliff",
+      "sourceLines1Based": [
+        3,
+        6
+      ],
+      "type": "CCliff",
+      "attributes": {
+        "id": "AgriaCliff0"
+      },
+      "fields": [
+        {
+          "name": "CliffMesh",
+          "attributes": {
+            "value": "CliffNatural0"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "EditorIcon",
+          "attributes": {
+            "value": "Assets\\Textures\\ui-editoricon-terraineditor_cliffnatural.dds"
+          },
+          "children": [],
+          "text": ""
+        }
+      ],
+      "selectedFieldsOnly": true
+    },
+    {
+      "source": "lib.cliffmesh",
+      "sourceLines1Based": [
+        46,
+        48
+      ],
+      "type": "CCliffMesh",
+      "attributes": {
+        "id": "CliffNatural0"
+      },
+      "fields": [
+        {
+          "name": "CliffHeights",
+          "attributes": {
+            "index": "0",
+            "value": "-8.000000"
+          },
+          "children": [],
+          "text": ""
+        }
+      ],
+      "selectedFieldsOnly": true
+    },
+    {
+      "source": "lib.cliffmesh",
+      "sourceLines1Based": [
+        72,
+        75
+      ],
+      "type": "CCliffMesh",
+      "attributes": {
+        "id": "CliffMade6"
+      },
+      "fields": [
+        {
+          "name": "WeldNormals",
+          "attributes": {
+            "value": "0"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "CliffHeights",
+          "attributes": {
+            "index": "0",
+            "value": "-7.000000"
+          },
+          "children": [],
+          "text": ""
+        }
+      ],
+      "selectedFieldsOnly": true
+    },
+    {
+      "source": "lib.cliffmesh",
+      "sourceLines1Based": [
+        76,
+        79
+      ],
+      "type": "CCliffMesh",
+      "attributes": {
+        "id": "CliffMade7"
+      },
+      "fields": [
+        {
+          "name": "WeldNormals",
+          "attributes": {
+            "value": "0"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "CliffHeights",
+          "attributes": {
+            "index": "0",
+            "value": "-20.000000"
+          },
+          "children": [],
+          "text": ""
+        }
+      ],
+      "selectedFieldsOnly": true
+    },
+    {
+      "source": "lib.tile",
+      "sourceLines1Based": [
+        7,
+        10
+      ],
+      "type": "CTile",
+      "attributes": {
+        "id": "KorhalTile"
+      },
+      "fields": [
+        {
+          "name": "Material",
+          "attributes": {
+            "value": "Assets/HardTiles/KorhalRoad/KorhalRoad.m3"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "EditorIcon",
+          "attributes": {
+            "value": "Assets\\Textures\\ui-editoricon-roads.dds"
+          },
+          "children": [],
+          "text": ""
+        }
+      ],
+      "selectedFieldsOnly": true
+    },
+    {
+      "source": "lib.terraintex",
+      "sourceLines1Based": [
+        3,
+        7
+      ],
+      "type": "CTerrainTex",
+      "attributes": {
+        "default": "1",
+        "id": "WizSimpleTerrainTex"
+      },
+      "fields": [
+        {
+          "name": "Texture",
+          "attributes": {
+            "value": "Assets\\Textures\\##texId##.dds"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "Normalmap",
+          "attributes": {
+            "value": "Assets\\Textures\\##texId##Normal.dds"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "EditorIcon",
+          "attributes": {
+            "value": "Assets\\Textures\\ui-editoricon-##texId##.dds"
+          },
+          "children": [],
+          "text": ""
+        }
+      ],
+      "selectedFieldsOnly": true
+    },
+    {
+      "source": "lib.terraintex",
+      "sourceLines1Based": [
+        8,
+        24
+      ],
+      "type": "CTerrainTex",
+      "attributes": {
+        "id": "AgriaDirt"
+      },
+      "fields": [
+        {
+          "name": "Texture",
+          "attributes": {
+            "value": "Assets\\Textures\\Agria_Dirt.dds"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "Normalmap",
+          "attributes": {
+            "value": "Assets\\Textures\\Agria_DirtNormal.dds"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "DoodadEntry",
+          "attributes": {},
+          "children": [
+            {
+              "name": "Model",
+              "attributes": {
+                "value": "PlantMixAgria"
+              },
+              "children": [],
+              "text": ""
+            },
+            {
+              "name": "RandomRotation",
+              "attributes": {
+                "value": "1"
+              },
+              "children": [],
+              "text": ""
+            },
+            {
+              "name": "Probability",
+              "attributes": {
+                "value": "0.100000"
+              },
+              "children": [],
+              "text": ""
+            },
+            {
+              "name": "PlacementRadius",
+              "attributes": {
+                "value": "1.000000"
+              },
+              "children": [],
+              "text": ""
+            }
+          ],
+          "text": ""
+        },
+        {
+          "name": "DoodadEntry",
+          "attributes": {},
+          "children": [
+            {
+              "name": "Model",
+              "attributes": {
+                "value": "RockMixAgria"
+              },
+              "children": [],
+              "text": ""
+            },
+            {
+              "name": "RandomRotation",
+              "attributes": {
+                "value": "1"
+              },
+              "children": [],
+              "text": ""
+            },
+            {
+              "name": "Probability",
+              "attributes": {
+                "value": "0.200000"
+              },
+              "children": [],
+              "text": ""
+            },
+            {
+              "name": "PlacementRadius",
+              "attributes": {
+                "value": "1.000000"
+              },
+              "children": [],
+              "text": ""
+            }
+          ],
+          "text": ""
+        }
+      ],
+      "selectedFieldsOnly": true
+    },
+    {
+      "source": "lib.terraintex",
+      "sourceLines1Based": [
+        36,
+        47
+      ],
+      "type": "CTerrainTex",
+      "attributes": {
+        "id": "AgriaRock"
+      },
+      "fields": [
+        {
+          "name": "Texture",
+          "attributes": {
+            "value": "Assets\\Textures\\Agria_Rock.dds"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "Normalmap",
+          "attributes": {
+            "value": "Assets\\Textures\\Agria_RockNormal.dds"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "PhysicsMaterial",
+          "attributes": {
+            "value": "Rock"
+          },
+          "children": [],
+          "text": ""
+        }
+      ],
+      "selectedFieldsOnly": true
+    },
+    {
+      "source": "lib.water",
+      "sourceLines1Based": [
+        11,
+        37
+      ],
+      "type": "CWater",
+      "attributes": {
+        "id": "BelShir"
+      },
+      "fields": [
+        {
+          "name": "State",
+          "attributes": {
+            "index": "0"
+          },
+          "children": [
+            {
+              "name": "Height",
+              "attributes": {
+                "value": "9.000000"
+              },
+              "children": [],
+              "text": ""
+            },
+            {
+              "name": "Color",
+              "attributes": {
+                "value": "0.000000,0.235294,0.239216,0.337000"
+              },
+              "children": [],
+              "text": ""
+            },
+            {
+              "name": "MeshRoughness",
+              "attributes": {
+                "value": "1.000000"
+              },
+              "children": [],
+              "text": ""
+            },
+            {
+              "name": "TextureRoughness",
+              "attributes": {
+                "value": "1.000000"
+              },
+              "children": [],
+              "text": ""
+            },
+            {
+              "name": "ReflectionDistortion",
+              "attributes": {
+                "value": "0.184000"
+              },
+              "children": [],
+              "text": ""
+            },
+            {
+              "name": "RefractionDistortion",
+              "attributes": {
+                "value": "0.020000"
+              },
+              "children": [],
+              "text": ""
+            }
+          ],
+          "text": ""
+        },
+        {
+          "name": "Doodads",
+          "attributes": {},
+          "children": [
+            {
+              "name": "Model",
+              "attributes": {
+                "value": "BelShirWaterDoodadLilyPad"
+              },
+              "children": [],
+              "text": ""
+            },
+            {
+              "name": "Density",
+              "attributes": {
+                "value": "0.030000"
+              },
+              "children": [],
+              "text": ""
+            },
+            {
+              "name": "MinSize",
+              "attributes": {
+                "value": "0.800000"
+              },
+              "children": [],
+              "text": ""
+            },
+            {
+              "name": "MaxSize",
+              "attributes": {
+                "value": "1.500000"
+              },
+              "children": [],
+              "text": ""
+            },
+            {
+              "name": "Lifetime",
+              "attributes": {
+                "value": "4294967295"
+              },
+              "children": [],
+              "text": ""
+            }
+          ],
+          "text": ""
+        },
+        {
+          "name": "ReceiveShadows",
+          "attributes": {
+            "value": "1"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "BeachShoreline",
+          "attributes": {
+            "value": "BelShirBeachShoreline"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "CliffShoreline",
+          "attributes": {
+            "value": "BelShirCliffShoreline"
+          },
+          "children": [],
+          "text": ""
+        }
+      ],
+      "selectedFieldsOnly": true
+    },
+    {
+      "source": "lib.water",
+      "sourceLines1Based": [
+        42,
+        63
+      ],
+      "type": "CWater",
+      "attributes": {
+        "id": "Char"
+      },
+      "fields": [
+        {
+          "name": "IsLava",
+          "attributes": {
+            "value": "1"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "ReceiveShadows",
+          "attributes": {
+            "value": "1"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "BeachShoreline",
+          "attributes": {
+            "value": "CharBeachShoreline"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "CliffShoreline",
+          "attributes": {
+            "value": "CharCliffShoreline"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "Sound",
+          "attributes": {
+            "value": "Emitter_Lava"
+          },
+          "children": [],
+          "text": ""
+        }
+      ],
+      "selectedFieldsOnly": true
+    },
+    {
+      "source": "lib.model",
+      "sourceLines1Based": [
+        27108,
+        27111
+      ],
+      "type": "CModel",
+      "attributes": {
+        "id": "BelShirBeachShoreline"
+      },
+      "fields": [
+        {
+          "name": "Model",
+          "attributes": {
+            "value": "Assets\\Water\\ShoreLines\\ShorelineWavesBeach\\ShorelineWavesBeach.m3"
+          },
+          "children": [],
+          "text": ""
+        }
+      ],
+      "selectedFieldsOnly": true
+    },
+    {
+      "source": "lib.model",
+      "sourceLines1Based": [
+        27112,
+        27115
+      ],
+      "type": "CModel",
+      "attributes": {
+        "id": "BelShirCliffShoreline"
+      },
+      "fields": [
+        {
+          "name": "Model",
+          "attributes": {
+            "value": "Assets\\Water\\ShoreLines\\ShorelineWavesBeach\\ShorelineWavesBeach.m3"
+          },
+          "children": [],
+          "text": ""
+        }
+      ],
+      "selectedFieldsOnly": true
+    },
+    {
+      "source": "lib.model",
+      "sourceLines1Based": [
+        27132,
+        27135
+      ],
+      "type": "CModel",
+      "attributes": {
+        "id": "CharBeachShoreline"
+      },
+      "fields": [
+        {
+          "name": "Model",
+          "attributes": {
+            "value": "Assets\\Water\\ShoreLines\\ShorelineWavesLava\\ShorelineWavesLava.m3"
+          },
+          "children": [],
+          "text": ""
+        }
+      ],
+      "selectedFieldsOnly": true
+    },
+    {
+      "source": "lib.model",
+      "sourceLines1Based": [
+        27,
+        33
+      ],
+      "type": "CModelFoliage",
+      "attributes": {
+        "default": "1",
+        "id": "Foliage"
+      },
+      "fields": [
+        {
+          "name": "Model",
+          "attributes": {
+            "value": "Assets\\Foliage\\##id##\\##id##.m3"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "Tipability",
+          "attributes": {
+            "value": "0.750000"
+          },
+          "children": [],
+          "text": ""
+        }
+      ],
+      "selectedFieldsOnly": true
+    },
+    {
+      "source": "lib.model",
+      "sourceLines1Based": [
+        26271,
+        26276
+      ],
+      "type": "CModelFoliage",
+      "attributes": {
+        "parent": "Foliage",
+        "id": "PlantMixAgria"
+      },
+      "fields": [
+        {
+          "name": "VariationCount",
+          "attributes": {
+            "value": "15"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "SpringDampening",
+          "attributes": {
+            "value": "6.000000"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "SpringStrength",
+          "attributes": {
+            "value": "8.000000"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "DragCoefficient",
+          "attributes": {
+            "value": "2.000000"
+          },
+          "children": [],
+          "text": ""
+        }
+      ],
+      "selectedFieldsOnly": true
+    },
+    {
+      "source": "lib.texturesheet",
+      "sourceLines1Based": [
+        3,
+        7
+      ],
+      "type": "CTextureSheet",
+      "attributes": {
+        "id": "EmoticonsSheet1"
+      },
+      "fields": [
+        {
+          "name": "Image",
+          "attributes": {
+            "value": "Assets\\Textures\\UI_bnet_emoticons_sheet1.dds"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "Rows",
+          "attributes": {
+            "value": "10"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "Columns",
+          "attributes": {
+            "value": "10"
+          },
+          "children": [],
+          "text": ""
+        }
+      ],
+      "selectedFieldsOnly": true
+    },
+    {
+      "source": "swarm.terrainobject",
+      "sourceLines1Based": [
+        213,
+        224
+      ],
+      "type": "CCliffDoodad",
+      "attributes": {
+        "id": "DefensiveWall451HMerge1Mirror"
+      },
+      "fields": [
+        {
+          "name": "TexSets",
+          "attributes": {
+            "value": "Char"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "CliffSet",
+          "attributes": {
+            "value": "CharCliff1"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "Model",
+          "attributes": {
+            "value": "Assets\\TerrainObjects\\DefensiveWall451HMerge\\DefensiveWall451HMerge_01.m3"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "NumCellsDown",
+          "attributes": {
+            "value": "5"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "NumCellsAcross",
+          "attributes": {
+            "value": "7"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "HeightCodes",
+          "attributes": {
+            "value": "BBBBBBB"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "HeightCodes",
+          "attributes": {
+            "value": "BBBBBBB"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "HeightCodes",
+          "attributes": {
+            "value": "CCCBBBB"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "HeightCodes",
+          "attributes": {
+            "value": "CCCCCBB"
+          },
+          "children": [],
+          "text": ""
+        },
+        {
+          "name": "HeightCodes",
+          "attributes": {
+            "value": "CCCCCCC"
+          },
+          "children": [],
+          "text": ""
+        }
+      ],
+      "selectedFieldsOnly": true
+    }
+  ]
+}

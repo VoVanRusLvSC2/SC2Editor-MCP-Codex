@@ -8,3 +8,8 @@ examples/**/runs/
 generated/*.log
 *.sc2uimcp.bak
 *.sc2uimcp.tmp
+
+# Local verification and temporary input artifacts
+*.tsbuildinfo
+*.log
+coverage/

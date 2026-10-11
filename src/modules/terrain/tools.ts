@@ -1,3 +1,4 @@
+import { registerTerrainSurfaceTools } from "./surface/tools.js";
 import { McpServer } from "@modelcontextprotocol/server";
 import * as z from "zod/v4";
 import { TerrainWorkspace } from "./workspace.js";
@@ -23,6 +24,7 @@ export function registerTerrainTools(
   context: TerrainToolContext,
 ): void {
   const terrain = context.workspace;
+  registerTerrainSurfaceTools(server, context);
   const directory = z.object({ directory: z.string().default("") }).strict();
   server.registerTool("terrain.components.inspect",{description:"Check native cell flags, sync cliff grid and vertex-color entry boundaries against map dimensions. Raw flags/sub-data are not verified pathing or color brush semantics.",inputSchema:directory},async a=>textResult(await terrain.inspectComponents(a.directory)));
   server.registerTool(

@@ -1,6 +1,524 @@
 {
-  "version": "1.1.0-alpha.18",
+  "version": "1.1.0-alpha.20",
   "tools": {
+    "terrain.surface.overview": {
+      "description": "Compact whole-surface component overview. Unknowns and missing schemas remain explicit. Character budget is NOT a token measurement.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "directory": {
+            "default": "",
+            "type": "string",
+            "maxLength": 512
+          },
+          "maxChars": {
+            "default": 6000,
+            "type": "integer",
+            "minimum": 128,
+            "maximum": 12000
+          }
+        },
+        "required": [
+          "directory",
+          "maxChars"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "terrain.surface.components": {
+      "description": "Paginated component inventory with raw sizes and profile/evidence status.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "directory": {
+            "default": "",
+            "type": "string",
+            "maxLength": 512
+          },
+          "offset": {
+            "default": 0,
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "limit": {
+            "default": 20,
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 50
+          }
+        },
+        "required": [
+          "directory",
+          "offset",
+          "limit"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "terrain.surface.component.inspect": {
+      "description": "Inspect one component, optionally one bounded array page. Never interprets raw paint as final passability.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "directory": {
+            "default": "",
+            "type": "string",
+            "maxLength": 512
+          },
+          "component": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1024
+          },
+          "section": {
+            "type": "string",
+            "enum": [
+              "cliffCells",
+              "ramps",
+              "cliffSets",
+              "textures",
+              "textureSets",
+              "blockTextureSets",
+              "cliffDoodads",
+              "zones",
+              "bodies",
+              "entries",
+              "doodads",
+              "textureNames",
+              "indices"
+            ]
+          },
+          "offset": {
+            "default": 0,
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "limit": {
+            "default": 5,
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 20
+          }
+        },
+        "required": [
+          "directory",
+          "component",
+          "offset",
+          "limit"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "terrain.surface.height.sample": {
+      "description": "Sample raw HMAP vertex channels and world-height candidates; reports non-unit scale formula conflicts.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "directory": {
+            "default": "",
+            "type": "string",
+            "maxLength": 512
+          },
+          "x": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "y": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          }
+        },
+        "required": [
+          "directory",
+          "x",
+          "y"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "terrain.surface.texture.sample": {
+      "description": "Eight raw 4-bit weights at a MASK pixel, not world-space coordinates. Does not infer a rendered material.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "directory": {
+            "default": "",
+            "type": "string",
+            "maxLength": 512
+          },
+          "x": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "y": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          }
+        },
+        "required": [
+          "directory",
+          "x",
+          "y"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "terrain.surface.paint.sample": {
+      "description": "Read two physical paint bytes. No lookup table / passability claim.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "directory": {
+            "default": "",
+            "type": "string",
+            "maxLength": 512
+          },
+          "x": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "y": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "layer": {
+            "type": "string",
+            "enum": [
+              "pathing",
+              "creep"
+            ]
+          }
+        },
+        "required": [
+          "directory",
+          "x",
+          "y",
+          "layer"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "terrain.surface.bytes": {
+      "description": "Bounded hex slice for verifying an exact component offset.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "directory": {
+            "default": "",
+            "type": "string",
+            "maxLength": 512
+          },
+          "component": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1024
+          },
+          "offset": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "length": {
+            "default": 128,
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4096
+          }
+        },
+        "required": [
+          "directory",
+          "component",
+          "offset",
+          "length"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "terrain.surface.validate": {
+      "description": "Structural/profile checks only. SC2 Editor, multiplayer determinism, mesh, shader and navigation validation are NOT performed.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "directory": {
+            "default": "",
+            "type": "string",
+            "maxLength": 512
+          }
+        },
+        "required": [
+          "directory"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "terrain.surface.plan.cell": {
+      "description": "Preview one bounded RAW edit in memory. Does not stage or save. Lists dependent layers needing Editor regeneration; never an engine-validity certificate.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "directory": {
+            "default": "",
+            "type": "string",
+            "maxLength": 512
+          },
+          "edit": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "kind": {
+                    "type": "string",
+                    "const": "height-raw"
+                  },
+                  "x": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "y": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "channel": {
+                    "type": "string",
+                    "enum": [
+                      "heightBase",
+                      "heightAdjustments"
+                    ]
+                  },
+                  "value": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 65535
+                  }
+                },
+                "required": [
+                  "kind",
+                  "x",
+                  "y",
+                  "channel",
+                  "value"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "kind": {
+                    "type": "string",
+                    "const": "texture-weight"
+                  },
+                  "x": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "y": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "layer": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 7
+                  },
+                  "value": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 15
+                  }
+                },
+                "required": [
+                  "kind",
+                  "x",
+                  "y",
+                  "layer",
+                  "value"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "kind": {
+                    "type": "string",
+                    "const": "painted-raw"
+                  },
+                  "x": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "y": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "layer": {
+                    "type": "string",
+                    "enum": [
+                      "pathing",
+                      "creep"
+                    ]
+                  },
+                  "secondary": {
+                    "type": "boolean"
+                  },
+                  "value": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 255
+                  }
+                },
+                "required": [
+                  "kind",
+                  "x",
+                  "y",
+                  "layer",
+                  "secondary",
+                  "value"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "kind": {
+                    "type": "string",
+                    "const": "vertex-byte"
+                  },
+                  "entry": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "byte": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "value": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 255
+                  }
+                },
+                "required": [
+                  "kind",
+                  "entry",
+                  "byte",
+                  "value"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "kind": {
+                    "type": "string",
+                    "const": "terrain-parameter"
+                  },
+                  "attribute": {
+                    "type": "string",
+                    "enum": [
+                      "quantizeScale",
+                      "quantizeBias",
+                      "standardHeight"
+                    ]
+                  },
+                  "value": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "attribute",
+                  "value"
+                ],
+                "additionalProperties": false
+              }
+            ]
+          }
+        },
+        "required": [
+          "directory",
+          "edit"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "terrain.surface.catalog.inspect": {
+      "description": "Inspect authored terrain catalog records, tokens, raw references, sparse CliffHeights and symbolic HeightCodes. Does not resolve inheritance, dependency order, CASC or assets.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "file": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1024
+          },
+          "id": {
+            "type": "string",
+            "maxLength": 512
+          },
+          "type": {
+            "type": "string",
+            "maxLength": 128
+          },
+          "offset": {
+            "default": 0,
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "limit": {
+            "default": 5,
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 20
+          },
+          "bindings": {
+            "default": {},
+            "type": "object",
+            "propertyNames": {
+              "type": "string",
+              "maxLength": 128
+            },
+            "additionalProperties": {
+              "type": "string",
+              "maxLength": 8192
+            }
+          }
+        },
+        "required": [
+          "file",
+          "offset",
+          "limit",
+          "bindings"
+        ],
+        "additionalProperties": false
+      }
+    },
     "terrain.components.inspect": {
       "description": "Check native cell flags, sync cliff grid and vertex-color entry boundaries against map dimensions. Raw flags/sub-data are not verified pathing or color brush semantics.",
       "inputSchema": {
