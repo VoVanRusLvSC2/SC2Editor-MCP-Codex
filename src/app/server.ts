@@ -1,3 +1,4 @@
+import { registerSettingsTools } from "../modules/settings/tools.js";
 import { registerCascTools } from "../modules/casc/tools.js";
 import { projectPreflight } from "./preflight.js";
 import { registerScriptTools } from "../modules/script/tools.js";
@@ -20,6 +21,7 @@ export function createProjectServer(project: Project) {
     enabled("placement") ? { workspace: project.placement } : undefined,
     enabled("ai") ? { workspace: project.ai } : undefined,
     enabled("terrain") ? { workspace: project.terrain } : undefined, enabled("ui"));
+  if (enabled("settings")) registerSettingsTools(server, project.settings);
   if (enabled("casc")) registerCascTools(server, project.casc);
   if (enabled("map")) registerMapTools(server,project.map);
   if (enabled("script")) registerScriptTools(server,project.script);
@@ -34,10 +36,11 @@ export function createProjectServer(project: Project) {
     selection: { profile: selection.profile, source: selection.source, modules: [...selection.modules], unknown: selection.unknown },
     availableModules: publicModules,
     profiles: moduleProfiles(),
-    configure: { profile: "Set SC2_MCP_PROFILE to minimal, focused-data, focused-script, focused-authoring, ui, cutscene, data, terrain, casc, script, authoring or all", custom: "Set SC2_MCP_MODULES to a comma-separated module list; ui is always included" },
+    configure: { profile: "Set SC2_MCP_PROFILE to minimal, focused-data, focused-script, focused-authoring, ui, cutscene, data, terrain, casc, settings, landscape, script, authoring or all", custom: "Set SC2_MCP_MODULES to a comma-separated module list; ui is always included" },
     dataSchema: project.data.schema.loadState(),
     casc: { enabled: enabled("casc"), ...project.casc.configuration() },
     authoring: {
+      settings: enabled("settings") ? project.settings.capabilities() : "DISABLED",
       gui: enabled("script") ? { tools:["trigger.describe_function","trigger.plan","trigger.validate","trigger.apply"],verifiedFunctions:9,argumentSubset:["literal","variable","preset","gamelink","PlayerGroupAll"],compiler:"NOT_EXECUTED" } : "DISABLED",
       labels: enabled("script") ? { tools:["trigger.labels","trigger.label_of"],discovery:"READ_ONLY",assignment:"UNSUPPORTED_EDITOR_FORMAT" } : "DISABLED",
       data: enabled("data") ? { referenceCoverage:"PARTIAL",effective:"PARTIAL",unknownIsUnused:false } : "DISABLED",
@@ -46,7 +49,7 @@ export function createProjectServer(project: Project) {
   }, null, 2) }] }));
   if (enabled("ui")) {
   server.registerTool("ui.project_status", {
-    description: "Audit coverage and limitations of all eleven modules; separate registry evidence from actual Editor/runtime validation. Read-only.",
+    description: "Audit coverage and limitations of all twelve modules; separate registry evidence from actual Editor/runtime validation. Read-only.",
     inputSchema: z.object({}).strict(),
   }, async () => ({ content: [{ type: "text" as const, text: JSON.stringify(projectCoverage(project), null, 2) }] }));
   server.registerTool("ui.test_readiness",{description:"Gather known offline map/terrain/UI/cutscene/text/data/placement/AI/script checks and pending drafts before Editor tests. PASS is not full standard-function or engine coverage.",inputSchema:z.object({}).strict()},async()=>({content:[{type:"text" as const,text:JSON.stringify(await projectPreflight(project))}]}));

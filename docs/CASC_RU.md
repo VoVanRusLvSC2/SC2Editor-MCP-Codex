@@ -15,7 +15,7 @@ node dist/index.js
 
 `SC2_UI_ROOT` — рабочая карта/мод, `SC2_CASC_ROOT` — установленная игра с `.build.info`. Windows default — `C:/Program Files (x86)/StarCraft II`. Кэш по умолчанию лежит в `<workspace>/.sc2mcp-casc-cache`; `SC2_CASC_CACHE` позволяет выбрать отдельный каталог. Кэш внутри установки игры запрещён.
 
-Профиль `casc` включает UI, CASC, Data и Browse. Для совместной работы с поверхностью используй `all` либо `SC2_MCP_MODULES=terrain,casc,data,browse,placement,map`. Старые узкие профили сохраняют свои поверхности инструментов. Native reader запускается лениво и держит индекс в одном процессе.
+Профиль `casc` включает UI, CASC, Data и Browse. Для совместной работы с поверхностью используй `landscape`, `all` либо `SC2_MCP_MODULES=terrain,casc,data,browse,placement,map`. Старые узкие профили сохраняют свои поверхности инструментов. Native reader запускается лениво и держит индекс в одном процессе.
 
 ## Команды
 

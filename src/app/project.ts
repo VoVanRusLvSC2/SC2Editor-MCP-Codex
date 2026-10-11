@@ -1,4 +1,5 @@
 import path from "node:path";
+import { SettingsWorkspace } from "../modules/settings/workspace.js";
 import { CascWorkspace } from "../modules/casc/workspace.js";
 import { ScriptWorkspace } from "../modules/script/workspace.js";
 import { TriggerWorkspace } from "../modules/trigger/workspace.js";
@@ -38,11 +39,12 @@ export async function createProject(root: string, options: {loadUiSchema?:boolea
   const placement = new PlacementWorkspace(workspace, browse), terrain = new TerrainWorkspace(workspace, browse, placement);
   placement.terrain = terrain;
   const map = new MapWorkspace(workspace,terrain);
+  const settings = new SettingsWorkspace(workspace);
   const ai = new AiWorkspace(workspace, aiSchema, data, browse);
   const text = new TextWorkspace(workspace, textSchema);
   const cutscene = new CutsceneWorkspace(workspace, cutsceneSchema), cutsceneAssets = new CutsceneAssetIndex(workspace.root);
   const script = new ScriptWorkspace(workspace);
   const trigger = new TriggerWorkspace(workspace);
-  return { casc, script, trigger, workspace, schema, data, browse, placement, terrain, map, ai, text, cutscene, cutsceneSchema, cutsceneAssets };
+  return { settings, casc, script, trigger, workspace, schema, data, browse, placement, terrain, map, ai, text, cutscene, cutsceneSchema, cutsceneAssets };
 }
 export type Project = Awaited<ReturnType<typeof createProject>>;

@@ -1,0 +1,731 @@
+{
+  "version": "1.1.0-alpha.20",
+  "tools": {
+    "settings.capabilities": {
+      "description": "Report separate map lobby/settings operations, verified v39 profile and explicit gaps. Does not launch Editor.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": true
+      }
+    },
+    "settings.inspect": {
+      "description": "Inspect MapInfo players/options and Attributes counts. Reads staged changes. Editor/runtime acceptance is unverified.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "directory": {
+            "default": "",
+            "type": "string"
+          }
+        },
+        "required": [
+          "directory"
+        ],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": true
+      }
+    },
+    "settings.attributes.list": {
+      "description": "Page map attributes with stored identifiers and localization keys.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "directory": {
+            "default": "",
+            "type": "string"
+          },
+          "offset": {
+            "default": 0,
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "limit": {
+            "default": 50,
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100
+          }
+        },
+        "required": [
+          "directory",
+          "offset",
+          "limit"
+        ],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": true
+      }
+    },
+    "settings.variants.list": {
+      "description": "Page map variants with stored identifiers and localization keys.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "directory": {
+            "default": "",
+            "type": "string"
+          },
+          "offset": {
+            "default": 0,
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "limit": {
+            "default": 50,
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100
+          }
+        },
+        "required": [
+          "directory",
+          "offset",
+          "limit"
+        ],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": true
+      }
+    },
+    "settings.attribute.get": {
+      "description": "Inspect one attribute: stored fields, values/defaults/locks and preserved unknown tags. Standard numeric value IDs are raw on-disk values.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "directory": {
+            "default": "",
+            "type": "string"
+          },
+          "id": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9999
+          }
+        },
+        "required": [
+          "directory",
+          "id"
+        ],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": true
+      }
+    },
+    "settings.variant.get": {
+      "description": "Inspect one variant: stored fields, values/defaults/locks and preserved unknown tags. Standard numeric value IDs are raw on-disk values.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "directory": {
+            "default": "",
+            "type": "string"
+          },
+          "id": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9999
+          }
+        },
+        "required": [
+          "directory",
+          "id"
+        ],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": true
+      }
+    },
+    "settings.players.list": {
+      "description": "Read native v39 player slots: control, team, AI/race catalog token, color, registered start locations, decal and game options. IDs are MapInfo IDs, separate from zero-based lobby slots.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "directory": {
+            "default": "",
+            "type": "string"
+          }
+        },
+        "required": [
+          "directory"
+        ],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": true
+      }
+    },
+    "settings.plan": {
+      "description": "Prepare lossless map settings edits: custom attributes/values/defaults; cloned native variants/mode fields/existing bindings; player parameters and 13 game option flags. No disk writes. New attributes need values in the same plan. Names use localization keys. Pins the complete map manifest; unknown bytes preserved.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "directory": {
+            "default": "",
+            "type": "string"
+          },
+          "operations": {
+            "minItems": 1,
+            "maxItems": 100,
+            "type": "array",
+            "items": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 9999
+                    },
+                    "type": {
+                      "type": "string",
+                      "enum": [
+                        "Global",
+                        "Player"
+                      ]
+                    },
+                    "name": {
+                      "type": "string",
+                      "maxLength": 1024
+                    },
+                    "access": {
+                      "default": "Host",
+                      "type": "string",
+                      "enum": [
+                        "Host",
+                        "Self"
+                      ]
+                    },
+                    "availability": {
+                      "default": "All",
+                      "type": "string",
+                      "maxLength": 1024
+                    },
+                    "visibility": {
+                      "default": "All",
+                      "type": "string",
+                      "maxLength": 1024
+                    },
+                    "op": {
+                      "type": "string",
+                      "const": "attribute.create"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "type",
+                    "name",
+                    "access",
+                    "availability",
+                    "visibility",
+                    "op"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "op": {
+                      "type": "string",
+                      "const": "attribute.set"
+                    },
+                    "id": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 9999
+                    },
+                    "field": {
+                      "type": "string",
+                      "enum": [
+                        "Name",
+                        "Availability",
+                        "Visibility",
+                        "Access"
+                      ]
+                    },
+                    "value": {
+                      "type": "string",
+                      "maxLength": 1024
+                    }
+                  },
+                  "required": [
+                    "op",
+                    "id",
+                    "field",
+                    "value"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "op": {
+                      "type": "string",
+                      "const": "attribute.value.upsert"
+                    },
+                    "id": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 9999
+                    },
+                    "valueId": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 9999
+                    },
+                    "name": {
+                      "type": "string",
+                      "maxLength": 1024
+                    },
+                    "description": {
+                      "type": "string",
+                      "maxLength": 1024
+                    },
+                    "icon": {
+                      "type": "string",
+                      "maxLength": 1024
+                    }
+                  },
+                  "required": [
+                    "op",
+                    "id",
+                    "valueId",
+                    "name"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "op": {
+                      "type": "string",
+                      "const": "attribute.default"
+                    },
+                    "id": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 9999
+                    },
+                    "slot": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "const": "Global"
+                        },
+                        {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 15
+                        }
+                      ]
+                    },
+                    "valueId": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 9999
+                    }
+                  },
+                  "required": [
+                    "op",
+                    "id",
+                    "slot",
+                    "valueId"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "op": {
+                      "type": "string",
+                      "const": "variant.clone"
+                    },
+                    "id": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 9999
+                    },
+                    "sourceId": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 9999
+                    },
+                    "modeName": {
+                      "type": "string",
+                      "maxLength": 1024
+                    },
+                    "modeDesc": {
+                      "type": "string",
+                      "maxLength": 1024
+                    }
+                  },
+                  "required": [
+                    "op",
+                    "id",
+                    "sourceId"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "op": {
+                      "type": "string",
+                      "const": "variant.set"
+                    },
+                    "id": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 9999
+                    },
+                    "field": {
+                      "type": "string",
+                      "enum": [
+                        "ModeName",
+                        "ModeDesc",
+                        "CategoryId",
+                        "ModeId",
+                        "MaxTeamSize"
+                      ]
+                    },
+                    "value": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "maxLength": 1024
+                        },
+                        {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 4294967295
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "op",
+                    "id",
+                    "field",
+                    "value"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "op": {
+                      "type": "string",
+                      "const": "variant.default"
+                    },
+                    "id": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 9999
+                    },
+                    "namespace": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 4294967295
+                    },
+                    "attributeId": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 4294967295
+                    },
+                    "slot": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "const": "Global"
+                        },
+                        {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 15
+                        }
+                      ]
+                    },
+                    "valueId": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 4294967295
+                    },
+                    "locked": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "op",
+                    "id",
+                    "namespace",
+                    "attributeId",
+                    "slot",
+                    "valueId"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "op": {
+                      "type": "string",
+                      "const": "variant.hidden"
+                    },
+                    "id": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 9999
+                    },
+                    "namespace": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 4294967295
+                    },
+                    "attributeId": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 4294967295
+                    },
+                    "hidden": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "op",
+                    "id",
+                    "namespace",
+                    "attributeId",
+                    "hidden"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "op": {
+                      "type": "string",
+                      "const": "player.set"
+                    },
+                    "playerId": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 16
+                    },
+                    "patch": {
+                      "type": "object",
+                      "properties": {
+                        "control": {
+                          "type": "string",
+                          "enum": [
+                            "None",
+                            "User",
+                            "Computer",
+                            "Neutral",
+                            "Hostile"
+                          ]
+                        },
+                        "aiName": {
+                          "type": "string",
+                          "maxLength": 256
+                        },
+                        "color": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 16
+                        },
+                        "startLocation": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 4294967295
+                        },
+                        "decal": {
+                          "type": "string",
+                          "maxLength": 40
+                        }
+                      },
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "op",
+                    "playerId",
+                    "patch"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "op": {
+                      "type": "string",
+                      "const": "options.set"
+                    },
+                    "patch": {
+                      "type": "object",
+                      "properties": {
+                        "disableReplay": {
+                          "type": "boolean"
+                        },
+                        "waitForKey": {
+                          "type": "boolean"
+                        },
+                        "disableTriggerPreload": {
+                          "type": "boolean"
+                        },
+                        "horizontalFov": {
+                          "type": "boolean"
+                        },
+                        "hideErrorsTest": {
+                          "type": "boolean"
+                        },
+                        "disableObservers": {
+                          "type": "boolean"
+                        },
+                        "staggerEvents": {
+                          "type": "boolean"
+                        },
+                        "showErrorsOnline": {
+                          "type": "boolean"
+                        },
+                        "showCountdown": {
+                          "type": "boolean"
+                        },
+                        "allUnitsUseBaseHeight": {
+                          "type": "boolean"
+                        },
+                        "disableViewEveryone": {
+                          "type": "boolean"
+                        },
+                        "disableTakeCommand": {
+                          "type": "boolean"
+                        },
+                        "disableRecoverGame": {
+                          "type": "boolean"
+                        }
+                      },
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "op",
+                    "patch"
+                  ],
+                  "additionalProperties": false
+                }
+              ]
+            }
+          }
+        },
+        "required": [
+          "directory",
+          "operations"
+        ],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": true
+      }
+    },
+    "settings.apply": {
+      "description": "Apply checked settings plan through shared byte transactions. dryRun and staging default true. Stale map content/drafts rejected; a staged group must be saved separately.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "planId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "dryRun": {
+            "default": true,
+            "type": "boolean"
+          },
+          "stage": {
+            "default": true,
+            "type": "boolean"
+          },
+          "backup": {
+            "default": true,
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "planId",
+          "dryRun",
+          "stage",
+          "backup"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "settings.save": {
+      "description": "Commit complete staged byte group with map manifest guards and backups. dryRun defaults true.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "transactionId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "dryRun": {
+            "default": true,
+            "type": "boolean"
+          },
+          "backup": {
+            "default": true,
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "transactionId",
+          "dryRun",
+          "backup"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "settings.discard": {
+      "description": "Discard the complete staged settings group, preserving disk bytes. dryRun defaults true.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "transactionId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "dryRun": {
+            "default": true,
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "transactionId",
+          "dryRun"
+        ],
+        "additionalProperties": false
+      }
+    }
+  }
+}

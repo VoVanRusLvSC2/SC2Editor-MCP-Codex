@@ -43,12 +43,14 @@ for (const dependency of ["@modelcontextprotocol/server", "@modelcontextprotocol
 }
 
 await fs.copyFile(path.join(projectRoot, "windows", "SC2-UI-Workbench.ps1"), path.join(output, "SC2-UI-Workbench.ps1"));
+await fs.copyFile(path.join(projectRoot, "windows", "SC2-MCP.cmd"), path.join(output, "SC2-MCP.cmd"));
 await fs.copyFile(path.join(projectRoot, "windows", "README-WINDOWS.md"), path.join(output, "README-WINDOWS.md"));
 await fs.copyFile(path.join(projectRoot, "README.md"), path.join(output, "README.md"));
 await fs.copyFile(path.join(projectRoot, "README_RU.md"), path.join(output, "README_RU.md"));
 await fs.mkdir(path.join(output,"generated"),{recursive:true});
 for(const file of runtimeSchemas)await fs.copyFile(path.join(projectRoot,"generated",file),path.join(output,"generated",file));
 await fs.cp(path.join(projectRoot,"generated","data-xsd-index"),path.join(output,"generated","data-xsd-index"),{recursive:true});
+for (const file of ["casc-tools.json", "settings-tools.json", "settings-evidence.json"]) await fs.copyFile(path.join(projectRoot, "generated", file), path.join(output, "generated", file));
 await fs.cp(path.join(projectRoot, "docs"), path.join(output, "docs"), { recursive: true });
 await fs.cp(path.join(projectRoot, "examples"), path.join(output, "examples"), { recursive: true });
 await buildPeLauncher(path.join(output, "SC2-UI-Workbench.exe"));
@@ -67,6 +69,11 @@ if (process.platform === "win32" && path.extname(process.execPath).toLowerCase()
 await fs.writeFile(path.join(output, "BUILD-INFO.json"), `${JSON.stringify({
   version,
   bundledArchiveBackend: true,
+  bundledCascBackend: true,
+  publicModules: 12,
+  mcpLauncher: "SC2-MCP.cmd",
+  mcpDefaultProfile: "all",
+  settingsEditorValidation: "NOT_EXECUTED",
   archiveWindowsExecution: "NOT_EXECUTED",
   platformBuiltOn: process.platform,
   bundledNode,

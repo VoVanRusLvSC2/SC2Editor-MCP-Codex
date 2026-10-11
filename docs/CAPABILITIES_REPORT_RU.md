@@ -12,6 +12,7 @@
 | Galaxy / Triggers | Galaxy structural reading/writes, native signature registry, bounded GUI trigger inspection/authoring; CASC читает current NativeLib/natives bytes | Полный compiler/semantic binding, все GUI function shapes, полное преобразование произвольных сценариев |
 | UI / Text / Cutscene | Существующие semantic XML operations, styles/localization, scene/camera/track editing | Все renderer/engine-specific semantics, полные GUI replicas и универсальные in-game acceptance checks |
 | Map / MPQ | Native import/export/reopen entry checks, templates/blueprints, MapInfo и metadata plans | Чистая карта с нуля без native donor; универсальный resize/rebuild; все варианты MPQ/MapInfo |
+| Settings | Отдельный модуль: Attributes/values/defaults, clone/patch variants и существующих bindings, control/AI/color/start/decal игроков, 13 game option flags; lossless plan/stage/save | Teams/alliances/player count, новые standard bindings, варианты с нуля, другие MapInfo versions, полноценная engine acceptance |
 | Assets | Реальные CASC paths, metadata и ограниченные декодированные byte ranges M3/DDS/audio/прочих файлов | Полноценный M3/DDS/audio preview и engine asset resolver |
 
 ## Подтверждения
@@ -25,6 +26,8 @@
 ## Новый модуль и следующие приоритеты
 
 Отдельный **CASC** уже добавлен: он владеет installed-game source и кэшем, а Terrain/Data/Browse используют его данные через собственные APIs. [Устройство, команды и запуск](CASC_RU.md).
+
+Отдельный **Settings** добавлен для настроек карты: [команды и ограничения](SETTINGS_RU.md). Общий профиль `landscape` объединяет Terrain + CASC + Settings с существующими вспомогательными модулями. Старые узкие профили сохранены.
 
 Следующий отдельный модуль имеет смысл для **Assets preview**: M3/DDS inspection/preview, animation/material metadata, provenance-aware resolving с учётом dependency order. Он не нужен для базового CASC чтения, уже реализованного сейчас.
 

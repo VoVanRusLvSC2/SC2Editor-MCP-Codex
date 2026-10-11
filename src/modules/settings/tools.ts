@@ -1,0 +1,20 @@
+import { McpServer } from "@modelcontextprotocol/server";
+import * as z from "zod/v4";
+import { SettingsWorkspace } from "./workspace.js";
+import { settingsPlanSchema } from "./schemas.js";
+const directory = z.string().default(""), dryRun = z.boolean().default(true);
+const result = (value: unknown) => { const text = JSON.stringify(value, null, 2); if (text.length > 64000)
+    throw new Error("SETTINGS_RESPONSE_LIMIT: use paginated lists and per-id detail tools"); return { content: [{ type: "text" as const, text }] }; };
+export function registerSettingsTools(server: McpServer, settings: SettingsWorkspace) {
+    server.registerTool("settings.capabilities", { description: "Report separate map lobby/settings operations, verified v39 profile and explicit gaps. Does not launch Editor.", inputSchema: z.object({}).strict(), annotations: { readOnlyHint: true } }, async () => result(settings.capabilities()));
+    server.registerTool("settings.inspect", { description: "Inspect MapInfo players/options and Attributes counts. Reads staged changes. Editor/runtime acceptance is unverified.", inputSchema: z.object({ directory }).strict(), annotations: { readOnlyHint: true } }, async (a) => result(await settings.inspect(a.directory)));
+    for (const kind of ["attributes", "variants"] as const)
+        server.registerTool(`settings.${kind}.list`, { description: `Page map ${kind} with stored identifiers and localization keys.`, inputSchema: z.object({ directory, offset: z.number().int().min(0).default(0), limit: z.number().int().min(1).max(100).default(50) }).strict(), annotations: { readOnlyHint: true } }, async (a) => result(await settings.list(a.directory, kind, a.offset, a.limit)));
+    for (const kind of ["attribute", "variant"] as const)
+        server.registerTool(`settings.${kind}.get`, { description: `Inspect one ${kind}: stored fields, values/defaults/locks and preserved unknown tags. Standard numeric value IDs are raw on-disk values.`, inputSchema: z.object({ directory, id: z.number().int().min(1).max(9999) }).strict(), annotations: { readOnlyHint: true } }, async (a) => result(await settings.get(a.directory, kind, a.id)));
+    server.registerTool("settings.players.list", { description: "Read native v39 player slots: control, team, AI/race catalog token, color, registered start locations, decal and game options. IDs are MapInfo IDs, separate from zero-based lobby slots.", inputSchema: z.object({ directory }).strict(), annotations: { readOnlyHint: true } }, async (a) => result((await settings.players(a.directory)).inspect()));
+    server.registerTool("settings.plan", { description: "Prepare lossless map settings edits: custom attributes/values/defaults; cloned native variants/mode fields/existing bindings; player parameters and 13 game option flags. No disk writes. New attributes need values in the same plan. Names use localization keys. Pins the complete map manifest; unknown bytes preserved.", inputSchema: settingsPlanSchema, annotations: { readOnlyHint: true } }, async (a) => result(await settings.plan(a)));
+    server.registerTool("settings.apply", { description: "Apply checked settings plan through shared byte transactions. dryRun and staging default true. Stale map content/drafts rejected; a staged group must be saved separately.", inputSchema: z.object({ planId: z.string().min(1), dryRun, stage: z.boolean().default(true), backup: z.boolean().default(true) }).strict() }, async (a) => result(await settings.apply(a.planId, a)));
+    server.registerTool("settings.save", { description: "Commit complete staged byte group with map manifest guards and backups. dryRun defaults true.", inputSchema: z.object({ transactionId: z.string().min(1), dryRun, backup: z.boolean().default(true) }).strict() }, async (a) => result(await settings.save(a.transactionId, a)));
+    server.registerTool("settings.discard", { description: "Discard the complete staged settings group, preserving disk bytes. dryRun defaults true.", inputSchema: z.object({ transactionId: z.string().min(1), dryRun }).strict() }, async (a) => result(settings.discard(a.transactionId, a.dryRun)));
+}

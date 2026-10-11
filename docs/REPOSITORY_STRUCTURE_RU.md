@@ -1,6 +1,6 @@
 # Структура репозитория
 
-Проект — TypeScript MCP/GUI application с C++ MPQ backend. Публичных модулей одиннадцать; `trigger.*` подключается вместе с Script. Единственный composition root — `src/app/project.ts`, сервер — `src/app/server.ts`, выбор инструментов — `src/app/moduleSelection.ts`.
+Проект — TypeScript MCP/GUI application с C++ MPQ/CASC backends. Публичных модулей двенадцать; `trigger.*` подключается вместе с Script. Единственный composition root — `src/app/project.ts`, сервер — `src/app/server.ts`, выбор инструментов — `src/app/moduleSelection.ts`.
 
 | Каталог | Что хранится и зачем |
 | --- | --- |

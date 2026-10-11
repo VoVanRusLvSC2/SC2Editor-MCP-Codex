@@ -8,7 +8,7 @@ export function projectCoverage(project: Project) {
   );
   return {
     version: bridgeCapabilities(project.workspace.root).version,
-    scope: "Eleven implemented modules; current registries plus explicitly labelled historical evidence",
+    scope: "Twelve implemented modules; current registries plus explicitly labelled historical evidence",
     completeEngineCoverage: false,
     overallCoveragePercent: null,
     reason: "The complete set of engine formats and semantic rules is not known; a global percentage would be unsupported.",
@@ -21,6 +21,7 @@ export function projectCoverage(project: Project) {
       text: { registry: project.text.schema.coverage(), gaps: ["Not every discovered rich-text tag has semantic operations", "Glyph coverage, rendering and locale fallback are not verified"] },
       data: { registry: project.data.schema.coverage(), evidenceScope: "Bundled historical corpus totals and current registry consistency; this call does not reparse the original corpus", gaps: ["Hidden enums, defaults and illegal combinations", "Full active dependency resolution and runtime behavior"] },
       ai: { registry: { nodes: project.ai.schema.data.nodes.length, properties: project.ai.schema.data.properties.length, nodeStatus: counts(project.ai.schema.data.nodes), propertyStatus: counts(project.ai.schema.data.properties) }, gaps: ["Populated wave serialization remains inferred and opt-in", "Config/Script nodes have preserve-only support", "Trigger editing and full AI runtime semantics are absent"] },
+      settings: { support: project.settings.capabilities(), gaps: project.settings.capabilities().gaps },
       casc: { support: ["Actual local CASC/MNDX index and strict BLTE reads", "Build-specific SHA-verified byte cache and explicit Data/Browse metadata mounts", "Compressed Galaxy symbol summaries and imported-reference source checks"], gaps: ["No CDN fetch or storage writer", "No complete native inheritance/compiler/runtime proof", "Large binary assets are inspected/read by bounded ranges"] },
       browse: { support: ["Catalog and loose-asset indexing", "Dependency-aware search, localization and references"], gaps: ["Declared layers may be absent from installed roots", "MPQ uses explicit map.import; CASC metadata roots require explicit casc.mount", "No engine-rendered 3D preview"] },
       placement: { support: ["Observed Objects XML: Unit, Doodad and ObjectPoint v27", "Seeded scatter, ground snapping and joint terrain plans"], gaps: ["Regions/Cameras and other native object kinds are preserved without complete editors; incoming Point links are not fully checked", "No footprint, pathing or runtime collision validation"] },
