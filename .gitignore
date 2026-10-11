@@ -13,3 +13,6 @@ generated/*.log
 *.tsbuildinfo
 *.log
 coverage/
+
+# Verified local game bytes and semantic caches
+.sc2mcp-casc-cache/

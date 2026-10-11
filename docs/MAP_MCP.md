@@ -1,6 +1,6 @@
-# Map module — alpha.18
+# Map module
 
-`map.*` is the ninth module in the existing server. It uses the same Workspace, paths and transaction queue as the other modules. GUI-trigger development is excluded; Galaxy scripts are edited by the separate script.* module. Existing scripts and opaque Triggers files are preserved by clone/import/export.
+`map.*` handles map foundation and archive operations in the shared server. It uses the same Workspace, paths and transaction queue as the other modules. GUI-trigger development is excluded; Galaxy scripts are edited by the separate script.* module. Existing scripts and opaque Triggers files are preserved by clone/import/export.
 
 ## Commands
 
@@ -94,3 +94,7 @@ Workspace text/byte commits now use a persistent prepared/committed journal and 
 Next order: clean defaults/document completion → Terrain grids/init/derived/resize → cliffs → ramps → populated water bodies → pathing → textures/colors/decor → map build → script.* → Editor/game verification. General directory/readset pinning outside map.* still needs completion.
 
 Layout reference: https://github.com/sc2-arcade-watcher/sc2-file-format-docs/blob/main/mapinfo.md . This is an independent research reference, not a claim that functions were recovered from the supplied protected EXE. Native fixture provenance and component hashes are in src/tests/fixtures/map-native.
+
+## Separate map settings
+
+Attributes, native game variants and selected MapInfo v39 player/options writes are provided by the separate settings.* module. The Map module keeps its original writer scope and opaque-tail preservation. See [Settings](SETTINGS_RU.md); settings/landscape/all profiles expose the new tools.

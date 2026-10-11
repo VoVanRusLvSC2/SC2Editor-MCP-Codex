@@ -1,4 +1,4 @@
-export const publicModules = ["ui", "cutscene", "text", "data", "browse", "placement", "ai", "terrain", "map", "script"] as const;
+export const publicModules = ["ui", "cutscene", "text", "data", "browse", "placement", "ai", "terrain", "map", "script", "casc", "settings"] as const;
 export type PublicModule = typeof publicModules[number];
 
 const profiles: Record<string, PublicModule[]> = {
@@ -10,6 +10,9 @@ const profiles: Record<string, PublicModule[]> = {
   ui: ["ui", "text"],
   cutscene: ["ui", "cutscene", "browse", "data"],
   data: ["ui", "data", "browse"],
+  settings: ["ui", "settings", "map", "text"],
+  landscape: ["ui", "terrain", "placement", "browse", "data", "map", "casc", "settings", "text"],
+  casc: ["ui", "casc", "data", "browse"],
   terrain: ["ui", "terrain", "placement", "browse", "data", "map"],
   script: ["ui", "script"],
   authoring: ["ui", "cutscene", "text", "data", "browse", "placement", "terrain", "map", "script"],

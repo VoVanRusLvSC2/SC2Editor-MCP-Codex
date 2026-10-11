@@ -1,6 +1,15 @@
 # Changelog
 
+## Map Settings and portable MCP — 2026-10-11
+
+- Separate `settings.*` module: lossless Attributes definitions/values/defaults, native variant clone and existing bindings, MapInfo v39 player parameters and thirteen known game-option bits.
+- Full-map stale guards and shared multi-file stage/save; existing module implementations retained.
+- Settings/landscape profiles, bundled stdio `SC2-MCP.cmd`, current Windows setup and capability report. Offline native fixtures and SDK checks only; Editor was not used.
+
 ## Unreleased — 2026-10-11
+
+- Add a separate installed-game CASC module: local native MNDX/strict BLTE reads, bounded search/text/asset ranges, source build/CKey/SHA provenance, verified byte cache, explicit Data/Browse mounts and compressed Galaxy symbol summaries.
+- Pin CascLib and include the native helper/license in Windows portable; imported ZIP metadata remains separately source-checked reference material.
 
 - Add native LFCT v102 ground hide/show cell/area plans, visibility preview and placement exclusion, with a real p.SC2Map fixture and user-confirmed visual acceptance.
 - Add direct terrain.paint/blend tools and correct the default blend strength to 0.5; real SDK tests exercise paint, blend, relief, hide, show and persisted save.

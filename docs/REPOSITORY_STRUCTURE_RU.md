@@ -1,6 +1,6 @@
 # Структура репозитория
 
-Проект — TypeScript MCP/GUI application с C++ MPQ backend. Публичных модулей десять; `trigger.*` подключается вместе с Script. Единственный composition root — `src/app/project.ts`, сервер — `src/app/server.ts`, выбор инструментов — `src/app/moduleSelection.ts`.
+Проект — TypeScript MCP/GUI application с C++ MPQ/CASC backends. Публичных модулей двенадцать; `trigger.*` подключается вместе с Script. Единственный composition root — `src/app/project.ts`, сервер — `src/app/server.ts`, выбор инструментов — `src/app/moduleSelection.ts`.
 
 | Каталог | Что хранится и зачем |
 | --- | --- |
@@ -20,6 +20,10 @@
 | `docs/` | Текущие руководства, форматы, ограничения и архитектура |
 
 Большинство файлов `generated/` — `data-xsd-index`: manifest и маленькие XSD shards, которые реально читает `DataXsdRegistry`. Это нужные runtime-данные. Galaxy, Trigger, AI, Cutscene, Text и Data registries также используются кодом/portable сборкой. Название generated само по себе не означает мусор.
+
+## CASC
+
+`src/modules/casc` владеет installed-game source, проверенным кэшем и metadata mounts. `native/casc` содержит helper source, pinned upstream revision и license; `native/bin/windows-x64/sc2-mcp-casc.exe` нужен runtime/portable. Game bytes и source ZIP references исключены из Git через `.sc2mcp-casc-cache/` и `work/`. [CASC guide](CASC_RU.md).
 
 ## TERRAIN
 

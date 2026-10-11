@@ -144,6 +144,16 @@ export class BrowseWorkspace {
     this.indexedData = new DataWorkspace(workspace, data.schema, [...dependencyRoots, ...installed].map((entry) => entry.path));
   }
 
+  setDependencyRefresh(refresh: () => Promise<void>) { this.indexedData.dependencyRefresh = refresh; }
+  removeDependencyRoot(root: string) {
+    const absolute = path.resolve(root), index = this.roots.findIndex(entry => entry.path === absolute);
+    if (index >= 0) this.roots.splice(index, 1); this.indexedData.removeDependencyRoot(absolute); this.snapshot = undefined;
+  }
+  addDependencyRoot(root: string) {
+    const absolute = path.resolve(root);
+    if (!this.roots.some(entry => entry.path === absolute)) this.roots.push({ path: absolute, sourceLayer: "dependency", dependency: dependencyFromPath(absolute), availability: "INSTALLED_BUT_NOT_DECLARED" });
+    this.indexedData.addDependencyRoot(absolute); this.snapshot = undefined;
+  }
   private async files(): Promise<BrowseIndexSnapshot["files"]> {
     const output: BrowseIndexSnapshot["files"] = [];
     const visit = async (root: RootSpec, directory: string): Promise<void> => {

@@ -1,36 +1,29 @@
-# SC2Editor MCP / SC2 UI Workbench — Windows
+# Готовый SC2Editor MCP для Windows x64
 
-## Start
+Для MCP используется `runtime\node.exe` с `app\dist\index.js`, либо `SC2-MCP.cmd`. Установка npm/Node.js для переносного пакета не нужна. `SC2-UI-Workbench.exe` запускает дополнительный web GUI; для MCP stdio он не требуется.
 
-Double-click `SC2-UI-Workbench.exe`.
+## MCP-клиент
 
-1. Select an unpacked/component `.SC2Map`, `.SC2Mod`, or another directory containing SC2 UI files.
-2. The launcher starts the local editor and opens `http://127.0.0.1:4312`.
-3. Make staged changes, validate, inspect the diff, and use **Save + backup**.
-4. Return to the launcher message and click **OK** to stop the local server.
+В настройках вашего MCP-клиента задайте:
 
-The launcher remembers the last selected directory in `%APPDATA%\SC2UIWorkbench`.
-
-The GUI's **Attach UI container** field offers `GameUI/UIContainer`, lower/console/upper presets, and accepts any other descriptor path with its `file` value. See `docs\REAL_EXAMPLE_RU.md`; the complete generated component tree is in `examples\UI`.
-
-## Node runtime
-
-If the package contains `runtime\node.exe`, it is fully portable. Otherwise it uses Node.js 20+ from PATH or `%ProgramFiles%\nodejs\node.exe`.
-
-To create a self-contained build on Windows:
-
-```powershell
-npm install
-npm run windows:portable
-Compress-Archive -Path .\release\SC2-UI-Workbench-Windows\* -DestinationPath .\release\SC2-UI-Workbench-Windows-x64.zip -Force
+```json
+{
+  "command": "C:/Tools/SC2Editor-MCP/runtime/node.exe",
+  "args": ["C:/Tools/SC2Editor-MCP/app/dist/index.js"],
+  "env": {
+    "SC2_UI_ROOT": "K:/Maps/MyMap-components",
+    "SC2_CASC_ROOT": "C:/Program Files (x86)/StarCraft II",
+    "SC2_MCP_PROFILE": "all"
+  }
+}
 ```
 
-The build copies the exact `node.exe` running npm into `runtime\node.exe`.
+Замените пути пакета и рабочей папки карты. Root — распакованные компоненты карты или папка, внутри которой импортируются карты. Упакованный файл сначала открывается через `map.archive.inspect`/`map.import`, редактируется в компонентах и сохраняется через `map.export`. Bundled StormLib backend уже включён.
 
-## Packed maps
+По умолчанию `all` сохраняет доступ ко всем существующим модулям и добавляет CASC/Settings. Для работы только с картой профиль `landscape` включает работающую поверхность, чтение реальной игры через CASC, Settings, Map, Data, Browse, Placement, Text и UI. `all` включает также остальные существующие модули: Cutscene, AI, Script/Trigger. Узкие прежние профили сохранены. Первая команда — `modkit.capabilities`.
 
-The EXE folder picker opens component directories. For a packed binary map, configure `SC2_UI_ARCHIVE_ADAPTER` and use `npm run gui:archive -- MyMap.SC2Map`, or extract it first with the supported archive adapter workflow. The launcher does not disguise an unpacked directory editor as native MPQ support.
+CASC читает установленную игру; служебный кэш `.sc2mcp-casc-cache` лежит в рабочей папке. Reader запускается лениво. Для старта/работы файловых команд SC2 Editor не нужен. Для текущего выпуска редактор не запускался.
 
-## Seven-module MCP alpha.7
+Руководства: `docs\TERRAIN_RU.md`, `docs\CASC_RU.md`, `docs\SETTINGS_RU.md`. Реальные ограничения: `docs\CAPABILITIES_REPORT_RU.md`. Native cliffs/ramps/pathing rebuild, team/alliance reconstruction и полная engine validation пока отсутствуют.
 
-The same package contains ui.*, cutscene.*, text.*, data.*, browse.*, placement.* and ai.*. Run `node app\dist\index.js` and set SC2_UI_ROOT to the component directory. GUI includes UI Editor, Browse / Placement and A.I. Module tabs; Cutscene/Text/Data also use the compact MCP APIs. AI writes only CustomAI + sibling ComponentList; Trigger bindings are read-only. Trigger/Terrain top-level modules are not included. Populated AI waves/composition remain explicit opt-in/unconfirmed; no Editor/game compatibility test was performed. See docs\AI_CODEX_GUIDE_RU.md and README_RU.md.
+Из исходников: `npm ci`, затем `npm run windows:portable`. GUI запускается `SC2-UI-Workbench.exe`, выбирает component-directory и открывает `http://127.0.0.1:4312`.
