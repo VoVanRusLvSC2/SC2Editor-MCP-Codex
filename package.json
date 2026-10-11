@@ -54,7 +54,9 @@
     "build:incremental": "tsc -p tsconfig.dev.json",
     "script:api": "node --import tsx scripts/generate-galaxy-api.ts",
     "map:discover:executables": "node --import tsx scripts/analyze-map-executables.ts",
-    "terrain:catalog:scan": "node scripts/scan-terrain-catalogs.mjs"
+    "terrain:catalog:scan": "node scripts/scan-terrain-catalogs.mjs",
+    "casc:build": "node scripts/build-native-casc.mjs",
+    "casc:schemas": "node --import tsx scripts/generate-casc-schemas.ts"
   },
   "dependencies": {
     "@modelcontextprotocol/server": "^2.0.0",

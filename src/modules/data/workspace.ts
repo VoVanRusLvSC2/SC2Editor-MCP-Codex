@@ -85,6 +85,12 @@ export class DataWorkspace {
     this.extraRoots = extraRoots.map((entry) => path.resolve(entry));
   }
 
+  dependencyRefresh?: () => Promise<void>;
+  removeDependencyRoot(root: string) { const index = this.extraRoots.indexOf(path.resolve(root)); if (index >= 0) this.extraRoots.splice(index, 1); }
+  addDependencyRoot(root: string) {
+    const absolute = path.resolve(root);
+    if (!this.extraRoots.includes(absolute)) this.extraRoots.push(absolute);
+  }
   async open(file = "Base.SC2Data/GameData/UnitData.xml") {
     const raw = await this.workspace.readRaw(file);
     return { ...raw, document: raw.exists || raw.staged ? new DataDocument(raw.text, raw.file) : DataDocument.create(raw.file) };
@@ -126,6 +132,7 @@ export class DataWorkspace {
   }
 
   async catalog(overrides?: ReadonlyMap<string, string>): Promise<CatalogRecords> {
+    await this.dependencyRefresh?.();
     referenceSchema.refresh();
     const records = await this.discoverRoot(this.workspace.root, "workspace", overrides);
     const source=(await this.workspace.readRaw('DocumentInfo')).text;
@@ -421,6 +428,7 @@ export class DataWorkspace {
       if(!request.changes.length||request.changes.length>48)throw new Error('DATA_BATCH_FILE_LIMIT');
       if(request.changes.reduce((n,c)=>n+c.operations.length,0)>500)throw new Error('DATA_BATCH_OPERATION_LIMIT');
       const targets=request.changes.map(c=>normalize(c.file));
+      for (const target of targets) { const absolute = this.workspace.resolveUserPath(target); if (this.extraRoots.some(root => absolute === root || absolute.startsWith(root + path.sep))) throw new Error("DATA_DEPENDENCY_READ_ONLY"); }
       if(new Set(targets).size!==targets.length)throw new Error('DATA_BATCH_DUPLICATE_FILE');
       for(const target of targets)if(!/(?:^|\/)GameData\/[^/]+\.xml$/i.test(target))throw new Error('DATA_BATCH_CATALOG_PATH_REQUIRED: '+target);
       const component=normalize(request.componentListFile??'ComponentList.SC2Components'),index=normalize(request.gameDataIndexFile??'Base.SC2Data/GameData.xml');
@@ -510,6 +518,8 @@ export class DataWorkspace {
 
   async apply(request: Parameters<DataWorkspace["applyTracked"]>[0]) { return this.workspace.withReadSet(() => this.applyTracked(request)); }
   private async applyTracked(request: { file?: string; componentListFile?: string; gameDataIndexFile?: string; referenceFiles?: string[]; operations: DataOperation[]; dryRun?: boolean; stage?: boolean; backup?: boolean; validate?: boolean; allowInvalid?: boolean; expectedSha256?: Record<string, string>; authoringPolicy?: "strict" | "compatibility" }) {
+    const target = this.workspace.resolveUserPath(request.file ?? "Base.SC2Data/GameData/UnitData.xml");
+    if (this.extraRoots.some(root => target === root || target.startsWith(root + path.sep))) throw new Error("DATA_DEPENDENCY_READ_ONLY");
     if (!request.operations.length) throw new Error("data.apply requires at least one operation");
     if (request.operations.length > 500) throw new Error("data.apply accepts at most 500 operations");
     const targetFile = normalize(request.file ?? "Base.SC2Data/GameData/UnitData.xml");

@@ -1,0 +1,308 @@
+{
+  "version": "1.1.0-alpha.20",
+  "tools": {
+    "casc.status": {
+      "description": "Read actual installed SC2 CASC build, native index availability, verified byte-cache statistics and restored dependency views. Local only; no CDN or game writes.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "openWorldHint": false
+      }
+    },
+    "casc.search": {
+      "description": "Search named logical paths in the installed game root with exact folder-prefix filtering and bounded pages. local:false means listed content is not present locally.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "prefix": {
+            "default": "",
+            "type": "string",
+            "maxLength": 1024
+          },
+          "query": {
+            "default": "",
+            "type": "string",
+            "maxLength": 128
+          },
+          "offset": {
+            "default": 0,
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "limit": {
+            "default": 20,
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100
+          }
+        },
+        "required": [
+          "prefix",
+          "query",
+          "offset",
+          "limit"
+        ],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "openWorldHint": false
+      }
+    },
+    "casc.file.inspect": {
+      "description": "Read CASC logical file size, local availability, content/encoding keys and source build. Does not extract assets.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "file": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1024
+          }
+        },
+        "required": [
+          "file"
+        ],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "openWorldHint": false
+      }
+    },
+    "casc.read_text": {
+      "description": "Read real UTF-8 CASC bytes through a verified build-specific persistent cache. Return a character page with SHA-256 and explicit truncation; input file limit 16 MiB.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "file": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1024
+          },
+          "offset": {
+            "default": 0,
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "maxChars": {
+            "default": 8000,
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 24000
+          }
+        },
+        "required": [
+          "file",
+          "offset",
+          "maxChars"
+        ],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "openWorldHint": false
+      }
+    },
+    "casc.read_bytes": {
+      "description": "Read up to 4096 decoded bytes from an actual local CASC asset. No bulk binary cache or M3/DDS renderer.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "file": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1024
+          },
+          "offset": {
+            "default": 0,
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "length": {
+            "default": 128,
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4096
+          }
+        },
+        "required": [
+          "file",
+          "offset",
+          "length"
+        ],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "openWorldHint": false
+      }
+    },
+    "casc.mount": {
+      "description": "Materialize selected read-only game package metadata in a verified build-specific cache view and register it with existing Data/Browse. Missing files produce PARTIAL_NOT_MOUNTED. Original installation and map files are untouched.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "packages": {
+            "minItems": 1,
+            "maxItems": 16,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 1024
+            }
+          },
+          "kinds": {
+            "default": [
+              "catalogs",
+              "triggers",
+              "strings",
+              "schemas"
+            ],
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "catalogs",
+                "triggers",
+                "strings",
+                "schemas",
+                "layouts"
+              ]
+            }
+          },
+          "locales": {
+            "default": [
+              "ruRU",
+              "enUS"
+            ],
+            "maxItems": 8,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[a-z]{2}[A-Z]{2}$"
+            }
+          },
+          "maxFiles": {
+            "default": 1000,
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2000
+          }
+        },
+        "required": [
+          "packages",
+          "kinds",
+          "locales",
+          "maxFiles"
+        ],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "openWorldHint": false
+      }
+    },
+    "casc.galaxy.symbols": {
+      "description": "Inspect paginated top-level declarations from a real CASC Galaxy file. Persist compressed per-file symbol summaries keyed by build and source SHA; lexical analysis, not compiler/type proof.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "file": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1024
+          },
+          "query": {
+            "default": "",
+            "type": "string",
+            "maxLength": 128
+          },
+          "offset": {
+            "default": 0,
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "limit": {
+            "default": 20,
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100
+          }
+        },
+        "required": [
+          "file",
+          "query",
+          "offset",
+          "limit"
+        ],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "openWorldHint": false
+      }
+    },
+    "casc.cache.references": {
+      "description": "List imported metadata references without treating them as current CASC bytes.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "openWorldHint": false
+      }
+    },
+    "casc.cache.verify_reference": {
+      "description": "Verify each declared source SHA of an imported Core Galaxy API reference against this installed CASC build. A match does not prove all authoring/runtime semantics.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "maxLength": 128,
+            "pattern": "^[a-z0-9_-]+$"
+          }
+        },
+        "required": [
+          "id"
+        ],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "openWorldHint": false
+      }
+    }
+  }
+}

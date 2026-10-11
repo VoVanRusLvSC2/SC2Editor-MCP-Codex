@@ -25,12 +25,15 @@ await fs.cp(path.join(projectRoot, "src", "gui", "public"), path.join(app, "src"
 await fs.copyFile(path.join(projectRoot, "package.json"), path.join(app, "package.json"));
 const nativeArchiveSource = path.join(projectRoot,"native","bin","windows-x64");
 await fs.stat(path.join(nativeArchiveSource,"sc2-mcp-archive.exe"));
+await fs.stat(path.join(nativeArchiveSource,"sc2-mcp-casc.exe"));
 await fs.mkdir(path.join(app,"native","bin","windows-x64"),{recursive:true});
 for(const file of await fs.readdir(nativeArchiveSource))if(/\.(exe|dll)$/i.test(file))await fs.copyFile(path.join(nativeArchiveSource,file),path.join(app,"native","bin","windows-x64",file));
 await fs.mkdir(path.join(app,"native"),{ recursive:true });
 await fs.copyFile(path.join(projectRoot,"native","vendor","StormLib","LICENSE"),path.join(app,"native","StormLib-LICENSE.txt"));
 await fs.copyFile(path.join(projectRoot,"native","STORMLIB-REVISION.json"),path.join(app,"native","STORMLIB-REVISION.json"));
 await fs.copyFile(path.join(projectRoot,"native","README.md"),path.join(app,"native","README.md"));
+await fs.copyFile(path.join(projectRoot,"native","casc","LICENSE-CascLib.txt"),path.join(app,"native","CascLib-LICENSE.txt"));
+await fs.copyFile(path.join(projectRoot,"native","casc","CASC-REVISION.json"),path.join(app,"native","CASC-REVISION.json"));
 
 for (const dependency of ["@modelcontextprotocol/server", "@modelcontextprotocol/core", "zod", "@xmldom/xmldom"]) {
   const source = path.join(projectRoot, "node_modules", ...dependency.split("/"));

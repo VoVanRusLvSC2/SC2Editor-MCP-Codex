@@ -1,0 +1,6 @@
+{
+  "repository": "https://github.com/ladislav-zezula/CascLib",
+  "commit": "38a34665624b8775bb875274b36191b21c38d97b",
+  "license": "MIT",
+  "mode": "local-only, no CDN, strict data checking"
+}

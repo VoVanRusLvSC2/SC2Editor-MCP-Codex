@@ -1,3 +1,5 @@
+import path from "node:path";
+import { CascWorkspace } from "../modules/casc/workspace.js";
 import { ScriptWorkspace } from "../modules/script/workspace.js";
 import { TriggerWorkspace } from "../modules/trigger/workspace.js";
 import { Workspace } from "../core/workspace.js";
@@ -24,6 +26,15 @@ export async function createProject(root: string, options: {loadUiSchema?:boolea
   const workspace = new Workspace(root, schema);
   await workspace.recover();
   const data = new DataWorkspace(workspace, dataSchema), browse = new BrowseWorkspace(workspace, data);
+  const casc = new CascWorkspace(workspace.root, { onMount: root => { data.addDependencyRoot(root); browse.addDependencyRoot(root); }, onUnmount: root => { data.removeDependencyRoot(root); browse.removeDependencyRoot(root); } });
+  try { await casc.restoreMounts(); } catch (error) { if (!(error instanceof Error) || error.message !== "CASC_INSTALL_BUILD_INFO_UNAVAILABLE") throw error; }
+  const refreshCasc = async () => {
+    if (!data.extraRoots.some(root => root.startsWith(casc.cacheRoot + path.sep))) return;
+    await workspace.readDependency(path.join(casc.install, ".build.info"));
+    await casc.refreshBuild();
+    await casc.restoreMounts();
+  };
+  data.dependencyRefresh = refreshCasc; browse.setDependencyRefresh(refreshCasc);
   const placement = new PlacementWorkspace(workspace, browse), terrain = new TerrainWorkspace(workspace, browse, placement);
   placement.terrain = terrain;
   const map = new MapWorkspace(workspace,terrain);
@@ -32,6 +43,6 @@ export async function createProject(root: string, options: {loadUiSchema?:boolea
   const cutscene = new CutsceneWorkspace(workspace, cutsceneSchema), cutsceneAssets = new CutsceneAssetIndex(workspace.root);
   const script = new ScriptWorkspace(workspace);
   const trigger = new TriggerWorkspace(workspace);
-  return { script, trigger, workspace, schema, data, browse, placement, terrain, map, ai, text, cutscene, cutsceneSchema, cutsceneAssets };
+  return { casc, script, trigger, workspace, schema, data, browse, placement, terrain, map, ai, text, cutscene, cutsceneSchema, cutsceneAssets };
 }
 export type Project = Awaited<ReturnType<typeof createProject>>;

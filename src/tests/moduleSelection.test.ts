@@ -6,6 +6,8 @@ test("MCP module profiles preserve all by default and support focused tool surfa
   const all = resolveModuleSelection({});
   assert.equal(all.profile, "all");
   assert.equal(all.modules.has("ai"), true);
+  assert.equal(all.modules.has("casc"), true);
+  assert.deepEqual([...resolveModuleSelection({ SC2_MCP_PROFILE: "casc" }).modules], ["ui", "casc", "data", "browse"]);
   const focused = resolveModuleSelection({ SC2_MCP_PROFILE: "script" });
   assert.deepEqual([...focused.modules], ["ui", "script"]);
   const custom = resolveModuleSelection({ SC2_MCP_MODULES: "data,browse,unknown" });

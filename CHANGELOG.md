@@ -2,6 +2,9 @@
 
 ## Unreleased — 2026-10-11
 
+- Add a separate installed-game CASC module: local native MNDX/strict BLTE reads, bounded search/text/asset ranges, source build/CKey/SHA provenance, verified byte cache, explicit Data/Browse mounts and compressed Galaxy symbol summaries.
+- Pin CascLib and include the native helper/license in Windows portable; imported ZIP metadata remains separately source-checked reference material.
+
 - Add native LFCT v102 ground hide/show cell/area plans, visibility preview and placement exclusion, with a real p.SC2Map fixture and user-confirmed visual acceptance.
 - Add direct terrain.paint/blend tools and correct the default blend strength to 0.5; real SDK tests exercise paint, blend, relief, hide, show and persisted save.
 
