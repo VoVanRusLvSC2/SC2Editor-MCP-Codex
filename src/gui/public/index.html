@@ -328,7 +328,7 @@
           <label>Min X<input id="terrainMinX" type="number" value="4"></label><label>Min Y<input id="terrainMinY" type="number" value="4"></label>
           <label>Max X<input id="terrainMaxX" type="number" value="28"></label><label>Max Y<input id="terrainMaxY" type="number" value="28"></label>
         </div>
-        <label>Action<select id="terrainAction"><option value="lighting.assign">Assign lighting</option><option value="generate">Generate style</option><option value="height.raise">Raise</option><option value="height.lower">Lower</option><option value="height.flatten">Flatten</option><option value="height.smooth">Smooth</option><option value="texture.paint">Paint texture</option><option value="water.create">Add water</option><option value="water.update">Move / change water</option><option value="water.remove">Remove water</option><option value="water.material">Water material settings</option></select></label>
+        <label>Action<select id="terrainAction"><option value="lighting.assign">Assign lighting</option><option value="generate">Generate style</option><option value="height.raise">Raise</option><option value="height.lower">Lower</option><option value="height.flatten">Flatten</option><option value="height.smooth">Smooth</option><option value="texture.paint">Paint texture</option><option value="texture.blend">Blend textures</option><option value="height.noise">Uneven ground</option><option value="surface.hide">Hide ground</option><option value="surface.show">Restore ground</option><option value="water.create">Add water</option><option value="water.update">Move / change water</option><option value="water.remove">Remove water</option><option value="water.material">Water material settings</option></select></label>
         <div id="terrainWaterControls" class="hidden">
           <label>Water material ID<input id="terrainWaterTemplate" list="terrainWaterNames" placeholder="Existing material or new ID"></label>
           <datalist id="terrainWaterNames"></datalist>
@@ -356,7 +356,7 @@
       </div>
     </aside>
     <section class="panel terrain-view">
-      <div class="panel-heading"><h2>Map preview</h2><select id="terrainPreviewMode" aria-label="Preview layer"><option value="height">Height</option><option value="texture">Texture layers</option><option value="water">Water</option><option value="cliff">Cliff levels</option></select></div>
+      <div class="panel-heading"><h2>Map preview</h2><select id="terrainPreviewMode" aria-label="Preview layer"><option value="height">Height</option><option value="texture">Texture layers</option><option value="water">Water</option><option value="cliff">Cliff levels</option><option value="visibility">Hidden ground</option></select></div>
       <div class="terrain-image-wrap"><img id="terrainPreviewImage" class="hidden" alt="Terrain preview, north up"></div>
       <span class="muted">Diagnostic preview. SC2 materials and models are visible in the game editor.</span>
     </section>

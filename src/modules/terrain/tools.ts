@@ -11,7 +11,7 @@ import {
   terrainPlanSchema,
   terrainGenerateSchema, terrainLandscapeSchema,
   terrainFeatureSchema,
-  terrainApplySchema,
+  terrainApplySchema, terrainVisibilitySchema, terrainTextureBrushSchema,
 } from "./schemas.js";
 const textResult = (value: unknown) => ({
   content: [{ type: "text" as const, text: JSON.stringify(value, null, 2) }],
@@ -26,6 +26,21 @@ export function registerTerrainTools(
   const terrain = context.workspace;
   registerTerrainSurfaceTools(server, context);
   const directory = z.object({ directory: z.string().default("") }).strict();
+  for (const blend of [false, true]) server.registerTool(blend ? "terrain.blend" : "terrain.paint", {
+    description: `Plan ${blend ? "mixing an active terrain texture into existing weights (default strength 0.5)" : "terrain texture painting (default strength 1)"} in a world-space brush area. Returns planId; persist through terrain.apply/save.`,
+    inputSchema: terrainTextureBrushSchema,
+    annotations: { readOnlyHint: true, destructiveHint: false, openWorldHint: false },
+  }, async ({ directory, ...brush }) => textResult(await terrain.plan({ directory, operations: [{ op: blend ? "texture.blend" : "texture.paint", ...brush }] })));
+  for (const hidden of [true, false]) server.registerTool(hidden ? "terrain.hide" : "terrain.show", {
+    description: `${hidden ? "Hide" : "Restore"} terrain ground by exact native cells or a world-space area. Returns a Terrain plan; persist with terrain.apply/save. Changes only LFCT v102 hidden bit 0x04, preserving heights, textures, cliffs and other flags. Pathing is not regenerated.`,
+    inputSchema: terrainVisibilitySchema,
+    annotations: { readOnlyHint: true, destructiveHint: false, openWorldHint: false },
+  }, async args => textResult(await terrain.visibilityPlan(hidden, args)));
+  server.registerTool("terrain.visibility.inspect", {
+    description: "Read the authored ground-hidden cell grid, counts and optional integer cell samples, including a Terrain plan. This is visibility, not passability.",
+    inputSchema: z.object({ directory: z.string().default(""), cells: z.array(z.object({ x: z.number().int().nonnegative(), y: z.number().int().nonnegative() }).strict()).max(500).default([]), planId: z.string().optional() }).strict(),
+    annotations: { readOnlyHint: true, destructiveHint: false, openWorldHint: false },
+  }, async args => textResult(await terrain.visibility(args.directory, args.cells, args.planId)));
   server.registerTool("terrain.components.inspect",{description:"Check native cell flags, sync cliff grid and vertex-color entry boundaries against map dimensions. Raw flags/sub-data are not verified pathing or color brush semantics.",inputSchema:directory},async a=>textResult(await terrain.inspectComponents(a.directory)));
   server.registerTool(
     "terrain.inspect",
@@ -195,7 +210,7 @@ export function registerTerrainTools(
           planId: z.string().optional(),
           directory: z.string().default(""),
           mode: z
-            .enum(["height", "texture", "water", "cliff"])
+            .enum(["height", "texture", "water", "cliff", "visibility"])
             .default("height"),
           size: z.number().int().min(16).max(512).default(128),
         })

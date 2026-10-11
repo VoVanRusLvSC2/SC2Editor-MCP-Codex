@@ -41,6 +41,8 @@ GUI: `npm run gui`, затем `http://127.0.0.1:4312`. [Описание workbe
 
 ## Работа с TERRAIN
 
+Основные команды: `terrain.paint`, `terrain.blend`, `terrain.generate`, `terrain.mountain`, `terrain.plan` с noise/smooth/raise; `terrain.hide` и `terrain.show` скрывают/восстанавливают грунт. Все возвращают сохраняемый plan. Скрытие визуально подтверждено пользователем на предоставленной `p.SC2Map`.
+
 1. `terrain.surface.overview` — увидеть состав native-компонентов и неизвестные форматы.
 2. `terrain.surface.component.inspect` или узкий sample — проверить нужную сетку/секцию.
 3. `terrain.plan`, `terrain.generate`, `terrain.recipe.plan`, water/lighting plans — подготовить поддерживаемые изменения.

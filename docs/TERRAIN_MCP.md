@@ -13,6 +13,8 @@ For the new scoped `terrain.surface.*` inspection tools, see the [complete modul
 | `terrain.palette.get`, `terrain.assets` | Actual palette/block sets and Browse catalog searches |
 | `terrain.styles.list` | Ten deterministic recipe presets |
 | `terrain.plan` | Isolated plan from 1–100 validated operations |
+| `terrain.paint`, `terrain.blend` | Real texture brush plans; blend defaults to strength 0.5 |
+| `terrain.hide`, `terrain.show`, `terrain.visibility.inspect` | LFCT v102 ground-hidden cell/area plans and bounded samples |
 | `terrain.generate` | Area-based relief and painting recipe with seed/materials |
 | `terrain.road`, `terrain.river`, `terrain.lake` | Corridor flattening/channel carving/lake basin; optional flat v110 water rectangles on the 8-cell grid |
 | `terrain.mountain`, `terrain.valley`, `terrain.plateau`, `terrain.crater`, `terrain.coast`, `terrain.transition` | Geometric height/texture brush recipes |
@@ -26,7 +28,7 @@ Exact input definitions: [generated schemas](../generated/terrain-tools.json).
 
 ## Operation batch
 
-Supported operations: `height.raise/lower/set/flatten/noise/slope/smooth`; `texture.paint/blend/replace/smooth/paint_rules`; `palette.update`; standalone `stamp.apply`. `water.create/update/remove` support only flat v110 grid rectangles; `water.material` edits CWater settings and links its catalog via Includes/Components in the same byte group. Complex body sections stay read-only. Areas support rectangle, circle, polygon and corridor; brushes allow strength, edgeBlend and protectedAreas. `maxSlope` is a sampled geometric constraint, not a pathing proof.
+Supported operations: `surface.hide/show` (cell/area, native LFCT v102 hidden bit 0x04); `height.raise/lower/set/flatten/noise/slope/smooth`; `texture.paint/blend/replace/smooth/paint_rules`; `palette.update`; standalone `stamp.apply`. `water.create/update/remove` support only flat v110 grid rectangles; `water.material` edits CWater settings and links its catalog via Includes/Components in the same byte group. Complex body sections stay read-only. Areas support rectangle, circle, polygon and corridor; texture.blend defaults to strength 0.5; brushes allow strength, edgeBlend and protectedAreas. `maxSlope` is a sampled geometric constraint, not a pathing proof.
 
 ```json
 {

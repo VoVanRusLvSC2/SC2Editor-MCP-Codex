@@ -4,6 +4,35 @@ TERRAIN объединяет редактирование поддерживае
 
 Добавление из `SC2_Surface_Toolkit_SC2GameData.zip` находится в `src/modules/terrain/surface/`. Оно расширяет существующий TERRAIN десятью инструментами `terrain.surface.*`. Отдельный сервер и второй набор workspace-файлов не создаются.
 
+## Основные команды создания поверхности
+
+| Задача | Команда для Codex |
+| --- | --- |
+| Создать рельеф и распределить материалы | `terrain.generate`, `terrain.landscape.plan` |
+| Покрасить выбранной текстурой | `terrain.paint` |
+| Смешать текстуры | `terrain.blend`; default strength 0.5 сохраняет долю прежней текстуры |
+| Горки, неровности, выравнивание и сглаживание | `terrain.mountain`, `terrain.valley`, `terrain.plan` с `height.raise/lower/noise/smooth/flatten/slope` |
+| Скрыть грунт клетками или областью | `terrain.hide` |
+| Восстановить грунт | `terrain.show` |
+| Посмотреть скрытые клетки | `terrain.visibility.inspect`, `terrain.preview` с `mode:"visibility"` |
+
+Эти команды создают настоящий сохраняемый Terrain plan. `terrain.apply` с `dryRun:false, stage:true` и `terrain.save` с `dryRun:false` записывают изменения. У `save` тоже есть dry-run по умолчанию.
+
+### Скрытие грунта
+
+Это отверстия/чёрные участки на карте. На предоставленной `p.SC2Map` из Editor 5.0.17.98310 обнаружены 24 клетки с флагом `0x06`; обычный грунт имеет `0x02`, отверстия под cliff meshes — `0x03`. Кисть изменяет только скрывающий бит `0x04` в `t3CellFlags` v102 и сохраняет остальные биты, высоту, texture weights и cliff/ramp geometry.
+
+```json
+{"tool":"terrain.hide","arguments":{"cells":[{"x":72,"y":62},{"x":73,"y":62}]}}
+{"tool":"terrain.show","arguments":{"area":{"type":"rectangle","minX":72,"minY":62,"maxX":76,"maxY":66}}}
+```
+
+`cells` — целые native cell indices; `area` — world-space область с выбором по центрам клеток. Требуется ровно один из этих вариантов. Реализация ограничена размерно согласованным LFCT v102; непроверенные версии отказывают явно. Операции доступны и в `terrain.plan` как `surface.hide`/`surface.show`. В GUI добавлены Hide/Restore ground, Blend textures, Uneven ground и preview скрытия.
+
+После скрытия ground sampling показывает `hidden:true`; scatter и snap не размещают объекты на скрытом грунте. Клифовые модели и объекты остаются отдельной геометрией. Проходимость и navigation mesh этой кистью не пересчитываются.
+
+2026-10-11: пользователь визуально проверил и подтвердил работу двух MCP-authored packed копий `p.SC2Map`: восстановление 24 клеток и добавление 16 скрытых клеток. Это пользовательская визуальная проверка этого сценария, а не автоматическое доказательство всего Editor/runtime. MPQ reopen проверяет каждый entry; десять регрессий включают настоящие MCP paint/blend/height-noise/hide/show → stage/save.
+
 ## Из чего состоит
 
 | Часть | Файлы | Задача |
@@ -35,7 +64,7 @@ flowchart LR
 | --- | --- |
 | Обзор | Размеры, версии, компоненты, counts, статусы parsed/partial/opaque/ambiguous/invalid |
 | Высота | Существующие world-space инструменты и отдельные raw HMAP base/adjustment/mask samples |
-| Текстуры | Существующая палитра и кисти; raw MASK возвращает восемь весов 0..15 |
+| Текстуры | Прямые paint/blend commands, палитра и кисти; raw MASK возвращает восемь весов 0..15 |
 | Рельеф | Raise/lower/set/flatten/noise/smooth, ограниченные seeded стили и feature recipes |
 | Вода | Существующие flat v110 rectangles на сетке 8 клеток и CWater states; сложные bodies сохраняются без редактирования |
 | Свет | Существующие binding CTerrain и поддерживаемые CLight поля |

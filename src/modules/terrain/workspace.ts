@@ -15,6 +15,7 @@ import type {
   TerrainIssue,
   TerrainPlanRequest,
   TerrainPlanSummary,
+  TerrainVisibilityRequest,
 } from "./types.js";
 import {
   applyOperations,
@@ -32,7 +33,7 @@ import {
 import { renderTerrainPng, type PreviewMode } from "./preview.js";
 import {
   terrainPlanSchema,
-  terrainGenerateSchema, terrainLandscapeSchema,
+  terrainGenerateSchema, terrainLandscapeSchema, terrainVisibilitySchema,
   terrainFeatureSchema,
 } from "./schemas.js";
 import { areaWeight } from "./geometry.js";
@@ -112,6 +113,7 @@ export class TerrainWorkspace {
         cliffSets: d.cliffSets,
         ramps: d.ramps.length,
         water: state.water?.list(),
+        surfaceVisibility: state.visibility?.inspect(),
         waterMaterials: state.waterCatalog?.list(),
         nativeIntegrity: inspectNativeIntegrity(data.sources, d.width - 1, d.height - 1),
         capabilities: this.support(state),
@@ -140,6 +142,8 @@ export class TerrainWorkspace {
         state.descriptor.scale.every((v) => v === 1) &&
         [114, 115].includes(state.descriptor.version),
       paletteUpdate: !!state.syncTextures,
+      hideTerrain: !!state.visibility && state.descriptor.scale.every(v => v === 1) && [114, 115].includes(state.descriptor.version),
+      showTerrain: !!state.visibility && state.descriptor.scale.every(v => v === 1) && [114, 115].includes(state.descriptor.version),
       waterTableRead: state.water?.simple ?? false,
       waterEntries: state.water?.coverageKnown ?? false,
       waterBodyEditing: false,
@@ -193,10 +197,11 @@ export class TerrainWorkspace {
       const x = Math.round(gx),
         y = Math.round(gy),
         i = y * s.heights.width + x;
-      if (!protection[i]) protection[i] = s.heights.protected(x, y) ? 2 : 1;
+      if (!protection[i]) protection[i] = (s.heights.protected(x, y) || s.visibility?.touchesHiddenVertex(x, y)) ? 2 : 1;
       return {
         ...p,
         ...sample,
+        hidden: s.visibility?.atGrid(gx, gy) ?? false,
         protected: protection[i] === 2,
         textures: undefined as
           | Array<{ id: string; weight: number }>
@@ -304,6 +309,15 @@ export class TerrainWorkspace {
         "Vegetation/buildings are delegated to placement.createLocation with terrain snapping.",
       ],
     };
+  }
+  async visibility(directory = "", cells: Point2[] = [], planId?: string) {
+    const state = await this.state(directory, planId);
+    if (!state.visibility) throw new Error("VISIBILITY_COMPONENT_UNSUPPORTED: requires LFCT v102");
+    return { directory, ...state.visibility.inspect(cells), nativeEditorVerified: false };
+  }
+  async visibilityPlan(hidden: boolean, request: TerrainVisibilityRequest) {
+    const parsed = terrainVisibilitySchema.parse(request);
+    return this.plan({ directory: parsed.directory, operations: [{ op: hidden ? "surface.hide" : "surface.show", ...(parsed.area ? { area: parsed.area } : { cells: parsed.cells }) }] });
   }
   async assets(
     query = "",
@@ -543,6 +557,13 @@ export class TerrainWorkspace {
       valid: !issues.some((i) => i.severity === "error"),
       changedVertices,
       changedTexturePixels,
+      changedVisibilityCells: (() => {
+        const file = this.file(directory, "t3CellFlags"), old = before.get(file), current = next.get(file);
+        if (!old || !current || old.length !== current.length) return 0;
+        let count = 0;
+        for (let i = 32; i < current.length; i++) if ((old[i] ^ current[i]) & 4) count++;
+        return count;
+      })(),
       sourceSha256,
       diskSha256,
       evidence: [

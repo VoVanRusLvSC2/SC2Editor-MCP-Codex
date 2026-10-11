@@ -2,6 +2,9 @@
 
 ## Unreleased — 2026-10-11
 
+- Add native LFCT v102 ground hide/show cell/area plans, visibility preview and placement exclusion, with a real p.SC2Map fixture and user-confirmed visual acceptance.
+- Add direct terrain.paint/blend tools and correct the default blend strength to 0.5; real SDK tests exercise paint, blend, relief, hide, show and persisted save.
+
 - Integrate the supplied Surface Toolkit into Terrain with ten scoped read-only `terrain.surface.*` tools, shared draft-aware snapshots, bounded byte previews and authored catalog/token inspection.
 - Add codec/catalog regressions and real MCP SDK transport tests; include the XML parser in Windows portable builds.
 - Replace stale README release banners with current module navigation and a complete Russian Terrain/repository guide.

@@ -329,6 +329,7 @@ function bindTerrainEvents() {
     const edgeBlend = n("terrainEdge"); let endpoint, body;
     if(action === "lighting.assign") {endpoint="plan";body={directory,operations:[{op:action,id:$("terrainLighting").value.trim()}]};}
     else if (action === "generate") { endpoint = "landscape"; body = {directory, area, lighting:$("terrainLighting").value.trim() || undefined, style:$("terrainStyle").value, seed:n("terrainSeed"), edgeBlend, ...(texture?{materials:{base:texture}}:{})}; }
+    else if(action === "surface.hide" || action === "surface.show") { endpoint="plan"; body={directory,operations:[{op:action,area}]}; $("terrainPreviewMode").value="visibility"; }
     else if(action.startsWith("water.")) {
       const template = $("terrainWaterTemplate").value.trim(), parent = $("terrainWaterParent").value.trim();
       const operations = [];
@@ -342,7 +343,7 @@ function bindTerrainEvents() {
       if(action === "water.remove") operations.push({op:action,index:n("terrainWaterIndex")});
       endpoint = "plan";body = {directory,operations};$("terrainPreviewMode").value = "water";
     }
-    else { const operation = {op:action,area,edgeBlend}; if (action === "height.raise" || action === "height.lower") operation.amount = n("terrainAmount"); else if (action === "height.flatten") operation.height = "currentMedian"; else if (action === "height.smooth") {operation.radius = 2;operation.method = "edge_preserving";} else operation.texture = texture; endpoint = "plan"; body = {directory,operations:[operation]}; }
+    else { const operation = {op:action,area,edgeBlend}; if (action === "height.raise" || action === "height.lower") operation.amount = n("terrainAmount"); else if (action === "height.noise") {operation.amplitude=n("terrainAmount");operation.seed=n("terrainSeed");} else if (action === "height.flatten") operation.height = "currentMedian"; else if (action === "height.smooth") {operation.radius = 2;operation.method = "edge_preserving";} else operation.texture = texture; endpoint = "plan"; body = {directory,operations:[operation]}; }
     const plan = await api(`/api/terrain/${endpoint}`, {method:"POST",body:JSON.stringify(body)});
     state.terrainPlanId = plan.id; $("terrainOutput").textContent = JSON.stringify(plan, null, 2); $("terrainStageButton").disabled = !plan.valid;
     await terrainPreview();
