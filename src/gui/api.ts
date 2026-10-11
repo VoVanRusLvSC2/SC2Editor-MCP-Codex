@@ -206,7 +206,7 @@ export async function dispatchGuiApi(
         if(endpoint === "lighting") return {status:200,body:await terrain.lighting(dir)};
         if (endpoint === "styles") return { status: 200, body: terrain.styles() };
         if (endpoint === "palette") return { status: 200, body: await terrain.palette(dir) };
-        if (endpoint === "preview") { const mode = query.get("mode") ?? "height"; if (!["height", "texture", "water", "cliff"].includes(mode)) throw new Error("Invalid terrain preview mode"); return { status: 200, body: await terrain.preview(query.get("planId") ?? undefined, dir, mode as "height" | "texture" | "water" | "cliff", 256) }; }
+        if (endpoint === "preview") { const mode = query.get("mode") ?? "height"; if (!["height", "texture", "water", "cliff", "visibility"].includes(mode)) throw new Error("Invalid terrain preview mode"); return { status: 200, body: await terrain.preview(query.get("planId") ?? undefined, dir, mode as "height" | "texture" | "water" | "cliff" | "visibility", 256) }; }
       }
       if (method === "POST") {
         const body = asObject(request.body);

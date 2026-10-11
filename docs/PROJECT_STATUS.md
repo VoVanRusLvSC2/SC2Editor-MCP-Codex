@@ -12,9 +12,9 @@ Automated validation covers TypeScript builds, lint, codec/catalog regressions a
 
 - TypeScript development and release builds: PASS.
 - ESLint: PASS.
-- Complete test suite: 519 tests, 518 PASS, 0 failures, 1 existing Unix shell fixture skipped on Windows.
+- Complete test suite after ground authoring: 529 tests, 528 PASS, 0 failures, 1 existing Unix shell fixture skipped on Windows.
 - Surface Toolkit regressions: 166 PASS; host and real SDK transport checks: 8 PASS.
-- `terrain:schemas`: 41 Terrain tools, including 10 new scoped Surface tools.
+- `terrain:schemas`: 46 Terrain tools, including 10 new scoped Surface tools.
 - Windows portable build and SDK stdio smoke: PASS; overview and authored catalog tokens work with the bundled XML parser.
 
-`.gitattributes` pins LF for generated text examples so byte-for-byte checks work on Windows. Runtime schema shards and synthetic component bytes are retained. SC2 Editor/runtime validation has not been executed by this change.
+`.gitattributes` pins LF for generated text examples so byte-for-byte checks work on Windows. Runtime schema shards and synthetic component bytes are retained. The user visually confirmed hidden/restored ground on the two MCP-authored packed p.SC2Map copies. That is a narrow user check, not automated full Editor/runtime validation. Native cliffs/ramps/pathing regeneration remains incomplete.

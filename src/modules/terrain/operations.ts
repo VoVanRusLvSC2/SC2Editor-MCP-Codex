@@ -1,3 +1,4 @@
+import { TerrainVisibility } from "./visibility.js";
 import type { TerrainArea, TerrainIssue, TerrainOperation } from "./types.js";
 import { componentListWithGameData, gameDataIndexWithCatalog } from "../data/workspace.js";
 import { LightingCatalog } from "./lighting.js";
@@ -42,6 +43,7 @@ export interface TerrainState {
   syncTextures?: SyncTextureInfo;
   water?: WaterEntries;
   waterCatalog?: WaterCatalog;
+  visibility?: TerrainVisibility;
 }
 export function parseState(sources: Map<string, Buffer>): TerrainState {
   const xml = sources.get("t3Terrain.xml"),
@@ -85,7 +87,12 @@ export function parseState(sources: Map<string, Buffer>): TerrainState {
     : undefined;
   const catalog = sources.get("Base.SC2Data/GameData/WaterData.xml");
   const waterCatalog = catalog?.length ? new WaterCatalog(new TextDecoder("utf-8",{fatal:true}).decode(catalog)) : undefined;
-  return { sources, descriptor, heights, masks, sync, syncTextures, water, waterCatalog };
+  const flagBytes = sources.get("t3CellFlags");
+  const visibility = flagBytes && flagBytes.length >= 32 && flagBytes.toString("ascii", 0, 4) === "LFCT" && flagBytes.readUInt32LE(4) === 102
+    && flagBytes.readUInt32LE(24) === heights.width - 1 && flagBytes.readUInt32LE(28) === heights.height - 1
+    && flagBytes.length === 32 + (heights.width - 1) * (heights.height - 1)
+    ? new TerrainVisibility(flagBytes, heights.width - 1, heights.height - 1) : undefined;
+  return { sources, descriptor, heights, masks, sync, syncTextures, water, waterCatalog, visibility };
 }
 function bounded(area: TerrainArea, state: TerrainState): void {
   const b = areaBounds(area),
@@ -185,11 +192,32 @@ export function applyOperations(
   const protection = new Uint8Array(state.heights.width * state.heights.height);
   const isProtected = (x: number, y: number): boolean => {
     const i = y * state.heights.width + x;
-    if (!protection[i]) protection[i] = state.heights.protected(x, y) ? 2 : 1;
+    if (!protection[i]) protection[i] = (state.heights.protected(x, y) || state.visibility?.touchesHiddenVertex(x, y)) ? 2 : 1;
     return protection[i] === 2;
   };
   for (const op of operations) {
     if ("area" in op && op.area) bounded(op.area, state);
+    if (op.op === "surface.hide" || op.op === "surface.show") {
+      const visibility = state.visibility;
+      if (!visibility) throw new Error("VISIBILITY_COMPONENT_UNSUPPORTED: requires dimension-matched LFCT v102");
+      const hidden = op.op === "surface.hide";
+      if (op.cells) {
+        for (const cell of op.cells) visibility.setHidden(cell.x, cell.y, hidden);
+      } else if (op.area) {
+        const bounds = brushBounds(op.area, state);
+        // Cell centers, rather than height vertices, define the boolean visibility brush.
+        const b = areaBounds(op.area), d = state.descriptor;
+        const minX = Math.max(0, Math.floor((b.minX - d.offset[0]) / d.scale[0]));
+        const minY = Math.max(0, Math.floor((b.minY - d.offset[1]) / d.scale[1]));
+        for (let y = minY; y <= Math.min(visibility.height - 1, bounds.maxY); y++)
+          for (let x = minX; x <= Math.min(visibility.width - 1, bounds.maxX); x++) {
+            const point = { x: d.offset[0] + (x + 0.5) * d.scale[0], y: d.offset[1] + (y + 0.5) * d.scale[1] };
+            if (areaWeight(op.area, point) > 0) visibility.setHidden(x, y, hidden);
+          }
+      }
+      protection.fill(0);
+      continue;
+    }
     if (op.op === "stamp.apply")
       throw new Error("STAMP_REQUIRES_WORKSPACE_RESOLUTION");
     if (
@@ -429,10 +457,10 @@ export function applyOperations(
             x: gx * state.descriptor.scale[0] + state.descriptor.offset[0],
             y: gy * state.descriptor.scale[1] + state.descriptor.offset[1],
           };
-          const weight = operationWeight(operation, p);
+          const weight = operationWeight(operation.op === "texture.blend" && operation.strength === undefined ? { ...operation, strength: 0.5 } : operation, p);
           if (!weight) continue;
           const sample = state.heights.sample(p);
-          if (sample.mask === 0) continue;
+          if (sample.mask === 0 || state.visibility?.atGrid((p.x - state.descriptor.offset[0]) / state.descriptor.scale[0], (p.y - state.descriptor.offset[1]) / state.descriptor.scale[1])) continue;
           const set = state.descriptor.blockSet(gx, gy);
           if (
             !Number.isInteger(set) ||

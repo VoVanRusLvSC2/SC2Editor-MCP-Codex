@@ -37,6 +37,19 @@ export const terrainAreaSchema = z.discriminatedUnion("type", [
     })
     .strict(),
 ]);
+export const terrainTextureBrushSchema = z.object({
+  directory: z.string().default(""), area: terrainAreaSchema, texture: z.string().min(1),
+  strength: number.min(0).max(1).optional(), edgeBlend: number.nonnegative().optional(),
+  protectedAreas: z.array(terrainAreaSchema).max(50).optional(),
+}).strict();
+export const terrainVisibilityTarget = {
+  area: terrainAreaSchema.optional(),
+  cells: z.array(z.object({ x: z.number().int().nonnegative(), y: z.number().int().nonnegative() }).strict())
+    .min(1).max(4096).refine(cells => new Set(cells.map(cell => `${cell.x}:${cell.y}`)).size === cells.length, "Duplicate cells").optional(),
+};
+export const visibilityTargetValid = (value: { area?: unknown; cells?: unknown }) => (value.area !== undefined) !== (value.cells !== undefined);
+export const terrainVisibilitySchema = z.object({ directory: z.string().default(""), ...terrainVisibilityTarget }).strict()
+  .refine(visibilityTargetValid, "Specify exactly one area or cells");
 const brush = {
   area: terrainAreaSchema,
   strength: number.min(0).max(1).optional(),
@@ -44,6 +57,8 @@ const brush = {
   protectedAreas: z.array(terrainAreaSchema).max(50).optional(),
 };
 export const terrainOperationSchema = z.discriminatedUnion("op", [
+  z.object({ op: z.enum(["surface.hide", "surface.show"]), ...terrainVisibilityTarget }).strict()
+    .refine(visibilityTargetValid, "Specify exactly one area or cells"),
   z
     .object({
       op: z.enum(["height.raise", "height.lower"]),

@@ -1,0 +1,68 @@
+{
+  "source": "user-supplied p.SC2Map",
+  "mapSha256": "28a230f4c4c3dd9f73a8cc93359c5059c5eebbc16182c935e9021d52e044d1a6",
+  "editorBuild": "5.0.17.98310",
+  "observation": "24 ground-hidden cells have raw flags 0x06; ordinary ground 0x02; cliff holes 0x03. UI screenshot shows the separate black ground patch. Derived hidden bit 0x04; runtime not validated.",
+  "components": [
+    {
+      "name": "t3CellFlags",
+      "bytes": 16416,
+      "sha256": "5f0da9daa96b3cbb3f45c38afcf22abf7cd8c1e6bac6daef0f82953094ce009b"
+    },
+    {
+      "name": "t3FluffDoodad",
+      "bytes": 28,
+      "sha256": "3f3f15b8480e7cf37d97bc9c4affe5af1348b352bbc1213a71da32195a88e937"
+    },
+    {
+      "name": "t3HardTile",
+      "bytes": 167,
+      "sha256": "205f4264c3e186bc2959c356abfc716b9cec6e5d6e06c553a0d7f81e7b6e7906"
+    },
+    {
+      "name": "t3HeightMap",
+      "bytes": 99878,
+      "sha256": "397379fa9c9dfcc31efeb44661589267ef5c714a4ba1b2e01677be80421ef3ee"
+    },
+    {
+      "name": "t3SyncCliffLevel",
+      "bytes": 32800,
+      "sha256": "3613dc4e1304369c5fab7f63eb0b440e9ed017673147050afd232a0626e7da31"
+    },
+    {
+      "name": "t3SyncHeightMap",
+      "bytes": 66628,
+      "sha256": "6ee4366b183def5a229d932d3ab15c29cef1a984deaf739469eb4c50f0674348"
+    },
+    {
+      "name": "t3SyncTextureInfo",
+      "bytes": 131164,
+      "sha256": "934758947d386c21bce856e7e91c9e88c3ba0e4ca8a95e5ff63c48ed13cb5703"
+    },
+    {
+      "name": "t3Terrain.version",
+      "bytes": 44,
+      "sha256": "41efd48baec8ac952d8f1cba2537d4b397ff7a26bfa44679b3c8a368ed83237c"
+    },
+    {
+      "name": "t3Terrain.xml",
+      "bytes": 19766,
+      "sha256": "6b876baf60f655acdf84186063217661c5ddc2ec2e5b33e3e99818d12f86002a"
+    },
+    {
+      "name": "t3TextureMasks",
+      "bytes": 4194368,
+      "sha256": "20ae31f4d493fd3d5fe838a4ef185189b271feb43935bd4650c150010ea1a459"
+    },
+    {
+      "name": "t3VertCol",
+      "bytes": 66167,
+      "sha256": "20073bbbaf8c06b1f01d672791823ad2d2d9224b2ab1d7ac05e4450cb6501eeb"
+    },
+    {
+      "name": "t3Water",
+      "bytes": 144,
+      "sha256": "a86887852ca24fca68f8751ac4a3d4ca46cbf654594761d36ab74d998efa3934"
+    }
+  ]
+}

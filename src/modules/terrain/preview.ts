@@ -1,6 +1,6 @@
 import { deflateSync } from "node:zlib";
 import type { TerrainState } from "./operations.js";
-export type PreviewMode = "height" | "texture" | "water" | "cliff";
+export type PreviewMode = "height" | "texture" | "water" | "cliff" | "visibility";
 function crc32(bytes: Buffer): number {
   let crc = 0xffffffff;
   for (const byte of bytes) {
@@ -56,7 +56,10 @@ export function renderTerrainPng(
       };
       const sample = hm.sample(p);
       let rgb: number[];
-      if (sample.mask === 0) rgb = [31, 35, 44];
+      const hidden = state.visibility?.atGrid(gx, gy) ?? false;
+      if (hidden) rgb = [0, 0, 0];
+      else if (sample.mask === 0) rgb = [31, 35, 44];
+      else if (mode === "visibility") rgb = [150, 190, 130];
       else if (mode === "cliff") rgb = colors[sample.mask % 8];
       else if (mode === "texture" && state.masks) {
         const x = Math.min(state.masks.width - 1, Math.floor(gx * 8)),
@@ -76,7 +79,7 @@ export function renderTerrainPng(
           Math.round(80 + 150 * t),
         ];
       }
-      if (mode === "water" && state.water?.at(p).length) rgb = [45, 128, 200];
+      if (!hidden && mode === "water" && state.water?.at(p).length) rgb = [45, 128, 200];
       const off = py * (size * 3 + 1) + 1 + px * 3;
       for (let c = 0; c < 3; c++) raw[off + c] = rgb[c];
     }

@@ -20,6 +20,8 @@ A single MCP server and local workbench for StarCraft II map/mod files. TypeScri
 
 The supplied Surface Toolkit is integrated into Terrain through ten `terrain.surface.*` tools. They expose component inventories, bounded raw samples, structural validation, preview-only byte edits and authored terrain catalog inspection. They share the existing workspace and observe staged drafts. Native cliff/ramp rebuild, full pathing semantics, complex water-body editing and engine validation remain unavailable.
 
+Terrain authoring also exposes `terrain.paint`, `terrain.blend`, `terrain.hide`, `terrain.show` and visibility inspection. Ground hiding/restoration was visually confirmed by the user on the supplied p.SC2Map; pathing regeneration remains unavailable.
+
 ## Run
 
 Requires Node.js 20+. In PowerShell:

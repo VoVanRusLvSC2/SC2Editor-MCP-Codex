@@ -215,7 +215,7 @@ export class PlacementWorkspace {
       terrainHashes = sampled;
       for (const [i, point] of sampled.samples.entries()) {
         if (
-          point.mask === 0 ||
+          (point.mask === 0 || point.hidden) ||
           (args.maxSlope !== undefined && point.slope > args.maxSlope)
         )
           throw new Error(
@@ -442,7 +442,7 @@ export class PlacementWorkspace {
           const point = args.textures
             ? surface.sample(p)
             : surface.sampleGround(p);
-          if (point.mask === 0) {
+          if ((point.mask === 0 || point.hidden)) {
             rejected.holes++;
             return false;
           }
@@ -579,7 +579,7 @@ export class PlacementWorkspace {
       const [x, y] = object.position.split(",").map(Number),
         point = surface.sampleGround({ x, y });
       if (
-        point.mask === 0 ||
+        (point.mask === 0 || point.hidden) ||
         point.slope > args.maxSlope ||
         (args.avoidWater && point.water?.length)
       )

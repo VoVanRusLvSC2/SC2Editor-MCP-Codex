@@ -29,7 +29,15 @@ export type TerrainStyle =
   | "badlands"
   | "coastal"
   | "space_platform";
+export interface TerrainVisibilityRequest {
+  directory?: string;
+  /** World-space shape; membership is sampled at each cell center. */
+  area?: TerrainArea;
+  /** Explicit integer native cell coordinates. Exactly one of area/cells is required. */
+  cells?: Point2[];
+}
 export type TerrainOperation =
+  | ({ op: "surface.hide" | "surface.show" } & Omit<TerrainVisibilityRequest, "directory">)
   | { op: "lighting.assign"; id: string }
   | ({ op: "lighting.preset" } & import("./lighting.js").LightingPatch)
   | ({
@@ -138,6 +146,7 @@ export interface TerrainPlanSummary {
   valid: boolean;
   changedVertices: number;
   changedTexturePixels: number;
+  changedVisibilityCells: number;
   evidence: string[];
   sourceSha256: Record<string, string>;
   diskSha256: Record<string, string>;
