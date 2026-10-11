@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased — 2026-10-11
+
+- Integrate the supplied Surface Toolkit into Terrain with ten scoped read-only `terrain.surface.*` tools, shared draft-aware snapshots, bounded byte previews and authored catalog/token inspection.
+- Add codec/catalog regressions and real MCP SDK transport tests; include the XML parser in Windows portable builds.
+- Replace stale README release banners with current module navigation and a complete Russian Terrain/repository guide.
+- Remove obsolete standalone ALPHA summaries and one-off ALPHA reports; retain required registries, fixtures, format evidence and the renamed benchmark baseline.
+
 ## 1.1.0-alpha.20 — 2026-09-21
 
 - Enrich pinned Galaxy native signatures with the official GUI action name, grammar, hint, FunctionDef identity and ParamDef identities from local `NativeLib.TriggerLib` and `TriggerStrings.txt` evidence.

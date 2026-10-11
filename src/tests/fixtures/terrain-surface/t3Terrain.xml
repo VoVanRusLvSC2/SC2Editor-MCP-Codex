@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<terrain version='115'>
+<!-- a comment containing <heightMap and quote ' -->
+<heightMap scale='1 1 1' dim='9 9' offset='10 20 30' uvtiling='1 1 0 0' tileSet='Test'>
+<vertData name='t3HeightMap' quantizeScale='0.125' standardHeight='8' quantizeBias='4'/>
+<masks name='t3TextureMasks'/><textureSetList num='1'><textureSet name='Set01' i='0'/></textureSetList>
+<textureList num='2'><texture name='Rock &amp; Sand' i='0'/><texture i='1' name='Dust'/></textureList>
+<blockTextureSetList><blockTextureSet tileSet='0' i='0'/></blockTextureSetList>
+<cliffSetList><cliffSet name='Cliff01' i='0'/></cliffSetList>
+<cliffCellList num='2'><cc cvar='65535' cid='0' f='5' i='0' future='keep'/></cliffCellList>
+<rampList><ramp dir='3' hi='3' lo='2' cid='0' leftLo='u(1e0, 0) r(0, 1) c=(2, 4) w=2 h=3' mid='u(0, 0) r(0, 0) c=(0, 0) w=0 h=0' leftLoVar='4294967295' rampHardTileHandles='17 23'/></rampList>
+<cliffDoodadList><cliffDoodad name='Rock.m3' pos='1 2 3' rot='2'/></cliffDoodadList>
+<future kept='&lt;a&gt;'><heightMap quantizeBias='999' dim='7 7'/><![CDATA[not <xml>]]></future>
+</heightMap></terrain>

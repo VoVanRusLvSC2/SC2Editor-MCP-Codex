@@ -72,7 +72,7 @@
 | Scatter 5000 центров, distance=1, область 200×200 | 367 мс | 17.7 мс |
 | Локальные noise+paint, radius=6, native 137×137 vertices | 161 мс | 41.2 мс |
 
-Один замер каждого сценария в текущем окружении, без imports/чтения fixture. Это не время полного MCP-запроса или записи на диск. Отношения зависят от задачи, JIT, нагрузки и машины. Все три выходных SHA-256 совпали с alpha.8. [Полный отчёт](../generated/terrain-doodads-performance.json); повтор: `npm run benchmark:terrain -- generated/terrain-doodads-performance-baseline-alpha8.json`.
+Один замер каждого сценария в текущем окружении, без imports/чтения fixture. Это не время полного MCP-запроса или записи на диск. Отношения зависят от задачи, JIT, нагрузки и машины. Все три выходных SHA-256 совпали с alpha.8. [Полный отчёт](../generated/terrain-doodads-performance.json); повтор: `npm run benchmark:terrain -- generated/terrain-doodads-performance-baseline.json`.
 
 Оптимизация использует один XML append/reparse на последовательный add-run, пространственные buckets с точной distance-проверкой, ограниченную область brush/sync traversal, lookup maps палитры и кэш native protection в рамках операции. Общий grouped byte writer не заменялся.
 

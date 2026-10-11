@@ -1,0 +1,4 @@
+# Generated examples must match byte-for-byte tests on Windows and Unix.
+examples/** text=auto eol=lf
+# Synthetic native components retain their original byte representation.
+src/tests/fixtures/terrain-surface/** -text

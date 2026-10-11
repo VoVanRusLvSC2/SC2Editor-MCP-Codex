@@ -1,5 +1,7 @@
 # Terrain: инструкция для Codex
 
+Актуальное устройство TERRAIN и новые `terrain.surface.*`: [полное руководство](TERRAIN_RU.md).
+
 Используй существующий MCP-сервер и распакованную карту с native t3-компонентами. Сначала `terrain.inspect`, `terrain.capabilities`, `terrain.palette.get`; координаты бери из фактических bounds. Модуль не создаёт terrain bundle с нуля и не записывает MPQ.
 
 1. Для точечного изменения вызови `terrain.plan` с operations. Для области со стилем — `terrain.generate`. Для дороги, горы, кратера и других форм — соответствующую `terrain.*` команду.
@@ -22,4 +24,4 @@ Water create/update/remove заблокированы: 56-байтовая та�
 
 Проверки на native компонентах четырёх карт подтверждают размеры, сохранение байтов и поддерживаемые структуры. Использован read-only анализ предоставленного SC2Editor 5.0.16.97563. Это не доказывает открытие/сохранение изменённой карты в Editor или работу в игре; такие проверки пока NOT_EXECUTED. Полные команды, форматы и границы: [TERRAIN_MCP.md](TERRAIN_MCP.md).
 
-Alpha.9: для декораций с фильтрами поверхности используй `placement.scatterDoodads`; для обновления высоты существующих объектов — `placement.snapToTerrain`. [Подробные примеры](TERRAIN_DOODADS.md).
+для декораций с фильтрами поверхности используй `placement.scatterDoodads`; для обновления высоты существующих объектов — `placement.snapToTerrain`. [Подробные примеры](TERRAIN_DOODADS.md).

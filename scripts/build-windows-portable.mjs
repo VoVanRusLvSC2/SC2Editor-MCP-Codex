@@ -32,7 +32,7 @@ await fs.copyFile(path.join(projectRoot,"native","vendor","StormLib","LICENSE"),
 await fs.copyFile(path.join(projectRoot,"native","STORMLIB-REVISION.json"),path.join(app,"native","STORMLIB-REVISION.json"));
 await fs.copyFile(path.join(projectRoot,"native","README.md"),path.join(app,"native","README.md"));
 
-for (const dependency of ["@modelcontextprotocol/server", "@modelcontextprotocol/core", "zod"]) {
+for (const dependency of ["@modelcontextprotocol/server", "@modelcontextprotocol/core", "zod", "@xmldom/xmldom"]) {
   const source = path.join(projectRoot, "node_modules", ...dependency.split("/"));
   const destination = path.join(app, "node_modules", ...dependency.split("/"));
   await fs.mkdir(path.dirname(destination), { recursive: true });
