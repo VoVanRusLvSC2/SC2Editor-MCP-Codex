@@ -84,3 +84,13 @@ test('GUI triggers without Identifier can be inspected and selected by ID', asyn
   const details = await workspace.get('20DF7BE4');
   assert.equal(details.references[0]?.id, '1F1812E9');
 });
+
+
+test('root custom include uses only the XML prefix and displays at column zero',()=>{
+ const xml='<TriggerData><Root/><Element Type="CustomScript" Id="AAAA0010"><ScriptCode>     include &quot;Scripts/Example&quot;</ScriptCode></Element></TriggerData>';
+ const fixed=normalizeCustomScriptLayout(xml).xml;
+ const block=/<ScriptCode>([\s\S]*?)<\/ScriptCode>/.exec(fixed)![1];
+ const visible=block.split('\n').slice(1,-1).map(line=>line.slice(12)).join('\n');
+ assert.equal(visible,'include &quot;Scripts/Example&quot;');
+ assert.equal(normalizeCustomScriptLayout(fixed).changedScriptBlocks,0);
+});

@@ -2,3 +2,4 @@
 examples/** text=auto eol=lf
 # Synthetic native components retain their original byte representation.
 src/tests/fixtures/terrain-surface/** -text
+generated/o200k_base.tiktoken -text

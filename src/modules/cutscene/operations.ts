@@ -103,6 +103,41 @@ export function applyCutsceneOperations(
   operations.forEach((operation, index) => {
     let target: string | undefined;
     switch (operation.op) {
+      case 'speech.add': {
+        const object=doc.resolve(resolveAlias(operation.object,aliases));if(object.tag!=='CCutsceneNodeActor'||!object.attrs.guid)throw new Error('Speech requires an Actor GUID');if(!operation.soundLink&&!operation.facialAnim)throw new Error('Speech requires a sound or facial animation');const existing=object.childIds.map(id=>doc.nodes[id]).find(n=>n.tag==='CCutsceneNodeConversation'),track=existing?.attrs.guid?'guid:'+existing.attrs.guid:doc.addNode({guid:object.attrs.guid},stableSpec({nativeType:'CCutsceneNodeConversation',attrs:{name:'Conversation'}}));const attrs:Record<string,string|number|boolean>={start:nativeTimeInput(operation.start??0),...(operation.duration===undefined?{lockedToEnd:true}:{duration:nativeTimeInput(operation.duration)})};if(operation.soundLink)attrs.soundLink=operation.soundLink;if(operation.facialAnim)attrs.facialAnim=operation.facialAnim;if(operation.facialGroup)attrs.facialGroup=operation.facialGroup;if(operation.filter)attrs.filter=operation.filter;target=doc.addNode(track,stableSpec({nativeType:'CCutsceneElementConversation',attrs}));break;
+      }
+      case 'sound.add': {
+        const attrs:Record<string,string|number|boolean>={name:operation.name,soundLink:operation.soundLink,soundIndex:String(operation.variation??0),startOffset:nativeTimeInput(operation.offset??0),volumeScale:(operation.volume??1).toFixed(6),pitch:(operation.pitch??1).toFixed(6),mode:operation.mode??0,position:nativeVector(operation.position??[0,0,0])};target=doc.addNode(operation.parent?resolveAlias(operation.parent,aliases):undefined,stableSpec({nativeType:'CCutsceneNodeSound',attrs,children:[{nativeType:'CCutsceneElementObject',attrs:{start:nativeTimeInput(operation.start??0),...(operation.duration===undefined?{lockedToEnd:true}:{duration:nativeTimeInput(operation.duration)})}}]}));break;
+      }
+      case "path.add": {
+        const parent=operation.parent?resolveAlias(operation.parent,aliases):doc.addNode(undefined,stableSpec({nativeType:'CCutsceneNodeFolder',attrs:{name:'Movement Paths'}}));
+        target=doc.addNode(parent,stableSpec({nativeType:'CCutsceneNodePath',attrs:{name:operation.name},children:operation.points.map((point,i)=>({nativeType:'CCutsceneNodePathMarker',attrs:{name:'Point '+(i+1),position:nativeVector(point),sortIndex:i}}))}));break;
+      }
+      case "followPath.add": {
+        const object=doc.resolve(resolveAlias(operation.object,aliases)),pathNode=doc.resolve(resolveAlias(operation.path,aliases));if(!object.attrs.guid||!pathNode.attrs.guid||pathNode.tag!=='CCutsceneNodePath')throw new Error('Follow Path requires native object/path GUIDs');
+        const track=doc.addNode({guid:object.attrs.guid},stableSpec({nativeType:'CCutsceneNodeFollowPath',attrs:{name:'Movement'}}));
+        if(operation.objectSpeed!==undefined){doc.setAttribute({guid:object.attrs.guid},'movespeed',operation.objectSpeed.toFixed(6));doc.setAttribute({guid:object.attrs.guid},'useAnimMovespeed',false);}
+        const attrs:Record<string,string|number|boolean>={pathGuid:pathNode.attrs.guid,start:nativeTimeInput(operation.start??0),alwaysPointUp:operation.alwaysPointUp??true,...(operation.duration===undefined?{lockedToEnd:true}:{duration:nativeTimeInput(operation.duration)}),...(operation.lockedToEnd===undefined?{}:{lockedToEnd:operation.lockedToEnd})};for(const [i,c]of ['X','Y','Z'].entries())attrs['pathRotationOffset'+c]=(operation.rotation??[0,0,0])[i].toFixed(6);target=doc.addNode(track,stableSpec({nativeType:'CCutsceneElementFollowPath',attrs}));break;
+      }
+      case "attachment.add":
+      case "lookAt.add": {
+        const object=doc.resolve(resolveAlias(operation.object,aliases)),host=doc.resolve(resolveAlias(operation.target,aliases));
+        if(!object.attrs.guid||!host.attrs.guid)throw new Error("Constraint requires native GUIDs");
+        if(operation.op==="attachment.add"&&object.attrs.guid===host.attrs.guid)throw new Error("Self attachment is invalid");
+        const nodeType=operation.op==="attachment.add"?"CCutsceneNodeAttachment":"CCutsceneNodeLookAt",elementType=operation.op==="attachment.add"?"CCutsceneElementAttachment":"CCutsceneElementLookAt";
+        const existing=object.childIds.map(id=>doc.nodes[id]).find(n=>n.tag===nodeType),track=existing?.attrs.guid?`guid:${existing.attrs.guid}`:doc.addNode({guid:object.attrs.guid},stableSpec({nativeType:nodeType,attrs:{name:operation.op==="attachment.add"?"Attachments":"Look At"}}));
+        const attrs:Record<string,string|number|boolean>={start:nativeTimeInput(operation.start??0),...(operation.duration===undefined?{lockedToEnd:true}:{duration:nativeTimeInput(operation.duration)}),...(operation.lockedToEnd===undefined?{}:{lockedToEnd:operation.lockedToEnd})};
+        if(operation.op==="attachment.add"){Object.assign(attrs,{attachGuid:host.attrs.guid,attachName:operation.point,inheritScale:operation.inheritScale??true,inheritVisibility:operation.inheritVisibility??true});for(const [i,c]of ['X','Y','Z'].entries()){attrs['offset'+c]=(operation.offset??[0,0,0])[i].toFixed(6);attrs['rotation'+c]=(operation.rotation??[0,0,0])[i].toFixed(6);}}
+        else Object.assign(attrs,{lookAtGUID:host.attrs.guid,lookAtAttachId:operation.point??'Head',lookAtType:operation.type??'FastHeadOnly',ignoreEyes:operation.ignoreEyes??false});
+        target=doc.addNode(track,stableSpec({nativeType:elementType,attrs}));break;
+      }
+      case "object.filter":
+        doc.setAttribute(resolveAlias(operation.object,aliases),'filter',operation.filter);break;
+      case "activeShot.set": {
+        const object=doc.resolve(resolveAlias(operation.object,aliases));if(!object.attrs.guid)throw new Error("Active Shot requires native GUID");
+        for(const n of object.childIds.map(id=>doc.nodes[id]).filter(n=>n.tag==='CCutsceneNodeActiveShot').sort((a,b)=>b.id-a.id))doc.removeNode({nodeId:n.id});
+        for(const shot of operation.shots){const camera=doc.resolve(resolveAlias(shot.camera,aliases));if(!camera.attrs.guid)throw new Error("Shot camera requires native GUID");target=doc.addNode({guid:object.attrs.guid},stableSpec({nativeType:'CCutsceneNodeActiveShot',attrs:{cameraGUID:camera.attrs.guid,cameraIndex:shot.index??0}}));}break;
+      }
       case "object.add":
         target = doc.addNode(operation.parent ? resolveAlias(operation.parent, aliases) : undefined, stableSpec(operation.object));
         break;
@@ -351,10 +386,10 @@ export function applyCutsceneOperations(
         doc.removeNode(resolveAlias(operation.light, aliases));
         break;
       case "light.activate": {
-        const track = locateCategory(doc, schema, "director-light-track");
-        if (!track) throw new Error("No Director active-light track exists");
+        let track = locateCategory(doc, schema, "director-light-track");
+        if(!track){const director=doc.nodes.find(n=>n.tag==='CCutsceneNodeDirector');if(!director)throw new Error('Active Light requires Director');track=doc.resolve(doc.addNode({nodeId:director.id},stableSpec({nativeType:'CCutsceneNodeActiveLight',attrs:{name:'Environment Lights'}})));}
         const light = operation.light ? doc.resolve(resolveAlias(operation.light, aliases)) : undefined;
-        if (light && light.tag !== "CCutsceneNodeLight") throw new Error(`${light.tag} is not CCutsceneNodeLight`);
+        if (light && light.tag !== "CCutsceneNodeEnvironmentLight") throw new Error(`${light.tag} is not an EnvironmentLight; Director Active Light controls scene lighting presets`);
         if (light && !light.attrs.guid) throw new Error("Cutscene light has no native guid");
         const attrs: Record<string, string | number> = {
           lightGUID: light?.attrs.guid ?? "0",

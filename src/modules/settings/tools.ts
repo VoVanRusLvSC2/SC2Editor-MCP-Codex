@@ -1,3 +1,4 @@
+import {readJsonPlanFile} from '../../core/jsonPlanFile.js';
 import { McpServer } from "@modelcontextprotocol/server";
 import * as z from "zod/v4";
 import { SettingsWorkspace } from "./workspace.js";
@@ -6,6 +7,8 @@ const directory = z.string().default(""), dryRun = z.boolean().default(true);
 const result = (value: unknown) => { const text = JSON.stringify(value, null, 2); if (text.length > 64000)
     throw new Error("SETTINGS_RESPONSE_LIMIT: use paginated lists and per-id detail tools"); return { content: [{ type: "text" as const, text }] }; };
 export function registerSettingsTools(server: McpServer, settings: SettingsWorkspace) {
+  server.registerTool('settings.plan_file',{description:'Plan the strict module request from a workspace JSON file (max 1 MiB). No execution, no staging until apply; avoids repeating large schemas.',inputSchema:z.object({file:z.string().min(1).max(512)}).strict()},async a=>({content:[{type:'text' as const,text:JSON.stringify(await settings.plan(await readJsonPlanFile(settings.workspace,a.file)))}]}));
+
     server.registerTool("settings.capabilities", { description: "Report separate map lobby/settings operations, verified v39 profile and explicit gaps. Does not launch Editor.", inputSchema: z.object({}).strict(), annotations: { readOnlyHint: true } }, async () => result(settings.capabilities()));
     server.registerTool("settings.inspect", { description: "Inspect MapInfo players/options and Attributes counts. Reads staged changes. Editor/runtime acceptance is unverified.", inputSchema: z.object({ directory }).strict(), annotations: { readOnlyHint: true } }, async (a) => result(await settings.inspect(a.directory)));
     for (const kind of ["attributes", "variants"] as const)

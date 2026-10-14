@@ -1,3 +1,4 @@
+import {editNativeGeometry} from './nativeGeometry.js';
 import { TerrainVisibility } from "./visibility.js";
 import type { TerrainArea, TerrainIssue, TerrainOperation } from "./types.js";
 import { componentListWithGameData, gameDataIndexWithCatalog } from "../data/workspace.js";
@@ -220,15 +221,10 @@ export function applyOperations(
     }
     if (op.op === "stamp.apply")
       throw new Error("STAMP_REQUIRES_WORKSPACE_RESOLUTION");
-    if (
-      op.op === "cliff.paint" ||
-      op.op === "ramp.create" ||
-      op.op === "ramp.remove" ||
-      op.op === "pathing.paint"
-    )
-      throw new Error(
-        `NATIVE_TERRAIN_OPERATION_UNAVAILABLE: ${op.op}; structural regeneration has not been proven. A whole-map donor stamp preserves existing native cliffs/ramps/pathing.`,
-      );
+    if (op.op==='cliff.paint'||op.op==='ramp.create'||op.op==='ramp.remove') {
+      editNativeGeometry(state,op);protection.fill(0);continue;
+    }
+    if (op.op==='pathing.paint')throw new Error('NATIVE_TERRAIN_OPERATION_UNAVAILABLE: pathing.paint');
     if (op.op === "palette.update") {
       if (!state.syncTextures)
         throw new Error("SYNC_TEXTURE_COMPONENT_REQUIRED");

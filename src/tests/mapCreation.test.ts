@@ -66,7 +66,7 @@ test("failed/unsupported terrain generation leaves source and destination untouc
   const f = await fixture(t); await f.map.registerBlueprint("native", "template", false);
   const before = await directoryManifest(f.source);
   await assert.rejects(f.map.create({ blueprintId: "native", destinationDirectory: "created", dryRun: false,
-    terrainOperations: [{ op: "cliff.paint", parameters: {} }] }), /NATIVE_TERRAIN_OPERATION_UNAVAILABLE/);
+    terrainOperations: [{ op: "cliff.paint", parameters: {} }] }), /NATIVE_(?:TERRAIN_OPERATION_UNAVAILABLE|GEOMETRY_|CLIFF_)/);
   await assert.rejects(f.map.create({ blueprintId: "native", destinationDirectory: "created", dryRun: false,
     landscape: { style: "city", materials: { base: "UnavailableTexture" } } }), /TEXTURE_NOT_RESOLVED|TEXTURE.*MISSING|TEXTURE.*PALETTE/);
   await assert.rejects(f.map.create({ blueprintId: "native", destinationDirectory: "template/nested" }), /INSIDE_BLUEPRINT/);

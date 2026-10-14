@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Catalog>
-    <CUnit id="ScenarioAUnit">
-        <WeaponArray index="0" Link="ScenarioAWeapon"/>
-    </CUnit>
-</Catalog>

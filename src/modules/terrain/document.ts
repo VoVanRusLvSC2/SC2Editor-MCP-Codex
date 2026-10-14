@@ -191,13 +191,13 @@ export class HeightMap {
     const d = this.descriptor;
     const fine = Math.round(
       ((z - d.offset[2]) / d.scale[2] + 2 * d.quantizeBias) / d.quantizeScale -
-        this.bytes.readUInt16LE(i),
+        this.bytes.readUInt16LE(i + 2),
     );
     if (fine < 0 || fine > 65535)
       throw new Error(
         `HEIGHT_QUANTIZATION_RANGE: (${x},${y}); choose a smaller height change or an Editor-generated donor stamp`,
       );
-    this.bytes.writeUInt16LE(fine, i + 2);
+    this.bytes.writeUInt16LE(fine, i);
     return this.z(x, y);
   }
   point(x: number, y: number): Point2 {

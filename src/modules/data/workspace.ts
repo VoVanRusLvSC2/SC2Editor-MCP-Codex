@@ -72,12 +72,13 @@ export class DataWorkspace {
   private plans=new Map<string,{request:Parameters<DataWorkspace["applyTracked"]>[0];fingerprint:string;schemaSources:Array<{file:string;sha256:string}>}>();
   private parsedCatalogs=new Map<string,DataDocument>();
   private parsedBytes=0;
+  private validationCache=new Map<string,{source:string;invalid:boolean;catalog:boolean}>();
   private cachedDocument(absolute:string,source:string,file:string) {
     const existing=this.parsedCatalogs.get(absolute);
     if(existing?.source===source)return existing;
     if(existing)this.parsedBytes-=Buffer.byteLength(existing.source);
     const doc=new DataDocument(source,file);this.parsedCatalogs.delete(absolute);this.parsedCatalogs.set(absolute,doc);this.parsedBytes+=Buffer.byteLength(source);
-    while(this.parsedCatalogs.size>128 || this.parsedBytes>32*1024*1024){const key=this.parsedCatalogs.keys().next().value!;this.parsedBytes-=Buffer.byteLength(this.parsedCatalogs.get(key)!.source);this.parsedCatalogs.delete(key);}
+    while(this.parsedCatalogs.size>1024 || this.parsedBytes>64*1024*1024){const key=this.parsedCatalogs.keys().next().value!;this.parsedBytes-=Buffer.byteLength(this.parsedCatalogs.get(key)!.source);this.parsedCatalogs.delete(key);}
     return doc;
   }
 
@@ -85,6 +86,7 @@ export class DataWorkspace {
     this.extraRoots = extraRoots.map((entry) => path.resolve(entry));
   }
 
+  cacheStats(){return {entries:this.parsedCatalogs.size,sourceBytes:this.parsedBytes,maxEntries:1024,maxSourceBytes:64*1024*1024};}
   dependencyRefresh?: () => Promise<void>;
   removeDependencyRoot(root: string) { const index = this.extraRoots.indexOf(path.resolve(root)); if (index >= 0) this.extraRoots.splice(index, 1); }
   addDependencyRoot(root: string) {
@@ -102,7 +104,7 @@ export class DataWorkspace {
     const isCandidate=(file:string)=>/(?:^|\/)GameData\/.*\.xml$/i.test(file)||/Data\.xml$/i.test(path.basename(file));
     const visit=async(directory:string):Promise<void>=>{
       let entries;try{entries=await this.workspace.readDirectory(directory,'data-catalog',entry=>entry.isDirectory()?!(SKIP.has(entry.name)||internalWorkspaceDirectory(entry.name)):isCandidate(normalize(path.relative(base,path.join(directory,entry.name)))));}catch(error){files.issues.push({file:directory,code:"CATALOG_DIRECTORY_UNREADABLE",reason:String(error)});return;}
-      for(const entry of entries){if(entry.isDirectory()&&(SKIP.has(entry.name)||internalWorkspaceDirectory(entry.name)))continue;const absolute=path.join(directory,entry.name);if(entry.isDirectory())await visit(absolute);else if(entry.isFile()&&isCandidate(normalize(path.relative(base,absolute))))candidates.add(absolute);}
+      for(const entry of entries){if(entry.isDirectory()&&(SKIP.has(entry.name)||internalWorkspaceDirectory(entry.name)||(layer==='dependency'&&/\.sc2(?:map|mod|campaign)$/i.test(entry.name))))continue;const absolute=path.join(directory,entry.name);if(entry.isDirectory())await visit(absolute);else if(entry.isFile()&&isCandidate(normalize(path.relative(base,absolute))))candidates.add(absolute);}
     };
     await visit(base);
     if(layer==="workspace")for(const file of [...this.workspace.draftFiles(),...this.workspace.binary.draftFiles(),...overrides?.keys()??[]]){
@@ -116,7 +118,7 @@ export class DataWorkspace {
         const stat=await fs.stat(absolute).catch(()=>undefined);if(stat&&stat.size>64*1024*1024){files.issues.push({file:absolute,code:"CATALOG_BYTE_LIMIT",reason:"Catalog exceeds 64 MiB"});continue;}
         const source=layer==="workspace"&&overrides?.has(workspaceRelative)?overrides.get(workspaceRelative)!:layer==="workspace"?(await this.workspace.readRaw(workspaceRelative)).text:await this.workspace.readDependency(absolute);
         if(Buffer.byteLength(source)>64*1024*1024){files.issues.push({file:absolute,code:"CATALOG_BYTE_LIMIT",reason:"Staged catalog exceeds 64 MiB"});continue;}
-        const parsed=scanXml(source);if(parsed.diagnostics.some(d=>d.severity==="error"))files.issues.push({file:absolute,code:"CATALOG_XML_INVALID",reason:"XML references cannot be completely indexed"});if(parsed.rootIds.some(id=>parsed.nodes[id].tag==="Catalog"))files.push({file:workspaceRelative,absolute,layer,provenance:layer==="workspace"?provenance(absolute):[path.basename(base),...provenance(absolute)],document:this.cachedDocument(absolute,source,workspaceRelative)});
+        let validation=this.validationCache.get(absolute);if(validation?.source!==source){const parsed=scanXml(source);validation={source,invalid:parsed.diagnostics.some(d=>d.severity==='error'),catalog:parsed.rootIds.some(id=>parsed.nodes[id].tag==='Catalog')};this.validationCache.set(absolute,validation);while(this.validationCache.size>1024)this.validationCache.delete(this.validationCache.keys().next().value!);}if(validation.invalid)files.issues.push({file:absolute,code:"CATALOG_XML_INVALID",reason:"XML references cannot be completely indexed"});if(validation.catalog)files.push({file:workspaceRelative,absolute,layer,provenance:layer==="workspace"?provenance(absolute):[path.basename(base),...provenance(absolute)],document:this.cachedDocument(absolute,source,workspaceRelative)});
       }catch(error){if(error instanceof Error&&error.message.startsWith("STALE_"))throw error;files.issues.push({file:absolute,code:"CATALOG_READ_FAILED",reason:String(error)});}
     }
     const lookup=new Map(files.map(r=>[normalize(path.relative(base,r.absolute)).toLowerCase(),r.absolute]));
@@ -131,6 +133,13 @@ export class DataWorkspace {
     return files;
   }
 
+  async metadataEntry(domain:string,id:string){
+    const records=await this.catalog();const matches=[];
+    for(const record of records){if(record.engineActive===false||record.layer==='dependency'&&record.dependencyAvailability!=='DECLARED_AVAILABLE'&&!record.provenance.some(p=>/^core\.sc2mod$/i.test(p)))continue;
+      if(!record.document.source.includes(id))continue;for(const node of record.document.entries())if(node.attrs.id===id&&dataDomainFromType(node.tag)===domain)matches.push({id,domain,ctype:node.tag,parent:node.attrs.parent,layer:record.layer,file:record.absolute,sha256:createHash('sha256').update(record.document.source).digest('hex')});
+    }
+    return {available:matches.length>0,matches,coverageIssues:records.issues};
+  }
   async catalog(overrides?: ReadonlyMap<string, string>): Promise<CatalogRecords> {
     await this.dependencyRefresh?.();
     referenceSchema.refresh();

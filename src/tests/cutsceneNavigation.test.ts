@@ -1,0 +1,6 @@
+import test from 'node:test';import assert from 'node:assert/strict';import vm from 'node:vm';
+import {createCameraNavigation} from '../modules/cutscenePreview/navigation.js';
+const camera={id:'m3:portrait:0',name:'Portrait',eye:[3,-2,-29],target:[3,-1,-29],fov:43.6,vertical:false,near:.01,far:10,roll:15,curves:[],rigObject:'portrait'};
+test('switching from an embedded camera to orbit preserves its eye, target, FOV and roll',()=>{const nav=createCameraNavigation(camera),s=nav.camera();for(let i=0;i<3;i++)assert.ok(Math.abs(s.eye[i]-camera.eye[i])<1e-10);assert.deepEqual(s.target,camera.target);assert.equal(s.fov,camera.fov);assert.equal(s.roll,15);assert.equal(s.rigObject,undefined);});
+test('wheel dolly moves backward along the current view axis without jumping to scene bounds',()=>{const nav=createCameraNavigation(camera);nav.dolly(120);const s=nav.camera();assert.equal(s.eye[0],3);assert.equal(s.eye[2],-29);assert.ok(Math.abs(s.eye[1]-(-1-Math.exp(.12)))<1e-10);assert.deepEqual(s.target,camera.target);});
+test('browser navigation factory has no imported closure dependencies',()=>{const browser=vm.runInNewContext('('+createCameraNavigation.toString()+')')(camera),node=createCameraNavigation(camera);browser.rotate(10,4);node.rotate(10,4);assert.deepEqual([...browser.camera().eye],node.camera().eye);});

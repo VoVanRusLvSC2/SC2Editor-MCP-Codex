@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "purpose": "Source publication inventory only; no automatic staging, deletion or push",
+  "rootFiles": [
+    ".gitattributes", ".gitignore", "package.json", "package-lock.json",
+    "tsconfig.json", "tsconfig.dev.json", "tsconfig.release.json", "eslint.config.mjs",
+    "LICENSE", "CREDITS.md", "THIRD_PARTY_LICENSES.md", "PUBLISHING_RU.md", "publication-policy.json",
+    "README.md", "README_RU.md", "SCRIPT-GUIDE-RU.md", "CHANGELOG.md"
+  ],
+  "sourceDirectories": ["src/", "scripts/", "windows/", "tests/terrain-surface/"],
+  "localDirectories": [
+    ".git/", "node_modules/", "work/", "output/", "release/", "dist/", "dist-runtime/",
+    ".build-cache/", ".playwright-cli/", ".sc2mcp-casc-cache/", ".sc2mcp-assets-preview/",
+    ".sc2mcp-ui-preview/", ".sc2mcp-document-staging/", "coverage/", "native/bin/",
+    "src/tests/fixtures/", "tests/terrain-surface/fixtures/", "examples/",
+    "docs/cutscene-manual-images/", "docs/cutscene-runtime-images/"
+  ],
+  "runtimeGeneratedFiles": [
+    "ai-module-schema.json", "cutscene-schema.json", "data-editor-schema.json",
+    "data-observed-schema.json", "text-font-style-schema.json", "font-style-corpus.json",
+    "trigger-authoring-registry.json", "trigger-skirmish-recipe.json", "galaxy-native-api.json",
+    "o200k_base.tiktoken", "o200k_base.sha256", "TIKTOKEN_LICENSE.txt"
+  ],
+  "runtimeGeneratedDirectories": ["data-xsd-index/"],
+  "documentation": [
+    "ARCHITECTURE.md", "AI_CODEX_GUIDE_RU.md", "AI_MCP.md", "BROWSE_PLACEMENT_CODEX_RU.md",
+    "BROWSE_PLACEMENT_MCP.md", "CASC_RU.md", "CODEX_GUIDE_RU.md", "CUTSCENE_ARCHITECTURE.md",
+    "CUTSCENE_ASSETS_RU.md", "CUTSCENE_CAMERA.md", "CUTSCENE_CODEX_GUIDE_RU.md",
+    "CUTSCENE_COVERAGE.md", "CUTSCENE_MCP.md", "CUTSCENE_RUNTIME.md", "CUTSCENE_TIMELINE.md",
+    "DATA_MCP.md", "DEPENDENCY_TRANSACTIONS_RU.md", "DOCUMENT_CREATION_RU.md",
+    "GUI_WORKBENCH.md", "MAP_CREATION_RU.md", "MAP_MCP.md", "RUNTIME_AND_ARCHIVES.md",
+    "SETTINGS_RU.md", "TERRAIN_CODEX_GUIDE_RU.md", "TERRAIN_DOODADS.md", "TERRAIN_LIGHTING_RU.md",
+    "TERRAIN_MCP.md", "TERRAIN_RU.md", "TERRAIN_WATER_RU.md", "TEXT_ARCHITECTURE.md",
+    "TEXT_CODEX_GUIDE_RU.md", "TEXT_COVERAGE.md", "TEXT_LOCALIZATION.md", "TEXT_MCP.md",
+    "TEXT_RICH_TEXT.md", "TRIGGER_MCP_RU.md", "TRIGGER-SCRIPT-LAYOUT-RU.md",
+    "UI_APPLY_TRANSACTION.md", "WINDOWS_EXE.md", "REPOSITORY_STRUCTURE_RU.md"
+  ],
+  "publicationHolds": [
+    {
+      "id": "project-credit-gpl-compatibility",
+      "reason": "Original-code custom license requires project-level attribution; compatibility with the combined GPL-2.0-only renderer distribution is not granted or established",
+      "notice": "LICENSE"
+    },
+    {
+      "id": "surface-toolkit-license",
+      "reason": "Imported Surface Toolkit core/format redistribution license is not established",
+      "notice": "src/modules/terrain/surface/NOTICE.md"
+    },
+    {
+      "id": "renderer-corresponding-source",
+      "reason": "GPL renderer package references missing local dependencies/build entry point; verify complete corresponding source before distributing the combined work",
+      "notice": "THIRD_PARTY_LICENSES.md"
+    },
+    {
+      "id": "upstream-data-and-research-scope",
+      "reason": "Review rights/provenance of upstream schemas, generated SC2 registries and source-derived rendering changes; research derivatives have not been cleared for publication",
+      "notice": "PUBLISHING_RU.md"
+    }
+  ]
+}

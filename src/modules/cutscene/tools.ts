@@ -33,6 +33,16 @@ const nativeNode: z.ZodType<NativeNodeSpec> = z.lazy(() => z.object({
 }));
 
 const operationSchema = z.discriminatedUnion("op", [
+ z.object({op:z.literal('speech.add'),as:z.string().optional(),object:selector,soundLink:z.string().min(1).max(1024).optional(),facialAnim:z.string().min(1).max(256).optional(),facialGroup:z.string().min(1).max(128).optional(),start:nativeTimeInput.optional(),duration:nativeTimeInput.optional(),filter:z.string().max(512).optional()}),
+ z.object({op:z.literal('sound.add'),as:z.string().optional(),parent:selector.optional(),name:z.string().min(1).max(128),soundLink:z.string().min(1).max(1024),variation:z.number().int().min(0).max(1024).default(0),start:nativeTimeInput.optional(),duration:nativeTimeInput.optional(),offset:nativeTimeInput.optional(),volume:z.number().min(0).max(4).default(1),pitch:z.number().min(.05).max(8).default(1),mode:z.union([z.literal(0),z.literal(1),z.literal(2)]).default(0),position:z.tuple([z.number(),z.number(),z.number()]).optional()}),
+  z.object({op:z.literal("path.add"),as:z.string().optional(),parent:selector.optional(),name:z.string().min(1).max(128),points:z.array(z.tuple([z.number(),z.number(),z.number()])).min(2).max(256)}),
+  z.object({op:z.literal("followPath.add"),as:z.string().optional(),object:selector,path:selector,start:nativeTimeInput.optional(),duration:nativeTimeInput.optional(),alwaysPointUp:z.boolean().default(true),rotation:z.tuple([z.number(),z.number(),z.number()]).optional(),objectSpeed:z.number().nonnegative().max(1000).optional(),lockedToEnd:z.boolean().optional()}),
+
+  z.object({op:z.literal("attachment.add"),as:z.string().optional(),object:selector,target:selector,point:z.string().max(128),start:nativeTimeInput.optional(),duration:nativeTimeInput.optional(),offset:z.tuple([z.number(),z.number(),z.number()]).optional(),rotation:z.tuple([z.number(),z.number(),z.number()]).optional(),inheritScale:z.boolean().default(true),inheritVisibility:z.boolean().default(true),lockedToEnd:z.boolean().optional()}),
+  z.object({op:z.literal("lookAt.add"),as:z.string().optional(),object:selector,target:selector,point:z.string().max(128).default("Head"),type:z.string().min(1).max(128).default("FastHeadOnly"),ignoreEyes:z.boolean().default(false),start:nativeTimeInput.optional(),duration:nativeTimeInput.optional(),lockedToEnd:z.boolean().optional()}),
+  z.object({op:z.literal("object.filter"),object:selector,filter:z.string().max(512)}),
+  z.object({op:z.literal("activeShot.set"),object:selector,shots:z.array(z.object({camera:selector,index:z.number().int().nonnegative().max(128).default(0)})).max(32)}),
+
   z.object({ op: z.literal("object.add"), as: z.string().optional(), parent: selector.optional(), object: nativeNode }),
   z.object({ op: z.literal("object.remove"), object: selector }),
   z.object({ op: z.literal("object.rename"), object: selector, name: z.string().min(1) }),
@@ -113,6 +123,9 @@ const operationFamilies = {
   animation: ["animation.layer.add", "animation.add", "animation.update", "animation.remove"],
   propertyAnimation: ["property.animate", "text.animate", "keyframe.add", "keyframe.update", "keyframe.remove"],
   lighting: ["light.add", "light.update", "light.remove", "light.activate", "fog.upsert", "property.animate"],
+  movement: ["path.add", "followPath.add"],
+  media: ["speech.add", "sound.add"],
+  constraints: ["attachment.add", "lookAt.add", "object.filter", "activeShot.set"],
   escapeHatch: ["raw.patch"],
 };
 

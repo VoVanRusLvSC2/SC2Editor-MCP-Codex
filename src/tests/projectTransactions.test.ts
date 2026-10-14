@@ -151,10 +151,10 @@ test("capabilities recognize component directories with map suffix and distingui
   }
 });
 
-test("project status covers exactly twelve modules without claiming total engine coverage", async t => {
+test("project status covers exactly thirteen modules without claiming total engine coverage", async t => {
   const w = await fixture(t), p = await createProject(w.root);
   const report = projectCoverage(p);
-  assert.deepEqual(Object.keys(report.modules).sort(), ["ai", "browse", "casc", "cutscene", "data", "map", "placement", "script", "settings", "terrain", "text", "ui"]);
+  assert.deepEqual(Object.keys(report.modules).sort(), ["ai", "browse", "casc", "cutscene", "data", "document", "map", "placement", "script", "settings", "terrain", "text", "ui"]);
   assert.equal(report.completeEngineCoverage, false);
   assert.equal(report.overallCoveragePercent, null);
   const result = await dispatchGuiApi(p.workspace, p.schema, { method: "GET", pathname: "/api/project/status" }, { ...p, projectStatus: () => report });

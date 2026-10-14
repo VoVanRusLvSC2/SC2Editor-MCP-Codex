@@ -1,0 +1,10 @@
+import { promises as fs } from "node:fs";
+import * as z from "zod/v4";
+import type { McpServer } from "@modelcontextprotocol/server";
+import { registerDocumentTools } from "../src/modules/document/tools.js";
+import type { DocumentWorkspace } from "../src/modules/document/workspace.js";
+import { APP_VERSION } from "../src/app/version.js";
+const tools:Record<string,unknown>={};
+registerDocumentTools({registerTool(name:string,config:{description:string;inputSchema:z.ZodType;annotations?:unknown}){tools[name]={description:config.description,inputSchema:z.toJSONSchema(config.inputSchema),annotations:config.annotations};}} as unknown as McpServer,undefined as unknown as DocumentWorkspace);
+await fs.writeFile("generated/document-tools.json",JSON.stringify({version:APP_VERSION,tools},null,2)+"\n");
+console.log(JSON.stringify({count:Object.keys(tools).length,file:"generated/document-tools.json"}));

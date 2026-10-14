@@ -23,7 +23,7 @@ export function safeCascPath(value: string, allowEmpty = false): string {
   return normalized;
 }
 interface CacheMetadata extends CascBuild { schemaVersion: 1; path: string; sha256: string; contentKey: string; encodingKey: string; size: number }
-interface MountRecord { package: string; root: string; build: CascBuild; files: Array<{ logicalPath: string; file: string; sha256: string }> }
+interface MountRecord { kinds?:CascKind[];locales?:string[];package: string; root: string; build: CascBuild; files: Array<{ logicalPath: string; file: string; sha256: string }> }
 export type CascKind = "catalogs" | "triggers" | "strings" | "schemas" | "layouts";
 export interface CascOptions { install?: string; cacheRoot?: string; backendFactory?: (install: string) => CascBackend; onMount?: (root: string) => void; onUnmount?: (root: string) => void }
 
@@ -92,9 +92,9 @@ export class CascWorkspace {
     const { build, backend } = await this.ready(); return { build, ...await backend.list(prefix, query, offset, limit) };
   }
   async inspect(file: string) { file = safeCascPath(file); const { build, backend } = await this.ready(); return { build, ...await backend.inspect(file) }; }
-  private async fetch(file: string) {
+  private async fetch(file: string, maxBytes = 16 * 1024 * 1024) {
     const { build, backend } = await this.ready(), entry = await backend.inspect(file);
-    if (entry.size > 16 * 1024 * 1024 || !Number.isSafeInteger(entry.size) || entry.size < 0) throw new Error("CASC_FULL_FILE_BYTE_BUDGET");
+    if (entry.size > maxBytes || !Number.isSafeInteger(entry.size) || entry.size < 0) throw new Error("CASC_FULL_FILE_BYTE_BUDGET");
     const cached = this.cachePath(`${build.buildKey}/files/${file}`), metadataFile = this.cachePath(`${build.buildKey}/metadata/${file}.json`);
     const metadata = await fs.readFile(metadataFile, "utf8").then(text => JSON.parse(text) as CacheMetadata).catch(error => { if ((error as NodeJS.ErrnoException).code === "ENOENT" || error instanceof SyntaxError) return undefined; throw error; });
     if (metadata) {
@@ -104,8 +104,7 @@ export class CascWorkspace {
       }
       this.stats.invalidCacheEntries++;
     }
-    const result = await backend.read(file, 0, entry.size), bytes = Buffer.from(result.base64, "base64");
-    if (result.path !== file || result.offset !== 0 || result.size !== entry.size || bytes.length !== entry.size || result.contentKey !== entry.contentKey) throw new Error("CASC_NATIVE_READ_IDENTITY_MISMATCH");
+    const chunks:Buffer[]=[];for(let offset=0;offset<entry.size;offset+=4*1024*1024){const length=Math.min(4*1024*1024,entry.size-offset),part=await backend.read(file,offset,length),bytes=Buffer.from(part.base64,"base64");if(part.path!==file||part.offset!==offset||part.size!==entry.size||bytes.length!==length||part.contentKey!==entry.contentKey)throw new Error("CASC_NATIVE_READ_IDENTITY_MISMATCH");chunks.push(bytes);}const bytes=Buffer.concat(chunks,entry.size),result={contentKey:entry.contentKey,encodingKey:entry.encodingKey};
     if (entry.contentKey !== "0".repeat(32) && createHash("md5").update(bytes).digest("hex") !== entry.contentKey) throw new Error("CASC_CONTENT_KEY_MISMATCH");
     if ((await this.source()).buildInfoSha256 !== build.buildInfoSha256) throw new Error("CASC_BUILD_CHANGED_DURING_READ");
     const next: CacheMetadata = { schemaVersion: 1, ...build, path: file, sha256: sha(bytes), contentKey: result.contentKey, encodingKey: result.encodingKey, size: bytes.length };
@@ -113,6 +112,7 @@ export class CascWorkspace {
     this.stats.misses++; this.stats.nativeBytesRead += bytes.length;
     return { bytes, metadata: next, cacheHit: false };
   }
+  async readLimited(file:string,maxBytes:number){if(!Number.isInteger(maxBytes)||maxBytes<1||maxBytes>64*1024*1024)throw new Error('CASC_RENDERER_BYTE_BUDGET');file=safeCascPath(file);const key=`${(await this.source()).buildKey}:${file}:${maxBytes}`,existing=this.inFlight.get(key);if(existing)return existing;const promise=this.fetch(file,maxBytes);this.inFlight.set(key,promise);try{return await promise;}finally{this.inFlight.delete(key);}}
   async read(file: string) {
     file = safeCascPath(file);
     const key = `${(await this.source()).buildKey}:${file}`, existing = this.inFlight.get(key);
@@ -136,7 +136,7 @@ export class CascWorkspace {
   private selected(file: string, kinds: CascKind[], locales: string[]) {
     if (/(?:^|\/)documentinfo$/.test(file)) return true;
     if (kinds.includes("catalogs") && /\/base\.sc2data\/(?:gamedata\.xml|gamedata\/.*\.xml)$/.test(file)) return true;
-    if (kinds.includes("triggers") && /\/triggerlibs\/.*\.(?:galaxy|triggerlib|xml)$/.test(file)) return true;
+    if (kinds.includes("triggers") && (/\/triggerlibs\/.*\.(?:galaxy|triggerlib|sc2lib|xml)$/.test(file) || /\/triggers$/.test(file))) return true;
     if (kinds.includes("strings") && locales.some(locale => file.includes(`/${locale.toLowerCase()}.sc2data/`)) && /\/localizeddata\/[^/]*strings\.txt$/.test(file)) return true;
     if (kinds.includes("schemas") && /\.xsd$/.test(file)) return true;
     return kinds.includes("layouts") && /\.(?:sc2layout|stormlayout|sc2style|stormstyle)$/.test(file);
@@ -145,7 +145,7 @@ export class CascWorkspace {
     return relative.split("/").map((part, index) => {
       if (part === "base.sc2data") return "Base.SC2Data";
       if (index === 0 && /^[a-z]{4}\.sc2data$/.test(part)) return part.slice(0, 2) + part.slice(2, 4).toUpperCase() + ".SC2Data";
-      const names: Record<string, string> = { documentinfo: "DocumentInfo", "gamedata.xml": "GameData.xml", gamedata: "GameData", localizeddata: "LocalizedData", triggerlibs: "TriggerLibs" };
+      const names: Record<string, string> = { documentinfo: "DocumentInfo", "gamedata.xml": "GameData.xml", gamedata: "GameData", localizeddata: "LocalizedData", triggerlibs: "TriggerLibs", triggers: "Triggers" };
       return names[part] ?? part;
     }).join("/");
   }
@@ -156,13 +156,22 @@ export class CascWorkspace {
     for (let pkg of packages) {
       pkg = safeCascPath(pkg);
       if (!/\.sc2(?:mod|campaign)$/.test(pkg)) throw new Error("CASC_PACKAGE_PATH_REQUIRED");
-      const selected: CascEntry[] = []; let offset = 0, more = true;
+      const selected: CascEntry[] = [];
+      // Package-owned scopes only. Embedded campaign maps are separate documents.
+      const scopes:Array<{prefix:string;query:string}>=[{prefix:pkg,query:'/documentinfo'}];
+      if(kinds.includes('catalogs'))scopes.push({prefix:pkg+'/base.sc2data/gamedata',query:''},{prefix:pkg,query:'/base.sc2data/gamedata.xml'});
+      if(kinds.includes('triggers'))scopes.push({prefix:pkg+'/base.sc2data/triggerlibs',query:''},{prefix:pkg,query:'/triggers'});
+      if(kinds.includes('strings'))for(const locale of locales)scopes.push({prefix:pkg+'/'+locale.toLowerCase()+'.sc2data/localizeddata',query:'strings.txt'});
+      if(kinds.includes('layouts'))scopes.push({prefix:pkg+'/base.sc2data/ui',query:''});
+      if(kinds.includes('schemas'))scopes.push({prefix:pkg+'/base.sc2data',query:'.xsd'});
+      for(const scope of scopes){let offset = 0, more = true;
       do {
-        const page = await this.search(pkg, "", offset, 100);
-        selected.push(...page.items.filter(entry => this.selected(entry.path, kinds, locales)));
+        const page = await this.search(scope.prefix, scope.query, offset, 100);
+        selected.push(...page.items.filter(entry => !entry.path.slice(pkg.length+1).split("/").some(p=>/\.sc2(?:map|mod|campaign)$/.test(p)) && this.selected(entry.path, kinds, locales)));
         if (page.nextOffset === null) more = false;
         else { if (page.nextOffset <= offset) throw new Error("CASC_INDEX_PAGINATION_INVALID"); offset = page.nextOffset; }
-      } while (more);
+      } while (more);}
+      const unique=[...new Map(selected.map(e=>[e.path,e])).values()];selected.splice(0,selected.length,...unique);
       if (!selected.length) { reports.push({ package: pkg, status: "NO_SELECTED_FILES" }); continue; }
       selectedCount += selected.length;
       if (selectedCount > maxFiles) throw new Error("CASC_MOUNT_FILE_COUNT_BUDGET");
@@ -179,7 +188,7 @@ export class CascWorkspace {
       }
       if ((await this.source()).buildInfoSha256 !== build.buildInfoSha256) throw new Error("CASC_BUILD_CHANGED_DURING_MOUNT");
       this.syncBuild(build);
-      const record: MountRecord = { package: pkg, root: viewRoot, build, files };
+      const record: MountRecord = { kinds,locales,package: pkg, root: viewRoot, build, files };
       // Failed partial mounts stay inspectable but are not registered as available dependency roots.
       if (!errors.length) {
         await this.atomic(this.cachePath(`${build.buildKey}/mounts/${sha(pkg)}.json`), JSON.stringify(record, null, 2) + "\n");
@@ -188,6 +197,15 @@ export class CascWorkspace {
       reports.push({ package: pkg, root: viewRoot, files: files.length, errors, status: errors.length ? "PARTIAL_NOT_MOUNTED" : "MOUNTED", implicitEngineActivation: false });
     }
     return { build, selectedCount, totalBytes, reports, dependencyOrder: "Existing Data/Browse DocumentInfo resolver; unlisted implicit dependencies remain unknown" };
+  }
+  async ensurePackage(pkg:string,kinds:CascKind[],locales:string[]){
+    pkg=safeCascPath(pkg);const build=await this.source(),file=this.cachePath(`${build.buildKey}/mounts/${sha(pkg)}.json`);
+    let record:MountRecord|undefined;try{record=JSON.parse(await fs.readFile(file,'utf8'));}catch(error){if((error as NodeJS.ErrnoException).code!=='ENOENT'&&!(error instanceof SyntaxError))throw error;}
+    if(record&&record.build.buildKey===build.buildKey&&record.root===this.cachePath(`${build.buildKey}/views/${pkg}`)&&kinds.every(k=>record!.kinds?.includes(k))&&(!kinds.includes('strings')||locales.every(l=>record!.locales?.includes(l)))){
+      if(record.files.length>2000)throw new Error('CASC_MOUNT_MANIFEST_INVALID');for(const item of record.files){safeCascPath(item.file);const bytes=await fs.readFile(this.cachePath(`${build.buildKey}/views/${pkg}/${item.file}`));if(sha(bytes)!==item.sha256)throw new Error('CASC_MOUNT_VIEW_CORRUPTED');}
+      this.syncBuild(build);this.registerView(record.root);return {root:record.root,cacheHit:true,build};
+    }
+    const requestedKinds=[...new Set([...(record?.kinds??[]),...kinds])],requestedLocales=[...new Set([...(record?.locales??[]),...locales])];const mounted=await this.mount([pkg],requestedKinds,requestedLocales,2000),report=mounted.reports[0];if(report?.status!=='MOUNTED')throw new Error('CASC_PACKAGE_NOT_MOUNTED: '+pkg);return {root:String(report.root),cacheHit:false,build};
   }
   async restoreMounts() {
     const build = await this.source(); this.syncBuild(build);

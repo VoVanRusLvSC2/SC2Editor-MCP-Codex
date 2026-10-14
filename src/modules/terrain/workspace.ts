@@ -1,5 +1,7 @@
+import type {LightingWorkspace,LightingResolveOptions} from '../lighting/workspace.js';
+import {resolveGlobalLighting} from '../lighting/catalog.js';
 import { LightingCatalog } from "./lighting.js";
-import { promises as fs } from "node:fs";
+
 import path from "node:path";
 import { Workspace } from "../../core/workspace.js";
 import { bytesHash, type ByteOptions } from "../../core/binaryTransactions.js";
@@ -54,6 +56,7 @@ export class TerrainWorkspace {
     readonly workspace: Workspace,
     readonly browse?: BrowseWorkspace,
     readonly placement?: PlacementWorkspace,
+    readonly globalLighting?: LightingWorkspace,
   ) {}
   private file(directory: string, name: string): string {
     return this.workspace.binary.key(path.join(directory, name));
@@ -156,8 +159,9 @@ export class TerrainWorkspace {
       waterCoverageKnown: state.water?.coverageKnown ?? false,
       proceduralStyles: Object.keys(TERRAIN_STYLES),
       wholeMapStamp: true,
-      structuralCliffEditing: false,
-      nativeRampEditing: false,
+      structuralCliffEditing: state.descriptor.version===115 && !!state.sync && !!state.visibility,
+      nativeGeometryProfile: "v115 identity; levels 0..3; rectangular two-cell lattice; cardinal width-4 ramps",
+      nativeRampEditing: state.descriptor.version===115 && !!state.sync && !!state.visibility,
       pathingPainting: false,
       arbitraryWaterLevel: true,
       vertexColorPainting: false,
@@ -202,6 +206,7 @@ export class TerrainWorkspace {
         ...p,
         ...sample,
         hidden: s.visibility?.atGrid(gx, gy) ?? false,
+        nativeMeshHole: !!((s.visibility?.raw(Math.max(0,Math.min(s.heights.width-2,Math.floor(gx))),Math.max(0,Math.min(s.heights.height-2,Math.floor(gy))))??0) & 1),
         protected: protection[i] === 2,
         textures: undefined as
           | Array<{ id: string; weight: number }>
@@ -346,13 +351,9 @@ export class TerrainWorkspace {
   private async waterDependencySnapshot(directory: string) {
     if (!this.browse) return undefined;
     const owned = new Set(TERRAIN_COMPONENTS.map(n => path.resolve(this.workspace.root,this.file(directory,n))));
-    const files = (await this.browse.index(true)).files.filter(f => !owned.has(path.resolve(f.path)));
-    const records = [];
-    for(const file of files) {
-      const disk = bytesHash(await fs.readFile(file.path));
-      const key = path.relative(this.workspace.root,file.path).split(path.sep).join("/");
-      const draft = file.sourceLayer === "workspace" && this.workspace.hasDraft(key) ? (await this.workspace.diff(key)).afterSha256 : undefined;
-      records.push({file:file.path,disk,draft});
+    const catalogs=await this.browse.data.catalog(),records=[];
+    for(const catalog of catalogs.filter(c=>!owned.has(path.resolve(c.absolute)))){
+      records.push({file:catalog.absolute,source:bytesHash(Buffer.from(catalog.document.source)),layer:catalog.layer,order:catalog.declarationOrder});
     }
     return bytesHash(Buffer.from(JSON.stringify(records)));
   }
@@ -366,8 +367,8 @@ export class TerrainWorkspace {
       visiting.delete(id); ready.add(id); return;
     }
     if (state.water?.list().entries.some(w => w.template === id)) { ready.add(id); return; }
-    const resolved = await this.browse?.resolve({id,catalogType:"Water"}).catch(() => undefined);
-    if (!resolved?.resolved || !resolved.dependencyReady) throw new Error(`WATER_DEPENDENCY_UNAVAILABLE: ${id}`);
+    const resolved = await this.browse?.data.metadataEntry('Water',id);
+    if (!resolved?.available) throw new Error(`WATER_DEPENDENCY_UNAVAILABLE: ${id}`);
     ready.add(id);
   }
   async plan(request: TerrainPlanRequest): Promise<TerrainPlanSummary> {
@@ -470,7 +471,7 @@ export class TerrainWorkspace {
         if(visiting.has(id))throw new Error(`LIGHTING_PARENT_CYCLE: ${id}`);
         const local=lights?.list().find(l=>l.id===id);
         if(local){visiting.add(id);if(local.parent)await resolveLight(local.parent,visiting);visiting.delete(id);}
-        else {const resolved=await this.browse?.resolve({id,catalogType:"Light"}).catch(()=>undefined);if(!resolved?.resolved || !resolved.dependencyReady)throw new Error(`LIGHTING_DEPENDENCY_UNAVAILABLE: ${id}`);}
+        else {const resolved=await this.browse?.data.metadataEntry('Light',id);if(!resolved?.available)throw new Error(`LIGHTING_DEPENDENCY_UNAVAILABLE: ${id}`);}
         lightReady.add(id);
       };
       for(const op of request.operations) {
@@ -613,12 +614,22 @@ export class TerrainWorkspace {
     directory = "",
     mode: PreviewMode = "height",
     size = 128,
+    lightOptions:LightingResolveOptions={},
   ) {
     const p = id ? await this.checked(id) : undefined;
     const s = await this.state(directory, id);
-    const image = renderTerrainPng(s, mode, size);
+    let lighting:Awaited<ReturnType<LightingWorkspace['resolve']>>|undefined;
+    if(mode==='lit'){
+      const tileSet=s.descriptor.heightMap.attrs.tileSet,localTerrain=new LightingCatalog(s.sources.get('Base.SC2Data/GameData/TerrainData.xml')?.toString('utf8')||'<Catalog/>','CTerrain').list().find(t=>t.id===tileSet);
+      const dependency=lightOptions.preset||localTerrain?.lighting?undefined:await this.browse?.resolve({id:tileSet,catalogType:'Terrain'}).catch(()=>undefined);
+      const preset=lightOptions.preset??localTerrain?.lighting??dependency?.object?.effective?.fields?.Lighting?.value??'DefaultLight';
+      const localTexts=[s.sources.get('Base.SC2Data/GameData/LightData.xml')?.toString('utf8')||'<Catalog/>'];
+      lighting=this.globalLighting?await this.globalLighting.resolve({...lightOptions,preset,directory,localTexts}):{lighting:resolveGlobalLighting(localTexts,preset,lightOptions.stateIndex),issues:[{code:'LIGHTING_CASC_UNAVAILABLE',detail:'Only local catalog was resolved'}],references:[],build:undefined,stateIndex:lightOptions.stateIndex??0,engineValidated:false};
+    }
+    const image = renderTerrainPng(s, mode, size,lighting?.lighting);
     return {
       plan: p?.summary,
+      lighting:lighting?{preset:lighting.lighting.preset,found:lighting.lighting.found,stateIndex:lighting.stateIndex,issues:lighting.issues,references:lighting.references,sharedModule:true,engineValidated:false}:undefined,
       mode,
       orientation: "north up; positive Y",
       imageMimeType: "image/png",
@@ -628,7 +639,7 @@ export class TerrainWorkspace {
           ? s.descriptor.textures.filter((t) => t.id)
           : undefined,
       notice:
-        "Diagnostic terrain preview; this does not render SC2 materials or models.",
+        mode==='lit'?"Shared SC2 global lighting over diagnostic terrain colors/normals; native terrain materials, shadows and regions remain partial.":"Diagnostic terrain preview; this does not render SC2 materials or models.",
     };
   }
   async validate(id?: string, directory = "") {
@@ -799,7 +810,7 @@ export class TerrainWorkspace {
         ...op,
         object: {
           ...op.object,
-          position: { ...op.object.position, z: sample.height },
+          position: { ...op.object.position, z: op.object.kind === "Unit" ? 0 : sample.height },
           ...(op.object.kind === "Doodad"
             ? { flags: { ...op.object.flags, HeightAbsolute: "1" } }
             : {}),

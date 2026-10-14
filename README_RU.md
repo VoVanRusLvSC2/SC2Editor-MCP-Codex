@@ -1,5 +1,14 @@
 # SC2Editor MCP
 
+Наш код: Copyright (c) 2026 **VoVanRusLvSC2**
+(vladimir.lencmanis@gmail.com), [отдельная лицензия с атрибуцией](LICENSE).
+Проект, использующий наш код или модули, обязан указать в README, Credits или
+«О программе», что использует модули SC2Editor-MCP-Codex от VoVanRusLvSC2,
+а также сохранить copyright и условия лицензии. Автор Surface Toolkit:
+**vise** (указан владельцем проекта). [Авторство и пример упоминания](CREDITS.md),
+[сторонние лицензии](THIRD_PARTY_LICENSES.md),
+[состав исходников для GitHub](PUBLISHING_RU.md).
+
 MCP-сервер для работы с файлами карт и модов StarCraft II. Основной код — TypeScript/Node.js; C++ backend в `native/` читает и собирает MPQ. GUI использует ту же рабочую область и транзакции.
 
 **TERRAIN:** [устройство, команды, примеры и границы поддержки](docs/TERRAIN_RU.md). В существующий модуль добавлен Surface Toolkit из `SC2_Surface_Toolkit_SC2GameData.zip`: обзор компонентов, сырые сетки, структурные проверки, предварительный просмотр правок и чтение terrain-каталогов. Инструменты называются `terrain.surface.*`.
@@ -7,6 +16,10 @@ MCP-сервер для работы с файлами карт и модов St
 **CASC:** [чтение установленного SC2 и кэш](docs/CASC_RU.md). [Отчёт: что работает и чего ещё нет](docs/CAPABILITIES_REPORT_RU.md).
 
 **SETTINGS:** [атрибуты, варианты игры, игроки и options карты](docs/SETTINGS_RU.md). Готовый пакет содержит `SC2-MCP.cmd`; [подключение к MCP-клиенту](windows/README-WINDOWS.md).
+
+**DOCUMENT:** [создание пустой основы карты и мода](docs/DOCUMENT_CREATION_RU.md). Локальная реализация включает 10 MCP команд; Editor/runtime проверка не выполнялась.
+
+**Исходный план document-модуля:** [создание пустой основы карты и мода](docs/DOCUMENT_FOUNDATION_PLAN_RU.md), [исследование декомпиляции и DMP-derived данных](docs/DOCUMENT_FOUNDATION_RESEARCH_RU.md). План сохраняет исходные research gates; фактические профили описаны в руководстве создания.
 
 ## Модули
 
@@ -22,6 +35,7 @@ MCP-сервер для работы с файлами карт и модов St
 | `terrain.*` | Рельеф, текстуры, вода, свет, планы и анализ native-компонентов | [TERRAIN](docs/TERRAIN_RU.md) |
 | `casc.*` | Реальные ресурсы установленной игры, поиск/чтение, кэш по сборке и Data/Browse mounts | [CASC](docs/CASC_RU.md) |
 | `settings.*` | Attributes, native game variants, параметры игроков и options MapInfo v39 | [Settings](docs/SETTINGS_RU.md) |
+| `document.*` | Fresh dependent/extension mod и пустая Arcade map, зависимости и initial flat grids | [Document](docs/DOCUMENT_CREATION_RU.md) |
 | `map.*` | MPQ import/export, MapInfo и создание карты из заготовки | [Map](docs/MAP_MCP.md) |
 | `script.*`, `trigger.*` | Galaxy и ограниченные операции GUI-триггеров в профиле script | [Script](SCRIPT-GUIDE-RU.md), [Trigger](docs/TRIGGER_MCP_RU.md) |
 
@@ -41,7 +55,7 @@ node dist/index.js
 
 `SC2_UI_ROOT` указывает на распакованную карту/мод или общий каталог с отдельно выбранными папками карт. Упакованный SC2Map сначала импортируется через `map.import`. stdout сервера занят MCP-протоколом.
 
-Профили: `all`, `ui`, `cutscene`, `data`, `terrain`, `casc`, `settings`, `landscape`, `script`, `authoring`, `minimal`, `focused-data`, `focused-script`, `focused-authoring`. По умолчанию `all`. `SC2_MCP_MODULES` задаёт точный список через запятую и имеет приоритет; при таком выборе добавляется UI.
+Профили: `all`, `ui`, `cutscene`, `data`, `terrain`, `casc`, `settings`, `landscape`, `document`, `script`, `authoring`, `minimal`, `focused-data`, `focused-script`, `focused-authoring`. По умолчанию `all`. `SC2_MCP_MODULES` задаёт точный список через запятую и имеет приоритет; при таком выборе добавляется UI.
 
 GUI: `npm run gui`, затем `http://127.0.0.1:4312`. [Описание workbench](docs/GUI_WORKBENCH.md). Windows-пакет: `npm run windows:portable`; [инструкция EXE](docs/WINDOWS_EXE.md).
 

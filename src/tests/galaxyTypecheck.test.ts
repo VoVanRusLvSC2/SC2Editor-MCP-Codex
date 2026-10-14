@@ -56,3 +56,12 @@ test('Galaxy typecheck rejects invalid while and compound operator operand types
  assert.equal(result.valid,false);
  assert.ok(result.diagnostics.filter(x=>x.code==='GALAXY_OPERATOR_TYPE').length>=2);
 });
+
+test('Galaxy catches native type names used as record fields before packing',async t=>{
+ const root=await fs.mkdtemp(path.join(os.tmpdir(),'sc2-galaxy-keywords-'));t.after(()=>fs.rm(root,{recursive:true,force:true}));
+ await fs.writeFile(path.join(root,'custom.galaxy'),'struct State { int wave; int timer; }; void InitMap() {}');
+ const result=await new ScriptWorkspace(new Workspace(root)).validate();assert.equal(result.valid,false);assert.ok(result.diagnostics.filter(x=>x.code==='GALAXY_RESERVED_IDENTIFIER').length>=2);
+ await fs.writeFile(path.join(root,'custom.galaxy'),'struct State { int mf_wave; int mf_timer; }; void InitMap() {}');assert.equal((await new ScriptWorkspace(new Workspace(root)).validate()).valid,true);
+});
+
+test('native GUI CombineText/CombineStrings additions preserve their type, mixed additions remain invalid',async t=>{const root=await fs.mkdtemp(path.join(os.tmpdir(),'sc2-galaxy-concat-'));t.after(()=>fs.rm(root,{recursive:true,force:true}));const file=path.join(root,'custom.galaxy');await fs.writeFile(file,'text Caption(){ return (StringExternal("Prefix") + (IntToText(30) + StringExternal("Suffix"))); } string Name(){ return ("A" + "B"); }');assert.equal((await new ScriptWorkspace(new Workspace(root)).validate()).valid,true);await fs.writeFile(file,'text Bad(){ return StringExternal("Prefix") + 30; }');assert.equal((await new ScriptWorkspace(new Workspace(root)).validate()).valid,false);});

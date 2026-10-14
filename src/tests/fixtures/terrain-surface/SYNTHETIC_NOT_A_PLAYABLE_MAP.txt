@@ -1,1 +1,0 @@
-Synthetic parser test components only. Not an SC2 map, not Editor-generated, not engine-validated. SMAP here is the experimental planar profile.

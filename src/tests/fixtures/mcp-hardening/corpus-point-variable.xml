@@ -1,6 +1,0 @@
-<Element Type="Variable" Id="98C069A1">
-            <VariableType>
-                <Type Value="point"/>
-            </VariableType>
-            <Value Type="Param" Library="Chal" Id="FA79D2D3"/>
-        </Element>

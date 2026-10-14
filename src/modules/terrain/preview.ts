@@ -1,6 +1,9 @@
+import {createGlobalLightingKernel} from '../lighting/math.js';
+import {createGlobalToneMath} from '../lighting/tone.js';
+import type {GlobalLighting} from '../lighting/types.js';
 import { deflateSync } from "node:zlib";
 import type { TerrainState } from "./operations.js";
-export type PreviewMode = "height" | "texture" | "water" | "cliff" | "visibility";
+export type PreviewMode = "height" | "texture" | "water" | "cliff" | "visibility" | "lit";
 function crc32(bytes: Buffer): number {
   let crc = 0xffffffff;
   for (const byte of bytes) {
@@ -22,10 +25,11 @@ export function renderTerrainPng(
   state: TerrainState,
   mode: PreviewMode = "height",
   size = 128,
+  lighting?:GlobalLighting,
 ): Buffer {
   if (!Number.isInteger(size) || size < 16 || size > 512)
     throw new Error("PREVIEW_SIZE_RANGE");
-  const hm = state.heights;
+  const hm = state.heights, lightMath=createGlobalLightingKernel(),tone=createGlobalToneMath();
   let min = Infinity,
     max = -Infinity;
   for (let y = 0; y < hm.height; y++)
@@ -61,7 +65,7 @@ export function renderTerrainPng(
       else if (sample.mask === 0) rgb = [31, 35, 44];
       else if (mode === "visibility") rgb = [150, 190, 130];
       else if (mode === "cliff") rgb = colors[sample.mask % 8];
-      else if (mode === "texture" && state.masks) {
+      else if ((mode === "texture" || mode === "lit") && state.masks) {
         const x = Math.min(state.masks.width - 1, Math.floor(gx * 8)),
           y = Math.min(state.masks.height - 1, Math.floor(gy * 8)),
           weights = state.masks.weights(x, y),
@@ -80,6 +84,13 @@ export function renderTerrainPng(
         ];
       }
       if (!hidden && mode === "water" && state.water?.at(p).length) rgb = [45, 128, 200];
+      if(mode==='lit'&&lighting&&!hidden&&sample.mask!==0){
+        const left=Math.max(0,gx-1),right=Math.min(hm.width-1,gx+1),bottom=Math.max(0,gy-1),top=Math.min(hm.height-1,gy+1);
+        const at=(x:number,y:number)=>hm.sample({x:x*state.descriptor.scale[0]+state.descriptor.offset[0],y:y*state.descriptor.scale[1]+state.descriptor.offset[1]}).height;
+        const normal=[-(at(right,gy)-at(left,gy))/((right-left)*state.descriptor.scale[0]),-(at(gx,top)-at(gx,bottom))/((top-bottom)*state.descriptor.scale[1]),1],params=lighting.parameters??{};
+        const lit=lightMath.diffuse(lighting,normal,rgb.map(v=>v/255),1,lightMath.cube(lighting,normal));
+        rgb=tone.color(lit,lighting.operatorHDR??0,params.HDRExposure??1,params.HDRContrast??1,params.HDRWhitePoint??1,!!params.HDRWhiteShift).map(v=>Math.round(Math.max(0,Math.min(1,v))*255));
+      }
       const off = py * (size * 3 + 1) + 1 + px * 3;
       for (let c = 0; c < 3; c++) raw[off + c] = rgb[c];
     }

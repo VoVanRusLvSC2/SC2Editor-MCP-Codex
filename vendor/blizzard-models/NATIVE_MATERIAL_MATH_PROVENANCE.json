@@ -1,0 +1,92 @@
+{
+  "date": "2026-10-14",
+  "sourceBuild": "SC2 installed resource build 98310",
+  "scope": "Local vendor material math and per-property sampling integration",
+  "retainedSource": "browser/chunk-7HCZNWOX.js; canonical shader TypeScript absent from provided package",
+  "readableAddedSource": "browser/native-material-math.js",
+  "sourceEvidence": [
+    {
+      "path": "mods/core.sc2mod/base.sc2data/shaders/lightingmodels.fx",
+      "contentKey": "a2a2043f525b5830c8c1373143670a3e",
+      "encodingKey": "16be1972be2477203f895ed3a8597f90",
+      "sha256": "800fc01be6e0afe3e956f62e3ae2503ca912b5749b14e4c12c7f6079be3ac3e0"
+    },
+    {
+      "path": "mods/core.sc2mod/base.sc2data/shaders/lighttypes.fx",
+      "contentKey": "00908fd1d186b53bf263e171e9b17240",
+      "encodingKey": "fbc9141a9b5961585b61213352a800d8",
+      "sha256": "bbbf9212d48e84cfe5e0fe1af7dd8893ffb14f4f3491740694909f7da8d9dfa8"
+    },
+    {
+      "path": "mods/core.sc2mod/base.sc2data/shaders/psmaterial.fx",
+      "contentKey": "234bbb453b0a8f550658d26d916a621f",
+      "encodingKey": "d74c1631b7d52d9ad313bdd60c1c9734",
+      "sha256": "eb42b93fb88d076fe8cc2a6dcaffd8e18342fb15a3e56f9ff446b80c72e6e85d"
+    },
+    {
+      "path": "mods/core.sc2mod/base.sc2data/shaders/psmateriallayer.fx",
+      "contentKey": "b6a2719a9e5ccc02d009038b65b9e8aa",
+      "encodingKey": "628cca61207c1b6d4220be3bab4dcfd1",
+      "sha256": "cde53ea470865db71fd7ca595edf52d2980c50748e2954861836a6f57910de5c"
+    }
+  ],
+  "changes": [
+    "alphaFactor before team color/invert/multiply/add",
+    "independent diffuse/emissive team colors and exponent paths",
+    "RGBA multiply/add after inversion",
+    "native RGB emissive LERP and second-layer accumulator operation",
+    "normalized shading normal and saturated Lambert/Blinn dot terms",
+    "zero specular exponent preserved; WebGL uses native OpenGL 0.0001 pow-base branch",
+    "AO separated from albedo and applied to ambient",
+    "lightmap overrides global diffuse and suppresses global specular",
+    "copy-on-write per-property values feed both uniforms and CPU shade without rebuilding shader cache"
+  ],
+  "preservedVerifiedOperations": [
+    "DXT5N Alpha/Green decode",
+    "gloss alpha squared exponent",
+    "fake-energy polynomial",
+    "signed normal blending factor squared"
+  ],
+  "sampleOverrides": {
+    "thirdArgument": "{propertyValues?: Record<dotJoinedPath, number|number[]>, passPropertyValues?: Record<dotJoinedPath, number|number[]>[], signal?: AbortSignal}",
+    "legacyAbortSignalStillAccepted": true,
+    "noNativeIdsInVendorSchema": true,
+    "absentDisabledColorMultiplyAddNotEnabled": true
+  },
+  "teamColorDefaults": "Separate colors fall back to legacy teamColor; exponent preview defaults [1,1] are not claimed as native engine defaults",
+  "engineValidated": false,
+  "allSupported": false,
+  "published": false,
+  "nativeAnimationEvidence": {
+    "report": "C:\\Users\\Vladimir\\Documents\\ChatGPT\\sc2_editor_C++\\research_2026_10_13\\native\\NATIVE_ANIMATION_BEHAVIOR.json",
+    "sha256": "dca7a78216c7a2a450858ad8fb03a1721ae59ce9f2b8596739551137448166d6",
+    "verified": "runtime flag0x10 STEP when set, LINEAR when clear for scalar/Vec2/four-float helper; incoming mapped M3A header mode merge141519000",
+    "quaternionVerified": false,
+    "nativeBlendEquationsApplied": false
+  },
+  "unvalidated": [
+    "Vec3/quaternion temporal formulas, playback query flags, native priority/fade/concurrent clock construction",
+    "runtime shader permutations/uniform mappings",
+    "authored UV/Fresnel matrix construction",
+    "transparent/forward/deferred pass execution and API blend/sampler state"
+  ],
+  "artifactHashes": [
+    {
+      "path": "browser/chunk-7HCZNWOX.js",
+      "sha256": "15f8e92ad0e2f0b0eb21f61a4d45873dc4f193202ff221e57d927ca7736b15e2"
+    },
+    {
+      "path": "browser/native-material-math.js",
+      "sha256": "94d8525ba11f99f4f3e1eebf067fdfbd450197ef132d23323f39703c121b3e5a"
+    },
+    {
+      "path": "browser/material-entry.js",
+      "sha256": "4cb9be0e56f598957dd7cf4141aed67d576c84cd543a2e44a05e5f8f7fc06341"
+    },
+    {
+      "path": "browser/material-bundle.js",
+      "sha256": "5229601f1ff4f656f1b4ad1f9ff89661b4f1812a3a1e4b8369a20377e7249d10"
+    }
+  ],
+  "verification": "8 math/per-property source tests and1 GPU integration regression passed using canonical emitted JavaScript; GL mocked in the regression; real driver verification belongs to root renderer validation"
+}

@@ -1,3 +1,4 @@
+import {readJsonPlanFile} from '../../core/jsonPlanFile.js';
 import { registerTerrainSurfaceTools } from "./surface/tools.js";
 import { McpServer } from "@modelcontextprotocol/server";
 import * as z from "zod/v4";
@@ -24,7 +25,14 @@ export function registerTerrainTools(
   context: TerrainToolContext,
 ): void {
   const terrain = context.workspace;
+  server.registerTool('terrain.plan_file',{description:'Plan the strict module request from a workspace JSON file (max 1 MiB). No execution, no staging until apply; avoids repeating large schemas.',inputSchema:z.object({file:z.string().min(1).max(512)}).strict()},async a=>({content:[{type:'text' as const,text:JSON.stringify(await terrain.plan(await readJsonPlanFile(terrain.workspace,a.file)))}]}));
+
   registerTerrainSurfaceTools(server, context);
+  const nativeDirectory={directory:z.string().default('')};
+  server.registerTool('terrain.cliff.paint',{description:'Plan native HMAP/CLIF/SMAP/LFCT and cliffCellList edits. v115 identity, rectangular 2-cell lattice, levels 0..3; all companion files are one guarded transaction. Engine validation separate.',inputSchema:z.object({...nativeDirectory,area:z.object({type:z.literal('rectangle'),minX:z.number().int(),minY:z.number().int(),maxX:z.number().int(),maxY:z.number().int()}).strict(),level:z.number().int().min(0).max(3),cliffSet:z.number().int().min(0).max(63).default(0),variation:z.number().int().min(0).max(3).default(0)}).strict()},async a=>textResult(await terrain.plan({directory:a.directory,operations:[{op:'cliff.paint',area:a.area,parameters:{level:a.level,cliffSet:a.cliffSet,variation:a.variation}}]})));
+  server.registerTool('terrain.ramp.create',{description:'Plan a native cardinal width-4 ramp on an existing one-level cliff boundary. Measured p.SC2Map profile, no Editor invocation; supports the explicit v115 identity format.',inputSchema:z.object({...nativeDirectory,center:z.object({x:z.number().int(),y:z.number().int()}).strict(),direction:z.enum(['west','east','north','south']),lowerLevel:z.number().int().min(1).max(2).default(1),cliffSet:z.number().int().min(0).max(63).default(0)}).strict()},async a=>textResult(await terrain.plan({directory:a.directory,operations:[{op:'ramp.create',parameters:{center:a.center,direction:a.direction,lowerLevel:a.lowerLevel,cliffSet:a.cliffSet,width:4}}]})));
+  server.registerTool('terrain.ramp.remove',{description:'Plan removal of one supported native cardinal ramp, rebuilding its step and companion grids. Unknown hard-tile handles are rejected.',inputSchema:z.object({...nativeDirectory,index:z.number().int().min(0)}).strict()},async a=>textResult(await terrain.plan({directory:a.directory,operations:[{op:'ramp.remove',parameters:{index:a.index}}]})));
+
   const directory = z.object({ directory: z.string().default("") }).strict();
   for (const blend of [false, true]) server.registerTool(blend ? "terrain.blend" : "terrain.paint", {
     description: `Plan ${blend ? "mixing an active terrain texture into existing weights (default strength 0.5)" : "terrain texture painting (default strength 1)"} in a world-space brush area. Returns planId; persist through terrain.apply/save.`,
@@ -204,20 +212,21 @@ export function registerTerrainTools(
     "terrain.preview",
     {
       description:
-        "Return a compact plan diff and a diagnostic PNG of height/texture/water/cliff masks, without mutating the map or rendering SC2 assets.",
+        "Return a compact plan diff and diagnostic PNG of terrain masks; mode=lit uses the shared SC2 global lighting module from CASC/project catalogs. Native materials/shadows are partial. Read-only.",
       inputSchema: z
         .object({
           planId: z.string().optional(),
           directory: z.string().default(""),
           mode: z
-            .enum(["height", "texture", "water", "cliff", "visibility"])
+            .enum(["height", "texture", "water", "cliff", "visibility", "lit"])
             .default("height"),
           size: z.number().int().min(16).max(512).default(128),
+          lightPreset:z.string().min(1).max(255).optional(),stateIndex:z.number().int().min(0).max(63).default(0),packages:z.array(z.string()).max(8).optional(),
         })
         .strict(),
     },
     async (a) => {
-      const p = await terrain.preview(a.planId, a.directory, a.mode, a.size);
+      const p = await terrain.preview(a.planId, a.directory, a.mode, a.size,{preset:a.lightPreset,stateIndex:a.stateIndex,packages:a.packages});
       const { imageBase64, ...summary } = p;
       return {
         content: [

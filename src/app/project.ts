@@ -1,4 +1,10 @@
+import {LightingWorkspace} from '../modules/lighting/workspace.js';
+import {CutscenePreviewWorkspace} from '../modules/cutscenePreview/workspace.js';
+import {DialogPreviewWorkspace} from "../modules/uiPreview/dialogWorkspace.js";
+import {UiPreviewWorkspace} from "../modules/uiPreview/workspace.js";
+import {AssetWorkspace} from "../modules/assets/workspace.js";
 import path from "node:path";
+import { DocumentWorkspace } from "../modules/document/workspace.js";
 import { SettingsWorkspace } from "../modules/settings/workspace.js";
 import { CascWorkspace } from "../modules/casc/workspace.js";
 import { ScriptWorkspace } from "../modules/script/workspace.js";
@@ -36,15 +42,21 @@ export async function createProject(root: string, options: {loadUiSchema?:boolea
     await casc.restoreMounts();
   };
   data.dependencyRefresh = refreshCasc; browse.setDependencyRefresh(refreshCasc);
-  const placement = new PlacementWorkspace(workspace, browse), terrain = new TerrainWorkspace(workspace, browse, placement);
+  const lighting=new LightingWorkspace(workspace,casc);
+  const placement = new PlacementWorkspace(workspace, browse), terrain = new TerrainWorkspace(workspace, browse, placement,lighting);
   placement.terrain = terrain;
   const map = new MapWorkspace(workspace,terrain);
   const settings = new SettingsWorkspace(workspace);
+  const document = new DocumentWorkspace(workspace,casc);
   const ai = new AiWorkspace(workspace, aiSchema, data, browse);
   const text = new TextWorkspace(workspace, textSchema);
   const cutscene = new CutsceneWorkspace(workspace, cutsceneSchema), cutsceneAssets = new CutsceneAssetIndex(workspace.root);
   const script = new ScriptWorkspace(workspace);
-  const trigger = new TriggerWorkspace(workspace);
-  return { settings, casc, script, trigger, workspace, schema, data, browse, placement, terrain, map, ai, text, cutscene, cutsceneSchema, cutsceneAssets };
+  const trigger = new TriggerWorkspace(workspace, undefined, data, casc);
+  const assets=new AssetWorkspace(workspace,casc);
+  const uiPreview=new UiPreviewWorkspace(workspace,casc,textSchema);
+  const dialogPreview=new DialogPreviewWorkspace(uiPreview,trigger);
+  const cutscenePreview=new CutscenePreviewWorkspace(workspace,casc);
+  return { lighting, cutscenePreview, dialogPreview, uiPreview, assets, document, settings, casc, script, trigger, workspace, schema, data, browse, placement, terrain, map, ai, text, cutscene, cutsceneSchema, cutsceneAssets };
 }
 export type Project = Awaited<ReturnType<typeof createProject>>;

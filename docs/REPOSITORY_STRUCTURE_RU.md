@@ -1,6 +1,6 @@
 # Структура репозитория
 
-Проект — TypeScript MCP/GUI application с C++ MPQ/CASC backends. Публичных модулей двенадцать; `trigger.*` подключается вместе с Script. Единственный composition root — `src/app/project.ts`, сервер — `src/app/server.ts`, выбор инструментов — `src/app/moduleSelection.ts`.
+Проект — TypeScript MCP/GUI application с C++ MPQ/CASC backends. Публичных модулей тринадцать; `trigger.*` подключается вместе с Script. Единственный composition root — `src/app/project.ts`, сервер — `src/app/server.ts`, выбор инструментов — `src/app/moduleSelection.ts`.
 
 | Каталог | Что хранится и зачем |
 | --- | --- |
@@ -40,5 +40,12 @@ README теперь описывает актуальные модули и ве
 Из ZIP перенесены format/core sources, нужные тесты/fixtures, selected observations и notices. Не включены `dist/`, вложенные original ZIP, vendor mirror, старые build logs, EXE string dumps и непроверенные отдельные MCP templates. Исходный пользовательский ZIP сохранён в Downloads; распакованный вход находится в игнорируемой `work/` рабочей копии на K.
 
 ## Что не хранить в Git
+
+Для публичной поставки используй [актуальный состав и ограничения](../PUBLISHING_RU.md)
+и `npm run publication:audit`. Локальный исследовательский репозиторий содержит
+уже отслеживаемые fixtures/evidence; `.gitignore` не исключает их из истории.
+Сторонний renderer использует свой `vendor/blizzard-models/dist/`, поэтому
+игнорирование корневого `/dist/` не распространяется на него. Название каталога
+`generated/` также не является основанием для удаления runtime registries.
 
 `node_modules/`, `dist/`, `dist-runtime/`, `release/`, `work/`, сборочные логи, cache/temp/backup files. Они исключены `.gitignore`. Новый отчёт следует коммитить только тогда, когда он нужен runtime, воспроизводимой проверке или объясняет неизвестный формат с указанием источника.

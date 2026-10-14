@@ -30,6 +30,15 @@ export function checkGalaxyTypes(doc:GalaxyDocument,natives:ReadonlyMap<string,G
   const tokens=doc.tokens;
   let checked=0,unknown=0;
   const fail=(code:string,offset:number,message:string)=>diagnostics.push({severity:'error',code,offset,message});
+  // Native handle types (including `wave`) are lexical keywords in Galaxy.
+  const reserved=new Set(['include','if','else','while','for','do','switch','case','default','break','continue','return','struct','typedef','const','static','native','true','false','null',...primitiveTypes]);
+  for(const signature of natives.values())for(const raw of [signature.returnType,...signature.parameters]){const t=typeOf(raw);if(t)reserved.add(t);}
+  const checkName=(name:string,offset:number)=>{if(reserved.has(name))fail('GALAXY_RESERVED_IDENTIFIER',offset,`${name} is a Galaxy keyword/type, not a legal declaration name`);};
+  for(const symbol of doc.symbols){checkName(symbol.name,symbol.start);if(symbol.kind==='struct'){
+    const open=tokens.findIndex(t=>t.start>=symbol.start&&t.value==='{'),end=doc.pairs.get(open)??open;
+    for(let i=open+1;i<end;){let at=i;while(['const','static'].includes(tokens[at]?.value))at++;at++;while(tokens[at]?.value==='[')at=(doc.pairs.get(at)??at)+1;if(tokens[at]?.kind==='identifier')checkName(tokens[at].value,tokens[at].start);while(i<end&&tokens[i].value!==';')i++;i++;}
+  }}
+
 
   for(const fn of doc.symbols.filter(s=>s.kind==='function'&&s.bodyStart!==undefined)){
     const start=tokens.findIndex(t=>t.end===fn.bodyStart&&t.value==='{');
@@ -38,7 +47,7 @@ export function checkGalaxyTypes(doc:GalaxyDocument,natives:ReadonlyMap<string,G
     const scopes:Array<Map<string,string>>=[new Map()];
     for(const raw of fn.parameters??[]){
       const name=/([A-Za-z_][A-Za-z_0-9]*)\s*(?:\[[^\]]*\])?\s*$/.exec(raw)?.[1],type=typeOf(raw);
-      if(name&&type)scopes[0].set(name,type);
+      if(name&&type){checkName(name,fn.start);scopes[0].set(name,type);}
       else unknown++;
     }
     const declared=new Set(scopes[0].keys());
@@ -116,11 +125,12 @@ export function checkGalaxyTypes(doc:GalaxyDocument,natives:ReadonlyMap<string,G
           const position=tokens[cursor].start;cursor+=op.length;
           const right=parse(precedence[op.value]+1);
           if(left&&right){
-            if(['+','-','*','/','%','<','<=','>','>='].includes(op.value)&&(!numericTypes.has(left)||!numericTypes.has(right)))fail('GALAXY_OPERATOR_TYPE',position,`${op.value} expects numbers, got ${left} and ${right}`);
+            const concat=op.value==='+'&&left===right&&(left==='string'||left==='text');
+            if(['+','-','*','/','%','<','<=','>','>='].includes(op.value)&&!concat&&(!numericTypes.has(left)||!numericTypes.has(right)))fail('GALAXY_OPERATOR_TYPE',position,`${op.value} expects numbers, got ${left} and ${right}`);
             if(['&&','||'].includes(op.value)&&(left!=='bool'||right!=='bool'))fail('GALAXY_OPERATOR_TYPE',position,`${op.value} expects bool, got ${left} and ${right}`);
             if(['==','!='].includes(op.value)&&!compatible(left,right)&&!compatible(right,left))fail('GALAXY_OPERATOR_TYPE',position,`${op.value} compares incompatible ${left} and ${right}`);
           }
-          left=['<','<=','>','>=','==','!=','&&','||'].includes(op.value)?'bool':left&&right?(left==='fixed'||right==='fixed'?'fixed':'int'):undefined;
+          left=['<','<=','>','>=','==','!=','&&','||'].includes(op.value)?'bool':left&&right?(op.value==='+'&&left===right&&['text','string'].includes(left)?left:left==='fixed'||right==='fixed'?'fixed':'int'):undefined;
         }
         return left;
       };
@@ -161,6 +171,7 @@ export function checkGalaxyTypes(doc:GalaxyDocument,natives:ReadonlyMap<string,G
       const typeToken=tokens[declStart],nameToken=tokens[declStart+1];
       if(typeToken&&nameToken?.kind==='identifier'&&(primitiveTypes.has(typeToken.value)||structTypes.has(typeToken.value))){
         if(tokens[declStart+2]?.value==='='||tokens[declStart+2]?.value===';'||tokens[declStart+2]?.value==='['){
+          checkName(nameToken.value,nameToken.start);
           if(scopes.at(-1)!.has(nameToken.value))fail('GALAXY_SCOPE_DUPLICATE',nameToken.start,`${nameToken.value} is already declared in this scope`);
           scopes.at(-1)!.set(nameToken.value,typeToken.value);declared.add(nameToken.value);
           if(tokens[declStart+2]?.value==='[')unknown++;

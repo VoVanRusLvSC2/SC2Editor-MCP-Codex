@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Catalog>
-    <CActorModel id="ScenarioAVisual">
-        <Model value="ScenarioAModel"/>
-        <On Terms="Effect.ScenarioAInitial.Start; At Target" Send="Create"/>
-    </CActorModel>
-</Catalog>

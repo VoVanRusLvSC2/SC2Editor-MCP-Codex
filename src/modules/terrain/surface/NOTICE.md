@@ -1,5 +1,9 @@
 # Surface Toolkit source provenance
 
+Author: **vise**, as identified by the SC2Editor-MCP-Codex project owner.
+This attribution supplements the supplied provenance; it does not replace the
+original notices or establish a previously unspecified redistribution license.
+
 Imported from the user-supplied `SC2_Surface_Toolkit_SC2GameData.zip`, toolkit
 version `0.2.0-gamedata-inspection`. Archive SHA-256: `7905df94fad4bdf8d488b2ad4de3be5ae4557dd1df2c9e076930e71f24b6f128`.
 

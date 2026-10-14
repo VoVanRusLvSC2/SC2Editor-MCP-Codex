@@ -1,10 +1,22 @@
+import {dataDomainFromType} from '../data/domains.js';
+import {skirmishRecipe,type SkirmishOptions} from './recipes/skirmish.js';
+import {ScriptWorkspace} from '../script/workspace.js';
+import {emitGuiGalaxy} from './runtime.js';
+import {TriggerLibraries} from './libraries.js';
+import type {CascWorkspace} from '../casc/workspace.js';
+import {GUI_TYPE_CODES,GUI_VARIABLE_TYPES,definitionsFor} from './typeSystem.js';
 import {DataWorkspace} from "../data/workspace.js";
 import {promises as fs} from "node:fs";
 import {StringTableDocument} from "../text/stringTable.js";
 import {projectPath} from "../../app/paths.js";
-import {describeFunction, renderCall, registry, digest, encode, type GuiRequest} from './authoring.js';
+import {describeFunction, renderCalls, registry, registryDigest, registrySourceDigest, digest, encode, type GuiRequest, type GuiText, functionSupport, inspectGuiVariables, validateGuiRequestSize, collectGuiValues, inspectGuiFunctions, withGuiFunctions, resolveFunction} from './authoring.js';
+import {triggerPlanSchema} from './schemas.js';
+import {declareVariables} from './variables.js';
+import {declareGuiTypes} from './declarations.js';
+import {declareFunctions,populateFunctions} from './functions.js';
+import {PlacementDocument} from '../placement/document.js';
 import { randomBytes } from 'node:crypto';
-import type { Workspace } from '../../core/workspace.js';
+import { Workspace } from '../../core/workspace.js';
 import { scanXml, decodeXmlValue } from '../../core/xmlScanner.js';
 import type { XmlNode } from '../../core/types.js';
 import { normalizeCustomScriptLayout } from './scriptLayout.js';
@@ -103,7 +115,8 @@ function graft(target: string, source: string, sourceTrigger: string, targetTrig
 }
 
 export class TriggerWorkspace {
-  constructor(private readonly workspace: Workspace,private readonly registryFile=projectPath('generated/trigger-authoring-registry.json')) {}
+  constructor(private readonly workspace: Workspace,private readonly registryFile=projectPath('generated/trigger-authoring-registry.json'),private readonly data=new DataWorkspace(workspace),private readonly casc?:CascWorkspace) {this.libraries=new TriggerLibraries(workspace,data,casc);}
+  private readonly libraries:TriggerLibraries;
   private async stringFiles():Promise<string[]> {return (await fs.readdir(this.workspace.root,{withFileTypes:true})).filter(e=>e.isDirectory()&&!/^Base\.SC2Data$/i.test(e.name)&&/^[a-z]{4}\.SC2Data$/i.test(e.name)).map(e=>e.name+'/LocalizedData/TriggerStrings.txt').sort();}
   private nameKey(type:string,library:string,id:string){return type+'/Name/'+(library?'lib_'+library+'_':'')+id;}
   private async localizedNames(){const files=await this.stringFiles();const table=new Map<string,string>();for(const file of files){const raw=await this.workspace.readRaw(file);for(const entry of new StringTableDocument(raw.text).list(undefined,100000))if(!table.has(entry.key))table.set(entry.key,entry.value);}return table;}
@@ -150,13 +163,14 @@ export class TriggerWorkspace {
     if (!exists) return { exists: false, triggers: [] };
     const names=await this.localizedNames();
     const all = list(text).map(t=>({...t,displayName:names.get(this.nameKey("Trigger",t.library,t.id)) ?? t.identifier})), selected = query ? all.filter(t => (t.identifier+" "+t.displayName).toLowerCase().includes(query.toLowerCase())) : all;
-    return { exists: true, libraryId: libraryId(text), count: all.length, matching: selected.length,total:selected.length,truncated:offset+limit<selected.length,next:offset+limit<selected.length?offset+limit:null, triggers: selected.slice(offset, offset + limit) };
+    const functions=[...new Set(['',...graph(text).libraries.map(n=>n.attrs.Id??'')])].flatMap(library=>inspectGuiFunctions(text,library)).map(f=>({id:f.id,name:f.name,library:f.library,flags:f.flags,returnType:f.returnType,parameters:f.parameters.map(p=>({id:p.id,name:p.name,type:p.type}))}));
+    return { exists: true, functions, libraryId: libraryId(text), variables:[...new Set(['',...graph(text).libraries.map(n=>n.attrs.Id??'')])].flatMap(library=>inspectGuiVariables(text,library)), count: all.length, matching: selected.length,total:selected.length,truncated:offset+limit<selected.length,next:offset+limit<selected.length?offset+limit:null, triggers: selected.slice(offset, offset + limit) };
   }
   async get(identifier: string, options: {includeRaw?:boolean;offset?:number;limit?:number} = {}) {
     const { text } = await this.workspace.readRaw('Triggers');
     const found = trigger(text, identifier);
     const nodes = graph(text);
-    const refs = nodes.refs(found).filter(r => r.node.tag === 'Event' || r.node.tag === 'Action').map(r => ({ kind:r.node.tag, id:r.id, library:r.library, definition:nodes.byKey.get(r.key)?.xml ?? null }));
+    const refs = nodes.refs(found).filter(r => r.node.tag === 'Event' || r.node.tag === 'Condition' || r.node.tag === 'Action').map(r => ({ kind:r.node.tag, id:r.id, library:r.library, definition:nodes.byKey.get(r.key)?.xml ?? null }));
     const offset=options.offset??0,limit=options.limit??100;
     return {identifier,id:found.id,library:found.library,xml:options.includeRaw ? found.xml : found.xml.slice(0,16384),xmlTruncated:!options.includeRaw&&found.xml.length>16384,total:refs.length,next:offset+limit<refs.length?offset+limit:null,truncated:offset+limit<refs.length,references:refs.slice(offset,offset+limit).map(r=>({...r,definition:options.includeRaw?r.definition:r.definition?.slice(0,4096)??null,definitionTruncated:!options.includeRaw&&(r.definition?.length??0)>4096}))};
   }
@@ -170,82 +184,159 @@ export class TriggerWorkspace {
     }, { dryRun: args.dryRun ?? true, stage: args.stage ?? true, requireExisting: true, summary: `Graft ${args.kind} ${args.index} from ${args.sourceTrigger} into ${args.targetTrigger}` });
     return { ...transaction, copiedElements: result?.copied, eventOrActionId: result?.rootId };
   }
-  private readonly plans = new Map<string,{before:string;xml:string;schema:string;root:string;strings:Map<string,string>;stringRevisions:Map<string,string>;catalogRevision?:string}>();
+  private readonly plans = new Map<string,{before:string;xml:string;schema:string;schemaFile:string;root:string;strings:Map<string,string>;stringRevisions:Map<string,string>;catalogRevision?:string;objectsRevision?:string;libraryRevision?:string;needsCatalogs?:boolean}>();
   searchFunctions(query='',offset=0,limit=50){
     const r=registry(this.registryFile),needle=query.toLowerCase(),all=(r.definitions??r.functions).filter(f=>f.name.toLowerCase().includes(needle));
-    return {total:all.length,offset,truncated:offset+limit<all.length,next:offset+limit<all.length?offset+limit:null,items:all.slice(offset,offset+limit).map(f=>({library:f.library,id:f.id,name:f.name,flags:f.flags,returnType:(f as typeof f & {returnType?:string}).returnType,parameters:f.parameters.map(p=>({id:p.id,name:p.name,type:p.type,gameType:p.gameType})),serializerSupported:r.functions.some(x=>x.id===f.id)})),source:r.source,sha256:r.sha256,editor:'NOT_RUN'};
+    return {total:all.length,offset,truncated:offset+limit<all.length,next:offset+limit<all.length?offset+limit:null,items:all.slice(offset,offset+limit).map(f=>({library:f.library,id:f.id,name:f.name,flags:f.flags,returnType:(f as typeof f & {returnType?:string}).returnType,parameters:f.parameters.map(p=>({id:p.id,name:p.name,type:p.type,gameType:p.gameType})),serializerSupported:functionSupport(f).supported,unsupportedReasons:functionSupport(f).reasons})),source:r.source,sha256:r.sha256,editor:'NOT_RUN'};
   }
   describeFunction(name:string) { return describeFunction(name,registry(this.registryFile)); }
+  async searchAvailableFunctions(query='',offset=0,limit=10,library='') {
+    const raw=await this.workspace.readRaw('Triggers'),context=await this.libraries.context(registry(this.registryFile)),r=withGuiFunctions(context.registry,raw.text,library),needle=query.toLowerCase();
+    const all=(r.definitions??r.functions).filter(f=>f.name.toLowerCase().includes(needle));
+    return {total:all.length,offset,next:offset+limit<all.length?offset+limit:null,items:all.slice(offset,offset+limit).map(f=>({id:f.id,name:f.name,library:f.library,source:f.origin==='map'?'map':f.library==='Ntve'?'NativeLib':'dependency',flags:f.flags,returnType:f.returnType,parameters:f.parameters.map(p=>({name:p.name,type:p.type,gameType:p.gameType})),supported:functionSupport(f).supported})),libraries:context.libraries,libraryCacheHit:context.cacheHit,compiler:'NOT_EXECUTED'};
+  }
+  async describeFunctions(names:string[],library='',presetLimit=12){
+    if(!names.length||names.length>40)throw new Error('GUI_DESCRIBE_BATCH_LIMIT');
+    const context=await this.libraries.context(registry(this.registryFile)),xml=(await this.workspace.readRaw('Triggers')).text,r=withGuiFunctions(context.registry,xml,library);
+    return {cacheHit:context.cacheHit,libraryRevision:context.revision,items:names.map(name=>{try{const f=resolveFunction(name,r);return {name:f.name,id:f.id,library:f.library,roles:f.flags.filter(v=>['FlagEvent','FlagAction','FlagCall','FlagCondition'].includes(v)),returnType:f.returnGuiType,parameters:f.parameters.map(p=>({name:p.name,id:p.id,type:p.type,gameType:p.gameType,typeElement:p.typeElement,flags:p.flags,hasDefault:!!p.defaultXml,presets:p.presets?.slice(0,presetLimit),presetCount:p.presets?.length??0,presetsTruncated:(p.presets?.length??0)>presetLimit})),support:functionSupport(f)};}catch(error){return {name,error:error instanceof Error?error.message:String(error)};}})};
+  }
+  async runtimeSourceForPreview(file='Triggers'){
+    const raw=await this.workspace.readRaw(file),context=await this.libraries.context(registry(this.registryFile));
+    return {...emitGuiGalaxy(raw.text,context.registry),sourceFile:file,sourceSha256:digest(raw.text),librarySources:context.sources,registryRevision:context.revision};
+  }
+  async generateRuntime(dryRun=true,stage=true){
+    const raw=await this.workspace.readRaw('Triggers'),context=await this.libraries.context(registry(this.registryFile)),generated=emitGuiGalaxy(raw.text,context.registry);
+    const validation=await new ScriptWorkspace(this.workspace).validateSource(generated.source);if(!validation.valid)throw new Error('GUI_RUNTIME_STATIC_ERRORS: '+JSON.stringify(validation.diagnostics.filter(d=>d.severity==='error').slice(0,10)));
+    const transaction=await this.workspace.applyRawTransaction(this.workspace.coupledDraftFiles(['Triggers','MapScript.galaxy']),files=>{if(digest(files.get('Triggers')!)!==digest(raw.text))throw new Error('GUI_RUNTIME_SOURCE_STALE');const next=new Map(files);next.set('MapScript.galaxy',generated.source);return next;},{dryRun,stage,backup:true,summary:'Generate playable Galaxy from the same GUI graph'});
+    return {...generated,source:undefined,sourceBytes:Buffer.byteLength(generated.source),sourceSha256:digest(generated.source),transaction,validation,converterUsed:false};
+  }
+  recipeSkirmish(options:SkirmishOptions){return this.planBatch(skirmishRecipe(options));}
+  async planFile(file:string){const raw=await this.workspace.readRaw(file);if(!raw.exists&&!raw.staged)throw new Error('GUI_PLAN_FILE_MISSING');if(Buffer.byteLength(raw.text)>1024*1024)throw new Error('GUI_PLAN_FILE_BYTE_LIMIT');const value=JSON.parse(raw.text);return Array.isArray(value)?this.planBatch(value):this.plan(value);}
+  async planBatch(requests:GuiRequest[]){
+    if(!requests.length||requests.length>100||Buffer.byteLength(JSON.stringify(requests))>1024*1024)throw new Error('GUI_PLAN_BATCH_LIMIT');
+    const source=this.workspace;
+    class PlanningWorkspace extends Workspace {override async readRaw(file:string,includeDraft=true){const own=await super.readRaw(file,includeDraft);return own.staged?own:source.readRaw(file,includeDraft);}}
+    const virtual=new PlanningWorkspace(source.root),data=new DataWorkspace(virtual,this.data.schema,[...this.data.extraRoots]),planner=new TriggerWorkspace(virtual,this.registryFile,data,this.casc),steps=[];
+    let last:NonNullable<ReturnType<typeof planner.plans.get>>|undefined,objectsRevision:string|undefined,catalogRevision:string|undefined,needsCatalogs=false;
+    for(const request of requests){const step=await planner.plan(request);const saved=planner.plans.get(step.planId)!;objectsRevision??=saved.objectsRevision;catalogRevision??=saved.catalogRevision;needsCatalogs ||= !!saved.needsCatalogs;await planner.applyPlan(step.planId,false,true);last=saved;steps.push(step);}
+    const strings=new Map<string,string>(),stringRevisions=new Map<string,string>();for(const file of virtual.draftFiles()){if(file==='Triggers')continue;strings.set(file,(await virtual.readRaw(file)).text);stringRevisions.set(file,digest((await source.readRaw(file)).text));}
+    const planId=randomBytes(16).toString('hex'),before=digest((await source.readRaw('Triggers')).text),context=await this.libraries.context(registry(this.registryFile),needsCatalogs);
+    this.plans.set(planId,{...last!,before,xml:(await virtual.readRaw('Triggers')).text,root:source.root,strings,stringRevisions,objectsRevision,catalogRevision,needsCatalogs,libraryRevision:context.revision});
+    return {planId,revision:before,steps:steps.length,triggerIds:steps.map(s=>s.triggerId).filter(Boolean),variables:steps.flatMap(s=>s.variables),functions:steps.flatMap(s=>s.functions),presets:steps.flatMap(s=>s.presets),structures:steps.flatMap(s=>s.structures),calls:steps.reduce((n,s)=>n+s.calls,0),customResourceLibraryCreated:false,compiler:'NOT_EXECUTED',sourceFilesStaged:false};
+  }
+  async describeAvailableFunction(name:string,library='') {
+    const raw=await this.workspace.readRaw('Triggers'),context=await this.libraries.context(registry(this.registryFile)),r=withGuiFunctions(context.registry,raw.text,library);
+    if(!name.startsWith('custom:')&&!inspectGuiFunctions(raw.text,library).some(f=>f.id===name||f.name===name)){const f=resolveFunction(name,r);return {...f,xml:undefined,support:functionSupport(f),compiler:'NOT_EXECUTED'};}
+    const f=resolveFunction(name,r);return {...f,xml:undefined,support:functionSupport(f),arguments:'Parameter IDs or unique names',compiler:'NOT_EXECUTED'};
+  }
+  async types(query='',offset=0,limit=30,library=''){
+    const context=await this.libraries.context(registry(this.registryFile)),xml=(await this.workspace.readRaw('Triggers')).text,defs=definitionsFor(xml,library,context.registry),needle=query.toLowerCase();
+    const all=[...GUI_TYPE_CODES.map(code=>({kind:'type',name:code,variable:GUI_VARIABLE_TYPES.includes(code as typeof GUI_VARIABLE_TYPES[number])})),...defs.presets.map(p=>({kind:'preset',name:p.name??p.id,id:p.id,library:p.library,baseType:p.baseType,asBits:p.asBits,members:p.values.length})),...defs.structures.map(s=>({kind:'record',name:s.name??s.id,id:s.id,library:s.library,fields:s.variables.map(ref=>{const f=defs.variables.find(v=>v.id===ref.id&&v.library===(ref.library??s.library));return {id:ref.id,name:f?.name,type:f?.variableType,arraySizes:f?.arraySizes};})}))].filter(v=>!needle||JSON.stringify(v).toLowerCase().includes(needle));
+    return {total:all.length,offset,next:offset+limit<all.length?offset+limit:null,items:all.slice(offset,offset+limit),libraries:context.libraries,cacheHit:context.cacheHit,compiler:'NOT_EXECUTED'};
+  }
   async validate() {
     const {text}=await this.workspace.readRaw('Triggers');const g=graph(text);
     const issues=g.elements.flatMap(e=>g.refs(e).filter(r=>r.library===e.library&&!g.byKey.has(r.key)).map(r=>({code:'TRIGGER_DANGLING_REFERENCE',key:r.key,offset:r.node.start})));
-    return {valid:issues.length===0,issues,scope:'XML and local typed graph',externalLibraries:[...new Set(g.elements.flatMap(e=>g.refs(e).filter(r=>r.library!==e.library).map(r=>r.library)))],compiler:'NOT_EXECUTED'};
+    return {valid:issues.length===0,issues,scope:'XML and local typed graph (not a compiler)',externalLibraries:[...new Set(g.elements.flatMap(e=>g.refs(e).filter(r=>r.library!==e.library).map(r=>r.library)))],compiler:'NOT_EXECUTED'};
   }
   private async catalogRevision(values?:Array<{domain:string;id:string}>) {
-    const records=await new DataWorkspace(this.workspace).catalog();
+    const records=await this.data.catalog();
     if(records.issues.length)throw new Error('GUI_GAMELINK_COVERAGE_UNKNOWN');
-    for(const value of values??[]){const matches=records.flatMap(r=>r.engineActive===false?[]:r.document.objects()).filter(o=>o.domain===value.domain&&o.id===value.id);if(!matches.length)throw new Error('GUI_GAMELINK_UNRESOLVED: '+value.domain+':'+value.id);}
-    return digest(records.map(r=>r.absolute+'\0'+r.document.sha256+'\0'+r.engineActive).sort().join('\n'));
+    for(const value of values??[]){const matches=records.flatMap(r=>r.engineActive===false&&r.dependencyAvailability!=='DECLARED_AVAILABLE'||!r.document.source.includes(value.id)?[]:r.document.entries()).filter(o=>dataDomainFromType(o.tag)===value.domain&&o.attrs.id===value.id);if(!matches.length)throw new Error('GUI_GAMELINK_UNRESOLVED: '+value.domain+':'+value.id);}
+    return digest(records.map(r=>r.absolute+'\0'+r.document.sha256+'\0'+r.engineActive+'\0'+r.dependencyAvailability).sort().join('\n'));
   }
   async plan(request:GuiRequest) {
-    if(request.calls.length>100)throw new Error('GUI_BATCH_LIMIT');
-    const gamelinks=request.calls.flatMap(c=>Object.values(c.args).filter(v=>v.kind==='gamelink')) as Array<{kind:'gamelink';domain:string;id:string}>;
+    validateGuiRequestSize(request);
+    request=triggerPlanSchema.parse(request);
+    const values=collectGuiValues(request);
+    const gamelinks=values.filter(v=>v.kind==='gamelink') as Array<{kind:'gamelink';domain:string;id:string}>;
+    const unitValues=values.filter(v=>v.kind==='unit') as Array<{kind:'unit';objectId:number}>;
+    let objectsRevision:string|undefined;
+    if(unitValues.length){
+      const raw=(await this.workspace.readRaw('Objects')).text,objects=new PlacementDocument(raw);
+      if(objects.validate().some(d=>d.severity==='error'))throw new Error('GUI_OBJECTS_INVALID');
+      for(const value of unitValues)if(!objects.list().some(o=>o.kind==='ObjectUnit'&&o.id===value.objectId))throw new Error('GUI_PLACED_UNIT_UNRESOLVED: '+value.objectId);
+      objectsRevision=digest(raw);
+    }
+    const libraryContext=await this.libraries.context(registry(this.registryFile),gamelinks.length>0),schema=libraryContext.registry;
     const catalogRevision=gamelinks.length?await this.catalogRevision(gamelinks):undefined;
     const before=(await this.workspace.readRaw('Triggers')).text;
     let xml=before;
-    const g=graph(xml),used=new Set(g.elements.map(e=>e.id));
+    const g=graph(xml),used=new Set([...g.elements.map(e=>e.id),...(schema.definitions??schema.functions).map(f=>f.id)]);
     const nextId=()=>{let id:string;do{id=randomBytes(4).toString('hex').toUpperCase();}while(used.has(id));used.add(id);return id;};
+    const container=(g:ReturnType<typeof graph>,library:string)=>{
+      const nodes=library ? g.libraries.filter(n=>n.attrs.Id===library) : g.parsed.rootIds.map(id=>g.parsed.nodes[id]).filter(n=>n.tag==='TriggerData');
+      if(nodes.length!==1)throw new Error(library?'GUI_LIBRARY_NOT_UNIQUE':'GUI_ROOT_NOT_UNIQUE');
+      return nodes[0];
+    };
+    const append=(source:string,node:XmlNode,fragment:string)=>node.selfClosing
+      ? source.slice(0,node.start)+source.slice(node.start,node.startTagEnd).replace(/\/\s*>$/,'>')+fragment+`</${node.tag}>`+source.slice(node.end)
+      : source.slice(0,node.endTagStart)+fragment+source.slice(node.endTagStart);
     let target=request.targetTrigger;
-    const names:Array<{key:string;value:string}>=[];
+    const names:GuiText[]=[],texts:GuiText[]=[];
     if(request.create){
       if(target)throw new Error('GUI_TARGET_CONFLICT');
-      const c=request.create,lib=g.libraries.filter(n=>n.attrs.Id===c.library);
-      if(lib.length!==1)throw new Error('GUI_LIBRARY_NOT_UNIQUE');
-      const id=nextId();target=id;names.push({key:this.nameKey("Trigger",c.library,id),value:c.identifier});
-      const item=`<Item Type="Trigger" Library="${encode(c.library)}" Id="${id}"/>`;
+      const c={...request.create,library:request.create.library??''},lib=container(g,c.library);
+      const localLibrary=c.library ? ` Library="${encode(c.library)}"` : '';
+      const id=nextId();target=id;names.push({key:this.nameKey("Trigger",c.library,id),value:c.identifier,translations:c.translations});
+      const item=`<Item Type="Trigger"${localLibrary} Id="${id}"/>`;
       let fragment=`<Element Type="Trigger" Id="${id}"><Identifier>${encode(c.identifier)}</Identifier></Element>`;
-      const root=g.parsed.nodes.find(n=>n.tag==='Root'&&n.parentId===lib[0].id);
-      if(c.category){const cat=nextId();names.push({key:this.nameKey("Category",c.library,cat),value:c.category});fragment=`<Element Type="Category" Id="${cat}"><Identifier>${encode(c.category)}</Identifier>${item}</Element>`+fragment;const categoryItem=`<Item Type="Category" Library="${encode(c.library)}" Id="${cat}"/>`;if(root){xml=xml.slice(0,root.start)+(root.selfClosing?xml.slice(root.start,root.startTagEnd).replace(/\/\s*>$/,'>')+categoryItem+'</Root>':xml.slice(root.start,root.endTagStart)+categoryItem+'</Root>')+xml.slice(root.end);}else fragment='<Root>'+categoryItem+'</Root>'+fragment;}
+      const root=g.parsed.nodes.find(n=>n.tag==='Root'&&n.parentId===lib.id);
+      if(c.category){const cat=nextId();names.push({key:this.nameKey("Category",c.library,cat),value:c.category});fragment=`<Element Type="Category" Id="${cat}"><Identifier>${encode(c.category)}</Identifier>${item}</Element>`+fragment;const categoryItem=`<Item Type="Category"${localLibrary} Id="${cat}"/>`;if(root){xml=xml.slice(0,root.start)+(root.selfClosing?xml.slice(root.start,root.startTagEnd).replace(/\/\s*>$/,'>')+categoryItem+'</Root>':xml.slice(root.start,root.endTagStart)+categoryItem+'</Root>')+xml.slice(root.end);}else fragment='<Root>'+categoryItem+'</Root>'+fragment;}
       else if(root){xml=xml.slice(0,root.start)+(root.selfClosing?xml.slice(root.start,root.startTagEnd).replace(/\/\s*>$/,'>')+item+'</Root>':xml.slice(root.start,root.endTagStart)+item+'</Root>')+xml.slice(root.end);}else fragment='<Root>'+item+'</Root>'+fragment;
-      const current=graph(xml).libraries.find(n=>n.attrs.Id===c.library)!;
-      xml=xml.slice(0,current.endTagStart)+fragment+xml.slice(current.endTagStart);
+      const current=container(graph(xml),c.library);
+      xml=append(xml,current,fragment);
     }
-    if(!target)throw new Error('GUI_TARGET_MISSING');
-    for(const call of request.calls){
-      const block=trigger(xml,target),rendered=renderCall(call,block.library,nextId,xml,registry(this.registryFile));
-      const library=graph(xml).libraries.find(n=>n.attrs.Id===block.library)!;
-      xml=xml.slice(0,library.endTagStart)+rendered.elements+xml.slice(library.endTagStart);
-      const current=trigger(xml,target),parsed=graph(xml).parsed;
-      const same=current.node.childIds.map(id=>parsed.nodes[id]).filter(n=>n.tag===call.kind);
-      const siblings=current.node.childIds.map(id=>parsed.nodes[id]);
-      const insertion=same.at(-1)?.end ?? (call.kind==='Event'?siblings.find(n=>['Condition','Action'].includes(n.tag))?.start:call.kind==='Condition'?siblings.find(n=>n.tag==='Action')?.start:undefined) ?? current.node.endTagStart;
-      const reference=`<${call.kind} Type="FunctionCall" Library="${encode(block.library)}" Id="${rendered.id}"/>`;
-      if(current.node.selfClosing)xml=xml.slice(0,current.offset)+current.xml.replace(/\/\s*>$/,'>')+reference+'</Element>'+xml.slice(current.node.end);
-      else xml=xml.slice(0,insertion)+reference+xml.slice(insertion);
+    if(!target&&(request.calls.length||request.variables?.some(v=>v.scope==='local')))throw new Error('GUI_TARGET_MISSING');
+    const scope=target?trigger(xml,target).library:'';
+    const userTypes=declareGuiTypes(xml,request,scope,nextId,schema,text=>texts.push(text));xml=userTypes.xml;names.push(...userTypes.names);
+    const headers=declareFunctions(xml,request.functions??[],scope,nextId,schema);xml=headers.xml;names.push(...headers.names);
+    const declared=declareVariables(xml,request.variables??[],scope,target,nextId,withGuiFunctions(schema,xml,scope),text=>texts.push(text));
+    xml=declared.xml;names.push(...declared.names);
+    const bodies=populateFunctions(xml,request.functions??[],headers.functions,scope,nextId,schema,text=>texts.push(text));xml=bodies.xml;names.push(...bodies.names);
+    if(request.calls.length){
+      const block=trigger(xml,target!),rendered=renderCalls(request.calls,block.library,nextId,xml,withGuiFunctions(schema,xml,scope),{triggerId:block.id,onText:text=>texts.push(text)});
+      xml=append(xml,container(graph(xml),block.library),rendered.elements);
+      for(const kind of ['Event','Condition','Action'] as const){
+        const references=rendered.references.filter(ref=>ref.kind===kind).map(ref=>`<${kind} Type="FunctionCall"${scope?` Library="${encode(scope)}"`:''} Id="${ref.id}"/>`).join('');if(!references)continue;
+        const current=trigger(xml,target!),parsed=graph(xml).parsed,siblings=current.node.childIds.map(id=>parsed.nodes[id]);
+        const insertion=siblings.filter(n=>n.tag===kind).at(-1)?.end??(kind==='Event'?siblings.find(n=>['Condition','Action'].includes(n.tag))?.start:kind==='Condition'?siblings.find(n=>n.tag==='Action')?.start:undefined)??current.node.endTagStart;
+        if(current.node.selfClosing)xml=xml.slice(0,current.offset)+current.xml.replace(/\/\s*>$/,'>')+references+'</Element>'+xml.slice(current.node.end);
+        else xml=xml.slice(0,insertion)+references+xml.slice(insertion);
+      }
     }
     const result=graph(xml);
     for(const e of result.elements)for(const r of result.refs(e))if(r.library===e.library&&!result.byKey.has(r.key))throw new Error('GUI_PLAN_DANGLING_REFERENCE: '+r.key);
     const strings=new Map<string,string>(),stringRevisions=new Map<string,string>();
     const stringFiles=request.stringFiles ?? (names.length ? await this.stringFiles() : []);
-    if(names.length&&!stringFiles.length)stringFiles.push('enUS.SC2Data/LocalizedData/TriggerStrings.txt');
-    for(const file of stringFiles){
+    if((names.length||texts.length)&&!stringFiles.length)stringFiles.push('enUS.SC2Data/LocalizedData/TriggerStrings.txt');
+    const requestedLocales=new Set([...names,...texts].flatMap(n=>Object.keys(n.translations??{})));
+    for(const locale of requestedLocales)if(!stringFiles.some(f=>f.startsWith(locale+'.SC2Data/')))stringFiles.push(locale+'.SC2Data/LocalizedData/TriggerStrings.txt');
+    for(const file of [...new Set(stringFiles)]){
       if(/^Base\.SC2Data\//i.test(file)||!/^[a-z]{4}\.SC2Data\/LocalizedData\/TriggerStrings\.txt$/i.test(file))throw new Error('GUI_STRING_FILE_SCOPE_INVALID');
       const source=(await this.workspace.readRaw(file)).text,table=new StringTableDocument(source);stringRevisions.set(file,digest(source));
-      for(const entry of names)table.set(entry.key,entry.value);strings.set(file,table.source);
+      const locale=file.slice(0,4);
+      for(const entry of [...names,...texts])table.set(entry.key,entry.translations?.[locale]??entry.value);strings.set(file,table.source);
+      if(texts.length){
+        const gameFile=file.replace(/TriggerStrings\.txt$/,'GameStrings.txt'),gameSource=(await this.workspace.readRaw(gameFile)).text,gameTable=new StringTableDocument(gameSource);
+        stringRevisions.set(gameFile,digest(gameSource));for(const entry of texts)gameTable.set(entry.key,entry.translations?.[locale]??entry.value);strings.set(gameFile,gameTable.source);
+      }
     }
     const planId=randomBytes(16).toString('hex');
-    this.plans.set(planId,{before:digest(before),xml,schema:digest(JSON.stringify(registry(this.registryFile))),root:this.workspace.root,strings,stringRevisions,catalogRevision});
+    this.plans.set(planId,{before:digest(before),xml,schema:registryDigest(registry(this.registryFile)),schemaFile:registrySourceDigest(this.registryFile),root:this.workspace.root,strings,stringRevisions,catalogRevision,objectsRevision,libraryRevision:libraryContext.revision,needsCatalogs:gamelinks.length>0});
     while(this.plans.size>32||[...this.plans.values()].reduce((bytes,p)=>bytes+Buffer.byteLength(p.xml)+[...p.strings.values()].reduce((n,s)=>n+Buffer.byteLength(s),0),0)>32*1024*1024)this.plans.delete(this.plans.keys().next().value!);
     if(!this.plans.has(planId))throw new Error('GUI_PLAN_BYTE_LIMIT');
-    return {planId,revision:digest(before),triggerId:target,calls:request.calls.length,sourceOfTruth:'Triggers',regenerateGalaxyInEditor:true,compiler:'NOT_EXECUTED'};
+    return {planId,revision:digest(before),triggerId:target,variables:declared.variables,functions:headers.functions,presets:userTypes.presets,structures:userTypes.structures,definitionEditorValidation:headers.functions.length?'NOT_EXECUTED':undefined,customEventEditorValidation:headers.functions.some(f=>f.kind==='Event')?'NOT_EXECUTED':undefined,calls:request.calls.length,events:request.calls.filter(c=>c.kind==='Event').length,conditions:request.calls.filter(c=>c.kind==='Condition').length,actions:request.calls.filter(c=>c.kind==='Action').length,libraryContext:{libraries:libraryContext.libraries,cacheHit:libraryContext.cacheHit,build:libraryContext.build},customResourceLibraryCreated:false,localizedTextValues:texts.length,catalogValidation:'Local/declared-dependency definition identities; engine activation is not certified',sourceOfTruth:'Triggers',regenerateGalaxyInEditor:true,compiler:'NOT_EXECUTED'};
   }
   async applyPlan(planId:string,dryRun=true,stage=true) {
     const plan=this.plans.get(planId);if(!plan)throw new Error('GUI_PLAN_NOT_FOUND');
-    if(plan.root!==this.workspace.root||plan.schema!==digest(JSON.stringify(registry(this.registryFile))))throw new Error('GUI_PLAN_CONTEXT_STALE');
+    if(plan.root!==this.workspace.root||plan.schema!==registryDigest(registry(this.registryFile)))throw new Error('GUI_PLAN_CONTEXT_STALE');
     return this.workspace.applyRawTransaction(this.workspace.coupledDraftFiles(['Triggers',...plan.strings.keys()]),async files=>{
+      if(plan.libraryRevision&&(await this.libraries.context(registry(this.registryFile),plan.needsCatalogs)).revision!==plan.libraryRevision)throw new Error('GUI_PLAN_LIBRARIES_STALE');
+      if(plan.objectsRevision&&digest((await this.workspace.readRaw('Objects')).text)!==plan.objectsRevision)throw new Error('GUI_PLAN_OBJECTS_STALE');
       if(plan.catalogRevision&&await this.catalogRevision()!==plan.catalogRevision)throw new Error('GUI_PLAN_DEPENDENCY_STALE');
       const schemaSource=await this.workspace.readDependency(this.registryFile);
-      if(digest(JSON.stringify(JSON.parse(schemaSource)))!==plan.schema)throw new Error('GUI_PLAN_SCHEMA_STALE');
+      if(digest(schemaSource)!==plan.schemaFile)throw new Error('GUI_PLAN_SCHEMA_STALE');
       if(digest(files.get('Triggers')!)!==plan.before)throw new Error('GUI_PLAN_SOURCE_STALE');
       for(const [file,revision]of plan.stringRevisions)if(digest(files.get(file)??'')!==revision)throw new Error('GUI_PLAN_STRINGS_STALE: '+file);
       graph(plan.xml);return new Map([...files,['Triggers',plan.xml],...plan.strings]);

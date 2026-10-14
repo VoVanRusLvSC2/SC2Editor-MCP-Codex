@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Catalog>
-    <CValidatorUnitCompareVital id="ScenarioALifeGate">
-        <Compare value="GT"/>
-        <Value value="0.2"/>
-    </CValidatorUnitCompareVital>
-</Catalog>

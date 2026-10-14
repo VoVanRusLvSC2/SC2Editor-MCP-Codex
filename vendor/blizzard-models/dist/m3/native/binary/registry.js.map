@@ -1,0 +1,1 @@
+{"version":3,"file":"registry.js","sourceRoot":"","sources":["../../../../src/m3/native/binary/registry.ts"],"names":[],"mappings":"AAEA,gFAAgF;AAChF,IAAI,UAAU,GAAuC,EAAE,CAAA;AAEvD,2CAA2C;AAC3C,MAAM,UAAU,aAAa;IAC3B,OAAO,UAAU,CAAA;AACnB,CAAC;AAED,8CAA8C;AAC9C,MAAM,UAAU,aAAa,CAAC,aAAiD;IAC7E,UAAU,GAAG,aAAa,CAAA;AAC5B,CAAC"}

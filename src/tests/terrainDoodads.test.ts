@@ -159,7 +159,7 @@ test("spatial scatter retains alpha.8 seeded output and handles negative coordin
       );
 });
 
-test("bounded native terrain processing retains byte-exact alpha.8 brush output", async () => {
+test("bounded native terrain processing pins corrected height-base brush output", async () => {
   const sources = await nativeSources("ant"),
     state = parseState(sources);
   applyOperations(state, [
@@ -180,7 +180,7 @@ test("bounded native terrain processing retains byte-exact alpha.8 brush output"
     createHash("sha256")
       .update(Buffer.concat([...sources.values()]))
       .digest("hex"),
-    "7919164a4c9d6ef6b60932326497712f2f4a52f04a938983d12fd9f103297afb",
+    "4405e5199728f97ac0347dbddf2d11a6408a480997784dfb5b8f58527701f0cd",
   );
 });
 
@@ -329,6 +329,8 @@ test("resnapping updates selected Z/native flag only, and pins terrain without r
     );
     await f.placement.apply(made.plan.id, { dryRun: false, stage: false });
     const objects = (await f.placement.scan()).objects;
+    assert.equal(objects[0].position, "10,20,0.2"); // Unit height is terrain-relative.
+    assert.ok(Number(objects[1].position!.split(",")[2]) > 0.2);
     assert.equal(objects[1].flags.HeightAbsolute, "1");
     assert.equal(objects[1].rotation, "1.5");
     assert.ok(objects[1].position!.startsWith("12,20,"));
@@ -494,4 +496,18 @@ test("GUI dispatch exposes Doodad tools and routes combined locations to the ter
   } finally {
     await f.cleanup();
   }
+});
+
+
+test("ground-snapped units use zero terrain offset while doodads retain absolute sampled Z",async()=>{
+ const f=await fixture();try{
+  const unit=await f.placement.addUnit({id:"Marine",position:{x:16,y:16,z:50},snapToTerrain:true,owner:1});
+  const doodad=await f.placement.addDoodad({id:"AgriaTree",position:{x:16,y:16,z:50},snapToTerrain:true});
+  assert.equal(unit.operations[0].op,"add");assert.equal(doodad.operations[0].op,"add");
+  if(unit.operations[0].op==="add"&&doodad.operations[0].op==="add"){
+   assert.equal(unit.operations[0].object.position.z,0);
+   assert.ok(doodad.operations[0].object.position.z>1);
+   assert.equal(doodad.operations[0].object.flags?.HeightAbsolute,"1");
+  }
+ }finally{await f.cleanup();}
 });

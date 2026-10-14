@@ -1,3 +1,4 @@
+import {formatUiXml,isUiXml} from './uiXmlFormat.js';
 import { lstatSync, promises as fs } from "node:fs";
 import path from "node:path";
 import { createHash } from "node:crypto";
@@ -262,7 +263,7 @@ export class Workspace {
       await verify(); guard();
       const transformed = await transform(new Map(current));
       for (const [key, value] of transformed) if (!current.has(key) || typeof value !== "string") throw new Error(`Invalid or undeclared transformer output: ${key}`);
-      const next = new Map(keys.map(key => [key, transformed.get(key) ?? current.get(key)!]));
+      const next = new Map(keys.map(key => {const value=transformed.get(key)??current.get(key)!;return [key,isUiXml(key)&&value!==current.get(key)?formatUiXml(value):value];}));
       const dryRun = options.dryRun ?? true, stage = options.stage ?? true, accepted = options.accept?.() ?? true;
       const changed = keys.filter(key => next.get(key) !== (stage ? current.get(key) : decodeUtf8(disk.get(key)!.bytes, key)) || ((requireMissing.has(key) || (!stage && this.draftCreates.has(key))) && !disk.get(key)!.exists));
       await assertSnapshots(file => this.resolveUserPath(file), disk); await verify(); guard();

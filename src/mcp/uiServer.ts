@@ -1,3 +1,7 @@
+import {formatUiXml} from '../core/uiXmlFormat.js';
+import {resolveModuleSelection} from '../app/moduleSelection.js';
+import {registerUiAssetTools} from './uiAssetContracts.js';
+import {instrumentTools} from '../app/telemetry.js';
 import { APP_VERSION } from "../app/version.js";
 import { registerTerrainTools, type TerrainToolContext } from "../modules/terrain/tools.js";
 import { McpServer } from "@modelcontextprotocol/server";
@@ -181,6 +185,8 @@ const layoutOperationSchema = z.discriminatedUnion("op", [
 
 export function createUiServer(workspace: Workspace, schema: SchemaRegistry, cutscene?: CutsceneToolContext, text?: TextToolContext, data?: DataToolContext, browse?: BrowseToolContext, placement?: PlacementToolContext, ai?: AiToolContext, terrain?: TerrainToolContext, includeUi = true): McpServer {
   const server = new McpServer({ name: "sc2editor-mcp", version: APP_VERSION });
+  instrumentTools(server,workspace.root,resolveModuleSelection().modules.size>0);
+  if(includeUi)registerUiAssetTools(server,workspace);
 
   if (includeUi) {
   server.registerTool("ui.list_files", {
@@ -756,6 +762,7 @@ export function createUiServer(workspace: Workspace, schema: SchemaRegistry, cut
     inputSchema: z.object({ file: z.string().min(1) }),
   }, async ({ file }) => textResult(await workspace.diff(file)));
 
+  server.registerTool('ui.format',{description:'Format local SC2Layout/SC2Style: one XML tag per line, four-space indentation. Preserve attributes/comments/entities; mixed text/CDATA remains intact. Atomic stale-guarded transaction; dry-run by default.',inputSchema:z.object({files:z.array(z.string().min(1).regex(/\.(SC2Layout|SC2Style)$/i)).min(1).max(32),dryRun:z.boolean().default(true),stage:z.boolean().default(true),backup:z.boolean().default(true)}).strict()},async a=>textResult(await workspace.applyRawTransaction(a.files,sources=>new Map([...sources].map(([file,source])=>[file,formatUiXml(source)])),{...a,requireExisting:true,summary:'Format UI XML one tag per line'})));
   server.registerTool("ui.save", {
     description: "Save the complete staged text group containing this file; checks original bytes/existence, with backups and compensation on handled write failure. Returns savedFiles.",
     inputSchema: z.object({

@@ -1,0 +1,2 @@
+/** Shared native global lighting state for map and cutscene preview. */
+export interface GlobalLighting {environmentMap?:string;environmentCube?:{size:number;faces:string[];sha256:string};environmentSH?:number[][];operatorHDR?:number;preset:string;requested?:string;found?:boolean;ambient:number[];directional:Array<{name:string;direction:number[];color:number[];specular:number[]}>;fogDensity:0;source?:string;parameters?:Record<string,number>}

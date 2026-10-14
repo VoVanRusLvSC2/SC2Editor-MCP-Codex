@@ -77,3 +77,10 @@
 Оптимизация использует один XML append/reparse на последовательный add-run, пространственные buckets с точной distance-проверкой, ограниченную область brush/sync traversal, lookup maps палитры и кэш native protection в рамках операции. Общий grouped byte writer не заменялся.
 
 186 тестов PASS: legacy модули, byte-exact результаты, allocation/mixed ordering, filters/water, existing-object preservation, stale terrain и dry-run, API/настоящий stdio MCP. [Текущий отчёт](../generated/terrain-doodads-test-report.json). Визуальный GUI, запуск Windows launcher, SC2Editor open/save и игровой runtime не выполнены. Native structural cliffs/ramps/pathing, arbitrary water levels и MPQ write-back остаются заблокированы.
+
+
+## Подтверждение на карте с игроком и компьютером (11.10.2026)
+
+При открытии `AgriaHumanVsBot_v3.SC2Map` пользователь подтвердил отображение размещённых объектов после исправления `Objects.version`: нативный FourCC — `plob`, как и регистрация в ComponentList. Ошибочный `objs` теперь отклоняется генератором version-файлов. Формат описан в [Version file](https://github.com/sc2-arcade-watcher/sc2-file-format-docs/blob/main/version-file.md#type-tags); `plob` независимо прочитан из двух существующих карт.
+
+Пользователь также показал различие редактора и игры: `ObjectUnit/Position` с Z, равным высоте грунта, добавлял эту высоту второй раз в редакторе. Поэтому `placement.addUnit` с `snapToTerrain:true` записывает Z=0, а `placement.snapToTerrain` для юнитов записывает только `heightOffset`. Для Doodads сохраняется абсолютная высота грунта плюс смещение и `HeightAbsolute=1`. Явное размещение без snap сохраняет переданный Z. На `AgriaHumanVsBot_v4.SC2Map` изменены только Z 47 Unit-объектов; координаты и флаги 70 декораций сохранены.

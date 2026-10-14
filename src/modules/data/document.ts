@@ -40,7 +40,8 @@ export const referenceSchema = new DataXsdRegistry();
 export interface DocumentReference { object: string; path: string; carrier: string; value: string; targetDomain?: string; sourceSpan: {start:number;end:number}; evidence: "NATIVE_TYPED_ATTRIBUTE" | "TARGET_TYPE_UNRESOLVED"; rule?:{schemaSha256?:string;ownerType:string;member:string;source:string}; rewritePolicy?:"exactSpan"|"unknown"; rawExpression?:string; resolution?:"resolved"|"unknown"; }
 
 export class DataDocument {
-  private parsed = scanXml("");
+  private parsedCache?:ReturnType<typeof scanXml>;
+  private get parsed(){return this.parsedCache??=scanXml(this.source);}
 
   constructor(public source: string, readonly sourceFile = "Base.SC2Data/GameData/UnitData.xml") { this.reparse(); }
 
@@ -52,7 +53,7 @@ export class DataDocument {
   get diagnostics() { return this.parsed.diagnostics; }
   get nodes(): readonly XmlNode[] { return this.parsed.nodes; }
 
-  private reparse(): void { this.parsed = scanXml(this.source); }
+  private reparse(): void { this.parsedCache=undefined; }
   private replace(start: number, end: number, text: string): void {
     if(this.diagnostics.some(d=>d.severity==="error"))throw new Error("INVALID_XML_SOURCE: cannot edit malformed GameData");
     if (start < 0 || end < start || end > this.source.length) throw new Error(`Invalid GameData source patch ${start}:${end}`);

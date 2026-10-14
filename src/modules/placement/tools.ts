@@ -1,3 +1,4 @@
+import {checkPlacementGeometry} from './geometryCheck.js';
 import {PointWorkspace,pointPlanSchema} from "./points.js";
 import { McpServer } from "@modelcontextprotocol/server";
 import * as z from "zod/v4";
@@ -175,6 +176,8 @@ export function registerPlacementTools(
   context: PlacementToolContext,
 ): void {
   const placement = context.workspace;
+  server.registerTool('placement.geometry_check',{description:'Check all object XML forms, bounds, unit ground offsets, absolute doodad heights and catalog radius overlap candidates. Optional CLIF/LFCT route candidate; actual footprints/engine pathing are not simulated.',inputSchema:z.object({objectIds:z.array(z.number().int().positive()).max(5000).default([]),tolerance:z.number().min(0).max(1).default(.01),route:z.object({from:z.object({x:z.number(),y:z.number()}),to:z.object({x:z.number(),y:z.number()})}).optional()}).strict()},async a=>textResult(await checkPlacementGeometry(placement,a.objectIds,a.tolerance,a.route)));
+
   let pointContext:PointWorkspace|undefined;
   const points=()=>pointContext ??=new PointWorkspace(placement.workspace);
   server.registerTool("placement.points.inspect",{description:"Inspect native ObjectPoint entries, preserving all other Objects data.",inputSchema:z.object({directory:z.string().default("")}).strict()},async a=>textResult(await points().inspect(a.directory)));

@@ -1,4 +1,0 @@
-Unit/Name/Marine=Marine
-Actor/Name/AgriaTree=Agria Tree
-Actor/Name/CharDuneRock=Char Dune Rock
-Actor/Name/CityStreetLight=City Street Light

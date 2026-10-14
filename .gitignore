@@ -1,8 +1,8 @@
 node_modules/
 work/
-dist/
-dist-runtime/
-release/
+/dist/
+/dist-runtime/
+/release/
 *.pdb
 examples/**/runs/
 generated/*.log
@@ -16,3 +16,48 @@ coverage/
 
 # Verified local game bytes and semantic caches
 .sc2mcp-casc-cache/
+
+# Python analysis artifacts
+__pycache__/
+*.pyc
+
+.sc2mcp-assets-preview/
+
+.sc2mcp-ui-preview/
+
+# Local build/verification/staging outputs
+/.build-cache/
+/.playwright-cli/
+/.sc2mcp-document-staging/
+/output/
+/docs/cutscene-manual-images/
+/docs/cutscene-runtime-images/
+/docs/*_VERIFICATION.json
+/docs/*_PROOF*.json
+/docs/*_TEST_RESULTS.*
+/docs/MANUAL_COVERAGE.json
+/docs/MANUAL_NATIVE_GPU_REGRESSION.json
+
+# Source publication: private inputs and compiled native helpers stay local
+/AGENTS.md
+/native/bin/
+/examples/
+/src/tests/fixtures/
+/tests/terrain-surface/fixtures/
+
+# Runtime registries are retained; auxiliary generated reports stay local
+/generated/*
+!/generated/ai-module-schema.json
+!/generated/cutscene-schema.json
+!/generated/data-editor-schema.json
+!/generated/data-observed-schema.json
+!/generated/text-font-style-schema.json
+!/generated/font-style-corpus.json
+!/generated/trigger-authoring-registry.json
+!/generated/trigger-skirmish-recipe.json
+!/generated/galaxy-native-api.json
+!/generated/o200k_base.tiktoken
+!/generated/o200k_base.sha256
+!/generated/TIKTOKEN_LICENSE.txt
+!/generated/data-xsd-index/
+!/generated/data-xsd-index/**

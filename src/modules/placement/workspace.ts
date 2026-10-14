@@ -221,7 +221,8 @@ export class PlacementWorkspace {
           throw new Error(
             "Placement point is on a terrain hole or excessive slope",
           );
-        positions[i].z = point.height;
+        // Unit Z is an offset from terrain in Editor; Doodads use HeightAbsolute.
+        positions[i].z = kind === "Unit" ? 0 : point.height;
       }
     }
     const operations: PlacementMutation[] = positions.map((position) => ({
@@ -587,7 +588,7 @@ export class PlacementWorkspace {
       operations.push({
         op: "move",
         objectId,
-        position: { x, y, z: point.height + args.heightOffset },
+        position: { x, y, z: (object.kind === "ObjectUnit" ? 0 : point.height) + args.heightOffset },
       });
       if (object.kind === "ObjectDoodad" && object.flags.HeightAbsolute !== "1")
         operations.push({ op: "setHeightAbsolute", objectId, value: true });

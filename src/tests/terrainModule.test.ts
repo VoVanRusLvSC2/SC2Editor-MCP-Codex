@@ -38,6 +38,17 @@ async function fixture(id = "nydus") {
   };
 }
 
+test('shared lighting terrain preview samples border normals inside the native map bounds',async()=>{
+  const f=await fixture();
+  try{
+    await fs.mkdir(path.join(f.root,'Base.SC2Data/GameData'),{recursive:true});
+    await fs.writeFile(path.join(f.root,'Base.SC2Data/GameData/LightData.xml'),'<Catalog><CLight id="BorderTest"><ToDInfoArray AmbientColor=".5,.5,.5"/></CLight></Catalog>');
+    const result=await f.terrain.preview(undefined,'','lit',128,{preset:'BorderTest'});
+    assert.equal(result.mode,'lit');assert.equal(result.lighting?.sharedModule,true);assert.equal(result.lighting?.preset,'BorderTest');
+    assert.ok(Buffer.from(result.imageBase64,'base64').length>100);assert.equal(result.lighting?.engineValidated,false);
+  }finally{await f.cleanup();}
+});
+
 for (const [id, w, h] of [
   ["nydus", 33, 33],
   ["ant", 137, 137],
@@ -80,7 +91,7 @@ for (const [id, w, h] of [
     }
   });
 
-test("height batch preserves base/mask/native data, updates interleaved sync and stages all files together", async () => {
+test("height batch preserves cliff-adjustment/mask/native data, updates interleaved sync and stages all files together", async () => {
   const f = await fixture();
   try {
     const before = await fs.readFile(path.join(f.root, "t3HeightMap"));
@@ -115,8 +126,8 @@ test("height batch preserves base/mask/native data, updates interleaved sync and
     );
     for (let j = 0; j < 33 * 33; j++) {
       assert.equal(
-        next.heights.bytes.readUInt16LE(32 + j * 6),
-        before.readUInt16LE(32 + j * 6),
+        next.heights.bytes.readUInt16LE(32 + j * 6 + 2),
+        before.readUInt16LE(32 + j * 6 + 2),
       );
       assert.equal(
         next.heights.bytes.readUInt16LE(32 + j * 6 + 4),
@@ -299,7 +310,7 @@ test("native ramps/cliffs/holes are preserved; unsupported structural editing fa
       assert.equal(p.files.find((f) => f.file === name)!.changedBytes, 0);
     await assert.rejects(
       f.terrain.plan({ operations: [{ op: "ramp.create", parameters: {} }] }),
-      /NATIVE_TERRAIN_OPERATION_UNAVAILABLE/,
+      /NATIVE_(?:TERRAIN_OPERATION_UNAVAILABLE|GEOMETRY_|CLIFF_)/,
     );
   } finally {
     await f.cleanup();
@@ -674,7 +685,7 @@ test("standalone placement ground snapping records terrain hashes and rejects a 
     });
     assert.equal(p.operations[0].op, "add");
     if (p.operations[0].op === "add")
-      assert.ok(p.operations[0].object.position.z > 7);
+      assert.equal(p.operations[0].object.position.z, 0); // Units store offset, not absolute ground.
     const raw = await fs.readFile(path.join(f.root, "t3HeightMap"));
     raw[34] ^= 1;
     await fs.writeFile(path.join(f.root, "t3HeightMap"), raw);

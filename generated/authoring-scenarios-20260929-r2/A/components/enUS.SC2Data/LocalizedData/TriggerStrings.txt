@@ -1,2 +1,0 @@
-Trigger/Name/lib_A1000001_F4E401A5=HardeningInit
-Category/Name/lib_A1000001_53D9828D=ManualAcceptance

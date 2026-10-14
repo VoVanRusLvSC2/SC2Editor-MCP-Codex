@@ -1,5 +1,22 @@
 # Changelog
 
+## Offline previews, shared lighting and source publication — 2026-10-14
+
+- Add offline WebGL2 cutscene playback with typed M3/M3A property bindings, layered animation sampling, materials, embedded cameras/lights, RTT, localized audio/subtitles and a selectable timeline.
+- Share catalog lighting, Key/Fill/Back, ambient environment and tone operators across previews; retain MCP authoring for map lighting, cutscene lights and fog.
+- Add asset/UI/dialog previews, sequential MCP batches, readable UI XML writes and bounded Data reads.
+- Keep UI child insertions inside the parent even when opening/closing tags share one line; focused Script transport checks enforce allowed namespaces as the UI tool surface grows.
+- Prepare material shaders with playback defaults, reuse per-material samples across batches and preserve the composite depth contract. Full native rendering, shadows and portrait framing remain unvalidated: `engineValidated=false`, `allSupported=false`.
+- Add the original-code attribution license and module credits; credit Surface Toolkit to vise as identified by the project owner, retaining third-party licenses/notices and unresolved compatibility/provenance notices.
+- Keep game assets, private fixtures, reports, compiled helpers and generated players outside the current source tree in Git; retain source backends and required runtime registries. Previously committed history is not rewritten.
+
+## Local empty Document module — 2026-10-11
+
+- Add ten document.* tools for fresh dependent/extension mods and empty Arcade map foundations with optional initial flat terrain.
+- Add native metadata/version and complete empty MapInfo factories, a bounded dependency/CTerrain resolver, guarded private materialization and exclusive packed output.
+- Preserve existing module writers and focused profiles. Engine/native-default fidelity remains partial; no Editor was launched.
+
+
 ## Map Settings and portable MCP — 2026-10-11
 
 - Separate `settings.*` module: lossless Attributes definitions/values/defaults, native variant clone and existing bindings, MapInfo v39 player parameters and thirteen known game-option bits.

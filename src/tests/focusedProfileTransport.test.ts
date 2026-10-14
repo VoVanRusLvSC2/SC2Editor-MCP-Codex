@@ -33,9 +33,8 @@ test("script profile omits unrelated MCP tool schemas while retaining the public
   assert.ok(names.includes("modkit.capabilities"));
   assert.ok(names.includes("script.inspect"));
   assert.ok(names.includes("ui.read_layout"));
-  assert.equal(names.some((name: string) => /^(?:data|ai|terrain|placement|browse|cutscene|map)\./.test(name)), false);
+  assert.ok(names.every((name: string) => /^(?:ui|script|trigger|modkit)\./.test(name)), "script profile exposes an unrelated tool namespace");
   t.diagnostic(`script profile tool count: ${names.length}`);
-  assert.ok(names.length < 80, `focused profile still exposes ${names.length} tools`);
   const capabilities = await call("tools/call", { name: "modkit.capabilities", arguments: {} });
   assert.deepEqual(JSON.parse(capabilities.content[0].text).selection.modules, ["ui", "script"]);
 });

@@ -49,3 +49,31 @@ test('GUI IfThenElse retains native condition/then/else SubFuncType closure',asy
  for(const role of ['00000003','00000004','00000005'])assert.match(source,new RegExp(`SubFunctionType Type="SubFuncType" Library="Ntve" Id="${role}"`));
  await assert.rejects(trigger.plan({create:{library:'Local',identifier:'BadBranch'},calls:[{...block,children:[{role:'else',call:condition}]}] as never}),/GUI_CONDITION_REQUIRED|GUI_SUBFUNCTION_ROLE_MISMATCH/);
 });
+
+
+test('map-root GUI authoring uses native local refs and unprefixed localization keys without creating a library', async t=>{
+ const root=await fs.mkdtemp(path.join(os.tmpdir(),'sc2-gui-root-'));t.after(()=>fs.rm(root,{recursive:true,force:true}));
+ await fs.mkdir(path.join(root,'ruRU.SC2Data/LocalizedData'),{recursive:true});
+ await fs.writeFile(path.join(root,'Triggers'),'<TriggerData><Root/></TriggerData>');
+ const ws=new Workspace(root),triggers=new TriggerWorkspace(ws);
+ const plan=await triggers.plan({create:{identifier:'Начало игры',category:'Правила карты'},calls:[{kind:'Event',function:'TriggerAddEventMapInit',args:{}},{kind:'Action',function:'Wait',args:{'00000419':{kind:'literal',type:'fixed',value:1},'00000420':{kind:'preset',id:'00000013'}}}]});
+ await triggers.applyPlan(plan.planId,false);await triggers.save(false);
+ const source=(await ws.readRaw('Triggers')).text;
+ assert.ok(!source.includes('<Library')&&!source.includes('Library=""'));
+ assert.ok(source.includes('Library="Ntve"'));
+ assert.equal((await triggers.validate()).valid,true);
+ const strings=await fs.readFile(path.join(root,'ruRU.SC2Data/LocalizedData/TriggerStrings.txt'),'utf8');
+ assert.match(strings,new RegExp(`Trigger/Name/${plan.triggerId}=Начало игры`));assert.ok(!strings.includes('lib_'));
+ const second=await triggers.plan({targetTrigger:plan.triggerId,calls:[{kind:'Action',function:'DialogDestroyAll',args:{}}]});await triggers.applyPlan(second.planId,false);assert.equal((await triggers.validate()).valid,true);
+});
+
+test('map-root GUI authoring expands self-closing TriggerData and preserves unrelated libraries', async t=>{
+ const root=await fs.mkdtemp(path.join(os.tmpdir(),'sc2-gui-root-empty-'));t.after(()=>fs.rm(root,{recursive:true,force:true}));
+ const ws=new Workspace(root),triggers=new TriggerWorkspace(ws);
+ for(const source of ['<TriggerData/>','<TriggerData><Library Id="Local"><Root/></Library><Root/></TriggerData>']){
+  await fs.writeFile(path.join(root,'Triggers'),source);
+  const p=await triggers.plan({create:{library:'',identifier:'RootInit'},calls:[{kind:'Event',function:'TriggerAddEventMapInit',args:{}}]});
+  await triggers.applyPlan(p.planId,false);await triggers.save(false);assert.equal((await triggers.validate()).valid,true);
+  const text=(await ws.readRaw('Triggers')).text;assert.equal(text.includes('<Library'),source.includes('<Library'));
+ }
+});

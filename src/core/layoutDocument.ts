@@ -59,6 +59,11 @@ function lineStart(source: string, offset: number): number {
   return n < 0 ? 0 : n + 1;
 }
 
+function insertionOffset(source: string, tagOffset: number): number {
+  const start = lineStart(source, tagOffset);
+  return /^[\t ]*$/.test(source.slice(start, tagOffset)) ? start : tagOffset;
+}
+
 function lineEndIncludingNewline(source: string, offset: number): number {
   const n = source.indexOf("\n", offset);
   return n < 0 ? source.length : n + 1;
@@ -318,7 +323,7 @@ export class LayoutDocument {
   private insertionPoint(parent?: XmlNode): { offset: number; indent: string } {
     const host = parent ?? this.descNode();
     if (host.selfClosing || host.endTagStart < 0) throw new Error(`Cannot insert into <${host.tag}>`);
-    const offset = lineStart(this.sourceText, host.endTagStart);
+    const offset = insertionOffset(this.sourceText, host.endTagStart);
     return { offset, indent: indentAt(this.sourceText, host.endTagStart) + inferIndentUnit(this.sourceText) };
   }
 
@@ -464,7 +469,7 @@ export class LayoutDocument {
     if (node.selfClosing || node.endTagStart < 0) throw new Error(`Cannot insert into <${node.tag}>`);
     const nl = newlineOf(this.sourceText);
     const unit = inferIndentUnit(this.sourceText);
-    const offset = before ? lineStart(this.sourceText, before.start) : lineStart(this.sourceText, node.endTagStart);
+    const offset = insertionOffset(this.sourceText, before?.start ?? node.endTagStart);
     const indent = before
       ? indentAt(this.sourceText, before.start)
       : indentAt(this.sourceText, node.start) + unit;

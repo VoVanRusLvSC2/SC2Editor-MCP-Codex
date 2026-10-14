@@ -160,7 +160,7 @@ export class BrowseWorkspace {
       let entries;
       try { entries = await fs.readdir(directory, { withFileTypes: true }); } catch { return; }
       for (const entry of entries) {
-        if (entry.isDirectory() && (SKIP.has(entry.name) || internalWorkspaceDirectory(entry.name))) continue;
+        if (entry.isDirectory() && (SKIP.has(entry.name) || internalWorkspaceDirectory(entry.name) || (root.sourceLayer==='dependency' && /\.sc2(?:map|mod|campaign)$/i.test(entry.name)))) continue;
         const absolute = path.join(directory, entry.name);
         if (entry.isDirectory()) { await visit(root, absolute); continue; }
         if (!INDEXABLE.test(entry.name)) continue;

@@ -1,5 +1,14 @@
 # SC2Editor MCP
 
+Original code: Copyright (c) 2026 **VoVanRusLvSC2**
+(vladimir.lencmanis@gmail.com), under the [custom attribution license](LICENSE).
+Projects using our code or modules must credit VoVanRusLvSC2 and identify
+SC2Editor-MCP-Codex as their source in README, Credits or About, in addition
+to retaining copyright and license notices. Surface Toolkit author: **vise**
+(attribution provided by the project owner). Third-party components keep their
+own licenses; see [credits](CREDITS.md), [license scope](THIRD_PARTY_LICENSES.md) and the
+[source publication checklist](PUBLISHING_RU.md).
+
 A single MCP server and local workbench for StarCraft II map/mod files. TypeScript/Node.js implements semantic tools and shared transactions; the C++ backend in `native/` handles MPQ archives.
 
 [Русское руководство](README_RU.md) · [TERRAIN module](docs/TERRAIN_RU.md) · [Repository structure](docs/REPOSITORY_STRUCTURE_RU.md)
@@ -21,6 +30,7 @@ Installed SC2 resources can now be read directly through `casc.*`, with a verifi
 | Terrain | Height, textures, recipes, flat water, lighting and component inspection | [TERRAIN](docs/TERRAIN_RU.md), [API](docs/TERRAIN_MCP.md) |
 | CASC | Installed-game MNDX/BLTE reads, search, byte/semantic cache and metadata mounts | [CASC](docs/CASC_RU.md) |
 | Settings | Map attributes, native game variants, v39 players and game options | [Settings](docs/SETTINGS_RU.md) |
+| Document | Fresh empty dependent/extension mods and Arcade map foundations | [Document](docs/DOCUMENT_CREATION_RU.md) |
 | Map | MPQ import/export, MapInfo and template-based creation | [Map](docs/MAP_MCP.md) |
 | Script | Galaxy and bounded GUI trigger authoring | [Script](SCRIPT-GUIDE-RU.md), [Trigger](docs/TRIGGER_MCP_RU.md) |
 

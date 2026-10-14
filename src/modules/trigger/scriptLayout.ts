@@ -30,7 +30,7 @@ export function normalizeCustomScriptLayout(xml: string) {
     let depth = 0;
     for (let parent: number | null = node.parentId; parent !== null; parent = parsed.nodes[parent]!.parentId) depth++;
     const closingIndent = '    '.repeat(depth);
-    const prefix = closingIndent + '    ' + (owner.attrs.Type === 'CustomScript' ? '     ' : '');
+    const prefix = closingIndent + '    '; // XML structure only; extra spaces become visible code indentation in Editor.
     const text = nl + lines.map(line => prefix + (line.trim() ? line.slice(common) : '')).join(nl) + nl + closingIndent;
     if (raw !== text) edits.push({ start: node.startTagEnd, end: node.endTagStart, text, ownerId: owner.attrs.Id ?? '' });
   }

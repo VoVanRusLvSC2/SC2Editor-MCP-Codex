@@ -138,3 +138,25 @@ test("Data cannot mutate a mounted CASC dependency view through direct or batch 
  await assert.rejects(data.apply({ file, operations: [{ op: "object.create", ctype: "CUnit", id: "Other" }] }), /DEPENDENCY_READ_ONLY/);
  await assert.rejects(data.batch({ changes: [{ file, operations: [{ op: "object.create", ctype: "CUnit", id: "Other" }] }] }), /DEPENDENCY_READ_ONLY/);
 });
+
+
+test("CASC trigger views include native SC2Lib and root Triggers bytes rather than only Galaxy files", async t => {
+ const f=await fixture(t),library="mods/core.sc2mod/base.sc2data/triggerlibs/sample.sc2lib",triggers="mods/core.sc2mod/triggers";
+ const libraryBytes=Buffer.from('<TriggerData><Library Id="Test"><Root/></Library></TriggerData>'),triggerBytes=Buffer.from('<TriggerData><Root/></TriggerData>');
+ f.backend.files.set(library,libraryBytes);f.backend.files.set(triggers,triggerBytes);
+ const report=await f.casc.mount(["mods/core.sc2mod"],["triggers"],[],10);assert.equal(report.reports[0].status,"MOUNTED");
+ const mounted=f.mounted[0];assert.ok(mounted);
+ assert.deepEqual(await fs.readFile(path.join(mounted,"Base.SC2Data/TriggerLibs/sample.sc2lib")),libraryBytes);
+ assert.deepEqual(await fs.readFile(path.join(mounted,"Triggers")),triggerBytes);
+ assert.equal((await f.casc.restoreMounts()).length,1);
+});
+
+test('CASC campaign mount ignores embedded map catalogs and retains earlier kinds',async t=>{
+ const f=await fixture(t);const file='campaigns/test.sc2campaign/base.sc2data/gamedata/unitdata.xml';
+ f.backend.files.set(file,Buffer.from('<Catalog><CUnit id="Owned"/></Catalog>'));
+ f.backend.files.set('campaigns/test.sc2campaign/base.sc2maps/maps/demo.sc2map/base.sc2data/gamedata/unitdata.xml',Buffer.from('<Catalog><CUnit id="Unrelated"/></Catalog>'));
+ const mounted=await f.casc.mount(['campaigns/test.sc2campaign'],['catalogs'],[],20);assert.equal(mounted.reports[0].files,1);
+ const first=await f.casc.ensurePackage('campaigns/test.sc2campaign',['catalogs'],[]);assert.equal(first.cacheHit,true);
+});
+
+test("Internal preview read streams large CASC binaries and keeps default budget unchanged",async t=>{const {casc,backend}=await fixture(t);const large="mods/core.sc2mod/base.sc2assets/large.m3",bytes=Buffer.alloc(17*1024*1024,23);backend.files.set(large,bytes);await assert.rejects(casc.read(large),/FULL_FILE_BYTE_BUDGET/);assert.equal(backend.reads,0);const result=await casc.readLimited(large,32*1024*1024);assert.deepEqual(result.bytes,bytes);assert.equal(backend.reads,5);await assert.rejects(casc.read(large),/FULL_FILE_BYTE_BUDGET/);assert.equal((await casc.readLimited(large,32*1024*1024)).cacheHit,true);});

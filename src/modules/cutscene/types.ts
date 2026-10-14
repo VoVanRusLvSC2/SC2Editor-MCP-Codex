@@ -150,6 +150,16 @@ export interface CutsceneComposeSpec {
 }
 
 export type CutsceneOperation =
+  | { op: "path.add"; as?:string; parent?:CutsceneNodeSelector|string; name:string; points:Array<[number,number,number]> }
+  | { op: "followPath.add"; as?:string; object:CutsceneNodeSelector|string; path:CutsceneNodeSelector|string; start?:string|number; duration?:string|number; alwaysPointUp?:boolean; rotation?:[number,number,number]; objectSpeed?:number; lockedToEnd?:boolean }
+
+  | { op: "attachment.add"; as?: string; object: CutsceneNodeSelector|string; target: CutsceneNodeSelector|string; point: string; start?: string|number; duration?: string|number; offset?: [number,number,number]; rotation?: [number,number,number]; inheritScale?: boolean; inheritVisibility?: boolean; lockedToEnd?: boolean }
+  | { op: "lookAt.add"; as?: string; object: CutsceneNodeSelector|string; target: CutsceneNodeSelector|string; point?: string; type?: string; ignoreEyes?: boolean; start?: string|number; duration?: string|number; lockedToEnd?: boolean }
+  | { op: "object.filter"; object: CutsceneNodeSelector|string; filter: string }
+  | { op: "activeShot.set"; object: CutsceneNodeSelector|string; shots: Array<{camera:CutsceneNodeSelector|string;index?:number}> }
+
+  | { op:"speech.add";as?:string;object:CutsceneNodeSelector|string;soundLink?:string;facialAnim?:string;facialGroup?:string;start?:string|number;duration?:string|number;filter?:string }
+  | { op:"sound.add";as?:string;parent?:CutsceneNodeSelector|string;name:string;soundLink:string;variation?:number;start?:string|number;duration?:string|number;offset?:string|number;volume?:number;pitch?:number;mode?:0|1|2;position?:[number,number,number] }
   | { op: "object.add"; as?: string; parent?: CutsceneNodeSelector | string; object: NativeNodeSpec }
   | { op: "object.remove"; object: CutsceneNodeSelector | string }
   | { op: "object.rename"; object: CutsceneNodeSelector | string; name: string }
