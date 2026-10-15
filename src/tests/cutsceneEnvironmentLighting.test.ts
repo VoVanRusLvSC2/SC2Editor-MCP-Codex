@@ -25,6 +25,49 @@ test('An interrupted ActiveLight fade starts from the prior fade value and obeys
  const environment=createEnvironmentKernel(createPreviewKernel());assert.equal(environment.lighting(scene,500).parameters?.HDRExposure,3);assert.equal(environment.lighting(scene,750).parameters?.HDRExposure,4.5);assert.equal(environment.lighting(scene,2000,{filters:['Visible']}).parameters?.HDRExposure,1);
 });
 
+test('EnvironmentLight explicitly overrides the environment multiplier with zero and preserves authored AmbientColor',()=>{
+ const scene=parsePreviewScene('<CutsceneState><CCutsceneNodeEnvironmentLight guid="1" ambientEnvironmentMultiplier="0" ambientColor=".2,.3,.4"/><CCutsceneElementActiveLight lightGUID="1" start="0"/></CutsceneState>','environment-multiplier-zero');
+ scene.lighting=resolvePreviewLighting(['<Catalog><CLight id="base"><ToDInfoArray AmbientColor=".1,.1,.1" AmbientEnvironmentMultiplier="2"/></CLight></Catalog>'],'base');
+ const light=createEnvironmentKernel(createPreviewKernel()).lighting(scene,0);
+ assert.equal(light.ambientEnvironmentMultiplier,0);assert.deepEqual(light.ambient,[.2,.3,.4]);
+ assert.equal(scene.lighting.ambientEnvironmentMultiplier,2);assert.deepEqual(scene.lighting.ambient,[.1,.1,.1]);
+});
+
+test('EnvironmentLight samples multiplier curves without mutating the authored node value or AmbientColor',()=>{
+ const scene=parsePreviewScene('<CutsceneState><CCutsceneNodeEnvironmentLight guid="1" ambientEnvironmentMultiplier=".25" ambientColor=".2,.3,.4"><CCutsceneNodePropertyValue propertyName="ambientEnvironmentMultiplier"><CCutsceneElementPropertyCurve time="0" value="0"/><CCutsceneElementPropertyCurve time="1000" value=".4"/></CCutsceneNodePropertyValue></CCutsceneNodeEnvironmentLight><CCutsceneElementActiveLight lightGUID="1" start="0"/></CutsceneState>','environment-multiplier-curve');
+ const node=scene.environmentLights![0],environment=createEnvironmentKernel(createPreviewKernel());Object.freeze(node.values);Object.freeze(node.curves[0].keys);
+ assert.equal(environment.lighting(scene,0).ambientEnvironmentMultiplier,0);
+ assert.equal(environment.lighting(scene,250).ambientEnvironmentMultiplier,.1);
+ assert.equal(environment.lighting(scene,1000).ambientEnvironmentMultiplier,.4);
+ assert.deepEqual(environment.lighting(scene,250).ambient,[.2,.3,.4]);assert.equal(node.values.ambientEnvironmentMultiplier,.25);
+});
+
+test('ActiveLight linearly blends environment multipliers to an explicit zero at the authored time',()=>{
+ const scene=parsePreviewScene('<CutsceneState><CCutsceneNodeEnvironmentLight guid="1" ambientEnvironmentMultiplier="0"/><CCutsceneElementActiveLight lightGUID="1" start="100" blendTime="1000"/></CutsceneState>','environment-multiplier-fade');
+ scene.lighting=resolvePreviewLighting(['<Catalog><CLight id="base"><ToDInfoArray AmbientEnvironmentMultiplier="4"/></CLight></Catalog>'],'base');
+ const environment=createEnvironmentKernel(createPreviewKernel());
+ assert.deepEqual([0,100,350,600,1100].map(time=>environment.lighting(scene,time).ambientEnvironmentMultiplier),[4,4,3,2,0]);
+});
+
+test('Interrupted multiplier fades freeze the prior animated target at the next ActiveLight start',()=>{
+ const scene=parsePreviewScene('<CutsceneState><CCutsceneNodeEnvironmentLight guid="1" ambientEnvironmentMultiplier="6"><CCutsceneNodePropertyValue propertyName="ambientEnvironmentMultiplier"><CCutsceneElementPropertyCurve time="0" value="6"/><CCutsceneElementPropertyCurve time="1000" value="10"/></CCutsceneNodePropertyValue></CCutsceneNodeEnvironmentLight><CCutsceneNodeEnvironmentLight guid="2" ambientEnvironmentMultiplier="0"/><CCutsceneElementActiveLight lightGUID="1" start="0" blendTime="1000"/><CCutsceneElementActiveLight lightGUID="2" start="500" blendTime="1000"/></CutsceneState>','environment-multiplier-interruption');
+ scene.lighting=resolvePreviewLighting(['<Catalog><CLight id="base"><ToDInfoArray AmbientEnvironmentMultiplier="2"/></CLight></Catalog>'],'base');
+ const environment=createEnvironmentKernel(createPreviewKernel());
+ assert.deepEqual([250,500,750,1000,1500].map(time=>environment.lighting(scene,time).ambientEnvironmentMultiplier),[3.25,5,3.75,2.5,0]);
+ assert.equal(scene.environmentLights![0].values.ambientEnvironmentMultiplier,6);
+});
+
+test('Missing multiplier endpoints preserve inheritance or the sole authored value without inventing a default',()=>{
+ const scene=parsePreviewScene('<CutsceneState><CCutsceneNodeEnvironmentLight guid="1" ambientColor=".2,.3,.4"/><CCutsceneElementActiveLight lightGUID="1" start="0" blendTime="1000"/></CutsceneState>','environment-multiplier-inheritance');
+ scene.lighting=resolvePreviewLighting(['<Catalog><CLight id="base"><ToDInfoArray AmbientEnvironmentMultiplier=".025"/></CLight><CLight id="child" parent="base"/></Catalog>'],'child');
+ const environment=createEnvironmentKernel(createPreviewKernel());assert.equal(environment.lighting(scene,500).ambientEnvironmentMultiplier,.025);
+ scene.lighting=resolvePreviewLighting([]);assert.equal(environment.lighting(scene,500).ambientEnvironmentMultiplier,undefined);
+ scene.environmentLights![0].values.ambientEnvironmentMultiplier=0;assert.equal(environment.lighting(scene,500).ambientEnvironmentMultiplier,0);
+ const presets=parsePreviewScene('<CutsceneState><CCutsceneElementActiveLight lightID="known" start="0"/><CCutsceneElementActiveLight lightID="missing" start="1000" blendTime="1000"/></CutsceneState>','environment-multiplier-missing-preset');
+ presets.lightPresets={'known#0':{...resolvePreviewLighting([]),ambientEnvironmentMultiplier:2},'missing#0':resolvePreviewLighting([])};
+ assert.deepEqual([0,1000,1500,2000].map(time=>environment.lighting(presets,time).ambientEnvironmentMultiplier),[2,2,2,2]);
+});
+
 test('Height fog follows the shipped integral and saturates instead of applying an extra exponential',()=>{
  const environment=createEnvironmentKernel(createPreviewKernel()),fog={color:[0,0,0],density:.02,falloff:.1,startHeight:3},eye=[0,0,2],point=[0,10,7],distance=Math.hypot(10,5);
  const expected=.02*distance*Math.exp(.1)*(1-Math.exp(-.5))/.5;
@@ -41,10 +84,46 @@ test('Native Zerg10 packed environment RGB/direction vectors parse and retain ra
  assert.equal(node.values.ambientColorRed,.066667);assert.equal(node.values.keyDirectionY,.010382);assert.equal(node.values.colorize,0);
  assert.equal(node.rawValues?.ambientColor,'0.066667,0.105882,0.141176');assert.equal(node.rawValues?.ambientEnvironmentMap,'Assets/Textures/ZergSky.dds');
  assert.deepEqual(light.ambient,[.066667,.105882,.141176]);assert.deepEqual(light.directional[0].color,[0,0,0]);assert.ok(light.directional[0].direction[2]>.999);
- assert.ok(scene.issues.some(i=>i.code==='ENVIRONMENT_VALUE_UNEVALUATED'&&i.detail.startsWith('ambientEnvironmentMap=')));
+ assert.equal(node.environmentMap,'Assets/Textures/ZergSky.dds');
+ assert.ok(!scene.issues.some(i=>i.code==='ENVIRONMENT_VALUE_UNEVALUATED'&&i.detail.startsWith('ambientEnvironmentMap=')));
 });
 
 test('A native-sized HotS fog timeline retains sixty-five nodes while selecting one timed fog state',()=>{
  const source='<CutsceneState>'+Array.from({length:65},(_,i)=>`<CCutsceneNodeFog guid="${i}" fogDensity="${i/1000}"><CCutsceneElementObject start="${i*1000}" duration="1000"/></CCutsceneNodeFog>`).join('')+'</CutsceneState>',scene=parsePreviewScene(source,'HotS-fog-timeline'),environment=createEnvironmentKernel(createPreviewKernel());
  assert.equal(scene.fog?.length,65);assert.equal(environment.fog(scene,64000).density,.064);assert.equal(environment.fog(scene,65000).density,0);
+});
+
+test('ActiveLight selects the authored environment cube rather than the base preset cube',()=>{
+ const scene=parsePreviewScene('<CutsceneState><CCutsceneNodeEnvironmentLight guid="1" ambientEnvironmentMap="Assets/blue.dds" ambientColor="1,1,1"/><CCutsceneElementActiveLight lightGUID="1" start="0" blendTime="1000"/></CutsceneState>','environment-cube');
+ const baseCube={size:1,faces:Array(6).fill(Buffer.from([255,0,0,255]).toString('base64')),sha256:'red'},nodeCube={size:1,faces:Array(6).fill(Buffer.from([0,0,255,255]).toString('base64')),sha256:'blue'};
+ scene.lighting={...createLightingKernel().fallback,environmentMap:'Assets/red.dds',environmentCube:baseCube};scene.environmentLights![0].environmentCube=nodeCube;
+ const environment=createEnvironmentKernel(createPreviewKernel());
+ assert.equal(environment.lighting(scene,0).environmentCube,baseCube);
+ assert.equal(environment.lighting(scene,499).environmentMap,'Assets/red.dds');
+ assert.equal(environment.lighting(scene,500).environmentCube,nodeCube);
+ assert.deepEqual(createLightingKernel().cube(environment.lighting(scene,1000),[1,0,0]),[0,0,1]);
+ // An authored but unavailable map must not silently reuse another map's pixels.
+ delete scene.environmentLights![0].environmentCube;
+ assert.equal(environment.lighting(scene,1000).environmentCube,undefined);
+ assert.equal(scene.lighting.environmentCube,baseCube);
+});
+
+test('late-bound ambient follows cube replacement and scalar fades without applying the node HDR factor to the scalar',()=>{
+ const scene=parsePreviewScene('<CutsceneState><CCutsceneNodeEnvironmentLight guid="1" ambientEnvironmentMap="Assets/blue.dds" ambientEnvironmentMultiplier=".025" ambientColor=".2,.3,.4" hdrAmbientMultiplier="3"/><CCutsceneElementActiveLight lightGUID="1" start="0" blendTime="1000"/></CutsceneState>','environment-late-ambient');
+ scene.lighting=resolvePreviewLighting(['<Catalog><CLight id="base"><AmbientEnvironmentMap value="Assets/white.dds"/><ToDInfoArray AmbientColor=".1,.2,.3"><Param index="HDRAmbientMultiplier" value="2"/></ToDInfoArray></CLight></Catalog>'],'base');
+ const white={size:1,faces:Array(6).fill(Buffer.from([255,255,255,255]).toString('base64')),sha256:'white'},blue={size:1,faces:Array(6).fill(Buffer.from([0,0,255,255]).toString('base64')),sha256:'blue'};scene.lighting.environmentCube=white;scene.environmentLights![0].environmentCube=blue;
+ const environment=createEnvironmentKernel(createPreviewKernel()),k=createLightingKernel(),half=environment.lighting(scene,500),end=environment.lighting(scene,1000);
+ assert.equal(half.environmentCube,blue);k.ambientUniform(half).forEach(value=>assert.ok(Math.abs(value-.5125)<1e-12));k.ambientUniform(end).forEach(value=>assert.ok(Math.abs(value-.025)<1e-12));
+ assert.deepEqual(k.cube(half,[1,0,0]),[0,0,1]);assert.equal(scene.lighting.ambientEnvironmentMultiplier,1);
+ delete scene.environmentLights![0].environmentCube;const missing=environment.lighting(scene,1000);
+ assert.equal(missing.environmentCube,undefined);k.ambientUniform(missing).forEach((value,i)=>assert.ok(Math.abs(value-[.6,.9,1.2][i])<1e-12));
+ assert.equal(scene.environmentLights![0].values.hdrAmbientMultiplier,3);assert.equal(scene.environmentLights![0].values.ambientColorRed,.2);
+});
+
+test('legacy packed cube states blend the effective default1 continuously into zero and interrupted fades without mutating the source',()=>{
+ const scene=parsePreviewScene('<CutsceneState><CCutsceneNodeEnvironmentLight guid="1" ambientEnvironmentMultiplier="0"/><CCutsceneNodeEnvironmentLight guid="2" ambientEnvironmentMultiplier=".8"/><CCutsceneElementActiveLight lightGUID="1" start="100" blendTime="1000"/><CCutsceneElementActiveLight lightGUID="2" start="600" blendTime="1000"/></CutsceneState>','legacy-cube-multiplier');
+ scene.lighting={...createLightingKernel().fallback,ambient:[0,0,0],environmentCube:{size:1,faces:Array(6).fill(Buffer.from([255,255,255,255]).toString('base64')),sha256:'legacy-white'}};
+ const environment=createEnvironmentKernel(createPreviewKernel()),k=createLightingKernel(),times=[99,100,350,600,850,1100,1600],expected=[1,1,.75,.5,.575,.65,.8];
+ times.forEach((time,i)=>k.ambientUniform(environment.lighting(scene,time)).forEach(value=>assert.ok(Math.abs(value-expected[i])<1e-12,`${time}: ${value} != ${expected[i]}`)));
+ assert.equal(scene.lighting.ambientEnvironmentMultiplier,undefined);assert.equal(scene.environmentLights![0].values.ambientEnvironmentMultiplier,0);
 });

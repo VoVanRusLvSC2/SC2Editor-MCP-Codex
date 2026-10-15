@@ -1,5 +1,6 @@
 import {createGlobalLightingKernel} from '../lighting/math.js';
 import {createGlobalToneMath} from '../lighting/tone.js';
+import {createGlobalColorizationMath} from '../lighting/colorization.js';
 import type {GlobalLighting} from '../lighting/types.js';
 import { deflateSync } from "node:zlib";
 import type { TerrainState } from "./operations.js";
@@ -29,7 +30,7 @@ export function renderTerrainPng(
 ): Buffer {
   if (!Number.isInteger(size) || size < 16 || size > 512)
     throw new Error("PREVIEW_SIZE_RANGE");
-  const hm = state.heights, lightMath=createGlobalLightingKernel(),tone=createGlobalToneMath();
+  const hm = state.heights, lightMath=createGlobalLightingKernel(),tone=createGlobalToneMath(),toneControls=tone.controls(lighting??lightMath.fallback),colorMath=createGlobalColorizationMath(),mapping=mode==='lit'&&lighting?colorMath.prepare(lighting):undefined;
   let min = Infinity,
     max = -Infinity;
   for (let y = 0; y < hm.height; y++)
@@ -87,9 +88,10 @@ export function renderTerrainPng(
       if(mode==='lit'&&lighting&&!hidden&&sample.mask!==0){
         const left=Math.max(0,gx-1),right=Math.min(hm.width-1,gx+1),bottom=Math.max(0,gy-1),top=Math.min(hm.height-1,gy+1);
         const at=(x:number,y:number)=>hm.sample({x:x*state.descriptor.scale[0]+state.descriptor.offset[0],y:y*state.descriptor.scale[1]+state.descriptor.offset[1]}).height;
-        const normal=[-(at(right,gy)-at(left,gy))/((right-left)*state.descriptor.scale[0]),-(at(gx,top)-at(gx,bottom))/((top-bottom)*state.descriptor.scale[1]),1],params=lighting.parameters??{};
+        const normal=[-(at(right,gy)-at(left,gy))/((right-left)*state.descriptor.scale[0]),-(at(gx,top)-at(gx,bottom))/((top-bottom)*state.descriptor.scale[1]),1];
         const lit=lightMath.diffuse(lighting,normal,rgb.map(v=>v/255),1,lightMath.cube(lighting,normal));
-        rgb=tone.color(lit,lighting.operatorHDR??0,params.HDRExposure??1,params.HDRContrast??1,params.HDRWhitePoint??1,!!params.HDRWhiteShift).map(v=>Math.round(Math.max(0,Math.min(1,v))*255));
+        const mapped=tone.color(lit,toneControls.operator,toneControls.exposure,toneControls.contrast,toneControls.whitePoint,toneControls.whiteShift);
+        rgb=(mapping?.lut?colorMath.sample(mapping.lut,mapped):mapped).map(v=>Math.round(Math.max(0,Math.min(1,v))*255));
       }
       const off = py * (size * 3 + 1) + 1 + px * 3;
       for (let c = 0; c < 3; c++) raw[off + c] = rgb[c];

@@ -1,7 +1,16 @@
 # Changelog
 
+## Cutscene renderer v42 and shared lighting — 2026-10-15
+
+- Add blue editor panels, the complete authored-property inspector, independent frame guides and output fitting, and selectable Director/timeline objects.
+- Correct native Actor/Light rotation conventions, camera basis, ordinary material HDR factors, independent environment-cube intensity and spot-light cone math. Accept the valid large city crowd mesh within bounded memory limits.
+- Replace approximate RGB grading with shared HSL/Colorize/Variations and a 16-cube LUT. Correct tone contrast and enable the normal HDR WhiteShift stage in WebGL and CPU terrain previews.
+- Document implemented features, remaining limits and the lighting roadmap in `docs/RENDER_STATUS_V42_RU.txt`. Keep game assets and raw research local; retain existing attribution and third-party terms.
+- Validation: release build and exported-source typecheck pass; the v42 targeted graph passes 327 tests with no skips. Native shadow passes, complete postprocessing and matched engine/GPU pixels remain open; `engineValidated=false`, `allSupported=false`.
+
 ## Offline previews, shared lighting and source publication — 2026-10-14
 
+- Add v30 cutscene editor panels, resource/object selection, live Property/Value rows, independent 16:9/16:10 frame guides and output fitting, RTT source view, render resolution and explicit repeat/End Scene stop controls. Correct transparent object sorting, guard depth clears against inherited state, and resolve authored EnvironmentLight cubes. Native portrait transforms and full lighting/shadow fidelity remain open.
 - Add offline WebGL2 cutscene playback with typed M3/M3A property bindings, layered animation sampling, materials, embedded cameras/lights, RTT, localized audio/subtitles and a selectable timeline.
 - Share catalog lighting, Key/Fill/Back, ambient environment and tone operators across previews; retain MCP authoring for map lighting, cutscene lights and fog.
 - Add asset/UI/dialog previews, sequential MCP batches, readable UI XML writes and bounded Data reads.

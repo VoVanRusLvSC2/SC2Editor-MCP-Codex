@@ -46,11 +46,12 @@ test('real SDK creates an empty document through the registered MCP tools with a
  const f=await fixture(t),install=path.join(f.root,'game'),env=Object.fromEntries(Object.entries(process.env).filter((entry):entry is[string,string]=>entry[1]!==undefined));delete env.SC2_MCP_MODULES;env.SC2_UI_ROOT=f.root;env.SC2_MCP_PROFILE='document';env.SC2_CASC_ROOT=install;
  // This is a real native CASC-reader test when the installed game is available.
  const actual='C:/Program Files (x86)/StarCraft II';try{await fs.stat(path.join(actual,'.build.info'));}catch{t.skip('Installed SC2 is unavailable');return;}env.SC2_CASC_ROOT=actual;
- const client=new Client({name:'document-creation-test',version:'1'});t.after(()=>client.close());await client.connect(new StdioClientTransport({command:process.execPath,args:['dist/index.js'],env,stderr:'pipe'}));
+ const client=new Client({name:'document-creation-test',version:'1'});try{await client.connect(new StdioClientTransport({command:process.execPath,args:['dist/index.js'],env,stderr:'pipe'}));
  const call=async(name:string,args:Record<string,unknown>={})=>{const r=await client.callTool({name,arguments:args});assert.notEqual(r.isError,true,JSON.stringify(r));if(r.content[0].type!=='text')throw Error('Expected text');return JSON.parse(r.content[0].text);};
  const tools=await client.listTools();assert.equal(tools.tools.filter(t=>t.name.startsWith('document.')).length,11);
  const p=await call('document.plan',{kind:'mod',modType:'extension',destination:'sdk-extension',dependencies:{mode:'standard',expansion:'liberty',campaign:false}});assert.equal(p.valid,true);const created=await call('document.create',{planId:p.id,dryRun:false});assert.equal(created.created,true);assert.equal((await call('document.inspect',{directory:'sdk-extension'})).valid,true);
  const mp=await call('document.plan',{kind:'map',destination:'sdk-map',map:{width:32,height:48},terrain:{enabled:true,tileSet:'Agria'},dependencies:{mode:'standard',expansion:'liberty',campaign:false}});assert.equal(mp.valid,true);const packed=await call('document.create',{planId:mp.id,dryRun:false,output:'packed'});assert.equal(packed.archiveVerification.reopened,true);assert.equal(packed.kind,'map');
+ }finally{await client.close();} // Stop telemetry/CASC before the fixture removes its directory.
 });
 
 test('new foundations cannot overwrite a pre-existing component or packed destination',async t=>{

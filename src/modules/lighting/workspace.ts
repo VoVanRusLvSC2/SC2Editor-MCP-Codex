@@ -23,6 +23,7 @@ export class LightingWorkspace {
   }
   const lighting=resolveGlobalLighting(texts,options.preset??'DefaultLight',index);
   if(!lighting.found)issues.push({code:'LIGHTING_PRESET_FALLBACK',detail:options.preset??'DefaultLight'});
+  if(lighting.parameters?.HDRAmbientMultiplier!==undefined)issues.push({code:'LIGHTING_AMBIENT_HDR_UNVALIDATED',detail:'The RGB fallback keeps the existing HDRAmbientMultiplier preview policy; its native HDR graph is unvalidated. The resolved environment cube uses the independent native scalar without this multiplier.'});
   if(lighting.environmentMap){const logical=safeCascPath(lighting.environmentMap);let bytes:Buffer|undefined;
    for(const pack of [...packages].reverse())try{bytes=await read(pack+'/base.sc2assets/'+logical,16*1024*1024);break;}catch(e){if(mustPropagate(e))throw e;}
    if(bytes)try{lighting.environmentCube=decodeAmbientCube(bytes);}catch(e){issues.push({code:'LIGHTING_ENVIRONMENT_UNSUPPORTED',detail:String(e)});}else issues.push({code:'LIGHTING_ENVIRONMENT_MISSING',detail:logical});

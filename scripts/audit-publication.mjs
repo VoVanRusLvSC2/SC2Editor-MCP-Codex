@@ -19,7 +19,7 @@ function classify(file) {
     return entry("local", "Local outputs, fixtures, inputs or build/cache directory");
   if (/\.(exe|dll|lib|exp|obj|o|a|pdb|dmp|zip|7z|mpq|sc2map|sc2mod|sc2data|m3|m3a|dds|fxa|fxe|mp3|ogg|wav|png|jpg|jpeg|webp|gz|log|tap|tsbuildinfo|pyc)$/i.test(file))
     return entry("local", "Binary/input asset or auxiliary evidence; not part of this source proposal");
-  if (/\.txt$/i.test(file) && !file.startsWith("native/vendor/") && !file.startsWith("vendor/blizzard-models/") && !/(^|\/)(CMakeLists\.txt|[^/]*(?:LICENSE|COPYING|NOTICE|COPYRIGHT)[^/]*)$/i.test(file))
+  if (/\.txt$/i.test(file) && !roots.has(file) && !docs.has(file) && !file.startsWith("native/vendor/") && !file.startsWith("vendor/blizzard-models/") && !/(^|\/)(CMakeLists\.txt|[^/]*(?:LICENSE|COPYING|NOTICE|COPYRIGHT)[^/]*)$/i.test(file))
     return entry("local", "Auxiliary TXT; required license and CMake files are retained separately");
   if (roots.has(file) || docs.has(file)) return entry("candidate", "Project metadata, notices or current usage documentation");
   if (file.startsWith("schema/")) return entry("review", "Required upstream schema/provenance: redistribution scope needs review");
