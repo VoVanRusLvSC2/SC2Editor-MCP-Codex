@@ -1,5 +1,6 @@
 import type {PreviewScene} from './types.js';
 import {timelineMarkup, timelineCss} from './timeline.js';
+import {createPlaybackKernel} from './playback.js';
 import {editorUiCss} from './editorUi.js';
 
 export function playerMarkup(scene: PreviewScene, dataScripts: string, bootstrapScript: string) {
@@ -7,7 +8,7 @@ export function playerMarkup(scene: PreviewScene, dataScripts: string, bootstrap
     return `<!doctype html><html lang="ru"><head><meta charset="utf-8">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src data:; media-src data:; style-src 'unsafe-inline'; script-src 'unsafe-inline'">
 <meta name="viewport" content="width=device-width"><title>Cutscenes — ${esc(scene.file)}</title>
-<style>${timelineCss}${editorUiCss}</style></head><body data-renderer="v42">
+<style>${timelineCss}${editorUiCss}</style></head><body data-renderer="v61">
 <header>
     <div class="editor-title"><h1>Cutscenes · ${esc(scene.file)}</h1><span id="loading-widget"><progress id="loading-progress" max="100" value="0" aria-label="Загрузка плеера"></progress><span id="loading-label" role="status">0% · Чтение файла</span></span></div>
     <nav class="editor-menus" aria-label="Меню катсцены">
@@ -17,7 +18,7 @@ export function playerMarkup(scene: PreviewScene, dataScripts: string, bootstrap
     </nav>
     <div class="editor-toolbar">
         <button id="play">▶ Воспроизвести</button><select id="camera" aria-label="Камера"></select>
-        <select id="mode" aria-label="Режим рендера"><option value="solid">Материалы</option><option value="wireframe">Каркас</option><option value="skeleton">Скелет</option></select>
+        <select id="mode" aria-label="Режим рендера"><option value="solid">Материалы</option><option value="ungraded">Материалы · без LUT</option><option value="wireframe">Каркас</option><option value="skeleton">Скелет</option></select>
         <select id="speed" aria-label="Скорость"><option value=".25">0.25×</option><option value=".5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select>
         <label><input id="sound" type="checkbox" checked>Звук</label><label><input id="subtitles" type="checkbox" checked>Субтитры</label><label><input id="effects" type="checkbox" checked>Эффекты</label><label><input id="scene-loop" type="checkbox">Повтор</label>
         <label>Фильтры <input id="filters" placeholder="red, win"></label><label title="Видимость объектов с native флагом Guide"><input id="guides" type="checkbox" checked>Guide</label>
@@ -47,6 +48,6 @@ export function playerMarkup(scene: PreviewScene, dataScripts: string, bootstrap
     </aside>
 </main>
 <footer><input id="time" type="range" aria-label="Время сцены" min="0" step="1" value="0"><b id="stamp"></b><p>Мышь: вращение · колесо: отдаление от текущей камеры · D: Director</p><small class="note">WebGL2 · материалы из CASC · SC2 Key/Fill/Back · Fog/Light/RTT. HDR/Bloom/DOF/AO приблизительные; тени и совпадение с движком SC2 не подтверждены.</small></footer>
-${timelineMarkup(scene)}<output id="status" role="status">Подготовка WebGL2…</output>
+${timelineMarkup({...scene,duration:createPlaybackKernel().duration(scene)})}<output id="status" role="status">Подготовка WebGL2…</output>
 ${dataScripts}<script>${bootstrapScript}</script></body></html>`;
 }

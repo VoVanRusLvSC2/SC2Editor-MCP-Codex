@@ -1,5 +1,93 @@
 # Changelog
 
+## Cutscene renderer v61 static sampler bias — 2026-10-16
+
+- Qualified ordinary DDS 2D and native cube bindings now apply the native constructor MipLODBias of -0.75 to implicit, explicit-LOD and gradient sampling. Authored sampling bias remains additive; the GPU program cache distinguishes native and legacy bindings.
+- Preserve legacy PNG/video/RTT/effect sampling and the blue Director UI/property inspector. Full runtime graphics-quality selection and matched original GPU images remain unverified.
+- Validation: normal/release builds and serializable factory parity; 172 focused tests, 454 offline ESSL compile/link pairs and 322 recorded scene moments across six local cutscenes. These are source/data/command checks, not driver, pixel or frame-rate validation. `engineValidated=false`, `allSupported=false`.
+
+## Cutscene renderer v60 original 2D mip transport — 2026-10-16
+
+- Carry original rectangular DDS BC1/BC2/BC3 and mask-decoded RGB32 mip chains from the asset producer into the shared WebGL2 loader. Select a bounded original mip instead of resampling or generating levels; retain the PNG fallback for other preview paths.
+- Upload compatible S3TC blocks directly or decode the same source levels to RGBA, with explicit maximum mip level and wrap state. Validate partial chains, dimensions, truncation and malformed payloads before allocating GPU resources.
+- Local input checks cover 941 texture/size cases and 7,969 source mip subresources. Game resources, embedded HTML players, screenshots and raw research are excluded from source publication.
+- Shared shadow-camera geometry and its numeric tests are included as source preparation; it is not connected to active shadow rendering. Native shadows, complete lighting/postprocessing, FX/terrain/audio parity and original-frame comparison remain open.
+
+## Cutscene renderer v54 native detail-normal UVs — 2026-10-16
+
+- Qualified ordinary native materials now sample both detail normals with config1 coordinates and independent mask1/mask2 gradients. A missing mask2 uses the first native UV emitter; disabling its colour contribution retains its animated gradient coordinates.
+- Retain raw LAYR flags and related-UV provenance on new imports. Existing local Davis materials receive metadata checked against the same SHA-matched M3; geometry, animation and source property values are preserved.
+- Blue editor UI and authored-property inspector remain. Native image parity, full sampler/lighting/shadow rules and unsupported UV families remain unvalidated.
+
+## Cutscene renderer v53 native normal-blend activation — 2026-10-16
+
+- Read native MAT bits 0x4 and 0x08000000 for detail-normal blending and the second mask. Qualified two-detail materials now sum enabled masks, choose one detail normal by sign and blend with squared weight; a missing disabled second mask no longer replaces the result at full weight. Raw-disabled blending ignores retained detail layers.
+- Reuse the existing signed CPU/GPU material implementation and per-property M3A sampling without mutating imported materials or animation IDs. Six General Davis hair materials in the city scene take this route. Detail UV/gradient ownership, disabled-layer defaults and matched native images remain open; this change does not establish full lighting parity.
+
+## Cutscene renderer v52 native environment LOD — 2026-10-16
+
+- Apply the native ordinary type4 UV matrix to explicit color, normal, gloss, emissive, mask and alpha layers: XYZ rotation about the native half-unit pivot, negative offsets and XY tiling. Existing per-property M3A samples supply the transforms. Upload the native two-row matrix as mat4x2. Height/parallax, flipbooks, detail-normal ownership, other UV emitters and special/PBR/FX paths keep prior handling.
+- For qualified native cube Envio materials with raw MAT bit0x800, compute Windows SC2 explicit LOD from normal-map UV derivatives or the interpolated eye-to-vertex vector times0.25, plus floor(log2(source face size)) times one minus processed gloss alpha. Source size is independent of available mip count; EnvioMask keeps implicit LOD.
+- Share one gloss sample with specular/local-light calculations. Preserve unclamped/unsquared gloss for the LOD bias; explicitly handle zero derivatives before GLSL log2. Native sampler state and matched original/GPU pixels remain unverified.
+
+## Cutscene renderer v51 native cube mip transport — 2026-10-16
+
+- Preserve DDS cube faces and original mip levels in compact BC1/BC2/BC3 or decoded RGBA payloads. Qualified ordinary environment materials use real samplerCube bindings; the original atlas remains available for other routes.
+- Upload original compressed blocks when S3TC supports the dimensions; otherwise decode each native mip to RGBA. Set the actual maximum level, including intentionally preblurred single-level resources; never generate new cube mips from an atlas.
+- Preserve native ambient cubes, ordinary 2D images, RTT and special-effect routes. Native gloss-based explicit LOD and multi-owner/alternate environment modes remain pending; this change does not establish original-frame fidelity.
+
+## Cutscene renderer v50 DDS cube orientation — 2026-10-16
+
+- Reverse rows within each DDS cubemap face when packing the preview horizontal cross. This compensates for the existing cubeUv shader V convention and restores the native Direct3D/OpenGL face orientation; ordinary 2D DDS images keep their original rows.
+- Keep native DDS rows for real ambient samplerCube uploads. Gradient-face checks exercise both material-atlas and native ambient sampling at 96 off-axis directions.
+- Version only the cube thumbnail cache so previously cached inverted faces are regenerated. Preserve source DDS resources, model/animation data and the existing material shader math. Native roughness LOD, mip retention and cube-edge filtering remain pending.
+
+## Cutscene renderer v49 environment UV matrix — 2026-10-16
+
+- Ordinary standard mesh materials with one enabled environment layer transform decoded world normals and interpolated incident vectors before reflection/projection, using the native offset/XYZ rotation/scale order. Both inputs use homogeneous w=1; transformed normals retain their native length.
+- Consume the existing per-property M3A sampler and distinguish matrix routes in the GPU program cache. Remove the old post-projection UV/parallax adjustment for this route, including cube sampling.
+- Materials with multiple environment owners or flipbooks keep the previous preview route. Special/FX and alternate runtime modes, roughness LOD and original GPU image parity remain open; this is not a claim of complete native rendering.
+
+## Cutscene renderer v48 environment vectors — 2026-10-16
+
+- Standard native M3 environment/enviMask projections use the decoded world normal and an interpolated world eye-to-vertex vector. Previously they used the geometric view-space normal, so normal-map detail did not steer these reflections.
+- Include the native environment route in the GPU program key and prewarm it. Preserve specialized/PBR paths, ordinary UVs and existing animation sampling. Full native environment UV-matrix order and roughness/LOD remain pending.
+- Validate generated ESSL with the official Khronos glslang compiler: 453 unique vertex/fragment pairs, including 176 environment variants, compile/link offline. This does not validate GPU pixels, native image parity or performance.
+
+## Cutscene renderer v47 material flags and LotV textures — 2026-10-15
+
+- Correct native MAT bit 0x800 polarity for specular energy in the importer, encoder flag helper and old embedded-model adapter. Preserve raw flags and specialized material families. Environment roughness blur is still pending.
+- Decode RGB32 DDS cubemaps into the existing reflection atlas, retaining channel masks, face order, pitch and face-major mip offsets. Validate missing faces, mip bounds and truncation.
+- Resolve ordinary media under the selected locale as well as base assets, keeping dependency precedence and explicit paths. This restores localized Raynor body and Hyperion screen textures used by LotV.
+- Reserve up to 25 Mi pixels instead of 24 for texture previews, allowing recovered texture layers to fit without shrinking already embedded textures during a local update. GPU mip storage can increase by about 5.3 MiB at this limit; no FPS improvement is claimed.
+- Real LotV resource decoding and offline scene/command checks cover these changes. Actual GPU pixels, performance and native visual parity remain unverified.
+
+## Cutscene renderer v46 texture filtering — 2026-10-15
+
+- Adapt ModKit's MIT static texture filtering with a maximum of 8x anisotropy, bounded by the device capability. Cache extension queries per context and retain trilinear mipmaps without the extension. RTT, video, palette, ambient cube and postprocess sampling keep their existing paths.
+- Report the selected filtering factor in frame/MCP capture diagnostics. Keep upstream attribution and permission inside serialized players and in `vendor/modkit-scene`.
+- Audit pinned ModKit and ModKit-Blizzard sources against the current renderer. Their preview light floor, four-light route, generic shadow filter and incomplete reflection projection are not adopted as SC2 equations. Native image parity and the Nova color discrepancy remain unverified.
+
+## Cutscene renderer v45 MCP capture and light budget — 2026-10-15
+
+- Add `cutscene.render`: capture a requested native tick from the existing WebGL2 player and return a PNG through MCP, with frame, renderer and light diagnostics. Use an isolated background browser profile, bounded CDP pipe calls and a unique output file. No SC2 Editor or software-rasterizer substitution.
+- Preserve exact capture dimensions, wait for media readiness and warm the existing RTT targets. Capture protocol/controller and MCP output tests use fakes; actual browser capture and native-frame parity remain unverified.
+- Use up to 128 local lights on devices with at least 1024 fragment uniform vectors; retain 32/8 tiers for smaller devices. Report omitted lights and skip zero-attenuation lighting work. Nova reference frames previously lost 21–28 active lights at the 32-light cap; hardware performance and visual improvement still need measurement.
+
+## Cutscene renderer v44 playback and material lighting — 2026-10-15
+
+- Fit the timeline and seek slider to the last enabled End Scene instead of extended camera/model lifetimes. Show the exact endpoint and elapsed/total time; keep authored data intact.
+- Handle simultaneous bookmark commands and eligible jump targets, and reset the audio clock on jumps, loops and scrubbing. Start 2D voices at their authored gain before the first sample; preserve stereo and per-event SoundData levels.
+- Accumulate local diffuse/specular lighting before material and reflection layers. Environment specular uses incident light independently of the material specular map; avoid repeated material texture samples inside the light loop.
+- Add “Materials without LUT” for comparing color grading while retaining lighting and tone mapping. Full native lighting, shadows, audio mixing and frame parity remain unvalidated.
+
+## Cutscene renderer v43 material preview — 2026-10-15
+
+- Integrate the useful material ideas from the supplied render-preview archive into the current TypeScript source. Preserve v42 lighting, colorization, camera, UI, large-scene and depth fixes.
+- Use a bounded alpha cutout for eligible hair masks; keep authored thresholds, alternate masks, ordinary transparency and actor fades. Software standard-material snapshots share the hair policy.
+- Merge eligible opaque CMP_ reflection/height details with the textured base. Keep surface-specific caches, parallax height and native property ownership; restore separate passes for animated alpha and prepare both shader variants before playback.
+- Share finite radial-light parameters and report equal/reversed-endpoint fallbacks. These preview policies are approximations, not native-engine validation. Background browser capture remains separate pending safe integration.
+
 ## Cutscene renderer v42 and shared lighting — 2026-10-15
 
 - Add blue editor panels, the complete authored-property inspector, independent frame guides and output fitting, and selectable Director/timeline objects.

@@ -47,7 +47,7 @@ const MAT_TWO_SIDED = 0x8;
 const MAT_UNSHADED = 0x10;
 const MAT_DEPTH_PREPASS = 0x100;
 const MAT_DOUBLE_LAMBERT = 0x80000;
-/** MAT_ simulate_roughness: the gloss blurs the environment instead of dimming the specular. */
+/** MAT_ simulate_roughness enables specular energy correction and environment blur together. */
 const MAT_SIMULATE_ROUGHNESS = 0x800;
 const MAT_CLAMP_OUTPUT = 0x40000000;
 const SPECIALIZED_MATERIAL_TAGS = {
@@ -178,6 +178,9 @@ function convertLayer(sections, layer, slot, op, animationTracks) {
         clampResult: (flags & LAYR_COLOR_CLAMP) !== 0,
         wrapX: (flags & LAYR_UV_WRAP_X) !== 0,
         wrapY: (flags & LAYR_UV_WRAP_Y) !== 0,
+        // Native UV allocation provenance; preserve related-layer redirects.
+        ...{sourceFlags: flags >>> 0,
+            ...(typeof layer.uv_source_related === 'number' ? {sourceUvRelated: layer.uv_source_related} : {})},
     };
     if (usesConstantColor) {
         converted.constantColor = animColor(layer.color_value, animationTracks);
@@ -309,12 +312,12 @@ export function convertStandardMaterial(sections, mat, animationTracks) {
     };
 }
 /**
- * The engine dims the specular by FakeEnergyConservingSpec unless SimulateRoughness is set
- * (CMaterial_ApplyForDraw, as WhiteoutFlakes reads it); hdr_spec values of 2-5 assume the dim.
+ * Base98310 141f75cf5: FakeEnergyConservingSpec receives (flags >> 11) & 1.
+ * The sibling BlurEnvironmentMap setter uses the same bit; neither value is inverted.
  * A separate object: the vendored codec-kit type predates the field until the next hop.
  */
 function specularEnergy(flags) {
-    return { specularEnergyConservation: (flags & MAT_SIMULATE_ROUGHNESS) === 0 };
+    return { specularEnergyConservation: (flags & MAT_SIMULATE_ROUGHNESS) !== 0 };
 }
 function surfaceMaterial(layers, overrides = {}) {
     return {

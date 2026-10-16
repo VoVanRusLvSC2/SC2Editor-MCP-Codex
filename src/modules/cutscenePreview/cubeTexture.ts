@@ -1,1 +1,1 @@
-export {decodePreviewDds} from '../assets/cubeTexture.js';
+export {decodePreviewDds,packPreviewCube} from '../assets/cubeTexture.js';

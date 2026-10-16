@@ -24,6 +24,7 @@ under this license unless the output contains our code.
 | --- | --- | --- |
 | Original code across all project modules and original documentation | Custom attribution license | Root `LICENSE`, required project credit and this scope notice |
 | `vendor/blizzard-models/` | Package declares GPL-2.0-only; local modifications to that component retain GPL terms | `LICENSE-GPL-2.0.txt`, `NOTICE.md`, editable sources and modification/build information |
+| Static texture filtering method in `src/modules/cutscenePreview/materialTextures.ts`, adapted from ModKit | MIT; excluded from the root custom license | Embedded MIT notice, `vendor/modkit-scene/LICENSE-MIT.txt` and `NOTICE.md` |
 | `native/vendor/StormLib/` | MIT for StormLib; bundled codecs and other third-party files retain their individual notices | Entire upstream license/notice files, including notices within bundled sources |
 | CascLib fetched by the native CASC build | MIT; pinned upstream revision | `native/casc/LICENSE-CascLib.txt`, `CASC-REVISION.json` and upstream notices |
 | Tiktoken vocabulary | MIT notice supplied with the vocabulary | `generated/TIKTOKEN_LICENSE.txt` |

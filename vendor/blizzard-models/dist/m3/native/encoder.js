@@ -2608,8 +2608,8 @@ function materialFlags(material) {
         flags |= 524288;
     if (standard?.clampOutput)
         flags |= 1073741824;
-    // SimulateRoughness: a material that states no specular dim (another game's) keeps its highlight.
-    if (standard?.specularEnergyConservation === false)
+    // Base98310 bit11 enables specular dimming (and environment blur); raw flags above stay authoritative.
+    if (standard?.specularEnergyConservation === true)
         flags |= 0x800;
     return flags >>> 0;
 }

@@ -3,6 +3,14 @@ import {parsePreviewScene} from '../modules/cutscenePreview/scene.js';import {cr
 function cube(){const b=Buffer.alloc(128+6*8);b.write('DDS ');b.writeUInt32LE(124,4);b.writeUInt32LE(4,12);b.writeUInt32LE(4,16);b.writeUInt32LE(1,28);b.writeUInt32LE(32,76);b.write('DXT1',84);b.writeUInt32LE(0xfe00,112);for(let i=0;i<6;i++)b.writeUInt16LE(0xffff,128+i*8);return b;}
 test('Uniform native cube produces constant Lambert ambient in every direction',()=>{const sh=environmentIrradiance(cube()),k=createLightingKernel();for(const normal of [[1,0,0],[-1,0,0],[0,1,0],[0,0,-1],[1,1,1]])for(const value of k.irradiance(sh,normal))assert.ok(Math.abs(value-1)<.00002,String(value));});
 test('Cube +X illumination remains in world space and differs from opposite direction',()=>{const b=cube();for(let i=1;i<6;i++)b.writeUInt16LE(0,128+i*8);const sh=environmentIrradiance(b),k=createLightingKernel();assert.ok(k.irradiance(sh,[1,0,0])[0]>k.irradiance(sh,[-1,0,0])[0]+.3);});
+
+test('native DDS top half on +X contributes toward positive world Y in derived irradiance',()=>{
+ const bytes=cube();for(let face=1;face<6;face++)bytes.writeUInt16LE(0,128+face*8);
+ // +X native camera has +Y up: top two rows white, bottom two rows black.
+ bytes.writeUInt32LE(0x55550000,132);
+ const sh=environmentIrradiance(bytes),kernel=createLightingKernel();
+ assert.ok(kernel.irradiance(sh,[1,1,0])[0]>kernel.irradiance(sh,[1,-1,0])[0]+.1);
+});
 test('Native bridge inherits environment path and preserves zero Ambient/Key and HDR operator',()=>{const light=resolvePreviewLighting(['<Catalog><CLight id="base"><AmbientEnvironmentMap value="Assets/a.dds"/><ToDInfoArray AmbientColor=".2,.2,.2" OperatorHDR="4"/></CLight><CLight id="bridge" parent="base"><ToDInfoArray AmbientColor="0,0,0"><DirectionalLight index="Key" ColorMultiplier="0" SpecColorMultiplier="0"/></ToDInfoArray></CLight></Catalog>'],'bridge');assert.equal(light.environmentMap,'Assets/a.dds');assert.deepEqual(light.ambient,[0,0,0]);assert.deepEqual(light.directional[0].color,[0,0,0]);assert.equal(light.operatorHDR,4);});
 
 test('EnvironmentLight retains authored HDR/AO/colorization controls and blends their animated catalog aliases',()=>{

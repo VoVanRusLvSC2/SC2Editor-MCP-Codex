@@ -73,7 +73,7 @@ test('GPU packs shared native spot coefficients once per sampled light and repor
  const stats=renderer.draw(k.sample(scene,500,'director',undefined,false),320,200,'solid',undefined,false);
  assert.equal(parameterCalls,3,'each sampled spot is converted once, independent of repeated material batches');assert.equal(stats.localLights,2);assert.equal(stats.skippedSpotLights,1);
  const options=uploaded.get('u_previewLocalOptions[0]')!,directions=uploaded.get('u_previewLocalDirection[0]')!,node=math.spotParameters(.35,.75)!;
- close(options.slice(0,4),[0,node.bias,node.scale,3].map(Math.fround));close(directions.slice(0,4),[0,0,-1,node.hotspotMultiplier].map(Math.fround));
- close(options.slice(4,8),[0,-.8775825618903728,8.168770850313663,3].map(Math.fround));close(directions.slice(4,8),[0,0,-1,1.340387890121944].map(Math.fround));
+ close(options.slice(0,4),[1,node.bias,node.scale,3].map(Math.fround));close(directions.slice(0,4),[0,0,-1,node.hotspotMultiplier].map(Math.fround));
+ close(options.slice(4,8),[1,-.8775825618903728,8.168770850313663,3].map(Math.fround));close(directions.slice(4,8),[0,0,-1,1.340387890121944].map(Math.fround));
  assert.ok([...options,...directions].every(Number.isFinite));assert.equal(scene.lights![1].falloff,0);
 });

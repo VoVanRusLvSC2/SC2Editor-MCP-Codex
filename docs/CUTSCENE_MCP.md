@@ -1,5 +1,17 @@
 # Cutscene MCP guide
 
+## Preview and frame capture
+
+`cutscene.preview` produces a local interactive WebGL2 player. `cutscene.render` builds the same player and returns a PNG frame plus renderer diagnostics through MCP:
+
+```json
+{"file":"MyScene.SC2Cutscene","time":3000,"width":1280,"height":720}
+```
+
+Time uses the scene's native ticks. Frame capture needs installed Microsoft Edge or Google Chrome and runs only when requested; registering the MCP tool does not launch a browser. It does not launch SC2 Editor. Rebuild the source and reconnect MCP after updating.
+
+Renderer v61 includes original DDS 2D/cube mip transport, qualified native UV/detail-normal and reflection LOD handling, and scoped static sampler bias. The blue Director UI, aspect guides and authored-property inspector remain available. Native shadow passes and complete lighting/postprocessing/FX/terrain/audio parity are unfinished. Protocol/controller and offline shader tests do not establish real-browser capture or SC2 image parity: `engineValidated=false`, `allSupported=false`.
+
 ## Recommended Codex workflow
 
 1. Call `cutscene.context` once with the intended categories and optional batched asset queries.

@@ -15,7 +15,9 @@ A single MCP server and local workbench for StarCraft II map/mod files. TypeScri
 
 Installed SC2 resources can now be read directly through `casc.*`, with a verified build-specific cache and explicit Data/Browse mounts. [CASC guide](docs/CASC_RU.md) · [Current capabilities and gaps](docs/CAPABILITIES_REPORT_RU.md).
 
-**Renderer v42:** [implemented features, limits and lighting roadmap (Russian TXT)](docs/RENDER_STATUS_V42_RU.txt). SC2 engine parity remains unvalidated; native shadow passes are not implemented yet.
+**Renderer v61:** original DDS 2D/cube mip chains, native material UV/detail-normal and reflection LOD handling, and scoped static sampler bias. Blue Director UI and the authored-property inspector are retained. [Changes](CHANGELOG.md); [historical v42 status (Russian TXT)](docs/RENDER_STATUS_V42_RU.txt). SC2 engine parity remains unvalidated; native shadow passes and complete postprocessing remain unfinished.
+
+**MCP frame capture:** [`cutscene.render` WebGL2 frame capture for MCP](docs/CUTSCENE_MCP.md#preview-and-frame-capture), using installed Edge/Chrome and the same player as interactive preview. Protocol/controller tests pass; actual browser capture of this version is not yet verified. Rebuild and reconnect MCP to load the new tool.
 
 **Settings:** [map attributes, variants, players and game options](docs/SETTINGS_RU.md). Portable packages include `SC2-MCP.cmd`; [MCP setup](windows/README-WINDOWS.md).
 

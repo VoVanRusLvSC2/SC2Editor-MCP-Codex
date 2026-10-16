@@ -28,6 +28,8 @@ function classify(file) {
       return entry("candidate", "Runtime tokenizer vocabulary and supplied MIT notice");
     return entry("review", "Required SC2 runtime registry: preserve provenance and review data rights");
   }
+  if (["vendor/modkit-scene/NOTICE.md", "vendor/modkit-scene/LICENSE-MIT.txt"].includes(file))
+    return entry("candidate", "MIT notices for the adapted static texture filtering method");
   if (file.startsWith("vendor/blizzard-models/"))
     return entry("review", "Required GPL model renderer: retain sources/notices; corresponding-source and research scope unresolved");
   if (/^src\/modules\/terrain\/surface\/(core|format)\//.test(file))

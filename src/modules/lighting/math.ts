@@ -6,6 +6,13 @@ export function createGlobalLightingKernel(){
  function normalMatrix(m:number[]){const [a,b,c,d,e,f,g,h,i]=[m[0],m[1],m[2],m[4],m[5],m[6],m[8],m[9],m[10]],det=a*(e*i-f*h)-d*(b*i-c*h)+g*(b*f-c*e);return Math.abs(det)<1e-12?[1,0,0,0,1,0,0,0,1]:[(e*i-f*h)/det,(f*g-d*i)/det,(d*h-e*g)/det,(c*h-b*i)/det,(a*i-c*g)/det,(b*g-a*h)/det,(b*f-c*e)/det,(c*d-a*f)/det,(a*e-b*d)/det];}
  function irradiance(sh:number[][]|undefined,raw:number[]){if(!sh)return [0,0,0];const length=Math.hypot(...raw)||1,[x,y,z]=raw.map(v=>v/length),basis=[.282095,.488603*y,.488603*z,.488603*x,1.092548*x*y,1.092548*y*z,.315392*(3*z*z-1),1.092548*x*z,.546274*(x*x-y*y)];return [0,1,2].map(c=>Math.max(0,basis.reduce((n,b,i)=>n+b*(sh[i]?.[c]??0),0)));}const saturate=(x:number)=>Math.max(0,Math.min(1,x));
  function pointAttenuation(distance:number,recipRange:number,multiplier:number){const ramp=saturate((1-saturate(distance*recipRange))*multiplier);return ramp*ramp;}
+ // The supplied preview uses a finite radial ramp for coincident/reversed near
+ // and far distances. This edge-case fallback is a preview policy, not a native equation.
+ function pointParameters(near:number,range:number){
+  if(!Number.isFinite(near)||!Number.isFinite(range))return undefined;
+  const far=Math.max(.001,range),fallback=near>=far-.001||range<=0;
+  return {range:far,multiplier:fallback?1:far/Math.max(.001,far-near),fallback};
+ }
  // Base98310 141d96b20: node and M3 LITE angles are full radians; .95 is an authored float32 constant.
  function spotParameters(hotspot:number,falloff:number){
   const outer=Math.cos(falloff*.5),inner=Math.cos(Math.min(hotspot,falloff*.949999988079071)*.5),bias=-outer,scale=1/(1-outer),hotspotMultiplier=1/(1-(1-inner)*scale);
@@ -47,5 +54,5 @@ export function createGlobalLightingKernel(){
  function shader(worldNormal:boolean){return `uniform samplerCube u_previewAmbientCube;uniform float u_previewAmbientCubeEnabled;
  vec3 previewGlobalNormal(vec3 n){return ${worldNormal?'normalize(n)':'normalize(mat3(v_previewWorldTangent,v_previewWorldBitangent,v_previewWorldNormal)*n)'};}
  vec3 previewAmbient(vec3 n){vec3 environment=u_previewAmbientCubeEnabled>.5?texture(u_previewAmbientCube,previewGlobalNormal(n)).rgb:vec3(1.);return u_sceneAmbientColor*environment;}`;}
- return {fallback,direction,normalMatrix,irradiance,pointAttenuation,spotParameters,spotAttenuation,blinn,ambientUniform,materialHDR,diffuse,cube,cubeFace,shader};
+ return {fallback,direction,normalMatrix,irradiance,pointAttenuation,pointParameters,spotParameters,spotAttenuation,blinn,ambientUniform,materialHDR,diffuse,cube,cubeFace,shader};
 }

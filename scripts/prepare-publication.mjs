@@ -36,7 +36,7 @@ for (const record of selected) {
   hashes.push({ file: record.file, bytes: copied.length, sha256: digest(copied), category: record.category });
 }
 const notices = ["LICENSE", "CREDITS.md", "THIRD_PARTY_LICENSES.md", "vendor/blizzard-models/LICENSE-GPL-2.0.txt",
-  "vendor/blizzard-models/NOTICE.md", "src/modules/terrain/surface/NOTICE.md",
+  "vendor/blizzard-models/NOTICE.md", "vendor/modkit-scene/NOTICE.md", "vendor/modkit-scene/LICENSE-MIT.txt", "src/modules/terrain/surface/NOTICE.md",
   "native/vendor/StormLib/LICENSE", "native/casc/LICENSE-CascLib.txt", "generated/TIKTOKEN_LICENSE.txt"];
 for (const notice of notices) if (!seen.has(notice.toLowerCase())) throw new Error(`PUBLICATION_NOTICE_MISSING: ${notice}`);
 const report = {

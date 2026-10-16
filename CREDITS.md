@@ -15,6 +15,8 @@ notice does not contain an explicit redistribution license.
 
 Third-party implementations keep their own authorship and licenses:
 
+- ModKit contributors: static texture filtering adapted from `@modkit/scene`;
+  see its [MIT notice and pinned source](vendor/modkit-scene/NOTICE.md).
 - `@modkit/blizzard-models`: the supplied model/material/effect library and
   editable sources; see its [NOTICE](vendor/blizzard-models/NOTICE.md) and
   [GPL-2.0 license](vendor/blizzard-models/LICENSE-GPL-2.0.txt).

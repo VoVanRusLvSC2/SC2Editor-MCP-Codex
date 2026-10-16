@@ -5,7 +5,9 @@ import type {GlobalLighting} from './types.js';
 export function decodeAmbientCube(bytes:Buffer):NonNullable<GlobalLighting['environmentCube']>{
  if(bytes.length<128)throw new Error('LIGHTING_ENVIRONMENT_DDS_TRUNCATED');
  if(!(bytes.readUInt32LE(112)&0x200))throw new Error('LIGHTING_ENVIRONMENT_REQUIRES_CUBE');
- const image=decodePreviewDds(bytes),sourceSize=image.width/4;
+ // Real samplerCube faces retain DDS rows. The material preview cross has a
+ // different per-face V convention and must not be reused for this upload.
+ const image=decodePreviewDds(bytes,'native'),sourceSize=image.width/4;
  if(image.height!==sourceSize*3||sourceSize>512)throw new Error('LIGHTING_ENVIRONMENT_CUBE_BUDGET');
  const size=Math.min(128,sourceSize),cells=[[2,1],[0,1],[1,2],[1,0],[1,1],[3,1]];
  const faces=cells.map(([cx,cy])=>{
