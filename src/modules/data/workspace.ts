@@ -320,21 +320,23 @@ export class DataWorkspace {
 
   private actorIssues(records:CatalogRecord[]){const objects=records.flatMap(r=>r.document.objects());return records.flatMap(r=>r.document.actorCoverageIssues(entry=>this.referenceTokens(objects,entry.tag,entry.attrs.id)));}
 
-  references(records: CatalogRecord[]): DataReference[] {
-    const objects = records.flatMap((record) => record.document.objects().map((object) => ({ ...object, file: record.file })));
+  references(records: CatalogRecord[],scope:'all'|'workspace'='all'): DataReference[] {
+    const objects = records.flatMap((record) => record.document.objects().map((object) => ({ ...object, file: record.file, layer:record.layer })));
     const byId = new Map<string, typeof objects>();
     for (const object of objects) if (object.id) byId.set(object.id, [...(byId.get(object.id) ?? []), object]);
-    const own:DataReference[]=records.flatMap((record) => record.document.references(entry=>this.referenceTokens(objects,entry.tag,entry.attrs.id)).map((reference) => {
+    const ownByRecord=records.map((record) => ({record,refs:record.document.references(entry=>this.referenceTokens(objects,entry.tag,entry.attrs.id)).map((reference) => {
       const targets = (byId.get(reference.value) ?? []).filter(o=>!reference.targetDomain || o.domain === reference.targetDomain);
       const target = targets.length === 1 ? targets[0] : undefined;
       return { file: record.file, ...reference, targetDomain: reference.targetDomain ?? target?.domain, targetType: target?.ctype, evidence: reference.evidence };
-    }));
+    })}));
+    const allOwn:DataReference[]=ownByRecord.flatMap(row=>row.refs);
+    const own=scope==='all'?allOwn:ownByRecord.filter(row=>row.record.layer==='workspace').flatMap(row=>row.refs);
     const inherited:DataReference[]=[];
-    for(const child of objects.filter(o=>o.id&&o.parent)){
+    for(const child of objects.filter(o=>o.id&&o.parent&&(scope==='all'||o.layer==='workspace'))){
       const tokens=this.referenceTokens(objects,child.ctype,child.id),seen=new Set<string>();let parent=child.parent;
-      const childKey=child.ctype+':'+child.id,ownPaths=new Set(own.filter(r=>r.file===child.file&&r.object===childKey).map(r=>r.path.slice(childKey.length)));
+      const childKey=child.ctype+':'+child.id,ownPaths=new Set(allOwn.filter(r=>r.file===child.file&&r.object===childKey).map(r=>r.path.slice(childKey.length)));
       while(parent&&!seen.has(parent)){seen.add(parent);const matches=objects.filter(o=>o.id===parent&&o.domain===child.domain);if(matches.length!==1)break;const ancestor=matches[0],ancestorKey=ancestor.ctype+':'+ancestor.id;
-        for(const reference of own.filter(r=>r.file===ancestor.file&&r.object===ancestorKey&&r.rawExpression?.includes('##')&&r.carrier!=='parent'&&!ownPaths.has(r.path.slice(ancestorKey.length)))){
+        for(const reference of allOwn.filter(r=>r.file===ancestor.file&&r.object===ancestorKey&&r.rawExpression?.includes('##')&&r.carrier!=='parent'&&!ownPaths.has(r.path.slice(ancestorKey.length)))){
           let value=reference.rawExpression!;for(let i=0;i<16&&value.includes('##');i++){const next=value.replace(/##([^#]+)##/g,(whole,id:string)=>tokens[id]??whole);if(next===value)break;value=next;}
           reference.rewritePolicy='readOnly';
           inherited.push({...reference,object:childKey,path:childKey+reference.path.slice(ancestorKey.length),value,resolution:value.includes('##')?'unknown':'resolved',rewritePolicy:'readOnly',inheritedFrom:{object:ancestorKey,file:ancestor.file}});
@@ -485,7 +487,7 @@ export class DataWorkspace {
         next.set(index,include);
         const records=await this.catalog(next);
         for(const file of targets)if(!records.some(r=>r.layer==='workspace'&&r.file===file))records.push({file,absolute:this.workspace.resolveUserPath(file),layer:'workspace',provenance:['workspace'],document:docs.get(file)!});
-        validation=validateDataDocuments(targets[0],records,this.schema,this.references(records));
+        validation=validateDataDocuments(targets[0],records,this.schema,this.references(records,'workspace'));
         verdicts=targets.map(file=>({file,authoring:validateDataAuthoring(file,original.get(file)!,docs.get(file)!,records,records.issues)}));
         const rejected=verdicts.find(v=>!v.authoring.accepted);
         if(rejected)throw new DataAuthoringError(rejected.authoring);
@@ -714,7 +716,7 @@ export class DataWorkspace {
       if ((request.validate ?? true) || request.authoringPolicy !== "compatibility") {
         const validationRecords = await this.catalog(next);
         if (!validationRecords.some((record) => record.layer === "workspace" && record.file === targetFile)) validationRecords.unshift({ file: targetFile, absolute: this.workspace.resolveUserPath(targetFile), layer: "workspace", provenance: ["workspace"], document });
-        validation = validateDataDocuments(targetFile, validationRecords, this.schema,this.references(validationRecords));
+        validation = validateDataDocuments(targetFile, validationRecords, this.schema,this.references(validationRecords,'workspace'));
         authoring = validateDataAuthoring(targetFile, originalDocument, document, validationRecords, validationRecords.issues);
         if (request.authoringPolicy !== "compatibility" && !authoring.accepted) throw new DataAuthoringError(authoring);
         if (!validation.valid && !request.allowInvalid) throw new Error(`Data validation failed with ${validation.errors} error(s): ${validation.diagnostics.filter((entry) => entry.severity === "error").slice(0, 5).map((entry) => `${entry.path}: ${entry.message}`).join("; ")}`);
@@ -734,6 +736,6 @@ export class DataWorkspace {
       const opened = await this.open(file);
       records.unshift({ file: opened.file, absolute: opened.absolute, layer: "workspace", provenance: ["workspace"], document: opened.document });
     }
-    return validateDataDocuments(normalize(file), records, this.schema,this.references(records));
+    return validateDataDocuments(normalize(file), records, this.schema,this.references(records,'workspace'));
   }
 }
