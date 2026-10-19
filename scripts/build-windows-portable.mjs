@@ -18,6 +18,9 @@ for (const directory of ["dist", "schema"]) {
 }
 await fs.cp(path.join(projectRoot,"vendor","blizzard-models"),path.join(app,"vendor","blizzard-models"),{recursive:true});
 await fs.cp(path.join(projectRoot,"vendor","modkit-scene"),path.join(app,"vendor","modkit-scene"),{recursive:true});
+await fs.mkdir(path.join(app,'scripts'),{recursive:true});
+await fs.cp(path.join(projectRoot,'scripts/modkit'),path.join(app,'scripts/modkit'),{recursive:true});
+await fs.copyFile(path.join(projectRoot,'scripts/setup-modkit-runtime.mjs'),path.join(app,'scripts/setup-modkit-runtime.mjs'));
 const runtimeSchemas=["cutscene-schema.json","text-font-style-schema.json","font-style-corpus.json","ai-module-schema.json","data-editor-schema.json","data-observed-schema.json", "galaxy-native-api.json", "trigger-authoring-registry.json", "trigger-skirmish-recipe.json", "o200k_base.tiktoken", "o200k_base.sha256", "TIKTOKEN_LICENSE.txt"];
 await fs.mkdir(path.join(app,"generated"),{recursive:true});
 for(const file of runtimeSchemas)await fs.copyFile(path.join(projectRoot,"generated",file),path.join(app,"generated",file));

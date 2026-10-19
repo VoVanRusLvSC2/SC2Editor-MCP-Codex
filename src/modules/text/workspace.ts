@@ -271,7 +271,7 @@ export class TextWorkspace {
           case "font.import": throw new Error("Unexpected font.import in text transaction");
         }
       }
-      if (style && request.styleFile) next.set(request.styleFile, style.source);
+      if (style && request.styleFile && required.has(request.styleFile)) next.set(request.styleFile, style.source);
       const styleSources = new Map([...next].filter(([file]) => /\.SC2Style$/i.test(file)));
       const stringSources = new Map([...next].filter(([file]) => /Strings\.txt$/i.test(file)));
       validation = validateTextSources(styleSources, stringSources, this.schema);

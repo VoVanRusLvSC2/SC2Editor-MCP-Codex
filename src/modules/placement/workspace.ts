@@ -311,8 +311,14 @@ export class PlacementWorkspace {
       throw new Error("placement.addBatch accepts 1..5000 objects");
     const operations: PlacementMutation[] = [];
     const candidates: BrowseSearchResult[] = [];
+    const resolvedSelectors = new Map<string, Awaited<ReturnType<PlacementWorkspace["resolvePlaceable"]>>>();
     for (const object of args.objects) {
-      const resolved = await this.resolvePlaceable(object.kind, object);
+      const selector = JSON.stringify([object.kind, object.id, object.key, object.query, object.catalogType]);
+      let resolved = resolvedSelectors.get(selector);
+      if (!resolved) {
+        resolved = await this.resolvePlaceable(object.kind, object);
+        resolvedSelectors.set(selector, resolved);
+      }
       operations.push({
         op: "add",
         object: {
@@ -665,6 +671,13 @@ export class PlacementWorkspace {
           : [],
       ...(args.bounds ? { bounds: args.bounds } : {}),
     });
+  }
+
+  async removeBatch(args:{objectIds:number[];objectFile?:string;componentListFile?:string}) {
+    if(!args.objectIds.length||args.objectIds.length>5000||new Set(args.objectIds).size!==args.objectIds.length)throw new Error('INVALID_REMOVE_BATCH');
+    const file=args.objectFile??'Objects',raw=await this.workspace.readRaw(file),document=new PlacementDocument(raw.text,file),present=new Set(document.list().map(o=>o.id));
+    for(const id of args.objectIds)if(!Number.isInteger(id)||id<1||!present.has(id))throw new Error('REMOVE_OBJECT_MISSING: '+id);
+    return this.remember({request:args,objectFile:file,componentListFile:args.componentListFile??'ComponentList.SC2Components',operations:args.objectIds.map(objectId=>({op:'remove' as const,objectId})),candidates:[],evidence:['INFERRED'],warnings:['Trigger/Galaxy object references are not rewritten; callers must select disposable decoration IDs.']});
   }
 
   async scan(objectFile = "Objects") {
@@ -1048,6 +1061,11 @@ export class PlacementWorkspace {
       errors,
       warnings,
       issues,
+      editorVisibility: {
+        placedObjects: (() => { try { return document.list().length; } catch { return 0; } })(),
+        editorLayerState: "UNOBSERVABLE" as const,
+        hint: "The map can contain placed objects while the SC2 Editor hides their 3D layer. If objects appear in the layer list but not the viewport, enable View > Show Layer and select Layer > All in the Editor.",
+      },
       checks: {
         xml: issues.some((entry) => entry.code === "MALFORMED_XML")
           ? "FAIL"

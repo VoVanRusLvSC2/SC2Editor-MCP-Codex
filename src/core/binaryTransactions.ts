@@ -237,6 +237,11 @@ export class BinaryTransactions {
     if (group) for (const file of group.files) this.owners.delete(file);
     if (this.groups.delete(id)) this.revision++;
   }
+  saveContaining(file:string,options:Omit<ByteOptions,'stage'>={}){
+    const id=this.owners.get(this.key(file));
+    if(!id)throw new Error('Staged binary transaction not found for file: '+file);
+    return this.save(id,options);
+  }
   async save(id: string, options: Omit<ByteOptions, "stage"> = {}) {
     return this.serial(async () => {
       const group = this.groups.get(id);

@@ -24,6 +24,7 @@ export class PlayersDocument {
     readonly tableEnd: number;
     readonly defaultObservedPlayer: number;
     private readonly fields = new Map<number, Record<string, Span>>();
+    private readonly playerCountOffset: number;
     constructor(readonly bytes: Buffer) {
         this.core = new MapInfoDocument(bytes);
         let o = this.core.opaqueTailOffset;
@@ -49,6 +50,7 @@ export class PlayersDocument {
         if (musicLength === 65535)
             throw new Error("EXTENDED_MUSIC_STRING_UNSUPPORTED");
         take(musicLength);
+        this.playerCountOffset = o;
         const count = u32();
         if (count > 16)
             throw new Error("INVALID_PLAYER_COUNT");
@@ -77,6 +79,20 @@ export class PlayersDocument {
         // The remaining alliance/team/lighting structures are preserved byte-for-byte.
     }
     inspect() { return { version: 39, players: this.players, startLocationIds: this.startLocationIds, defaultObservedPlayer: this.defaultObservedPlayer, options: Object.fromEntries(Object.entries(flags).map(([name, mask]) => [name, !!(this.core.gameOptionsFlags & mask)])), playerTableEnd: this.tableEnd, preservedTailBytes: this.bytes.length - this.tableEnd, teamAndAllianceWriting: false }; }
+    registerStarts(ids:number[]):Buffer {
+        const all=[...new Set([...this.startLocationIds,...ids])];
+        if(all.length>256||ids.some(id=>!Number.isInteger(id)||id<1||id>0x7fffffff))throw new Error('INVALID_START_LOCATION_ID');
+        const list=Buffer.alloc(4+all.length*4);list.writeUInt32LE(all.length);all.forEach((id,i)=>list.writeUInt32LE(id,4+i*4));
+        const next=Buffer.concat([this.bytes.subarray(0,this.tableEnd),list,this.bytes.subarray(this.tableEnd+4+this.startLocationIds.length*4)]);new PlayersDocument(next);return next;
+    }
+    createPlayer(operation:Extract<SettingsOperation,{op:'player.create'}>):Buffer {
+        if(this.fields.has(operation.playerId))throw new Error('PLAYER_ALREADY_EXISTS');
+        if(this.players.length>=16||operation.aiName.includes('\0'))throw new Error('INVALID_PLAYER_CREATE');
+        const word=(v:number)=>{const b=Buffer.alloc(4);b.writeInt32LE(v);return b;};
+        const record=Buffer.concat([Buffer.from([operation.playerId]),word(controls.indexOf(operation.control)),word(-1),Buffer.from(operation.aiName+'\0'),word(operation.color),word(0),word(0),Buffer.from([0])]);
+        const head=Buffer.from(this.bytes.subarray(0,this.tableEnd));head.writeUInt32LE(this.players.length+1,this.playerCountOffset);
+        const next=Buffer.concat([head,record,this.bytes.subarray(this.tableEnd)]);new PlayersDocument(next);return next;
+    }
     patch(operation: Extract<SettingsOperation, {
         op: "player.set" | "options.set";
     }>): Buffer {

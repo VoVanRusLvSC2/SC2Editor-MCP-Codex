@@ -34,11 +34,17 @@ export function editNativeGeometry(s:TerrainState,operation:Extract<TerrainOpera
  }else if(operation.op==='ramp.create'){
   const center=params.center as {x:number;y:number}|undefined;if(!center)throw new Error('NATIVE_RAMP_CENTER_REQUIRED');const cx=integer(center.x,'center.x',4,p.w-4),cy=integer(center.y,'center.y',4,p.h-4),q=rotations[String(params.direction)];if(q===undefined)throw new Error('NATIVE_RAMP_CARDINAL_DIRECTION_REQUIRED');const lower=integer(params.lowerLevel??1,'lowerLevel',1,2),cid=integer(params.cliffSet??0,'cliffSet',0,63);if(params.width!==undefined&&params.width!==4)throw new Error('NATIVE_RAMP_PROFILE_WIDTH_IS_4');if(!s.descriptor.cliffSets.some(c=>Number(c.i)===cid))throw new Error('NATIVE_CLIFF_SET_UNAVAILABLE');if((q%2===0&&(cx%2!==0||cy%2!==1))||(q%2===1&&(cx%2!==1||cy%2!==0)))throw new Error('NATIVE_RAMP_LATTICE_ALIGNMENT');
   const u=rotate(-1,0,q),r=rotate(0,1,q),high={x:cx+u[0]*2,y:cy+u[1]*2},low={x:cx-u[0]*2,y:cy-u[1]*2};if(level(high.x,high.y)!==lower+1||level(low.x,low.y)!==lower)throw new Error('NATIVE_RAMP_REQUIRES_ADJACENT_ONE_LEVEL_STEP');if(touchesExisting(cx-2,cy-2,cx+2,cy+2))throw new Error('NATIVE_RAMP_OVERLAP');
+  // A single high/low center pair is insufficient on an organic cliff: the
+  // side rails can end in different cliff levels and create black cap seams.
+  for(let lateral=-2;lateral<=2;lateral++){
+   const hx=high.x+r[0]*lateral,hy=high.y+r[1]*lateral,lx=low.x+r[0]*lateral,ly=low.y+r[1]*lateral;
+   if(level(hx,hy)!==lower+1||level(lx,ly)!==lower)
+    throw new Error('NATIVE_RAMP_UNEVEN_CLIFF_RAILS: choose a straight one-level cliff boundary across the full ramp width');
+  }
   for(let row=0;row<7;row++)for(let col=0;col<5;col++){const [dx,dy]=rotate(col-2,row-3,q),v=CARDINAL_RAMP_VERTICES[row][col];setVertex(cx+dx,cy+dy,standard,offsetFor(lower)+v[0],lower+v[1]-1);p.sync.writeInt16LE(Math.round((standard+offsetFor(lower))*256)+v[2],64+((cy+dy)*(p.w+1)+cx+dx)*4);}
-  // Retain the heightmap under ramp side caps. Their native cutout footprint is
-  // not yet reproduced exactly for rotated/stacked ramps; opening it leaves black gaps.
-  // Full cliff wall cutouts and the authored visibility bit remain unchanged.
-  for(let row=0;row<6;row++)for(let col=0;col<4;col++){const [dx,dy]=rotate(col-1.5,row-2.5,q),x=Math.floor(cx+dx),y=Math.floor(cy+dy),v=CARDINAL_RAMP_CELLS[row][col];p.c.writeUInt16LE(lower*64+v[0],32+(y*p.w+x)*2);p.f[32+y*p.w+x]&=~1;rampOwned.set(y*p.w+x,0);const i=Math.floor(y/2)*(p.w/2)+Math.floor(x/2);cells.set(i,{index:i,flags:2,cliffSetIndex:cid,variation:0});dirtyCells.add(i);}
+  // The measured donor ramp cuts out the terrain beneath both side caps
+  // (rows 0/1 and 4/5). Keep all other LFCT bits, including authored hiding.
+  for(let row=0;row<6;row++)for(let col=0;col<4;col++){const [dx,dy]=rotate(col-1.5,row-2.5,q),x=Math.floor(cx+dx),y=Math.floor(cy+dy),v=CARDINAL_RAMP_CELLS[row][col];p.c.writeUInt16LE(lower*64+v[0],32+(y*p.w+x)*2);p.f[32+y*p.w+x]=(p.f[32+y*p.w+x]&~1)|v[1];rampOwned.set(y*p.w+x,0);const i=Math.floor(y/2)*(p.w/2)+Math.floor(x/2);cells.set(i,{index:i,flags:2,cliffSetIndex:cid,variation:0});dirtyCells.add(i);}
   const position=(x:number,y:number)=>{const [a,b]=rotate(x,y,q);return [cx+a,cy+b]};const zero=frame([0,0],[0,0],[0,0],0,0),attrs={dir:String([2,4,6,0][q]),hi:String(lower+1),lo:String(lower),cid:String(cid),leftLo:frame(u,r,position(0,-2),1,2),rightLo:frame(u,r,position(0,2),1,2),leftHi:zero,rightHi:zero,base:frame(u,r,position(-1,0),3,1),mid:frame(u,r,[cx,cy],1,2),leftLoVar:'0',rightLoVar:'0',leftHiVar:'4294967295',rightHiVar:'4294967295'};ramps.push({dir:Number(attrs.dir),hi:lower+1,lo:lower,cliffSetIndex:cid,frames:{mid:{up:u,right:r,center:[cx,cy],width:1,height:2}},variations:{leftLo:0,rightLo:0},rawAttributes:attrs});
  }else if(operation.op==='ramp.remove'){
   const index=integer(params.index,'index',0,ramps.length-1),r=ramps[index],mid=r.frames.mid;if(!mid||r.hi!==r.lo+1||![0,2,4,6].includes(r.dir))throw new Error('NATIVE_RAMP_REMOVE_PROFILE_UNSUPPORTED');const [cx,cy]=mid.center,[ux,uy]=mid.up;for(let y=cy-3;y<=cy+3;y++)for(let x=cx-3;x<=cx+3;x++){const l=(x-cx)*ux+(y-cy)*uy>=1?r.hi:r.lo;setVertex(x,y,standard,offsetFor(l),l);const i=Math.floor(y/2)*(p.w/2)+Math.floor(x/2);dirtyCells.add(i);if(cells.get(i)?.flags===2)cells.get(i)!.flags=1;}ramps.splice(index,1);

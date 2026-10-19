@@ -25,7 +25,7 @@ export function safeCascPath(value: string, allowEmpty = false): string {
 interface CacheMetadata extends CascBuild { schemaVersion: 1; path: string; sha256: string; contentKey: string; encodingKey: string; size: number }
 interface MountRecord { kinds?:CascKind[];locales?:string[];package: string; root: string; build: CascBuild; files: Array<{ logicalPath: string; file: string; sha256: string }> }
 export type CascKind = "catalogs" | "triggers" | "strings" | "schemas" | "layouts";
-export interface CascOptions { install?: string; cacheRoot?: string; backendFactory?: (install: string) => CascBackend; onMount?: (root: string) => void; onUnmount?: (root: string) => void }
+export interface CascOptions { install?: string; cacheRoot?: string; backendName?:string;backendFactory?: (install: string) => CascBackend; onMount?: (root: string) => void; onUnmount?: (root: string) => void }
 
 /** Read-only game source, build-scoped verified byte cache, and explicit dependency views. */
 export class CascWorkspace {
@@ -43,7 +43,7 @@ export class CascWorkspace {
     const installRelative = path.relative(this.install, this.cacheRoot);
     if (!installRelative || (!installRelative.startsWith("..") && !path.isAbsolute(installRelative))) throw new Error("CASC_CACHE_INSIDE_INSTALL_REFUSED");
   }
-  configuration() { return { install: this.install, cacheRoot: this.cacheRoot, helperAvailable: existsSync(bundledCascHelper()), localOnly: true, gameWrites: false, initialized: !!this.backend }; }
+  configuration() { return { install: this.install, cacheRoot: this.cacheRoot, backend:this.options.backendName??'native CascLib',helperAvailable: existsSync(bundledCascHelper()), localOnly: true, gameWrites: false, initialized: !!this.backend }; }
   private async source() {
     const raw = await fs.readFile(path.join(this.install, ".build.info"), "utf8").catch(error => { throw new Error("CASC_INSTALL_BUILD_INFO_UNAVAILABLE", { cause: error }); });
     return parseCascBuildInfo(raw);

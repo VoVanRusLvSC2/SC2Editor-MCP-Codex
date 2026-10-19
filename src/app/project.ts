@@ -4,6 +4,9 @@ import {DialogPreviewWorkspace} from "../modules/uiPreview/dialogWorkspace.js";
 import {UiPreviewWorkspace} from "../modules/uiPreview/workspace.js";
 import {AssetWorkspace} from "../modules/assets/workspace.js";
 import path from "node:path";
+import {ModkitIntegration,ModkitCascBackend,modkitAvailable} from '../integrations/modkit/runtime.js';
+import {MapPreviewWorkspace} from '../modules/map/preview.js';
+import {ModkitTerrainWorkspace} from '../modules/terrain/modkitWorkspace.js';
 import { DocumentWorkspace } from "../modules/document/workspace.js";
 import { SettingsWorkspace } from "../modules/settings/workspace.js";
 import { CascWorkspace } from "../modules/casc/workspace.js";
@@ -33,8 +36,11 @@ export async function createProject(root: string, options: {loadUiSchema?:boolea
   const workspace = new Workspace(root, schema);
   await workspace.recover();
   const data = new DataWorkspace(workspace, dataSchema), browse = new BrowseWorkspace(workspace, data);
-  const casc = new CascWorkspace(workspace.root, { onMount: root => { data.addDependencyRoot(root); browse.addDependencyRoot(root); }, onUnmount: root => { data.removeDependencyRoot(root); browse.removeDependencyRoot(root); } });
+  const modkit=new ModkitIntegration(workspace,path.resolve(process.env.SC2_CASC_ROOT??'C:/Program Files (x86)/StarCraft II'),()=>data.extraRoots);
+  const useModkitCasc=process.env.SC2_CASC_BACKEND==='modkit'||(process.env.SC2_CASC_BACKEND!=='native'&&modkitAvailable());
+  const casc = new CascWorkspace(workspace.root, { ...(useModkitCasc?{backendName:'ModKit',backendFactory:()=>new ModkitCascBackend(modkit)}:{}),onMount: root => {data.addDependencyRoot(root,root.replaceAll('\\','/').match(/\/views\/((?:mods|campaigns)\/[^/]+)$/i)?.[1]); browse.addDependencyRoot(root); }, onUnmount: root => { data.removeDependencyRoot(root); browse.removeDependencyRoot(root); } });
   try { await casc.restoreMounts(); } catch (error) { if (!(error instanceof Error) || error.message !== "CASC_INSTALL_BUILD_INFO_UNAVAILABLE") throw error; }
+  if(modkitAvailable())data.nativeCatalogFiles=new Set(await (await modkit.port()).catalogFiles());
   const refreshCasc = async () => {
     if (!data.extraRoots.some(root => root.startsWith(casc.cacheRoot + path.sep))) return;
     await workspace.readDependency(path.join(casc.install, ".build.info"));
@@ -46,6 +52,8 @@ export async function createProject(root: string, options: {loadUiSchema?:boolea
   const placement = new PlacementWorkspace(workspace, browse), terrain = new TerrainWorkspace(workspace, browse, placement,lighting);
   placement.terrain = terrain;
   const map = new MapWorkspace(workspace,terrain);
+  const mapPreview=new MapPreviewWorkspace(modkit);
+  const modkitTerrain=new ModkitTerrainWorkspace(modkit);
   const settings = new SettingsWorkspace(workspace);
   const document = new DocumentWorkspace(workspace,casc);
   const ai = new AiWorkspace(workspace, aiSchema, data, browse);
@@ -57,6 +65,6 @@ export async function createProject(root: string, options: {loadUiSchema?:boolea
   const uiPreview=new UiPreviewWorkspace(workspace,casc,textSchema);
   const dialogPreview=new DialogPreviewWorkspace(uiPreview,trigger);
   const cutscenePreview=new CutscenePreviewWorkspace(workspace,casc);
-  return { lighting, cutscenePreview, dialogPreview, uiPreview, assets, document, settings, casc, script, trigger, workspace, schema, data, browse, placement, terrain, map, ai, text, cutscene, cutsceneSchema, cutsceneAssets };
+  return { modkit,modkitTerrain,mapPreview,lighting, cutscenePreview, dialogPreview, uiPreview, assets, document, settings, casc, script, trigger, workspace, schema, data, browse, placement, terrain, map, ai, text, cutscene, cutsceneSchema, cutsceneAssets };
 }
 export type Project = Awaited<ReturnType<typeof createProject>>;

@@ -95,6 +95,7 @@ export class CutsceneDocument {
       if (selector.id.startsWith("guid:")) selector = { ...selector, guid: selector.id.slice(5), id: undefined };
       else if (selector.id.startsWith("name:")) selector = { ...selector, name: selector.id.slice(5), id: undefined };
       else if (selector.id.startsWith("node:")) selector = { ...selector, nodeId: Number(selector.id.slice(5)), id: undefined };
+        else throw new Error('CUTSCENE_SELECTOR_ID_INVALID: use guid:, name: or node:');
     }
     let matches = this.parsed.nodes.filter((node) =>
       (selector.nodeId === undefined || node.id === selector.nodeId) &&

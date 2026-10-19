@@ -61,7 +61,15 @@ export class SettingsWorkspace {
         let map = initial.get(mapFile)!, attributes = initial.get(attributeFile)!;
         new PlayersDocument(map);
         for (const op of operations) {
-            if (op.op === "player.set" || op.op === "options.set")
+            if(op.op==='player.create')map=new PlayersDocument(map).createPlayer(op);
+            else if(op.op==='starts.register'){
+                const objectFile=this.file(directory,'Objects'),objects=await this.workspace.binary.read(objectFile,false);
+                const {scanXml}=await import('../../core/xmlScanner.js');
+                const tree=scanXml(objects.bytes.toString('utf8'));
+                for(const id of op.objectIds)if(!tree.nodes.some(n=>n.tag==='ObjectPoint'&&Number(n.attrs.Id)===id&&n.attrs.Type==='StartLoc'))throw new Error('START_LOCATION_OBJECT_MISSING: '+id);
+                map=new PlayersDocument(map).registerStarts(op.objectIds);
+            }
+            else if (op.op === "player.set" || op.op === "options.set")
                 map = new PlayersDocument(map).patch(op);
             else {
                 if (!attributes.length) {

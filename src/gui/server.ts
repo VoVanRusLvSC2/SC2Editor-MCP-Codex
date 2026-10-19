@@ -104,6 +104,6 @@ export async function startGuiServer(options: {
   const actualPort = typeof address === "object" && address ? address.port : port;
   return {
     url: `http://${host}:${actualPort}`,
-    close: () => new Promise<void>((resolve, reject) => server.close((error) => error ? reject(error) : resolve())),
+    close: async () => {await new Promise<void>((resolve, reject) => server.close((error) => error ? reject(error) : resolve()));project.casc.close();await project.modkit.close();},
   };
 }

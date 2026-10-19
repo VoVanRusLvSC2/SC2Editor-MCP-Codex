@@ -1,4 +1,5 @@
 import { createHash } from "node:crypto";
+import {sc2BuiltinDependencies} from '../../core/sc2BuiltinDependencies.js';
 import { promises as fs } from "node:fs";
 import path from "node:path";
 import { Workspace } from "../../core/workspace.js";
@@ -152,7 +153,7 @@ export class BrowseWorkspace {
   addDependencyRoot(root: string) {
     const absolute = path.resolve(root);
     if (!this.roots.some(entry => entry.path === absolute)) this.roots.push({ path: absolute, sourceLayer: "dependency", dependency: dependencyFromPath(absolute), availability: "INSTALLED_BUT_NOT_DECLARED" });
-    this.indexedData.addDependencyRoot(absolute); this.snapshot = undefined;
+    this.indexedData.addDependencyRoot(absolute,this.data.nativePackageProfile(absolute)); this.snapshot = undefined;
   }
   private async files(): Promise<BrowseIndexSnapshot["files"]> {
     const output: BrowseIndexSnapshot["files"] = [];
@@ -183,7 +184,8 @@ export class BrowseWorkspace {
     const queue = [this.roots[0]!]; const visited = new Set<string>();
     while (queue.length) {
       const root = queue.shift()!; if (visited.has(root.path)) continue; visited.add(root.path);
-      const source = root.sourceLayer === "workspace" ? (await this.workspace.readRaw("DocumentInfo")).text : await this.workspace.readDependency(path.join(root.path, "DocumentInfo"), true);
+        let source = root.sourceLayer === "workspace" ? (await this.workspace.readRaw("DocumentInfo")).text : await this.workspace.readDependency(path.join(root.path, "DocumentInfo"), true);
+        const profile=this.data.nativePackageProfile(root.path);if(!source.trim()&&profile){source='<DocInfo><Dependencies>'+sc2BuiltinDependencies[profile].map(file=>'<Value>file:'+file+'</Value>').join('')+'</Dependencies></DocInfo>';warnings.push('Native package dependency profile: '+profile);}
       const parsed = scanXml(source);
       if (parsed.diagnostics.some((issue) => issue.severity === "error")) { warnings.push(`Malformed DocumentInfo: ${root.path}`); continue; }
       for (const node of parsed.nodes.filter((entry) => entry.tag === "Dependencies")) for (const childId of node.childIds) {
@@ -212,6 +214,7 @@ export class BrowseWorkspace {
   }
 
   async index(force = false): Promise<BrowseIndexSnapshot> {
+    this.indexedData.nativeCatalogFiles=this.data.nativeCatalogFiles;
     force ||= this.workspace.trackingReads;
     const files = await this.files();
     const draftHashes = await Promise.all(files.filter((file) => file.sourceLayer === "workspace" && this.workspace.hasDraft(normalized(path.relative(this.workspace.root, file.path)))).map(async (file) => (await this.workspace.diff(normalized(path.relative(this.workspace.root, file.path)))).afterSha256));

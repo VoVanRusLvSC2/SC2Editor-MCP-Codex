@@ -251,6 +251,11 @@ export class DataDocument {
       const holder = this.ensureParent(selector, holderSegments);
       const last = segments[segments.length - 1];
       if(last.ordinal!==undefined)throw new Error("DATA_ORDINAL_FIELD_MISSING");
+      // An indexed selector addresses index="...", not the ordinal position of
+      // repeated unindexed nodes. Refuse the likely typo instead of silently
+      // appending a second On event that cannot replace the original event.
+      if(last.index!==undefined&&this.children(holder).some(node=>node.tag===last.name&&(node.attrs.index??node.attrs.Index)===undefined))
+        throw new Error(`DATA_FIELD_INDEX_UNMATCHED: ${path}; use [#ordinal] for unindexed ${last.name} fields`);
       const spec: DataNativeFieldSpec = { name: last.name, index: last.index };
       if (carrier === "value") spec.value = value;
       else if (carrier === "Link") spec.link = scalar(value);
@@ -304,6 +309,7 @@ export class DataDocument {
           else {
             const field = members.find(f=>f.kind === "attribute" && f.name === span.name);
             domain = referenceSchema.linkDomain(field?.inlineType ?? field?.type,new Set<string>(),field?.typeNamespace);
+            if(!domain&&span.name==='Link'&&field?.type&&referenceSchema.describe(field.type.replace(/^.*:/,'')))continue;
             if (!domain && span.name === "value") domain = referenceSchema.linkDomain(type);
           }
           if (!domain && span.name !== "Link") continue;

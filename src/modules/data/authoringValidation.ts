@@ -65,7 +65,7 @@ function validateFields(fields:DataField[],oldFields:DataField[],owner:string|Da
     if(!member){out.push(diagnostic('DATA_AUTHOR_FIELD_UNKNOWN',`Field '${field.name}' is absent from declared ${typeof owner==='string'?owner:owner.name}`,file,pathOf(object,field)));continue;}
     const type=memberType(member);
     if(changed(field,old)){
-      if(field.value!==undefined&&!referenceSchema.members(type ?? '').some(m=>m.kind==='attribute'&&m.name==='value'))out.push(diagnostic('DATA_AUTHOR_VALUE_UNDECLARED',`Field '${field.name}' has no declared value attribute`,file,pathOf(object,field)));
+      if(field.value!==undefined&&!referenceSchema.members(type ?? '').some(m=>m.kind==='attribute'&&m.name===(field.attrs.Value!==undefined?'Value':'value')))out.push(diagnostic('DATA_AUTHOR_VALUE_UNDECLARED',`Field '${field.name}' has no declared value attribute`,file,pathOf(object,field)));
       if(field.link!==undefined&&!referenceSchema.members(type ?? '').some(m=>m.kind==='attribute'&&m.name==='Link'))out.push(diagnostic('DATA_AUTHOR_LINK_UNDECLARED',`Field '${field.name}' has no declared Link attribute`,file,pathOf(object,field)));
       if(type)validateAttributes(field.attrs,type,file,pathOf(object,field),out,old?.attrs);
     }
@@ -74,7 +74,7 @@ function validateFields(fields:DataField[],oldFields:DataField[],owner:string|Da
   }
 }
 
-export function validateDataAuthoring(file:string,before:DataDocument,after:DataDocument,records:RecordView[],coverageIssues:Array<{code:string;reason:string}>):DataAuthoringVerdict {
+export function validateDataAuthoring(file:string,before:DataDocument,after:DataDocument,records:RecordView[],coverageIssues:Array<{code:string;reason:string}>,external:ReadonlyMap<string,ReadonlySet<string>>=new Map()):DataAuthoringVerdict {
   const diagnostics:DataDiagnostic[]=[];
   const originals=before.objects(),current=after.objects();
   const indexed=records.filter(r=>r.engineActive!==false).flatMap(r=>r.document.objects());
@@ -92,7 +92,7 @@ export function validateDataAuthoring(file:string,before:DataDocument,after:Data
     if(oldRefs.has(`${ref.object}\0${ref.path}\0${ref.carrier}\0${ref.value}`)||!ref.value)continue;
     if(!ref.targetDomain){diagnostics.push(diagnostic('DATA_AUTHOR_REFERENCE_DOMAIN_UNKNOWN',`Authored ${ref.carrier} reference '${ref.value}' has no proven target domain`,file,ref.path,'L3'));continue;}
     if(ref.resolution==='unknown'){diagnostics.push(diagnostic('DATA_AUTHOR_REFERENCE_DYNAMIC',`Cannot resolve authored reference '${ref.rawExpression??ref.value}'`,file,ref.path,'L3'));continue;}
-    if(!indexed.some(o=>o.id===ref.value&&o.domain===ref.targetDomain))missing.push({...ref,file});
+    if(!external.get(ref.targetDomain)?.has(ref.value)&&!indexed.some(o=>o.id===ref.value&&o.domain===ref.targetDomain))missing.push({...ref,file});
   }
   const incomplete=coverageIssues.length>0||records.some(r=>r.engineActive===undefined);
   for(const ref of missing)diagnostics.push(diagnostic(incomplete?'DATA_AUTHOR_REFERENCE_SCOPE_INCOMPLETE':'DATA_AUTHOR_REFERENCE_MISSING',`Authored ${ref.targetDomain} reference '${ref.value}' does not resolve in the active catalog${incomplete?' (catalog scope incomplete)':''}`,file,ref.path,'L3'));

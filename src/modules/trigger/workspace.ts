@@ -217,6 +217,8 @@ export class TriggerWorkspace {
     const source=this.workspace;
     class PlanningWorkspace extends Workspace {override async readRaw(file:string,includeDraft=true){const own=await super.readRaw(file,includeDraft);return own.staged?own:source.readRaw(file,includeDraft);}}
     const virtual=new PlanningWorkspace(source.root),data=new DataWorkspace(virtual,this.data.schema,[...this.data.extraRoots]),planner=new TriggerWorkspace(virtual,this.registryFile,data,this.casc),steps=[];
+    data.nativeCatalogFiles=this.data.nativeCatalogFiles;
+    for(const root of this.data.extraRoots){const profile=this.data.nativePackageProfile(root);if(profile)data.addDependencyRoot(root,profile);}
     let last:NonNullable<ReturnType<typeof planner.plans.get>>|undefined,objectsRevision:string|undefined,catalogRevision:string|undefined,needsCatalogs=false;
     for(const request of requests){const step=await planner.plan(request);const saved=planner.plans.get(step.planId)!;objectsRevision??=saved.objectsRevision;catalogRevision??=saved.catalogRevision;needsCatalogs ||= !!saved.needsCatalogs;await planner.applyPlan(step.planId,false,true);last=saved;steps.push(step);}
     const strings=new Map<string,string>(),stringRevisions=new Map<string,string>();for(const file of virtual.draftFiles()){if(file==='Triggers')continue;strings.set(file,(await virtual.readRaw(file)).text);stringRevisions.set(file,digest((await source.readRaw(file)).text));}

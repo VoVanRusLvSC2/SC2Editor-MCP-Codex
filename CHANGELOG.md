@@ -1,5 +1,20 @@
 # Changelog
 
+## ModKit native terrain tools — 2026-10-19
+
+- Connect original ModKit format owners for CellAttribute pathing paint/fill, raw pathing/creep channels, vertex-color stroke bytes, fluff records, guarded complete HRDT groups/duplicate-key repair and PATH hints. Preserve existing coherent terrain writers and expose existing seeded Placement decoration/snap through terrain aliases.
+- Add native texture palette/block-set authoring, donor ramp transfer and qualified diagonal fitting/widening. Coordinate HMAP/SMAP/CLIF/LFCT, preserve unrelated native bytes and reject unsupported opaque layouts.
+- Add static navigation PNG/route preview with bounded canonical Data/CASC footprint closure, explicit missing dependencies and catalog=false fast mode. Retain engineValidated=false; no live SC2 simulation claim.
+- Keep plans staged and stale-checked; fix modkit.save to commit binary transaction groups as documented. Add native round-trip, footprint, diagonal transport and transaction tests plus actual stdio MCP import/paint/save/navigation/export acceptance. No Editor/game used.
+
+## ModKit Data, CASC and map preview — 2026-10-19
+
+- Add a pinned optional ModKit runtime and shared public Host/ModContext adapter. `data.modkit.query` returns selected effective fields, authoring rows or paged IDs with dependency/source provenance. Existing Data writers retain their transaction guards.
+- `map.preview` uses the ModKit world renderer and its model/texture loaders, producing compressed self-contained WebGL HTML and optional CPU PNG/MCP images. Retain explicit partial coverage and GPU/CPU differences; no SC2 visual-parity claim.
+- Route existing CASC tools through ModKit when installed, with local-only reads and a native CascLib fallback selectable at startup. Read real content/encoding keys from existing ModKit reader methods, completing missing declarations while preserving the original MD5/SHA integrity guards.
+- Add snapshot/path/binary/provenance/schema tests and real stdio MCP acceptance on local Agria. No Editor/game or real browser/GPU launched. Runtime source pins, compatibility patch and setup instructions: docs/MODKIT_INTEGRATION_RU.md.
+- Fix large converted UVM codec selection: retain the synthetic .uvm extension so rigs, Stand animations and materials reach the original world renderer. Recheck the later Agria v8 with native cliffs/ramps; expose model facet/piece counts and fit the whole map. Preserve native CASC metadata mode and existing Data/Terrain writers; document the comparison and a future upstream patch.
+
 ## Cutscene renderer v61 static sampler bias — 2026-10-16
 
 - Qualified ordinary DDS 2D and native cube bindings now apply the native constructor MipLODBias of -0.75 to implicit, explicit-LOD and gradient sampling. Authored sampling bias remains additive; the GPU program cache distinguishes native and legacy bindings.

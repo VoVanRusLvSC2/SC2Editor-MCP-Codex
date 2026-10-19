@@ -40,6 +40,7 @@ import {
 } from "./schemas.js";
 import { areaWeight } from "./geometry.js";
 import { inspectNativeIntegrity } from "./nativeIntegrity.js";
+import {modkitAvailable} from '../../integrations/modkit/runtime.js';
 interface StoredPlan {
   summary: TerrainPlanSummary;
   before: Map<string, Buffer>;
@@ -162,7 +163,10 @@ export class TerrainWorkspace {
       structuralCliffEditing: state.descriptor.version===115 && !!state.sync && !!state.visibility,
       nativeGeometryProfile: "v115 identity; levels 0..3; rectangular two-cell lattice; cardinal width-4 ramps",
       nativeRampEditing: state.descriptor.version===115 && !!state.sync && !!state.visibility,
-      pathingPainting: false,
+      pathingPainting: modkitAvailable()&&!!state.sources.get('CellAttribute_Pnp')?.length,
+      modkitTerrainToolsAvailable:modkitAvailable(),
+      pathingPaintingTool:'terrain.pathing.paint/fill; native CellAttribute masks; missing headers need an explicit template',
+      nativeScalarColorEditingTool:'terrain.modkit.plan vertexColor.set; existing stroke bytes, not arbitrary RGBA',
       arbitraryWaterLevel: true,
       vertexColorPainting: false,
       syncStrategy:
@@ -177,7 +181,7 @@ export class TerrainWorkspace {
       directory,
       ...inspected.capabilities,
       reason:
-        "Structural writers and pathing flag semantics require additional native evidence; no guessed binary records are emitted.",
+        "Writers are format-specific. ModKit adds native CellAttribute masks, scalar color/fluff/road records and template ramps through terrain.modkit tools. Engine navigation acceptance remains separate.",
     };
   }
   async inspectComponents(directory = "") {
@@ -658,6 +662,12 @@ export class TerrainWorkspace {
     return {
       valid: !("error" in inspection) && !!inspection.nativeIntegrity?.valid,
       inspection,
+      visual: "NOT_VERIFIED",
+      cliffJunctionClosure: "NOT_VERIFIED",
+      cliffJunctionRisk: "Structural terrain validation does not prove that adjoining cliff cells form a closed wall. Concave or acute joins can leave open ground holes; compare an editor-saved before/after sample before treating such joins as repaired.",
+      rampVisualRisk: inspection.ramps
+        ? "Native ramp components pass structural checks, but cliff side caps and rotated joins are not certified by a game render. Inspect ramps in SC2 before treating the terrain as visually complete."
+        : undefined,
       editor: "not run",
       runtime: "not run",
     };

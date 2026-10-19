@@ -1,0 +1,12 @@
+diff --git a/packages/host/src/model-resources.ts b/packages/host/src/model-resources.ts
+--- a/packages/host/src/model-resources.ts
++++ b/packages/host/src/model-resources.ts
+@@ -93,7 +93,7 @@ function uvmArtifactSource(
+     kind: 'bytes' as const,
+     ref: Object.freeze({
+       id: `${source.ref.id}#model.export-uvm`,
+-      uri: `memory+uvm:${encodeURIComponent(source.ref.uri)}`,
++      uri: `memory+uvm:${encodeURIComponent(source.ref.uri)}.uvm`,
+     }),
+     revision: revisionIdFromRef({
+       kind: 'provider-token',

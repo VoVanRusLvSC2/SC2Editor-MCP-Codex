@@ -4,6 +4,8 @@ TERRAIN объединяет редактирование поддерживае
 
 Добавление из `SC2_Surface_Toolkit_SC2GameData.zip` находится в `src/modules/terrain/surface/`. Оно расширяет существующий TERRAIN десятью инструментами `terrain.surface.*`. Отдельный сервер и второй набор workspace-файлов не создаются.
 
+19 октября подключены недостающие публичные инструменты ModKit: маски проходимости и заливка, raw pathing/creep, fluff, значения vertex-color, native HRDT, палитры и перенос/расширение квалифицированных рамп. `terrain.navigation.preview` использует эффективные footprint объектов из Data/CASC и сохраняет PNG. Массовый декор и привязка к высоте доступны как `terrain.decorate` и `terrain.objects.snap` через наш Placement. Подробная таблица, примеры и ограничения: [интеграция ModKit](MODKIT_INTEGRATION_RU.md#расширение-terrain--19-октября).
+
 ## Основные команды создания поверхности
 
 | Задача | Команда для Codex |
@@ -15,6 +17,10 @@ TERRAIN объединяет редактирование поддерживае
 | Скрыть грунт клетками или областью | `terrain.hide` |
 | Восстановить грунт | `terrain.show` |
 | Посмотреть скрытые клетки | `terrain.visibility.inspect`, `terrain.preview` с `mode:"visibility"` |
+| Нарисовать/стереть запрет прохода или строительства | `terrain.pathing.paint`, `terrain.pathing.fill` |
+| Проверить статическую проходимость и получить PNG | `terrain.navigation.preview` |
+| Рассеять декор по фильтрам / привязать объекты к рельефу | `terrain.decorate`, `terrain.objects.snap` |
+| Подобрать/перенести native ramp из донора | `terrain.ramp.fit`, операция `ramp.template` в `terrain.modkit.plan_file` |
 
 Эти команды создают настоящий сохраняемый Terrain plan. `terrain.apply` с `dryRun:false, stage:true` и `terrain.save` с `dryRun:false` записывают изменения. У `save` тоже есть dry-run по умолчанию.
 
@@ -150,7 +156,7 @@ Scanner не перезаписывает output, сообщает ошибки/
 - SMAP v102: Toolkit не выбирает planar/interleaved по эвристике и возвращает ambiguous без явного профиля. Существующий Terrain writer сохраняет свой ограниченный корпусный профиль.
 - WATR bodies/shorelines/waves и HRDT string framing/mesh generation не превращаются в общий writer.
 - Painted bytes, CellFlags и CellAttribute не равны конечной проходимости; `passable:null` остаётся явным.
-- Создание cliffs/ramps, rebuild pathing/collision, M3/DDS rendering и проверка игрового runtime не реализованы этим добавлением.
+- Читатели `terrain.surface.*` сами не создают cliffs/ramps и не перестраивают engine pathing. Запись выполняют существующие `terrain.cliff.*`/`terrain.ramp.*` и новый ModKit `ramp.template` в пределах своих профилей. Проверка игрового runtime остаётся отдельной.
 
 Следующие этапы: собрать карты до/после одиночных операций в нужной сборке Editor; зафиксировать byte SHA/build; подтвердить спорные profiles; разрешать writer только для согласованной группы слоёв через существующие транзакции. Каждый такой этап требует своего подтверждённого результата; нынешние tests не считаются engine certificate.
 

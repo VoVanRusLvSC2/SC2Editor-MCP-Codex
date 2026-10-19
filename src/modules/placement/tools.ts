@@ -353,6 +353,7 @@ export function registerPlacementTools(
     async (args) =>
       textResult(await placement.mutate({ ...args, op: "remove" })),
   );
+  server.registerTool('placement.removeBatch',{description:'Plan atomic removal of 1–5000 exact existing object IDs. No mutation until placement.apply; stale source guards retained. Does not rewrite Trigger/Galaxy references.',inputSchema:z.object({...commonFiles,objectIds:z.array(z.number().int().positive()).min(1).max(5000)}).strict()},async args=>textResult(compactPlacementPlan(await placement.removeBatch(args))));
   server.registerTool(
     "placement.decorate",
     {

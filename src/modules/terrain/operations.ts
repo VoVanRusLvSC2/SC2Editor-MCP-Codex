@@ -32,6 +32,11 @@ export const TERRAIN_COMPONENTS = [
   "t3VertCol",
   "t3FluffDoodad",
   "PaintedPathingLayer",
+  "PaintedCreepLayer",
+  "CellAttribute_Pnp",
+  "CellAttribute_Pnb",
+  "CellAttribute_Pcl",
+  "CellAttribute_Pgr",
   "t3SyncPathingInfo",
   "Terrain",
 ] as const;
@@ -224,7 +229,7 @@ export function applyOperations(
     if (op.op==='cliff.paint'||op.op==='ramp.create'||op.op==='ramp.remove') {
       editNativeGeometry(state,op);protection.fill(0);continue;
     }
-    if (op.op==='pathing.paint')throw new Error('NATIVE_TERRAIN_OPERATION_UNAVAILABLE: pathing.paint');
+    if (op.op==='pathing.paint')throw new Error('NATIVE_TERRAIN_OPERATION_UNAVAILABLE: use terrain.pathing.paint or terrain.modkit.plan for CellAttribute masks');
     if (op.op === "palette.update") {
       if (!state.syncTextures)
         throw new Error("SYNC_TEXTURE_COMPONENT_REQUIRED");

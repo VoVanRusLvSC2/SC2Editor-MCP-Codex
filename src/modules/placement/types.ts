@@ -72,6 +72,11 @@ export interface PlacementValidationReport {
   errors: number;
   warnings: number;
   issues: PlacementValidationIssue[];
+  editorVisibility: {
+    placedObjects: number;
+    editorLayerState: "UNOBSERVABLE";
+    hint: string;
+  };
   checks: {
     xml: "PASS" | "FAIL";
     duplicateIds: "PASS" | "FAIL";

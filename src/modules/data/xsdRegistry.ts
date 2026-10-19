@@ -48,6 +48,11 @@ export interface DataXsdManifest {
 
 /** Small manifest plus one-file-per-type access to the large declared SC2 Data XSD. */
 export class DataXsdRegistry {
+  private pinnedDepth=0;
+  private pinnedTypes=new Map<string,DataXsdType|undefined>();
+  private pinnedMembers=new Map<string|DataXsdType,DataXsdField[]>();
+  /** One synchronous analysis pins each shard once; transaction callers still verify consumed hashes before commit. */
+  withPinnedReads<T>(work:()=>T):T{if(this.pinnedDepth)return work();this.refresh();this.pinnedDepth++;try{return work();}finally{this.pinnedDepth--;this.pinnedTypes.clear();this.pinnedMembers.clear();}}
   private revision?:string;
   private manifestHash?:string;
   private readonly consumedSources=new Map<string,{file:string;sha256:string}>();
@@ -58,6 +63,7 @@ export class DataXsdRegistry {
   constructor(private readonly manifestFile = projectPath("generated/data-xsd-index/manifest.json")) {}
 
   manifest(): DataXsdManifest | undefined {
+    if(this.pinnedDepth&&this.manifestValue!==undefined)return this.manifestValue??undefined;
     let revision:string;
     try{const stat=statSync(this.manifestFile);revision=stat.size+":"+stat.mtimeMs;}catch(error){if((error as NodeJS.ErrnoException).code!=="ENOENT")throw error;revision="missing";}
     if(this.revision!==revision){this.revision=revision;this.manifestValue=undefined;this.typeCache.clear();this.shardHashes.clear();this.consumedSources.clear();}
@@ -71,20 +77,22 @@ export class DataXsdRegistry {
   }
 
   describe(name: string): DataXsdType | undefined {
+    if(this.pinnedDepth&&this.pinnedTypes.has(name))return this.pinnedTypes.get(name);
     this.manifest();
     const key = name;
     const descriptors=this.manifest()?.types ?? [];
     const fallback=descriptors.filter(entry=>entry.name.toLowerCase()===key.toLowerCase());
     const descriptor=descriptors.find(entry=>entry.name===key) ?? (fallback.length===1?fallback[0]:undefined);
-    if (!descriptor) return undefined;
+    if (!descriptor){if(this.pinnedDepth)this.pinnedTypes.set(name,undefined);return undefined;}
     const file = path.resolve(path.dirname(this.manifestFile), descriptor.shard);
     if(!file.startsWith(path.dirname(this.manifestFile)+path.sep))throw new Error('XSD_SHARD_PATH_ESCAPE');
     const source=readFileSync(file,'utf8'),sha256=createHash('sha256').update(source).digest('hex');
     this.consumedSources.set(file,{file,sha256});
-    if(this.shardHashes.get(key)?.sha256===sha256)return this.typeCache.get(key);
+    if(this.shardHashes.get(key)?.sha256===sha256){const value=this.typeCache.get(key);if(this.pinnedDepth)this.pinnedTypes.set(name,value);return value;}
     const value = JSON.parse(source) as DataXsdType;
     this.shardHashes.set(key,{file,sha256});
     this.typeCache.set(key, value);
+    if(this.pinnedDepth)this.pinnedTypes.set(name,value);
     while(this.typeCache.size>512){const first=this.typeCache.keys().next().value!;this.typeCache.delete(first);this.shardHashes.delete(first);}
     return value;
   }
@@ -94,11 +102,12 @@ export class DataXsdRegistry {
   sources(){this.manifest();return [...this.manifestHash?[{file:this.manifestFile,sha256:this.manifestHash}]:[],...this.consumedSources.values()];}
 
   members(type: string | DataXsdType, seen = new Set<string>()): DataXsdField[] {
+    const root=seen.size===0;if(this.pinnedDepth&&root&&this.pinnedMembers.has(type))return this.pinnedMembers.get(type)!;
     const value = typeof type === "string" ? this.describe(type.replace(/^.*:/, "")) : type;
     if (!value || seen.has(value.name)) return [];
     seen.add(value.name);
     const inherited = value.base && this.localNamespace(value.baseNamespace) && !value.base.startsWith("xs:") ? this.members(value.base, seen) : [];
-    return [...inherited.filter(f => !(value.derivation==="restriction"&&value.kind==="complex"&&f.kind==="element")&&!value.fields.some(g => g.kind === f.kind && g.name === f.name)), ...value.fields].filter(f=>f.use!=="prohibited");
+    const result=[...inherited.filter(f => !(value.derivation==="restriction"&&value.kind==="complex"&&f.kind==="element")&&!value.fields.some(g => g.kind === f.kind && g.name === f.name)), ...value.fields].filter(f=>f.use!=="prohibited");if(this.pinnedDepth&&root)this.pinnedMembers.set(type,result);return result;
   }
 
   fieldType(owner: string | DataXsdType, names: string[]): string | DataXsdType | undefined {

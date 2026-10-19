@@ -61,3 +61,7 @@ __pycache__/
 !/generated/TIKTOKEN_LICENSE.txt
 !/generated/data-xsd-index/
 !/generated/data-xsd-index/**
+
+# Optional pinned ModKit runtime and its local resources
+/.modkit-runtime/
+.sc2mcp-modkit-cache/

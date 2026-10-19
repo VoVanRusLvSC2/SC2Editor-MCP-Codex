@@ -1,0 +1,197 @@
+diff --git a/casc/src/casc/index.d.ts b/casc/src/casc/index.d.ts
+index e5af42c..ebf0f9d 100644
+--- a/casc/src/casc/index.d.ts
++++ b/casc/src/casc/index.d.ts
+@@ -59,6 +59,9 @@ export class CascReader {
+   localRows(): Promise<Uint8Array>
+   /** One root-index row's local availability, without scanning other rows or fetching CDN bytes. */
+   localRow(row: number): boolean
++  /** Public reader methods already implemented in reader.js; complete the shipped declarations. */
++  resolveFile(path: string): { readonly contentKey: string; readonly encodingKeys?: readonly string[] } | undefined
++  resolveContentKey(contentKey: string): string | undefined
+   contentSizeOf(path: string): number | undefined
+   readPath(path: string, signal?: AbortSignal): Promise<Uint8Array>
+   close(): Promise<void>
+diff --git a/starcraft2/modules/game/battlenet/content-sources/local-files.ts b/starcraft2/modules/game/battlenet/content-sources/local-files.ts
+index 29bf568..4815a0d 100644
+--- a/starcraft2/modules/game/battlenet/content-sources/local-files.ts
++++ b/starcraft2/modules/game/battlenet/content-sources/local-files.ts
+@@ -192,8 +192,7 @@ export class Sc2FolderSource implements LocalSource {
+     const scope = this.children === undefined ? '' : path
+     let pending = this.hidden.get(scope)
+     if (pending === undefined) {
+-      const listing = windowsHiddenPaths(join(this.directory, scope), undefined,
+-        { recursive: this.children === undefined })
++      const listing = windowsHiddenPaths(join(this.directory, scope), undefined)
+       const parentPath = scope.split('/').slice(0, -1).join('/')
+       pending = scope === '' ? listing : Promise.all([this.hiddenPaths(parentPath), listing])
+         .then(([parent, children]) => new Set([...parent, ...Array.from(children, name => `${scope}/${name}`)]))
+diff --git a/starcraft2/modules/map/providers/semantic/runtime.js b/starcraft2/modules/map/providers/semantic/runtime.js
+index 3d5055a..47e7870 100644
+--- a/starcraft2/modules/map/providers/semantic/runtime.js
++++ b/starcraft2/modules/map/providers/semantic/runtime.js
+@@ -1,4 +1,4 @@
+-import { analyzeMapOverview, overviewCatalogQueries } from '../../../../dist/modules/map/shared/image/overview.js'
++import { overviewCatalogQueries } from '../../../../dist/modules/map/shared/image/overview.js'
+ import { parseSc2MapDocuments } from '../../../../dist/modules/map/shared/coordinator.js'
+ import { catalogAssetLogicalId, modelVariationFor, catalogModelVariationLogicalId } from '../../../../shared/catalog-model.js'
+ import { catalogFieldValue, resolvedFieldRecord, commaSeparatedVector as waterVector, projectCatalogLight } from '../../../../shared/catalog-light.js'
+@@ -2792,15 +2792,8 @@ export async function analyzeStarcraft2MapWorkspace(request) {
+     )
+   }
+   let latticeCoverage
+-  if (heightDocument !== undefined && terrainParameterDocument !== undefined) {
+-    try {
+-      const parsed = parseSc2MapDocuments(new Map(value.documents.map(document => [document.path.split(/[\\/]/u).at(-1),document.bytes])))
+-      const overview = analyzeMapOverview(parsed,{pixelsPerCell:8,...(value.catalog===undefined?{}:{catalog:value.catalog})})
+-      latticeCoverage = Object.freeze({overview:Object.freeze({...overview,coordinateSpaceId:'map-native'})})
+-    } catch(error) {
+-      diagnostics.push(diagnosticFor(error,terrainParameterDocument.path))
+-    }
+-  }
++  // Compatibility: public Core 72253b4 lacks the optional RLE lattice overview contract.
++  // Native world geometry/materials remain supplied by this provider.
+   const totalDiagnostics = semantic.diagnostics.length + diagnostics.length
+   const diagnosticsTruncated = totalDiagnostics > maxDiagnostics
+   const retained = diagnosticsTruncated ? Math.max(0, maxDiagnostics - 1) : maxDiagnostics
+diff --git a/starcraft2/modules/map/shared/image/overview.ts b/starcraft2/modules/map/shared/image/overview.ts
+index 44c2b26..f228b45 100644
+--- a/starcraft2/modules/map/shared/image/overview.ts
++++ b/starcraft2/modules/map/shared/image/overview.ts
+@@ -1,7 +1,3 @@
+-import type { MapLatticeOverview } from '@modkit/sdk/maps'
+-import { encodeLatticeRunRows } from '@modkit/codec-kit/maps/lattice-overview'
+-import { validateLatticeOverview } from '@modkit/sdk/maps'
+-
+ /**
+  * Top-down overview of a StarCraft II map: cliff levels, cliff faces, ramps, pathing, resources,
+  * start locations and the playable boundary, drawn from the map's own documents.
+@@ -1128,7 +1124,6 @@ export interface MapOverviewOptions {
+ }
+ 
+ export interface MapOverview {
+-  readonly latticeOverview?: MapLatticeOverview
+   readonly width: number
+   readonly height: number
+   /** RGB, row 0 is the map's north edge. */
+@@ -2110,35 +2105,15 @@ export function renderMapOverview(map: SC2MapData, options: MapOverviewOptions =
+           canvas.put(canvas.pixelX(2 * i + 1), canvas.pixelY(2 * j + 1), RAMP_DOT)
+       }
+ 
+-  const semanticMarkers: MapLatticeOverview['markers'][number][] = []
+-  let currentMarker: MapMarker | undefined
+-  let markerOrdinal = 0
+-  /** Record the same resolved body the native renderer draws, without reclassifying catalogs. */
+-  const recordBody = (polygon: readonly Point[], color: Rgb, opacity: number) => {
+-    if (!options.publishLattice || currentMarker === undefined) return
+-    const marker = currentMarker
+-    const resource = ['minerals','rich-minerals','geyser','rich-geyser'].includes(marker.kind)
+-    semanticMarkers.push({
+-      id: `marker:${marker.objectId ?? marker.type}:${markerOrdinal++}`,
+-      role: resource ? 'resource' : marker.kind === 'destructible' ? 'destructible' : 'unit',
+-      point: [marker.x,marker.y], outline: polygon, color, opacity,
+-      ...(resource ? {resourceKind:marker.kind, resourceVariant:marker.kind.startsWith('rich-') ? 'rich' as const : 'ordinary' as const,
+-        resourceState:marker.supply ?? 'full'} : {}),
+-      ...(marker.player === undefined ? {} : {player:marker.player}),
+-    })
+-  }
+-
+   // Placed units: a body with a black outline. Doodads stay part of the shaded ground.
+   if (options.markers !== false) {
+     const outlines = canvas.ink()
+     const body = (polygon: readonly Point[], color: Rgb, alpha = 1) => {
+-      recordBody(polygon, color, alpha)
+       canvas.paint(polygon, color, alpha)
+       for (const segment of polylineSegments(polygon, true)) canvas.stroke(outlines, segment, 0.5)
+     }
+     const starts: MapMarker[] = []
+     for (const marker of markers) {
+-      currentMarker = marker
+       switch (marker.kind) {
+         case 'start-location':
+           starts.push(marker)
+@@ -2185,10 +2160,6 @@ export function renderMapOverview(map: SC2MapData, options: MapOverviewOptions =
+         [marker.x + half, marker.y + half],
+         [marker.x - half, marker.y + half],
+       ]
+-      if (options.publishLattice) semanticMarkers.push({
+-        id:`start:${index}`, role:'start', point:[marker.x,marker.y], outline:corners,
+-        color, opacity:1, ...(marker.player === undefined ? {} : {player:marker.player}),
+-      })
+       for (const segment of polylineSegments(corners, true))
+         canvas.stroke(square, segment, Math.max(1, scale / 6))
+       canvas.composite(square, color)
+@@ -2207,34 +2178,7 @@ export function renderMapOverview(map: SC2MapData, options: MapOverviewOptions =
+             canvas.blendAt((py * canvas.width + px) * 3, SHADE, OUTSIDE_ALPHA)
+         }
+   }
+-  const overviewEntities = new Set((options.catalog?.definitions ?? options.catalog?.entities ?? []).map(entity=>`${entity.namespace}/${entity.entityId}`))
+-  const catalogReady = options.catalog !== undefined && overviewCatalogQueries(options.catalog).every(ref=>overviewEntities.has(`${ref.namespace}/${ref.entityId}`)) &&
+-    (map.objects?.units.every(unit=>catalog?.unit(unit.unitType)!==undefined) ?? true)
+-  const latticeOverview: MapLatticeOverview | undefined = options.publishLattice ? validateLatticeOverview({
+-    provenance:{method:'native-terrain-overview',quality:'derived',complete:catalogReady},
+-    raster:{columns:canvas.width,rows:canvas.height,origin:[0,cellsY],columnStep:[1/scale,0],rowStep:[0,-1/scale],
+-      elevation:encodeLatticeRunRows(canvas.width,canvas.height,(x,y)=>canvas.levels[y*canvas.width+x]!),
+-      palette:LEVEL_ANCHORS.map(([value,color])=>({value,color})),
+-      ...(catalogReady ? {
+-      movementProfile:'blizzard/starcraft-2:standard-ground',
+-      blocked:encodeLatticeRunRows(canvas.width,canvas.height,(x,y)=>water(y*canvas.width+x)?0:terrainBlocked[y*canvas.width+x]!),
+-      noBuild:encodeLatticeRunRows(canvas.width,canvas.height,(x,y)=>water(y*canvas.width+x)?0:noBuild[y*canvas.width+x]!),
+-      vision:encodeLatticeRunRows(canvas.width,canvas.height,(x,y)=>water(y*canvas.width+x)?0:visionArea[y*canvas.width+x]!),
+-      } : {}),
+-    },
+-    lines:[...lineFaces.flatMap(face=>{
+-      const {gap}=walkOf(face)
+-      return face.pieces.flatMap(({segment},i)=>gap(i)?[]:[{role:'cliff',points:[[segment[0],segment[1]],[segment[2],segment[3]]],closed:false}])
+-    }),...drawnSides.map(segment=>({role:'cliff',points:[[segment[0],segment[1]],[segment[2],segment[3]]],closed:false})),
+-    ...ramps.flatMap(ramp=>{
+-      const [left,right]=ramp.sides
+-      const at=(a:number,l:number):Point=>[ramp.center[0]+ramp.up[0]*a+ramp.right[0]*l,ramp.center[1]+ramp.up[1]*a+ramp.right[1]*l]
+-      return [ramp.slopeTop,ramp.drawnBottom].map(a=>({role:'ramp',points:[at(a,left.lateral),at(a,right.lateral)],closed:false}))
+-    })],
+-    markers:semanticMarkers,
+-    ...(playable===undefined?{}:{playableArea:[[playable.left,playable.bottom],[playable.right,playable.bottom],[playable.right,playable.top],[playable.left,playable.top]]}),
+-  }) : undefined
+-  return { width: canvas.width, height: canvas.height, rgb: canvas.rgb, ...(latticeOverview === undefined ? {} : {latticeOverview}) }
++  return { width: canvas.width, height: canvas.height, rgb: canvas.rgb }
+ }
+ 
+ export function mapOverviewToPng(map: SC2MapData, options: MapOverviewOptions = {}): Uint8Array {
+@@ -2269,7 +2213,3 @@ function gridToPng(
+   return encodeRGB8(width, height, rgb)
+ }
+ 
+-/** Shared owner projection used by the native overview and world/UVW publication. */
+-export function analyzeMapOverview(map: SC2MapData, options: Omit<MapOverviewOptions,'publishLattice'> = {}): MapLatticeOverview {
+-  return renderMapOverview(map,{...options,publishLattice:true}).latticeOverview!
+-}
+diff --git a/starcraft2/package.json b/starcraft2/package.json
+index 21f46aa..84cd731 100644
+--- a/starcraft2/package.json
++++ b/starcraft2/package.json
+@@ -5,6 +5,10 @@
+   "type": "module",
+   "description": "StarCraft II authored-data, layout, localization, map, replay and runtime codecs for MK3.",
+   "exports": {
++    "./map/overview": {
++      "types": "./dist/modules/map/shared/image/overview.d.ts",
++      "default": "./dist/modules/map/shared/image/overview.js"
++    },
+     "./codecs/sc2-cutscene": "./modules/cutscene/codecs/cutscene/runtime.js",
+     "./cutscene/provider": "./modules/cutscene/providers/language/runtime.js",
+     "./codecs/sc2-style": "./modules/style/codecs/style/runtime.js",
+@@ -131,6 +135,14 @@
+       "types": "./shared/editing/authored-text-format.d.ts",
+       "default": "./shared/editing/authored-text-format.js"
+     },
++    "./map/format": {
++      "types": "./dist/modules/map/shared/format/index.d.ts",
++      "default": "./dist/modules/map/shared/format/index.js"
++    },
++    "./map/navigation": {
++      "types": "./dist/modules/map/shared/navigation/index.d.ts",
++      "default": "./dist/modules/map/shared/navigation/index.js"
++    },
+     "./maps": "./modules/map/providers/semantic/runtime.js",
+     "./maps/uvw-converter": "./modules/map/codecs/package/src/uvw-map-converter.js",
+     "./map-preview": "./modules/map/providers/preview/runtime.js",

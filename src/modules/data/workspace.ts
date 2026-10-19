@@ -1,4 +1,6 @@
 import {createHash} from "node:crypto";
+import {sc2BuiltinDependencies} from '../../core/sc2BuiltinDependencies.js';
+import {StringTableDocument} from '../text/stringTable.js';
 import {galaxyReferences,guiReferences,objectReferences,type CrossReference,type CrossIssue} from "./crossReferences.js";
 import { dataDomainFromType } from "./domains.js";
 import { internalWorkspaceDirectory } from "../../core/discoveryPaths.js";
@@ -88,9 +90,13 @@ export class DataWorkspace {
 
   cacheStats(){return {entries:this.parsedCatalogs.size,sourceBytes:this.parsedBytes,maxEntries:1024,maxSourceBytes:64*1024*1024};}
   dependencyRefresh?: () => Promise<void>;
-  removeDependencyRoot(root: string) { const index = this.extraRoots.indexOf(path.resolve(root)); if (index >= 0) this.extraRoots.splice(index, 1); }
-  addDependencyRoot(root: string) {
+  private readonly nativePackageProfiles=new Map<string,string>();
+  nativeCatalogFiles:ReadonlySet<string>=new Set();
+  nativePackageProfile(root:string){return this.nativePackageProfiles.get(path.resolve(root));}
+  removeDependencyRoot(root: string) {const absolute=path.resolve(root);this.nativePackageProfiles.delete(absolute); const index = this.extraRoots.indexOf(absolute); if (index >= 0) this.extraRoots.splice(index, 1); }
+  addDependencyRoot(root: string,builtinPackage?:string) {
     const absolute = path.resolve(root);
+    if(builtinPackage&&Object.hasOwn(sc2BuiltinDependencies,builtinPackage.toLowerCase()))this.nativePackageProfiles.set(absolute,builtinPackage.toLowerCase());
     if (!this.extraRoots.includes(absolute)) this.extraRoots.push(absolute);
   }
   async open(file = "Base.SC2Data/GameData/UnitData.xml") {
@@ -129,7 +135,7 @@ export class DataWorkspace {
       const text=await this.workspace.readDependency(absolute,true);if(text)activationSources.set(file.toLowerCase(),{absolute,source:text});return text||undefined;
     });
     for(const key of activation.files){const loaded=activationSources.get(key);if(!loaded||files.some(r=>r.absolute===loaded.absolute))continue;const file=normalize(path.relative(layer==="workspace"?this.workspace.root:base,loaded.absolute));files.push({file,absolute:loaded.absolute,layer,provenance:layer==="workspace"?provenance(loaded.absolute):[path.basename(base),...provenance(loaded.absolute)],document:this.cachedDocument(loaded.absolute,loaded.source,file)});}
-    for(const record of files){record.activationWarnings=activation.warnings;record.activationMode=activation.mode;record.engineActive=activation.mode === "EXPLICIT_INCLUDES" ? activation.files.has(normalize(path.relative(base,record.absolute)).toLowerCase()) : undefined;}
+    for(const record of files){const relative=normalize(path.relative(base,record.absolute)).toLowerCase(),native=layer==='dependency'&&this.nativePackageProfiles.has(base)&&/^base\.sc2data\/gamedata\/[^/]+$/.test(relative)&&this.nativeCatalogFiles.has(path.posix.basename(relative));record.activationWarnings=activation.warnings;record.activationMode=activation.mode;record.engineActive=native|| (activation.mode === "EXPLICIT_INCLUDES" ? activation.files.has(relative) : undefined);}
     return files;
   }
 
@@ -139,6 +145,13 @@ export class DataWorkspace {
       if(!record.document.source.includes(id))continue;for(const node of record.document.entries())if(node.attrs.id===id&&dataDomainFromType(node.tag)===domain)matches.push({id,domain,ctype:node.tag,parent:node.attrs.parent,layer:record.layer,file:record.absolute,sha256:createHash('sha256').update(record.document.source).digest('hex')});
     }
     return {available:matches.length>0,matches,coverageIssues:records.issues};
+  }
+  private async externalStringReferences(){
+    const keys=new Set<string>();let total=0,count=0;
+    const collect=(text:string)=>{total+=Buffer.byteLength(text);if(total>64*1024*1024||++count>512)throw Error('DATA_LOCALIZATION_READ_LIMIT');for(const e of new StringTableDocument(text).list(undefined,Number.MAX_SAFE_INTEGER))keys.add(e.key);};
+    for(const file of await this.workspace.listStringFiles())collect((await this.workspace.readRaw(file)).text);
+    for(const root of this.extraRoots){const locales=await this.workspace.readDirectory(root,'data-locales',e=>e.isDirectory()&&/^[a-z]{4}\.SC2Data$/i.test(e.name));for(const locale of locales){const folder=path.join(root,locale.name,'LocalizedData');const files=await this.workspace.readDirectory(folder,'data-localized-strings',e=>e.isFile()&&/Strings\.txt$/i.test(e.name)).catch((e:NodeJS.ErrnoException)=>{if(e.code==='ENOENT')return [];throw e;});for(const file of files)collect(await this.workspace.readDependency(path.join(folder,file.name)));}}
+    return new Map<string,ReadonlySet<string>>([['String',keys],['Hotkey',keys]]);
   }
   async catalog(overrides?: ReadonlyMap<string, string>): Promise<CatalogRecords> {
     await this.dependencyRefresh?.();
@@ -150,7 +163,9 @@ export class DataWorkspace {
     const visit=async(root:string,text:string)=>{
       if(visiting.has(root)){records.issues.push({file:root,code:'DEPENDENCY_CYCLE',reason:'Declared dependency graph contains a cycle'});return;}
       if(visited.has(root))return;visiting.add(root);
-      const parsed=scanXml(text);if(parsed.diagnostics.some(d=>d.severity==='error'))records.issues.push({file:root,code:'DEPENDENCY_DOCUMENT_INVALID',reason:'Cannot establish declared dependency graph'});
+        const profile=this.nativePackageProfiles.get(root);
+        if(!text.trim()&&profile){text='<DocInfo><Dependencies>'+sc2BuiltinDependencies[profile].map(file=>'<Value>file:'+file+'</Value>').join('')+'</Dependencies></DocInfo>';}
+        const parsed=scanXml(text);if(parsed.diagnostics.some(d=>d.severity==='error'))records.issues.push({file:root,code:'DEPENDENCY_DOCUMENT_INVALID',reason:'Cannot establish declared dependency graph'});
       for(const node of parsed.nodes.filter(n=>n.tag==='Dependencies'))for(const childId of node.childIds){const child=parsed.nodes[childId],content=text.slice(child.startTagEnd,child.endTagStart).trim();const file=content.match(/(?:^|,)file:([^,]+)/i)?.[1];
         if(!file){if(content)records.issues.push({file:root,code:'DEPENDENCY_REMOTE_UNRESOLVED',reason:content});continue;}
         const name=normalize(file).split('/').at(-1)!.toLowerCase(),matches=this.extraRoots.filter(r=>dependencyName(r)===name);
@@ -185,7 +200,7 @@ export class DataWorkspace {
     return visit(fields);
   }
 
-  private effective(object: DataObject & {engineActive?:boolean}, all: Array<DataObject & { file: string; layer: string;engineActive?:boolean }>,parentIndex?:Map<string,DataObject & {file:string;layer:string;engineActive?:boolean}>) {
+  private effective(object: DataObject & {engineActive?:boolean}, all: Array<DataObject & { file: string; layer: string;engineActive?:boolean }>,parentIndex?:Map<string,DataObject & {file:string;layer:string;engineActive?:boolean}>,indexes?:{defaults:Map<string,typeof all>;layers:Map<string,typeof all>}) {
     const chain: Array<DataObject & { file: string; layer: string }> = [];
     const visited = new Set<string>();
     const unresolvedParents:Array<{id:string;reason:string}>=[];
@@ -199,11 +214,11 @@ export class DataWorkspace {
       if(parent&&!next)unresolvedParents.push({id:parent,reason:object.engineActive===true?"ACTIVE_PARENT_UNRESOLVED":"PARENT_UNRESOLVED"});
       current=next;
     }
-    const defaults = all.filter(entry=>entry.ctype===object.ctype && entry.isDefault && !entry.id && entry.engineActive!==false);
+    const defaults = indexes?.defaults.get(object.ctype)??(indexes?[]:all.filter(entry=>entry.ctype===object.ctype && entry.isDefault && !entry.id && entry.engineActive!==false));
     if(defaults.length===1)chain.unshift(defaults[0]);
     const layerConflicts=new Set<string>(),layerTokenConflicts=new Set<string>();
     const expanded:typeof chain=[];
-    for(const entry of chain){const layers=entry.id?all.filter(o=>o.id===entry.id&&o.domain===entry.domain&&o.engineActive!==false):[];
+    for(const entry of chain){const layers=entry.id?(indexes?.layers.get(entry.domain+'\0'+entry.id)??(indexes?[]:all.filter(o=>o.id===entry.id&&o.domain===entry.domain&&o.engineActive!==false))):[];
       for(const layer of layers.filter(o=>o!==entry)){if(!expanded.some(e=>e.declarationKey?.file===layer.declarationKey?.file&&e.declarationKey?.start===layer.declarationKey?.start&&e.id===layer.id))expanded.push(layer);}
       expanded.push(entry);
     }
@@ -272,11 +287,12 @@ export class DataWorkspace {
     const offset=args.offset??0,limit=args.limit??200;
     const filtered=matchingObjects.slice(offset,offset+limit);
     const parentIndex=new Map<string,typeof all[number]>(),verifiedParents=new Map<string,typeof all[number]>();
+    const indexes={defaults:new Map<string,typeof all>(),layers:new Map<string,typeof all>()};for(const object of all){if(object.engineActive===false)continue;if(object.isDefault&&!object.id){const list=indexes.defaults.get(object.ctype);if(list)list.push(object);else indexes.defaults.set(object.ctype,[object]);}if(object.id){const key=object.domain+'\0'+object.id,list=indexes.layers.get(key);if(list)list.push(object);else indexes.layers.set(key,[object]);}}
     for(const object of all){const key=`${object.domain ?? object.ctype}\0${object.id ?? ""}`;if(object.engineActive!==false&&!parentIndex.has(key))parentIndex.set(key,object);if(object.engineActive===true&&!verifiedParents.has(key))verifiedParents.set(key,object);}
     const objects = filtered.map((object) => {
       const publicObject: Omit<typeof object, "recordKey"> & { recordKey?: string } = { ...object };
       delete publicObject.recordKey;
-      const effective = args.includeInherited === false ? undefined : this.effective(object, all,object.engineActive===true?verifiedParents:parentIndex);
+      const effective = args.includeInherited === false ? undefined : this.effective(object, all,object.engineActive===true?verifiedParents:parentIndex,indexes);
       const fieldSummary=this.boundedFields(this.projectedFields(object.fields,needles),args.includeRaw?Number.MAX_SAFE_INTEGER:200);
       const effectiveEntries=effective?Object.entries(effective.fields).filter(([fieldPath])=>!needles.length||needles.some(needle=>fieldPath.toLowerCase().includes(needle))):[];
       return {
@@ -310,33 +326,41 @@ export class DataWorkspace {
     };
   }
 
-  private referenceTokens(objects:DataObject[],ctype:string,id?:string):Record<string,string> {
+  private referenceTokenResolver(objects:DataObject[]){
+    const types=new Map<string,DataObject[]>(),domains=new Map<string,DataObject[]>(),defaults=new Map<string,DataObject[]>(),cache=new Map<string,Record<string,string>>();
+    const add=(map:Map<string,DataObject[]>,key:string,o:DataObject)=>{const list=map.get(key);if(list)list.push(o);else map.set(key,[o]);};
+    for(const o of objects){add(types,o.ctype+'\0'+o.id,o);add(domains,o.domain+'\0'+o.id,o);if(o.isDefault&&!o.id)add(defaults,o.ctype,o);}
+    return (ctype:string,id?:string):Record<string,string>=>{const key=ctype+'\0'+id,prior=cache.get(key);if(prior)return prior;
     const domain=dataDomainFromType(ctype),chain:DataObject[]=[],seen=new Set<string>();
-    let candidates=objects.filter(o=>o.ctype===ctype&&o.id===id);
-    while(candidates.length===1){const object=candidates[0];if(seen.has(object.id??""))break;seen.add(object.id??"");chain.unshift(object);if(!object.parent)break;candidates=objects.filter(o=>o.domain===domain&&o.id===object.parent);}
-    const defaults=objects.filter(o=>o.ctype===ctype&&o.isDefault&&!o.id);if(defaults.length===1)chain.unshift(defaults[0]);
-    const tokens:Record<string,string>={};for(const object of chain){Object.assign(tokens,object.tokens??{});for(const id of Object.keys(tokens))if(object.attrs[id]!==undefined)tokens[id]=object.attrs[id];}return tokens;
+    let candidates=types.get(key)??[];
+    while(candidates.length===1){const object=candidates[0];if(seen.has(object.id??""))break;seen.add(object.id??"");chain.unshift(object);if(!object.parent)break;candidates=domains.get(domain+'\0'+object.parent)??[];}
+    const ownDefaults=defaults.get(ctype)??[];if(ownDefaults.length===1)chain.unshift(ownDefaults[0]);
+    const tokens:Record<string,string>={};for(const object of chain){Object.assign(tokens,object.tokens??{});for(const id of Object.keys(tokens))if(object.attrs[id]!==undefined)tokens[id]=object.attrs[id];}cache.set(key,tokens);return tokens;};
   }
+  private referenceTokens(objects:DataObject[],ctype:string,id?:string){return this.referenceTokenResolver(objects)(ctype,id);}
 
-  private actorIssues(records:CatalogRecord[]){const objects=records.flatMap(r=>r.document.objects());return records.flatMap(r=>r.document.actorCoverageIssues(entry=>this.referenceTokens(objects,entry.tag,entry.attrs.id)));}
+  private actorIssues(records:CatalogRecord[]){return referenceSchema.withPinnedReads(()=>{const resolve=this.referenceTokenResolver(records.flatMap(r=>r.document.objects()));return records.flatMap(r=>r.document.actorCoverageIssues(entry=>resolve(entry.tag,entry.attrs.id)));});}
 
   references(records: CatalogRecord[],scope:'all'|'workspace'='all'): DataReference[] {
+    return referenceSchema.withPinnedReads(()=>{
     const objects = records.flatMap((record) => record.document.objects().map((object) => ({ ...object, file: record.file, layer:record.layer })));
     const byId = new Map<string, typeof objects>();
     for (const object of objects) if (object.id) byId.set(object.id, [...(byId.get(object.id) ?? []), object]);
-    const ownByRecord=records.map((record) => ({record,refs:record.document.references(entry=>this.referenceTokens(objects,entry.tag,entry.attrs.id)).map((reference) => {
+    const resolve=this.referenceTokenResolver(objects),byDomain=new Map<string,typeof objects>();for(const o of objects){const key=o.domain+'\0'+o.id,list=byDomain.get(key);if(list)list.push(o);else byDomain.set(key,[o]);}
+    const ownByRecord=records.map(record=>({record,refs:record.document.references(entry=>resolve(entry.tag,entry.attrs.id)).map((reference) => {
       const targets = (byId.get(reference.value) ?? []).filter(o=>!reference.targetDomain || o.domain === reference.targetDomain);
       const target = targets.length === 1 ? targets[0] : undefined;
       return { file: record.file, ...reference, targetDomain: reference.targetDomain ?? target?.domain, targetType: target?.ctype, evidence: reference.evidence };
     })}));
     const allOwn:DataReference[]=ownByRecord.flatMap(row=>row.refs);
     const own=scope==='all'?allOwn:ownByRecord.filter(row=>row.record.layer==='workspace').flatMap(row=>row.refs);
+    const byOwner=new Map<string,DataReference[]>();for(const r of allOwn){const key=r.file+'\0'+r.object,list=byOwner.get(key);if(list)list.push(r);else byOwner.set(key,[r]);}
     const inherited:DataReference[]=[];
     for(const child of objects.filter(o=>o.id&&o.parent&&(scope==='all'||o.layer==='workspace'))){
-      const tokens=this.referenceTokens(objects,child.ctype,child.id),seen=new Set<string>();let parent=child.parent;
-      const childKey=child.ctype+':'+child.id,ownPaths=new Set(allOwn.filter(r=>r.file===child.file&&r.object===childKey).map(r=>r.path.slice(childKey.length)));
-      while(parent&&!seen.has(parent)){seen.add(parent);const matches=objects.filter(o=>o.id===parent&&o.domain===child.domain);if(matches.length!==1)break;const ancestor=matches[0],ancestorKey=ancestor.ctype+':'+ancestor.id;
-        for(const reference of allOwn.filter(r=>r.file===ancestor.file&&r.object===ancestorKey&&r.rawExpression?.includes('##')&&r.carrier!=='parent'&&!ownPaths.has(r.path.slice(ancestorKey.length)))){
+      const tokens=resolve(child.ctype,child.id),seen=new Set<string>();let parent=child.parent;
+      const childKey=child.ctype+':'+child.id,ownPaths=new Set((byOwner.get(child.file+'\0'+childKey)??[]).map(r=>r.path.slice(childKey.length)));
+      while(parent&&!seen.has(parent)){seen.add(parent);const matches=byDomain.get(child.domain+'\0'+parent)??[];if(matches.length!==1)break;const ancestor=matches[0],ancestorKey=ancestor.ctype+':'+ancestor.id;
+        for(const reference of (byOwner.get(ancestor.file+'\0'+ancestorKey)??[]).filter(r=>r.rawExpression?.includes('##')&&r.carrier!=='parent'&&!ownPaths.has(r.path.slice(ancestorKey.length)))){
           let value=reference.rawExpression!;for(let i=0;i<16&&value.includes('##');i++){const next=value.replace(/##([^#]+)##/g,(whole,id:string)=>tokens[id]??whole);if(next===value)break;value=next;}
           reference.rewritePolicy='readOnly';
           inherited.push({...reference,object:childKey,path:childKey+reference.path.slice(ancestorKey.length),value,resolution:value.includes('##')?'unknown':'resolved',rewritePolicy:'readOnly',inheritedFrom:{object:ancestorKey,file:ancestor.file}});
@@ -344,7 +368,7 @@ export class DataWorkspace {
         parent=ancestor.parent;
       }
     }
-    return [...own,...inherited];
+    return [...own,...inherited];});
   }
 
   private async crossReferences() {
@@ -487,8 +511,8 @@ export class DataWorkspace {
         next.set(index,include);
         const records=await this.catalog(next);
         for(const file of targets)if(!records.some(r=>r.layer==='workspace'&&r.file===file))records.push({file,absolute:this.workspace.resolveUserPath(file),layer:'workspace',provenance:['workspace'],document:docs.get(file)!});
-        validation=validateDataDocuments(targets[0],records,this.schema,this.references(records,'workspace'));
-        verdicts=targets.map(file=>({file,authoring:validateDataAuthoring(file,original.get(file)!,docs.get(file)!,records,records.issues)}));
+        const external=await this.externalStringReferences();validation=validateDataDocuments(targets[0],records,this.schema,this.references(records,'workspace'),external);
+        verdicts=targets.map(file=>({file,authoring:validateDataAuthoring(file,original.get(file)!,docs.get(file)!,records,records.issues,external)}));
         const rejected=verdicts.find(v=>!v.authoring.accepted);
         if(rejected)throw new DataAuthoringError(rejected.authoring);
         if(!validation.valid)throw new Error('DATA_BATCH_VALIDATION_FAILED: '+validation.diagnostics.filter(d=>d.severity==='error').slice(0,5).map(d=>d.code+' '+d.path).join('; '));
@@ -717,7 +741,7 @@ export class DataWorkspace {
         const validationRecords = await this.catalog(next);
         if (!validationRecords.some((record) => record.layer === "workspace" && record.file === targetFile)) validationRecords.unshift({ file: targetFile, absolute: this.workspace.resolveUserPath(targetFile), layer: "workspace", provenance: ["workspace"], document });
         validation = validateDataDocuments(targetFile, validationRecords, this.schema,this.references(validationRecords,'workspace'));
-        authoring = validateDataAuthoring(targetFile, originalDocument, document, validationRecords, validationRecords.issues);
+        authoring = validateDataAuthoring(targetFile, originalDocument, document, validationRecords, validationRecords.issues,await this.externalStringReferences());
         if (request.authoringPolicy !== "compatibility" && !authoring.accepted) throw new DataAuthoringError(authoring);
         if (!validation.valid && !request.allowInvalid) throw new Error(`Data validation failed with ${validation.errors} error(s): ${validation.diagnostics.filter((entry) => entry.severity === "error").slice(0, 5).map((entry) => `${entry.path}: ${entry.message}`).join("; ")}`);
       }
@@ -736,6 +760,6 @@ export class DataWorkspace {
       const opened = await this.open(file);
       records.unshift({ file: opened.file, absolute: opened.absolute, layer: "workspace", provenance: ["workspace"], document: opened.document });
     }
-    return validateDataDocuments(normalize(file), records, this.schema,this.references(records,'workspace'));
+    return validateDataDocuments(normalize(file), records, this.schema,this.references(records,'workspace'),await this.externalStringReferences());
   }
 }

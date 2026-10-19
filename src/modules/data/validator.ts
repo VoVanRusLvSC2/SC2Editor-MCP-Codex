@@ -4,7 +4,7 @@ import type { DataDiagnostic, DataReference, DataObject, DataValidationReport } 
 
 export interface IndexedDataObject extends DataObject { file: string; layer: "workspace" | "dependency" }
 
-export function validateDataDocuments(primaryFile: string, documents: Array<{ file: string; document: DataDocument; layer: "workspace" | "dependency" }>, schema?: DataSchemaRegistry,referenceEdges?:DataReference[]): DataValidationReport {
+export function validateDataDocuments(primaryFile: string, documents: Array<{ file: string; document: DataDocument; layer: "workspace" | "dependency" }>, schema?: DataSchemaRegistry,referenceEdges?:DataReference[],external:ReadonlyMap<string,ReadonlySet<string>>=new Map()): DataValidationReport {
   const diagnostics: DataDiagnostic[] = [];
   const objects: IndexedDataObject[] = [];
   for (const record of documents) {
@@ -101,7 +101,8 @@ export function validateDataDocuments(primaryFile: string, documents: Array<{ fi
   const typedEdges=referenceEdges??documents.filter(r=>r.layer === "workspace").flatMap(record=>record.document.references().map(ref=>({...ref,file:record.file})));
   for(const ref of typedEdges){
     if(!ref.targetDomain||!ref.value)continue;
-    const targets=objects.filter(o=>o.id===ref.value&&o.domain===ref.targetDomain);
+    if(external.get(ref.targetDomain)?.has(ref.value))continue;
+    const targets=(byDomainId.get(ref.targetDomain+'\0'+ref.value)??[]).filter(o=>o.domain===ref.targetDomain);
     if(!targets.length)diagnostics.push({level:"L3",severity:"warning",code:"DATA_TYPED_REFERENCE_UNRESOLVED",message:"Typed reference not found in loaded catalog scope",file:ref.file,path:ref.path,reference:{kind:ref.targetDomain,value:ref.value}});
   }
 
