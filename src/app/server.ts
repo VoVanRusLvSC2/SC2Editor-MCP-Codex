@@ -1,3 +1,4 @@
+import {registerNativeEditorTools} from '../integrations/native/tools.js';
 import {registerLightingTools} from '../modules/lighting/tools.js';
 import {registerModkitIntegrationTools} from '../integrations/modkit/tools.js';
 import {registerModkitTerrainTools} from '../modules/terrain/modkitTools.js';
@@ -38,6 +39,7 @@ export function createProjectServer(project: Project) {
   if (enabled("assets")) registerAssetTools(server,project.assets);
   if (enabled("ui")){ registerUiPreviewTools(server,project.uiPreview); registerDialogPreviewTools(server,project.dialogPreview); registerPreviewBatch(server,project.dialogPreview); }
   if (enabled("map")) registerMapTools(server,project.map);
+  if (enabled("editor")) registerNativeEditorTools(server,project.nativeEditor);
   if(enabled('terrain'))registerModkitTerrainTools(server,project.modkitTerrain,project.placement);
   if(enabled('map')||enabled('data')||enabled('casc'))registerModkitIntegrationTools(server,project.modkit,{data:enabled('data'),map:enabled('map')},project.mapPreview);
   if (enabled("script")) registerScriptTools(server,project.script);
@@ -52,9 +54,10 @@ export function createProjectServer(project: Project) {
     selection: { profile: selection.profile, source: selection.source, modules: [...selection.modules], unknown: selection.unknown },
     availableModules: publicModules,
     profiles: moduleProfiles(),
-    configure: { profile: "Set SC2_MCP_PROFILE to workflow, map-builder, minimal, focused-data, focused-script, focused-authoring, ui, cutscene, cutscene-preview, data, terrain, casc, assets, settings, landscape, document, script, authoring or all", custom: "Set SC2_MCP_MODULES to a comma-separated module list; ui is always included" },
+    configure: { profile: "Set SC2_MCP_PROFILE to workflow, map-builder, editor, minimal, focused-data, focused-script, focused-authoring, ui, cutscene, cutscene-preview, data, terrain, casc, assets, settings, landscape, document, script, authoring or all", custom: "Set SC2_MCP_MODULES to a comma-separated module list; ui is always included" },
     dataSchema: project.data.schema.loadState(),
     modkitRuntime:project.modkit.status(),
+    nativeEditor:project.nativeEditor.configuration(),
     casc: { enabled: enabled("casc"), ...project.casc.configuration() },
     authoring: {
       cutscenePreview: enabled("cutscene")||enabled("cutscene-preview")?{tool:"cutscene.preview",renderTool:"cutscene.render",webglCapture:{browser:"installed Edge/Chrome",background:true,nativePixelValidated:false},coverageTool:"cutscene.coverage",facialInfoTool:"cutscene.facial_info",audio:true,facialFxa:{format:"FACE/1731",linearGraphs:true,hermiteCurves:true,auxiliaryBindings:false},manualPages:35,allManualFeaturesSupported:false,offline:true,geometry:true,skeletalM3M3A:true,renderer:"WebGL2",lighting:"SC2 source-derived material/light equations; pass graph approximate",materialAnimation:{nativeIds:true,typedChannelTypes:13,propertyScoped:true,stcPriority:true,sourceBundleIdentity:true,nativeHeaderModeMerge:true,weightsEngineValidated:false},nativeShaderEquations:true,directCameraClipNormalization:true,defaultFogDensity:0,fog:true,localLights:true,rtt:true,embeddedCameras:true,persistentTimeline:true,gpuSkinning:true,materials:true,particles:true,ribbons:true,weightedLayerBlending:true,engineValidated:false}:"DISABLED",

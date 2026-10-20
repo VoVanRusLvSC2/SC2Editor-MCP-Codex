@@ -66,7 +66,8 @@
     "casc:schemas": "node --import tsx scripts/generate-casc-schemas.ts",
     "settings:schemas": "node --import tsx scripts/generate-settings-schemas.ts",
     "document:schemas": "node --import tsx scripts/generate-document-schemas.ts",
-    "modkit:setup": "node scripts/setup-modkit-runtime.mjs"
+    "modkit:setup": "node scripts/setup-modkit-runtime.mjs",
+    "native:setup": "node scripts/setup-native-toolkit.mjs"
   },
   "dependencies": {
     "@modelcontextprotocol/server": "^2.0.0",

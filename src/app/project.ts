@@ -1,4 +1,5 @@
 import {LightingWorkspace} from '../modules/lighting/workspace.js';
+import {NativeEditorBridge} from '../integrations/native/bridge.js';
 import {CutscenePreviewWorkspace} from '../modules/cutscenePreview/workspace.js';
 import {DialogPreviewWorkspace} from "../modules/uiPreview/dialogWorkspace.js";
 import {UiPreviewWorkspace} from "../modules/uiPreview/workspace.js";
@@ -35,6 +36,7 @@ export async function createProject(root: string, options: {loadUiSchema?:boolea
   ]);
   const workspace = new Workspace(root, schema);
   await workspace.recover();
+  const nativeEditor=new NativeEditorBridge(workspace);
   const data = new DataWorkspace(workspace, dataSchema), browse = new BrowseWorkspace(workspace, data);
   const modkit=new ModkitIntegration(workspace,path.resolve(process.env.SC2_CASC_ROOT??'C:/Program Files (x86)/StarCraft II'),()=>data.extraRoots);
   const useModkitCasc=process.env.SC2_CASC_BACKEND==='modkit'||(process.env.SC2_CASC_BACKEND!=='native'&&modkitAvailable());
@@ -65,6 +67,6 @@ export async function createProject(root: string, options: {loadUiSchema?:boolea
   const uiPreview=new UiPreviewWorkspace(workspace,casc,textSchema);
   const dialogPreview=new DialogPreviewWorkspace(uiPreview,trigger);
   const cutscenePreview=new CutscenePreviewWorkspace(workspace,casc);
-  return { modkit,modkitTerrain,mapPreview,lighting, cutscenePreview, dialogPreview, uiPreview, assets, document, settings, casc, script, trigger, workspace, schema, data, browse, placement, terrain, map, ai, text, cutscene, cutsceneSchema, cutsceneAssets };
+  return { nativeEditor,modkit,modkitTerrain,mapPreview,lighting, cutscenePreview, dialogPreview, uiPreview, assets, document, settings, casc, script, trigger, workspace, schema, data, browse, placement, terrain, map, ai, text, cutscene, cutsceneSchema, cutsceneAssets };
 }
 export type Project = Awaited<ReturnType<typeof createProject>>;

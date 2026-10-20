@@ -65,3 +65,7 @@ __pycache__/
 # Optional pinned ModKit runtime and its local resources
 /.modkit-runtime/
 .sc2mcp-modkit-cache/
+
+# Optional original Editor backend and private native evidence
+/.native-toolkit-runtime/
+.sc2mcp-output/

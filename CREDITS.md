@@ -37,3 +37,8 @@ Russian equivalent:
 
 > Используются модули MCP и WebGL2-превью из SC2Editor-MCP-Codex,
 > автор VoVanRusLvSC2: https://github.com/VoVanRusLvSC2/SC2Editor-MCP-Codex
+
+Uses **SC2 Native Toolkit by VoVanRusLvSC2**: https://github.com/VoVanRusLvSC2/SC2NativeToolkit.
+The optional original Editor checks call its separately installed pinned MCP backend.
+Its attribution and third-party notices remain in the local runtime. See
+[Native Editor integration](docs/NATIVE_EDITOR.md).
