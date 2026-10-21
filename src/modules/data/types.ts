@@ -91,11 +91,14 @@ export interface DataTextureVitalLayerSpec {
 export type DataObjectSelector = string | { id: string; ctype?: string; domain?: string };
 
 export type DataOperation =
+  | { op:"recipe.unitActor"; id:string; unit:string; sourceActor:string; model:string; replace?:boolean; scale?:number }
+  | { op:"recipe.effectModel"; id:string; effect:string; model:string; at?:"Caster"|"Target"|"Effect"|"Source"; event?:"Start"|"Stop"; stopEffect?:string; stopEvent?:"Start"|"Stop"; orphanPolicy?:"keep"|"stop"; host?:"_Selectable"; inheritScale?:boolean; scale?:number; siteOp?:string; replace?:boolean }
   | { op: "object.create"; as?: string; ctype: string; id: string; parent?: string; attrs?: Record<string, DataScalar>; fields?: DataNativeFieldSpec[] }
   | { op: "object.clone"; as?: string; object: DataObjectSelector; id: string; parent?: string }
   | { op: "object.rename"; object: DataObjectSelector; newId: string; updateReferences?: boolean }
   | { op: "object.delete"; object: DataObjectSelector; force?: boolean }
   | { op: "object.setParent"; object: DataObjectSelector; parent?: string }
+  | { op: "object.setType"; object: DataObjectSelector; ctype: string }
   | { op: "object.setAttribute"; object: DataObjectSelector; attribute: string; value: DataScalar }
   | { op: "object.removeAttribute"; object: DataObjectSelector; attribute: string }
   | { op: "field.set"; object: DataObjectSelector; path: string; value: DataScalar }

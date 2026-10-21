@@ -21,20 +21,20 @@ const hashes=[];const walk=async dir=>{for(const e of await fs.readdir(dir,{with
 const report={status:'PREPARED',editor:'NOT_RUN',load:'NOT_RUN',saveReopen:'NOT_RUN',runtime:'NOT_RUN',foundation:'Assembled from checked-in native nydus component fixtures; not a complete original scenario or Editor golden',staticMap,gui,data,archive,hashes};
 await fs.writeFile(path.join(packet,'static-report.json'),JSON.stringify(report,null,2)+'\n');
 await fs.writeFile(path.join(packet,'RESULTS.json'),JSON.stringify({editorVersion:null,dependencies:null,load:'NOT_RUN',save:'NOT_RUN',reopen:'NOT_RUN',run:'NOT_RUN',regeneratedGalaxy:'NOT_RUN',notes:''},null,2)+'\n');
-await fs.writeFile(path.join(packet,'README_RU.md'),`# Ручная приёмка SC2 Editor
+await fs.writeFile(path.join(packet,'README.md'),`# Manual reception of SC2 Editor
 
-Статус Editor/load/save/runtime: NOT_RUN. Пакет — изолированная сборка native component fixtures, не полный исходный сценарий и не подтверждённая golden-карта.
-components содержит исходники; упакованный components/.sc2mcp-output/TypedGui.SC2Map находится в изолированном workspace после verified archive export (см. static-report.json).
+Editor/load/save/runtime: NOT_RUN is an isolated build of native component fixtures, not a complete original script, and not a confirmed golden card.
+The packaged components/.sc2mcp-output/TypedGui.SC2Map is located in isolated workspace after verified archive export (see static-report.json).
 
-1. Закройте или сохраните свою текущую сессию самостоятельно. Откройте копию указанного архива в отдельном Editor.
-2. Запишите версию Editor/SC2 и фактически доступные зависимости из DocumentInfo. Недоступная зависимость — отдельное внешнее условие, не скрывайте его как PASS.
-3. В Trigger Editor найдите ManualAcceptance / HardeningInit: Map Initialization, Wait 0.5 Game Time, Destroy All Dialogs. Проверьте порядок действий, типы, NativeLib binding и TriggerStrings.
-4. В Data Editor проверьте HardeningDamage.Amount=1 и HardeningSet.EffectArray -> HardeningDamage.
-5. Сохраните под новым именем, закройте и откройте вновь. Сравните события/действия/строки/ссылки. Сохраните regenerated MapScript.galaxy, compiler errors и журнал загрузки.
-6. Запустите Test Document только на копии. Зафиксируйте реальный load/run и ошибки; наличие статически корректного XML не подтверждает исполнение события.
-7. Для positive gamelink UnitCreate используйте trigger.plan на копии с реально объявленной и доступной Unit и существующей point Variable. Отдельно проверьте literal/variable/preset/gamelink; вложенный call/block/customScript в этой версии должен быть отвергнут до staging.
-8. Заполните RESULTS.json. До этого ни Editor, ни runtime не считаются проверенными.
+1. Close or save your current session yourself. Open a copy of the archive in a separate Editor.
+2. Write down the Editor/SC2 version and the actual dependencies available from DocumentInfo. Unavailable dependency is a separate external condition, don't hide it as PASS.
+3. In Trigger Editor, find ManualAcceptance/HardeningInit: Map Initialization, Wait 0.5 Game Time, Destroy All Dialogs.Check the order, types, NativeLib binding and TriggerStrings.
+4. In Data Editor, check HardeningDamage.Amount=1 and HardeningSet.EffectArray -> HardeningDamage.
+5. Save under a new name, close and reopen. Compare events/actions/line/links. Save regenerated MapScript.galaxy, compiler errors and download log.
+6. Run Test Document on copies only. Record real load/run and errors; having a statically correct XML does not confirm the execution of the event.
+7. For positive gamelink UnitCreate, use trigger.plan on a copy from the actual announced and available Unit and the existing point Variable.Separately check the literal/variable/preset/gamelink; the attached call/block/customScript in this version must be rejected before staging.
+8. Fill in RESULTS.json. Before that, neither Editor nor runtime is considered validated.
 
-Источники fixtures: src/tests/fixtures/terrain-native/nydus и map-native/nydus. Исходные карты, пользовательская сессия и настройки соединений не изменялись.
+The sources of fixtures are src/tests/fixtures/terrain-native/nydus and map-native/nydus. source maps, user session and connection settings have not changed.
 `);
 console.log(JSON.stringify({packet,staticValid:staticMap.valid,guiValid:gui.valid,dataValid:data.valid,editor:'NOT_RUN'},null,2));

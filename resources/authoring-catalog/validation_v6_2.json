@@ -1,0 +1,1 @@
+{"status":"passed","scripts":["add_auto_vegetation.py","add_vegetation.py","build_mcp_view.py","enrich.py","extract.py","index_all_maps.py","mcp_lookup.py","organize.py","select.py","style_lookup.py","verify.py"],"original_data_preserved":true,"lookup_smoke_tests":"passed","engine_verified":false}

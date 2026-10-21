@@ -1,4 +1,5 @@
 import {checkPlacementGeometry} from './geometryCheck.js';
+import {editorVisibility} from './editorVisibility.js';
 import {PointWorkspace,pointPlanSchema} from "./points.js";
 import { McpServer } from "@modelcontextprotocol/server";
 import * as z from "zod/v4";
@@ -176,6 +177,7 @@ export function registerPlacementTools(
   context: PlacementToolContext,
 ): void {
   const placement = context.workspace;
+  server.registerTool('placement.editor_visibility',{description:'Inspect the Windows SC2 Editor global TerrainLayersVisible mask. enableAll=true,dryRun=false backs up this exact preference and enables all layer bits. Does not launch/control Editor or certify model rendering; running instances may cache the preference.',inputSchema:z.object({enableAll:z.boolean().default(false),dryRun:z.boolean().default(true)}).strict()},async a=>textResult(await editorVisibility(placement.workspace,a.enableAll,a.dryRun)));
   server.registerTool('placement.geometry_check',{description:'Check all object XML forms, bounds, unit ground offsets, absolute doodad heights and catalog radius overlap candidates. Optional CLIF/LFCT route candidate; actual footprints/engine pathing are not simulated.',inputSchema:z.object({objectIds:z.array(z.number().int().positive()).max(5000).default([]),tolerance:z.number().min(0).max(1).default(.01),route:z.object({from:z.object({x:z.number(),y:z.number()}),to:z.object({x:z.number(),y:z.number()})}).optional()}).strict()},async a=>textResult(await checkPlacementGeometry(placement,a.objectIds,a.tolerance,a.route)));
 
   let pointContext:PointWorkspace|undefined;

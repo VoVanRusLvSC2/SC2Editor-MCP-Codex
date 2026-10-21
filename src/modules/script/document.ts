@@ -36,7 +36,24 @@ export class GalaxyDocument {
     readonly pairs = new Map<number, number>();
     readonly referencesByName = new Map<string, Array<{token:Token;index:number}>>();
     private callCache?: Array<{name:string;offset:number;member:boolean}>;
-    constructor(readonly source: string) { this.lex(); for(let index=0;index<this.tokens.length;index++){const token=this.tokens[index]!;if(token.kind!=="identifier"&&token.kind!=="string")continue;const key=token.kind==="string"?decodeGalaxyString(token.value):token.value;const rows=this.referencesByName.get(key)??[];rows.push({token,index});this.referencesByName.set(key,rows);} this.structure(); }
+    constructor(readonly source: string) { this.lex(); for(let index=0;index<this.tokens.length;index++){const token=this.tokens[index]!;if(token.kind!=="identifier"&&token.kind!=="string")continue;const key=token.kind==="string"?decodeGalaxyString(token.value):token.value;const rows=this.referencesByName.get(key)??[];rows.push({token,index});this.referencesByName.set(key,rows);} this.structure(); this.checkKnownActorMessages(); }
+    /** Target Editor evidence rejects this literal form. This is not a full
+     * actor-message grammar; dynamic strings and other commands stay unverified. */
+    private checkKnownActorMessages() {
+        for(const {token,index} of this.referencesByName.get('ActorSend')??[]){
+            if(token.kind!=='identifier'||this.tokens[index+1]?.value!=='(')continue;
+            const close=this.pairs.get(index+1);if(close===undefined)continue;
+            const args:Array<[number,number]>=[];let start=index+2;
+            for(let i=start;i<close;i++){
+                const nested=this.pairs.get(i);if(nested!==undefined&&nested>i){i=nested;continue;}
+                if(this.tokens[i].value===','){args.push([start,i]);start=i+1;}
+            }
+            args.push([start,close]);const message=args[1];
+            if(args.length!==2||!message||message[1]-message[0]!==1||this.tokens[message[0]]?.kind!=='string')continue;
+            const text=decodeGalaxyString(this.tokens[message[0]].value);
+            if(/^SetTintColor\s+[-+\d.]+,[-+\d.]+,[-+\d.]+\s+[-+\d.]+$/.test(text))this.error('ACTOR_MESSAGE_KNOWN_INVALID_FORMAT',this.tokens[message[0]].start,'Editor rejected this comma-separated SetTintColor literal. Use a verified native message or a Data Actor effect; other actor-message forms are not certified by this check.');
+        }
+    }
     private error(code: string, offset: number, message: string) { this.diagnostics.push({ severity: "error", code, offset, message }); }
     private lex() { const s = this.source; let i = 0; while (i < s.length) {
         const start = i, c = s[i]!;

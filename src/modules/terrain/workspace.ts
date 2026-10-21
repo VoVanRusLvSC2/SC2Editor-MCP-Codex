@@ -774,6 +774,7 @@ export class TerrainWorkspace {
   ) {
     if (!this.placement) throw new Error("PLACEMENT_CONTEXT_UNAVAILABLE");
     const placementArea = args.area;
+    if(placementArea.type==='polygon')throw new Error('LANDSCAPE_POLYGON_TERRAIN_UNSUPPORTED: use polygon decoration after native terrain planning');
     const area: TerrainArea =
       placementArea.type === "circle"
         ? {

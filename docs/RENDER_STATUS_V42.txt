@@ -1,0 +1,161 @@
+SC2Editor-MCP-Codex: render state v42
+Date: 15.10.2026
+Author of our code: VoVanRusLvSC2 / vladimir.lencmanis@gmail.com
+Repository: https://github.com/VoVanRusLvSC2/SC2Editor-MCP-Codex
+
+1. CURRECT RESULT
+
+v42 - working pre-WebGL2 cutscene player and common module
+The cutscene lighting and diagnostic preview of the map.
+engine Validated=false, allSupported=false.
+Confirmed equations and numerical checks are no substitute for frame comparisons.
+
+Updated six local players: Nova MP02_010, Mengska Palace HotS
+LotV MissionEpilogue01Start, Nova MP03_035, Nova MP03_020 and LotV
+Korhal01Debrief Game models, textures, sounds, reference images
+HTML players with built-in resources are not included in public source code.
+
+HDR WhiteShift binding fixed in v42: normal HDR pass shifts
+Bright saturated colors to white tone conversion and 3D LUT.
+Reinhard is excluded from this effect. Common code uses WebGL and CPU previews.
+The old HDRWhiteShift synthetic field no longer controls the stage.
+
+2. What's already been implemented
+
+Lighting:
+- General module src/modules/lighting: reading LightData, presets, inheritance
+  catalogs, local redefinitions, state of light, and general computations.
+- Ambient and Key/Fill/Back, environment cube and independent card multiplier
+  environment; author's ambientEnvironmentMap in the cutscene.
+- Local point/spotlight sources, attenuation by distance,
+  The confirmed shape of the cone, the transformation of position and direction.
+- Read and Animate M3 LITE Built Sources
+- Animation EnvironmentLight/ActiveLight, numerical transitions between states
+  Some rules for selecting discrete parameters are still a preview policy.
+- Confirmed HDR multipliers of conventional illuminated standard materials.
+  Unshaded, special families and alternative terrain-HDR not issued
+  for a fully restored general case.
+- Tonal operators, ColorizationContrast communication with tonal contrast
+  Transformation, HDR WhiteShift.
+- HSL/levels/gamma/Colorize, ordered Variations and color table 16x16x16.
+  For conventional HDR-path confirmed linear filtration, clamp on the axes
+  and enable colorMap by default.
+- Separate knots of the cutscene fog, their time windows and parameter animation;
+  Without active Fog, the default density is zero.
+
+Materials, animations and cameras:
+- Typed M3/M3A channels, native animation ID and additional communication
+  animations with properties of materials, cameras and light sources.
+- Sampling each material property from available layers instead of
+  Select only one clip; support for STC/STS and part of the native competition.
+  Complete mixing of all layer varieties has not yet been confirmed.
+- UV transformations, alpha, color, emission and composite passages of materials.
+- Correcting the depth of combined passages and sorting transparent objects.
+- RTT/video_channel, coordinate texture and source camera.
+- Fixes Actor/Light transformations, camera base and near/far clip.
+  CPU geometry check Raynor shows front framing;
+  The final match of the textured GPU image has not yet been verified.
+- Particles/ribbons, sound, subtitles and part of facial animation as preview functions.
+
+Interface and productivity:
+- Blue interface, Director, object tree, Property/Value on the right
+  Preservation of original properties and display of current values.
+- Selection of the object by timeline tracks, transport, bookmarks and End Scene.
+- 16:9/16:10 frame formats and individual white guides.
+- Load percentage; 100% is achieved after the first frame drawn.
+- Manual movement of the camera starts with the last calculated camera.
+- Preliminary shader training, reuse of GPU geometry
+  and postures, caching properties of materials and cutting off invisible objects.
+  There is no 60 FPS guarantee on all scenes and devices.
+
+MCP and editing:
+- lighting.inspect reads the general light from the installed game and local
+  directories; the team itself does not change anything.
+- terrain.lighting.inspect / terrain.lighting.plan and terrain operations
+  allow you to prepare and save the settings / purpose of the LightData preset.
+- cutscene operations allow you to change supported nodes Light, Fog,
+  EnvironmentLight and their properties with subsequent preservation/preview.
+- M3 LITE supports reading/animation/preview.
+  The light inside the M3 itself has not yet been realized.
+
+3. What is not yet or what is not confirmed
+
+- There is no full native shadow passage in the installed render yet.
+  The studied formulas and shadow bindings do not mean their introduction.
+- It does not match the original DeferredLight/frame graph SC2.
+  All local/transparent shadows and all sorting/passing options.
+- WebGL's Bloom, DOF and AO remain approximate. Full native SSAOs.
+  Bloom extraction/blur/composition and optics have not yet been restored.
+- Not closed all formats render targets, color conversions
+  HDR-bypass/overlay and other alternative paths.
+- Not fully implemented reflections, distortion, depth blend, volumetric
+  Special families of materials/effects.
+- The exact RGB/HDR ambient path without the environment cube remains partial.
+- Interpolation of discrete presets/environmental maps and some complex cases
+  Inheritance/transitions use a clearly limited preview policy.
+- CPU cutscene shots don't have full local lighting and post-processing.
+  PNG and WebGL can not be considered the same in coverage.
+- There is no complete terrain/map-context render inside the cutscene.
+- Not confirmed all rules of bone masks, IK, additive, whole/partial,
+  fades and all families of facial/material animation.
+- Accurate matching of all cameras, RTT, lighting and final frames with the editor
+  1:1 has not yet been confirmed. Editor and the game for this test have not been launched.
+
+4. What more needs to be added on lighting - on priority
+
+Priority 1: Shadows from the main directional light Key.
+You need to complete the selection of the shadow camera area by camera and objects.
+identify active bias/culling and depth formats, trace native flags
+Then add a real depth passage and a shadow reception.
+Key diffuse/specular, retaining independent ambient and Fill/Back.
+After that, check the self-shading, map boundaries, softness and animation.
+
+Priority 2: Local and color transparent shadows.
+Save shadowcasting and source identity in runtime; implement
+Confirmed spot/local shadow maps, separate depth/color maps
+Transparent shadows, model/material flags and quality/budget constraints.
+
+Priority 3: Full HDR and bloom.
+Restore the present order of brightness, downscale, blur and addition,
+its parameters/quality, buffer formats and alternative HDR passes.
+Don’t pick up an arbitrary general gamma/brightness for a single screenshot.
+
+Priority 4: Ambient, AO, and Reflections.
+Close the remaining ambient RGB/HDR fallback, SSAO and reflection sources.
+They're aligned with normals and families of materials. There's a color LUT.
+But it doesn't replace the missing shadows, the reflections and the right lighting.
+
+Priority 5: fog, DOF and special passageways.
+Bring the integration of fog with transparent objects and map context, restore
+native DOF, distortion/depth blend, and the impact of quality on pass selection.
+
+Priority 6: Comparison and Configuration through MCP.
+Check the same scenes, time, camera, aspect and graphics settings
+And then expand the supported light settings on the saved originals.
+in MCP without promising features that don’t work in the render itself.
+
+5. What has already been studied for shadows, but not introduced
+
+Found download shadow-uniforms, map binding, selection of orthographic
+area by scene, receiver coordinate transformation, 12 ordered
+soft filtration points, comparison-linear/LESS with white border,
+64x64 rotation noise, depth/slope bias transfer and part of native flags.
+Remains the choice of active branches, exact auxiliary functions,
+casters/receivers and matching selected formats.
+Bases/dumps/copies of shaders and raw results remain local.
+
+6. Verifications and Publications
+
+For v42, the assembly passed; 327 targeted tests passed, no errors or omissions.
+This is a cutscene/lighting/assets/document/terrain check, not a new one.
+Run all of the project's tests. WebGL commands are not recorded in the tests.
+Hardware pixel comparison or proof of performance.
+
+GitHub sends real MCP/render source code, current tests.
+necessary runtime files, this status and existing third-party notices.
+Local HTML with built-in game resources, EXE/DMP/Ghidra
+Screenshots, caches, private fixtures and one-time reports are not published.
+Our license and third-party terms are retained without relicensing.
+
+Continuation of render development after v42 is postponed at the request of the user.
+This document fixes the state; it does not mean the implementation of the plan items.

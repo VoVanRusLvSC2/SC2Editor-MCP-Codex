@@ -31,6 +31,7 @@ test('2D stereo keeps authored gain before the first sample and across camera mo
  let ctx:FakeContext,panners=0;const initialGains:number[]=[],offsets:number[]=[],gains:Array<ReturnType<typeof params>>=[];
  class FakeContext{
   currentTime=0;state='running';destination=node();listener=Object.fromEntries(['positionX','positionY','positionZ','forwardX','forwardY','forwardZ','upX','upY','upZ'].map(k=>[k,params()]));
+  // eslint-disable-next-line @typescript-eslint/no-this-alias -- Expose the mock clock to transport assertions.
   constructor(){ctx=this;}async resume(){}async close(){}async decodeAudioData(){return {length:480000,numberOfChannels:2,duration:10};}
   createGain(){const gain=params();gains.push(gain);return {...node(),gain};}createAnalyser(){return {...node(),fftSize:256,getFloatTimeDomainData(){}};}
   createBufferSource(){let connected:{gain:{value:number}};return {...node(),playbackRate:params(),connect(n:typeof connected){connected=n;},start(_t:number,offset:number){initialGains.push(connected.gain.value);offsets.push(offset);},stop(){},onended:undefined};}

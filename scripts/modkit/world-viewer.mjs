@@ -5,7 +5,7 @@ export function mount(input,summary) {
   const {document,ResizeObserver}=globalThis;
   const canvas=document.querySelector('canvas'),status=document.querySelector('#status'),picked=document.querySelector('#picked');
   const renderer=createWorldWebGlRenderer(canvas);
-  if(!renderer){status.textContent='WebGL2 недоступен. PNG остаётся доступным.';return;}
+  if(!renderer){status.textContent="WebGL2 is unavailable. PNG remains available.";return;}
   const initialCamera=input.camera??{...DEFAULT_WORLD_WEBGL_CAMERA};
   let camera={...initialCamera},selectedObjectId;
   const originalItems=input.items;
@@ -13,7 +13,7 @@ export function mount(input,summary) {
     const ratio=Math.min(globalThis.devicePixelRatio||1,1.5),r=canvas.getBoundingClientRect();
     canvas.width=Math.max(1,Math.round(r.width*ratio));canvas.height=Math.max(1,Math.round(r.height*ratio));
     const stats=renderer.draw({...input,camera,selectedObjectId});
-    status.textContent=`ModKit WebGL · ${summary.models.converted}/${summary.models.total} моделей · ${summary.terrainTextures} текстур грунта${summary.complete?'':' · частичная сцена'}`;
+    status.textContent=`ModKit WebGL · ${summary.models.converted}/${summary.models.total} models ${summary.terrainTextures} soil-texture${summary.complete?'':" • partial scene"}`;
     return stats;
   }
   let drag;
@@ -30,7 +30,7 @@ export function mount(input,summary) {
       const r=canvas.getBoundingClientRect();
       const hit=renderer.pick({...input,camera},{x:(e.clientX-r.left)*canvas.width/r.width,y:(e.clientY-r.top)*canvas.height/r.height,width:canvas.width,height:canvas.height});
       selectedObjectId=hit?.objectId;
-      picked.textContent=hit?`${hit.kind}${hit.objectId===undefined?'':` #${hit.objectId}`} · ${hit.position.map(n=>n.toFixed(2)).join(', ')}`:'Нет выбора';draw();
+      picked.textContent=hit?`${hit.kind}${hit.objectId===undefined?'':` #${hit.objectId}`} · ${hit.position.map(n=>n.toFixed(2)).join(', ')}`:"No choice.";draw();
     }drag=undefined;
   });
   canvas.addEventListener('pointercancel',()=>{drag=undefined;});

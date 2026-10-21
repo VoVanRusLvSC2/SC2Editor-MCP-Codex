@@ -14,11 +14,14 @@ const nativeField: z.ZodType<DataNativeFieldSpec> = z.lazy(() => z.object({
   attrs: z.record(z.string(), scalar).optional(), children: z.array(nativeField).optional(),
 }));
 const operation = z.discriminatedUnion("op", [
+  z.object({op:z.literal('recipe.unitActor'),id:dataId,unit:dataId,sourceActor:dataId,model:dataId,replace:z.boolean().default(false),scale:z.number().positive().max(20).optional()}),
+  z.object({op:z.literal('recipe.effectModel'),id:dataId,effect:dataId,model:dataId,at:z.enum(['Caster','Target','Effect','Source']).optional(),event:z.enum(['Start','Stop']).optional(),stopEffect:dataId.optional(),stopEvent:z.enum(['Start','Stop']).optional(),orphanPolicy:z.enum(['keep','stop']).optional(),host:z.literal('_Selectable').optional(),inheritScale:z.boolean().optional(),scale:z.number().positive().max(20).optional(),siteOp:dataId.optional(),replace:z.boolean().default(false)}),
   z.object({ op: z.literal("object.create"), as: z.string().optional(), ctype: z.string().regex(/^C[A-Z]/), id: z.string().min(1), parent: z.string().optional(), attrs: z.record(z.string(), scalar).optional(), fields: z.array(nativeField).optional() }),
   z.object({ op: z.literal("object.clone"), as: z.string().optional(), object: selector, id: z.string().min(1), parent: z.string().optional() }),
   z.object({ op: z.literal("object.rename"), object: selector, newId: z.string().min(1), updateReferences: z.boolean().optional() }),
   z.object({ op: z.literal("object.delete"), object: selector, force: z.boolean().optional() }),
   z.object({ op: z.literal("object.setParent"), object: selector, parent: z.string().optional() }),
+  z.object({ op: z.literal("object.setType"), object: selector, ctype: z.string().regex(/^C[A-Z][A-Za-z0-9_]*$/) }),
   z.object({ op: z.literal("object.setAttribute"), object: selector, attribute: z.string().min(1), value: scalar }),
   z.object({ op: z.literal("object.removeAttribute"), object: selector, attribute: z.string().min(1) }),
   z.object({ op: z.literal("field.set"), object: selector, path: z.string().min(1), value: scalar }),
@@ -76,7 +79,7 @@ export function registerDataTools(server: McpServer, context: DataToolContext): 
 
   const dataApplySchema = z.object({ file: z.string().default("Base.SC2Data/GameData/UnitData.xml"), componentListFile: z.string().default("ComponentList.SC2Components"), gameDataIndexFile: z.string().default("Base.SC2Data/GameData.xml"), referenceFiles: z.array(z.string()).max(61).optional(), operations: z.array(operation).min(1).max(500), dryRun: z.boolean().default(true), stage: z.boolean().default(true), backup: z.boolean().default(true), validate: z.boolean().default(true), allowInvalid: z.boolean().default(false), authoringPolicy:z.enum(["strict","compatibility"]).default("strict"), expectedSha256: z.record(z.string(), z.string()).optional() });
   server.registerTool("data.apply", {
-    description: "Atomically edit Data catalogs. New authoring is strict by default: declared XSD fields and typed references must validate before staging. Compatibility mode reports an explicit unverified authoring verdict. Defaults to dry-run.",
+    description: "Atomically edit Data catalogs. Strict by default: declared XSD fields and typed references validate before staging. Known incompatible parent classes are errors in both policies. object.setType repairs the XML class within the same catalog domain without deleting the ID or fields. Compatibility mode reports an unverified verdict. Defaults to dry-run.",
     inputSchema: dataApplySchema,
   }, async (args) => authorResult(data.apply({ ...args, operations: args.operations as DataOperation[] })));
 

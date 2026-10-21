@@ -150,7 +150,16 @@ export function checkGalaxyTypes(doc:GalaxyDocument,natives:ReadonlyMap<string,G
       const token=tokens[i],value=token.value;
       if(value==='{'){scopes.push(new Map());continue;}
       if(value==='}'){if(scopes.length>1)scopes.pop();continue;}
-      if(['for','do','switch'].includes(value)){unknown++;continue;}
+      if(value==='for'){
+        // The header has semicolon-delimited clauses, not ordinary statements.
+        // Do not let the update assignment consume the entire loop body and
+        // the following statement while looking for its next semicolon.
+        unknown++;
+        const close=tokens[i+1]?.value==='('?doc.pairs.get(i+1):undefined;
+        if(close!==undefined)i=close;
+        continue;
+      }
+      if(['do','switch'].includes(value)){unknown++;continue;}
       if(value==='if'||value==='while'){
         if(tokens[i+1]?.value==='('){
           const close=doc.pairs.get(i+1);

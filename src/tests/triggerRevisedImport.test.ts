@@ -1,0 +1,31 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {promises as fs} from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
+import {createHash} from 'node:crypto';
+import {Workspace} from '../core/workspace.js';
+import {TriggerWorkspace} from '../modules/trigger/workspace.js';
+import {inspectRevisedGui} from '../modules/trigger/revisedImport.js';
+const names=['FUNCTIONS','MAIN','GAMEPLAY','OBJECTIVES','CINEMATICS'];
+const tree='<TriggerData><Root>'+names.map((_,i)=>`<Item Type="Category" Id="0000000${i}"/>`).join('')+'</Root>'+names.map((n,i)=>`<Element Type="Category" Id="0000000${i}"><Identifier>${n}</Identifier></Element>`).join('')+'</TriggerData>';
+const hash=(s:string)=>createHash('sha256').update(s).digest('hex');
+test('revised GUI import rejects script fallback and incomplete or nested organization',()=>{
+ assert.equal(inspectRevisedGui(tree).customScripts,0);
+ assert.throws(()=>inspectRevisedGui(tree.replace('</TriggerData>','<Element Type="CustomScript" Id="A"/></TriggerData>')),/SCRIPT_FALLBACK/);
+ assert.throws(()=>inspectRevisedGui(tree.replace('</TriggerData>','<Element Type="Param" Id="A"><ScriptCode>Call();</ScriptCode></Element></TriggerData>')),/SCRIPT_FALLBACK/);
+ assert.throws(()=>inspectRevisedGui(tree.replace('CINEMATICS','EXTRA')),/FIVE_FLAT_FOLDERS/);
+ assert.throws(()=>inspectRevisedGui(tree.replace('<Identifier>MAIN</Identifier>','<Identifier>MAIN</Identifier><Item Type="Category" Id="00000000"/>')),/NESTED_FOLDER/);
+});
+test('revised GUI import pins both sources and stages tree/runtime/labels as one guarded transaction',async t=>{
+ const root=await fs.mkdtemp(path.join(os.tmpdir(),'sc2-revised-import-'));t.after(()=>fs.rm(root,{recursive:true,force:true}));
+ const before='<TriggerData><Root/></TriggerData>',runtime='void InitMap () {}';
+ await fs.writeFile(path.join(root,'Triggers'),before);await fs.writeFile(path.join(root,'MapScript.galaxy'),runtime);await fs.writeFile(path.join(root,'revised.xml'),tree);
+ await fs.writeFile(path.join(root,'names.json'),JSON.stringify({'Category/Name/00000000':'FUNCTIONS'}));
+ const ws=new Workspace(root),triggers=new TriggerWorkspace(ws),args={file:'revised.xml',stringsFile:'names.json',expectedSourceSha256:hash(before),expectedRuntimeSha256:hash(runtime),dryRun:true,stage:true};
+ await assert.rejects(triggers.importRevised({...args,expectedRuntimeSha256:'0'.repeat(64)}),/SOURCE_STALE/);
+ const preview=await triggers.importRevised(args);assert.equal(preview.counts.folders.length,5);assert.equal(await fs.readFile(path.join(root,'Triggers'),'utf8'),before);assert.deepEqual(ws.draftFiles(),[]);
+ await triggers.importRevised({...args,dryRun:false});assert.equal(await fs.readFile(path.join(root,'Triggers'),'utf8'),before);
+ await triggers.save(false);assert.equal(await fs.readFile(path.join(root,'Triggers'),'utf8'),tree);assert.match(await fs.readFile(path.join(root,'MapScript.galaxy'),'utf8'),/void InitMap/);
+ assert.match(await fs.readFile(path.join(root,'enUS.SC2Data/LocalizedData/TriggerStrings.txt'),'utf8'),/FUNCTIONS/);
+});

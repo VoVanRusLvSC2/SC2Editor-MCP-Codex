@@ -24,9 +24,9 @@ export function createObjectInspector(k:ReturnType<typeof createPreviewKernel>) 
         const curves=(parsed as {curves?:Curve[]}|undefined)?.curves??[];
         for(const curve of curves){
             const value=k.curve(curve,state.time,state.settings,state.activeShot);
-            let row=byName.get(curve.property);
+            const row=byName.get(curve.property);
             if(value===undefined){if(!row)add(curve.property,'Не вычисляется на этом кадре','unresolved','Анимация');continue;}
-            if(!row)row=add(curve.property,value,'animated','Анимация');
+            if(!row)add(curve.property,value,'animated','Анимация');
             else{row.value=format(value);row.kind='animated';row.changed=row.authored===undefined||!Number.isFinite(Number(row.authored))||Math.abs(Number(row.authored)-value)>1e-7;}
             // Native vectors can serialize as one attribute while curves use scalar aliases.
             const match=curve.property.match(/^(position|rotation|scale|teamColorDiffuse|teamColorEmissive|tintColor|fogColor|ambientColor|(?:key|fill|back)(?:DiffuseColor|SpecularColor|Direction))(X|Y|Z|Red|Green|Blue|R|G|B)$/);

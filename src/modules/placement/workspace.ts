@@ -5,7 +5,7 @@ import { Workspace } from "../../core/workspace.js";
 import { BrowseWorkspace } from "../browse/workspace.js";
 import type { BrowseSearchResult } from "../browse/types.js";
 import { componentListWithObjects, PlacementDocument } from "./document.js";
-import { planPositions, seededRandom } from "./planner.js";
+import { planPositions, seededRandom,placementAreaBounds } from "./planner.js";
 import { DistanceIndex } from "./spatialIndex.js";
 import { compactPlacementPlan } from "./summary.js";
 import {
@@ -72,7 +72,7 @@ function normalizedScale(scale?: number | Scale3): Scale3 | undefined {
   return typeof scale === "number" ? { x: scale, y: scale, z: scale } : scale;
 }
 
-function textHash(value: string): string {
+function textHash(value: string|Buffer): string {
   return createHash("sha256").update(value).digest("hex");
 }
 function requestHash(value: unknown): string {
@@ -118,7 +118,12 @@ export class PlacementWorkspace {
     const existing = [...this.plans.values()].find(
       (plan) => plan.requestHash === hash,
     );
-    if (existing) return existing;
+    if (existing) {
+      let current=true;
+      for(const [file,sha]of Object.entries(existing.sourceSha256))if(textHash((await this.workspace.binary.read(file)).bytes)!==sha){current=false;break;}
+      if(current&&!existing.applied)return existing;
+      this.plans.delete(existing.id);
+    }
     const sourceSha256: Record<string, string> = {};
     const diskSha256: Record<string, string> = {};
     for (const file of [input.objectFile, input.componentListFile]) {
@@ -370,15 +375,7 @@ export class PlacementWorkspace {
       throw new Error("TERRAIN_WATER_COVERAGE_UNAVAILABLE");
     if (args.textures && !surface.texturesKnown)
       throw new Error("TERRAIN_TEXTURE_COVERAGE_UNAVAILABLE");
-    const b =
-      args.area.type === "rectangle"
-        ? args.area
-        : {
-            minX: args.area.center.x - args.area.radius,
-            minY: args.area.center.y - args.area.radius,
-            maxX: args.area.center.x + args.area.radius,
-            maxY: args.area.center.y + args.area.radius,
-          };
+    const b = placementAreaBounds(args.area);
     if (
       b.minX < surface.bounds.minX ||
       b.minY < surface.bounds.minY ||
@@ -410,6 +407,7 @@ export class PlacementWorkspace {
       : PlacementDocument.create(args.objectFile);
     if (document.validate().some((i) => i.severity === "error"))
       throw new Error("INVALID_EXISTING_OBJECTS");
+    for(const id of args.replaceObjectIds){if(document.list().find(o=>o.id===id)?.kind!=='ObjectDoodad')throw new Error('REPLACEMENT_REQUIRES_DOODAD: '+id);document.remove(id);}
     const existingPoints = args.avoidExisting
       ? document
           .list()
@@ -423,6 +421,8 @@ export class PlacementWorkspace {
           })
       : [];
     let attempts = 0;
+    const clusters=args.clusterCount?planPositions({x:b.minX,y:b.minY,z:0},args.clusterCount,{type:'scatter',area:args.area,seed:args.seed^0x7192,minimumDistance:0,exclusionZones:args.exclusionZones}):[];
+    const clusterRadius=args.clusterRadius??Math.min(b.maxX-b.minX,b.maxY-b.minY)/4;
     const rejected = {
       holes: 0,
       protected: 0,
@@ -446,6 +446,7 @@ export class PlacementWorkspace {
         maxAttempts: args.maxAttempts,
         acceptPoint: (p) => {
           attempts++;
+          if(clusters.length&&!clusters.some(c=>Math.hypot(c.x-p.x,c.y-p.y)<=clusterRadius))return false;
           const point = args.textures
             ? surface.sample(p)
             : surface.sampleGround(p);
@@ -493,7 +494,7 @@ export class PlacementWorkspace {
     );
     const random = seededRandom(args.seed ^ 0x51c2),
       totalWeight = choices.reduce((n, c) => n + c.weight, 0);
-    const operations: PlacementMutation[] = positions.map((position) => {
+    const additions: PlacementMutation[] = positions.map((position) => {
       const roll = random() * totalWeight;
       let sum = 0;
       let choice = choices[choices.length - 1]!;
@@ -522,6 +523,7 @@ export class PlacementWorkspace {
         },
       };
     });
+    const operations:PlacementMutation[]=[...args.replaceObjectIds.map(objectId=>({op:'remove' as const,objectId})),...additions];
     const plan = await this.remember({
       request: {
         type: "scatterDoodads",
@@ -794,15 +796,7 @@ export class PlacementWorkspace {
       "industrial",
       "militaryBase",
     ].includes(args.locationType);
-    const areaBounds =
-      args.area.type === "circle"
-        ? {
-            minX: args.area.center.x - args.area.radius,
-            maxX: args.area.center.x + args.area.radius,
-            minY: args.area.center.y - args.area.radius,
-            maxY: args.area.center.y + args.area.radius,
-          }
-        : args.area;
+    const areaBounds = placementAreaBounds(args.area);
     const centerX = (areaBounds.minX + areaBounds.maxX) / 2;
     const centerY = (areaBounds.minY + areaBounds.maxY) / 2;
     const corridorHalfWidth =
@@ -832,7 +826,7 @@ export class PlacementWorkspace {
     const positions = planPositions(
       args.area.type === "circle"
         ? args.area.center
-        : { x: args.area.minX, y: args.area.minY, z: args.area.z },
+        : { x: areaBounds.minX, y: areaBounds.minY, z: args.area.z },
       objectCount,
       {
         type: "scatter",
@@ -1064,7 +1058,7 @@ export class PlacementWorkspace {
       editorVisibility: {
         placedObjects: (() => { try { return document.list().length; } catch { return 0; } })(),
         editorLayerState: "UNOBSERVABLE" as const,
-        hint: "The map can contain placed objects while the SC2 Editor hides their 3D layer. If objects appear in the layer list but not the viewport, enable View > Show Layer and select Layer > All in the Editor.",
+        hint: "Object presence/XML validity do not prove native 3D rendering. Check the live Units/Doodads layers, but if they are already enabled, investigate generated placement, terrain heights, catalog/actor initialization and Editor diagnostics. Saved TerrainLayersVisible bits alone are not a diagnosis.",
       },
       checks: {
         xml: issues.some((entry) => entry.code === "MALFORMED_XML")
@@ -1222,6 +1216,7 @@ function uniqueStrings(values: string[]): string[] {
   return [...new Set(values.map((value) => value.trim()).filter(Boolean))];
 }
 function areaMeasure(area: PlacementArea): number {
+  if(area.type==='polygon')return Math.abs(area.points.reduce((s,p,i)=>{const q=area.points[(i+1)%area.points.length];return s+p.x*q.y-q.x*p.y;},0))/2;
   return area.type === "circle"
     ? Math.PI * area.radius * area.radius
     : Math.abs((area.maxX - area.minX) * (area.maxY - area.minY));

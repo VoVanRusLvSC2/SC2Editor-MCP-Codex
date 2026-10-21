@@ -218,6 +218,26 @@ export class DataDocument {
     else this.setAttributeOn(node, "parent", parent);
   }
 
+  /** Repair the class while retaining catalog identity, comments and opaque fields. */
+  setType(selector: DataObjectSelector, ctype: string): XmlNode {
+    const node = this.resolve(selector), domain = dataDomainFromType(node.tag);
+    if (!/^C[A-Z][A-Za-z0-9_]*$/.test(ctype) || !domain || dataDomainFromType(ctype) !== domain)
+      throw new Error("DATA_CLASS_CHANGE_DOMAIN_MISMATCH");
+    const id = node.attrs.id;
+    if (!id) throw new Error("DATA_CLASS_CHANGE_ID_REQUIRED");
+    if (node.tag === ctype) return node;
+    // Work inside this node only; nested tags, including identical tag names,
+    // must remain byte-identical. Replace the closing tag before the opener.
+    let raw = this.source.slice(node.start, node.end);
+    if (!node.selfClosing) {
+      const closing = node.endTagStart - node.start;
+      raw = raw.slice(0, closing) + raw.slice(closing).replace(/^<\/[^\s>]+/, '</' + ctype);
+    }
+    raw = raw.replace(/^<[^\s/>]+/, '<' + ctype);
+    this.replace(node.start, node.end, raw);
+    return this.resolve({id, ctype});
+  }
+
   setObjectAttribute(selector: DataObjectSelector, name: string, value: DataScalar): void {
     if (["id", "parent"].includes(name)) throw new Error(`Use the dedicated object operation for '${name}'`);
     this.setAttributeOn(this.resolve(selector), name, value);

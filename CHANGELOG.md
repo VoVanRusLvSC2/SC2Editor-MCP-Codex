@@ -12,7 +12,7 @@
 - Add a pinned optional ModKit runtime and shared public Host/ModContext adapter. `data.modkit.query` returns selected effective fields, authoring rows or paged IDs with dependency/source provenance. Existing Data writers retain their transaction guards.
 - `map.preview` uses the ModKit world renderer and its model/texture loaders, producing compressed self-contained WebGL HTML and optional CPU PNG/MCP images. Retain explicit partial coverage and GPU/CPU differences; no SC2 visual-parity claim.
 - Route existing CASC tools through ModKit when installed, with local-only reads and a native CascLib fallback selectable at startup. Read real content/encoding keys from existing ModKit reader methods, completing missing declarations while preserving the original MD5/SHA integrity guards.
-- Add snapshot/path/binary/provenance/schema tests and real stdio MCP acceptance on local Agria. No Editor/game or real browser/GPU launched. Runtime source pins, compatibility patch and setup instructions: docs/MODKIT_INTEGRATION_RU.md.
+- Add snapshot/path/binary/provenance/schema tests and real stdio MCP acceptance on local Agria. No Editor/game or real browser/GPU launched. Runtime source pins, compatibility patch and setup instructions: docs/MODKIT_INTEGRATION.md.
 - Fix large converted UVM codec selection: retain the synthetic .uvm extension so rigs, Stand animations and materials reach the original world renderer. Recheck the later Agria v8 with native cliffs/ramps; expose model facet/piece counts and fit the whole map. Preserve native CASC metadata mode and existing Data/Terrain writers; document the comparison and a future upstream patch.
 
 ## Cutscene renderer v61 static sampler bias — 2026-10-16
@@ -108,7 +108,7 @@
 - Add blue editor panels, the complete authored-property inspector, independent frame guides and output fitting, and selectable Director/timeline objects.
 - Correct native Actor/Light rotation conventions, camera basis, ordinary material HDR factors, independent environment-cube intensity and spot-light cone math. Accept the valid large city crowd mesh within bounded memory limits.
 - Replace approximate RGB grading with shared HSL/Colorize/Variations and a 16-cube LUT. Correct tone contrast and enable the normal HDR WhiteShift stage in WebGL and CPU terrain previews.
-- Document implemented features, remaining limits and the lighting roadmap in `docs/RENDER_STATUS_V42_RU.txt`. Keep game assets and raw research local; retain existing attribution and third-party terms.
+- Document implemented features, remaining limits and the lighting roadmap in `docs/RENDER_STATUS_V42.txt`. Keep game assets and raw research local; retain existing attribution and third-party terms.
 - Validation: release build and exported-source typecheck pass; the v42 targeted graph passes 327 tests with no skips. Native shadow passes, complete postprocessing and matched engine/GPU pixels remain open; `engineValidated=false`, `allSupported=false`.
 
 ## Offline previews, shared lighting and source publication — 2026-10-14

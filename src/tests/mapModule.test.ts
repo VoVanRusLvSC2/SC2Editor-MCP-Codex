@@ -7,6 +7,7 @@ import { gunzipSync } from "node:zlib";
 import { Workspace } from "../core/workspace.js";
 import { MapInfoDocument } from "../modules/map/mapInfo.js";
 import { MapWorkspace } from "../modules/map/workspace.js";
+import {versionMarker} from '../modules/document/codecs/metadata.js';
 import { archiveBackendAvailable, archiveMetadataFile, directoryManifest, extractArchive, inspectArchive, packArchive, safeArchivePath } from "../archive/archiveAdapter.js";
 
 const bounds = { left:4,bottom:4,right:28,top:28 };
@@ -98,11 +99,16 @@ test("native backend preserves unknown content, encrypted entry intent, empty fi
 
 test("MCP map export supports a root workspace via reserved output and verifies every entry",{ skip:!archiveBackendAvailable() },async t => {
   const f = await fixture(t), map = new MapWorkspace(new Workspace(f.source));
+  await fs.writeFile(path.join(f.source,'Objects'),'<PlacedObjects Version="27"><ObjectUnit Id="1" UnitType="Marine" Player="1" Position="10,10,0"/></PlacedObjects>');
+  await fs.writeFile(path.join(f.source,'MapInfo.version'),versionMarker('mapi',{major:5,minor:0,patch:17,build:98310},1792517421,1));
+  await fs.writeFile(path.join(f.source,'Preload.xml'),'<Preload/>');
   const target = ".sc2mcp-output/Generated.SC2Map";
   const before = await directoryManifest(f.source);
   assert.equal((await map.export("",target)).dryRun,true);
   const actual = await map.export("",target,false);
   assert.ok("verification" in actual); assert.equal(actual.verification.reopened,true);
+  assert.ok(actual.editorLoad.changed.includes('Objects.version'));assert.ok(actual.editorLoad.changed.includes('Preload.xml'));
+  assert.ok('Objects.version' in actual.verification.contentSha256);
   assert.deepEqual(await directoryManifest(f.source),before);
   await assert.rejects(map.export("","Wrong.SC2Map",false),/INSIDE_COMPONENTS/);
   await assert.rejects(map.inspect("../outside"),/escapes/);

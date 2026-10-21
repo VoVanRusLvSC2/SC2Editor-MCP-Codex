@@ -5,6 +5,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
+import process from 'node:process';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const publicationRoot = path.join(root, "work", "publication");

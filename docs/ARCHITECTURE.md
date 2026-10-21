@@ -24,7 +24,7 @@ Text staging records the complete participating group, including unchanged membe
 
 Commit prepares UUID temporary files, rechecks snapshots, then performs per-file atomic rename. Handled failures compensate already-written files only where bytes still match this transaction's output. Drafts clear only after success.
 
-Alpha.11 automatically tracks Workspace text reads during preflight and validation, including external catalog reads and effective drafts. Read snapshots persist in staged groups until save. Data/AI preflight shares that context; AI/Browse bypass cached indexes during tracked editing. Missing root Triggers is explicitly pinned. See [dependency transactions](DEPENDENCY_TRANSACTIONS_RU.md).
+Alpha.11 automatically tracks Workspace text reads during preflight and validation, including external catalog reads and effective drafts. Read snapshots persist in staged groups until save. Data/AI preflight shares that context; AI/Browse bypass cached indexes during tracked editing. Missing root Triggers is explicitly pinned. See [dependency transactions](DEPENDENCY_TRANSACTIONS.md).
 
 This is not crash-wide multi-file atomicity: no persistent recovery journal or cross-process lock. Directory enumeration and untracked binary/adapter reads are not universally pinned. Ordinary symlink destinations and lexical escapes are rejected, but checks cannot eliminate hostile symlink swaps between check and open.
 
@@ -32,4 +32,4 @@ This is not crash-wide multi-file atomicity: no persistent recovery journal or c
 
 `ui.project_status`, GUI Project coverage and `npm run project:audit` cover all eight sections. The generated audit captures actual registrations, including dynamic tool names. Historical corpus totals are not a newly executed sweep. Preservation of unknown XML does not prove safe creation of unknown structures.
 
-See [full audit](PROJECT_ARCHITECTURE_AUDIT_RU.md). Editor/runtime gates remain NOT_EXECUTED.
+See [full audit](PROJECT_ARCHITECTURE_AUDIT.md). Editor/runtime gates remain NOT_EXECUTED.

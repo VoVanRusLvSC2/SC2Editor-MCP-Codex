@@ -4,6 +4,7 @@ import { promises as fs } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { execFileSync } from "node:child_process";
+import process from 'node:process';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const policy = JSON.parse(await fs.readFile(path.join(root, "publication-policy.json"), "utf8"));
@@ -17,6 +18,14 @@ const entry = (category, reason) => ({ category, reason });
 function classify(file) {
   if (inDirectory(file, policy.localDirectories) || /(^|\/)(node_modules|__pycache__|\.git|build|CMakeFiles)\//.test(file))
     return entry("local", "Local outputs, fixtures, inputs or build/cache directory");
+  if (file.startsWith('resources/authoring-catalog/'))
+    return /\.(?:json(?:\.gz)?|md)$/i.test(file)
+      ? entry('candidate', 'Runtime authoring catalog, provenance or English source instructions; gzip contains JSON, not game media')
+      : entry('local', 'Unexpected file type in the authoring reference catalog');
+  if (file.startsWith('.agents/skills/'))
+    return /\.(?:md|json|yaml|yml)$/i.test(file)
+      ? entry('candidate', 'Portable project authoring skill or routing/evaluation reference')
+      : entry('local', 'Non-instruction skill artifact');
   if (/\.(exe|dll|lib|exp|obj|o|a|pdb|dmp|zip|7z|mpq|sc2map|sc2mod|sc2data|m3|m3a|dds|fxa|fxe|mp3|ogg|wav|png|jpg|jpeg|webp|gz|log|tap|tsbuildinfo|pyc)$/i.test(file))
     return entry("local", "Binary/input asset or auxiliary evidence; not part of this source proposal");
   if (/\.txt$/i.test(file) && !roots.has(file) && !docs.has(file) && !file.startsWith("native/vendor/") && !file.startsWith("vendor/blizzard-models/") && !/(^|\/)(CMakeLists\.txt|[^/]*(?:LICENSE|COPYING|NOTICE|COPYRIGHT)[^/]*)$/i.test(file))
@@ -62,6 +71,8 @@ async function visit(directory = "") {
 await visit();
 records.sort((a, b) => a.file.localeCompare(b.file, "en"));
 const required = [...policy.rootFiles, ...generated, "generated/data-xsd-index/manifest.json",
+  'resources/authoring-catalog/manifest.json','resources/authoring-catalog/IMPORT.json',
+  '.agents/skills/sc2-mission-authoring/SKILL.md','.agents/skills/sc2-terrain-composition/SKILL.md','.agents/skills/sc2-data-trigger-systems/SKILL.md',
   "vendor/blizzard-models/LICENSE-GPL-2.0.txt", "vendor/blizzard-models/browser/material-bundle.js",
   "vendor/blizzard-models/dist/m3/native/model.js", "vendor/blizzard-models/src/m3/native/structures.xml",
   "native/vendor/StormLib/LICENSE", "native/casc/LICENSE-CascLib.txt"];

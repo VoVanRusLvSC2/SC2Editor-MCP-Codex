@@ -11,7 +11,7 @@ doc.createFrame({
   properties: [
     { tag: "Width", value: 220 },
     { tag: "Height", value: 56 },
-    { tag: "Text", value: "Отключить кнопку 2" },
+    { tag: "Text", value: "Turn off the 2 button" },
     { tag: "Toggleable", value: true },
     { tag: "Toggled", value: false },
   ],
@@ -37,7 +37,7 @@ doc.createFrame({
   properties: [
     { tag: "Width", value: 220 },
     { tag: "Height", value: 56 },
-    { tag: "Text", value: "Кнопка 2" },
+    { tag: "Text", value: "Button 2" },
     { tag: "Enabled", value: true },
   ],
 });

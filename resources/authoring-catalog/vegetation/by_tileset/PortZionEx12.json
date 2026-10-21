@@ -1,0 +1,1 @@
+{"tileset_id":"PortZionEx12","actor_vegetation":[],"native_texture_vegetation":[{"texture_id":"MonlythCracked","model_id":"PlantMixMonlyth","catalog":"Model","probability":["0.100000"],"placement_radius":["1.000000"],"approx_count":null,"placement":"native_texture_foliage","scope":"mods/liberty.sc2mod","vegetation_categories":["groundcover"],"vegetation_candidate":true}]}

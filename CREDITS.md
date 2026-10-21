@@ -35,10 +35,12 @@ identifying the modules or functionality used. For example:
 
 Russian equivalent:
 
-> Используются модули MCP и WebGL2-превью из SC2Editor-MCP-Codex,
-> автор VoVanRusLvSC2: https://github.com/VoVanRusLvSC2/SC2Editor-MCP-Codex
+> MCP and WebGL2 preview modules from SC2Editor-MCP-Codex are used.
+> Author VoVanRusLvSC2: https://github.com/VoVanRusLvSC2/SC2Editor-MCP-Codex
+
+ModKit Data/CASC/map integration also uses the public Host, SDK, SC2 loader, CASC reader, Images/Models codecs and world renderer by [Modkit contributors](https://github.com/hometlt/ModKit), with Blizzard-format extensions from [ModKit-Blizzard](https://github.com/hometlt/ModKit-Blizzard). Pinned sources and license preservation are described in [the integration notes](docs/MODKIT_INTEGRATION.md). These are upstream components, not original SC2Editor-MCP-Codex implementations.
 
 Uses **SC2 Native Toolkit by VoVanRusLvSC2**: https://github.com/VoVanRusLvSC2/SC2NativeToolkit.
-The optional original Editor checks call its separately installed pinned MCP backend.
-Its attribution and third-party notices remain in the local runtime. See
-[Native Editor integration](docs/NATIVE_EDITOR.md).
+The optional native Editor adapter calls the separately installed, pinned Toolkit
+MCP backend. Its attribution and third-party notices remain in the local runtime.
+See [Native Editor integration](docs/NATIVE_EDITOR.md) for scope and limitations.

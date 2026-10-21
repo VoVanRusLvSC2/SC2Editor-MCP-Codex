@@ -4,6 +4,22 @@
 
 ## Public tools
 
+`data.apply` also supports `recipe.unitActor` and `recipe.effectModel` (single
+catalog transactions; the multi-catalog `data.batch` expander does not support
+these recipes yet). The first copies a native actor's authored presentation and
+GenericUnit template, retains its native class, rebinds unit selectors and pins
+display/build/placement models. It avoids deriving a primary actor from another
+concrete unit actor and adding a second UnitBirth Create. The known conflicting
+pattern is rejected by `DATA_ACTOR_CONCRETE_PARENT_CREATE`. The second binds an
+effect Start/Stop event to a native one-shot model bracket. It supports Source,
+Caster, Target and Effect contexts, a selectable host, scale inheritance, site
+operations, explicit orphan policy and a separate stopEffect/stopEvent. It merges
+Actor, Model, Effect and related sound preloads into Preload.xml in the same
+transaction, preserving existing entries. Both require `replace:true` to rebuild an existing
+actor; replacement owns its authored fields. Source layer overlays, native event
+execution and complete rendering equivalence are not simulated. Validate visual
+behavior in the target engine; model/catalog existence is a static prerequisite.
+
 - `data.context` — selective objects, declared/effective fields, parent chain, references, dependency provenance and diagnostics. With `ids`, `ctypes`, `domains` or `fields`, it returns only matching objects/files; `fields` also projects the returned field trees to keep token use small.
 - `data.query` — batch search by id, C-type, domain, field, parent, native `Link` or invalid reference.
 - `data.describe_type` — bundled plus active observed schema for a C-type. It works even before a map/dependency is mounted: the generated registry contains every C-type, object attribute and field path seen in the audited corpus.
@@ -14,7 +30,7 @@ Normal Codex workflow: one `data.context`, then one `data.apply`. `data.apply` d
 
 ## Operations
 
-- `object.create`, `object.clone`, `object.rename`, `object.delete`, `object.setParent`, `object.setAttribute`, `object.removeAttribute`
+- `object.create`, `object.clone`, `object.rename`, `object.delete`, `object.setParent`, `object.setType`, `object.setAttribute`, `object.removeAttribute`
 - `field.set`, `field.setLink`, `field.setAttribute`, `field.removeAttribute`, `field.remove`
 - `array.append`
 - `native.add` for exact native structures discovered in a real map or dependency
@@ -22,6 +38,31 @@ Normal Codex workflow: one `data.context`, then one `data.apply`. `data.apply` d
 - `recipe.unitTextureByVital` — one compact operation creates reversible health-threshold texture states for one or more model material slots
 
 Fields use SC2-shaped paths such as `LifeMax`, `FlagArray[ArmySelect]`, `WeaponArray[0]`, or `CardLayouts[0].LayoutButtons[3]`. Unknown elements, attributes, comments, formatting and extension trees are retained. A clone is a byte copy with only the requested identity/parent change.
+
+### Native Actor class and parent checks
+
+Read the native Actor's `ctype` using `data.peek` or bounded `data.context`
+before deriving it. A unit Actor is not necessarily `CActorUnit`: Liberty Reaper
+is `CActorMissile`. Editor 5.0.17.98310 rejected the arena's former
+`CActorUnit ArenaHero04Actor parent="Reaper"` as an incompatible parent.
+`DATA_PARENT_CLASS_INCOMPATIBLE` now blocks this known invalid direction in
+ordinary strict and compatibility writes and is an error in `data.validate`.
+The effective-field view stops at that incompatible parent. The valid native
+direction, `CActorMissile` inheriting the `CActorUnit GenericUnitBase` template,
+is retained. The flattened Data XSD does not encode the full engine class tree;
+other unknown class relationships are not certified or rejected by guesswork.
+
+Repair an existing Actor with one guarded operation rather than deleting it:
+
+```json
+{"op":"object.setType","object":{"domain":"Actor","id":"ArenaHero04Actor"},"ctype":"CActorMissile"}
+```
+
+This preserves the catalog domain, ID, attributes, fields, comments and references;
+only the enclosing XML tag changes. Cross-domain changes are refused. The final
+catalog still goes through normal transaction validation. Editor/game acceptance
+and object visibility require a new target check; a list of placed objects or an
+offline terrain PNG is not that check.
 
 ## Atomic example
 

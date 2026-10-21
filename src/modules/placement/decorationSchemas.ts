@@ -9,6 +9,7 @@ const positiveRectangle = (v: {
   maxY: number;
 }) => v.maxX > v.minX && v.maxY > v.minY;
 const area = z.discriminatedUnion("type", [
+  z.object({type:z.literal('polygon'),points:z.array(z.object({x:finite,y:finite}).strict()).min(3).max(128),z:finite.default(0)}).strict(),
   z
     .object({
       type: z.literal("rectangle"),
@@ -71,7 +72,10 @@ export const scatterDoodadsSchema = z
     count: z.number().int().min(1).max(5000),
     seed: z.number().int().default(1),
     minimumDistance: finite.nonnegative().default(1),
+    clusterCount:z.number().int().min(0).max(32).default(0),
+    clusterRadius:finite.positive().optional(),
     avoidExisting: z.boolean().default(true),
+    replaceObjectIds:z.array(z.number().int().positive()).max(5000).default([]),
     avoidWater: z.boolean().default(true),
     avoidProtected: z.boolean().default(true),
     minHeight: finite.optional(),

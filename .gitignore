@@ -12,7 +12,7 @@ generated/*.log
 # Local verification and temporary input artifacts
 *.tsbuildinfo
 *.log
-coverage/
+/coverage/
 
 # Verified local game bytes and semantic caches
 .sc2mcp-casc-cache/
@@ -39,7 +39,6 @@ __pycache__/
 /docs/MANUAL_NATIVE_GPU_REGRESSION.json
 
 # Source publication: private inputs and compiled native helpers stay local
-/AGENTS.md
 /native/bin/
 /examples/
 /src/tests/fixtures/
@@ -65,7 +64,6 @@ __pycache__/
 # Optional pinned ModKit runtime and its local resources
 /.modkit-runtime/
 .sc2mcp-modkit-cache/
-
-# Optional original Editor backend and private native evidence
 /.native-toolkit-runtime/
 .sc2mcp-output/
+.sc2mcp-telemetry/

@@ -208,4 +208,4 @@ The workspace and every extracted dependency directory from `SC2_ASSET_ROOTS` ar
 
 `actor.add` accepts a catalog Model ID or a custom model path and native transform values. Many `actor.add`, light and animation operations still fit in one atomic `cutscene.apply` call.
 
-See [the Russian asset/location guide](CUTSCENE_ASSETS_RU.md) for the token-efficient Zerus/Kaldir workflow and the exact meaning of complete versus partial animation results.
+See [the Russian asset/location guide](CUTSCENE_ASSETS.md) for the token-efficient Zerus/Kaldir workflow and the exact meaning of complete versus partial animation results.

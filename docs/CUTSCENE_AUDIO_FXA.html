@@ -1,0 +1,24 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><title>SC2: Standard Sound and FaceFX</title><style>body{max-width:1100px;margin:30px auto;background:#101923;color:#dceaf6;font:16px/1.5 system-ui;padding:0 24px}a{color:#74d3ff}code,pre{background:#182b3d;padding:5px;white-space:pre-wrap}table{border-collapse:collapse;width:100%}td,th{text-align:left;border:1px solid #41576a;padding:10px}img{width:48%;max-width:540px}.note{color:#edc474}</style><h1>Standard sound and facial animation SC2</h1><p>October 13, 2026. Implemented in MCP and offline WebGL2 player; SC2 editor did not run.</p><p><a href="../work/cutscene-preview/Audio_Facial_Player.html">Open the test cutscene</a> · <a href="CUTSCENE_AUDIO_FXA_PROOF.json">Evidence and limitations</a></p><h2>It works.</h2><table><tr><th>Part part</th><th>Confirmed contract</th></tr><tr><td>Sound.</td><td>SoundData: inheritance, variation, locale enUS/ruru; Ogg/WAV, IMA ADPCM → PCM copy; WebAudio pause/seek/speed/mute, volume and 2D/3D position.</td></tr><tr><td>FXA</td><td>SC2 FACE/1731: entire archive checked by boundaries; compiled sum/multiply graph with linear links, cubic Hermite curves, positions/rotations/scales of named bones. FaceFX → M3: centimetres/Y-up/WXYZ → meters/Z-up/XYZW.</td></tr><tr><td>Combination</td><td>Facial changes on top of the M3/M3A body; common kernel for the CPU and GPU. Subsequent LookAt and attachments maintain their order.</td></tr><tr><td>AI</td><td>cutscene.facial_info - the exact names of existing animations; speech.add/sound.add - short operations in compose/apply.</td></tr></table><h2>Verification</h2><p>The Russian and English audio/FXA staff pairs are checked; the open player contains a Russian replica. SMFirstOfficer: 160 FXA animations, 47 graph nodes, 13 bones. BridgefidgetsdoorHorner00001 replica reproduces with the face; separately verified 3D Thor sound. WebAudio decoded both error-free resources, positive RMS, 0 voices, seek → one source, mute → RMS 0. GPU: RTX 2070, about 60 FPS, CPU 4PS2 is played along with the face; the English error check of the GCP4, this is missing from the error version of the 12 mPS / 3D.</p><p>99 targeted tests, assembly and lint passed, and the movement of all 13 facial bones was compared to the same M3A posture without FXA. Footage below: 1.2 and 2.3 seconds.</p><img src="cutscene-runtime-images/Audio_Facial_1200.png" alt="Facial animation at 1.2 s"><img src="cutscene-runtime-images/Audio_Facial_2300.png" alt="Facial animation at 2.3 s"><h2>Short surgeries</h2><pre>[
+  {
+    &quot;op&quot;: &quot;speech.add&quot;,
+    &quot;object&quot;: &quot;guid:1&quot;,
+    &quot;soundLink&quot;: &quot;VoiceSoundId&quot;,
+    &quot;facialAnim&quot;: &quot;ExactAnimationName&quot;,
+    &quot;facialGroup&quot;: &quot;Default&quot;,
+    &quot;start&quot;: 1000,
+    &quot;duration&quot;: 4000
+  },
+  {
+    &quot;op&quot;: &quot;sound.add&quot;,
+    &quot;name&quot;: &quot;FX&quot;,
+    &quot;soundLink&quot;: &quot;330mmBarrageCannonsMorph&quot;,
+    &quot;mode&quot;: 2,
+    &quot;position&quot;: [
+      1,
+      0,
+      1
+    ],
+    &quot;start&quot;: 6000,
+    &quot;duration&quot;: 2000
+  }
+]</pre><h2>Savings</h2><p>Measured o200k_base: facial_info response with one animation - 300 tokens; two verification operations - 121 tokens. Preview snapshots=false - 4.671 s. Geometry, sound and FXA curves remain in the local file, do not return the entire AI. This is the amount of payload; real consumption of model tokens and billing are not available.</p><h2>Why not 100%?</h2><p class="note">FXA blink/head/eye and M3 emotion bindings, ConversationLink/driver/import/subtitles, MasterSound, native mixer/envelopes, links/references and full HDR/postprocess still require implementation and comparison. Unsupported graphs and channels are diagnosed rather than replaced by volume animation.</p><p>Source of format/process: <a href="https://docs.google.com/document/d/1OxNxWdVvB98kSRTZg-uZwYc7f9gQXuD2myjB3qyanZs/edit">SC2 FaceFX handbook submitted</a>; <a href="https://facefx.github.io/documentation/doc/node-types">FaceFX: Types of Graph Nodes</a>Public definitions of Legendary Explorer fields were used to reconcile the structure; SDK code is not included, third-party code is not copied.</p></html>

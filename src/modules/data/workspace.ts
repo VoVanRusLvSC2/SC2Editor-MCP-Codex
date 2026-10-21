@@ -12,6 +12,8 @@ import { scanXml } from "../../core/xmlScanner.js";
 import { DataDocument,referenceSchema } from "./document.js";
 import { DataSchemaRegistry } from "./schemaRegistry.js";
 import { validateDataDocuments } from "./validator.js";
+import { parentClassCompatibility } from "./parentClasses.js";
+import {unitActorRecipe,effectModelRecipe,visualRecipePreloads} from './actorRecipes.js';
 import { validateDataAuthoring, DataAuthoringError, type DataAuthoringVerdict } from "./authoringValidation.js";
 import type { DataNativeFieldSpec, DataObject, DataObjectSelector, DataOperation, DataReference, DataValidationReport } from "./types.js";
 
@@ -212,6 +214,10 @@ export class DataWorkspace {
       const parent:string|undefined=current.parent;
       const next:(DataObject & {file:string;layer:string;engineActive?:boolean})|undefined=parent ? parentIndex ? parentIndex.get(`${current.domain ?? current.ctype}\0${parent}`) : all.find(candidate=>candidate.engineActive!==false&&(object.engineActive!==true||candidate.engineActive===true)&&candidate.id===parent&&(candidate.domain??candidate.ctype)===(current!.domain??current!.ctype)) : undefined;
       if(parent&&!next)unresolvedParents.push({id:parent,reason:object.engineActive===true?"ACTIVE_PARENT_UNRESOLVED":"PARENT_UNRESOLVED"});
+      if(next && parentClassCompatibility(current.ctype,next.ctype)==="incompatible"){
+        unresolvedParents.push({id:parent!,reason:"PARENT_CLASS_INCOMPATIBLE"});
+        break;
+      }
       current=next;
     }
     const defaults = indexes?.defaults.get(object.ctype)??(indexes?[]:all.filter(entry=>entry.ctype===object.ctype && entry.isDefault && !entry.id && entry.engineActive!==false));
@@ -317,8 +323,10 @@ export class DataWorkspace {
       coverageIssues:[...records.issues,...cross?.issues??[]].slice(0,200),coveragePagination:{total:records.issues.length+(cross?.issues.length??0),truncated:records.issues.length+(cross?.issues.length??0)>200,details:"data.references issueOffset/issueLimit"},
       diagnostics: requested ? (await this.validate(requested)).diagnostics.slice(0, args.limit ?? 200) : [],
       schema: { mode: "observed-bundled-plus-dynamic", activeObjectTypes: new Set(all.filter(entry=>entry.engineActive===true).map((entry) => entry.ctype)).size, activeFieldPaths: new Set(all.filter(entry=>entry.engineActive===true).flatMap((entry) => this.flattened([entry]).map((field) => `${entry.ctype}.${field.path}`))).size, coverage: this.schema.coverage() },
-      operations: ["object.create", "object.clone", "object.rename", "object.delete", "object.setParent", "object.setAttribute", "object.removeAttribute", "field.set", "field.setLink", "field.setAttribute", "field.removeAttribute", "field.remove", "array.append", "native.add", "recipe.weaponBurn", "recipe.unitTextureByVital"],
+      operations: ["object.create", "object.clone", "object.rename", "object.delete", "object.setParent", "object.setAttribute", "object.removeAttribute", "field.set", "field.setLink", "field.setAttribute", "field.removeAttribute", "field.remove", "array.append", "native.add", "recipe.weaponBurn", "recipe.unitTextureByVital", "recipe.unitActor", "recipe.effectModel"],
       recipes: {
+        "recipe.unitActor": {tool:'data.apply',creates:['native-class unit Actor'],requires:'One native source Actor with a GenericUnit template; explicit unit and Model',semantics:'Copy authored presentation, rebind unit events, pin display/build/placement Model and retain the source native class. replace:true explicitly rebuilds an existing Actor.',limits:'Concrete source layer overlays and full native rendering are not simulated'},
+        "recipe.effectModel": {tool:'data.apply',creates:['CActorModel','merged Preload.xml dependencies'],semantics:'Native Start/Stop event, Source/Caster/Target context, host/site operation, inherited scale and one-shot orphan policy are explicit. stopEffect/stopEvent close the bracket. Model/Actor/Effect and related sound preloads are committed atomically. replace:true rebuilds an existing Actor.',limits:'Model existence is checked; engine playback remains a separate test'},
         "recipe.weaponBurn": { creates: ["CEffectDamage", "CBehaviorBuff", "CEffectApplyBehavior", "CEffectSet", "CActorModel"], patches: "carrierEffect.carrierPath", defaults: { carrierCtype: "CEffectCreatePersistent", carrierPath: "PeriodicEffectArray[0]", attachSite: "SOpAttachHead" } },
         "recipe.unitTextureByVital": { creates: ["2x CTexture per slot", "CValidatorUnitCompareVital", "CActorStateMonitor"], semantics: "fractional Life threshold with reversible healthy/damaged TextureSelectById states", defaults: { pollInterval: 0.5 }, requires: "healthy and damaged DDS paths for every declared model material slot" },
       },
@@ -561,6 +569,7 @@ export class DataWorkspace {
     const componentFile = normalize(request.componentListFile ?? "ComponentList.SC2Components");
     const indexFile = normalize(request.gameDataIndexFile ?? "Base.SC2Data/GameData.xml");
     const records = await this.catalog();
+    const actorRecipeObjects=request.operations.some(o=>o.op==='recipe.unitActor'||o.op==='recipe.effectModel')?records.filter(r=>r.engineActive!==false).flatMap(r=>r.document.objects()):[];
     const cross = await this.crossReferences();cross.issues.push(...this.actorIssues(records));
     const allReferences = [...this.references(records),...cross.references];
     for(const schema of referenceSchema.sources()){const source=await this.workspace.readDependency(schema.file);if(createHash('sha256').update(source).digest('hex')!==schema.sha256)throw new Error('STALE_DATA_SCHEMA_TRANSACTION');}
@@ -584,7 +593,9 @@ export class DataWorkspace {
       if (incoming.length && operation.op === "object.delete" && !operation.force) throw new Error(`Data object '${oldId}' has ${incoming.length} incoming reference(s); delete is blocked unless force=true`);
       if (operation.op === "object.rename" && operation.updateReferences) for (const reference of incoming) if (records.some((record) => record.layer === "workspace" && record.file === reference.file) || cross.references.some(ref=>ref.file===reference.file)) referenceFiles.add(reference.file);
     }
-    const files = this.workspace.coupledDraftFiles([targetFile, componentFile, indexFile, ...referenceFiles]);
+    const visualRecipes=request.operations.filter((o):o is Extract<DataOperation,{op:'recipe.effectModel'}>=>o.op==='recipe.effectModel');
+    const preloadFile=path.posix.join(path.posix.dirname(componentFile),'Preload.xml');
+    const files = this.workspace.coupledDraftFiles([targetFile, componentFile, indexFile, ...referenceFiles,...visualRecipes.length?[preloadFile]:[]]);
     if (files.length > 64) throw new Error(`Atomic Data rename touches ${files.length} files; narrow referenceFiles to at most 61 catalog files`);
     let validation: DataValidationReport | undefined;
     let authoring: DataAuthoringVerdict | undefined;
@@ -651,6 +662,12 @@ export class DataWorkspace {
             document.removeObject(selector); break;
           }
           case "object.setParent": { const selector = selectorAlias(operation.object, aliasMap); document.setParent(selector, operation.parent); target = document.objectKey(document.resolve(selector)); break; }
+          case "object.setType": {
+            const selector=selectorAlias(operation.object,aliasMap),before=document.objectKey(document.resolve(selector));
+            target=document.objectKey(document.setType(selector,operation.ctype));
+            for(const [alias,value]of aliasMap)if(value===before)aliasMap.set(alias,target);
+            break;
+          }
           case "object.setAttribute": { const selector = selectorAlias(operation.object, aliasMap); document.setObjectAttribute(selector, operation.attribute, operation.value); target = `${document.objectKey(document.resolve(selector))}@${operation.attribute}`; break; }
           case "object.removeAttribute": { const selector = selectorAlias(operation.object, aliasMap); document.removeObjectAttribute(selector, operation.attribute); target = `${document.objectKey(document.resolve(selector))}@${operation.attribute}`; break; }
           case "field.set": { const selector = selectorAlias(operation.object, aliasMap); document.setField(selector, operation.path, "value", operation.value); target = `${document.objectKey(document.resolve(selector))}.${operation.path}`; break; }
@@ -660,6 +677,18 @@ export class DataWorkspace {
           case "field.remove": { const selector = selectorAlias(operation.object, aliasMap); document.removeField(selector, operation.path); target = `${document.objectKey(document.resolve(selector))}.${operation.path}`; break; }
           case "array.append": { const selector = selectorAlias(operation.object, aliasMap); const added = document.appendArray(selector, operation.path, operation); target = `${document.objectKey(document.resolve(selector))}.${added}`; break; }
           case "native.add": { const selector = selectorAlias(operation.object, aliasMap); document.addNative(selector, operation.parentPath, operation.field); target = `${document.objectKey(document.resolve(selector))}.${operation.field.name}`; break; }
+          case "recipe.unitActor": {
+            const available=[...actorRecipeObjects,...document.objects()];
+            for(const [domain,id] of [['Unit',operation.unit],['Model',operation.model]])if(!available.some(o=>o.domain===domain&&o.id===id))throw new Error('ACTOR_RECIPE_REFERENCE_MISSING: '+domain+':'+id);
+            const candidates=actorRecipeObjects.filter(o=>o.domain==='Actor'&&o.id===operation.sourceActor&&o.parent?.startsWith('GenericUnit')&&o.attrs.unitName);
+            if(candidates.length!==1)throw new Error('UNIT_ACTOR_SOURCE_AMBIGUOUS_OR_UNSUPPORTED: '+operation.sourceActor);
+            target=unitActorRecipe(document,candidates[0],operation);break;
+          }
+          case "recipe.effectModel": {
+            const available=[...actorRecipeObjects,...document.objects()];
+            for(const [domain,id] of [['Effect',operation.effect],['Model',operation.model],...operation.stopEffect?[['Effect',operation.stopEffect]]:[],...operation.siteOp?[['Actor',operation.siteOp]]:[]])if(!available.some(o=>o.domain===domain&&o.id===id))throw new Error('ACTOR_RECIPE_REFERENCE_MISSING: '+domain+':'+id);
+            target=effectModelRecipe(document,operation);break;
+          }
           case "recipe.weaponBurn": {
             const damageId = `${operation.id}PeriodicDamage`;
             const applyId = `${operation.id}Apply`;
@@ -735,6 +764,7 @@ export class DataWorkspace {
         applied.push({ index, op: operation.op, target });
       }
       next.set(targetFile, document.source);
+      if(visualRecipes.length)next.set(preloadFile,visualRecipePreloads(sources.get(preloadFile)??'',document,visualRecipes));
       next.set(componentFile, componentListWithGameData(next.get(componentFile) ?? ""));
       next.set(indexFile, gameDataIndexWithCatalog(next.get(indexFile) ?? "", targetFile));
       if ((request.validate ?? true) || request.authoringPolicy !== "compatibility") {

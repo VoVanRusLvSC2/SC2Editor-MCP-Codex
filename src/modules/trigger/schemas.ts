@@ -1,4 +1,5 @@
 import * as z from 'zod/v4';
+import {folderPath,organizationSchema} from './organization.js';
 import { GUI_VARIABLE_TYPES, type GuiValue, type GuiCall } from './authoring.js';
 const name=z.string().min(1).max(128).refine(v=>!/[\0\r\n]/.test(v),'Invalid GUI name');
 const locale=z.enum(['enUS','ruRU','deDE','frFR','esES','esMX','itIT','koKR','plPL','ptBR','zhCN','zhTW']);
@@ -30,7 +31,7 @@ export const guiFunctionSchema=z.object({
 }).strict();
 export const triggerPlanSchema=z.object({
  stringFiles:z.array(z.string().min(1)).max(16).optional(),targetTrigger:name.optional(),
- create:z.object({library:z.string().max(128).default(''),identifier:name,category:name.optional(),translations:translations.optional()}).strict().optional(),
+ create:z.object({library:z.string().max(128).default(''),identifier:name,category:name.optional(),folder:folderPath.optional(),genre:organizationSchema.shape.genre.optional(),translations:translations.optional()}).strict().optional(),
  calls:z.array(guiCallSchema).max(100).default([]),
  variables:z.array(guiVariableSchema).max(64).default([]),
  functions:z.array(guiFunctionSchema).max(32).default([]),

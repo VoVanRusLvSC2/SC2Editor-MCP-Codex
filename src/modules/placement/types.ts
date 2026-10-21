@@ -19,6 +19,7 @@ export interface PlacementBounds {
   maxZ?: number;
 }
 export type PlacementArea =
+  | {type:'polygon';points:Array<{x:number;y:number}>;z:number}
   | { type: "circle"; center: Position3; radius: number }
   | {
       type: "rectangle";

@@ -13,4 +13,11 @@ export default tseslint.config(
       "no-console": "off",
     },
   },
+  {
+    files: ['src/tests/**/*.ts'],
+    rules: {
+      // Browser/native mocks retain callback signatures with intentional placeholders.
+      '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+    },
+  },
 );

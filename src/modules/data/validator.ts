@@ -1,6 +1,8 @@
 import { DataDocument } from "./document.js";
 import type { DataSchemaRegistry } from "./schemaRegistry.js";
 import type { DataDiagnostic, DataReference, DataObject, DataValidationReport } from "./types.js";
+import { parentClassCompatibility } from "./parentClasses.js";
+import {concreteActorCreateConflict} from './actorConstruction.js';
 
 export interface IndexedDataObject extends DataObject { file: string; layer: "workspace" | "dependency" }
 
@@ -42,6 +44,15 @@ export function validateDataDocuments(primaryFile: string, documents: Array<{ fi
     if (object.parent) {
       const key = `${object.domain ?? object.ctype}\0${object.parent}`;
       if (!(byDomainId.get(key)?.length)) diagnostics.push({ level: "L3", severity: "warning", code: "DATA_PARENT_UNRESOLVED", message: `Parent '${object.parent}' was not found in domain ${object.domain ?? object.ctype}`, file: object.file, path: `${object.ctype}:${object.id ?? "<default>"}@parent`, reference: { kind: object.domain ?? object.ctype, value: object.parent } });
+      const parents = byDomainId.get(key) ?? [];
+      if(concreteActorCreateConflict(object,parents))diagnostics.push({level:'L3',severity:'error',code:'DATA_ACTOR_CONCRETE_PARENT_CREATE',message:'Concrete unit-actor inheritance plus another UnitBirth Create can register multiple primary actors. Use recipe.unitActor with a native source presentation and its GenericUnit template.',file:object.file,path:`${object.ctype}:${object.id}@parent`});
+      // A mixed-class overlay is unresolved, not a proven incompatible parent.
+      if (parents.length && parents.every(parent => parentClassCompatibility(object.ctype, parent.ctype) === "incompatible")) diagnostics.push({
+        level: "L3", severity: "error", code: "DATA_PARENT_CLASS_INCOMPATIBLE",
+        message: `DATA_PARENT_CLASS_INCOMPATIBLE: ${object.ctype} cannot inherit '${object.parent}' (${parents[0].ctype}); create the child with the native parent's class`,
+        file: object.file, path: `${object.ctype}:${object.id ?? "<default>"}@parent`,
+        reference: { kind: object.domain ?? object.ctype, value: object.parent },
+      });
     }
     const walk = (fields: DataObject["fields"], parentPath = "") => {
       const siblings = new Map<string, number>();

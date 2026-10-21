@@ -33,14 +33,14 @@ const archive=await project.map.export('.', '.sc2mcp-output/CinematicAcceptance.
 const triggerBytes=await fs.readFile(path.join(root,'Triggers'));
 await fs.writeFile(path.join(packet,'static-report.json'),JSON.stringify({status:'STATIC_PASS',build:97563,editor:'NOT_RUN',compiler:'NOT_EXECUTED',runtime:'NOT_RUN',triggerSha256:createHash('sha256').update(triggerBytes).digest('hex'),calls,gui,map,archive},null,2)+'\n');
 await fs.writeFile(path.join(packet,'RESULTS.json'),JSON.stringify({editorVersion:null,dependencies:null,load:'NOT_RUN',save:'NOT_RUN',reopen:'NOT_RUN',compile:'NOT_RUN',runtime:'NOT_RUN',generatedGalaxy:'NOT_RUN',notes:''},null,2)+'\n');
-await fs.writeFile(path.join(packet,'README_RU.md'),`# Ручная приёмка кинематических вызовов
+await fs.writeFile(path.join(packet,'README.md'),`# Manual reception of kinematic calls
 
-Статус Editor/compile/runtime: NOT_RUN. Это изолированная карта из checked-in native fixtures; сохраните пользовательскую сессию отдельно и открывайте копию.
+Editor/compile/runtime: NOT_RUN. This is an isolated map from checked-in native fixtures; save the user session separately and open a copy.
 
-Откройте components/.sc2mcp-output/CinematicAcceptance.SC2Map. В Trigger Editor проверьте категорию MCP Acceptance и триггер CinematicAcceptance: Map Initialization, CinematicMode On (PlayerGroupAll, duration 0), Wait 0.5, CinematicMode Off, GlobalCinematicSetting On, GlobalCinematicSetting Off. Это две разные FunctionDef, проверьте их параметры и локализованные имена.
+Open components/.sc2mcp-output/CinematicAcceptance.SC2Map.In Trigger Editor, check the MCP Acceptance category and the CinematicAcceptance: Map Initialization trigger, CinematicMode On (PlayerGroupAll, duration 0), Wait 0.5, CinematicMode Off, GlobalCinematicSetting On, GlobalCinematicSetting Off. These are two different FunctionDefs, check their settings and localized names.
 
-Сохраните карту под новым именем, откройте повторно и зафиксируйте порядок/типы/строки. Сгенерируйте Galaxy и зафиксируйте ошибки компиляции; только затем выполните Test Document на копии и запишите наблюдение. Для проверки выполнения используйте breakpoint или явный trace: визуальное отсутствие кинематического эффекта недостаточно.
+Save the map under a new name, re-open and record the order/types/strings. Generate a Galaxy and record compilation errors; only then run the Test Document on copies and record the observation. Use breakpoint or explicit trace to verify execution: no visual kinematic effect is enough.
 
-Отдельно подготовьте в Editor before/after для одной FunctionCall без своей метки, с Debug, с Cinematics, с явно выбранным None и снова с default/inherit. Сохраните XML/TriggerStrings каждого состояния. Пока этот формат не доказан, trigger.labels/label_of только читают, set/clear недоступны. Заполните RESULTS.json фактическими результатами и версией Editor.
+Separately prepare in Editor before/after for one FunctionCall without its tag, with Debug, with Cinematics, with explicitly selected None and again with default/inherit. Save XML/TriggerStrings of each state. Until this format is proven, trigger.labels/label_of is only read, set/clear is not available. Fill in RESULTS.json with actual results and the Editor version.
 `,'utf8');
 console.log(JSON.stringify({packet,archive:archive.output??null,static:'PASS',editor:'NOT_RUN'}));

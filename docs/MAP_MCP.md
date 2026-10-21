@@ -24,7 +24,7 @@ All file paths stay inside SC2_UI_ROOT. Using a parent workspace containing sepa
 
 Use `map.blueprint.inspect`, then `map.blueprint.register` with `dryRun:false`. `map.create` requires a blueprintId and a new destinationDirectory. It preserves all native scenario objects, scripts, data, dependencies and unknown components. Creation from a registered template is implemented; clean native serialization from nothing remains unsupported. Registered templates reference their source directory, so keep it available and unchanged. Changed templates need a new registration ID. Root templates create only under `.sc2mcp-output/`; generated output is excluded from the parent project index.
 
-See [Russian creation guide](MAP_CREATION_RU.md) for executable requests and limitations.
+See [Russian creation guide](MAP_CREATION.md) for executable requests and limitations.
 
 ## Workflow
 
@@ -97,4 +97,4 @@ Layout reference: https://github.com/sc2-arcade-watcher/sc2-file-format-docs/blo
 
 ## Separate map settings
 
-Attributes, native game variants and selected MapInfo v39 player/options writes are provided by the separate settings.* module. The Map module keeps its original writer scope and opaque-tail preservation. See [Settings](SETTINGS_RU.md); settings/landscape/all profiles expose the new tools.
+Attributes, native game variants and selected MapInfo v39 player/options writes are provided by the separate settings.* module. The Map module keeps its original writer scope and opaque-tail preservation. See [Settings](SETTINGS.md); settings/landscape/all profiles expose the new tools.

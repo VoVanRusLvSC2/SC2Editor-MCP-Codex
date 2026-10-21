@@ -1,3 +1,4 @@
+import {AsyncLocalStorage} from 'node:async_hooks';
 import { createHash } from "node:crypto";
 import {sc2BuiltinDependencies} from '../../core/sc2BuiltinDependencies.js';
 import { promises as fs } from "node:fs";
@@ -132,6 +133,8 @@ function rootForObject(object: { layer: string; provenance: string[] }, roots: R
 }
 
 export class BrowseWorkspace {
+  private readonly operationSnapshots=new AsyncLocalStorage<{snapshot?:Promise<BrowseIndexSnapshot>}>();
+  withSnapshot<T>(work:()=>Promise<T>):Promise<T>{return this.operationSnapshots.getStore()?work():this.operationSnapshots.run({},work);}
   private snapshot?: BrowseIndexSnapshot;
   private readonly roots: RootSpec[];
   private readonly indexedData: DataWorkspace;
@@ -214,6 +217,11 @@ export class BrowseWorkspace {
   }
 
   async index(force = false): Promise<BrowseIndexSnapshot> {
+    const scope=this.operationSnapshots.getStore();
+    if(scope&&!force){scope.snapshot??=this.buildIndex();return scope.snapshot;}
+    return this.buildIndex(force);
+  }
+  private async buildIndex(force=false):Promise<BrowseIndexSnapshot>{
     this.indexedData.nativeCatalogFiles=this.data.nativeCatalogFiles;
     force ||= this.workspace.trackingReads;
     const files = await this.files();

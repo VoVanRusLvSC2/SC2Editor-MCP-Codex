@@ -83,6 +83,12 @@ export class Workspace {
     if (!snapshot.exists && !optional) throw new Error(`Dependency not found: ${absolute}`);
     return decodeUtf8(snapshot.bytes, absolute);
   }
+  async readBinaryDependency(file:string,optional=false):Promise<Buffer>{
+    const absolute=path.resolve(file),snapshot=await readSnapshot(absolute);
+    this.captureRead(absolute,snapshot);
+    if(!snapshot.exists&&!optional)throw new Error(`Dependency not found: ${absolute}`);
+    return Buffer.from(snapshot.bytes);
+  }
   private draftRevision = 0;
   coupledDraftFiles(files:string[]):string[]{const result=new Set(files.map(file=>this.fileKey(file)));for(const file of result)for(const member of this.draftGroups.get(file)??[])result.add(member);return [...result];}
   draftFiles(): string[] { return [...this.drafts.keys()]; }

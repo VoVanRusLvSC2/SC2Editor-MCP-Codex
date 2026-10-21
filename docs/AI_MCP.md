@@ -12,7 +12,7 @@ Public tools:
 
 Alpha.7 integrates these five tools into the same server as UI/Text/Cutscene/Data/Browse/Placement. Only CustomAI and sibling ComponentList are writable; Trigger links are read-only. `updateReferences:true` updates internal CustomAI references only. Trigger-bound definition/wave rename/delete is blocked even with force or normal validation opt-outs. Trigger/Terrain top-level tools are not registered. GUI has an A.I. Module metadata/batch tab, not an Editor timeline replica.
 
-For reviewed apply, pass `expectedSha256` from files[].beforeSha256 (disk) and `expectedSourceSha256` from preview sourceSha256 (effective disk/drafts). GUI pins both. See [Russian guide](AI_CODEX_GUIDE_RU.md) and [migration/test report](AI_MIGRATION_REPORT.md).
+For reviewed apply, pass `expectedSha256` from files[].beforeSha256 (disk) and `expectedSourceSha256` from preview sourceSha256 (effective disk/drafts). GUI pins both. See [Russian guide](AI_CODEX_GUIDE.md) and [migration/test report](AI_MIGRATION_REPORT.md).
 
 All writes default to `dryRun: true`. With `dryRun: false, stage: false`, changed files are written through temporary files with backups and rollback. If `CustomAI` is absent, the transaction creates its minimal `AIData` envelope and adds the native `aiai` component entry.
 

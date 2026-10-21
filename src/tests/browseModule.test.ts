@@ -10,6 +10,16 @@ import { DataWorkspace } from "../modules/data/workspace.js";
 
 const FIXTURE = path.resolve("src/tests/fixtures/browse-placement-map");
 
+test('operation-scoped browse snapshots avoid rebuilds while preserving dependency stale guards',async t=>{
+ const {root,browse}=await fixture();t.after(()=>fs.rm(root,{recursive:true,force:true}));const workspace=browse.workspace;
+ await workspace.withReadSet(()=>browse.withSnapshot(async()=>{
+  const first=await browse.index(),second=await browse.index();assert.equal(first,second);
+  const file=first.files.find(f=>f.path.endsWith('ActorData.xml'))!;assert.ok(file);await fs.appendFile(file.path,'\n');
+  await assert.rejects(workspace.applyRawTransaction(['Proof.txt'],values=>new Map([...values,['Proof.txt','test']]),{dryRun:false,stage:true}),/STALE_/);
+ }));
+ assert.equal(await fs.stat(path.join(root,'Proof.txt')).catch(()=>null),null);
+});
+
 async function fixture() {
   const root = await fs.mkdtemp(path.join(os.tmpdir(), "sc2-browse-"));
   await fs.cp(FIXTURE, root, { recursive: true });

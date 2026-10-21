@@ -30,6 +30,7 @@ function excluded(point: Position3, zones: ExclusionZone[]): boolean {
 }
 
 function randomPoint(area: PlacementArea, random: () => number): Position3 {
+  if(area.type==='polygon'){const b=placementAreaBounds(area);return {x:b.minX+random()*(b.maxX-b.minX),y:b.minY+random()*(b.maxY-b.minY),z:area.z};}
   if (area.type === "rectangle")
     return {
       x: area.minX + random() * (area.maxX - area.minX),
@@ -99,6 +100,7 @@ export function planPositions(
         attempt++
       ) {
         const point = randomPoint(layout.area, random);
+        if(layout.area.type==='polygon'&&!insidePolygon(point,layout.area.points))continue;
         if (excluded(point, zones)) continue;
         if (index?.hasNear(point)) continue;
         if (options.acceptPoint && !options.acceptPoint(point)) continue;
@@ -113,3 +115,6 @@ export function planPositions(
     }
   }
 }
+
+export function insidePolygon(point:{x:number;y:number},points:Array<{x:number;y:number}>){let inside=false;for(let i=0,j=points.length-1;i<points.length;j=i++){const a=points[i],b=points[j];if((a.y>point.y)!==(b.y>point.y)&&point.x<(b.x-a.x)*(point.y-a.y)/(b.y-a.y)+a.x)inside=!inside;}return inside;}
+export function placementAreaBounds(area:PlacementArea){return area.type==='rectangle'?area:area.type==='circle'?{minX:area.center.x-area.radius,minY:area.center.y-area.radius,maxX:area.center.x+area.radius,maxY:area.center.y+area.radius}:{minX:Math.min(...area.points.map(p=>p.x)),minY:Math.min(...area.points.map(p=>p.y)),maxX:Math.max(...area.points.map(p=>p.x)),maxY:Math.max(...area.points.map(p=>p.y))};}

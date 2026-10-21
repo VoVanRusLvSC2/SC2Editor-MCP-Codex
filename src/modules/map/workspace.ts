@@ -14,6 +14,7 @@ import { terrainPlanSchema } from "../terrain/schemas.js";
 import type { TerrainOperation } from "../terrain/types.js";
 import type { GenerateArgs } from "../terrain/recipes.js";
 import { commitFiles } from "../../core/fileTransactions.js";
+import {editorLoadFiles,prepareEditorLoad} from './editorLoad.js';
 
 const blueprintRegistry = ".sc2mcp-blueprints.json";
 const blueprintTerrainFiles = ["t3Terrain.xml", "t3HeightMap", "t3TextureMasks", "t3SyncHeightMap", "t3SyncCliffLevel", "t3SyncTextureInfo", "t3CellFlags", "t3HardTile", "t3FluffDoodad", "t3VertCol", "t3Water"];
@@ -274,20 +275,34 @@ export class MapWorkspace {
     this.assertNoDrafts(directory);
     const inspection = await this.inspect(directory);
     if(!inspection.valid) throw new Error("INVALID_MAP_FOUNDATION: " + JSON.stringify(inspection.issues));
-    if(dryRun) return { dryRun:true,directory,archive,entryCount:inspection.files.length,validation:inspection.validationScope };
+    if(dryRun){const inputs=new Map(await Promise.all(editorLoadFiles.map(async file=>[file,await fs.readFile(path.join(source,file)).catch(e=>{if(e.code!=='ENOENT')throw e;return Buffer.alloc(0);})] as const)));const load=prepareEditorLoad(inputs);return {dryRun:true,directory,archive,entryCount:inspection.files.length,validation:inspection.validationScope,editorLoad:{changed:load.changed,objects:load.objects,addedPreloads:load.addedPreloads,rendering:load.rendering}};}
     return this.workspace.transactions.run(async () => {
       this.assertNoDrafts(directory);
       const staging = await fs.mkdtemp(path.join(os.tmpdir(),"sc2mcp-map-export-"));
       try {
         const meta = await this.snapshotCopy(directory,staging,inspection.files);
+        const loadInputs=new Map(await Promise.all(editorLoadFiles.map(async file=>[file,await fs.readFile(path.join(staging,file)).catch(e=>{if(e.code!=='ENOENT')throw e;return Buffer.alloc(0);})] as const)));
+        const load=prepareEditorLoad(loadInputs);
+        for(const file of load.changed)await fs.writeFile(path.join(staging,file),load.next.get(file)!);
         const result = await packArchive(staging,target,{ backup,beforePublish:async () => {
           this.assertNoDrafts(directory);
           if(JSON.stringify(await directoryManifest(source)) !== JSON.stringify(inspection.files)) throw new Error("STALE_MAP_EXPORT");
           await assertSnapshots(file => file,new Map([[path.join(source,archiveMetadataFile),meta]]));
         } });
-        return { ...result,componentDirectory:source,dryRun:false,validation:inspection.validationScope,editorValidation:"NOT_EXECUTED",runtimeValidation:"NOT_EXECUTED" };
+        return { ...result,componentDirectory:source,dryRun:false,validation:inspection.validationScope,editorLoad:{changed:load.changed,objects:load.objects,addedPreloads:load.addedPreloads,rendering:load.rendering},editorValidation:"NOT_EXECUTED",runtimeValidation:"NOT_EXECUTED" };
       } finally { await fs.rm(staging,{ recursive:true,force:true }); }
     });
+  }
+  async prepareEditor(directory='',dryRun=true){
+    this.assertNoDrafts(directory);
+    const files=editorLoadFiles.map(f=>this.workspace.binary.key(path.join(directory,f)));
+    let summary:{changed:string[];objects:number;addedPreloads:number;rendering:string}|undefined;
+    const transaction=await this.workspace.binary.apply(files,sources=>{
+      const input=new Map(editorLoadFiles.map((f,i)=>[f,sources.get(files[i])!]));
+      const load=prepareEditorLoad(input);summary={changed:load.changed,objects:load.objects,addedPreloads:load.addedPreloads,rendering:load.rendering};
+      return new Map(editorLoadFiles.map((f,i)=>[files[i],load.next.get(f)!]));
+    },{dryRun,stage:false,backup:true});
+    return {directory,dryRun,editorLoad:summary,transaction,editor:'NOT_EXECUTED'};
   }
   async clone(directory: string, destinationDirectory: string, dryRun = true) {
     const source = this.root(directory), target = this.root(destinationDirectory);

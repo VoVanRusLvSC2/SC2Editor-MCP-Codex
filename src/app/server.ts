@@ -1,3 +1,4 @@
+import {registerAuthoringTools} from './authoringTools.js';
 import {registerNativeEditorTools} from '../integrations/native/tools.js';
 import {registerLightingTools} from '../modules/lighting/tools.js';
 import {registerModkitIntegrationTools} from '../integrations/modkit/tools.js';
@@ -39,11 +40,12 @@ export function createProjectServer(project: Project) {
   if (enabled("assets")) registerAssetTools(server,project.assets);
   if (enabled("ui")){ registerUiPreviewTools(server,project.uiPreview); registerDialogPreviewTools(server,project.dialogPreview); registerPreviewBatch(server,project.dialogPreview); }
   if (enabled("map")) registerMapTools(server,project.map);
-  if (enabled("editor")) registerNativeEditorTools(server,project.nativeEditor);
+  if (enabled('editor')) registerNativeEditorTools(server,project.nativeEditor);
   if(enabled('terrain'))registerModkitTerrainTools(server,project.modkitTerrain,project.placement);
   if(enabled('map')||enabled('data')||enabled('casc'))registerModkitIntegrationTools(server,project.modkit,{data:enabled('data'),map:enabled('map')},project.mapPreview);
   if (enabled("script")) registerScriptTools(server,project.script);
   if (enabled("script")) registerTriggerTools(server,project.trigger);
+  registerAuthoringTools(server,project,{script:enabled('script'),terrain:enabled('terrain')&&enabled('placement')&&enabled('browse')});
   server.registerTool("modkit.save",{description:"Save complete staged text or binary transaction group containing a file, with stale guards and backup.",inputSchema:z.object({file:z.string().min(1),backup:z.boolean().default(true)}).strict()},async args=>({content:[{type:"text" as const,text:JSON.stringify(await (project.workspace.binary.hasDraft(args.file)?project.workspace.binary.saveContaining(args.file,{dryRun:false,backup:args.backup}):project.workspace.save(args.file,{backup:args.backup})))}]}));
   server.registerTool("modkit.discard",{description:"Discard complete staged group containing a file without disk writes.",inputSchema:z.object({file:z.string().min(1)}).strict()},async args=>({content:[{type:"text" as const,text:JSON.stringify({discarded:project.workspace.discard(args.file)})}]}));
   server.registerTool("modkit.capabilities", {

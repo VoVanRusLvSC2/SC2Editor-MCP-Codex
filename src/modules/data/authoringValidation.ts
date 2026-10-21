@@ -1,6 +1,8 @@
 import { DataDocument, referenceSchema } from './document.js';
 import type { DataDiagnostic, DataField, DataObject, DataReference } from './types.js';
 import type { DataXsdField, DataXsdType } from './xsdRegistry.js';
+import {parentClassCompatibility} from './parentClasses.js';
+import {concreteActorCreateConflict} from './actorConstruction.js';
 
 interface RecordView { file:string; layer:'workspace'|'dependency'; engineActive?:boolean; document:DataDocument }
 export interface DataAuthoringVerdict {
@@ -81,6 +83,9 @@ export function validateDataAuthoring(file:string,before:DataDocument,after:Data
   for(const object of current){
     const old=originals.find(o=>key(o)===key(object));
     if(old&&JSON.stringify({attrs:old.attrs,fields:old.fields})===JSON.stringify({attrs:object.attrs,fields:object.fields}))continue;
+    const parents=object.parent?indexed.filter(parent=>parent.id===object.parent&&parent.domain===object.domain):[];
+    if(concreteActorCreateConflict(object,parents))diagnostics.push(diagnostic('DATA_ACTOR_CONCRETE_PARENT_CREATE','Concrete unit actor plus a second UnitBirth Create binding; use recipe.unitActor',file,pathOf(object)+'@parent','L3'));
+    if(parents.length&&parents.every(parent=>parentClassCompatibility(object.ctype,parent.ctype)==='incompatible'))diagnostics.push(diagnostic('DATA_PARENT_CLASS_INCOMPATIBLE',`${object.ctype} cannot inherit '${object.parent}' (${parents[0].ctype}); use the native parent's class`,file,pathOf(object)+'@parent','L3'));
     const declared=referenceSchema.describe(object.ctype);
     if(!declared){diagnostics.push(diagnostic('DATA_AUTHOR_TYPE_UNKNOWN',`Type '${object.ctype}' is absent from the indexed XSD`,file,pathOf(object)));continue;}
     if(!old||JSON.stringify(old.attrs)!==JSON.stringify(object.attrs))validateAttributes(object.attrs,object.ctype,file,pathOf(object),diagnostics,old?.attrs);

@@ -67,7 +67,10 @@
     "settings:schemas": "node --import tsx scripts/generate-settings-schemas.ts",
     "document:schemas": "node --import tsx scripts/generate-document-schemas.ts",
     "modkit:setup": "node scripts/setup-modkit-runtime.mjs",
-    "native:setup": "node scripts/setup-native-toolkit.mjs"
+    "native:setup": "node scripts/setup-native-toolkit.mjs",
+    "docs:check-language": "node scripts/check-documentation-language.mjs",
+    "catalog:import": "python scripts/import-authoring-catalog.py",
+    "catalog:verify": "node scripts/verify-authoring-catalog.mjs"
   },
   "dependencies": {
     "@modelcontextprotocol/server": "^2.0.0",

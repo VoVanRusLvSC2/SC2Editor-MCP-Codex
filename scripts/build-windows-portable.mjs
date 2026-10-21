@@ -13,7 +13,7 @@ for(const candidate of [releaseRoot,output]){try{if((await fs.lstat(candidate)).
 await fs.rm(output, { recursive: true, force: true });
 await fs.mkdir(app, { recursive: true });
 
-for (const directory of ["dist", "schema"]) {
+for (const directory of ["dist", "schema", "resources"]) {
   await fs.cp(path.join(projectRoot,directory === "dist" ? "dist-runtime" : directory), path.join(app, directory), { recursive: true });
 }
 await fs.cp(path.join(projectRoot,"vendor","blizzard-models"),path.join(app,"vendor","blizzard-models"),{recursive:true});
@@ -60,7 +60,7 @@ await fs.copyFile(path.join(projectRoot,"windows","SC2-MCP-WORKFLOW.cmd"),path.j
 await fs.copyFile(path.join(projectRoot,"windows","SC2-MCP-CUTSCENE-PREVIEW.cmd"),path.join(output,"SC2-MCP-CUTSCENE-PREVIEW.cmd"));
 await fs.copyFile(path.join(projectRoot, "windows", "README-WINDOWS.md"), path.join(output, "README-WINDOWS.md"));
 await fs.copyFile(path.join(projectRoot, "README.md"), path.join(output, "README.md"));
-await fs.copyFile(path.join(projectRoot, "README_RU.md"), path.join(output, "README_RU.md"));
+await fs.copyFile(path.join(projectRoot, "README_LEGACY.md"), path.join(output, "README_LEGACY.md"));
 await fs.mkdir(path.join(output,"generated"),{recursive:true});
 for(const file of runtimeSchemas)await fs.copyFile(path.join(projectRoot,"generated",file),path.join(output,"generated",file));
 await fs.cp(path.join(projectRoot,"generated","data-xsd-index"),path.join(output,"generated","data-xsd-index"),{recursive:true});

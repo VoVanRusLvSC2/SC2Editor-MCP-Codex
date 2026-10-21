@@ -1,3 +1,4 @@
+import {organizeTriggerXml,ensureTriggerFolder,organizationSchema,type OrganizationArgs} from './organization.js';
 import {dataDomainFromType} from '../data/domains.js';
 import {skirmishRecipe,type SkirmishOptions} from './recipes/skirmish.js';
 import {ScriptWorkspace} from '../script/workspace.js';
@@ -20,6 +21,8 @@ import { Workspace } from '../../core/workspace.js';
 import { scanXml, decodeXmlValue } from '../../core/xmlScanner.js';
 import type { XmlNode } from '../../core/types.js';
 import { normalizeCustomScriptLayout } from './scriptLayout.js';
+import {upsertCustomScripts,customScriptsSchema,type CustomScriptsArgs} from './customScripts.js';
+import {inspectRevisedGui} from './revisedImport.js';
 
 type Kind = 'Event' | 'Action';
 const key = (library: string, type: string, id: string) => JSON.stringify([library,type,id]);
@@ -119,6 +122,28 @@ export class TriggerWorkspace {
   private readonly libraries:TriggerLibraries;
   private async stringFiles():Promise<string[]> {return (await fs.readdir(this.workspace.root,{withFileTypes:true})).filter(e=>e.isDirectory()&&!/^Base\.SC2Data$/i.test(e.name)&&/^[a-z]{4}\.SC2Data$/i.test(e.name)).map(e=>e.name+'/LocalizedData/TriggerStrings.txt').sort();}
   private nameKey(type:string,library:string,id:string){return type+'/Name/'+(library?'lib_'+library+'_':'')+id;}
+  async organize(input:OrganizationArgs){
+    const args=organizationSchema.parse(input),raw=await this.workspace.readRaw('Triggers'),organized=organizeTriggerXml(raw.text,args,await this.localizedNames());
+    const locales=await this.stringFiles();if(!locales.length)locales.push('enUS.SC2Data/LocalizedData/TriggerStrings.txt');
+    const transaction=await this.workspace.applyRawTransaction(this.workspace.coupledDraftFiles(['Triggers',...locales]),files=>{
+      if(digest(files.get('Triggers')??'')!==digest(raw.text))throw new Error('ORGANIZATION_SOURCE_STALE');
+      const next=new Map(files);next.set('Triggers',organized.xml);
+      for(const file of locales){const table=new StringTableDocument(files.get(file)??'');for(const folder of organized.created)table.set(this.nameKey('Category',args.library,folder.id),folder.name);next.set(file,table.source);}
+      return next;
+    },{dryRun:args.dryRun,stage:args.stage,backup:true,summary:'Organize GUI folders without changing executable elements'});
+    return {...organized,xml:undefined,transaction,compiler:'NOT_EXECUTED',sourceOfTruth:'Triggers'};
+  }
+  async customScripts(input:CustomScriptsArgs){
+    const args=customScriptsSchema.parse(input),raw=await this.workspace.readRaw('Triggers'),result=upsertCustomScripts(raw.text,args,await this.localizedNames()),locales=await this.stringFiles();
+    if(!locales.length)locales.push('enUS.SC2Data/LocalizedData/TriggerStrings.txt');
+    const transaction=await this.workspace.applyRawTransaction(this.workspace.coupledDraftFiles(['Triggers',...locales]),files=>{
+      if(digest(files.get('Triggers')??'')!==digest(raw.text))throw new Error('GUI_CUSTOM_SCRIPT_SOURCE_STALE');
+      const next=new Map(files);next.set('Triggers',result.xml);
+      for(const file of locales){const table=new StringTableDocument(files.get(file)??'');for(const folder of result.created)table.set(this.nameKey('Category','',folder.id),folder.name);for(const label of result.labels)table.set(label.key,label.value);next.set(file,table.source);}
+      return next;
+    },{dryRun:args.dryRun,stage:args.stage,backup:true,summary:'Author visible Custom Script declarations/actions in GUI folders'});
+    return {...result,xml:undefined,transaction,compiler:'NOT_EXECUTED',sourceOfTruth:'Triggers',rawScript:true};
+  }
   private async localizedNames(){const files=await this.stringFiles();const table=new Map<string,string>();for(const file of files){const raw=await this.workspace.readRaw(file);for(const entry of new StringTableDocument(raw.text).list(undefined,100000))if(!table.has(entry.key))table.set(entry.key,entry.value);}return table;}
   async labels(query='',offset=0,limit=100) {
     const {text}=await this.workspace.readRaw('Triggers'),g=graph(text);
@@ -211,6 +236,24 @@ export class TriggerWorkspace {
     return {...generated,source:undefined,sourceBytes:Buffer.byteLength(generated.source),sourceSha256:digest(generated.source),transaction,validation,converterUsed:false};
   }
   recipeSkirmish(options:SkirmishOptions){return this.planBatch(skirmishRecipe(options));}
+  async importRevised(args:{file:string;stringsFile?:string;expectedSourceSha256:string;expectedRuntimeSha256:string;dryRun:boolean;stage:boolean}){
+    const input=await this.workspace.readRaw(args.file),source=await this.workspace.readRaw('Triggers'),runtime=await this.workspace.readRaw('MapScript.galaxy');
+    if(digest(source.text)!==args.expectedSourceSha256||digest(runtime.text)!==args.expectedRuntimeSha256)throw new Error('GUI_IMPORT_SOURCE_STALE');
+    const counts=inspectRevisedGui(input.text),context=await this.libraries.context(registry(this.registryFile)),generated=emitGuiGalaxy(input.text,context.registry);
+    const validation=await new ScriptWorkspace(this.workspace).validateSource(generated.source);
+    if(!validation.valid)throw new Error('GUI_IMPORT_RUNTIME_ERRORS: '+JSON.stringify(validation.diagnostics.filter(d=>d.severity==='error').slice(0,10)));
+    const strings=args.stringsFile?await this.workspace.readRaw(args.stringsFile):undefined;
+    const labels:Record<string,string>=strings?JSON.parse(strings.text):{};
+    if(Array.isArray(labels)||typeof labels!=='object'||labels===null||Object.keys(labels).length>10000||Object.entries(labels).some(([k,v])=>!/^(Category|Trigger|FunctionDef|Variable|ParamDef)\/Name\/[A-Fa-f0-9]+$/.test(k)||typeof v!=='string'||/[\r\n]/.test(v)))throw new Error('GUI_IMPORT_LABELS');
+    const locales=await this.stringFiles();if(!locales.length)locales.push('enUS.SC2Data/LocalizedData/TriggerStrings.txt');
+    const files=['Triggers','MapScript.galaxy',args.file,...(args.stringsFile?[args.stringsFile]:[]),...locales];
+    const transaction=await this.workspace.applyRawTransaction(this.workspace.coupledDraftFiles(files),files=>{
+      if(digest(files.get('Triggers')??'')!==args.expectedSourceSha256||digest(files.get('MapScript.galaxy')??'')!==args.expectedRuntimeSha256||files.get(args.file)!==input.text||(args.stringsFile&&files.get(args.stringsFile)!==strings!.text))throw new Error('GUI_IMPORT_SOURCE_STALE');
+      const next=new Map(files);next.set('Triggers',input.text);next.set('MapScript.galaxy',generated.source);
+      for(const file of locales){const table=new StringTableDocument(files.get(file)??'');for(const [key,value]of Object.entries(labels))table.set(key,value);next.set(file,table.source);}return next;
+    },{dryRun:args.dryRun,stage:args.stage,backup:true,summary:'Import reviewed full GUI tree and generate its runtime atomically'});
+    return {counts,validation,transaction,inputSha256:digest(input.text),runtimeSha256:digest(generated.source),semanticEquivalence:'NOT_PROVEN',compiler:'NOT_EXECUTED'};
+  }
   async planFile(file:string){const raw=await this.workspace.readRaw(file);if(!raw.exists&&!raw.staged)throw new Error('GUI_PLAN_FILE_MISSING');if(Buffer.byteLength(raw.text)>1024*1024)throw new Error('GUI_PLAN_FILE_BYTE_LIMIT');const value=JSON.parse(raw.text);return Array.isArray(value)?this.planBatch(value):this.plan(value);}
   async planBatch(requests:GuiRequest[]){
     if(!requests.length||requests.length>100||Buffer.byteLength(JSON.stringify(requests))>1024*1024)throw new Error('GUI_PLAN_BATCH_LIMIT');
@@ -278,13 +321,17 @@ export class TriggerWorkspace {
     const names:GuiText[]=[],texts:GuiText[]=[];
     if(request.create){
       if(target)throw new Error('GUI_TARGET_CONFLICT');
-      const c={...request.create,library:request.create.library??''},lib=container(g,c.library);
+      const c={...request.create,library:request.create.library??''};
+      if(c.category&&c.folder)throw new Error('GUI_FOLDER_CATEGORY_CONFLICT');
+      let folderId:string|undefined;
+      if(c.folder||c.category){const folders=ensureTriggerFolder(xml,c.library,c.folder??c.category!,nextId,await this.localizedNames());xml=folders.xml;folderId=folders.id;for(const folder of folders.created)names.push({key:this.nameKey('Category',c.library,folder.id),value:folder.name});}
+      const currentGraph=graph(xml),lib=container(currentGraph,c.library);
       const localLibrary=c.library ? ` Library="${encode(c.library)}"` : '';
       const id=nextId();target=id;names.push({key:this.nameKey("Trigger",c.library,id),value:c.identifier,translations:c.translations});
       const item=`<Item Type="Trigger"${localLibrary} Id="${id}"/>`;
       let fragment=`<Element Type="Trigger" Id="${id}"><Identifier>${encode(c.identifier)}</Identifier></Element>`;
-      const root=g.parsed.nodes.find(n=>n.tag==='Root'&&n.parentId===lib.id);
-      if(c.category){const cat=nextId();names.push({key:this.nameKey("Category",c.library,cat),value:c.category});fragment=`<Element Type="Category" Id="${cat}"><Identifier>${encode(c.category)}</Identifier>${item}</Element>`+fragment;const categoryItem=`<Item Type="Category"${localLibrary} Id="${cat}"/>`;if(root){xml=xml.slice(0,root.start)+(root.selfClosing?xml.slice(root.start,root.startTagEnd).replace(/\/\s*>$/,'>')+categoryItem+'</Root>':xml.slice(root.start,root.endTagStart)+categoryItem+'</Root>')+xml.slice(root.end);}else fragment='<Root>'+categoryItem+'</Root>'+fragment;}
+      const root=currentGraph.parsed.nodes.find(n=>n.tag==='Root'&&n.parentId===lib.id);
+      if(folderId){const folder=currentGraph.byKey.get(key(c.library,'Category',folderId))!;xml=append(xml,folder.node,item);}
       else if(root){xml=xml.slice(0,root.start)+(root.selfClosing?xml.slice(root.start,root.startTagEnd).replace(/\/\s*>$/,'>')+item+'</Root>':xml.slice(root.start,root.endTagStart)+item+'</Root>')+xml.slice(root.end);}else fragment='<Root>'+item+'</Root>'+fragment;
       const current=container(graph(xml),c.library);
       xml=append(xml,current,fragment);
@@ -306,6 +353,13 @@ export class TriggerWorkspace {
         if(current.node.selfClosing)xml=xml.slice(0,current.offset)+current.xml.replace(/\/\s*>$/,'>')+references+'</Element>'+xml.slice(current.node.end);
         else xml=xml.slice(0,insertion)+references+xml.slice(insertion);
       }
+    }
+    if(request.create?.folder){
+      const folder=request.create.folder,tree=graph(xml),lib=container(tree,scope),root=tree.parsed.nodes.find(n=>n.tag==='Root'&&n.parentId===lib.id);
+      const allowed=['Trigger','FunctionDef','Variable','CustomScript','Preset','Structure','Comment'] as const;
+      const assignments=(root?.childIds??[]).map(i=>tree.parsed.nodes[i]).filter(n=>n.tag==='Item'&&allowed.includes(n.attrs.Type as typeof allowed[number])&&!g.byKey.has(key(scope,n.attrs.Type,n.attrs.Id))).map(n=>({type:n.attrs.Type as typeof allowed[number],id:n.attrs.Id,folder}));
+      const organized=organizeTriggerXml(xml,{genre:request.create.genre,library:scope,folders:[folder],assignments},await this.localizedNames());xml=organized.xml;
+      for(const f of organized.created)names.push({key:this.nameKey('Category',scope,f.id),value:f.name});
     }
     const result=graph(xml);
     for(const e of result.elements)for(const r of result.refs(e))if(r.library===e.library&&!result.byKey.has(r.key))throw new Error('GUI_PLAN_DANGLING_REFERENCE: '+r.key);

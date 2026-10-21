@@ -20,6 +20,18 @@ async function fixture(files: Record<string, string> = {}) {
   return { root, workspace, data: new DataWorkspace(workspace) };
 }
 
+test('effect presentation and preload commit together, while a late failure leaves both unchanged',async()=>{
+ const file='Base.SC2Data/GameData/FX.xml',catalog='<Catalog><CModel id="Flash"/><CEffectEnumArea id="Search"/></Catalog>';
+ const f=await fixture({[file]:catalog,'Preload.xml':'<Preload><Movie id="Keep"/></Preload>'});
+ try{
+  const recipe={op:'recipe.effectModel' as const,id:'Visual',effect:'Search',model:'Flash',siteOp:undefined};
+  await assert.rejects(f.data.apply({file,operations:[recipe,{op:'field.set',object:'Absent',path:'Scale',value:1}],dryRun:false,stage:false,authoringPolicy:'compatibility'}));
+  assert.equal(await fs.readFile(path.join(f.root,file),'utf8'),catalog);assert.equal(await fs.readFile(path.join(f.root,'Preload.xml'),'utf8'),'<Preload><Movie id="Keep"/></Preload>');
+  await f.data.apply({file,operations:[recipe],dryRun:false,stage:false,authoringPolicy:'compatibility'});
+  const preload=await fs.readFile(path.join(f.root,'Preload.xml'),'utf8');assert.ok(preload.includes('<Actor id="Visual"/>'));assert.ok(preload.includes('<Model id="Flash"/>'));assert.ok(preload.includes('<Movie id="Keep"/>'));
+ }finally{await fs.rm(f.root,{recursive:true,force:true});}
+});
+
 test("GameData open/parse is byte-identical and preserves unknown extensions", () => {
   const source = `<?xml version="1.0"?>\r\n<Catalog future="yes">\r\n    <!--keep-->\r\n    <CUnit id="X" parent="Marine" custom="opaque"><Future foo='bar'><Nested/></Future></CUnit>\r\n</Catalog>`;
   const document = new DataDocument(source);
