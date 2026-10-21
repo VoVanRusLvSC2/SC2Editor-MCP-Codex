@@ -2,7 +2,7 @@ import {formatUiXml} from '../core/uiXmlFormat.js';
 import {resolveModuleSelection} from '../app/moduleSelection.js';
 import {registerUiAssetTools} from './uiAssetContracts.js';
 import {instrumentTools} from '../app/telemetry.js';
-import { APP_VERSION } from "../app/version.js";
+import { APP_TITLE, APP_VERSION } from "../app/version.js";
 import { registerTerrainTools, type TerrainToolContext } from "../modules/terrain/tools.js";
 import { McpServer } from "@modelcontextprotocol/server";
 import * as z from "zod/v4";
@@ -184,7 +184,7 @@ const layoutOperationSchema = z.discriminatedUnion("op", [
 ]);
 
 export function createUiServer(workspace: Workspace, schema: SchemaRegistry, cutscene?: CutsceneToolContext, text?: TextToolContext, data?: DataToolContext, browse?: BrowseToolContext, placement?: PlacementToolContext, ai?: AiToolContext, terrain?: TerrainToolContext, includeUi = true): McpServer {
-  const server = new McpServer({ name: "sc2editor-mcp", version: APP_VERSION });
+  const server = new McpServer({ name: "sc2editor-mcp", title: APP_TITLE, version: APP_VERSION });
   instrumentTools(server,workspace.root,resolveModuleSelection().modules.size>0);
   if(includeUi)registerUiAssetTools(server,workspace);
 

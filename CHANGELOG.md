@@ -1,5 +1,24 @@
 # Changelog
 
+## SC2EditorToolkit verified scope — 2026-10-21
+
+- Publish a path-free native acceptance record, actual core regression status lines, a module readiness matrix and explicit unsupported/unverified scope. Keep private archives, generated user scripts, DLLs and screenshots local. The public product/MCP display title is SC2EditorToolkit; existing protocol IDs, tools, links and license attribution remain compatible.
+- Add opt-in `native:verify` through real MCP, including PNG payload/hash checks, and `evidence:check` for the recorded source scope. Seven public editor tools and eight upstream operations were exercised; listing 18 upstream tools is not execution of all of them.
+- The expanded core run found and fixed placement replay duplication. Cache the applied post-state so an unchanged repeated request stays idempotent, while rollback can be planned again. Final core run: 288 tests, 287 pass, zero failures, one Windows platform skip. The public record retains initial failures and resolution notes.
+
+## Native connection fix — 2026-10-21
+
+- Upgrade the complete Toolkit package to 0.9.2-rc.1 / native protocol 11. Share a single reviewed version/protocol/SHA-256 pin across setup, discovery and transport, reject mismatched runtime receipts, and retain the pin/installer in portable builds. Installation remains explicit; no automatic downloads during map authoring.
+- Original load/Data, GUI generation/compilation, 60-component save/close/reopen comparison and whole-map PNG export passed on a private arena snapshot. The previous Win32 126 failure did not reproduce; the user archive was unchanged. This does not certify arbitrary maps or gameplay.
+- Keep successful native phases in full local evidence rather than repeating them in compact MCP responses; retain failed/unknown phases. Builds, lint and 28 bridge/batch/transport regressions passed.
+
+## Native Toolkit diagnostic integration — 2026-10-21
+
+- Pin Toolkit 0.9.1-rc.1 / native protocol 10 with package checksum, executable hash and build-version checks. Preserve the previous runtime and required attribution.
+- Add paginated `editor.cameras` and exact saved-camera selection in `editor.capture`, retaining original camera readback and its explicit limits. ModKit remains the fast map preview.
+- Preserve native controller/phase failure evidence in compact jobs. Unknown log counts stay null; failed capture cannot return an old image, and failed checks cannot export previous Galaxy through the bridge.
+- Local validation: 26 integration/transport/batch tests, builds, lint and English-prose checks passed. Real MCP enumerated two fixture cameras and rejected an unknown ID. Native loading, compilation, roundtrip and camera rendering are blocked by reproduced Win32 126 hook setup failure; this is not native stability acceptance.
+
 ## ModKit native terrain tools — 2026-10-19
 
 - Connect original ModKit format owners for CellAttribute pathing paint/fill, raw pathing/creep channels, vertex-color stroke bytes, fluff records, guarded complete HRDT groups/duplicate-key repair and PATH hints. Preserve existing coherent terrain writers and expose existing seeded Placement decoration/snap through terrain aliases.

@@ -1,5 +1,10 @@
 # Current project status
 
+The current public product name is **SC2EditorToolkit**. Start with the
+[verified-scope matrix and public evidence](VERIFICATION.md): the latest core
+run has 287 passes, no failures and one Windows platform skip; the native MCP
+chain and four PNG image payload/hash checks passed on the recorded fixture.
+
 The public module selections share one Workspace and transaction coordinator.
 Script also registers `trigger.*` authoring. `modkit.capabilities` reports the
 current surface; individual tools report format and engine limitations.
@@ -12,10 +17,16 @@ runtime fixes, Data actor/effect recipes, native Editor-load metadata preparatio
 English instructions and three project skills. Catalog observations and geometry
 measurements do not establish engine pathing, visual quality or rendering parity.
 
-The optional Toolkit 0.8 bridge provides native load/Data observations, original
-GUI generation/compilation and save/close/reopen comparison. A local private-copy
-arena check confirmed those operations and source preservation. Native captures
-failed in that session; gameplay and ability presentation remain separate checks.
+The optional bridge now pins Toolkit 0.9.2-rc.1 (native protocol 11). A single
+version/protocol/package-hash pin drives setup, runtime discovery and handshake;
+mixed installations fail before launch. The earlier 0.9.1 Win32 126 startup
+failure no longer reproduces in the new private-copy arena test: native load/Data,
+original GUI generation/compilation, Save As/Close/disk reopen and all 60 component
+comparisons passed. Source hashes stayed unchanged. A new whole-map native PNG
+was inspected and shows terrain, units and decor. These are local fixture results;
+gameplay, all-map rendering coverage and ability presentation remain separate
+checks. Saved-camera A/B/A captures passed native core-parameter readback; the
+resulting close views were inspected separately from the whole-map export.
 See [native checks](NATIVE_EDITOR.md), [authoring protocol](AUTHORING_PROTOCOL.md),
 [decor workflow](DECOR_VISUAL_WORKFLOW.md) and [skills](../.agents/skills/README.md).
 

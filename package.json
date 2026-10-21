@@ -1,5 +1,6 @@
 {
   "name": "sc2editor-mcp",
+  "displayName": "SC2EditorToolkit",
   "version": "1.1.0-alpha.20",
   "private": true,
   "author": {
@@ -70,7 +71,9 @@
     "native:setup": "node scripts/setup-native-toolkit.mjs",
     "docs:check-language": "node scripts/check-documentation-language.mjs",
     "catalog:import": "python scripts/import-authoring-catalog.py",
-    "catalog:verify": "node scripts/verify-authoring-catalog.mjs"
+    "catalog:verify": "node scripts/verify-authoring-catalog.mjs",
+    "native:verify": "node scripts/verify-native-editor.mjs",
+    "evidence:check": "node scripts/check-verification-evidence.mjs"
   },
   "dependencies": {
     "@modelcontextprotocol/server": "^2.0.0",

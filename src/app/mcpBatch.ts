@@ -8,7 +8,7 @@ export function compactResult(value:unknown){
  if(value&&typeof value==='object'&&!Array.isArray(value)){
   const v=value as Record<string,unknown>;
   if(v.stopped===true)return {stopped:true};
-  if(typeof v.state==='string'&&['check','capture','diagnostics'].includes(String(v.operation)))
+  if(typeof v.state==='string'&&['check','capture','cameras','diagnostics'].includes(String(v.operation)))
    return Object.fromEntries(['id','state','operation','phase','createdAt','startedAt','finishedAt','deadlineExceeded','report','error','result'].filter(k=>v[k]!==undefined).map(k=>[k,v[k]]));
   if(v.transport==='retained stdio MCP')return v;
  }

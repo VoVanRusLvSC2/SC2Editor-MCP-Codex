@@ -1,4 +1,5 @@
 import {spawn,type ChildProcessWithoutNullStreams} from 'node:child_process';
+import {nativeRelease} from './release.js';
 
 export interface NativeResult {content?:Array<{type:string;text?:string;data?:string;mimeType?:string}>;structuredContent?:Record<string,any>;isError?:boolean}
 export interface NativeClient {start():Promise<void>;call(name:string,args:Record<string,unknown>):Promise<NativeResult>;close():Promise<void>;info():unknown}
@@ -16,6 +17,7 @@ export class NativeStdioClient implements NativeClient {
   info(){return {connected:!!this.child&&!this.child.killed,server:this.serverInfo,tools:[...this.tools]};}
   start():Promise<void>{return this.starting??=this.connect().catch(error=>{this.starting=undefined;throw error;});}
   private async connect(){
+    this.buffer='';this.tools.clear();this.serverInfo=undefined;
     const child=spawn(this.command,this.args,{cwd:this.cwd,windowsHide:true,stdio:['pipe','pipe','pipe']});this.child=child;
     child.stderr.resume(); // Native evidence is retained by the Toolkit, not mixed into MCP stdout.
     const fail=(error:Error)=>{for(const p of this.pending.values())p.reject(error);this.pending.clear();this.starting=undefined;if(this.child===child)this.child=undefined;};
@@ -32,10 +34,10 @@ export class NativeStdioClient implements NativeClient {
         }catch{fail(Error('NATIVE_PROTOCOL_INVALID_JSON'));}
       }
     });
-    const initialized=await this.rpc('initialize',{protocolVersion:'2025-06-18',capabilities:{},clientInfo:{name:'SC2Editor-MCP-Codex',version:'1'}});
+    const initialized=await this.rpc('initialize',{protocolVersion:'2025-06-18',capabilities:{},clientInfo:{name:'SC2EditorToolkit',version:'1'}});
     this.serverInfo=initialized.serverInfo;
-    if(initialized.serverInfo?.name!=='sc2-native-toolkit'||!/^0\.8\./.test(initialized.serverInfo?.version??'')){
-      await this.close();throw Error('NATIVE_TOOLKIT_VERSION_MISMATCH: expected 0.8.x');
+    if(initialized.serverInfo?.name!=='sc2-native-toolkit'||initialized.serverInfo?.version!==nativeRelease.version){
+      await this.close();throw Error('NATIVE_TOOLKIT_VERSION_MISMATCH: expected '+nativeRelease.version);
     }
     child.stdin.write(JSON.stringify({jsonrpc:'2.0',method:'notifications/initialized'})+'\n');
     const listed=await this.rpc('tools/list',{});this.tools=new Set(listed.tools.map((tool:{name:string})=>tool.name));

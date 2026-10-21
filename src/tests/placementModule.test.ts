@@ -152,6 +152,21 @@ test("rollback dry-run preserves both staged components", async () => {
   assert.equal(await fs.readFile(path.join(root, "Objects"), "utf8"), before);
 });
 
+test("a rolled-back placement can be planned again without retaining a false applied receipt", async () => {
+  const { root, placement } = await fixture();
+  const request = { id: "Marine", position: { x: 60, y: 60, z: 0 }, owner: 1 };
+  const before = await fs.readFile(path.join(root, "Objects"), "utf8");
+  const first = await placement.addUnit(request);
+  await placement.apply(first.id, { dryRun: false, stage: true });
+  await placement.rollback("Objects", "ComponentList.SC2Components", false);
+  assert.equal(await fs.readFile(path.join(root, "Objects"), "utf8"), before);
+  const next = await placement.addUnit(request);
+  const applied = await placement.apply(next.id, { dryRun: false, stage: false });
+  assert.equal(applied.accepted, true);assert.notEqual(applied.alreadyApplied, true);
+  const doc = new PlacementDocument(await fs.readFile(path.join(root, "Objects"), "utf8"));
+  assert.equal(doc.list().filter(o => o.catalogId === "Marine" && o.position === "60,60,0").length, 1);
+});
+
 test("invalid format and unproven writable attributes are not accepted", () => {
   assert.ok(new PlacementDocument("<PlacedObjects><ObjectUnit").validate().some((issue) => issue.code === "MALFORMED_XML"));
   const invalid = new PlacementDocument('<PlacedObjects Version="27"><ObjectUnit Id="1abc" UnitType="Marine" Scale="1,1" Rotation="NaN"/></PlacedObjects>');

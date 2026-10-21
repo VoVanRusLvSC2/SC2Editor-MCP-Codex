@@ -98,6 +98,7 @@ function positionInBounds(
 export class PlacementWorkspace {
   terrain?: TerrainWorkspace;
   private readonly plans = new Map<string, PlacementPlan>();
+  private readonly appliedSources = new Map<string, Record<string, string>>();
   constructor(
     readonly workspace: Workspace,
     readonly browse: BrowseWorkspace,
@@ -119,10 +120,13 @@ export class PlacementWorkspace {
       (plan) => plan.requestHash === hash,
     );
     if (existing) {
+      const expected=existing.applied?this.appliedSources.get(existing.id):existing.sourceSha256;
+      if(existing.applied&&!expected)return existing;
       let current=true;
-      for(const [file,sha]of Object.entries(existing.sourceSha256))if(textHash((await this.workspace.binary.read(file)).bytes)!==sha){current=false;break;}
-      if(current&&!existing.applied)return existing;
+      for(const [file,sha]of Object.entries(expected!))if(textHash((await this.workspace.binary.read(file)).bytes)!==sha){current=false;break;}
+      if(current)return existing;
       this.plans.delete(existing.id);
+      this.appliedSources.delete(existing.id);
     }
     const sourceSha256: Record<string, string> = {};
     const diskSha256: Record<string, string> = {};
@@ -1156,6 +1160,9 @@ export class PlacementWorkspace {
     if (!(options.dryRun ?? true)) {
       plan.applied = true;
       plan.appliedAt = new Date().toISOString();
+      const sources:Record<string,string>={};
+      for(const file of Object.keys(plan.sourceSha256))sources[file]=textHash((await this.workspace.binary.read(file)).bytes);
+      this.appliedSources.set(plan.id,sources);
     }
     return {
       accepted: true,

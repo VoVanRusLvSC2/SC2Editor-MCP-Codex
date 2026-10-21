@@ -1,4 +1,8 @@
-# What is already working and what is not yet - 2026-10-11
+# Historical capabilities snapshot - 2026-10-11
+
+For the current supported scope, native DLL/MCP confirmation and unverified
+features, use the [2026-10-21 acceptance matrix](VERIFICATION.md). The snapshot
+below predates the native Editor bridge and later authoring improvements.
 
 The main surface operations are ready for supported native components of the existing map. CASC now reads the installed game directly, and selected metadata packages connect to Data/Browse. Full availability of all features of the SC2 Editor/engine project does not declare.
 

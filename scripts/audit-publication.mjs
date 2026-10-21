@@ -72,6 +72,7 @@ await visit();
 records.sort((a, b) => a.file.localeCompare(b.file, "en"));
 const required = [...policy.rootFiles, ...generated, "generated/data-xsd-index/manifest.json",
   'resources/authoring-catalog/manifest.json','resources/authoring-catalog/IMPORT.json',
+  'docs/verification/native-editor-0.9.2.json',
   '.agents/skills/sc2-mission-authoring/SKILL.md','.agents/skills/sc2-terrain-composition/SKILL.md','.agents/skills/sc2-data-trigger-systems/SKILL.md',
   "vendor/blizzard-models/LICENSE-GPL-2.0.txt", "vendor/blizzard-models/browser/material-bundle.js",
   "vendor/blizzard-models/dist/m3/native/model.js", "vendor/blizzard-models/src/m3/native/structures.xml",

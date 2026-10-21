@@ -1,0 +1,652 @@
+{
+  "schemaVersion": 1,
+  "project": "SC2EditorToolkit",
+  "recordedAt": "2026-10-21T11:16:45.116Z",
+  "readiness": "Supported MCP authoring and original Editor validation passed on recorded fixtures; not universal Editor/gameplay certification",
+  "provenance": {
+    "kind": "Bounded extract of actual local MCP and native responses",
+    "publicContainsPrivateMaps": false,
+    "publicContainsBinariesOrImages": false,
+    "independentCertification": false
+  },
+  "platform": {
+    "os": "Windows x64",
+    "node": "v24.14.1",
+    "editorBuild": "5.0.17.98310"
+  },
+  "protocols": {
+    "outer": {
+      "negotiated": "2025-11-25",
+      "serverInfo": {
+        "name": "sc2editor-mcp",
+        "title": "SC2EditorToolkit",
+        "version": "1.1.0-alpha.20"
+      }
+    },
+    "toolkit": {
+      "serverInfo": {
+        "name": "sc2-native-toolkit",
+        "version": "0.9.2-rc.1"
+      },
+      "mcpProtocolRequested": "2025-06-18",
+      "nativeProtocol": 11
+    },
+    "publicEditorTools": [
+      "editor.status",
+      "editor.check",
+      "editor.cameras",
+      "editor.capture",
+      "editor.diagnostics",
+      "editor.job",
+      "editor.stop"
+    ],
+    "upstreamToolsListed": 18,
+    "upstreamOperationsExecuted": [
+      "sc2_compile_all",
+      "sc2_export_galaxy",
+      "sc2_save_reopen",
+      "sc2_validate_document",
+      "sc2_list_map_cameras",
+      "sc2_export_map_image",
+      "sc2_capture_terrain",
+      "sc2_diagnostics"
+    ],
+    "allUpstreamToolsExecuted": false
+  },
+  "runtime": {
+    "version": "0.9.2-rc.1",
+    "nativeProtocol": 11,
+    "sourceCommit": "2ad6406977fee5e771f226e21a23c53702b58bb5",
+    "archiveSha256": "fd36e145430c137354caaa5a8b77644fc7f70a493b17a0ad0d820b6ba68dde0f",
+    "executableSha256": "721cdc33172bb49b7dda33a1939ff39c7816516e639bc73ccf45401540a28674",
+    "completePackageInstalled": true
+  },
+  "live": {
+    "startedAt": "2026-10-21T11:03:24.126Z",
+    "finishedAt": "2026-10-21T11:10:47.954Z",
+    "sourceFixture": "Private arena archive with two saved cameras; not distributed",
+    "sourceSha256": "fff4de4d11052685fd4df05849a49dc824edf9c43f30f0fba7c01ccd9e108146",
+    "sourceUnchanged": true,
+    "load": {
+      "status": "NATIVE_DOCUMENT_VALIDATED",
+      "nativeLoadVerified": true,
+      "nativeDataModuleLoaded": true,
+      "nativeValidationPassed": true,
+      "diagnostics": {
+        "newErrorsClear": true,
+        "inspectionComplete": true,
+        "newErrorCount": 0,
+        "newWarningCount": 0,
+        "compilerErrors": null
+      }
+    },
+    "saveReopen": {
+      "status": "NATIVE_SAVE_REOPEN_VERIFIED",
+      "nativeSaveVerified": true,
+      "nativeReopenVerified": true,
+      "componentComparisonVerified": true,
+      "nativeValidationPassed": true,
+      "componentComparison": {
+        "beforeCount": 60,
+        "savedCount": 60,
+        "reopenedCount": 60,
+        "changedByNativeSave": 6,
+        "added": 1,
+        "removed": 1,
+        "modified": 4,
+        "savedToReopenedEqual": true,
+        "changes": [
+          {
+            "name": "(attributes)",
+            "locale": "enUS",
+            "change": "modified",
+            "archiveMetadata": true
+          },
+          {
+            "name": "(listfile)",
+            "locale": "enUS",
+            "change": "modified",
+            "archiveMetadata": true
+          },
+          {
+            "name": ".sc2mcp/revised/Triggers.xml",
+            "locale": "enUS",
+            "change": "removed",
+            "archiveMetadata": false
+          },
+          {
+            "name": "BankList.xml",
+            "locale": "enUS",
+            "change": "added",
+            "archiveMetadata": false
+          },
+          {
+            "name": "ComponentList.SC2Components",
+            "locale": "enUS",
+            "change": "modified",
+            "archiveMetadata": false
+          },
+          {
+            "name": "DocumentHeader",
+            "locale": "enUS",
+            "change": "modified",
+            "archiveMetadata": false
+          }
+        ],
+        "changesTruncated": false
+      },
+      "diagnostics": {
+        "newErrorsClear": true,
+        "inspectionComplete": true,
+        "newErrorCount": 0,
+        "newWarningCount": 0,
+        "compilerErrors": null
+      }
+    },
+    "compile": {
+      "status": "NATIVE_XML_TO_GALAXY_BACKGROUND_PASSED",
+      "nativeGenerationVerified": true,
+      "nativeCompilePassed": true,
+      "sourceSha256": "b8264465a3c0c13aacc7bce153478ac35dfa3f3d7065b945609866a08d00c372",
+      "compilerErrors": []
+    },
+    "galaxyArtifact": {
+      "bytes": 48960,
+      "sha256": "b8264465a3c0c13aacc7bce153478ac35dfa3f3d7065b945609866a08d00c372",
+      "mime": "text/plain; charset=utf-8"
+    },
+    "wholeMap": {
+      "status": "MAP_IMAGE_EXPORTED",
+      "wholeMapVerified": true,
+      "artifact": {
+        "bytes": 2584658,
+        "sha256": "d29ec88f6938a954d8bff22f83533346bb429d427490bf9b390bf82c67cad59c",
+        "mime": "image/png"
+      },
+      "mcpImage": {
+        "mimeType": "image/png",
+        "bytes": 1972603,
+        "sha256": "2f294d23a01b45eb1085b8c6c7d0c310a166ba3bcc934206b333881590a4447e",
+        "matchesArtifact": true
+      }
+    },
+    "savedCameras": [
+      {
+        "status": "TERRAIN_FRAME_CAPTURED",
+        "mapCamera": {
+          "saved": {
+            "cameraId": "2001",
+            "name": "SouthwestCamera",
+            "nameReference": "SouthwestCamera",
+            "nameResolved": false,
+            "position": {
+              "x": 32,
+              "y": 45,
+              "z": 0
+            },
+            "target": {
+              "x": 32,
+              "y": 45
+            },
+            "values": {
+              "Distance": "34",
+              "Pitch": "56",
+              "Yaw": "180",
+              "FieldOfView": "27.8",
+              "NearClip": "0.1",
+              "FarClip": "600",
+              "ShadowClip": "75",
+              "FocalDepth": "8",
+              "FalloffEnd": "8"
+            },
+            "attributes": {
+              "Id": "2001",
+              "Name": "SouthwestCamera",
+              "Position": "32,45,0",
+              "CameraTarget": "32,45",
+              "Rotation": "3.141592653589793",
+              "Scale": "1,1,1",
+              "Color": "0,0,0,0"
+            }
+          },
+          "actual": {
+            "selected": 1,
+            "valuesRead": 1,
+            "name": "SouthwestCamera",
+            "target": {
+              "x": 32,
+              "y": 45,
+              "z": 7.5
+            },
+            "pitch": 56,
+            "yaw": 180,
+            "roll": 0,
+            "distance": 34,
+            "fov": 27.8
+          },
+          "nativeSelectionVerified": true,
+          "verification": {
+            "checked": [
+              "target.x",
+              "target.y",
+              "pitch",
+              "yaw",
+              "distance",
+              "fov"
+            ],
+            "unverifiedSavedParameters": [
+              "NearClip",
+              "FarClip",
+              "ShadowClip",
+              "FocalDepth",
+              "FalloffEnd"
+            ],
+            "numericTolerance": 0.11,
+            "targetTolerance": 0.02,
+            "source": "original Get Game Camera controls; bounded native UI precision"
+          },
+          "triggerExecution": false,
+          "scope": "saved map camera and editor placement state; no Galaxy/gameplay execution"
+        },
+        "artifact": {
+          "bytes": 2100361,
+          "sha256": "ab621da4007317e55d009203d3ea73655231fd1ad57b059c893d1af6111fc81e",
+          "mime": "image/png"
+        },
+        "mcpImage": {
+          "mimeType": "image/png",
+          "bytes": 2100361,
+          "sha256": "ab621da4007317e55d009203d3ea73655231fd1ad57b059c893d1af6111fc81e",
+          "matchesArtifact": true
+        }
+      },
+      {
+        "status": "TERRAIN_FRAME_CAPTURED",
+        "mapCamera": {
+          "saved": {
+            "cameraId": "2002",
+            "name": "NortheastCamera",
+            "nameReference": "NortheastCamera",
+            "nameResolved": false,
+            "position": {
+              "x": 96,
+              "y": 135,
+              "z": 0
+            },
+            "target": {
+              "x": 96,
+              "y": 135
+            },
+            "values": {
+              "Distance": "34",
+              "Pitch": "56",
+              "Yaw": "90",
+              "FieldOfView": "27.8",
+              "NearClip": "0.1",
+              "FarClip": "600",
+              "ShadowClip": "75",
+              "FocalDepth": "8",
+              "FalloffEnd": "8"
+            },
+            "attributes": {
+              "Id": "2002",
+              "Name": "NortheastCamera",
+              "Position": "96,135,0",
+              "CameraTarget": "96,135",
+              "Rotation": "1.5707963267948966",
+              "Scale": "1,1,1",
+              "Color": "0,0,0,0"
+            }
+          },
+          "actual": {
+            "selected": 1,
+            "valuesRead": 1,
+            "name": "NortheastCamera",
+            "target": {
+              "x": 96,
+              "y": 135,
+              "z": 7.5
+            },
+            "pitch": 56,
+            "yaw": 90,
+            "roll": 0,
+            "distance": 34,
+            "fov": 27.8
+          },
+          "nativeSelectionVerified": true,
+          "verification": {
+            "checked": [
+              "target.x",
+              "target.y",
+              "pitch",
+              "yaw",
+              "distance",
+              "fov"
+            ],
+            "unverifiedSavedParameters": [
+              "NearClip",
+              "FarClip",
+              "ShadowClip",
+              "FocalDepth",
+              "FalloffEnd"
+            ],
+            "numericTolerance": 0.11,
+            "targetTolerance": 0.02,
+            "source": "original Get Game Camera controls; bounded native UI precision"
+          },
+          "triggerExecution": false,
+          "scope": "saved map camera and editor placement state; no Galaxy/gameplay execution"
+        },
+        "artifact": {
+          "bytes": 2328891,
+          "sha256": "160eddf7946af84988160af8b2f826008ab84a9f63db1fdf3649c153eabc8a62",
+          "mime": "image/png"
+        },
+        "mcpImage": {
+          "mimeType": "image/png",
+          "bytes": 2328891,
+          "sha256": "160eddf7946af84988160af8b2f826008ab84a9f63db1fdf3649c153eabc8a62",
+          "matchesArtifact": true
+        }
+      },
+      {
+        "status": "TERRAIN_FRAME_CAPTURED",
+        "mapCamera": {
+          "saved": {
+            "cameraId": "2001",
+            "name": "SouthwestCamera",
+            "nameReference": "SouthwestCamera",
+            "nameResolved": false,
+            "position": {
+              "x": 32,
+              "y": 45,
+              "z": 0
+            },
+            "target": {
+              "x": 32,
+              "y": 45
+            },
+            "values": {
+              "Distance": "34",
+              "Pitch": "56",
+              "Yaw": "180",
+              "FieldOfView": "27.8",
+              "NearClip": "0.1",
+              "FarClip": "600",
+              "ShadowClip": "75",
+              "FocalDepth": "8",
+              "FalloffEnd": "8"
+            },
+            "attributes": {
+              "Id": "2001",
+              "Name": "SouthwestCamera",
+              "Position": "32,45,0",
+              "CameraTarget": "32,45",
+              "Rotation": "3.141592653589793",
+              "Scale": "1,1,1",
+              "Color": "0,0,0,0"
+            }
+          },
+          "actual": {
+            "selected": 1,
+            "valuesRead": 1,
+            "name": "SouthwestCamera",
+            "target": {
+              "x": 32,
+              "y": 45,
+              "z": 7.5
+            },
+            "pitch": 56,
+            "yaw": 180,
+            "roll": 0,
+            "distance": 34,
+            "fov": 27.8
+          },
+          "nativeSelectionVerified": true,
+          "verification": {
+            "checked": [
+              "target.x",
+              "target.y",
+              "pitch",
+              "yaw",
+              "distance",
+              "fov"
+            ],
+            "unverifiedSavedParameters": [
+              "NearClip",
+              "FarClip",
+              "ShadowClip",
+              "FocalDepth",
+              "FalloffEnd"
+            ],
+            "numericTolerance": 0.11,
+            "targetTolerance": 0.02,
+            "source": "original Get Game Camera controls; bounded native UI precision"
+          },
+          "triggerExecution": false,
+          "scope": "saved map camera and editor placement state; no Galaxy/gameplay execution"
+        },
+        "artifact": {
+          "bytes": 2099729,
+          "sha256": "079129b821c9a0d7e3d8718e849a08f610bc3765a297f170955bebf0a350c1e3",
+          "mime": "image/png"
+        },
+        "mcpImage": {
+          "mimeType": "image/png",
+          "bytes": 2099729,
+          "sha256": "079129b821c9a0d7e3d8718e849a08f610bc3765a297f170955bebf0a350c1e3",
+          "matchesArtifact": true
+        }
+      }
+    ],
+    "imageContentHashesMatched": true,
+    "desktopObservations": [
+      {
+        "samples": 1189,
+        "visibleWindowsOnUserDesktopPeak": 0,
+        "editorForegroundSamples": 0,
+        "inputDesktopChanges": 0,
+        "inputInjectionUsed": false,
+        "desktopSwitchApiUsed": false
+      },
+      {
+        "samples": 3466,
+        "visibleWindowsOnUserDesktopPeak": 0,
+        "editorForegroundSamples": 0,
+        "inputDesktopChanges": 0,
+        "inputInjectionUsed": false,
+        "desktopSwitchApiUsed": false
+      },
+      {
+        "samples": 3998,
+        "visibleWindowsOnUserDesktopPeak": 0,
+        "editorForegroundSamples": 0,
+        "inputDesktopChanges": 0,
+        "inputInjectionUsed": false,
+        "desktopSwitchApiUsed": false
+      },
+      {
+        "samples": 4921,
+        "visibleWindowsOnUserDesktopPeak": 0,
+        "editorForegroundSamples": 0,
+        "inputDesktopChanges": 0,
+        "inputInjectionUsed": false,
+        "desktopSwitchApiUsed": false
+      },
+      {
+        "samples": 5685,
+        "visibleWindowsOnUserDesktopPeak": 0,
+        "editorForegroundSamples": 0,
+        "inputDesktopChanges": 0,
+        "inputInjectionUsed": false,
+        "desktopSwitchApiUsed": false
+      },
+      {
+        "samples": 6269,
+        "visibleWindowsOnUserDesktopPeak": 0,
+        "editorForegroundSamples": 0,
+        "inputDesktopChanges": 0,
+        "inputInjectionUsed": false,
+        "desktopSwitchApiUsed": false
+      },
+      {
+        "samples": 6834,
+        "visibleWindowsOnUserDesktopPeak": 0,
+        "editorForegroundSamples": 0,
+        "inputDesktopChanges": 0,
+        "inputInjectionUsed": false,
+        "desktopSwitchApiUsed": false
+      }
+    ],
+    "gracefulStop": true
+  },
+  "frontendOnly": {
+    "outcome": "passed",
+    "mode": "frontend_only",
+    "jobsExecuted": 0,
+    "stopped": true
+  },
+  "regressions": {
+    "initial": {
+      "tests": 287,
+      "pass": 284,
+      "fail": 2,
+      "cancelled": 0,
+      "skipped": 1,
+      "todo": 0
+    },
+    "initialRawTapSha256": "704a4f114cb993bdc677b6a15a5718de86a46fe721efefb1f39a2b26fb37f112",
+    "initialFailures": [
+      {
+        "test": "recreating the exact committed request cannot silently duplicate objects",
+        "resolution": "Fixed applied-plan post-state caching; repeated requests do not duplicate, rollback can be replanned; regressions passed"
+      },
+      {
+        "test": "checked-in Kaldir Font Style and locales are exactly generated by text.apply",
+        "resolution": "Restored the excluded private example only in the validation checkout; no product failure or example publication"
+      }
+    ],
+    "final": {
+      "tests": 288,
+      "pass": 287,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 1,
+      "todo": 0
+    },
+    "finalRawTapSha256": "d146897e6225fcb74e07036982fc6c7745cbb0d400d41d88854813817f88babc",
+    "files": [
+      "dist/tests/nativeEditor.test.js",
+      "dist/tests/mcpBatch.test.js",
+      "dist/tests/authoringScript.test.js",
+      "dist/tests/authoringOrganization.test.js",
+      "dist/tests/authoringProtocolTransport.test.js",
+      "dist/tests/focusedProfileTransport.test.js",
+      "dist/tests/dataModule.test.js",
+      "dist/tests/dataActorRecipes.test.js",
+      "dist/tests/dataParentClasses.test.js",
+      "dist/tests/script.test.js",
+      "dist/tests/triggerRevisedRuntime.test.js",
+      "dist/tests/triggerRevisedImport.test.js",
+      "dist/tests/terrainModule.test.js",
+      "dist/tests/terrainNativeGeometry.test.js",
+      "dist/tests/terrainCompositions.test.js",
+      "dist/tests/decorMeasurements.test.js",
+      "dist/tests/placementModule.test.js",
+      "dist/tests/editorVisibility.test.js",
+      "dist/tests/mapModule.test.js",
+      "dist/tests/mapEditorLoad.test.js",
+      "dist/tests/document.test.js",
+      "dist/tests/settings.test.js",
+      "dist/tests/settingsNewPlayers.test.js",
+      "dist/tests/textModule.test.js",
+      "dist/tests/aiModule.test.js",
+      "dist/tests/browseModule.test.js",
+      "dist/tests/casc.test.js",
+      "dist/tests/uiXmlFormat.test.js",
+      "dist/tests/layoutDocument.test.js",
+      "dist/tests/modkitIntegration.test.js",
+      "dist/tests/modkitTerrain.test.js"
+    ],
+    "publicStatusExtract": "CORE_REGRESSIONS_2026-10-21.md",
+    "skip": "Unix shell fixture on Windows; failed archive reopen transaction negative test",
+    "scope": "Selected core suite across module formats and MCP transport, not all tests or universal engine acceptance",
+    "publicStatusExtractSha256": "1cbb37ba5c519fdcd5023b72df73015a5dec7cc7510cb5f2d030fe3e659d79b5"
+  },
+  "automation": {
+    "normalBuild": "passed",
+    "releaseBuild": "passed",
+    "lint": "passed",
+    "catalogVerify": {
+      "payloads": 1331,
+      "result": "passed"
+    },
+    "englishMaintainedProse": "passed"
+  },
+  "nativeBridgeSourceFingerprints": {
+    "encoding": "UTF-8 with CRLF normalized to LF; hashes exclude generated dist files",
+    "files": [
+      {
+        "file": "native-toolkit-release.json",
+        "sha256LfUtf8": "16b401fa08f4087ac191cdacbf10f6d8bf5a56b89c76f9d00312ee4d89cd2681"
+      },
+      {
+        "file": "src/integrations/native/bridge.ts",
+        "sha256LfUtf8": "1d59c27bb1596f8d17a150ca03de5d6ffeab8e7ddee25bc9d051e1c754f5a2f9"
+      },
+      {
+        "file": "src/integrations/native/transport.ts",
+        "sha256LfUtf8": "1ef20307859c7691e331128519db1676549f22c5eae88fd3c23d0e63593d7d9c"
+      },
+      {
+        "file": "src/integrations/native/tools.ts",
+        "sha256LfUtf8": "2e67ce26844aad4c7103448779443396160c42681fd5c6a5deb4229b3fdd7bc8"
+      },
+      {
+        "file": "src/integrations/native/release.ts",
+        "sha256LfUtf8": "2efaaef7371ad6fa2b8e67eefdc281fc3d47b1a05dc935cb35ce4e06ab80dca0"
+      },
+      {
+        "file": "src/app/mcpBatch.ts",
+        "sha256LfUtf8": "a26393a53ff6e5e2c9f14edf3a106a1b658e6a9dcd3e5533b0b46280db54357b"
+      },
+      {
+        "file": "src/app/version.ts",
+        "sha256LfUtf8": "a257bdc19e0e4227781931afb01cdebacb9bae1cb0e0da5b6b49059cc18c2c51"
+      },
+      {
+        "file": "src/mcp/uiServer.ts",
+        "sha256LfUtf8": "6611acca40e761affa55e0f7a9ae6dd6d45f8f2ba78392a052eff4e2e353090b"
+      }
+    ]
+  },
+  "notCertified": [
+    "Universal gameplay, balance, performance and every hero ability VFX",
+    "All terrain cliff corners, engine navigation/collision rebuild and complex water",
+    "Full Data effective-default/reference semantics and arbitrary GUI conversion",
+    "Full custom renderer material/light/shadow/animation/FaceFX parity",
+    "All Toolkit cutscene/audio/video features; enumeration alone is not execution"
+  ],
+  "reproduce": [
+    "npm run build",
+    "npm run native:setup",
+    "npm run native:verify",
+    "npm run native:verify -- --live --workspace <private-project> --archive <private-map.SC2Map> --camera-id <A> --camera-id <B> --camera-id <A>"
+  ],
+  "earlierLocalNegativeCases": [
+    {
+      "case": "unknownCameraId",
+      "status": "FAILED",
+      "error": "Saved map camera ID was not found uniquely",
+      "framePublished": false,
+      "sourceUnchanged": true
+    },
+    {
+      "case": "inconsistentRotationYaw",
+      "status": "FAILED",
+      "error": "Original camera Yaw does not match the saved value",
+      "framePublished": false,
+      "sourceUnchanged": true
+    }
+  ]
+}

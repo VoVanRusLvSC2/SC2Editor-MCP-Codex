@@ -15,6 +15,7 @@
     "THIRD_PARTY_LICENSES.md",
     "PUBLISHING.md",
     "publication-policy.json",
+    "native-toolkit-release.json",
     "README.md",
     "README_LEGACY.md",
     "SCRIPT-GUIDE.md",
@@ -27,6 +28,7 @@
     "windows/",
     "tests/terrain-surface/",
     "resources/authoring-catalog/",
+    "docs/verification/",
     ".agents/skills/"
   ],
   "localDirectories": [
@@ -158,6 +160,7 @@
     "UI_PREVIEW.html",
     "UI_TRIGGER_IMAGES.html",
     "V1_READINESS.md",
+    "VERIFICATION.md",
     "WINDOWS_EXE.md",
     "mcp-hardening/ACCEPTANCE.md",
     "mcp-hardening/AUTHORING_ACCEPTANCE_2026-09-29.md",

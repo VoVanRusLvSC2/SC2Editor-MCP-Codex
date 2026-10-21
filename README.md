@@ -1,4 +1,14 @@
-# SC2Editor MCP
+# SC2EditorToolkit
+
+**Verified scope:** supported MCP authoring workflows and original Editor checks
+on recorded fixtures. The native DLL connection, GUI compilation, save/reopen and
+map/camera rendering work in the verified setup. See the
+[acceptance matrix and reproducible checks](docs/VERIFICATION.md) for evidence and
+the features still awaiting engine/gameplay validation.
+
+The public project name is **SC2EditorToolkit**. The existing repository URL,
+`sc2editor-mcp` protocol identifier, environment variables and tool names remain
+compatible; the historical source and license attribution are retained.
 
 Current agent workflow: [Authoring protocol](docs/AUTHORING_PROTOCOL.md), [compact commands](docs/MCP_AUTHORING_SCRIPT.md), and [trigger organization](docs/TRIGGER_ORGANIZATION_PROTOCOL.md). Galaxy is the default logic language. Terrain profiles and reference palettes are available through `terrain.catalog`, `terrain.style`, and `terrain.compose`. Maintained documentation is English.
 
@@ -8,7 +18,7 @@ and three scoped [project skills](.agents/skills/README.md). These are runtime a
 authoring inputs, not optional local reports. Verify them with
 `npm run catalog:verify` and `npm run docs:check-language`.
 
-[Native Editor checks](docs/NATIVE_EDITOR.md) use the optional pinned Toolkit 0.8
+[Native Editor checks](docs/NATIVE_EDITOR.md) use the optional pinned Toolkit 0.9.2-rc.1
 backend; `map.preview` remains the fast ModKit preview. Native compilation,
 save/reopen, rendered appearance and gameplay have distinct verification scopes.
 

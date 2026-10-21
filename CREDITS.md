@@ -1,5 +1,8 @@
 # Authors and module credits
 
+Public product name: **SC2EditorToolkit**. Historical source/license identifiers
+and the existing repository URL below remain for attribution and compatibility.
+
 **SC2Editor-MCP-Codex — VoVanRusLvSC2**
 (vladimir.lencmanis@gmail.com).
 Original editor/MCP functions across all modules, project integration,

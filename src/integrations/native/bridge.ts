@@ -4,9 +4,10 @@ import {fileURLToPath} from 'node:url';
 import {createHash,randomUUID} from 'node:crypto';
 import type {Workspace} from '../../core/workspace.js';
 import {NativeStdioClient,type NativeClient} from './transport.js';
+import {nativeRelease} from './release.js';
 
 const hash=(bytes:Buffer)=>createHash('sha256').update(bytes).digest('hex');
-export const nativeHome=()=>fileURLToPath(new URL('../../../.native-toolkit-runtime/0.8.0-rc.1/',import.meta.url));
+export const nativeHome=()=>fileURLToPath(new URL(`../../../.native-toolkit-runtime/${nativeRelease.version}/`,import.meta.url));
 type Check='load'|'compile'|'save_reopen';
 interface Job {id:string;state:'queued'|'running'|'completed'|'failed';operation:string;phase:string;createdAt:string;startedAt?:string;finishedAt?:string;deadlineSeconds:number;report:string;result?:Record<string,any>;error?:string}
 interface Source {absolute:string;sha256:string}
@@ -27,8 +28,9 @@ export class NativeEditorBridge {
     this.work=workspace.resolveUserPath('.sc2mcp-output/native-editor');
   }
   configuration(){return {available:!!this.client||existsSync(path.join(this.home,'sc2-mcp-runtime.json'))||!!process.env.SC2_NATIVE_MCP_PATH,
-    expectedVersion:'0.8.x',runtimeHome:this.home,transport:'retained stdio MCP',launchPolicy:'Explicit editor.check/editor.capture may start an owned hidden Editor on private map copies',
-    setup:'npm run native:setup',gameplayValidation:false,fastMapPreview:'map.preview (ModKit)',terrainCameraControl:false};}
+    expectedVersion:nativeRelease.version,nativeProtocol:nativeRelease.nativeProtocol,runtimeHome:this.home,transport:'retained stdio MCP',launchPolicy:'Explicit editor.check/editor.capture may start an owned hidden Editor on private map copies',
+    stability:'Prerelease; native startup, compilation and rendering require local evidence',updatePolicy:'Pinned complete release; setup does not auto-upgrade or start an Editor',
+    setup:'npm run native:setup',gameplayValidation:false,fastMapPreview:'map.preview (ModKit)',terrainCameraControl:'Saved map cameras only; native readback required'};}
   private async connect(){
     return this.connecting??=this.connectImpl().catch(error=>{this.connecting=undefined;throw error;});
   }
@@ -38,9 +40,10 @@ export class NativeEditorBridge {
       let executable:string;
       if(configured)executable=path.resolve(configured);
       else{
-        let receipt:{executable:string;executableSha256:string};
+        let receipt:{version:string;nativeProtocol:number;executable:string;executableSha256:string};
         try{receipt=JSON.parse(await fs.readFile(path.join(this.home,'sc2-mcp-runtime.json'),'utf8'));}
         catch{throw Error('NATIVE_TOOLKIT_NOT_INSTALLED: npm run native:setup');}
+        if(receipt.version!==nativeRelease.version||receipt.nativeProtocol!==nativeRelease.nativeProtocol)throw Error('NATIVE_RUNTIME_PROTOCOL_MISMATCH: install the complete pinned package');
         executable=path.resolve(this.home,receipt.executable);
         const relative=path.relative(this.home,executable);
         if(path.isAbsolute(relative)||relative.startsWith('..'))throw Error('NATIVE_MANIFEST_PATH_INVALID');
@@ -94,13 +97,23 @@ export class NativeEditorBridge {
   private summary(value:Record<string,any>){
     const selected=['status','error','nativeLoadVerified','nativeDataModuleLoaded','nativeSaveVerified','nativeReopenVerified','componentComparisonVerified','nativeValidationPassed',
       'nativeGenerationVerified','nativeCompilePassed','sourceSha256','sourceUnchanged','componentComparison','desktopObservation','evidenceDirectory','artifact','savedArchive','componentDiffArtifact',
-      'requestedTerrainFrameVerified','wholeMapVerified','coordinateMappingValidated','preview','width','height'];
+      'requestedTerrainFrameVerified','wholeMapVerified','coordinateMappingValidated','preview','width','height',
+      'failureKind','failureStage','failureEvidence','failureNative','ownedWorkerReset','automaticRetry',
+      'mapCamera','cameraReadback','nativeCameraVerified','nativeLoad','controllerExitCode','failure','handlerCompletionKnown'];
     const result=Object.fromEntries(selected.filter(k=>k in value).map(k=>[k,value[k]]));
-    const diag=value.diagnostics??value.operationDiagnostics;
+    const diag=value.diagnostics??value.operationDiagnostics??value.loadDiagnostics;
     if(diag){result.diagnostics={newErrorsClear:diag.newErrorsClear??null,inspectionComplete:diag.inspectionComplete??null,
-      newErrorCount:Array.isArray(diag.newErrors)?diag.newErrors.length:diag.newErrorCount??null,
-      newWarningCount:Array.isArray(diag.newWarnings)?diag.newWarnings.length:diag.newWarningCount??null,
+      newErrorCount:Object.hasOwn(diag,'newErrorCount')?diag.newErrorCount:diag.inspectionComplete===false?null:Array.isArray(diag.newErrors)?diag.newErrors.length:null,
+      newWarningCount:Object.hasOwn(diag,'newWarningCount')?diag.newWarningCount:diag.inspectionComplete===false?null:Array.isArray(diag.newWarnings)?diag.newWarnings.length:null,
+      knownNewErrorCount:diag.knownNewErrorCount??(Array.isArray(diag.newErrors)?diag.newErrors.length:null),
       newErrors:diag.newErrors?.slice(0,8),newWarnings:diag.newWarnings?.slice(0,4),compilerErrors:Array.isArray(diag.compilerErrors)?diag.compilerErrors.slice(0,8):diag.compilerErrors??null};}
+    if(Array.isArray(value.phases)){
+      result.phaseCount=value.phases.length;
+      const failures=value.phases.filter((phase:Record<string,any>)=>phase.nativeConfirmed!==true||phase.error);
+      if(failures.length)result.phases=failures.slice(0,8).map((phase:Record<string,any>)=>({
+        phase:phase.phase,operation:phase.operation,nativeConfirmed:phase.nativeConfirmed,error:phase.error,
+        native:phase.native?this.summary(phase.native):undefined,diagnostics:phase.diagnostics?this.summary({diagnostics:phase.diagnostics}).diagnostics:undefined}));
+    }
     if(result.componentComparison){const c=result.componentComparison;result.componentComparison={...c,
       changes:c.changes?.slice(0,12).map((change:Record<string,unknown>)=>({name:change.name,locale:change.locale,change:change.change,archiveMetadata:change.archiveMetadata})),
       changesTruncated:!!c.changesTruncated||(c.changes?.length??0)>12};}
@@ -123,7 +136,7 @@ export class NativeEditorBridge {
         else{
           if(!checks.includes('load')&&!checks.includes('save_reopen')){
             const opened=await this.invoke('sc2_open_document',{map:copy},directory);evidence.open=opened;
-            if(opened.isError||opened.status==='FAILED'){failed=true;break;}
+            if(opened.isError||opened.status==='FAILED'){evidence.checks.open=opened;failed=true;break;}
           }
           value=await this.invoke('sc2_compile_all',{...(args.scope?{scope:args.scope}:{}),...(args.contextLabel?{context_label:args.contextLabel}:{}),...(args.locale?{locale:args.locale}:{})},directory);
           if(value.nativeCompilePassed===true){const exported=await this.invoke('sc2_export_galaxy',{output:path.join(directory,'Native.galaxy')},directory);evidence.galaxy=exported;if(exported.isError)failed=true;}
@@ -133,27 +146,47 @@ export class NativeEditorBridge {
         if(check==='compile'?value.nativeCompilePassed!==true:value.nativeValidationPassed!==true)incomplete=true;
       }
       evidence.sourceUnchanged=await this.unchanged(source);failed||=!evidence.sourceUnchanged;
-      this.ownedDocument=source.absolute;
+      this.ownedDocument=failed?undefined:source.absolute;
       await fs.writeFile(job.report,JSON.stringify(evidence,null,2)+'\n');
       return {failed,outcome:failed?'failed':incomplete?'incomplete':'passed',source:source.absolute,sourceSha256:source.sha256,sourceUnchanged:evidence.sourceUnchanged,
         checks:Object.fromEntries(Object.entries(evidence.checks).map(([key,value])=>[key,this.summary(value as Record<string,any>)])),
         ...(evidence.galaxy?{galaxy:this.summary(evidence.galaxy)}:{}),report:job.report,gameplayVerified:false};
     });
   }
-  async capture(args:{archive:string;mode:'viewport'|'map'|'region';bounds?:{left:number;bottom:number;right:number;top:number};size:number;deadlineSeconds:number}){
+  async cameras(args:{archive:string;locale?:string;offset:number;limit:number}){
+    const source=await this.source(args.archive);
+    if(!/\.sc2map$/i.test(source.absolute))throw Error('NATIVE_MAP_REQUIRED');
+    return this.enqueue('cameras',1200,async job=>{
+      if(!await this.unchanged(source))throw Error('NATIVE_SOURCE_CHANGED_WHILE_QUEUED');
+      const directory=path.dirname(job.report),copy=path.join(directory,'Input.SC2Map');await fs.copyFile(source.absolute,copy);
+      if(hash(await fs.readFile(copy))!==source.sha256)throw Error('NATIVE_SNAPSHOT_CHANGED');
+      job.phase='saved_cameras';
+      const value=await this.invoke('sc2_list_map_cameras',{map:copy,...(args.locale?{locale:args.locale}:{})},directory);
+      const sourceUnchanged=await this.unchanged(source);
+      const rows=Array.isArray(value.cameras)?value.cameras:[];
+      const failed=value.isError||value.status==='FAILED'||!sourceUnchanged;
+      const result={failed,source:source.absolute,sourceSha256:source.sha256,sourceUnchanged,
+        ...this.summary(value),cameras:rows.slice(args.offset,args.offset+args.limit),total:rows.length,
+        offset:args.offset,hasMore:args.offset+args.limit<rows.length,editorStarted:false,report:job.report};
+      await fs.writeFile(job.report,JSON.stringify(result,null,2)+'\n');return result;
+    });
+  }
+  async capture(args:{archive:string;mode:'viewport'|'map'|'region';cameraId?:string;bounds?:{left:number;bottom:number;right:number;top:number};size:number;deadlineSeconds:number}){
     const source=await this.source(args.archive);
     if(args.mode==='region'&&!args.bounds)throw Error('NATIVE_REGION_BOUNDS_REQUIRED');
+    if(args.cameraId&&args.mode!=='viewport')throw Error('NATIVE_CAMERA_REQUIRES_VIEWPORT');
+    if(args.cameraId&&!/\.sc2map$/i.test(source.absolute))throw Error('NATIVE_MAP_REQUIRED');
     return this.enqueue('capture',args.deadlineSeconds,async job=>{
       if(!await this.unchanged(source))throw Error('NATIVE_SOURCE_CHANGED_WHILE_QUEUED');
       const directory=path.dirname(job.report),copy=path.join(directory,'Input'+path.extname(source.absolute));await fs.copyFile(source.absolute,copy);
       if(hash(await fs.readFile(copy))!==source.sha256)throw Error('NATIVE_SNAPSHOT_CHANGED');
       job.phase=args.mode;
       const tool=args.mode==='viewport'?'sc2_capture_terrain':args.mode==='map'?'sc2_export_map_image':'sc2_capture_map_region';
-      const value=await this.invoke(tool,{map:copy,...(args.mode==='viewport'?{}:{size:args.size}),...(args.mode==='region'?{bounds:args.bounds}:{})},directory);
-      const sourceUnchanged=await this.unchanged(source);this.ownedDocument=source.absolute;
+      const value=await this.invoke(tool,{map:copy,...(args.cameraId?{map_camera_id:args.cameraId}:{}),...(args.mode==='viewport'?{}:{size:args.size}),...(args.mode==='region'?{bounds:args.bounds}:{})},directory);
+      const sourceUnchanged=await this.unchanged(source);this.ownedDocument=value.isError||value.status==='FAILED'?undefined:source.absolute;
       await fs.writeFile(job.report,JSON.stringify({source:source.absolute,sourceSha256:source.sha256,sourceUnchanged,result:value},null,2)+'\n');
       return {failed:value.isError||value.status==='FAILED'||!sourceUnchanged,source:source.absolute,sourceSha256:source.sha256,sourceUnchanged,
-        capture:this.summary(value),report:job.report,limitations:['Native water/category exclusion coverage is incomplete. Region mode crops a full image; it is not a camera-controlled close-up.']};
+        capture:this.summary(value),report:job.report,limitations:['Native water/category exclusion coverage is incomplete. Region mode crops a full image. Saved-camera captures show editor placements, not running triggers or gameplay.']};
     });
   }
   diagnostics(){return this.enqueue('diagnostics',1200,async job=>{job.phase='diagnostics';const value=await this.invoke('sc2_diagnostics',{},path.dirname(job.report));
