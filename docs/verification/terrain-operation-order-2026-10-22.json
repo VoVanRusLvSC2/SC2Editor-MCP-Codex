@@ -1,0 +1,196 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-22T04:59:19.274Z",
+  "scope": "Mixed ordinary-height/native-geometry operation ordering and metadata preservation; regional native topology ownership remains open",
+  "fixes": [
+    "Ordinary SMAP deltas are flushed before each native operation; subsequent brushes use a new baseline",
+    "Measured native ramp SMAP correction is not double-displaced by later protected brushes",
+    "changedVertices includes actual final native world-height changes and reports zero on unchanged repeats",
+    "Additional cliff-cell and cliff/ramp-list attributes survive native writes; unknown nested payload/text/comments reject before staging"
+  ],
+  "differential": {
+    "kind": "isolated in-memory regression against the frozen previous portable implementation",
+    "beforeDifferentSyncVertices": 186,
+    "afterDifferentSyncVertices": 0,
+    "previousCandidate": "SC2EditorToolkit-InstantData-dev11-20261022"
+  },
+  "mcp": {
+    "foundation": "9f0ed2d8-618f-430b-ad8c-58fb395521d2",
+    "combined": "6792c3e6-0602-46f6-a042-b197c45d00dc",
+    "sequential": "3a3d623c-3f7b-49e3-950f-16014bb0feeb",
+    "sequentialHarnessVerdict": "incomplete_or_failed",
+    "sequentialHarnessReason": "Final protected brush was a correct no-op; save returned saved=false while the harness expected true. All mutations/export completed. Failure retained; corrected no-op recheck passed.",
+    "protectedNoOp": "5645b34a-b446-4355-acaf-4380e76ec107",
+    "currentWriterNoOpAndExport": "3a7fda09-19de-4e08-8ad8-b73b79adf2d7",
+    "geometryComponentsEqual": [
+      {
+        "file": "t3Terrain.xml",
+        "bytes": 9097,
+        "sha256": "e7e0f2d6f60c5b9a963de299fc3e2088bf127f304210bdb0c0d923dcc5b150d5"
+      },
+      {
+        "file": "t3HeightMap",
+        "bytes": 25382,
+        "sha256": "5ff05b7d43dc401ecf6891ea218ea3d1c98b725e6f666cc89cbde67fafe0219b"
+      },
+      {
+        "file": "t3SyncHeightMap",
+        "bytes": 16964,
+        "sha256": "d34c87e87c030a424e0ac5e6ba2dd88b5d1a43933facdd8a30739b3a6ee28354"
+      },
+      {
+        "file": "t3SyncCliffLevel",
+        "bytes": 8224,
+        "sha256": "3731efe11dfc40e3598fc00418e09c642c1779749979dc47824d39d21985241c"
+      },
+      {
+        "file": "t3CellFlags",
+        "bytes": 4128,
+        "sha256": "e0883f9e83591cfe9f77af688eb24fe1434c98886b36a3cfe42c959f3785b396"
+      }
+    ],
+    "underlyingTerrainCalls": {
+      "combined": 3,
+      "sequential": 15,
+      "operations": 5,
+      "scope": "Plan/apply/save request counts for these identical operations; not model token or billing measurements"
+    }
+  },
+  "native": {
+    "sourceSha256": "daa9593e6d9e0b14d24b421a6458084e4f691f4d88bebdca44d3ec2c081d53a6",
+    "engineBuild": "5.0.17.98310",
+    "gameToolkit": "v0.1.0-dev.11",
+    "cleanLaunches": 2,
+    "retainedBridges": 1,
+    "runs": [
+      {
+        "jobId": "8d0e7095-895c-4849-b7c9-67ad1c38ec6c",
+        "createdAt": "2026-10-22T04:43:06.244Z",
+        "finishedAt": "2026-10-22T04:43:55.111Z",
+        "routes": [
+          {
+            "id": "route:marine:forward",
+            "arrived": true,
+            "maxObservedDeviation": 0,
+            "maxDeviation": 1.75
+          },
+          {
+            "id": "route:marine:reverse",
+            "arrived": true,
+            "maxObservedDeviation": 0,
+            "maxDeviation": 1.75
+          },
+          {
+            "id": "route:marauder:forward",
+            "arrived": true,
+            "maxObservedDeviation": 0,
+            "maxDeviation": 1.75
+          },
+          {
+            "id": "route:marauder:reverse",
+            "arrived": true,
+            "maxObservedDeviation": 0,
+            "maxDeviation": 1.75
+          }
+        ],
+        "cleanup": true,
+        "sourceAndArtifactUnchanged": true
+      },
+      {
+        "jobId": "3aaa4a0d-228b-47f0-86bd-31405d3e0274",
+        "createdAt": "2026-10-22T04:43:55.738Z",
+        "finishedAt": "2026-10-22T04:44:44.357Z",
+        "routes": [
+          {
+            "id": "route:marine:forward",
+            "arrived": true,
+            "maxObservedDeviation": 0,
+            "maxDeviation": 1.75
+          },
+          {
+            "id": "route:marine:reverse",
+            "arrived": true,
+            "maxObservedDeviation": 0,
+            "maxDeviation": 1.75
+          },
+          {
+            "id": "route:marauder:forward",
+            "arrived": true,
+            "maxObservedDeviation": 0,
+            "maxDeviation": 1.75
+          },
+          {
+            "id": "route:marauder:reverse",
+            "arrived": true,
+            "maxObservedDeviation": 0,
+            "maxDeviation": 1.75
+          }
+        ],
+        "cleanup": true,
+        "sourceAndArtifactUnchanged": true
+      }
+    ],
+    "visualReview": {
+      "firstRunOverview": true,
+      "firstRunRampDetail": true,
+      "observed": "Filled ramp and connected wall caps in the reviewed views; a technical single-material surface, not final art approval",
+      "secondRunPixels": "Capture/readback passed; pixels not separately reviewed"
+    },
+    "diagnostics": "Optional partial-source game diagnostics remain inconclusive",
+    "nativeNavigationRebuilt": false,
+    "arbitraryTopologyCertified": false
+  },
+  "regressions": {
+    "tests": 1304,
+    "pass": 1303,
+    "fail": 0,
+    "skipped": 1,
+    "testConcurrency": 4,
+    "reportSha256": "f8011a97e6cd8fe52d15b81d335601e55637b77bd19d651a8b738f5124ca2ea7",
+    "unknownMetadataScope": "Static preservation/rejection tests; native engine semantics of unknown attributes are not certified"
+  },
+  "portable": {
+    "candidate": "release/SC2EditorToolkit-TerrainOrder-dev11-20261022",
+    "published": false,
+    "smokePassed": true,
+    "compiledFingerprints": {
+      "modules/terrain/operations.js": "bc729df34bae40b01b7f439b7a0165b924dd6f6d61c9f7abbcef186595ac8673",
+      "modules/terrain/nativeGeometry.js": "422ebaf249389a95bc485c0c61388d158ca6eec463f9a217a25f88239e5d1e93",
+      "modules/terrain/loadContract.js": "26f69590590f52fcacbaa2e246c803b20a01c9214476dff90fc51db1a49481ea",
+      "modules/document/codecs/terrainLoadContract.js": "cbb1027dc1a35edf6d6ae7696d3cf6734012931100a6cc7ef9371364f17f5dd4",
+      "archive/terrainLoadContract.js": "e75cb33ed451bd6e1b1733f2d5f42076a5b38c1196a51da6b328220e2ac9b56d",
+      "modules/testing/workspace.js": "d3b95e219b7bb22cd00b3c43dc996549e6781373c6450d147c5fa54af8bd92e5",
+      "modules/terrain/workspace.js": "f6436cde41e99977cde61c04330c4139cb9cf68157d72a05fb619b4601b628a7",
+      "modules/map/workspace.js": "07961fc1f4fe91d83d5811b4a4a254f7a98cbef4eb7fcb615de470f703e56d0b",
+      "modules/trigger/authoring.js": "3dd7645c0a7b93a5ddc51a6407d5182460083921ea39481c598795f59059c931",
+      "app/authoringScript.js": "7ef7b344e07ab675142d5d1071c77d269386705eefb6617885ab12745b642b80",
+      "modules/data/document.js": "2a003f2061251c18cfde806fc974379efae76ae061bf094bb15684aa409f21d1",
+      "modules/data/authoringValidation.js": "1122c9e2c2d0366259e9d956d1e7239ffe4cedffc1332d6062e0bcd0c8f1a963",
+      "modules/data/tools.js": "9d96132663d49c44e45c5a0c48330f605b1e0819dece7add264539982ccb70e4",
+      "modules/data/workspace.js": "e24058703f27b5e32ee24cdd9519d106cba35fadc79187e10602a6e7a75834d1",
+      "modules/data/abilityRecipes.js": "85133d48356a62d8e9779c873aa5129aa6dc430db5c485fd1057139b0a4173f9"
+    },
+    "dataRejectionIsError": true,
+    "noRejectedFileWritten": true,
+    "privacy": {
+      "passed": true,
+      "checkedFiles": 9940,
+      "privateSourceFiles": 2331,
+      "privateCorpusCompared": true,
+      "violations": [],
+      "scope": "Explicit private paths/debug/test artifacts and exact external C++/Python/Galaxy source copies, including renamed files. Not proof against transformed snippets or binary reverse engineering."
+    }
+  },
+  "openCoverage": [
+    "Regional cliff/ramp ownership, semantic XML preimages and native coverage tracking",
+    "One-time legacy foundation normalization must not claim whole-map ownership or invalidate existing location preimages",
+    "Other ramp/topology profiles and authoritative native navigation/collision/buildability",
+    "Complex typed GUI original save/reopen and other Data/presentation variants",
+    "Finished mission aesthetics and balance"
+  ],
+  "sourceFingerprints": {
+    "src/modules/terrain/operations.ts": "7dc8b85d96f4a0ccd2f26c9878673f1e316d9d041c5507a94ec1c1ccd48aadf9",
+    "src/modules/terrain/nativeGeometry.ts": "50ab3b40c49d644b2ecea72c05c8b68a5c20f992f31823dc0b65dfa62c43108f",
+    "src/tests/terrainNativeGeometry.test.ts": "5b3297d488227d617a99a41e314c803c9f13c1434b0f62c8bb84d8d272d43ad8"
+  }
+}

@@ -9,6 +9,7 @@ import {ModelMeasurements,measureGeometry,type Geometry,type MeasuredModel} from
 import {attachmentMeasurements} from '../modules/assets/attachmentMeasurements.js';
 import {modelSheetSvg,modelSheetPng} from '../modules/assets/measurementRender.js';
 import {layoutPrefab,overlaps,type Slot} from '../modules/placement/decorPrefabs.js';
+import {measuredMemberGeometry} from '../modules/placement/compositionGeometry.js';
 import {DecorPalette,catalogScale,type DecorModel} from '../modules/placement/decorPalette.js';
 import {BrowseWorkspace} from '../modules/browse/workspace.js';
 import {DataWorkspace} from '../modules/data/workspace.js';
@@ -44,7 +45,9 @@ test('contact sheet retains shared units, escapes labels, fits Marine reference 
  const first=await modelSheetPng(cards),second=await modelSheetPng(cards);assert.deepEqual(first.bytes,second.bytes);assert.equal(first.bytes.readUInt32BE(16),720);assert.throws(()=>modelSheetSvg([]),/1_TO_12/);
 });
 test('all ready groups preserve a measured corridor and actual noncentral pivot offsets',()=>{
- for(const recipe of ['base_entrance','service_yard','landing_pad','forest_edge'] as const){const r=layoutPrefab(recipe,slots(),6,42);assert.ok(r.members.length>=5);for(const b of r.bounds)assert.equal(overlaps(b,r.reserved[0]),false);assert.deepEqual(r,layoutPrefab(recipe,slots(),6,42));}
+  for(const recipe of ['base_entrance','service_yard','landing_pad','forest_edge'] as const){const r=layoutPrefab(recipe,slots(),6,42);assert.ok(r.members.length>=5);for(const b of r.bounds)assert.equal(overlaps(b,r.reserved[0]),false);assert.deepEqual(r,layoutPrefab(recipe,slots(),6,42));
+   for(const [i,m]of r.members.entries()){assert.equal(m.boundsFrame,'member');const corners=measuredMemberGeometry({x:0,y:0},0,m).corners,actual={minX:Math.min(...corners.map(p=>p.x)),maxX:Math.max(...corners.map(p=>p.x)),minY:Math.min(...corners.map(p=>p.y)),maxY:Math.max(...corners.map(p=>p.y))};for(const key of ['minX','maxX','minY','maxY'] as const)assert.ok(Math.abs(actual[key]-r.bounds[i][key])<1e-4);}
+  }
  const gate=layoutPrefab('base_entrance',slots(),6,42);assert.equal(gate.members[0].heightOffset,.3);assert.notEqual(gate.members[0].offset.x,-5);assert.match(String(gate.connections[0].evidence),/not verified sockets/);
  assert.throws(()=>layoutPrefab('base_entrance',[],6,42),/SLOT_REQUIRED/);
 });
@@ -69,4 +72,15 @@ test('short author commands support measurement/palette and owned assembly save 
  const result=compileAuthorScript('terrain assemble zone=gate tileset=Agria recipe=base_entrance at=40,50 clearance=6 includeImage=false','save');
  assert.equal(result[0].tool,'terrain.assemble');assert.deepEqual(result[0].args.anchor,{x:40,y:50});assert.equal(result[0].args.dryRun,false);assert.equal(result[1].tool,'modkit.save');
  const read=compileAuthorScript('terrain measure id=ChainLinkFenceStraight\nterrain palette_preview tileset=Agria limit=6','plan');assert.equal(read.length,2);
+});
+test('explicit Actor measurement supports Unit models while Doodad placement remains strict',async t=>{
+ const root=await fs.mkdtemp(path.join(os.tmpdir(),'unit-measure-'));t.after(()=>fs.rm(root,{recursive:true,force:true}));await fs.cp('src/tests/fixtures/browse-placement-map',root,{recursive:true});
+ const bytes=m3(),file='mods/liberty.sc2mod/base.sc2assets/assets/units/terran/marine/marine.m3';
+ const casc={read:async()=>({bytes,metadata:{sha256:createHash('sha256').update(bytes).digest('hex'),buildKey:'test'},cacheHit:true}),search:async()=>({items:[{path:file}],nextOffset:null})}as unknown as CascWorkspace;
+ const workspace=new Workspace(root),browse=new BrowseWorkspace(workspace,new DataWorkspace(workspace,new DataSchemaRegistry())),palette=new DecorPalette(browse,new ModelMeasurements(workspace,casc));
+ await assert.rejects(palette.measure({id:'Marine',preview:false}),/DECOR_NOT_PLACEABLE_DOODAD/);
+ const report=await palette.measure({id:'Marine',representation:'Actor',preview:false});
+ assert.equal(report.model,'MarineModel');assert.equal(report.representation,'Actor');assert.equal(report.placeableAsDoodad,false);assert.ok(report.dimensions.width>0);
+ await assert.rejects(palette.resolve({id:'Marine'}),/DECOR_NOT_PLACEABLE_DOODAD/);
+ const failed=await palette.palette({tileset:'Agria',ids:['Marine'],reference:false});assert.equal(failed.items[0].status,'unavailable');
 });

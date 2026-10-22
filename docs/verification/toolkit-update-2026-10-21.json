@@ -1,0 +1,1344 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-21T20:36:38.997Z",
+  "kind": "Current integration update, not complete readiness",
+  "runtime": {
+    "version": "0.10.0-rc.1",
+    "nativeProtocol": 11,
+    "archiveSha256": "f85f524ce4b98c3c1bc804c19ee42ac3f3f7478ea9587eaa91950d31d1f136b6",
+    "executableSha256": "063572b57abf62ef29d8aaba3a5f9b34a6a784361f09720212449342d9576133",
+    "sourceCommit": "34b4343376d1598cbe0b51124833562bfb1826c2"
+  },
+  "native": {
+    "discovery": "passed",
+    "publicTools": [
+      "editor.tools",
+      "editor.call",
+      "editor.status",
+      "editor.check",
+      "editor.cameras",
+      "editor.capture",
+      "editor.diagnostics",
+      "editor.job",
+      "editor.stop"
+    ],
+    "advertisedOperations": 18,
+    "allOperationsExecuted": true,
+    "executedOperations": [
+      "sc2_capture_frame",
+      "sc2_capture_map_region",
+      "sc2_capture_terrain",
+      "sc2_compile_all",
+      "sc2_convert_xml",
+      "sc2_cutscene_open",
+      "sc2_cutscene_seek",
+      "sc2_diagnostics",
+      "sc2_editor_start",
+      "sc2_export_galaxy",
+      "sc2_export_map_image",
+      "sc2_export_video",
+      "sc2_list_map_cameras",
+      "sc2_modules",
+      "sc2_open_document",
+      "sc2_save_reopen",
+      "sc2_search_objects",
+      "sc2_validate_document"
+    ],
+    "liveAcceptance": "passed",
+    "currentAdapterAcceptance": true,
+    "acceptanceScope": "Recorded core load/Data, GUI compilation/Galaxy export, save/reopen, original map/region/camera images and native-saved game-artifact workflow; not every upstream tool or map",
+    "metadata": {
+      "outcome": "passed",
+      "cases": [
+        {
+          "id": "modules",
+          "tool": "editor.call",
+          "status": "passed",
+          "elapsedMs": 1020
+        },
+        {
+          "id": "cameras",
+          "tool": "editor.call",
+          "status": "passed",
+          "elapsedMs": 1016
+        },
+        {
+          "id": "objects",
+          "tool": "editor.call",
+          "status": "passed",
+          "elapsedMs": 1022
+        },
+        {
+          "id": "details",
+          "tool": "editor.job",
+          "status": "passed",
+          "elapsedMs": 3
+        }
+      ],
+      "sourceUnchanged": true
+    },
+    "vulkanCore": {
+      "outcome": "passed",
+      "cases": [
+        {
+          "id": "validate",
+          "tool": "editor.call",
+          "status": "passed",
+          "elapsedMs": 45353
+        },
+        {
+          "id": "compile",
+          "tool": "editor.call",
+          "status": "passed",
+          "elapsedMs": 22144
+        },
+        {
+          "id": "export",
+          "tool": "editor.call",
+          "status": "passed",
+          "elapsedMs": 1003
+        },
+        {
+          "id": "saveReopen",
+          "tool": "editor.call",
+          "status": "passed",
+          "elapsedMs": 71441
+        }
+      ],
+      "sourceUnchanged": true,
+      "fixtureSha256": "35f3359a78c969a0a740e7dc11c1fe7da2427df8c079d6e28d9e67d6c29a9ee4"
+    },
+    "images": {
+      "delivery": "passed",
+      "sourceUnchanged": true,
+      "originalViewportVisualReview": "failed: old fixture omitted Near/Far Clip and yielded a nearly black frame",
+      "wholeMapVisualReview": "inspected: terrain, water and placed objects visible",
+      "regionScope": "Crop only; coordinate mapping not certified",
+      "artifacts": [
+        {
+          "sha256": "533d71270079d1844369e60843f7c2a547199ed58b91e7ec5dc8f8da32b2b656",
+          "bytes": 18775
+        },
+        {
+          "sha256": "80d4d880f9b44936b85e1856a219e7349ccd2c40e594d9417252a187d78e8a17",
+          "bytes": 673496
+        },
+        {
+          "sha256": "27f2ce3fa2cd7470f32d4397d7dc62ab58d358d6ff1ec668c4792102e511eb81",
+          "bytes": 146094
+        }
+      ]
+    },
+    "savedCameras": {
+      "outcome": "passed",
+      "sourceUnchanged": true,
+      "fixtureSha256": "fff4de4d11052685fd4df05849a49dc824edf9c43f30f0fba7c01ccd9e108146",
+      "sequence": [
+        "2001",
+        "2002",
+        "2001"
+      ],
+      "visualReview": "First two corrected views inspected: terrain, vegetation and infrastructure visible",
+      "nearFarClipReadback": "Saved values explicit; native readback verifies the reported core fields, not these clip values",
+      "artifacts": [
+        {
+          "cameraId": "2001",
+          "assessment": {
+            "status": "content_detected",
+            "nearBlackRatio": 0,
+            "luminanceDeviation": 16.905,
+            "samplePixels": 11008,
+            "visualAcceptance": "not_checked",
+            "scope": "Sparse/flat image heuristic only. Dark scenes may be intentional; object identity, framing and rendering parity require review."
+          },
+          "sha256": "a1f6c8d7bc673906aa05714127ebc8d5b26570c836409e6f4403200d45592498",
+          "bytes": 2100179
+        },
+        {
+          "cameraId": "2002",
+          "assessment": {
+            "status": "content_detected",
+            "nearBlackRatio": 0,
+            "luminanceDeviation": 15.758,
+            "samplePixels": 11008,
+            "visualAcceptance": "not_checked",
+            "scope": "Sparse/flat image heuristic only. Dark scenes may be intentional; object identity, framing and rendering parity require review."
+          },
+          "sha256": "88734a4d5a22cf0f7476931794085d264b82d63949dd8fa69534524e34b47098",
+          "bytes": 2328660
+        },
+        {
+          "cameraId": "2001",
+          "assessment": {
+            "status": "content_detected",
+            "nearBlackRatio": 0,
+            "luminanceDeviation": 16.908,
+            "samplePixels": 11008,
+            "visualAcceptance": "not_checked",
+            "scope": "Sparse/flat image heuristic only. Dark scenes may be intentional; object identity, framing and rendering parity require review."
+          },
+          "sha256": "795d7122e43c51e653662564db8e0b95e80ea9feb20a0e2caf9b17f51ba73f70",
+          "bytes": 2100615
+        }
+      ]
+    },
+    "initialFailure": {
+      "status": "NOT_CONFIRMED",
+      "sendError": 187,
+      "retained": true,
+      "cause": "Unresolved; later isolated Vulkan runs passed. No claim that a single cause was established"
+    },
+    "supplement": {
+      "outcome": "passed",
+      "cases": [
+        {
+          "id": "start",
+          "tool": "editor.call",
+          "status": "passed",
+          "elapsedMs": 31186
+        },
+        {
+          "id": "open",
+          "tool": "editor.call",
+          "status": "passed",
+          "elapsedMs": 9063
+        },
+        {
+          "id": "convert",
+          "tool": "editor.call",
+          "status": "passed",
+          "elapsedMs": 13090
+        },
+        {
+          "id": "diagnostics",
+          "tool": "editor.call",
+          "status": "passed",
+          "elapsedMs": 1005
+        },
+        {
+          "id": "scene",
+          "tool": "editor.call",
+          "status": "passed",
+          "elapsedMs": 36207
+        },
+        {
+          "id": "seek",
+          "tool": "editor.call",
+          "status": "passed",
+          "elapsedMs": 4023
+        },
+        {
+          "id": "seekDetails",
+          "tool": "editor.job",
+          "status": "passed",
+          "elapsedMs": 4
+        },
+        {
+          "id": "frame",
+          "tool": "editor.call",
+          "status": "passed",
+          "elapsedMs": 4051
+        },
+        {
+          "id": "video",
+          "tool": "editor.call",
+          "status": "passed",
+          "elapsedMs": 9064
+        }
+      ],
+      "sourceUnchanged": true,
+      "frame": [
+        {
+          "sha256": "03618a36a71414c2be9ed2381f882a0e63f1c9a798f536d91d30d7d17250b9e5",
+          "bytes": 692871
+        }
+      ],
+      "video": {
+        "codec": "h264",
+        "pixelFormat": "yuv420p",
+        "width": 1276,
+        "height": 716,
+        "frameCount": 5,
+        "fps": "5/1",
+        "durationSeconds": 1,
+        "fullDecodePassed": true,
+        "decodedFrameVerified": true,
+        "decodedSampleIndex": 2,
+        "decodedLuminanceBins": 243
+      },
+      "visualReview": "Original cutscene frame inspected: animated-model scene with Marines, lighting and infrastructure visible",
+      "audio": "Silent export explicitly requested; audio not checked"
+    },
+    "historicalAcceptance": "native-editor-0.9.2.json",
+    "openCoverage": [
+      "Native audio export and all cutscene/FaceFX/link variants",
+      "Full startup/dependency/topology corpus",
+      "All water/category/camera variants",
+      "Extended inline-library save/game handshake; arbitrary terrain profiles beyond the restricted cardinal fixture"
+    ]
+  },
+  "modkit": {
+    "outcome": "passed",
+    "sourceUnchanged": true,
+    "pins": {
+      "blizzard": "78104889bed092d901516044bd90734df8d5caac",
+      "core": "7e3c856ba290b8abde55b1f7e4d93383179e8b9f"
+    },
+    "coreRevisionScope": "Images/models extension sources; Blizzard vendor Host/SDK packages retain their declared snapshot ABI",
+    "loadedReceiptMatches": true,
+    "cases": [
+      {
+        "id": "runtime",
+        "tool": "modkit.runtime",
+        "status": "passed",
+        "elapsedMs": 4
+      },
+      {
+        "id": "nativeSchemas",
+        "tool": "editor.tools",
+        "status": "passed",
+        "elapsedMs": 730
+      },
+      {
+        "id": "marine",
+        "tool": "data.modkit.query",
+        "status": "passed",
+        "elapsedMs": 8912
+      },
+      {
+        "id": "navigationTerrain",
+        "tool": "terrain.navigation.preview",
+        "status": "passed",
+        "elapsedMs": 4568
+      },
+      {
+        "id": "navigationCatalog",
+        "tool": "terrain.navigation.preview",
+        "status": "passed",
+        "elapsedMs": 10512
+      },
+      {
+        "id": "preview",
+        "tool": "map.preview",
+        "status": "passed",
+        "elapsedMs": 35881
+      },
+      {
+        "id": "runtimeLoaded",
+        "tool": "modkit.runtime",
+        "status": "passed",
+        "elapsedMs": 4
+      }
+    ],
+    "sourceHashes": [
+      {
+        "name": "EditorFixture.SC2Map",
+        "sha256": "58b1b17f7a7f44f0d19150333cf9c2b97ed0e51e9863b8e4ff8ace99d345e108"
+      },
+      {
+        "name": "Objects",
+        "sha256": "572b7315366afd4faff224fff1c416adba845870c8d8ffebc258034607fcff0f"
+      },
+      {
+        "name": "t3Terrain.xml",
+        "sha256": "2dc474437aa05da16a13f864bdbbb09e51f88756908fcff4b1a17adb167a53f4"
+      }
+    ],
+    "catalog": {
+      "footprints": 10,
+      "complete": true,
+      "walkable": 21873,
+      "buildable": 21145,
+      "engineValidated": false
+    },
+    "preview": {
+      "terrainTextures": 19,
+      "modelFacets": {
+        "geometry": 14,
+        "materials": 16,
+        "rigged": 16,
+        "animated": 16,
+        "textured": 16
+      },
+      "complete": false,
+      "elapsedMs": 35860,
+      "images": [
+        {
+          "sha256": "4ac7fc82479584af7a81008712c6145efaa236f021c21ef6e0e0bb5b4b2e66e0",
+          "bytes": 9210
+        },
+        {
+          "sha256": "fe9f2b94a7b93da2d477719c9d26a8c3e66fddce85b9201fd3509301906a04a7",
+          "bytes": 16939
+        },
+        {
+          "sha256": "fa2f5902875ac74a205e61767c9fb8d4b82098d76254907408f90c3514b7ecb7",
+          "bytes": 332071
+        }
+      ],
+      "visualReview": "Overview PNG inspected; native parity and all omitted models not certified"
+    },
+    "initialFailure": {
+      "field": "counts.blockers",
+      "cause": "Incorrect fixture expectation; special blockers differ from occupied footprint cells",
+      "retained": true
+    }
+  },
+  "guiLibraryImport": {
+    "implementation": "Original mapRoot compilation/adoption; library-qualified IDs, matching XML/template/output guards; no Custom Script fallback",
+    "authoringCases": [
+      {
+        "id": "convert",
+        "tool": "editor.call",
+        "status": "passed",
+        "elapsedMs": 30213
+      },
+      {
+        "id": "adopt",
+        "tool": "trigger.import_revised",
+        "status": "passed",
+        "elapsedMs": 335
+      },
+      {
+        "id": "save",
+        "tool": "trigger.save",
+        "status": "passed",
+        "elapsedMs": 11
+      },
+      {
+        "id": "export",
+        "tool": "map.export",
+        "status": "passed",
+        "elapsedMs": 886
+      }
+    ],
+    "selectedAuthoringCasesPassed": true,
+    "sourceUnchanged": true,
+    "sourceSha256": "afb281d1baabb85c3d53b82f7aa01b4d1f88294e3e9b28830628a5de61e9e310",
+    "nativeRuntimeSha256": "90354ccdf77fab80c52a3890a7ba039fc3d95dfbc5b715002b0f682522b78b3a",
+    "runtimeAcceptance": "not confirmed: two no-handshake launch failures on this new foundation; two subsequent launches of the known GUI/Data foundation passed in the same retained game bridge",
+    "runtimeRuns": [
+      {
+        "outcome": "failed",
+        "sourceSha256": "afb281d1baabb85c3d53b82f7aa01b4d1f88294e3e9b28830628a5de61e9e310",
+        "checks": [
+          {
+            "id": "archive",
+            "status": "passed"
+          },
+          {
+            "id": "game.launch",
+            "status": "failed"
+          },
+          {
+            "id": "game.cleanup",
+            "status": "passed"
+          },
+          {
+            "id": "artifact.unchanged",
+            "status": "passed"
+          },
+          {
+            "id": "source.unchanged",
+            "status": "passed"
+          }
+        ]
+      },
+      {
+        "outcome": "failed",
+        "sourceSha256": "afb281d1baabb85c3d53b82f7aa01b4d1f88294e3e9b28830628a5de61e9e310",
+        "checks": [
+          {
+            "id": "archive",
+            "status": "passed"
+          },
+          {
+            "id": "game.launch",
+            "status": "failed"
+          },
+          {
+            "id": "game.cleanup",
+            "status": "passed"
+          },
+          {
+            "id": "artifact.unchanged",
+            "status": "passed"
+          },
+          {
+            "id": "source.unchanged",
+            "status": "passed"
+          }
+        ]
+      },
+      {
+        "outcome": "passed",
+        "sourceSha256": "58b1b17f7a7f44f0d19150333cf9c2b97ed0e51e9863b8e4ff8ace99d345e108",
+        "checks": [
+          {
+            "id": "archive",
+            "status": "passed"
+          },
+          {
+            "id": "game.launch",
+            "status": "passed"
+          },
+          {
+            "id": "game.build",
+            "status": "passed"
+          },
+          {
+            "id": "route:knownFloor:forward",
+            "status": "passed"
+          },
+          {
+            "id": "route:knownFloor:reverse",
+            "status": "passed"
+          },
+          {
+            "id": "game.diagnostics",
+            "status": "inconclusive",
+            "reason": "No unexpected errors observed in available sources; diagnostic coverage is partial"
+          },
+          {
+            "id": "game.capture",
+            "status": "passed"
+          },
+          {
+            "id": "game.cleanup",
+            "status": "passed"
+          },
+          {
+            "id": "artifact.unchanged",
+            "status": "passed"
+          },
+          {
+            "id": "source.unchanged",
+            "status": "passed"
+          }
+        ]
+      },
+      {
+        "outcome": "passed",
+        "sourceSha256": "58b1b17f7a7f44f0d19150333cf9c2b97ed0e51e9863b8e4ff8ace99d345e108",
+        "checks": [
+          {
+            "id": "archive",
+            "status": "passed"
+          },
+          {
+            "id": "game.launch",
+            "status": "passed"
+          },
+          {
+            "id": "game.build",
+            "status": "passed"
+          },
+          {
+            "id": "route:knownFloor:forward",
+            "status": "passed"
+          },
+          {
+            "id": "route:knownFloor:reverse",
+            "status": "passed"
+          },
+          {
+            "id": "game.diagnostics",
+            "status": "inconclusive",
+            "reason": "No unexpected errors observed in available sources; diagnostic coverage is partial"
+          },
+          {
+            "id": "game.capture",
+            "status": "passed"
+          },
+          {
+            "id": "game.cleanup",
+            "status": "passed"
+          },
+          {
+            "id": "artifact.unchanged",
+            "status": "passed"
+          },
+          {
+            "id": "source.unchanged",
+            "status": "passed"
+          }
+        ]
+      }
+    ],
+    "nativeSaveReopen": "Active original save handler has not completed; deadline is advisory and no force-kill was issued",
+    "allGuiFeaturesCertified": false
+  },
+  "topologyExtension": {
+    "authoring": "passed",
+    "cases": [
+      {
+        "id": "clear",
+        "tool": "placement.removeBatch",
+        "status": "passed",
+        "elapsedMs": 8
+      },
+      {
+        "id": "clearApply",
+        "tool": "placement.apply",
+        "status": "passed",
+        "elapsedMs": 225
+      },
+      {
+        "id": "geometry",
+        "tool": "terrain.plan",
+        "status": "passed",
+        "elapsedMs": 134
+      },
+      {
+        "id": "apply",
+        "tool": "terrain.apply",
+        "status": "passed",
+        "elapsedMs": 204
+      },
+      {
+        "id": "export",
+        "tool": "map.export",
+        "status": "passed",
+        "elapsedMs": 726
+      }
+    ],
+    "scope": "Four cardinal ramps planned, committed and exported through MCP; native visual/traversal acceptance is not transferred from unit tests",
+    "rampRemoval": "Reject unmeasured mid-frames and removal footprints intersecting another ramp",
+    "runtime": "Initial small foundation not launched; known-game foundation launched but ground fixture creation was displaced, including after moving inside playable bounds. Cause not established; no traversal pass",
+    "runtimeRuns": [
+      {
+        "sourceSha256": "f5bea4a6630d3840d4e949dc464ba512207644eac93e7bc2d7c1a85ad60ba5bc",
+        "outcome": "failed",
+        "checks": [
+          {
+            "id": "archive",
+            "status": "passed"
+          },
+          {
+            "id": "game.launch",
+            "status": "passed"
+          },
+          {
+            "id": "game.build",
+            "status": "passed"
+          },
+          {
+            "id": "route:west_Marine",
+            "status": "failed",
+            "reason": "Fixture invalid, wrong type or displaced at spawn: requested {\"x\":6,\"y\":117}, observed {\"x\":10.3125,\"y\":117}"
+          },
+          {
+            "id": "game.cleanup",
+            "status": "passed"
+          },
+          {
+            "id": "artifact.unchanged",
+            "status": "passed"
+          },
+          {
+            "id": "source.unchanged",
+            "status": "passed"
+          }
+        ]
+      },
+      {
+        "sourceSha256": "f5bea4a6630d3840d4e949dc464ba512207644eac93e7bc2d7c1a85ad60ba5bc",
+        "outcome": "failed",
+        "checks": [
+          {
+            "id": "archive",
+            "status": "passed"
+          },
+          {
+            "id": "game.launch",
+            "status": "passed"
+          },
+          {
+            "id": "game.build",
+            "status": "passed"
+          },
+          {
+            "id": "route:west_Marine",
+            "status": "failed",
+            "reason": "Fixture invalid, wrong type or displaced at spawn: requested {\"x\":6,\"y\":117}, observed {\"x\":10.3125,\"y\":117}"
+          },
+          {
+            "id": "game.cleanup",
+            "status": "passed"
+          },
+          {
+            "id": "artifact.unchanged",
+            "status": "passed"
+          },
+          {
+            "id": "source.unchanged",
+            "status": "passed"
+          }
+        ]
+      },
+      {
+        "sourceSha256": "6c0f62442cec9589c23cf1312e6f5841ecbbfdd8e36db3ec7567680eac641b9b",
+        "outcome": "failed",
+        "checks": [
+          {
+            "id": "archive",
+            "status": "passed"
+          },
+          {
+            "id": "game.launch",
+            "status": "passed"
+          },
+          {
+            "id": "game.build",
+            "status": "passed"
+          },
+          {
+            "id": "route:west_Marine",
+            "status": "failed",
+            "reason": "Fixture invalid, wrong type or displaced at spawn: requested {\"x\":70,\"y\":117}, observed {\"x\":72.4727,\"y\":117.9727}"
+          },
+          {
+            "id": "game.cleanup",
+            "status": "passed"
+          },
+          {
+            "id": "artifact.unchanged",
+            "status": "passed"
+          },
+          {
+            "id": "source.unchanged",
+            "status": "passed"
+          }
+        ]
+      },
+      {
+        "sourceSha256": "6c0f62442cec9589c23cf1312e6f5841ecbbfdd8e36db3ec7567680eac641b9b",
+        "outcome": "failed",
+        "checks": [
+          {
+            "id": "archive",
+            "status": "passed"
+          },
+          {
+            "id": "game.launch",
+            "status": "passed"
+          },
+          {
+            "id": "game.build",
+            "status": "passed"
+          },
+          {
+            "id": "route:west_Marine",
+            "status": "failed",
+            "reason": "Fixture invalid, wrong type or displaced at spawn: requested {\"x\":70,\"y\":117}, observed {\"x\":72.4727,\"y\":117.9727}"
+          },
+          {
+            "id": "game.cleanup",
+            "status": "passed"
+          },
+          {
+            "id": "artifact.unchanged",
+            "status": "passed"
+          },
+          {
+            "id": "source.unchanged",
+            "status": "passed"
+          }
+        ]
+      }
+    ],
+    "noPathingLayer": "Explicit ModKit clear paint changed zero cells; no-path layer was already clear",
+    "warning": "NATIVE_NAVIGATION_NOT_REBUILT"
+  },
+  "dataPresentation": {
+    "outcome": "passed",
+    "sourceUnchanged": true,
+    "cases": [
+      {
+        "id": "presentation",
+        "tool": "data.presentation.check",
+        "status": "passed",
+        "elapsedMs": 58
+      },
+      {
+        "id": "exception",
+        "tool": "data.presentation.check",
+        "status": "passed",
+        "elapsedMs": 34
+      }
+    ],
+    "scope": "Declared event/model review and explicit invisible exceptions; native playback not checked"
+  },
+  "regressions": {
+    "tests": 153,
+    "pass": 153,
+    "fail": 0,
+    "skipped": 0,
+    "tapSha256": "9bf9a0e2ea4822c3cc3b0b6d98d25f650b2abd95a4fc1e69276185ab849d5306",
+    "scope": "Historical 153-test checkpoint retained before later terrain changes; the current 65-test check is recorded in terrainJunctionEvidence and gameToolkitEvidence"
+  },
+  "artifactAdoption": {
+    "outcome": "passed",
+    "sourceSha256": "58b1b17f7a7f44f0d19150333cf9c2b97ed0e51e9863b8e4ff8ace99d345e108",
+    "testedArtifact": {
+      "sha256": "ebecf4e66c6285c6a671cfc6f56963bb7a3aee5b15b68ef845ba2548fbb9c8b8",
+      "origin": "native_saved"
+    },
+    "checks": [
+      {
+        "id": "archive",
+        "status": "passed"
+      },
+      {
+        "id": "editor",
+        "status": "passed"
+      },
+      {
+        "id": "editor.game_artifact",
+        "status": "passed"
+      },
+      {
+        "id": "game.launch",
+        "status": "passed"
+      },
+      {
+        "id": "game.build",
+        "status": "passed"
+      },
+      {
+        "id": "route:arenaFloor:forward",
+        "status": "passed"
+      },
+      {
+        "id": "route:arenaFloor:reverse",
+        "status": "passed"
+      },
+      {
+        "id": "game.diagnostics",
+        "status": "inconclusive",
+        "reason": "No unexpected errors observed in available sources; diagnostic coverage is partial"
+      },
+      {
+        "id": "game.capture",
+        "status": "passed"
+      },
+      {
+        "id": "game.cleanup",
+        "status": "passed"
+      },
+      {
+        "id": "artifact.unchanged",
+        "status": "passed"
+      },
+      {
+        "id": "source.unchanged",
+        "status": "passed"
+      }
+    ],
+    "imageSha256": "29099fc72d2157b1febec8225c0f3fb1d0e783907bc5ae8fa912353632119b95",
+    "visualReview": "Game startup/hero-selection UI visible; Tarmac warnings retained. Partial diagnostics do not prove complete absence of errors"
+  },
+  "playableBoundsPreflight": {
+    "implementation": "Bounded neutral MapInfo read through the native archive helper; cache by exact archive SHA-256; route center containment, not footprints/collision",
+    "positive": {
+      "outcome": "passed",
+      "sourceSha256": "58b1b17f7a7f44f0d19150333cf9c2b97ed0e51e9863b8e4ff8ace99d345e108",
+      "checks": [
+        {
+          "id": "archive",
+          "status": "passed"
+        },
+        {
+          "id": "map.playable_bounds",
+          "status": "passed"
+        },
+        {
+          "id": "game.launch",
+          "status": "passed"
+        },
+        {
+          "id": "game.build",
+          "status": "passed"
+        },
+        {
+          "id": "route:knownFloor:forward",
+          "status": "passed"
+        },
+        {
+          "id": "route:knownFloor:reverse",
+          "status": "passed"
+        },
+        {
+          "id": "scenario:nativeMenu",
+          "status": "passed"
+        },
+        {
+          "id": "game.diagnostics",
+          "status": "inconclusive",
+          "reason": "No unexpected errors observed in available sources; diagnostic coverage is partial"
+        },
+        {
+          "id": "game.capture",
+          "status": "passed"
+        },
+        {
+          "id": "game.cleanup",
+          "status": "passed"
+        },
+        {
+          "id": "artifact.unchanged",
+          "status": "passed"
+        },
+        {
+          "id": "source.unchanged",
+          "status": "passed"
+        }
+      ]
+    },
+    "expectedNegative": {
+      "outcome": "failed",
+      "sourceSha256": "3353d3d319cca3abef9e805aef3e87386b52887800a7a76ae4a3f23d87580c73",
+      "bounds": {
+        "left": 10,
+        "bottom": 8,
+        "right": 246,
+        "top": 236
+      },
+      "point": {
+        "x": 6,
+        "y": 44
+      },
+      "gameNotLaunched": true,
+      "checks": [
+        {
+          "id": "archive",
+          "status": "passed"
+        },
+        {
+          "id": "map.playable_bounds",
+          "status": "failed",
+          "reason": "TEST_ROUTE_POINT_OUTSIDE_PLAYABLE_BOUNDS: start"
+        },
+        {
+          "id": "artifact.unchanged",
+          "status": "passed"
+        },
+        {
+          "id": "source.unchanged",
+          "status": "passed"
+        }
+      ]
+    },
+    "scope": "Playability and full terrain extents are distinct. Initial negative fixture used x=6 on a different map whose playable left was 0; that was an unsuitable negative example, retained privately."
+  },
+  "cliffSyncCorrection": {
+    "implementation": "Native non-ramp CLIF words use all four coarse corners; three-high-corner closure matches measured cells. Reject unmeasured saddle, multi-level and void joins rather than emit guessed sync.",
+    "nativeReference": {
+      "matchedCells": 396,
+      "orientations": 12,
+      "additionalDonorCells": 6,
+      "scope": "Original f=1 adjacent-level cells, ramp neighborhoods excluded; does not prove every HMAP midpoint or native navigation"
+    },
+    "game": {
+      "outcome": "passed",
+      "sourceUnchanged": true,
+      "sourceSha256": "c32c1b08f2ffe0dcd6e07e0131f261d01962aa6b4df9b3001c8541fc9dd1547b",
+      "cases": [
+        {
+          "id": "attach",
+          "tool": "game.attach",
+          "status": "passed",
+          "elapsedMs": 28747
+        },
+        {
+          "id": "overview_camera",
+          "tool": "game.call",
+          "status": "passed",
+          "elapsedMs": 311
+        },
+        {
+          "id": "overview",
+          "tool": "game.call",
+          "status": "passed",
+          "elapsedMs": 1937
+        },
+        {
+          "id": "corner_camera",
+          "tool": "game.call",
+          "status": "passed",
+          "elapsedMs": 208
+        },
+        {
+          "id": "corner",
+          "tool": "game.call",
+          "status": "passed",
+          "elapsedMs": 937
+        },
+        {
+          "id": "high",
+          "tool": "game.call",
+          "status": "passed",
+          "elapsedMs": 257
+        },
+        {
+          "id": "high_state",
+          "tool": "game.call",
+          "status": "passed",
+          "elapsedMs": 106
+        },
+        {
+          "id": "high_move",
+          "tool": "game.call",
+          "status": "passed",
+          "elapsedMs": 104
+        },
+        {
+          "id": "high_arrival",
+          "tool": "game.call",
+          "status": "passed",
+          "elapsedMs": 1834
+        },
+        {
+          "id": "low",
+          "tool": "game.call",
+          "status": "passed",
+          "elapsedMs": 206
+        },
+        {
+          "id": "low_state",
+          "tool": "game.call",
+          "status": "passed",
+          "elapsedMs": 106
+        },
+        {
+          "id": "cleanup",
+          "tool": "game.call",
+          "status": "passed",
+          "elapsedMs": 104
+        },
+        {
+          "id": "detach",
+          "tool": "game.detach",
+          "status": "passed",
+          "elapsedMs": 502
+        }
+      ],
+      "images": [
+        {
+          "sha256": "8f9b708bb813dbce9be15703e00b2578bbd92e51e25a72afd31f48d08eb1d2d6",
+          "bytes": 2040166
+        },
+        {
+          "sha256": "980cf01be1869fd09c2162df229122224e5331e09b54468d425f73f6822c2441",
+          "bytes": 1914735
+        }
+      ],
+      "visualReview": "Convex right/top cap close-up inspected: continuous visible wall, no black gap in that view. Overall view does not cover every authored shape. Marine spawned on high and low pad; high-pad move/arrival passed. No ramp-crossing certificate."
+    },
+    "corners": {
+      "outcome": "passed",
+      "sourceUnchanged": true,
+      "cases": [
+        {
+          "id": "attach",
+          "tool": "game.attach",
+          "status": "passed",
+          "elapsedMs": 27264
+        },
+        {
+          "id": "concave_camera",
+          "tool": "game.call",
+          "status": "passed",
+          "elapsedMs": 310
+        },
+        {
+          "id": "concave",
+          "tool": "game.call",
+          "status": "passed",
+          "elapsedMs": 1316
+        },
+        {
+          "id": "small_camera",
+          "tool": "game.call",
+          "status": "passed",
+          "elapsedMs": 309
+        },
+        {
+          "id": "small",
+          "tool": "game.call",
+          "status": "passed",
+          "elapsedMs": 718
+        },
+        {
+          "id": "detach",
+          "tool": "game.detach",
+          "status": "passed",
+          "elapsedMs": 344
+        }
+      ],
+      "images": [
+        {
+          "sha256": "fefddf8639b9684514bd816a7dcddbc539eee2b8eee7eabd5f61693de5217e59",
+          "bytes": 1973975
+        },
+        {
+          "sha256": "0430f25aafbba0ad543a0ffdae257785f296dd4a2a6d7ccffca838f3777ae704",
+          "bytes": 1972040
+        }
+      ],
+      "visualReview": "Tiny plateau close-up inspected: closed sides and top. Concave corner is partly cropped; a better framing and fine-vertex/SMAP normalization still need review."
+    },
+    "allCliffsFixed": false
+  },
+  "cliffFineNormalization": {
+    "implementation": "Canonical native HMAP edge/center pattern, coupled SMAP update; shared ramp vertices and authored base/coarse data protected. Each selected fine pattern occurs in the original reference corpus.",
+    "diff": {
+      "changedCoarseVertices": 0,
+      "changedFineVertices": 163,
+      "changedBaseHeights": 0,
+      "beforeSha256": "3bd9f56410bb930c28c03fc23d00d951865353c5c07d52616bd9faefb24aedd6",
+      "afterSha256": "adb5ca99b8a61871bf1d81bee5d7c136b542bba7edcb77c531ac941d4cc84987"
+    },
+    "selectedNativePatterns": 12,
+    "game": {
+      "outcome": "passed",
+      "sourceUnchanged": true,
+      "sourceSha256": "8b4c1b575f3da8ce83ed0c7f1fd4f017682a9d1f1d771f7f7fe87c89e570f643",
+      "cases": [
+        {
+          "id": "attach",
+          "tool": "game.attach",
+          "status": "passed",
+          "elapsedMs": 31973
+        },
+        {
+          "id": "concave_unit",
+          "tool": "game.call",
+          "status": "passed",
+          "elapsedMs": 158
+        },
+        {
+          "id": "concave_unit_state",
+          "tool": "game.call",
+          "status": "passed",
+          "elapsedMs": 156
+        },
+        {
+          "id": "concave_camera",
+          "tool": "game.call",
+          "status": "passed",
+          "elapsedMs": 309
+        },
+        {
+          "id": "concave",
+          "tool": "game.call",
+          "status": "passed",
+          "elapsedMs": 1792
+        },
+        {
+          "id": "small_camera",
+          "tool": "game.call",
+          "status": "passed",
+          "elapsedMs": 265
+        },
+        {
+          "id": "small",
+          "tool": "game.call",
+          "status": "passed",
+          "elapsedMs": 854
+        },
+        {
+          "id": "cleanup",
+          "tool": "game.call",
+          "status": "passed",
+          "elapsedMs": 161
+        },
+        {
+          "id": "detach",
+          "tool": "game.detach",
+          "status": "passed",
+          "elapsedMs": 396
+        }
+      ],
+      "images": [
+        {
+          "sha256": "713c98682b040dd96c403f5fb5c1f852902ea4127976861d735e2b439dd33ff5",
+          "bytes": 2195342
+        },
+        {
+          "sha256": "e119ee8dcc8b0b4bda8443f448758ff991375d52b1b3ceea780ad08e818e670f",
+          "bytes": 1952863
+        }
+      ],
+      "visualReview": "Inspected clear UI-free frames: continuous L-shaped concave wall with Marine standing at the join, and closed tiny plateau. Placement tolerance checked; arbitrary navigation/footprints not certified."
+    },
+    "allCliffsFixed": false
+  },
+  "activation": {
+    "freshOuterMcpVerified": true,
+    "directGameNativeUiSchema": "updated",
+    "directEditorGeometryProfile": "Old profile text observed; connection restart required for the latest generator. No other chat/process was force-restarted."
+  },
+  "terrainJunctionEvidence": "terrain-junctions-2026-10-21.json",
+  "gameToolkitEvidence": "game-toolkit-dev11-2026-10-21.json",
+  "privacy": {
+    "passed": true,
+    "checkedFiles": 9924,
+    "privateSourceFiles": 2331,
+    "privateCorpusCompared": true,
+    "violations": [],
+    "scope": "Explicit private paths/debug/test artifacts and exact external C++/Python/Galaxy source copies, including renamed files. Not proof against transformed snippets or binary reverse engineering.",
+    "package": "Local candidate; not published",
+    "sourceProtection": "External private implementation excluded; binary reverse engineering is not prevented"
+  },
+  "sourceFingerprints": [
+    {
+      "file": "native-toolkit-release.json",
+      "sha256LfUtf8": "3603dfc4b0bd20b83a4e44042c63a668596b4068b6bda8c84f814a10dde24831"
+    },
+    {
+      "file": "src/integrations/native/bridge.ts",
+      "sha256LfUtf8": "7cb96e1ff47973612dcb09973214a46f1c6a10bf676d4a954353db358d4a1f25"
+    },
+    {
+      "file": "src/integrations/native/transport.ts",
+      "sha256LfUtf8": "df9de411e71ad8cbfc7b6cee153817d435517cea7c226b9bb0a8e83913f3622e"
+    },
+    {
+      "file": "src/integrations/native/tools.ts",
+      "sha256LfUtf8": "99fc8c21f363f3465cca102d47d43745ef9c786f20fc251e35c7d4a143a629bf"
+    },
+    {
+      "file": "src/integrations/game/bridge.ts",
+      "sha256LfUtf8": "c92c1503caba401c087a00934cd68b26a0693ac5cc508cf4eae568f85117f793"
+    },
+    {
+      "file": "src/modules/testing/workspace.ts",
+      "sha256LfUtf8": "be29ae54a15c7aa287ba64a6fef72de8e832415994e9bea48caa938a07623584"
+    },
+    {
+      "file": "src/modules/testing/schemas.ts",
+      "sha256LfUtf8": "b95a7791814e03e481ca9c1588524de8134aed94a2d4c89075cc82087e35f8f7"
+    },
+    {
+      "file": "src/integrations/modkit/runtime.ts",
+      "sha256LfUtf8": "ad791c8774e1acd7aa909048d9bf94460b3ac362e4b007dd791b8a156852919f"
+    },
+    {
+      "file": "src/modules/terrain/geometry.ts",
+      "sha256LfUtf8": "b18c4c24ad8d01836e3e51bb4260baecf2db87c4ed6923ff16054e254e0bef28"
+    },
+    {
+      "file": "src/modules/terrain/workspace.ts",
+      "sha256LfUtf8": "d7063b430199dabb27b8c610ab297318158280279101098a214df954fb98e19f"
+    },
+    {
+      "file": "src/modules/terrain/schemas.ts",
+      "sha256LfUtf8": "05a017c9abc2551fbc47005a8bdc4f51bae104943f4fa61b629dc63e135c87c0"
+    },
+    {
+      "file": "src/modules/data/presentation.ts",
+      "sha256LfUtf8": "f158f018ac0291c7221ad875c69319fcdcae1a50cb39861319b1b74d5ad7dc21"
+    },
+    {
+      "file": "src/modules/data/tools.ts",
+      "sha256LfUtf8": "c7af92ef4139df10f7e0e17322870e46a3932ab5b2de026ffeb9fbfa845a8cff"
+    },
+    {
+      "file": "scripts/setup-modkit-runtime.mjs",
+      "sha256LfUtf8": "7f471794cc88d3ec411a76e40e1cffac80aae8a3a3bb1515ecc8b735e69dad21"
+    },
+    {
+      "file": "scripts/check-distribution-privacy.mjs",
+      "sha256LfUtf8": "747bb50d8e7c0ed8ec034f7759ec6bfca4424b8a348f872b68c1ce9095ed03da"
+    },
+    {
+      "file": "src/integrations/native/frameAssessment.ts",
+      "sha256LfUtf8": "600ab2096d4eb3180080c927f9d0a8431a489719f25691c591683474e6e05701"
+    },
+    {
+      "file": "src/integrations/native/details.ts",
+      "sha256LfUtf8": "6149278f97606e0c56148c4bfd13227621c0b68510868df5251c2ae7f3ac1f9b"
+    },
+    {
+      "file": "src/modules/testing/gate.ts",
+      "sha256LfUtf8": "2ae9a1a356335ca1c7785d0654dca589a55a2a2f0d86efd330b6aa61252bb5fe"
+    },
+    {
+      "file": "src/modules/trigger/revisedImport.ts",
+      "sha256LfUtf8": "1bc92ad2acd6398189b5d1a480e4434746c24caf9856d54a790774a1f14ab69d"
+    },
+    {
+      "file": "src/modules/trigger/nativeImport.ts",
+      "sha256LfUtf8": "cbde80425672c21921cb73827c37142df5cdc2ca6a56ca5b9e1d6df9254a6bf2"
+    },
+    {
+      "file": "src/modules/trigger/organization.ts",
+      "sha256LfUtf8": "b3d73742133565651df9bfecb4d1995dbe608ed85bc9a61e91632e74735ca4b4"
+    },
+    {
+      "file": "src/modules/trigger/workspace.ts",
+      "sha256LfUtf8": "740f0007c4982c14785d3962e51e80569d7d8da6e47bfdc767ef0eb8f4a2284e"
+    },
+    {
+      "file": "src/modules/trigger/tools.ts",
+      "sha256LfUtf8": "d53818333cc9d7b250120b886db0c52dec1e69d0b33c754a792c83c77fd978d5"
+    },
+    {
+      "file": "src/integrations/native/guiEvidence.ts",
+      "sha256LfUtf8": "8c962e18bb7814d8a8db74550bba1c9788a35d810235490845a67165d15bbdd5"
+    },
+    {
+      "file": "src/modules/terrain/nativeGeometry.ts",
+      "sha256LfUtf8": "2a26c06a0a3ee3400df353049c49d78ce29eeb07af93f619fe3af80c133a6806"
+    },
+    {
+      "file": "src/modules/terrain/operations.ts",
+      "sha256LfUtf8": "be66b9d483d52bff52c5353e43729948147105b93575336d8e1726e1a00b8fa8"
+    },
+    {
+      "file": "scripts/run-map-tests.mjs",
+      "sha256LfUtf8": "5240b0c7d9a3520b0b859c9c2cc3d65eff6889c3a8260a3f1c0ce8f35aa624f0"
+    },
+    {
+      "file": "scripts/verify-toolkit-integration.mjs",
+      "sha256LfUtf8": "02ed1e88da7f5b062c14310c52bbf7d10530c88d4d405b6c7187076387c8b5c3"
+    },
+    {
+      "file": "src/modules/terrain/cliffProfile.ts",
+      "sha256LfUtf8": "8df1b3e0bb0e7afada06dbda553a03d7e27070a2d899eb85f9091589c25a24ce"
+    },
+    {
+      "file": "src/modules/terrain/tools.ts",
+      "sha256LfUtf8": "559cd3b91ac045948dba98cd94b5da250cb8fff54ef484de3588840e57e382c8"
+    },
+    {
+      "file": "src/modules/terrain/types.ts",
+      "sha256LfUtf8": "670dbe38296104b255bd82e795a119e1685ee0b1b47d1c05c7ce204cc7779ddd"
+    },
+    {
+      "file": "src/modules/terrain/surface/format/terrain-params.ts",
+      "sha256LfUtf8": "40a17455ff3eac500e46a822eaa3863b966caa006c3522f7b5521714e3ebddd9"
+    },
+    {
+      "file": "src/app/authoringScript.ts",
+      "sha256LfUtf8": "297de1858ccb2f02d2401beb0463249cd875e52d02385f21aa106d8d2f1c76ea"
+    },
+    {
+      "file": "src/modules/testing/routeGeometry.ts",
+      "sha256LfUtf8": "84b68527e02659420fbfb100f4679d3346c62318f398717f651571276ac1677b"
+    },
+    {
+      "file": "src/modules/testing/playableBounds.ts",
+      "sha256LfUtf8": "8f186a39f8931aae0db14cd15868962840443f05f1cf8d93a431f32b78b1215f"
+    },
+    {
+      "file": "src/archive/archiveAdapter.ts",
+      "sha256LfUtf8": "5908359384bb86defd7063425ea550c38a237e0fcd6b8c1bf9cd66fd4b50600a"
+    },
+    {
+      "file": "native/archive.cpp",
+      "sha256LfUtf8": "54361878d44b421500326ae1461e503216de658a54cfac5f259255cb42924590"
+    }
+  ]
+}

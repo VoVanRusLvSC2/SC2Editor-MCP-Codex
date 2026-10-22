@@ -14,6 +14,7 @@
     "publication:audit": "node scripts/audit-publication.mjs",
     "publication:prepare": "node scripts/prepare-publication.mjs",
     "project:audit": "node --import tsx scripts/audit-project.ts",
+    "project:test-map": "node scripts/run-map-tests.mjs",
     "build": "tsc -p tsconfig.json",
     "lint": "eslint src scripts",
     "start": "node dist/index.js",
@@ -73,7 +74,10 @@
     "catalog:import": "python scripts/import-authoring-catalog.py",
     "catalog:verify": "node scripts/verify-authoring-catalog.mjs",
     "native:verify": "node scripts/verify-native-editor.mjs",
-    "evidence:check": "node scripts/check-verification-evidence.mjs"
+    "game:verify": "node scripts/verify-native-game.mjs",
+    "game:setup": "node scripts/setup-game-toolkit.mjs",
+    "evidence:check": "node scripts/check-verification-evidence.mjs",
+    "evidence:status": "node scripts/evidence-status.mjs"
   },
   "dependencies": {
     "@modelcontextprotocol/server": "^2.0.0",

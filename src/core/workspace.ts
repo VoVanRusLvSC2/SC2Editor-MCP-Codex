@@ -44,6 +44,7 @@ export interface RawTransactionOptions {
 }
 interface DirectoryRead {directory:string;entries:string[];accept:(entry:import('node:fs').Dirent)=>boolean}
 type ReadSet = Map<string, FileSnapshot> & { effective: Map<string, string>;directories:Map<string,DirectoryRead> };
+export interface WorkspaceReadMemo {readonly kind:'workspace-read-memo'}
 
 export class Workspace {
   readonly root: string;
@@ -57,8 +58,41 @@ export class Workspace {
   private readonly draftDirectories=new Map<string,Map<string,DirectoryRead>>();
   private readonly draftEffectiveReads = new Map<string, Map<string, string>>();
   private readonly reads = new AsyncLocalStorage<ReadSet>();
+  private readonly readMemos=new WeakMap<WorkspaceReadMemo,ReadSet>();
   withReadSet<T>(work: () => Promise<T>): Promise<T> { return this.reads.getStore() ? work() : this.reads.run(Object.assign(new Map<string, FileSnapshot>(), { effective: new Map<string, string>(),directories:new Map<string,DirectoryRead>() }), work); }
   get trackingReads(): boolean { return this.reads.getStore() !== undefined; }
+  private mergeReads(reads:ReadSet){
+    for(const [file,snapshot]of reads)this.captureRead(file,snapshot);
+    for(const [file,text]of reads.effective)this.captureEffective(file,text);
+    const target=this.reads.getStore();if(!target)return;
+    for(const [key,directory]of reads.directories){const previous=target.directories.get(key);if(previous&&JSON.stringify(previous.entries)!==JSON.stringify(directory.entries))throw Error('STALE_DIRECTORY_DEPENDENCY: '+directory.directory);target.directories.set(key,directory);}
+    if(target.directories.size>8192)throw Error('DIRECTORY_DEPENDENCY_LIMIT');
+  }
+  /** Isolated cache dependencies, replayable into later guarded operations. */
+  async memoizeReads<T>(work:()=>Promise<T>):Promise<{value:T;memo:WorkspaceReadMemo}>{
+    const reads:ReadSet=Object.assign(new Map<string,FileSnapshot>(),{effective:new Map<string,string>(),directories:new Map<string,DirectoryRead>()});
+    const value=await this.reads.run(reads,work);this.mergeReads(reads);
+    const memo:WorkspaceReadMemo=Object.freeze({kind:'workspace-read-memo'});this.readMemos.set(memo,reads);return {value,memo};
+  }
+  async reuseReads(memo:WorkspaceReadMemo):Promise<boolean>{
+    const reads=this.readMemos.get(memo);if(!reads)throw Error('FOREIGN_READ_MEMO');
+    // Compare content, not only timestamps: same-size edits and restored mtimes
+    // must invalidate cached interpretation and its eventual transaction guard.
+    for(const [file,expected]of reads){const current=await readSnapshot(file);if(current.exists!==expected.exists||!current.bytes.equals(expected.bytes))return false;}
+    for(const [file,expected]of reads.effective){const key=this.fileKey(file),current=this.drafts.get(key)??decodeUtf8((await this.binary.read(key)).bytes,file);if(current!==expected)return false;}
+    for(const directory of reads.directories.values()){
+      let entries;try{entries=await fs.readdir(directory.directory,{withFileTypes:true});}catch(e){if((e as NodeJS.ErrnoException).code==='ENOENT')return false;throw e;}
+      if(JSON.stringify(entries.filter(directory.accept).map(e=>e.name).sort())!==JSON.stringify(directory.entries))return false;
+    }
+    this.mergeReads(reads);return true;
+  }
+  readMemoFingerprint(memo:WorkspaceReadMemo):string{
+    const reads=this.readMemos.get(memo);if(!reads)throw Error('FOREIGN_READ_MEMO');const hash=createHash('sha256');
+    for(const [file,snapshot]of [...reads].sort(([a],[b])=>a.localeCompare(b)))hash.update(JSON.stringify([file,snapshot.exists,createHash('sha256').update(snapshot.bytes).digest('hex')]));
+    for(const [file,text]of [...reads.effective].sort(([a],[b])=>a.localeCompare(b)))hash.update(JSON.stringify([file,sha256(text)]));
+    for(const [key,directory]of [...reads.directories].sort(([a],[b])=>a.localeCompare(b)))hash.update(JSON.stringify([key,directory.entries]));
+    return hash.digest('hex');
+  }
   private captureRead(absolute: string, snapshot: FileSnapshot) {
     const reads = this.reads.getStore(); if (!reads) return;
     const previous = reads.get(absolute);

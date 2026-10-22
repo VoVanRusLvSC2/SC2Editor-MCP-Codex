@@ -1,17 +1,21 @@
 import type {BatchStep, BatchTool} from './mcpBatch.js';
+import {coalesceDataAuthoringSteps} from './authoringDataGroups.js';
 
 export type AuthorMode='plan'|'stage'|'save';
 export const authoringGuide={
-  nativeEditorPolicy:'Optional SC2NativeToolkit 0.8: editor.status reports connection without Editor startup; editor.check queues native load/Data, compile and save/reopen checks on a saved archive; editor.job polls compact results; editor.capture queues native images; editor.stop closes the owned hidden Editor. map.preview remains the fast ModKit renderer. Unknown diagnostics and native images do not certify gameplay.',
+  nativeEditorPolicy:'Optional pinned SC2NativeToolkit: editor.status reports connection without Editor startup; editor.check queues native load/Data, compile and save/reopen checks on a saved archive; editor.job polls compact results; editor.capture queues native images; editor.stop closes the owned hidden Editor. map.preview remains the fast ModKit renderer. Unknown diagnostics and native images do not certify gameplay.',
+  testPolicy:'project.test.plan file=tests.json resolves a reusable saved-map suite; project.test.run planId=... in stage mode explicitly launches checks. Existing retained bridges are leased sequentially. Read compact status/report; source changes invalidate prior acceptance. Five trigger folders are recommended, never mandatory.',
   presentationPolicy:'Player-facing abilities/effects normally include native Actor/Model feedback for cast, movement/travel and impact/area, plus sound when appropriate. Invisible helper effects/passives are explicit exceptions. Use native event/host/site-op/lifecycle bindings and visual preloads; mechanics or a Model ID alone do not prove visible playback.',
   format:'One command per line: section verb key=value. Quote values containing spaces. Use dotted keys for nested arguments and JSON only for complex arrays. A <<TAG block preserves Galaxy source verbatim.',
-  modes:{plan:'Read or preview only; module tools keep their dry-run defaults.',stage:'For supported recipes, apply to staged workspace files without saving.',save:'For supported recipes, apply and save with existing stale guards. Earlier commands may remain saved if a later command fails.'},
+  modes:{plan:'Read or preview only; module tools keep their dry-run defaults.',stage:'For supported recipes, apply to staged workspace files without saving.',save:'For supported recipes, apply and save with existing stale guards. Compatible adjacent same-catalog Data commands form one atomic group; earlier distinct groups may remain saved if a later group fails.'},
+  dataGroupingPolicy:'Adjacent compatible data.set, instant/target ability, veterancy and main Actor animation commands for one catalog share one guarded Data apply/save, up to500 operations. Original schemas/defaults are checked first. Reads, another file, different transaction flags, advanced edits and result references keep their boundaries. Group receipts use the first command ID and ordered operation indices.',
   examples:[
     'project organize genre=mission',
     'terrain catalog tileset=Agria section=vegetation limit=8',
     'terrain style tileset=Agria profile=forest',
     'terrain palette_preview tileset=Agria section=vegetation limit=6 includeImage=false',
     'terrain measure id=ChainLinkFenceStraight includeImage=false',
+    'terrain load.inspect',
     'terrain prefab tileset=Agria recipe=base_entrance clearance=6 includeImage=false',
     'terrain assemble zone=north_gate tileset=Agria recipe=base_entrance at=40,50 clearance=6 includeImage=false',
     'terrain compose zone=west_forest tileset=Agria profile=forest rect=10,10,30,30 count=40 seed=42',
@@ -20,6 +24,13 @@ export const authoringGuide={
     'terrain pathing rect=10,10,20,20 layer=noBuilding mode=block',
     'objects unit id=Marine at=25,31 owner=1 count=3',
     'data set id=MyMarine path=LifeMax value=600',
+    'data card.check unit=Hero',
+    'data ability.instant id=Pulse effect=PulseSearch button=Pulse energy=25 cooldown=5',
+    'data ability.target id=TargetPulse sourceAbility=Snipe effect=TargetDamage button=TargetPulse range=6 energy=25 cooldown=5',
+    'data ability.charges id=TargetPulse max=3 start=3 use=1 regen=8 location=Unit',
+    'data effect.projectile id=PointLaunch sourceEffect=EMPLaunchMissile sourceActor=GhostEMPAttack impactEffect=PointSearch damageEffect=PointDamage impactModel=GhostEMPAttackImpactEffect',
+    'data hero.veterancy id=HeroXP unit=Hero levelEffect=LevelUp xp=0,50,150 lifeDelta=100 damageDelta=5',
+    'data actor.ability_animation id=PulseMotion actor=HeroActor unit=Hero ability=Pulse cast=Attack loopCast=true',
     'logic function file=Scripts/Waves.galaxy <<END\\nvoid SpawnWave() { }\\nEND',
     'gui plan file=plans/gui-mission.json',
     'gui folder path=ROUNDS/WAVES genre=arena',
@@ -36,7 +47,7 @@ export const authoringGuide={
   ],
   logicDefault:'Galaxy. logic file/function/body and galaxy file/function/body build guarded script plans. GUI is only gui.plan or trigger.plan; no Galaxy-to-GUI conversion.',
   ownershipDefault:'Hero abilities, native costs/cooldowns/buttons and XP/levels belong in Data. Triggers coordinate rounds, objectives, UI and Banks and issue native ability orders. When graphical organization is requested, use actual Triggers folders, not Galaxy directories. Explicit visible Custom Script blocks may contain complex Galaxy code; generate runtime from that same GUI source.',
-  sections:{project:'organize/check',map:'status/check/preview/create/clone',document:'empty/status',terrain:'status/check/paint/blend/raise/lower/flatten/pathing/nav/decorate/cliff/ramp/catalog/style/compose/measure/palette_preview/prefab/assemble',objects:'status/check/unit/doodad',data:'find/check/set',logic:'status/check/symbols/file/function/body (Galaxy)',gui:'status/check/plan (explicit)',ui:'status/timer',cutscene:'status/show/create/compose',text:'check/set',settings:'status/players/player',ai:'status/find/check/definition/wave',assets:'find/inspect/preview/measure',casc:'find',lighting:'status'},
+  sections:{project:'organize/check',map:'status/check/preview/create/clone',document:'empty/status',terrain:'status/check/paint/blend/raise/lower/flatten/pathing/nav/decorate/cliff/cliff.repair/ramp/catalog/style/compose/measure/palette_preview/prefab/assemble',objects:'status/check/unit/doodad',data:'find/check/set',logic:'status/check/symbols/file/function/body (Galaxy)',gui:'status/check/plan (explicit)',ui:'status/timer',cutscene:'status/show/create/compose',text:'check/set',settings:'status/players/player',ai:'status/find/check/definition/wave',assets:'find/inspect/preview/measure',casc:'find',lighting:'status'},
   limits:'20 underlying MCP steps, 64 KiB source. Every command runs the original tool schema; unsupported aliases fail before any tool is called.',
 };
 type Args=Record<string,unknown>;
@@ -47,6 +58,7 @@ const aliases:Record<string,string>={
   'terrain.status':'terrain.inspect','terrain.check':'terrain.validate',
   'terrain.pathing':'terrain.pathing.paint','terrain.nav':'terrain.navigation.preview',
   'terrain.cliff':'terrain.cliff.paint','terrain.ramp':'terrain.ramp.create',
+  'terrain.landscape':'terrain.landscape.plan_file',
   'objects.status':'placement.scan','objects.check':'placement.validate',
   'objects.unit':'placement.addUnit','objects.doodad':'placement.addDoodad',
   'data.find':'data.peek','data.check':'data.validate',
@@ -63,16 +75,17 @@ const aliases:Record<string,string>={
   'lighting.status':'lighting.inspect',
 };
 const directCommands=new Set([
-  'project.organize','project.check','trigger.organize','terrain.catalog','terrain.style','terrain.compose','terrain.measure','terrain.palette_preview','terrain.prefab','terrain.assemble','assets.measure',
+  'project.test.plan','project.test.run','project.test.status','project.test.report','project.test.cancel',
+  'project.organize','project.check','trigger.organize','terrain.catalog','terrain.style','terrain.compose','terrain.measure','terrain.palette_preview','terrain.prefab','terrain.assemble','assets.measure','data.presentation.check',
   'map.inspect','map.validate','map.create','map.clone','map.blueprint.list','map.blueprint.inspect',
-  'map.preview','terrain.inspect','terrain.validate','terrain.palette','terrain.capabilities',
+  'map.preview','terrain.inspect','terrain.validate','terrain.palette','terrain.capabilities','terrain.load.inspect','terrain.load.repair',
   'terrain.paint','terrain.blend','terrain.raise','terrain.lower','terrain.flatten',
-  'terrain.generate','terrain.cliff.paint','terrain.ramp.create','terrain.plan_file','terrain.landscape.plan',
+  'terrain.generate','terrain.cliff.paint','terrain.cliff.repair','terrain.ramp.create','terrain.ramp.remove','terrain.ramp.repair','terrain.plan_file','terrain.landscape.plan','terrain.landscape.plan_file',
   'terrain.pathing.paint','terrain.pathing.fill','terrain.navigation.preview','terrain.decorate',
   'terrain.objects.snap','terrain.ramp.fit','terrain.modkit.inspect','terrain.modkit.plan_file',
   'placement.scan','placement.validate','placement.geometry_check','placement.addUnit',
   'placement.addDoodad','placement.addBatch','placement.scatterDoodads','placement.snapToTerrain',
-  'data.peek','data.query','data.context','data.resolve','data.validate','data.set',
+  'data.peek','data.query','data.context','data.resolve','data.validate','data.card.check','data.set','data.ability.instant','data.ability.target','data.ability.charges','data.effect.projectile','data.hero.veterancy','data.actor.ability_animation',
   'script.inspect','script.validate','script.symbols','script.context',
   'trigger.inspect','trigger.validate','trigger.plan_file','trigger.plan','trigger.custom_script',
   'trigger.search_functions','trigger.describe_functions','trigger.types',
@@ -144,7 +157,7 @@ function shorthand(name:string,args:Args,block?:string):{tool:string;args:Args;s
     const operation=kind==='file'?{op:'file.create',file,source:block}:kind==='function'?{op:'function.add',file,source:block}:{op:'function.body',file,name:functionName,body:block};
     return {tool:'script.plan',args:{operations:[operation]},saveFile:file};
   }
-  if(['terrain.paint','terrain.blend','terrain.pathing','terrain.pathing.paint','terrain.cliff','terrain.compose'].includes(name)){
+  if(['terrain.paint','terrain.blend','terrain.pathing','terrain.pathing.paint','terrain.cliff','terrain.cliff.repair','terrain.compose'].includes(name)){
     const target=area(args);if(target)args.area=target;
   }
   if(['terrain.prefab','terrain.assemble'].includes(name)){const at=take(args,'at');if(at!==undefined){const [x,y]=point(at,2,'AT');args.anchor={x,y};}}
@@ -163,6 +176,16 @@ function shorthand(name:string,args:Args,block?:string):{tool:string;args:Args;s
     const object=take(args,'id'),path=take(args,'path'),value=take(args,'value'),file=take(args,'file')??'Base.SC2Data/GameData/UnitData.xml';
     if(typeof object!=='string'||typeof path!=='string'||value===undefined||typeof file!=='string'||Object.keys(args).length)throw new Error('AUTHOR_DATA_SET_ARGS');
     return {tool:'data.apply',args:{file,operations:[{op:'field.set',object,path,value}]},saveFile:file};
+  }
+  if(name==='data.hero.veterancy'&&args.xp!==undefined){
+    const xp=String(take(args,'xp')).split(',');
+    if(args.levels!==undefined||xp.length>100||xp.some(n=>!n.trim()||!Number.isFinite(Number(n))))throw Error('AUTHOR_VETERANCY_THRESHOLDS');
+    const life=take(args,'lifeDelta')??0,damage=take(args,'damageDelta')??0;
+    args.levels=xp.map((value,index)=>({xp:Number(value),lifeDelta:index?life:0,damageDelta:index?damage:0}));
+  }
+  if(name==='data.ability.instant'||name==='data.ability.target'||name==='data.ability.charges'||name==='data.effect.projectile'||name==='data.hero.veterancy'||name==='data.actor.ability_animation'){
+    const file=take(args,'file')??(name==='data.actor.ability_animation'?'Base.SC2Data/GameData/ActorData.xml':name==='data.effect.projectile'?'Base.SC2Data/GameData/EffectData.xml':'Base.SC2Data/GameData/UnitData.xml');
+    return {tool:name,args:{file,...args},saveFile:String(file)};
   }
   if(name==='document.empty'){
     const kind=take(args,'kind')??'map',width=take(args,'width'),height=take(args,'height');
@@ -212,7 +235,9 @@ function shorthand(name:string,args:Args,block?:string):{tool:string;args:Args;s
 }
 function lifecycle(command:{tool:string;args:Args;saveFile?:string},mode:AuthorMode,base:string):BatchStep[]{
   const first:BatchStep={id:base,tool:command.tool,args:command.args};
+  if(command.tool==='data.card.check')return [first];
   if(mode==='plan'){
+    if(command.tool==='project.test.run'||command.tool==='project.test.cancel')throw new Error('AUTHOR_LIVE_REQUIRES_STAGE: test run/cancel is explicit; use stage mode');
     if(command.args.dryRun===false)throw new Error('AUTHOR_PLAN_REQUIRES_DRY_RUN');
     return [first];
   }
@@ -230,13 +255,13 @@ function lifecycle(command:{tool:string;args:Args;saveFile?:string},mode:AuthorM
   }else if(command.tool==='trigger.plan_file'||command.tool==='trigger.plan'||command.tool==='trigger.recipe_skirmish'){
     apply={id:base+'_apply',tool:'trigger.apply',args:{planId:from('planId'),dryRun:false,stage:true}};
     if(mode==='save')save={id:base+'_save',tool:'trigger.save',args:{}};
-  }else if(command.tool==='terrain.plan'||command.tool==='terrain.plan_file'||command.tool==='terrain.paint'||command.tool==='terrain.blend'||command.tool==='terrain.cliff.paint'||command.tool==='terrain.ramp.create'||command.tool==='terrain.generate'){
-    apply={id:base+'_apply',tool:'terrain.apply',args:{planId:from('planId'),dryRun:false,stage:true}};
-    if(mode==='save')save={id:base+'_save',tool:'terrain.save',args:{transactionId:{$from:base+'_apply.transactionId'},dryRun:false}};
+  }else if(command.tool==='terrain.plan'||command.tool==='terrain.plan_file'||command.tool==='terrain.landscape.plan'||command.tool==='terrain.landscape.plan_file'||command.tool==='terrain.paint'||command.tool==='terrain.blend'||command.tool==='terrain.cliff.paint'||command.tool==='terrain.cliff.repair'||command.tool==='terrain.load.repair'||command.tool==='terrain.ramp.create'||command.tool==='terrain.ramp.remove'||command.tool==='terrain.ramp.repair'||command.tool==='terrain.generate'){
+    apply={id:base+'_apply',tool:'terrain.apply',args:{planId:from('id'),dryRun:false,stage:true}};
+    if(mode==='save')save={id:base+'_save',tool:'terrain.save',args:{planId:from('id'),dryRun:false}};
   }else if(command.tool==='placement.addUnit'||command.tool==='placement.addDoodad'||command.tool==='placement.addBatch'||command.tool==='placement.scatterDoodads'){
-    apply={id:base+'_apply',tool:'placement.apply',args:{planId:command.tool==='placement.scatterDoodads'?{$from:base+'.plan.planId'}:from('planId'),dryRun:false,stage:true}};
+    apply={id:base+'_apply',tool:'placement.apply',args:{planId:command.tool==='placement.scatterDoodads'?{$from:base+'.plan.id'}:from('id'),dryRun:false,stage:true}};
     if(mode==='save')save={id:base+'_save',tool:'modkit.save',args:{file:'Objects'}};
-  }else if(command.tool==='data.apply'||command.tool==='text.apply'){
+  }else if(command.tool==='data.apply'||command.tool==='data.ability.instant'||command.tool==='data.ability.target'||command.tool==='data.ability.charges'||command.tool==='data.effect.projectile'||command.tool==='data.hero.veterancy'||command.tool==='data.actor.ability_animation'||command.tool==='text.apply'){
     first.args={...first.args,dryRun:false,stage:true};
     if(mode==='save'){
       if(!command.saveFile)throw new Error('AUTHOR_SAVE_FILE_REQUIRED');
@@ -275,8 +300,9 @@ export function compileAuthorScript(source:string,mode:AuthorMode,tools?:Readonl
     const next=lifecycle(command,mode,'s'+(steps.length+1));
     for(const step of next)if(tools&&!tools.has(step.tool))throw new Error('AUTHOR_TOOL_UNAVAILABLE: '+step.tool);
     steps.push(...next);
-    if(steps.length>20)throw new Error('AUTHOR_STEP_LIMIT');
   }
   if(!steps.length)throw new Error('AUTHOR_EMPTY');
-  return steps;
+  const grouped=coalesceDataAuthoringSteps(steps,mode,tools);
+  if(grouped.length>20)throw new Error('AUTHOR_STEP_LIMIT');
+  return grouped;
 }

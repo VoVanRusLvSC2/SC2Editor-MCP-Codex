@@ -20,6 +20,33 @@ test('operation-scoped browse snapshots avoid rebuilds while preserving dependen
  assert.equal(await fs.stat(path.join(root,'Proof.txt')).catch(()=>null),null);
 });
 
+test('tracked browse cache replays dependency guards and detects same-size timestamp-preserved edits',async t=>{
+ const {root,browse}=await fixture();t.after(()=>fs.rm(root,{recursive:true,force:true}));const workspace=browse.workspace,file=path.join(root,'Base.SC2Data/GameData/ActorData.xml'),stamp=new Date('2020-01-01T00:00:00Z');await fs.utimes(file,stamp,stamp);
+ const first=await workspace.withReadSet(()=>browse.index());
+ await fs.appendFile(path.join(root,'Objects'),'\n');assert.equal(await workspace.withReadSet(()=>browse.index()),first);
+ await fs.mkdir(path.join(root,'.sc2mcp'),{recursive:true});await fs.writeFile(path.join(root,'.sc2mcp/locations.json'),'{}');assert.equal(await workspace.withReadSet(()=>browse.index()),first);
+ await workspace.withReadSet(async()=>{const cached=await browse.index();assert.equal(cached,first);const original=await fs.readFile(file,'utf8'),edited=original.replace('AgriaTreeModel','OtherTreeModel');assert.equal(edited.length,original.length);await fs.writeFile(file,edited);await fs.utimes(file,stamp,stamp);await assert.rejects(workspace.applyRawTransaction(['Proof.txt'],values=>new Map([...values,['Proof.txt','test']]),{dryRun:false,stage:true}),/STALE_/);});
+ const changed=await workspace.withReadSet(()=>browse.index());assert.notEqual(changed,first);assert.notEqual(changed.fingerprint,first.fingerprint);assert.equal(await fs.stat(path.join(root,'Proof.txt')).catch(()=>null),null);
+});
+
+test('native terrain XML changes retain the catalog cache while actual TerrainData edits invalidate it',async t=>{
+ const {root,browse}=await fixture();t.after(()=>fs.rm(root,{recursive:true,force:true}));const workspace=browse.workspace;
+ await fs.writeFile(path.join(root,'t3Terrain.xml'),'<terrain version="115"><heightMap/></terrain>');
+ const catalog=path.join(root,'Base.SC2Data/GameData/TerrainData.xml');await fs.writeFile(catalog,'<Catalog><CTerrain id="LocalTerrain"/></Catalog>');
+ const first=await workspace.withReadSet(()=>browse.index());assert.ok(!first.files.some(f=>path.basename(f.path).toLowerCase()==='t3terrain.xml'));assert.ok(first.files.some(f=>f.path===catalog));
+ await fs.writeFile(path.join(root,'t3Terrain.xml'),'<terrain version="115"><heightMap><rampList num="0"/></heightMap></terrain>');
+ const second=await workspace.withReadSet(()=>browse.index());assert.equal(second,first);assert.equal(second.fingerprint,first.fingerprint);
+ await fs.writeFile(catalog,'<Catalog><CTerrain id="OtherTerrain"/></Catalog>');const changed=await workspace.withReadSet(()=>browse.index());assert.notEqual(changed,first);assert.notEqual(changed.fingerprint,first.fingerprint);
+});
+
+test('read memos track missing files, directory membership and effective drafts without capturing unrelated outer reads',async t=>{
+ const {root,browse}=await fixture();t.after(()=>fs.rm(root,{recursive:true,force:true}));const workspace=browse.workspace,file=path.join(root,'MissingData.xml');
+ const {memo}=await workspace.withReadSet(async()=>{await workspace.readRaw('Objects');return workspace.memoizeReads(async()=>{await workspace.readDependency(file,true);await workspace.readDirectory(root,'memo-catalogs',e=>e.name.endsWith('Data.xml'));});});
+ await fs.appendFile(path.join(root,'Objects'),'\n');assert.equal(await workspace.reuseReads(memo),true);await fs.writeFile(file,'<Catalog/>');assert.equal(await workspace.reuseReads(memo),false);
+ const captured=await workspace.memoizeReads(()=>workspace.readRaw('Base.SC2Data/GameData/ActorData.xml'));
+ await workspace.applyRawTransaction(['Base.SC2Data/GameData/ActorData.xml'],v=>new Map([...v,['Base.SC2Data/GameData/ActorData.xml',v.get('Base.SC2Data/GameData/ActorData.xml')!+'\n']]),{dryRun:false,stage:true});assert.equal(await workspace.reuseReads(captured.memo),false);
+});
+
 async function fixture() {
   const root = await fs.mkdtemp(path.join(os.tmpdir(), "sc2-browse-"));
   await fs.cp(FIXTURE, root, { recursive: true });

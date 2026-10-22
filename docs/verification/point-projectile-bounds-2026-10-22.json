@@ -1,0 +1,470 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-22T17:52:37.546Z",
+  "status": "passed_with_scoped_limits",
+  "scope": "EMP-derived native point projectile with explicit flight/impact presentation; default MapInfo Unit-pivot guard. Not universal projectile, footprint/pathing or finished-mission certification",
+  "implementation": {
+    "tool": "data.effect.projectile",
+    "operation": "recipe.projectileEffect",
+    "compactCommand": "data effect.projectile",
+    "profile": "Declared CEffectLaunchMissile, matching GenericAttack source, one ActionDamage event and a unique GenericAttackMissile/Model binding",
+    "pinsNativeMissileAndImpactModel": true,
+    "retainsAndPreloadsNativeSounds": true,
+    "implicitNewIdArtLookupsNeutralized": true,
+    "completeCatalogPreloadTransaction": true,
+    "secondPrimaryUnitActorAdded": false,
+    "abilityMechanics": "Native Data; target point, filters, damage, energy and unit cooldown",
+    "mainUnitPresentation": "Matched Ghost Unit/Model/main CActorUnit recipe; GenericAttack ::Main Attack animation handling retained. Exact animation-name readback not claimed",
+    "playableGuard": "New/moved Unit pivots use supported MapInfo half-open bounds; explicit outsidePlayableReason records intentional staging without disabling native clamping",
+    "mapInfoPlanAndStagedSaveGuard": true,
+    "missingMapInfo": "explicit_unverified_warning"
+  },
+  "source": "work/data-acceptance-20261022/PointProjectile/.sc2mcp-output/PointProjectile.SC2Map",
+  "sourceSha256": "dff27388652ec6e68dd3256302e7ea0f9e85432be45b056720b868f5aa4bc419",
+  "engineBuild": "5.0.17.98310",
+  "cleanLaunches": 2,
+  "sameRetainedBridges": true,
+  "nativeEditor": {
+    "jobId": "0dbb792b-becf-44c6-a3a8-eb1bf78ac493",
+    "load": "passed",
+    "compile": "passed",
+    "report": "K:\\SC2_MAP_Workspace\\SC2Editor-MCP-Codex\\work\\data-acceptance-20261022\\PointProjectile\\.sc2mcp-output\\ne\\jobs\\0dbb792b-becf-44c6-a3a8-eb1bf78ac493\\result.json"
+  },
+  "actualMcpAuthoring": [
+    "c17a1c53-4d06-42c6-805a-4d3cfb99392e",
+    "09add675-f0f8-493b-a7b8-d520047b900b",
+    "14cdcda7-d17c-48bb-bd6f-3364159ba3bb"
+  ],
+  "runs": [
+    {
+      "iteration": 1,
+      "state": "passed",
+      "session": "2c83dfda32a72695928b37253110c56d",
+      "castResults": {
+        "firstEnergy": 75,
+        "secondEnergy": 50,
+        "firstLife": [
+          460,
+          460,
+          500
+        ],
+        "secondLife": [
+          420,
+          420,
+          500
+        ],
+        "damagePerAffectedUnit": 40,
+        "casts": 2
+      },
+      "naturalCooldown": {
+        "polls": 8,
+        "remaining": 0,
+        "resetUsed": false
+      },
+      "positions": {
+        "x": 30,
+        "y": 26
+      },
+      "lifecycle": [
+        {
+          "actor": "PointLaunchAction",
+          "created": [
+            {
+              "nativeActorInstance": 78,
+              "gameTime": 5
+            },
+            {
+              "nativeActorInstance": 90,
+              "gameTime": 11
+            }
+          ],
+          "destroyed": [
+            {
+              "nativeActorInstance": 78,
+              "gameTime": 5.375
+            },
+            {
+              "nativeActorInstance": 90,
+              "gameTime": 11.375
+            }
+          ]
+        },
+        {
+          "actor": "GhostEMPAttackMissile",
+          "created": [
+            {
+              "nativeActorInstance": 79,
+              "gameTime": 5
+            },
+            {
+              "nativeActorInstance": 91,
+              "gameTime": 11
+            }
+          ],
+          "destroyed": [
+            {
+              "nativeActorInstance": 79,
+              "gameTime": 5.375
+            },
+            {
+              "nativeActorInstance": 91,
+              "gameTime": 11.375
+            }
+          ]
+        },
+        {
+          "actor": "GenericAttackImpactModel",
+          "created": [
+            {
+              "nativeActorInstance": 82,
+              "gameTime": 5.25
+            },
+            {
+              "nativeActorInstance": 94,
+              "gameTime": 11.25
+            }
+          ],
+          "destroyed": [
+            {
+              "nativeActorInstance": 82,
+              "gameTime": 8.25
+            },
+            {
+              "nativeActorInstance": 94,
+              "gameTime": 14.3125
+            }
+          ]
+        }
+      ],
+      "recording": {
+        "file": "work/launch-diagnostics-20261022/projectile-media/run1.mp4",
+        "sha256": "66f9a4a10e135d0e3bc47c1d61b8e5446cc3f20058f518e4cfc7eb34d4d5f992",
+        "requestedFps": 24,
+        "actualFrames": 16,
+        "seconds": 2.5939999999991414,
+        "selectedFrames": [
+          {
+            "phase": "flight",
+            "file": "work/launch-diagnostics-20261022/projectile-media/run1-flight.png",
+            "sha256": "9b1e91a0c15e06591eb8a21d466fd42e0c8d5a0989bc62556a620ca23fdbf290",
+            "gameTime": 11.125,
+            "visualReview": "Reviewed: a small bright missile during flight and a distinct red-white impact burst. Technical framing, not final mission composition."
+          },
+          {
+            "phase": "impact",
+            "file": "work/launch-diagnostics-20261022/projectile-media/run1-impact.png",
+            "sha256": "edca642f47de916e2d3cd273acc048b508e4d724ef69744d68af1852b1def463",
+            "gameTime": 11.375,
+            "visualReview": "Reviewed: a small bright missile during flight and a distinct red-white impact burst. Technical framing, not final mission composition."
+          }
+        ],
+        "mixedAudio": {
+          "status": "ok",
+          "nonzero": 213884,
+          "isolatedAbilitySound": "not_verified"
+        }
+      },
+      "sourceUnchanged": true,
+      "ownedCleanup": true
+    },
+    {
+      "iteration": 2,
+      "state": "passed",
+      "session": "336fad9ff37ae4951c999febc74b70b8",
+      "castResults": {
+        "firstEnergy": 75,
+        "secondEnergy": 50,
+        "firstLife": [
+          460,
+          460,
+          500
+        ],
+        "secondLife": [
+          420,
+          420,
+          500
+        ],
+        "damagePerAffectedUnit": 40,
+        "casts": 2
+      },
+      "naturalCooldown": {
+        "polls": 8,
+        "remaining": 0,
+        "resetUsed": false
+      },
+      "positions": {
+        "x": 30,
+        "y": 26
+      },
+      "lifecycle": [
+        {
+          "actor": "PointLaunchAction",
+          "created": [
+            {
+              "nativeActorInstance": 78,
+              "gameTime": 5.375
+            },
+            {
+              "nativeActorInstance": 90,
+              "gameTime": 11.5
+            }
+          ],
+          "destroyed": [
+            {
+              "nativeActorInstance": 78,
+              "gameTime": 5.75
+            },
+            {
+              "nativeActorInstance": 90,
+              "gameTime": 11.875
+            }
+          ]
+        },
+        {
+          "actor": "GhostEMPAttackMissile",
+          "created": [
+            {
+              "nativeActorInstance": 79,
+              "gameTime": 5.375
+            },
+            {
+              "nativeActorInstance": 91,
+              "gameTime": 11.5
+            }
+          ],
+          "destroyed": [
+            {
+              "nativeActorInstance": 79,
+              "gameTime": 5.75
+            },
+            {
+              "nativeActorInstance": 91,
+              "gameTime": 11.875
+            }
+          ]
+        },
+        {
+          "actor": "GenericAttackImpactModel",
+          "created": [
+            {
+              "nativeActorInstance": 82,
+              "gameTime": 5.625
+            },
+            {
+              "nativeActorInstance": 94,
+              "gameTime": 11.75
+            }
+          ],
+          "destroyed": [
+            {
+              "nativeActorInstance": 82,
+              "gameTime": 8.6875
+            },
+            {
+              "nativeActorInstance": 94,
+              "gameTime": 14.75
+            }
+          ]
+        }
+      ],
+      "recording": {
+        "file": "work/launch-diagnostics-20261022/projectile-media/run2.mp4",
+        "sha256": "c68a4fe72b9b2250198f2d4b66651b8043f3ad4e7a970c43e24c2e1a1ae783d6",
+        "requestedFps": 24,
+        "actualFrames": 15,
+        "seconds": 2.6090000000003783,
+        "selectedFrames": [
+          {
+            "phase": "flight",
+            "file": "work/launch-diagnostics-20261022/projectile-media/run2-flight.png",
+            "sha256": "05faa7ac627c461ae94a4f16c9ff9356a8b2087fe9ff02962dc8d2991fb41d68",
+            "gameTime": 11.625,
+            "visualReview": "Reviewed: a small bright missile during flight and a distinct red-white impact burst. Technical framing, not final mission composition."
+          },
+          {
+            "phase": "impact",
+            "file": "work/launch-diagnostics-20261022/projectile-media/run2-impact.png",
+            "sha256": "210a2b0d310a9fd37ecd3d822f72f926ce6ba7f5f6a699061a847c42d385109c",
+            "gameTime": 11.875,
+            "visualReview": "Reviewed: a small bright missile during flight and a distinct red-white impact burst. Technical framing, not final mission composition."
+          }
+        ],
+        "mixedAudio": {
+          "status": "ok",
+          "nonzero": 215199,
+          "isolatedAbilitySound": "not_verified"
+        }
+      },
+      "sourceUnchanged": true,
+      "ownedCleanup": true
+    }
+  ],
+  "foundation": {
+    "bounds": {
+      "left": 8,
+      "bottom": 8,
+      "right": 56,
+      "top": 40
+    },
+    "terrain": {
+      "width": 64,
+      "height": 48
+    },
+    "failedArchive": "work/launch-diagnostics-20261022/PointProjectile_BeforePlayableRepair.SC2Map",
+    "failedSha256": "54e1281093038fd7d491b54d2c6116af59afdd197133bd39f7d6093420cf505a",
+    "positions": {
+      "PointCaster": {
+        "x": 30,
+        "y": 26,
+        "z": 0
+      },
+      "PointLowCaster": {
+        "x": 30,
+        "y": 22,
+        "z": 0
+      },
+      "PointNear": {
+        "x": 36,
+        "y": 26,
+        "z": 0
+      },
+      "PointNeighbor": {
+        "x": 37,
+        "y": 26,
+        "z": 0
+      },
+      "PointOutside": {
+        "x": 40,
+        "y": 26,
+        "z": 0
+      }
+    },
+    "actualMcpMutationsOnly": true,
+    "unchangedAcrossCoordinateRepair": {
+      "Base.SC2Data/GameData/QualityProbe.xml": {
+        "bytes": 60536,
+        "sha256": "829e8b75cfeb9d19c864de350b0c3333d7e54008112874450299a6910c883240"
+      },
+      "Triggers": {
+        "bytes": 2252,
+        "sha256": "ea914bedf66f1c8bf89a50e055af3f31f8bb9cc6d2f1f884d23ccc4dbf6d1717"
+      },
+      "MapScript.galaxy": {
+        "bytes": 3160,
+        "sha256": "90354ccdf77fab80c52a3890a7ba039fc3d95dfbc5b715002b0f682522b78b3a"
+      },
+      "MapInfo": {
+        "bytes": 265,
+        "sha256": "c125a13be567119b3fe56dab5186a89e0a2909d24934cb2b78e2bc4509419a18"
+      },
+      "t3Terrain.xml": {
+        "bytes": 6117,
+        "sha256": "8cb945adc1ca575f5b25011435e7266aa76d19094a3b247ecc215b08d12c19e9"
+      }
+    },
+    "sourceTerrainDimensions": [
+      64,
+      48
+    ],
+    "playableBounds": {
+      "left": 8,
+      "bottom": 8,
+      "right": 56,
+      "top": 40
+    },
+    "runtimeOldY": 47.9998,
+    "requestedOldY": 50,
+    "scope": "The first bad fixture exceeded full terrain height48, not merely the playable top40. This corrects the initial clamping hypothesis. New default gameplay-unit guard is deliberately based on playable bounds."
+  },
+  "badPlacementRejectedThroughFrozenMcp": true,
+  "regressions": {
+    "full": {
+      "file": "work/launch-diagnostics-20261022/projectile-playable-full-tests-bounded.tap",
+      "sha256": "ef557b53cfa6ec0d0d720c16352ba9951cea358ead086d924c256728c27eba31",
+      "tests": 1393,
+      "pass": 1392,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 1
+    },
+    "focused": {
+      "file": "work/launch-diagnostics-20261022/projectile-playable-tests.tap",
+      "sha256": "70f737c462cffbf644e72dc24b3e8aa2edc6985573c832f9db729f603385a60f",
+      "tests": 23,
+      "pass": 23,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0
+    },
+    "retainedUnbounded": {
+      "file": "work/launch-diagnostics-20261022/projectile-playable-full-tests.tap",
+      "sha256": "d0759f0750e00ede1d6da2244f3689283be0838c6bea7c652c7cb0207939234d",
+      "tests": 1393,
+      "pass": 1391,
+      "fail": 0,
+      "cancelled": 1,
+      "skipped": 1
+    },
+    "concurrency": 4
+  },
+  "frozenRunner": {
+    "candidate": "C:\\Users\\Vladimir\\AppData\\Local\\SC2EditorToolkit\\Candidates\\PointProjectile-20261022-11ec9b64-b762-48bd-9f9d-f66987424d56",
+    "assembly": "Existing public package resources plus complete fresh release compilation and current maintained docs/skills",
+    "published": false,
+    "sourceStableDuringBuild": true,
+    "sourceSnapshotSha256": "03b10885ab69267ab30f255b4f1b32a066adac789ceba77c11f114da94c88d8d",
+    "compiledFiles": 351,
+    "manifestSha256": "587383d32fbb1b7490585ba47426078746f67d3f0d3027794f2fc65765bb2cff",
+    "privacy": {
+      "passed": true,
+      "checkedFiles": 9961,
+      "privateSourceFiles": 1113,
+      "privateCorpusCompared": true,
+      "violations": [],
+      "scope": "Explicit private paths/debug/test artifacts and exact external C++/Python/Galaxy source copies, including renamed files. Not proof against transformed snippets or binary reverse engineering."
+    }
+  },
+  "retainedFailures": [
+    {
+      "id": "aef618fc-f8d0-4f16-895f-f2855e4dc41a",
+      "scope": "Test request chose an occupied inherited Ghost card cell. Existing card guard rejected the complete grouped recipe before staging; corrected to a free cell."
+    },
+    {
+      "nativeJob": "194dd28f-fc4b-4764-8307-79a31bb099ac",
+      "scope": "Original Editor passed; first gameplay wait timed out on a malformed test layout at Y50 on a48-high surface. The ordinary failed archive is retained byte-for-byte; no Data/GUI/script changes were needed for the successful center-position retry."
+    },
+    {
+      "id": "f332e29a-888c-4a32-a701-8886575cc679",
+      "scope": "First attempted coordinate repair chose Y40, exactly the exclusive playable top. The new MCP guard rejected it; central Y26 is derived from actual MapInfo."
+    },
+    {
+      "scope": "A stdio launcher test hit its unchanged15-second limit during the unbounded full run (cancelled1). Retained TAP remains nonpassing. The complete rerun at concurrency4 passed without changing that deadline."
+    }
+  ],
+  "openCoverage": [
+    "Other missile/mover/beam/launch profiles, charges, learn/talent and wider Data combinations",
+    "Exact main-unit sequence-name playback, isolated ability audio and final command-card/UI design",
+    "Native footprint, pathing, collision and buildability queries; center containment is only a prerequisite",
+    "Finished landscape hierarchy, lighting/material review where requested, balance and final mission art",
+    "Earlier general startup failures and broader GUI/runtime-registration semantics remain separate",
+    "Private corpus comparison is an exact-copy/distribution gate, not protection against transformed fragments or reverse engineering"
+  ],
+  "sourceFingerprints": {
+    "src/modules/data/projectileRecipe.ts": "6f7aa2a64324b6be56750ece5225ba6e818fcf0774cc18e40f511ea774274bc4",
+    "src/modules/data/actorRecipes.ts": "122fc97a62a278ebc02515c5cdd43d1b0cebc8cb19b0a3f759f47443043072b7",
+    "src/modules/data/workspace.ts": "ca1dc82f20e529d423ea2bfff5e6612de724fe00f3f4117ebf52985ed434c655",
+    "src/modules/data/tools.ts": "2850a0ffd1fa1c2e6975d38f7ecae3aef50a7e1187317e5040abecf89d227333",
+    "src/modules/data/types.ts": "7fa1343f8eeeb4a6bf366604f7ea981ac9c6c551531b0db7a0575a7fca60cc3b",
+    "src/app/authoringScript.ts": "2010861ca63b3b611afaba34ef82dbf91e586daf17be019bd9430d02012ce15b",
+    "src/app/authoringDataGroups.ts": "32107b021fa01aac5a6e7a8f4b7311549f8d7ffff9ca9c991185771a352f915c",
+    "src/modules/placement/workspace.ts": "49f8b5ffe5aa8733a7885fc57ac8c97b23b9cb5822897ae7f41fb6c84f5d9344",
+    "src/modules/placement/locationSchemas.ts": "5606c0470b7c6d1ca0cabe59dce2c089ce6c21fc6dc0c7b2784f3f2d6a7bc8d5",
+    "src/tests/dataProjectileRecipe.test.ts": "df3529a5e0cf436a42cdd00703f04c07f0532d833e90fc304943c6046ad396bf",
+    "src/tests/placementPlayable.test.ts": "b868c9838f24c808494c7a3574b6a5d9ba3051869aab1308a06258a4e7eab5a6",
+    "scripts/check-distribution-privacy.mjs": "747bb50d8e7c0ed8ec034f7759ec6bfca4424b8a348f872b68c1ce9095ed03da",
+    "scripts/build-windows-portable.mjs": "51f8c73a09c323357cd613fb2a7c6197703129438e6d53f823a37b0124620499",
+    "docs/DATA_MCP.md": "71cdf0951e74268809f3c026b1b92578465ff20e072653c43aedc6e0d71e81ea",
+    "docs/BROWSE_PLACEMENT_MCP.md": "8d72b33088763bdef424cea55932d1d67bf4aa9921ef121d38802b325ad8981a",
+    "docs/AUTHORING_PROTOCOL.md": "3cab9ee80a8cd5bc1cd880ea1c13a130a4c560335c48b39aa044bf61ed55641f"
+  }
+}

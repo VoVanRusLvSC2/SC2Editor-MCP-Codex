@@ -25,6 +25,13 @@ test('expanded eligibility exposes native actions/events and explains unsupporte
  const multiple=r.definitions!.find(f=>f.parameters.some(p=>p.flags?.includes('ParamFlagMultiple')))!;assert.ok(functionSupport(multiple).supported);const bad=r.definitions!.find(f=>f.flags.includes('FlagRestricted'))!;assert.ok(!functionSupport(bad).supported);
 });
 
+test('unknown operator preset reports its rejected name and bounded native alternatives without staging',async t=>{
+ const f=await fixture(t);
+ await assert.rejects(f.trigger.plan({create:{identifier:'BadOperator'},variables:[{name:'Result',type:'int'}],calls:[{kind:'Action',function:'SetVariable',args:{var:variable('Result'),val:{kind:'call',function:'ArithmeticInt',args:{val1:int(2),op:preset('multiply'),val2:int(3)}}}}]}),e=>{
+  assert.match(String(e),/GUI_PRESET_MISMATCH/);assert.match(String(e),/"multiply"/);assert.match(String(e),/available=plus, minus, mult, div/);return true;
+ });assert.deepEqual(f.ws.draftFiles(),[]);
+});
+
 test('root GUI trigger creates global/local variables, typed assignment, condition, branches and localized message',async t=>{
  const f=await fixture(t);
  const request:GuiRequest={create:{identifier:'Income',translations:{ruRU:'Доход'}},variables:[{name:'Ticks',type:'int',initial:int(0),translations:{ruRU:'Прошедшие такты'}},{name:'Delay',type:'fixed',scope:'local',initial:fixed(0.5)}],calls:[{kind:'Event',function:'TriggerAddEventTimePeriodic',args:{dur:fixed(20),timeType:preset('game')}},comparison('Ticks'),{kind:'Action',function:'SetVariable',args:{var:variable('Ticks'),val:{kind:'call',function:'ArithmeticInt',args:{val1:variable('Ticks'),op:preset('plus'),val2:int(1)}}}},{kind:'Action',function:'IfThenElse',args:{},children:[{role:'if',call:comparison('Ticks')},{role:'then',call:wait},{role:'else',call:{kind:'Action',function:'DialogDestroyAll',args:{}}}]},{kind:'Action',function:'UIDisplayMessage',args:{players:{kind:'call',function:'PlayerGroupSingle',args:{p:int(1)}},messageArea:preset('Chat'),message:{kind:'text',value:'Income received',translations:{ruRU:'Доход получен'}}}}]};

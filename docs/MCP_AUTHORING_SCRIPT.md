@@ -13,15 +13,21 @@ terrain style tileset=Agria profile=forest
 terrain compose zone=west_forest tileset=Agria profile=forest rect=10,10,30,30 count=40 seed=42
 objects unit id=Marine at=25,31 owner=1 count=3
 data set id=MyMarine path=LifeMax value=600
+data actor.ability_animation id=PulseMotion actor=HeroActor unit=Hero ability=Pulse cast=Attack loopCast=true
 text set key=Mission/Title value="Defend the base" locale=enUS
 settings player id=2 control=Computer color=3
 ```
 
 Use `mode=plan` to inspect a request without staging edits. `mode=stage` applies
 supported operations to a draft. `mode=save` also saves the complete transaction
-group. Multi-command scripts execute sequentially: if a later command fails,
-earlier saved commands remain committed. Original schemas, dependency checks,
-stale guards and backup behavior apply. Read-only commands should use plan mode.
+group. Compatible adjacent Data setters and ability, veterancy or main Actor
+animation recipes for the same catalog share one graph validation and one save,
+up to 500 operations per group. A failure rolls back that entire group before
+saving. Different files, reads, result references, transaction options and
+advanced low-level operations preserve their boundaries. Groups execute
+sequentially: if a later group fails, earlier saved groups remain committed.
+Original schemas/defaults, dependency checks, stale guards and backup behavior
+apply. Read-only commands should use plan mode.
 
 **Galaxy is the default logic language.** Literal source blocks preserve code:
 

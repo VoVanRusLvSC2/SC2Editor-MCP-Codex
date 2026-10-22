@@ -7,6 +7,21 @@ export function segmentDistance(p: Point2, a: Point2, b: Point2): number {
   const t = n ? clamp(((p.x - a.x) * dx + (p.y - a.y) * dy) / n) : 0;
   return Math.hypot(p.x - a.x - t * dx, p.y - a.y - t * dy);
 }
+/** Whole stroke containment, including round end caps; prevents cross-zone edits. */
+export function corridorWithinArea(area:TerrainArea,points:Point2[],width:number):boolean{
+ const radius=width/2;
+ if(!points.length||!Number.isFinite(width)||width<=0||points.some(p=>areaDistance(area,p)<radius-1e-9))return false;
+ if(area.type==='rectangle'||area.type==='circle')return true; // Convex inset.
+ if(area.type!=='polygon')return false;
+ const cross=(a:Point2,b:Point2,c:Point2)=>(b.x-a.x)*(c.y-a.y)-(b.y-a.y)*(c.x-a.x);
+ for(let i=1;i<points.length;i++)for(let j=0;j<area.points.length;j++){
+  const a=points[i-1],b=points[i],c=area.points[j],d=area.points[(j+1)%area.points.length];
+  const overlap=Math.max(Math.min(a.x,b.x),Math.min(c.x,d.x))<=Math.min(Math.max(a.x,b.x),Math.max(c.x,d.x))+1e-9&&Math.max(Math.min(a.y,b.y),Math.min(c.y,d.y))<=Math.min(Math.max(a.y,b.y),Math.max(c.y,d.y))+1e-9;
+  if(overlap&&cross(a,b,c)*cross(a,b,d)<=0&&cross(c,d,a)*cross(c,d,b)<=0)return false;
+  if(Math.min(segmentDistance(a,c,d),segmentDistance(b,c,d),segmentDistance(c,a,b),segmentDistance(d,a,b))<radius-1e-9)return false;
+ }
+ return true;
+}
 export function areaDistance(area: TerrainArea, p: Point2): number {
   if (area.type === "circle")
     return area.radius - Math.hypot(p.x - area.center.x, p.y - area.center.y);

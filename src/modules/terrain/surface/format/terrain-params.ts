@@ -50,7 +50,7 @@ export interface TerrainRampFrame {
  * ramp tiles have codes that ship in none of the cliff mesh sets.
  */
 export interface TerrainRamp {
-  /** Direction code, 3–7 observed. */
+  /** Native enum: cardinal 0=south, 1=north, 2=west, 3=east; 4–7 diagonal. */
   dir: number
   /** Raw high/low codes. Physical units and mesh-letter mapping require validation. */
   hi: number
@@ -190,7 +190,7 @@ export function parseTerrainXml(xml: string): TerrainInfo {
       if (value !== 0xffffffff) variations[key] = value
     }
     const dir = uintAttr(node,'dir',0,255), hi = uintAttr(node,'hi',0), lo = uintAttr(node,'lo',0)
-    if (dir === 0 || hi >= 8 || lo >= 16) diagnostics.push('RAMP_REFERENCE_VALIDITY_CHECK_FAILED')
+    if (dir > 7 || hi >= 8 || lo >= 16) diagnostics.push('RAMP_REFERENCE_VALIDITY_CHECK_FAILED')
     return {dir, hi, lo, cliffSetIndex: uintAttr(node,'cid',0), frames, variations, rawFrames, rawAttributes:{...node.attributes}, rampHardTileHandles:node.attributes.rampHardTileHandles}
   })
   const cliffDoodads = rows('cliffDoodadList','cliffDoodad').map(node => ({

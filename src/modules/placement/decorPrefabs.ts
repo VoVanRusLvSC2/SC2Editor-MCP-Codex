@@ -7,7 +7,7 @@ export const prefabSchema=z.object({tileset:z.string().min(1),recipe:z.enum(['ba
 export const assembleSchema=prefabSchema.extend({zone:z.string().regex(/^[A-Za-z][A-Za-z0-9_-]{0,63}$/),maxSlope:z.number().nonnegative().default(.5),directory:z.string().default(''),dryRun:z.boolean().default(true),stage:z.boolean().default(true)}).strict();
 type Rect={minX:number;minY:number;maxX:number;maxY:number};
 export function overlaps(a:Rect,b:Rect){return a.minX<b.maxX&&a.maxX>b.minX&&a.minY<b.maxY&&a.maxY>b.minY;}
-type Member={id:string;key:string;offset:{x:number;y:number};heightOffset:number;horizontalBounds:Rect;rotation:number;scale:number;variation:number};
+type Member={id:string;key:string;offset:{x:number;y:number};heightOffset:number;horizontalBounds:Rect;boundsFrame:'member';rotation:number;scale:number;variation:number};
 export interface Slot {name:string;decor:DecorModel}
 /** Deterministic local layout using measured geometry, with no inference of game collision. */
 export function layoutPrefab(recipe:z.infer<typeof prefabSchema>['recipe'],slots:Slot[],clearance:number,seed:number){
@@ -15,12 +15,12 @@ export function layoutPrefab(recipe:z.infer<typeof prefabSchema>['recipe'],slots
  const reserved:Rect=recipe==='landing_pad'?{minX:-clearance/2,minY:-clearance/2,maxX:clearance/2,maxY:clearance/2}:{minX:-clearance/2,minY:-1e6,maxX:clearance/2,maxY:1e6};
  const slot=(name:string)=>{const found=slots.find(s=>s.name===name);if(!found)throw new Error('PREFAB_SLOT_REQUIRED: '+name);return found.decor;};
  const add=(name:string,x:number,y:number,rotation=0)=>{
-  const d=slot(name),g=d.measured.geometry,initial=measureGeometry(g,{...d.measured.transform,rotation}),center=initial.center;
+  const d=slot(name),g=d.measured.geometry,initial=measureGeometry(g,{...d.measured.transform,rotation}),unrotated=measureGeometry(g,{...d.measured.transform,rotation:0}),center=initial.center;
   // Offsets refer to the actual model pivot. Centre each mesh on a desired layout point.
   const offset={x:x-center[0],y:y-center[1]},transform={...d.measured.transform,rotation,position:[offset.x,offset.y,-initial.bottom] as [number,number,number]},measurement=measureGeometry(g,transform),b=measurement.bounds,r={minX:b.min[0],maxX:b.max[0],minY:b.min[1],maxY:b.max[1]};
   if(overlaps(r,reserved))throw new Error('PREFAB_VISUAL_BOUNDS_INTRUDE_RESERVED_PATH: '+d.actor.id);
   if(bounds.some(b=>overlaps(r,b)))throw new Error('PREFAB_VISUAL_BOUNDS_OVERLAP: '+d.actor.id);
-  members.push({id:d.actor.id,key:d.actor.key,offset,heightOffset:-initial.bottom,horizontalBounds:{minX:initial.bounds.min[0],maxX:initial.bounds.max[0],minY:initial.bounds.min[1],maxY:initial.bounds.max[1]},rotation,scale:1,variation:d.variation??0});bounds.push(r);models.push({...d.measured,transform,measurement});
+  members.push({id:d.actor.id,key:d.actor.key,offset,heightOffset:-initial.bottom,horizontalBounds:{minX:unrotated.bounds.min[0],maxX:unrotated.bounds.max[0],minY:unrotated.bounds.min[1],maxY:unrotated.bounds.max[1]},boundsFrame:'member',rotation,scale:1,variation:d.variation??0});bounds.push(r);models.push({...d.measured,transform,measurement});
  };
  if(recipe==='base_entrance'){
   const fence=slot('fence'),d=fence.measured.measurement.dimensions,rotate=d.depth>d.width?Math.PI/2:0,length=Math.max(d.width,d.depth),thickness=Math.min(d.width,d.depth);if(length<.1)throw new Error('PREFAB_FENCE_DIMENSIONS');

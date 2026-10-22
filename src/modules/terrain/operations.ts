@@ -1,5 +1,6 @@
-import {editNativeGeometry} from './nativeGeometry.js';
+import {editNativeGeometry,type NativeGeometryCoverage} from './nativeGeometry.js';
 import { TerrainVisibility } from "./visibility.js";
+import {repairLegacyTerrainLoadContract} from './loadContract.js';
 import type { TerrainArea, TerrainIssue, TerrainOperation } from "./types.js";
 import { componentListWithGameData, gameDataIndexWithCatalog } from "../data/workspace.js";
 import { LightingCatalog } from "./lighting.js";
@@ -179,10 +180,12 @@ function median(values: number[]): number {
   values.sort((a, b) => a - b);
   return values[Math.floor(values.length / 2)];
 }
+export interface TerrainTouches {height(x:number,y:number):void;texture(x:number,y:number):void;nativeGeometry?(coverage:NativeGeometryCoverage):void}
 export function applyOperations(
   state: TerrainState,
   operations: TerrainOperation[],
   maxSlope?: number,
+  touches?:TerrainTouches,
 ) {
   const initial = Buffer.from(state.heights.bytes);
   const originalHeights = new HeightMap(initial, state.descriptor);
@@ -191,7 +194,8 @@ export function applyOperations(
     : undefined;
   const issues: TerrainIssue[] = [];
   let heightTouched = false,
-    textureTouched = false;
+    textureTouched = false,
+    nativeGeometryTouched = false;
   let protectedCount = 0;
   let heightBounds: GridBounds | undefined,
     textureBounds: GridBounds | undefined;
@@ -201,7 +205,29 @@ export function applyOperations(
     if (!protection[i]) protection[i] = (state.heights.protected(x, y) || state.visibility?.touchesHiddenVertex(x, y)) ? 2 : 1;
     return protection[i] === 2;
   };
+  // A native geometry operation writes its own measured SMAP values. Apply
+  // pending ordinary height deltas before it, then start a new baseline for
+  // later brushes. A final delta from the original map would count the native
+  // cliff/ramp displacement twice and overwrite the donor residual correction.
+  let pendingHeightBaseline: HeightMap | undefined;
+  let pendingHeightBounds: GridBounds | undefined;
+  const flushHeightSync = () => {
+    if (!pendingHeightBaseline || !pendingHeightBounds) return;
+    for (let y = pendingHeightBounds.minY; y <= pendingHeightBounds.maxY; y++)
+      for (let x = pendingHeightBounds.minX; x <= pendingHeightBounds.maxX; x++) {
+        const delta = state.heights.z(x, y) - pendingHeightBaseline.z(x, y);
+        if (Math.abs(delta) > 1e-12) state.sync!.delta(x, y, delta);
+      }
+    pendingHeightBaseline = undefined;
+    pendingHeightBounds = undefined;
+  };
   for (const op of operations) {
+    if(op.op==='load.repair'){
+      if(operations.length!==1)throw Error('TERRAIN_LOAD_REPAIR_MUST_BE_STANDALONE');
+      const repair=repairLegacyTerrainLoadContract(state);
+      if(repair.changed.length)issues.push({severity:'warning',code:'TERRAIN_LOAD_REPAIR_NATIVE_CHECK_REQUIRED',message:'Diagnosed legacy load fields repaired; surface heights/textures/cliff levels preserved. Validate the exact archive in the native engine.'});
+      continue;
+    }
     if ("area" in op && op.area) bounded(op.area, state);
     if (op.op === "surface.hide" || op.op === "surface.show") {
       const visibility = state.visibility;
@@ -226,8 +252,12 @@ export function applyOperations(
     }
     if (op.op === "stamp.apply")
       throw new Error("STAMP_REQUIRES_WORKSPACE_RESOLUTION");
-    if (op.op==='cliff.paint'||op.op==='ramp.create'||op.op==='ramp.remove') {
-      editNativeGeometry(state,op);protection.fill(0);continue;
+    if (op.op==='cliff.paint'||op.op==='cliff.repair'||op.op==='ramp.create'||op.op==='ramp.remove'||op.op==='ramp.repair') {
+      flushHeightSync();
+      editNativeGeometry(state,op,touches?.nativeGeometry?.bind(touches));
+      nativeGeometryTouched = true;
+      if(!issues.some(i=>i.code==='NATIVE_NAVIGATION_NOT_REBUILT'))issues.push({severity:'warning',code:'NATIVE_NAVIGATION_NOT_REBUILT',message:'Native geometry components changed; engine navigation/collision caches were not rebuilt. CellAttribute paint alone does not prove valid placement or traversal. Run exact-archive ground tests before accepting this terrain.'});
+      protection.fill(0);continue;
     }
     if (op.op==='pathing.paint')throw new Error('NATIVE_TERRAIN_OPERATION_UNAVAILABLE: use terrain.pathing.paint or terrain.modkit.plan for CellAttribute masks');
     if (op.op === "palette.update") {
@@ -307,9 +337,11 @@ export function applyOperations(
         >,
         hm = state.heights;
       if (!state.sync) throw new Error("SYNC_HEIGHT_COMPONENT_REQUIRED");
+      pendingHeightBaseline ??= new HeightMap(Buffer.from(state.heights.bytes),state.descriptor);
       heightTouched = true;
       const bounds = brushBounds(operation.area, state);
       heightBounds = unionBounds(heightBounds, bounds);
+      pendingHeightBounds = unionBounds(pendingHeightBounds, bounds);
       const read = Float64Array.from({ length: hm.width * hm.height }, (_, i) =>
         hm.z(i % hm.width, Math.floor(i / hm.width)),
       );
@@ -347,6 +379,7 @@ export function applyOperations(
             }
             const i = y * hm.width + x,
               old = input[i];
+            touches?.height(x,y);
             let next = old;
             if (
               operation.op === "height.raise" ||
@@ -462,6 +495,7 @@ export function applyOperations(
           if (!weight) continue;
           const sample = state.heights.sample(p);
           if (sample.mask === 0 || state.visibility?.atGrid((p.x - state.descriptor.offset[0]) / state.descriptor.scale[0], (p.y - state.descriptor.offset[1]) / state.descriptor.scale[1])) continue;
+          touches?.texture(x,y);
           const set = state.descriptor.blockSet(gx, gy);
           if (
             !Number.isInteger(set) ||
@@ -526,17 +560,23 @@ export function applyOperations(
         }
     }
   }
+  flushHeightSync();
   let changedVertices = 0,
     changedTexturePixels = 0;
-  if (heightTouched) {
-    for (let y = heightBounds!.minY; y <= heightBounds!.maxY; y++)
-      for (let x = heightBounds!.minX; x <= heightBounds!.maxX; x++) {
+  if (heightTouched || nativeGeometryTouched) {
+    const bounds = nativeGeometryTouched
+      ? {minX:0,minY:0,maxX:state.heights.width-1,maxY:state.heights.height-1}
+      : heightBounds!;
+    for (let y = bounds.minY; y <= bounds.maxY; y++)
+      for (let x = bounds.minX; x <= bounds.maxX; x++) {
         const delta = state.heights.z(x, y) - originalHeights.z(x, y);
         if (Math.abs(delta) > 1e-12) {
           changedVertices++;
-          state.sync!.delta(x, y, delta);
           if (
             maxSlope !== undefined &&
+            heightBounds !== undefined &&
+            x >= heightBounds.minX && x <= heightBounds.maxX &&
+            y >= heightBounds.minY && y <= heightBounds.maxY &&
             x < state.heights.width - 1 &&
             y < state.heights.height - 1 &&
             !isProtected(x, y) &&

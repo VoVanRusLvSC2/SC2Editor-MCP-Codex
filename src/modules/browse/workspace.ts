@@ -7,7 +7,7 @@ import { Workspace } from "../../core/workspace.js";
 import { internalWorkspaceDirectory } from "../../core/discoveryPaths.js";
 import { scanXml } from "../../core/xmlScanner.js";
 import { DataWorkspace } from "../data/workspace.js";
-import { DataDocument } from "../data/document.js";
+import { DataDocument,referenceSchema } from "../data/document.js";
 import type { DataField, DataObject } from "../data/types.js";
 import { StringTableDocument } from "../text/stringTable.js";
 import type {
@@ -136,6 +136,8 @@ export class BrowseWorkspace {
   private readonly operationSnapshots=new AsyncLocalStorage<{snapshot?:Promise<BrowseIndexSnapshot>}>();
   withSnapshot<T>(work:()=>Promise<T>):Promise<T>{return this.operationSnapshots.getStore()?work():this.operationSnapshots.run({},work);}
   private snapshot?: BrowseIndexSnapshot;
+  private snapshotReads?:import('../../core/workspace.js').WorkspaceReadMemo;
+  private snapshotCacheKey?:string;
   private readonly roots: RootSpec[];
   private readonly indexedData: DataWorkspace;
   private missingDependencies: string[] = [];
@@ -155,8 +157,9 @@ export class BrowseWorkspace {
   }
   addDependencyRoot(root: string) {
     const absolute = path.resolve(root);
-    if (!this.roots.some(entry => entry.path === absolute)) this.roots.push({ path: absolute, sourceLayer: "dependency", dependency: dependencyFromPath(absolute), availability: "INSTALLED_BUT_NOT_DECLARED" });
-    this.indexedData.addDependencyRoot(absolute,this.data.nativePackageProfile(absolute)); this.snapshot = undefined;
+    const exists=this.roots.some(entry => entry.path === absolute),profile=this.indexedData.nativePackageProfile(absolute);
+    if (!exists) this.roots.push({ path: absolute, sourceLayer: "dependency", dependency: dependencyFromPath(absolute), availability: "INSTALLED_BUT_NOT_DECLARED" });
+    this.indexedData.addDependencyRoot(absolute,this.data.nativePackageProfile(absolute));if(!exists||profile!==this.indexedData.nativePackageProfile(absolute))this.snapshot=undefined;
   }
   private async files(): Promise<BrowseIndexSnapshot["files"]> {
     const output: BrowseIndexSnapshot["files"] = [];
@@ -167,6 +170,10 @@ export class BrowseWorkspace {
         if (entry.isDirectory() && (SKIP.has(entry.name) || internalWorkspaceDirectory(entry.name) || (root.sourceLayer==='dependency' && /\.sc2(?:map|mod|campaign)$/i.test(entry.name)))) continue;
         const absolute = path.join(directory, entry.name);
         if (entry.isDirectory()) { await visit(root, absolute); continue; }
+        // Native terrain topology is not a GameData catalog or physical asset.
+        // Its XML changes on every cliff/ramp edit; indexing it here invalidates
+        // the complete interpreted catalog despite unchanged Data dependencies.
+        if(directory===root.path&&entry.name.toLowerCase()==='t3terrain.xml')continue;
         if (!INDEXABLE.test(entry.name)) continue;
         const stat = await fs.stat(absolute);
         if (stat.size > 64 * 1024 * 1024) continue;
@@ -222,17 +229,24 @@ export class BrowseWorkspace {
     return this.buildIndex(force);
   }
   private async buildIndex(force=false):Promise<BrowseIndexSnapshot>{
+    const captured=await this.workspace.memoizeReads(()=>this.buildCapturedIndex(force));
+    captured.value.fingerprint=createHash('sha256').update(this.workspace.readMemoFingerprint(captured.memo)+JSON.stringify(this.roots)+JSON.stringify([...this.data.nativeCatalogFiles].sort())).digest('hex');
+    this.snapshotReads=captured.memo;return captured.value;
+  }
+  private async buildCapturedIndex(force=false):Promise<BrowseIndexSnapshot>{
     this.indexedData.nativeCatalogFiles=this.data.nativeCatalogFiles;
-    force ||= this.workspace.trackingReads;
     const files = await this.files();
     const draftHashes = await Promise.all(files.filter((file) => file.sourceLayer === "workspace" && this.workspace.hasDraft(normalized(path.relative(this.workspace.root, file.path)))).map(async (file) => (await this.workspace.diff(normalized(path.relative(this.workspace.root, file.path)))).afterSha256));
     const fingerprint = createHash("sha256").update(this.fingerprint(files) + draftHashes.join(":" )).digest("hex");
-    if (!force && this.snapshot?.fingerprint === fingerprint) return this.snapshot;
+    if (!force && this.snapshot && this.snapshotCacheKey===fingerprint && this.snapshotReads && await this.workspace.reuseReads(this.snapshotReads)) return this.snapshot;
     const warnings = await this.resolveDependencyDeclarations();
     const text = await this.textIndex(files);
     const textByKey = new Map<string, IndexedText[]>();
     for (const label of text) textByKey.set(label.key, [...(textByKey.get(label.key) ?? []), label]);
-    const context = await this.indexedData.context({ includeRaw: false, includeInherited: true, includeDependencies: true, includeReferences: true, limit: 500_000 });
+    // Browse constructs catalog links from the object fields below. The separate
+    // Data consumer-reference scan is unused here and couples the catalog cache
+    // to every Objects/Triggers edit.
+    const context = await this.indexedData.context({ includeRaw: false, includeInherited: true, includeDependencies: true, includeReferences: false, limit: 500_000 });
     type ContextObject = (typeof context.objects)[number];
     const entries: BrowseEntry[] = context.objects.flatMap((object: ContextObject): BrowseEntry[] => {
       if (!object.id) return [];
@@ -321,7 +335,12 @@ export class BrowseWorkspace {
       const prior = assets.get(key);
       assets.set(key, prior ? { ...prior, referencedBy: unique([...prior.referencedBy, ...asset.referencedBy].map((entry) => JSON.stringify(entry))).map((entry) => JSON.parse(entry) as PhysicalAssetEntry["referencedBy"][number]), evidence: unique([...prior.evidence, ...asset.evidence]) } : asset);
     }
+    // Absence is also a dependency: installing the optional schema must invalidate
+    // an index built without it, even when no catalog files changed.
+    await this.workspace.readBinaryDependency(referenceSchema.manifestFile,true);
+    for(const source of referenceSchema.sources()){const bytes=await this.workspace.readBinaryDependency(source.file);if(createHash('sha256').update(bytes).digest('hex')!==source.sha256)throw Error('BROWSE_SCHEMA_CHANGED_RESTART_REQUIRED');}
     this.snapshot = { fingerprint, builtAt: new Date().toISOString(), entries, assets: [...assets.values()].sort((a, b) => a.path.localeCompare(b.path)), files, warnings };
+    this.snapshotCacheKey=fingerprint;
     return this.snapshot;
   }
 

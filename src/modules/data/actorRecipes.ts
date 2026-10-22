@@ -45,12 +45,13 @@ export function effectModelRecipe(document:DataDocument,args:{id:string;effect:s
 
 /** Short-lived visuals must be ready before their effect event, not only after
  * a model is first requested. Preserve all existing native preload entries. */
-export function visualRecipePreloads(source:string,document:DataDocument,recipes:Array<{id:string;effect:string;model:string;stopEffect?:string}>){
- if(!recipes.length)return source;
+export function visualRecipePreloads(source:string,document:DataDocument,recipes:Array<{id:string;effect:string;model:string;stopEffect?:string}>,additional:Array<{tag:string;id:string}>=[]){
+ if(!recipes.length&&!additional.length)return source;
  const xml=source||'<?xml version="1.0" encoding="utf-8"?>\r\n<Preload/>\r\n',p=scanXml(xml),root=p.rootIds.length===1?p.nodes[p.rootIds[0]]:undefined;
  if(p.diagnostics.some(d=>d.severity==='error')||root?.tag!=='Preload')throw new Error('VISUAL_PRELOAD_XML_INVALID');
  const entries=new Map<string,{tag:string;id:string}>(),add=(tag:string,id:string)=>entries.set(tag+'\0'+id,{tag,id});
  for(const r of recipes){add('Actor',r.id);add('Model',r.model);add('Effect',r.effect);if(r.stopEffect)add('Effect',r.stopEffect);}
+ for(const entry of additional)add(entry.tag,entry.id);
  const effects=new Set(recipes.flatMap(r=>[r.effect,...r.stopEffect?[r.stopEffect]:[]]));
  for(const actor of document.objects().filter(o=>o.ctype==='CActorSound'&&o.id))if(actor.fields.some(f=>f.name==='On'&&effects.has(/^Effect\.([A-Za-z_][A-Za-z0-9_]*)\./.exec(f.attrs.Terms??'')?.[1]??''))){add('Actor',actor.id!);for(const f of actor.fields)if(f.name==='Sound'&&f.value)add('Sound',f.value);}
  const missing=[...entries.values()].filter(e=>!p.nodes.some(n=>n.parentId===root.id&&n.tag===e.tag&&n.attrs.id===e.id));

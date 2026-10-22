@@ -1,0 +1,441 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-22T05:57:33.867Z",
+  "scope": "Restricted regional native topology through the existing owned landscape generator, source preservation and catalog-cache invalidation",
+  "recipeRevision": 3,
+  "fixes": [
+    "Bounded rectangular cliff strokes and cardinal width-four ramps in config.terrain.topology",
+    "Semantic native XML cell/ramp row ownership plus masked HMAP/SMAP/CLIF/LFCT patches; deliberately unchanged or absent touched cells stay guarded",
+    "Separate one-time flat foundation preparation in the complete transaction; existing ledger migration rejects when it would invalidate preimages",
+    "Dependency-aware regional rebuild and removal, preserving independent regions and ancestor object IDs with actual final-height resnap",
+    "Exclude top-level t3Terrain.xml from the interpreted GameData catalog index; real catalog edits still invalidate retained snapshots"
+  ],
+  "mcp": {
+    "foundation": "f9216711-8074-4bb8-af22-59c9b064fe03",
+    "author": "b0697d59-f8c7-4c1e-8666-7c40eb7a9bf8",
+    "authorSteps": 19,
+    "repeatChangedFiles": 0,
+    "finalRepeatChangedFiles": 0,
+    "foundationPreparation": {
+      "changed": true,
+      "changedVertices": 6305,
+      "maxWorldDelta": 0.00006159078491663195
+    },
+    "archiveAudit": {
+      "recordedAt": "2026-10-22T05:51:24.842Z",
+      "outcome": "passed",
+      "states": [
+        {
+          "name": "Initial",
+          "file": "work/topology-owned-20261022/NativeRegions/.sc2mcp-output/OwnedInitial.SC2Map",
+          "sha256": "db5667a0386bb6f297a40f3cda2260380019b4b7190bf07816d6d59f54e48eb8",
+          "trees": [
+            {
+              "id": "1",
+              "type": "AgriaTree",
+              "position": [
+                14,
+                16,
+                9.999786
+              ]
+            },
+            {
+              "id": "2",
+              "type": "AgriaTree",
+              "position": [
+                62,
+                16,
+                9.999786
+              ]
+            }
+          ],
+          "rampCount": 2,
+          "westRampFrames": [
+            [
+              [
+                26,
+                15
+              ],
+              [
+                -1,
+                0
+              ],
+              [
+                0,
+                1
+              ],
+              1,
+              2
+            ]
+          ],
+          "eastGeometry": {
+            "cells": "ed43197dca79d02721e31404794969eec20f46b25087b0514d91794c567412db",
+            "ramps": "21d579c5bf75a0390b88ebc8d7bc04a4e2dea5ff9b492fb12cd8d5185842d2c0",
+            "binary": {
+              "t3HeightMap": "e391335304f3f2f206b4e3467697f2077f44b95e5e325573f4b0add2ce86eefb",
+              "t3SyncHeightMap": "e6af3aff5524243000d484182db7608ae7937ee0ad6d641f2baf85ed9f7298bb",
+              "t3SyncCliffLevel": "be4fcb6409f5f1273e9f1b01ab2c582b6371cd7c3c239851b84917d6a83a1a9e",
+              "t3CellFlags": "f5d880560a1f72083fbc97c8bd3970e241c42db88ec9b58790c6208f1d5a279b"
+            }
+          },
+          "components": {
+            "t3Terrain.xml": "cfaecf630a07d1e75d25e14c8ad709127c814b8a38be74c4df2d733708ee28d6",
+            "t3HeightMap": "c59c8e6ffc9430ee0a6d36ec6e8a14f8e1b7e1dfec9c002beb02229b2bb216ed",
+            "t3SyncHeightMap": "3cbeffd0db6d939609a38e4abd35a041b99a4398803271c481d8d2181aa9ec1e",
+            "t3SyncCliffLevel": "7629e0c31d6380432c1bd0672b91995f82a8d8cf361f994f11a91f86e00481cd",
+            "t3CellFlags": "9f6f10e9b1f715319394e30426771bd76ad13f3c151b332a6dd45e921493072b",
+            "Objects": "f39b949f4debd6960984143d2cca715dca3d4faefca9de34e27468cf4786a0c9"
+          },
+          "ordinaryGalaxyUnchanged": true,
+          "privateInstrumentationEntries": false
+        },
+        {
+          "name": "Lowered",
+          "file": "work/topology-owned-20261022/NativeRegions/.sc2mcp-output/OwnedLowered.SC2Map",
+          "sha256": "728b86e956bf2a1b7521891011749ec162deb8ee286ec653a540104186be358b",
+          "trees": [
+            {
+              "id": "1",
+              "type": "AgriaTree",
+              "position": [
+                14,
+                16,
+                8.000031
+              ]
+            },
+            {
+              "id": "2",
+              "type": "AgriaTree",
+              "position": [
+                62,
+                16,
+                9.999786
+              ]
+            }
+          ],
+          "rampCount": 1,
+          "westRampFrames": [],
+          "eastGeometry": {
+            "cells": "ed43197dca79d02721e31404794969eec20f46b25087b0514d91794c567412db",
+            "ramps": "21d579c5bf75a0390b88ebc8d7bc04a4e2dea5ff9b492fb12cd8d5185842d2c0",
+            "binary": {
+              "t3HeightMap": "e391335304f3f2f206b4e3467697f2077f44b95e5e325573f4b0add2ce86eefb",
+              "t3SyncHeightMap": "e6af3aff5524243000d484182db7608ae7937ee0ad6d641f2baf85ed9f7298bb",
+              "t3SyncCliffLevel": "be4fcb6409f5f1273e9f1b01ab2c582b6371cd7c3c239851b84917d6a83a1a9e",
+              "t3CellFlags": "f5d880560a1f72083fbc97c8bd3970e241c42db88ec9b58790c6208f1d5a279b"
+            }
+          },
+          "components": {
+            "t3Terrain.xml": "03f892215587316fd7a21d044b4a827d170df83be8847b95c3461b0e619e49b6",
+            "t3HeightMap": "8ea650828ee01dafb70a29a7202460291d33f4963c4c495d81b8a4fb063a7550",
+            "t3SyncHeightMap": "43cd4440772326ba6ee471349757e2fbab55bbd5b3c263d51497e31fd7aa9f18",
+            "t3SyncCliffLevel": "f12cc1b16299d9440aeaad107a8e285001cc0055e9aa941a766a5a910e35432c",
+            "t3CellFlags": "25c817d52bfdc872dd2301d8b636964e63ad98e77841cd019986254a9c215082",
+            "Objects": "d55cdc271621568c9b7099a5bc1f38fed6b1402f2fedc88d9d97f0050cce579c"
+          },
+          "ordinaryGalaxyUnchanged": true,
+          "privateInstrumentationEntries": false
+        },
+        {
+          "name": "Final",
+          "file": "work/topology-owned-20261022/NativeRegions/.sc2mcp-output/OwnedFinal.SC2Map",
+          "sha256": "db9ea3071cff3b4144dd2aad42f8cbe9d1eb1778c09d52bc186b67e73d04a658",
+          "trees": [
+            {
+              "id": "1",
+              "type": "AgriaTree",
+              "position": [
+                14,
+                16,
+                9.999786
+              ]
+            },
+            {
+              "id": "2",
+              "type": "AgriaTree",
+              "position": [
+                62,
+                16,
+                9.999786
+              ]
+            }
+          ],
+          "rampCount": 2,
+          "westRampFrames": [
+            [
+              [
+                26,
+                19
+              ],
+              [
+                -1,
+                0
+              ],
+              [
+                0,
+                1
+              ],
+              1,
+              2
+            ]
+          ],
+          "eastGeometry": {
+            "cells": "ed43197dca79d02721e31404794969eec20f46b25087b0514d91794c567412db",
+            "ramps": "21d579c5bf75a0390b88ebc8d7bc04a4e2dea5ff9b492fb12cd8d5185842d2c0",
+            "binary": {
+              "t3HeightMap": "e391335304f3f2f206b4e3467697f2077f44b95e5e325573f4b0add2ce86eefb",
+              "t3SyncHeightMap": "e6af3aff5524243000d484182db7608ae7937ee0ad6d641f2baf85ed9f7298bb",
+              "t3SyncCliffLevel": "be4fcb6409f5f1273e9f1b01ab2c582b6371cd7c3c239851b84917d6a83a1a9e",
+              "t3CellFlags": "f5d880560a1f72083fbc97c8bd3970e241c42db88ec9b58790c6208f1d5a279b"
+            }
+          },
+          "components": {
+            "t3Terrain.xml": "bcb0b060a68fda8e958d8263368d751197d978b7bd4846e63e69e02acd4c6abd",
+            "t3HeightMap": "7c7daf34e0a3e5e9cc770d2a0ca3aa2eb9f6810656e4621dfb68f71e26c1db42",
+            "t3SyncHeightMap": "5c0c7429405ce20050fb0d79a9de5eda7acdd077d9c9810ecf39e0282fd2b209",
+            "t3SyncCliffLevel": "6d69be6dd7783d8cbac365ee47186ba34fdfbdea2bbd77addd211a53f4026f34",
+            "t3CellFlags": "2297c794153f3546235082d289102c3dcfa21276cd3918d6973f66909e0c8959",
+            "Objects": "f39b949f4debd6960984143d2cca715dca3d4faefca9de34e27468cf4786a0c9"
+          },
+          "ordinaryGalaxyUnchanged": true,
+          "privateInstrumentationEntries": false
+        }
+      ],
+      "stableObjectIds": true,
+      "westGroundResnap": [
+        10,
+        8,
+        10
+      ],
+      "eastNativeRowsAndBinaryUnchanged": true,
+      "scope": "Three ordinary MCP exports; east X>=48 native cells/ramps and binary channels remain identical. This is not a general navigation or art certification."
+    },
+    "benchmark": {
+      "id": "06b7ebf3-ccc2-476b-9ad3-34e17a7cf9c5",
+      "sourceUnchanged": true,
+      "retainedSession": true,
+      "plans": [
+        {
+          "id": "cold",
+          "ms": 48287,
+          "changedFiles": 0
+        },
+        {
+          "id": "move",
+          "ms": 1667,
+          "changedFiles": 8
+        },
+        {
+          "id": "warmMoved",
+          "ms": 880,
+          "changedFiles": 0
+        },
+        {
+          "id": "restore",
+          "ms": 1262,
+          "changedFiles": 8
+        },
+        {
+          "id": "warmFinal",
+          "ms": 963,
+          "changedFiles": 0
+        }
+      ],
+      "beforeFix": [
+        {
+          "id": "initial",
+          "ms": 4070,
+          "changedFiles": 10
+        },
+        {
+          "id": "repeat",
+          "ms": 50075,
+          "changedFiles": 0
+        },
+        {
+          "id": "lowered",
+          "ms": 2957,
+          "changedFiles": 7
+        },
+        {
+          "id": "final",
+          "ms": 50163,
+          "changedFiles": 9
+        },
+        {
+          "id": "finalRepeat",
+          "ms": 41924,
+          "changedFiles": 0
+        }
+      ],
+      "scope": "Observed fixture durations only. Warm repeats and changed-zone plans no longer rebuild the unrelated catalog index; cold catalog parsing remains. No client token/billing measurement."
+    }
+  },
+  "native": {
+    "engineBuild": "5.0.17.98310",
+    "gameToolkit": "v0.1.0-dev.11",
+    "cleanLaunches": 6,
+    "retainedBridges": 1,
+    "routeTraversals": 48,
+    "namedViewCaptures": 18,
+    "runs": [
+      {
+        "jobId": "58c8226c-e2c4-4cfb-8e79-b8606b54bf7e",
+        "state": "Initial",
+        "sourceSha256": "db5667a0386bb6f297a40f3cda2260380019b4b7190bf07816d6d59f54e48eb8",
+        "createdAt": "2026-10-22T05:32:19.073Z",
+        "finishedAt": "2026-10-22T05:33:44.102Z",
+        "routeTraversals": 8,
+        "maximumObservedDeviation": 8.881784197001252e-16,
+        "sourceAndArtifactUnchanged": true,
+        "cleanup": true
+      },
+      {
+        "jobId": "7c7f535d-c7a5-4b2b-98e3-b9245653feae",
+        "state": "Initial",
+        "sourceSha256": "db5667a0386bb6f297a40f3cda2260380019b4b7190bf07816d6d59f54e48eb8",
+        "createdAt": "2026-10-22T05:33:44.938Z",
+        "finishedAt": "2026-10-22T05:35:08.796Z",
+        "routeTraversals": 8,
+        "maximumObservedDeviation": 8.881784197001252e-16,
+        "sourceAndArtifactUnchanged": true,
+        "cleanup": true
+      },
+      {
+        "jobId": "05da0588-7795-4bee-9302-bddddbbbd421",
+        "state": "Lowered",
+        "sourceSha256": "728b86e956bf2a1b7521891011749ec162deb8ee286ec653a540104186be358b",
+        "createdAt": "2026-10-22T05:35:10.066Z",
+        "finishedAt": "2026-10-22T05:36:33.844Z",
+        "routeTraversals": 8,
+        "maximumObservedDeviation": 8.881784197001252e-16,
+        "sourceAndArtifactUnchanged": true,
+        "cleanup": true
+      },
+      {
+        "jobId": "2e3868d1-aaa2-47a6-8d47-4baffb71f3a6",
+        "state": "Lowered",
+        "sourceSha256": "728b86e956bf2a1b7521891011749ec162deb8ee286ec653a540104186be358b",
+        "createdAt": "2026-10-22T05:36:34.862Z",
+        "finishedAt": "2026-10-22T05:38:00.153Z",
+        "routeTraversals": 8,
+        "maximumObservedDeviation": 8.881784197001252e-16,
+        "sourceAndArtifactUnchanged": true,
+        "cleanup": true
+      },
+      {
+        "jobId": "7166f4e4-4350-4b6c-be04-26b374fac8cd",
+        "state": "Final",
+        "sourceSha256": "db9ea3071cff3b4144dd2aad42f8cbe9d1eb1778c09d52bc186b67e73d04a658",
+        "createdAt": "2026-10-22T05:38:00.942Z",
+        "finishedAt": "2026-10-22T05:39:24.429Z",
+        "routeTraversals": 8,
+        "maximumObservedDeviation": 8.881784197001252e-16,
+        "sourceAndArtifactUnchanged": true,
+        "cleanup": true
+      },
+      {
+        "jobId": "515e5c8c-37e8-4cef-a819-31cd4dd16e62",
+        "state": "Final",
+        "sourceSha256": "db9ea3071cff3b4144dd2aad42f8cbe9d1eb1778c09d52bc186b67e73d04a658",
+        "createdAt": "2026-10-22T05:39:24.722Z",
+        "finishedAt": "2026-10-22T05:40:54.159Z",
+        "routeTraversals": 8,
+        "maximumObservedDeviation": 8.881784197001252e-16,
+        "sourceAndArtifactUnchanged": true,
+        "cleanup": true
+      }
+    ],
+    "visualReview": {
+      "initialWestAndEastDetail": "reviewed; closed caps, filled ramp and grounded trees in these views",
+      "loweredWestDetail": "reviewed; plateau/ramp removed, tree grounded on the lower surface",
+      "finalWestAndEastDetail": "reviewed; restored plateau, relocated west ramp, independent east ramp",
+      "supplementalCameraSuite": "c57ce336-85b7-4bbd-943e-b67a94ffeaae",
+      "selectedOverview": "Image-5-0.png, yaw90; both pads and ramps are visible",
+      "rejectedOverview": "Initial yaw180/distance125 is cropped; retained as unsuitable framing. Supplemental distance190 is visible but less readable.",
+      "secondRunPixels": "Captured but not separately reviewed",
+      "aestheticApproval": false
+    },
+    "diagnostics": "No unexpected errors in available sources; optional partial-source diagnostics remain inconclusive",
+    "navigationRebuilt": false,
+    "arbitraryTopologyCertified": false,
+    "buildabilityCertified": false
+  },
+  "regressions": {
+    "tests": 1313,
+    "pass": 1312,
+    "fail": 0,
+    "skipped": 1,
+    "testConcurrency": 4,
+    "reportSha256": "80f4bd6ca08809e543f856621c1719430490d4bdb332a464538439641cda6398",
+    "nativeOwnershipCases": 8,
+    "catalogCacheCase": "Native XML changes reuse snapshot; actual TerrainData catalog changes invalidate it"
+  },
+  "retainedFailures": [
+    {
+      "kind": "regression fixture",
+      "reason": "First targeted test placed its tree inside the conservative ramp protection rectangle. Corrected the fixture position, retained the guard."
+    },
+    {
+      "id": "2cf737a8-3559-422b-901e-32024de7c456",
+      "kind": "first benchmark harness",
+      "reason": "All MCP steps passed, but the catalog fingerprint upgrade correctly changed one ledger file. The initial no-op assertion and seven-source guard failed. Re-run after upgrade passed without changing final source bytes."
+    }
+  ],
+  "openCoverage": [
+    "Other topology/ramp widths, diagonals, edge/junction/donor profiles beyond the restricted supported matrix",
+    "Authoritative native navigation/collision/buildability queries",
+    "Complex typed GUI native save/reopen remains pending on the old live handler",
+    "Other Data targeting/charge/veterancy and presentation variants",
+    "Finished mission composition, art direction, balance and human aesthetic review"
+  ],
+  "sourceFingerprints": {
+    "src/modules/terrain/nativeTopologyOwnership.ts": "fdfd52b685e9cbe824a70ef449c972e76ede7d4633acf20ecb0beac38323bc7c",
+    "src/modules/terrain/nativeGeometry.ts": "92fcc23262ecf992bf11d0b4e36421291e03d2dc5282d7b1dcab899250b27856",
+    "src/modules/terrain/operations.ts": "9eecdfc0b16d730b32a056548f1701ef52df8117fc75e901aa2e1a4a60d56598",
+    "src/modules/terrain/landscapeOwnership.ts": "7c0b7716e7cef85f7f555b48d70111079c28c44bc30e1a108936b9eca413a606",
+    "src/modules/terrain/schemas.ts": "d12774cf8becc939d3365a2eee1fee208e99cf5d75e8b4157257ad6f896c0588",
+    "src/modules/terrain/workspace.ts": "733a1a9fd157c808522fce8ffccad073be916416c121140ea9ef0588e4e271fe",
+    "src/modules/terrain/tools.ts": "995c8d8f7a32f67eab294bc7a05765bada071d4b1d722e98b127407467071f5f",
+    "src/modules/browse/workspace.ts": "8dd42613a0624fedce8bf7349f3aeb7a2bfb5f38287e8661660eb6bbeaabab2a",
+    "src/tests/landscapeNativeOwnership.test.ts": "830673a0b3918e8c36106fc690bdfdac372ea66ed1047c8ad81c604cbe7efcb6",
+    "src/tests/browseModule.test.ts": "6bdf1d8141d153402fd3d6d7dfcf895e0b004fb9160d22b9e47756d4be43297d"
+  },
+  "portable": {
+    "state": "passed",
+    "candidate": "release/SC2EditorToolkit-NativeOwnership-dev11-20261022",
+    "published": false,
+    "compiledFingerprints": {
+      "modules/terrain/operations.js": "4f1dbda387eb5dc5156a444dabcf8f9350fe13a6235273f5c54c882c748278eb",
+      "modules/terrain/nativeGeometry.js": "1770c3eefbca6c30eca93c7fbb9a58b0ceb19954ed1342cab060ca92df4b2271",
+      "modules/terrain/landscapeOwnership.js": "e3d4ee66ab664e8326546c2f3005c9d8aa95a08529db44bb59459f0aa91856e5",
+      "modules/terrain/nativeTopologyOwnership.js": "fd21de0876e6e610ffb0631fb11604d2d02e57df6eee17864506b6c26836cc94",
+      "modules/terrain/schemas.js": "2899b40dc06ac38960b28e3386e828fc97e140a890127166c18bdb94e5fd2736",
+      "modules/terrain/tools.js": "c3923c702f7987542b540205173a371a78c1451bde50bfcc6b1a7629032b8a32",
+      "modules/browse/workspace.js": "656b0d674d79a1db54334ea0fa57a47d4495e792ee1292157cbda35aa2a6814a",
+      "modules/terrain/loadContract.js": "26f69590590f52fcacbaa2e246c803b20a01c9214476dff90fc51db1a49481ea",
+      "modules/document/codecs/terrainLoadContract.js": "cbb1027dc1a35edf6d6ae7696d3cf6734012931100a6cc7ef9371364f17f5dd4",
+      "archive/terrainLoadContract.js": "e75cb33ed451bd6e1b1733f2d5f42076a5b38c1196a51da6b328220e2ac9b56d",
+      "modules/testing/workspace.js": "d3b95e219b7bb22cd00b3c43dc996549e6781373c6450d147c5fa54af8bd92e5",
+      "modules/terrain/workspace.js": "3c2099150d610f1ac7ca7d4d3d759fef9436ebf4e6c9e2fe8a5a90ffcf5a636c",
+      "modules/map/workspace.js": "07961fc1f4fe91d83d5811b4a4a254f7a98cbef4eb7fcb615de470f703e56d0b",
+      "modules/trigger/authoring.js": "3dd7645c0a7b93a5ddc51a6407d5182460083921ea39481c598795f59059c931",
+      "app/authoringScript.js": "7ef7b344e07ab675142d5d1071c77d269386705eefb6617885ab12745b642b80",
+      "modules/data/document.js": "2a003f2061251c18cfde806fc974379efae76ae061bf094bb15684aa409f21d1",
+      "modules/data/authoringValidation.js": "1122c9e2c2d0366259e9d956d1e7239ffe4cedffc1332d6062e0bcd0c8f1a963",
+      "modules/data/tools.js": "9d96132663d49c44e45c5a0c48330f605b1e0819dece7add264539982ccb70e4",
+      "modules/data/workspace.js": "e24058703f27b5e32ee24cdd9519d106cba35fadc79187e10602a6e7a75834d1",
+      "modules/data/abilityRecipes.js": "85133d48356a62d8e9779c873aa5129aa6dc430db5c485fd1057139b0a4173f9"
+    },
+    "nativeTopologyIntentSchema": true,
+    "dataRejectionIsError": true,
+    "privacy": {
+      "passed": true,
+      "checkedFiles": 9942,
+      "privateSourceFiles": 2331,
+      "privateCorpusCompared": true,
+      "violations": [],
+      "scope": "Explicit private paths/debug/test artifacts and exact external C++/Python/Galaxy source copies, including renamed files. Not proof against transformed snippets or binary reverse engineering."
+    }
+  }
+}

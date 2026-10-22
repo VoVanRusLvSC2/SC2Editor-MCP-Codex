@@ -316,6 +316,15 @@ export class PlacementDocument {
   move(id: number, position: PlacementObject["position"]): void {
     this.setAttribute(id, "Position", positionText(position));
   }
+  /** Edit a complete move run against one parse, preserving unrelated XML bytes. */
+  moveMany(objects:Array<{objectId:number;position:PlacementObject['position']}>):void {
+    if(!objects.length)return;
+    const nodes=new Map<number,XmlNode>();for(const node of this.children(this.root()))if(/^\d+$/.test(node.attrs.Id??'')){const id=Number(node.attrs.Id);if(nodes.has(id))throw Error('DUPLICATE_PLACEMENT_ID: '+id);nodes.set(id,node);}
+    const values=new Map<number,string>();for(const object of objects){if(!nodes.has(object.objectId))throw Error('Placement object '+object.objectId+' not found');values.set(object.objectId,positionText(object.position));}
+    const edits:Array<{start:number;end:number;text:string}>=[];
+    for(const [id,value]of values){const node=nodes.get(id)!,span=node.attrSpans.find(a=>a.name==='Position');if(span){if(this.source.slice(span.valueStart,span.valueEnd)!==value)edits.push({start:span.valueStart,end:span.valueEnd,text:value});}else{const offset=node.startTagEnd-(node.selfClosing?2:1);edits.push({start:offset,end:offset,text:' Position="'+value+'"'});}}
+    if(edits.length){const parts:string[]=[];let cursor=0;for(const e of edits.sort((a,b)=>a.start-b.start)){parts.push(this.source.slice(cursor,e.start),e.text);cursor=e.end;}parts.push(this.source.slice(cursor));this.source=parts.join('');this.reparse();}
+  }
   setHeightAbsolute(id: number, value: boolean): void {
     const node = this.objectNode(id);
     if (node.tag !== "ObjectDoodad")
@@ -374,6 +383,14 @@ export class PlacementDocument {
     }
     this.replace(start, end, "");
   }
+  /** Validate every target before removing a whole owned group with one reparse. */
+  removeMany(ids:number[]):void {
+    if(!ids.length)return;if(new Set(ids).size!==ids.length)throw Error('DUPLICATE_PLACEMENT_REMOVAL');
+    const nodes=new Map<number,XmlNode>();for(const node of this.children(this.root()))if(/^\d+$/.test(node.attrs.Id??'')){const id=Number(node.attrs.Id);if(nodes.has(id))throw Error('DUPLICATE_PLACEMENT_ID: '+id);nodes.set(id,node);}
+    const newline=newlineOf(this.source),ranges=ids.map(id=>{const node=nodes.get(id);if(!node)throw Error('Placement object '+id+' not found');let start=node.start,end=node.end;if(this.source.slice(end,end+newline.length)===newline)end+=newline.length;else{const lineStart=this.source.lastIndexOf('\n',Math.max(0,start-1))+1;if(/^\s*$/.test(this.source.slice(lineStart,start)))start=lineStart;}return {start,end};}).sort((a,b)=>a.start-b.start);
+    const merged:Array<{start:number;end:number}>=[];for(const r of ranges){const last=merged.at(-1);if(last&&r.start<=last.end)last.end=Math.max(last.end,r.end);else merged.push({...r});}
+    const parts:string[]=[];let cursor=0;for(const r of merged){parts.push(this.source.slice(cursor,r.start));cursor=r.end;}parts.push(this.source.slice(cursor));this.source=parts.join('');this.reparse();
+  }
 
   apply(
     operations: PlacementMutation[],
@@ -395,10 +412,13 @@ export class PlacementDocument {
           result.push({ index: start + offset, op: "add", objectId });
         continue;
       }
+      if(operation.op==='remove'){
+        const start=index,ids:number[]=[];while(index<operations.length&&operations[index].op==='remove')ids.push((operations[index++] as Extract<PlacementMutation,{op:'remove'}>).objectId);this.removeMany(ids);for(const [offset,objectId]of ids.entries())result.push({index:start+offset,op:'remove',objectId});continue;
+      }
+      if(operation.op==='move'){
+        const start=index,moves:Array<Extract<PlacementMutation,{op:'move'}>>=[];while(index<operations.length&&operations[index].op==='move')moves.push(operations[index++] as Extract<PlacementMutation,{op:'move'}>);this.moveMany(moves);for(const [offset,m]of moves.entries())result.push({index:start+offset,op:'move',objectId:m.objectId});continue;
+      }
       switch (operation.op) {
-        case "move":
-          this.move(operation.objectId, operation.position);
-          break;
         case "rotate":
           this.rotate(operation.objectId, operation.rotation);
           break;
@@ -407,9 +427,6 @@ export class PlacementDocument {
           break;
         case "setHeightAbsolute":
           this.setHeightAbsolute(operation.objectId, operation.value);
-          break;
-        case "remove":
-          this.remove(operation.objectId);
           break;
       }
       result.push({ index, op: operation.op, objectId: operation.objectId });

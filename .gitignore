@@ -40,6 +40,7 @@ __pycache__/
 
 # Source publication: private inputs and compiled native helpers stay local
 /native/bin/
+/native/build-*/
 /examples/
 /src/tests/fixtures/
 /tests/terrain-surface/fixtures/
@@ -67,3 +68,6 @@ __pycache__/
 /.native-toolkit-runtime/
 .sc2mcp-output/
 .sc2mcp-telemetry/
+
+# Private, versioned Game Toolkit runtime; never publish upstream sources or binaries
+/.game-toolkit-runtime/

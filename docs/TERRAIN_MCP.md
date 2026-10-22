@@ -1,5 +1,19 @@
 # Terrain MCP
 
+`placement.createLocation` can combine an irregular polygon, existing terrain
+generation, authored roads and decoration in one terrain/Objects/ComponentList
+transaction. Its `terrain.routes` entries accept points, width, optional texture,
+and explicit `flatten`/height. Flattening defaults off. Painted/flattened strokes
+must fit entirely inside the location, including round caps; cross-zone roads use
+a separate `terrain.feature`/road plan. Protected areas remain in force.
+Decoration pivots are excluded from reserved route corridors before placement.
+This pivot check is not model-bound or engine-footprint clearance; use measured
+groups and navigation/native review for those requirements. The existing basic
+generation recipe still rewrites terrain inside its area; named incremental
+ownership is provided by `terrain.compose` for object groups. The named intent
+form of `terrain.landscape.plan` adds incremental height/texture/object ownership
+and explicit overlay dependencies; see [incremental locations](LANDSCAPE_OWNERSHIP.md).
+
 Terrain is part of the existing server and GUI. It edits supported **unpacked native component bundles**, not MPQ archives, and requires existing terrain. It does not construct a new map bundle from scratch. `SC2_UI_ROOT` identifies the unpacked map/mod root; `directory` selects terrain beneath that root.
 
 For the new scoped `terrain.surface.*` inspection tools, see the [complete module guide](TERRAIN.md).
@@ -9,11 +23,13 @@ For the new scoped `terrain.surface.*` inspection tools, see the [complete modul
 | Command | Result |
 | --- | --- |
 | `terrain.inspect`, `terrain.capabilities` | Component hashes, formats, physical bounds, supported writers and explicit limitations |
+| `terrain.load.inspect`, `terrain.load.repair` | Native allocation/Q12 checks and a restricted legacy level-one load repair plan; surface/gameplay payloads preserved |
 | `terrain.sample`, `terrain.analyze` | Heights, slopes, mask and texture diagnostics; optional planned result |
 | `terrain.palette.get`, `terrain.assets` | Actual palette/block sets and Browse catalog searches |
 | `terrain.styles.list` | Ten deterministic recipe presets |
 | `terrain.plan` | Isolated plan from 1–100 validated operations |
 | `terrain.paint`, `terrain.blend` | Real texture brush plans; blend defaults to strength 0.5 |
+| `terrain.cliff.repair`, `terrain.ramp.repair` | Bounded supported cliff normalization or diagnosed legacy direction repair; guarded plan, no automatic save |
 | `terrain.hide`, `terrain.show`, `terrain.visibility.inspect` | LFCT v102 ground-hidden cell/area plans and bounded samples |
 | `terrain.generate` | Area-based relief and painting recipe with seed/materials |
 | `terrain.road`, `terrain.river`, `terrain.lake` | Corridor flattening/channel carving/lake basin; optional flat v110 water rectangles on the 8-cell grid |
@@ -25,6 +41,11 @@ For the new scoped `terrain.surface.*` inspection tools, see the [complete modul
 | `terrain.apply`, `terrain.save`, `terrain.rollback` | Dry-run, grouped staging, commit and in-session byte restoration |
 
 Exact input definitions: [generated schemas](../generated/terrain-tools.json).
+
+`terrain.save` accepts exactly one staged `transactionId` or applied `planId`.
+An unchanged applied plan verifies its source bytes again and reports `unchanged`
+without creating or committing another group. Compact Terrain commands use this
+plan identity for both apply and save, including repeat/no-change operations.
 
 ## Operation batch
 
@@ -104,12 +125,54 @@ Height writes require supported sync data and unit scale. Existing base/mask fie
 
 Flat-table rectangle authoring is bounded to the observed 8-cell grid and rejects overlap. Catalog height/color/UV/lava settings support isolated parent-based materials. Extents conservatively exclude placement; actual wet ground, clipping and rendering remain unverified. Whole-map stamps require matching dimensions/transform/tileset/cliff sets, available textures, matching water table names and stale-donor checks. Existing Objects/triggers are retained and may require repositioning.
 
-Native cliff/ramp creation/removal, pathing painting, complex water bodies/waves and vertex color painting are unsupported and fail explicitly. Other binary components remain opaque. Map supplies a verified-content archive backend through [Map](MAP_MCP.md).
+Native cliff/ramp edits support the explicit v115 identity profile: rectangular
+two-cell cliff strokes and measured cardinal width-four ramps. Nonflat cliff
+junctions require adjacent levels 1..3. Their CLIF sync words now use the full
+coarse corner shape, matching 396 original native reference cells across 12
+orientations. Saddle, multi-level and void joins fail instead of writing guessed
+sync data. Supported strokes also normalize fine HMAP edge/center levels using
+one observed native 3x3 pattern per orientation and update SMAP. Coarse corners,
+authored base heights and upper mask bits are preserved; measured ramp vertices
+are protected, including a brush halo sharing their boundary. This is not an
+arbitrary-topology repair or engine navigation/collision rebuild. Complex water
+bodies/waves and unsupported binary profiles remain explicit limits. Map supplies
+a verified-content archive backend through [Map](MAP_MCP.md).
 
-Four user-supplied native maps provide compressed component fixtures with SHA-256 manifests. `npm test` exercises parsing, preservation, sync edits, stale plans, grouped save/rollback, styles/features, placement and GUI API/stdio integration. `npm run terrain:schemas` rebuilds schemas; `npm run terrain:demo` generates a diagnostic PNG and stage/save/restore report on a disposable fixture copy. It does not produce a playable SC2Map. The EXE evidence contains strings/addresses, not recovered serialization or a decompilation claim. SC2Editor open/save, visual acceptance and in-game runtime remain NOT_EXECUTED.
+`terrain.cliff.repair` plans a bounded normalization of already registered f=1
+cliff cells. It fixes fine-vertex pits/spikes and CLIF/SMAP/LFCT sync using the
+supported corner profile, without repainting coarse corners or base heights.
+Unregistered freeform terrain is left alone; ramp contact and unmeasured cell or
+junction profiles reject before any commit. It is not a general hole filler.
+Review the plan and persist through the ordinary `terrain.apply`/save transaction.
+The compact equivalent is `terrain cliff.repair rect=14,20,16,22` in
+`modkit.author`. Cliff-paint synchronization halos also retain authored base
+heights outside the stroke.
+
+Ramp direction is the native enum (south=0, north=1, west=2, east=3), not an
+eight-heading compass angle. The previous rotated generator could produce open
+side caps even when ground movement worked. `terrain.ramp.repair` repairs that
+specific legacy profile by changing only its `dir` attribute, after matching all
+measured frames and terrain channels. Hand-edited or unknown profiles reject.
+Use the same guarded plan/apply flow, or `terrain ramp.repair index=0` in the
+compact authoring interface. This does not rebuild navigation caches.
+
+Mixed height/native-geometry plans flush ordinary SMAP height deltas before each
+native operation and start a fresh height baseline afterward. Native ramp donor
+residuals must not receive the cliff displacement twice. `changedVertices` counts
+actual final world-height changes, including native-only plans. The
+[operation-order checkpoint](verification/terrain-operation-order-2026-10-22.json)
+compares combined and sequential MCP edits and includes exact-archive ground
+traversal and reviewed native views; it does not certify arbitrary topology.
+
+Native geometry keeps additional cliff-cell and cliff/ramp-list attributes.
+Unknown nested rows, embedded text or comments inside those regenerated lists
+reject before staging instead of being silently discarded. This preservation
+contract does not establish the engine semantics of unknown attributes.
+
+Four user-supplied native maps provide compressed component fixtures with SHA-256 manifests. `npm test` exercises parsing, preservation, sync edits, stale plans, grouped save/rollback, styles/features, placement and GUI API/stdio integration. `npm run terrain:schemas` rebuilds schemas; `npm run terrain:demo` generates a diagnostic PNG and stage/save/restore report on a disposable fixture copy. That historical demo does not produce a playable SC2Map. The EXE evidence contains strings/addresses, not recovered serialization or a decompilation claim. Native acceptance is scoped to the exact recorded fixtures, not inferred from those static reports.
 
 Validation summary: [test report](../generated/terrain-test-report.json), [portable HTTP smoke](../generated/terrain-portable-smoke.json). Browser visual inspection and Windows launcher execution were not run here. Format references: [sc2-file-format-docs](https://github.com/sc2-arcade-watcher/sc2-file-format-docs), based on reverse engineering; corpus mismatches are resolved conservatively (SMAP is interleaved in all supplied maps).
 
 Terrain also supports [terrain-aware Doodad scatter and existing-object snapping](TERRAIN_DOODADS.md), bounded traversal and compact plan responses. Current validation: [Doodad report](../generated/terrain-doodads-test-report.json). Prior reports are historical evidence.
 
-Water commands: `terrain.water.inspect` and `terrain.water.plan`. See [Russian guide and XML example](TERRAIN_WATER.md). The current Terrain tool schemas, including `terrain.surface.*`, are generated by `npm run terrain:schemas`. See the [full Russian module guide](TERRAIN.md).
+Water commands: `terrain.water.inspect` and `terrain.water.plan`. See [water guide and XML example](TERRAIN_WATER.md). The current Terrain tool schemas, including `terrain.surface.*`, are generated by `npm run terrain:schemas`. See the [complete module guide](TERRAIN.md).

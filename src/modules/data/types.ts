@@ -24,6 +24,7 @@ export interface DataObject {
   objectIdentity?:{domain?:string;id?:string};
   declarationKey?:{file:string;start:number};
   tokens?: Record<string,string>;
+  tokenTypes?: Record<string,string>;
   ctype: string;
   domain?: string;
   id?: string;
@@ -91,6 +92,12 @@ export interface DataTextureVitalLayerSpec {
 export type DataObjectSelector = string | { id: string; ctype?: string; domain?: string };
 
 export type DataOperation =
+  | ({op:'recipe.unitAbilityAnimation'} & import('./unitAnimations.js').UnitAbilityAnimationRecipe)
+  | ({op:'recipe.veterancy'} & import('./veterancyRecipe.js').VeterancyRecipe)
+  | ({op:'recipe.instantAbility'} & import('./abilityRecipes.js').InstantAbilityRecipe)
+  | ({op:'recipe.targetAbility'} & import('./abilityRecipes.js').TargetAbilityRecipe)
+  | ({op:'recipe.projectileEffect'} & import('./projectileRecipe.js').ProjectileEffectRecipe)
+  | ({op:'recipe.abilityCharges'} & import('./abilityCharges.js').AbilityChargesRecipe)
   | { op:"recipe.unitActor"; id:string; unit:string; sourceActor:string; model:string; replace?:boolean; scale?:number }
   | { op:"recipe.effectModel"; id:string; effect:string; model:string; at?:"Caster"|"Target"|"Effect"|"Source"; event?:"Start"|"Stop"; stopEffect?:string; stopEvent?:"Start"|"Stop"; orphanPolicy?:"keep"|"stop"; host?:"_Selectable"; inheritScale?:boolean; scale?:number; siteOp?:string; replace?:boolean }
   | { op: "object.create"; as?: string; ctype: string; id: string; parent?: string; attrs?: Record<string, DataScalar>; fields?: DataNativeFieldSpec[] }

@@ -1,8 +1,16 @@
-# Creating an Empty Map Base and Fashion
+# Creating an empty map or mod
 
-The `document.*` creates a new framework of parameters: a regular mod, extension mod, an empty Arcade map with or without Terrain. It does not require a registered card or copy someone else's scenario. It creates a flat initial grid with a selected texture for the surface; further landscape generation and game script are performed by existing modules separately.
+`document.*` creates a dependent mod, extension mod, or empty Arcade map with or without Terrain. It creates fresh metadata and, when requested, a flat grid with a selected terrain texture. Use the existing landscape, Data and scripting modules to author content afterwards.
 
-The implementation is available locally in the `codex/document-foundation` branch. Research and source game data are not published. SC2 Editor does not start; the result is verified by native codecs, real SDK calls and pack/reopen MPQ. The matching of all internal defaults with the editor and game launch has not yet been confirmed.
+Planning and creation do not start SC2 Editor. Verification covers native codecs, SDK calls and MPQ pack/reopen. A fresh Agria document also passed two native game launches and flat-ground traversals; this scoped fixture does not establish complete Editor defaults or universal startup compatibility. Research and source game data are excluded from the public package.
+
+`document.plan.foundation.heightEditing` reports the uniform foundation's
+representable fine-height range and upward/downward room before creation. The
+stored coarse/base channel is preserved during ordinary height editing. With
+the current profile, base height 8 leaves about one unit of upward room, whereas
+base height 4 leaves about five. Native requantization is unsupported. Use
+`terrain.analyze` after authoring to inspect the remaining common range for an
+area; differing cliff base channels can leave no common range.
 
 ## Supported parameters
 
@@ -18,9 +26,9 @@ Source-backed local profile: Header H2CS v8, version markers v2, MapInfo v39, Te
 
 For the map, there is only an empty `InitMap` - a system entry point without gameplay initialization. Author objects, triggers, libraries and scripting functions are not added. Melee/Training initialization is not added.
 
-## Teams.
+## Tools
 
-| Team team. | Appointment |
+| Tool | Purpose |
 | --- | --- |
 | `document.capabilities` | Real profiles and limitations |
 | `document.types` | What parameters are applicable to each species |

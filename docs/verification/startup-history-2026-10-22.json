@@ -1,0 +1,411 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-22T16:38:13.665Z",
+  "status": "passed_with_scoped_limits",
+  "scope": "Reusable retained-startup event observation and native GUI event/callback roundtrip on an unchanged saved EventsMap; not universal GUI semantics or general launch certification",
+  "implementation": {
+    "entry": "project.test.plan/run",
+    "manifest": "game.startupEvents",
+    "exactScalarFilters": true,
+    "explicitKindAndSource": true,
+    "readsRetainedHistoryBeforeCursorPolling": true,
+    "onlyReturnedOpaqueCursors": true,
+    "independentDeadlines": true,
+    "epochSessionMapChangeInvalidatesObservation": true,
+    "boundedPages": 256,
+    "positiveOccurrenceCanPassWithDroppedHistory": true,
+    "absenceNeverProvesNoEvent": true,
+    "callbackAssertionsRemainSeparate": true,
+    "readinessSelector": "Unit type/owner/area plus exact inspected native life/shields/energy",
+    "newMapSpecificServerCode": false,
+    "originalMapChanged": false,
+    "privateSdkModified": false
+  },
+  "gameBuild": "5.0.17.98310",
+  "source": "work/gui-acceptance-20261022/EventsMap/.sc2mcp-output/GuiEvents.SC2Map",
+  "sourceSha256": "b7ed5bc7e4a79e64182930531910731698bd806233e051414f36fd67bda58cf4",
+  "cleanLaunches": 2,
+  "sameRetainedBridges": true,
+  "runs": [
+    {
+      "jobId": "4451af76-6435-44cf-97e8-54b72aa53076",
+      "createdAt": "2026-10-22T16:30:49.024Z",
+      "finishedAt": "2026-10-22T16:33:28.904Z",
+      "outcome": "passed",
+      "sourceSha256": "b7ed5bc7e4a79e64182930531910731698bd806233e051414f36fd67bda58cf4",
+      "testedArtifact": {
+        "file": "K:\\SC2_MAP_Workspace\\SC2Editor-MCP-Codex\\.sc2mcp-output\\project-tests\\4451af76-6435-44cf-97e8-54b72aa53076\\Final.SC2Map",
+        "sha256": "5c97e98d421d86e3b67ceaf90f1cbb94362c10027e9c307ff458bcd6f2c4479c",
+        "origin": "native_saved"
+      },
+      "checks": [
+        {
+          "id": "archive",
+          "status": "passed"
+        },
+        {
+          "id": "editor",
+          "status": "passed"
+        },
+        {
+          "id": "editor.game_artifact",
+          "status": "passed"
+        },
+        {
+          "id": "map.terrain_load",
+          "status": "passed"
+        },
+        {
+          "id": "game.launch",
+          "status": "passed"
+        },
+        {
+          "id": "game.build",
+          "status": "passed"
+        },
+        {
+          "id": "game.ready",
+          "status": "passed"
+        },
+        {
+          "id": "startup_event:startupDeath",
+          "status": "passed"
+        },
+        {
+          "id": "scenario:eventsAndUI",
+          "status": "passed"
+        },
+        {
+          "id": "scenario:library",
+          "status": "passed"
+        },
+        {
+          "id": "scenario:nested",
+          "status": "passed"
+        },
+        {
+          "id": "scenario:record",
+          "status": "passed"
+        },
+        {
+          "id": "scenario:preset",
+          "status": "passed"
+        },
+        {
+          "id": "scenario:localArray",
+          "status": "passed"
+        },
+        {
+          "id": "game.diagnostics",
+          "status": "inconclusive",
+          "reason": "No unexpected errors observed in available sources; diagnostic coverage is partial"
+        },
+        {
+          "id": "game.capture",
+          "status": "passed"
+        },
+        {
+          "id": "game.cleanup",
+          "status": "passed"
+        },
+        {
+          "id": "artifact.unchanged",
+          "status": "passed"
+        },
+        {
+          "id": "source.unchanged",
+          "status": "passed"
+        }
+      ],
+      "event": {
+        "matched": {
+          "sequence": 1,
+          "gameTime": 3,
+          "kind": "unit_died",
+          "unit": "2991ca8f06cc7074222558dfbb8bc76b:u:2",
+          "unitType": "Marine",
+          "unitMetadataCurrent": true,
+          "owner": 1,
+          "position": {
+            "x": 30.0801,
+            "y": 16.8
+          },
+          "unitMetadataGameTime": 3,
+          "source": "galaxy"
+        },
+        "queryGameTime": 3.75,
+        "pagesRead": 1,
+        "dropped": false,
+        "stream": {
+          "session": "2991ca8f06cc7074222558dfbb8bc76b",
+          "runtimeEpoch": "bcbfe55c03a993a08ad48b247843343d",
+          "mapLoadSerial": 1
+        }
+      },
+      "markerStates": {
+        "initial": 13,
+        "firstResult": 14,
+        "secondResult": 15,
+        "unitEventResult": 44,
+        "timerResult": 23
+      },
+      "components": {
+        "Triggers": {
+          "bytes": 53025,
+          "sha256": "d49e54e48341a74cfb37b0e52f1a07bbbed70b7f1b14cbb7c0a6e1be33e21f6d",
+          "byteEqual": true,
+          "elements": 306
+        },
+        "MapScript.galaxy": {
+          "bytes": 13101,
+          "sha256": "729cf5661c53752cb58e43c9f45ab472950eddc8e2d53d68e6e0d521b38430c1",
+          "byteEqual": true
+        },
+        "Objects": {
+          "bytes": 2182,
+          "sha256": "781ce349ec2abaa434a607a2ed4248b4768210c178df25b8ca2f07dd7f1f1b6b",
+          "byteEqual": true
+        },
+        "t3Terrain.xml": {
+          "bytes": 6117,
+          "sha256": "8cb945adc1ca575f5b25011435e7266aa76d19094a3b247ecc215b08d12c19e9",
+          "byteEqual": true
+        }
+      },
+      "realUiHandlerConfirmations": 2,
+      "nativeSaveCloseReopen": true,
+      "exactSavedArtifactRevalidation": true,
+      "report": ".sc2mcp-output/project-tests/4451af76-6435-44cf-97e8-54b72aa53076/result.json",
+      "image": ".sc2mcp-output/project-tests/4451af76-6435-44cf-97e8-54b72aa53076/Game.png",
+      "runtime": {
+        "provenance": "pinned_release",
+        "releaseTag": "v0.1.0-dev.11",
+        "archiveSha256": "514096c72332f4d6629dee4a33a092957d3ee02a9c45281bb3a7ad59031c30f3",
+        "verifiedFiles": 113,
+        "binaryOverride": false
+      }
+    },
+    {
+      "jobId": "26a9fcc4-ac8a-4cb5-ad93-292b88469a8f",
+      "createdAt": "2026-10-22T16:33:29.016Z",
+      "finishedAt": "2026-10-22T16:35:46.997Z",
+      "outcome": "passed",
+      "sourceSha256": "b7ed5bc7e4a79e64182930531910731698bd806233e051414f36fd67bda58cf4",
+      "testedArtifact": {
+        "file": "K:\\SC2_MAP_Workspace\\SC2Editor-MCP-Codex\\.sc2mcp-output\\project-tests\\26a9fcc4-ac8a-4cb5-ad93-292b88469a8f\\Final.SC2Map",
+        "sha256": "5c97e98d421d86e3b67ceaf90f1cbb94362c10027e9c307ff458bcd6f2c4479c",
+        "origin": "native_saved"
+      },
+      "checks": [
+        {
+          "id": "archive",
+          "status": "passed"
+        },
+        {
+          "id": "editor",
+          "status": "passed"
+        },
+        {
+          "id": "editor.game_artifact",
+          "status": "passed"
+        },
+        {
+          "id": "map.terrain_load",
+          "status": "passed"
+        },
+        {
+          "id": "game.launch",
+          "status": "passed"
+        },
+        {
+          "id": "game.build",
+          "status": "passed"
+        },
+        {
+          "id": "game.ready",
+          "status": "passed"
+        },
+        {
+          "id": "startup_event:startupDeath",
+          "status": "passed"
+        },
+        {
+          "id": "scenario:eventsAndUI",
+          "status": "passed"
+        },
+        {
+          "id": "scenario:library",
+          "status": "passed"
+        },
+        {
+          "id": "scenario:nested",
+          "status": "passed"
+        },
+        {
+          "id": "scenario:record",
+          "status": "passed"
+        },
+        {
+          "id": "scenario:preset",
+          "status": "passed"
+        },
+        {
+          "id": "scenario:localArray",
+          "status": "passed"
+        },
+        {
+          "id": "game.diagnostics",
+          "status": "inconclusive",
+          "reason": "No unexpected errors observed in available sources; diagnostic coverage is partial"
+        },
+        {
+          "id": "game.capture",
+          "status": "passed"
+        },
+        {
+          "id": "game.cleanup",
+          "status": "passed"
+        },
+        {
+          "id": "artifact.unchanged",
+          "status": "passed"
+        },
+        {
+          "id": "source.unchanged",
+          "status": "passed"
+        }
+      ],
+      "event": {
+        "matched": {
+          "sequence": 1,
+          "gameTime": 3,
+          "kind": "unit_died",
+          "unit": "2865d52c63e124c52f8416c8b15f719c:u:2",
+          "unitType": "Marine",
+          "unitMetadataCurrent": true,
+          "owner": 1,
+          "position": {
+            "x": 30.0801,
+            "y": 16.8
+          },
+          "unitMetadataGameTime": 3,
+          "source": "galaxy"
+        },
+        "queryGameTime": 3.5,
+        "pagesRead": 1,
+        "dropped": false,
+        "stream": {
+          "session": "2865d52c63e124c52f8416c8b15f719c",
+          "runtimeEpoch": "0cdebd50ffcc8e48b95bbdf0b0201dc6",
+          "mapLoadSerial": 1
+        }
+      },
+      "markerStates": {
+        "initial": 13,
+        "firstResult": 14,
+        "secondResult": 15,
+        "unitEventResult": 44,
+        "timerResult": 23
+      },
+      "components": {
+        "Triggers": {
+          "bytes": 53025,
+          "sha256": "d49e54e48341a74cfb37b0e52f1a07bbbed70b7f1b14cbb7c0a6e1be33e21f6d",
+          "byteEqual": true,
+          "elements": 306
+        },
+        "MapScript.galaxy": {
+          "bytes": 13101,
+          "sha256": "729cf5661c53752cb58e43c9f45ab472950eddc8e2d53d68e6e0d521b38430c1",
+          "byteEqual": true
+        },
+        "Objects": {
+          "bytes": 2182,
+          "sha256": "781ce349ec2abaa434a607a2ed4248b4768210c178df25b8ca2f07dd7f1f1b6b",
+          "byteEqual": true
+        },
+        "t3Terrain.xml": {
+          "bytes": 6117,
+          "sha256": "8cb945adc1ca575f5b25011435e7266aa76d19094a3b247ecc215b08d12c19e9",
+          "byteEqual": true
+        }
+      },
+      "realUiHandlerConfirmations": 2,
+      "nativeSaveCloseReopen": true,
+      "exactSavedArtifactRevalidation": true,
+      "report": ".sc2mcp-output/project-tests/26a9fcc4-ac8a-4cb5-ad93-292b88469a8f/result.json",
+      "image": ".sc2mcp-output/project-tests/26a9fcc4-ac8a-4cb5-ad93-292b88469a8f/Game.png",
+      "runtime": {
+        "provenance": "pinned_release",
+        "releaseTag": "v0.1.0-dev.11",
+        "archiveSha256": "514096c72332f4d6629dee4a33a092957d3ee02a9c45281bb3a7ad59031c30f3",
+        "verifiedFiles": 113,
+        "binaryOverride": false
+      }
+    }
+  ],
+  "regressions": {
+    "focused": {
+      "file": "work/launch-diagnostics-20261022/startup-history-tests.tap",
+      "sha256": "ef122a5a50d3e9c5a40dfe26c93762b098474ea207c8ec783550de52ec4c4bea",
+      "tests": 48,
+      "pass": 48,
+      "skipped": 0
+    },
+    "full": {
+      "file": "work/launch-diagnostics-20261022/startup-history-full-tests.tap",
+      "sha256": "9da667b493ca848e599d7f3f74053e977c8238191d581e45a6185f120f3e59a3",
+      "tests": 1383,
+      "pass": 1382,
+      "skipped": 1
+    }
+  },
+  "frozenRunner": {
+    "candidate": "C:\\Users\\Vladimir\\AppData\\Local\\SC2EditorToolkit\\Candidates\\StartupHistory-20261022-52bc2c11-620d-493b-854e-cfc40e5190a7",
+    "published": false,
+    "assembly": "Existing public package resources plus complete freshly compiled runtime, current documentation and skills; local test candidate, not published",
+    "sourceStableDuringBuild": true,
+    "sourceSnapshotSha256": "918167240d3db4b42be4b604ba4d8d3595ffe49aad833d914739f6d6a1eb048c",
+    "compiledFiles": 350,
+    "compiledManifestSha256": "43ead27135cbe40c92d78b5558c64f4ef1b07d3a148b5f301a8ed285663336b2",
+    "privacy": {
+      "passed": true,
+      "checkedFiles": 9959,
+      "privateSourceFiles": 1113,
+      "privateCorpusCompared": true,
+      "violations": [],
+      "scope": "Explicit private paths/debug/test artifacts and exact external C++/Python/Galaxy source copies, including renamed files. Not proof against transformed snippets or binary reverse engineering."
+    }
+  },
+  "retainedFailures": [
+    {
+      "jobs": [
+        "eaf6244b-844e-4d54-9f3d-5759f7905a57",
+        "12f81c43-3609-4ee4-978a-a12ececc7b27",
+        "104909b9-2e73-41de-b2e6-9553bb920a16"
+      ],
+      "scope": "Waiting after a post-startup cursor, or omitting the game.wait cursor, missed the already emitted death event. Historical inconclusive runs remain unchanged; the new public observer reads actual history."
+    }
+  ],
+  "openCoverage": [
+    "Other imported GUI libraries, runtime event-registration/reference/callback semantics and unsupported controls remain outside this fixture",
+    "Optional runtime diagnostics remain partial; positive events do not certify complete retention or source coverage",
+    "Earlier unexplained native save stall and general launch/dependency/backend combinations remain separate",
+    "Broader Data abilities, topology/navigation/buildability and final composition/UI/balance remain open",
+    "Privacy comparison excludes transformed fragments and reverse engineering; the current candidate remains local/unpublished"
+  ],
+  "sourceFingerprints": {
+    "src/modules/testing/startupEvents.ts": "436ecc8537030cb2cb43e46ad73edc194e34b27ff7b305f655c81739b40eda3b",
+    "src/modules/testing/schemas.ts": "6b11aaf383f8de27a5ac16d458e221ad42234eca4e088894c9a7fe7208dd610e",
+    "src/modules/testing/workspace.ts": "15a98b2e61f6134afd58d1d36c32e8338bc8157ae3b97571e4e23ec699b88755",
+    "src/modules/testing/tools.ts": "162c10ebe336fc326fe5607975133bfd0cb3e0bbd18a03dac5fecc5f2d4bbe15",
+    "src/tests/startupEvents.test.ts": "1a4a9f2c1d863163bf76bbfa8ec551dd999698cada324ebe83f98ad5327ab4b9",
+    "src/tests/projectTesting.test.ts": "f747599ad44f06e2e4d9a4d94390ca3ed5eca5547cd1461a9a7269012f87a718",
+    "src/integrations/game/bridge.ts": "78e3985ff3d2280de340668e28706158519e7d2369342e08183d398b52d2976f",
+    "src/integrations/native/bridge.ts": "958782399aed74ea0df1004c81203e67f44c421cee7402d75defc61e4dd6a766",
+    "scripts/run-map-tests.mjs": "f5e0ddd70f988dd0c7a4147d1c1164b3231925f6098146c9b24fefe343022437",
+    "scripts/check-distribution-privacy.mjs": "747bb50d8e7c0ed8ec034f7759ec6bfca4424b8a348f872b68c1ce9095ed03da",
+    "scripts/build-windows-portable.mjs": "51f8c73a09c323357cd613fb2a7c6197703129438e6d53f823a37b0124620499",
+    "docs/PROJECT_TESTS.md": "dd0def1dea49a33d7c83fe274f5900afcc627d5c04a1fd6d3e4538db5cbc162b"
+  }
+}

@@ -27,6 +27,15 @@ Expose hero abilities through native Data command cards. Do not duplicate them
 with trigger Dialog buttons, automatic targeting or periodic cooldown displays
 unless the user explicitly requests a separate ability interface.
 
+Use explicit level indices when overriding inherited per-level ability arrays.
+For example, the instant/target recipe's `castIntroTime`, `castOutroTime` and
+`finishTime` write the corresponding native timing at index0; an unindexed child
+timing may append a later level while the
+current ability keeps its parent timing. Unindexed arrays used deliberately for
+native append semantics are a separate case. Ability phase timings do not create
+a channeled effect; keep native effect lifetime/cancellation separate from cast
+and finish duration.
+
 Player-facing abilities and effects include native visual Actor/Model feedback
 by default: cast, travel/movement, hit or area cues as appropriate, and matching
 sound when useful. Intentionally invisible helpers/passives are explicit
@@ -35,9 +44,28 @@ Reuse verified native bindings, including Start/Stop timing, source/target host,
 site operations and animation lifecycle. Validate model links separately from
 actual native playback; do not call an effect visually verified from XML alone.
 
+Configure the unit's main `CActorUnit` as well: retain native movement, attack,
+death and other required lifecycle animation handling. Bind custom ability
+cast/channel/recovery animation where the model supports it, with appropriate
+start, interruption and completion behavior. A separate impact or area Model is
+not unit animation. Verify available model sequences and actual playback instead
+of guessing animation names or creating a second primary unit actor for a spell.
+
+Before adding an ability button, inspect the inherited card as well as local
+entries with `data.card.check`. Instant/target recipes enforce known inherited
+slot, cell and shared-face conflicts; use `card.conflictReason` only for an
+intentional conditional binding and test the condition in the native UI. Unknown
+merge semantics remain unverified. Two visible abilities must not accidentally reuse one hotkey-bearing
+Button face. Use a distinct Button/hotkey and accurate tooltip when mechanics
+differ. Native user hotkey profiles still require runtime review. Measure effect
+scale against the unit and intended area; enlarging a model is not an art pass.
+Compare native camera target readback with the requested target: map bounds can
+clamp an apparently successful camera call. A visible conflict warning or clipped
+effect remains an unresolved UI/presentation finding even when Data mechanics pass.
+
 ## Logic ownership
 
-For missions, use exactly these top-level systems, in this order:
+For missions, these five top-level systems are a recommended starting point:
 
 ```text
 FUNCTIONS
@@ -47,7 +75,10 @@ OBJECTIVES
 CINEMATICS
 ```
 
-Use English UPPER_SNAKE_CASE subfolders only when needed. Shared helpers belong
+Five is a recommendation, not a required count or a maximum. Use fewer or more
+folders and genre-appropriate names when the map needs them. Explicit folder
+lists override the template; preserve established organization. Do not add empty
+systems just to reach five. Use English UPPER_SNAKE_CASE subfolders only when needed. Shared helpers belong
 in FUNCTIONS; startup and coordination in MAIN; mechanics, waves and gameplay UI
 in their owning GAMEPLAY system; native tasks in OBJECTIVES; scenes and their
 dialogue in CINEMATICS. Dedicated helpers and state stay with their system. Local
@@ -65,6 +96,14 @@ than silently reassigned. `trigger.plan.create.folder` assigns the new trigger
 and newly created global declarations/helpers to the same system. Set create.genre for a non-mission map. Legacy
 `create.category` remains compatible and reuses existing folders.
 
+Native GUI event declarations and runtime `TriggerAddEvent*` registration are
+different operations. Runtime registration needs an explicit target `trigger`
+expression and must preserve the original call, argument order and evaluation
+timing; do not move it into initialization or force an event-only function into
+an ordinary action. Preserve reference parameters, `structref`, nested arrays and
+callback semantics without adding unsolicited checks. Unsupported representation
+must remain an explicit limitation. See [GUI preservation requirements](TRIGGER_MCP.md#conversion-preservation-requirements).
+
 The complete supplied convention is in [TRIGGER_ORGANIZATION_PROTOCOL.md](TRIGGER_ORGANIZATION_PROTOCOL.md).
 
 ## Terrain composition
@@ -80,6 +119,14 @@ are different states. Variety alone does not justify wreckage or fire.
 5. Add irregular vegetation clusters and quieter clearings.
 6. Add supported foliage and surface markings separately.
 7. Resnap after height edits and inspect overview/gameplay-camera previews.
+
+Distinguish full terrain dimensions, visible camera area and MapInfo playable
+bounds before placing gameplay units or selecting spell test points. Supported
+MapInfo bounds use left/bottom inclusive, right/top exclusive coordinates.
+New Unit pivots and moves outside them reject by default. An explicit
+`outsidePlayableReason` records intentional staging, but does not prevent the
+engine from clamping a unit. Missing/unsupported MapInfo remains unverified.
+Compare requested and observed positions before diagnosing effect radius/range.
 
 Use `terrain.catalog` to inspect tileset sections and source location candidates.
 Use `terrain.style` to retrieve one profile and a bounded Actor shortlist checked
@@ -102,6 +149,13 @@ to an owned object stop replacement. Unrelated objects remain independent.
 Objects, component registration and ownership state are saved as one transaction;
 terrain/dependency changes invalidate a staged save.
 
+For incremental location terrain and decoration, use the named intent form of
+`terrain.landscape.plan` or `terrain landscape file=...` in the compact interface.
+Declare real overlay dependencies; repeated definitions are no-ops, and parent
+changes rebuild their dependants. Preserve the ownership record with the complete
+Terrain transaction. See [incremental locations](LANDSCAPE_OWNERSHIP.md) for the
+supported channels and remaining native/art-review limits.
+
 ## Evidence and limits
 
 Original Editor checks are available through the optional pinned
@@ -111,6 +165,12 @@ poll `editor.job`. `editor.capture` is the separate original-render check.
 `map.preview` remains the fast ModKit preview. These are explicit native jobs,
 not automatic effects of offline validation or authoring plan mode. Unknown
 diagnostics stay unknown; original Editor acceptance does not prove gameplay.
+
+Before normal-order tests, compare the live player roster from `game.attach` or
+`game.status` with every tested unit owner. A placed unit can exist for a player
+whose live type is `None`; finding the unit does not establish a playing owner.
+Configure intended participants through Settings and keep deliberate neutral or
+inactive-owner cases explicit. Order submission alone does not prove execution.
 
 Record pass, fail, not_checked or not_applicable with actual evidence. Static
 checks do not prove visual cliff closure, unit navigation, buildability or runtime

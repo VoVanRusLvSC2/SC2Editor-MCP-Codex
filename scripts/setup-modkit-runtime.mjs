@@ -10,7 +10,7 @@ import console from 'node:console';
 import {patchHostArtifacts} from './modkit/platform-patches.mjs';
 const project=fileURLToPath(new URL('../',import.meta.url));
 const home=path.join(project,'.modkit-runtime'),blizzard=path.join(home,'ModKit-Blizzard'),core=path.join(home,'ModKit');
-const pins={blizzard:'78104889bed092d901516044bd90734df8d5caac',core:'72253b49adff4f572c4763cd1ca5c980264afe41'};
+const pins={blizzard:'78104889bed092d901516044bd90734df8d5caac',core:'7e3c856ba290b8abde55b1f7e4d93383179e8b9f'};
 if(Number(process.versions.node.split('.')[0])<22)throw Error('ModKit requires Node.js 22+');
 const run=(cmd,args,cwd)=>execFileSync(cmd,args,{cwd,stdio:'inherit',windowsHide:true});
 async function clone(name,rev,destination,sparse){
@@ -51,6 +51,11 @@ for(const name of ['images','models'])await fs.cp(path.join(core,'extensions',na
 const hostPatches=await patchHostArtifacts(blizzard);
 const require=createRequire(path.join(blizzard,'package.json'));
 const {build}=await import(pathToFileURL(require.resolve('esbuild')).href);
+// New image encoders are source TypeScript with type-only Host/SDK references.
+// Emit their extension-owned JS while retaining Blizzard's declared vendor ABI.
+const imageRoot=path.join(blizzard,'.modkit-core-extensions','images');
+const imageEncoders=['gif/encode.ts','webp/encode.ts','jpeg/encode.ts','media-encoders.ts'].map(p=>path.join(imageRoot,'src',p)).filter(existsSync);
+if(imageEncoders.length)await build({entryPoints:imageEncoders,outbase:path.join(imageRoot,'src'),outdir:path.join(imageRoot,'dist'),bundle:false,format:'esm',platform:'neutral',target:'es2022',tsconfigRaw:{}});
 await build({entryPoints:[path.join(project,'scripts/modkit/world-viewer.mjs')],outfile:path.join(blizzard,'sc2-mcp-world-viewer.js'),
   bundle:true,format:'iife',globalName:'ModkitMapViewer',platform:'browser',target:'es2022',minify:true,
   banner:{js:'/*! ModKit world renderer, Copyright (c) 2026 Modkit contributors. MIT. '+(await fs.readFile(path.join(project,'vendor/modkit-scene/LICENSE-MIT.txt'),'utf8')).replaceAll('*/','* /')+' */'},
@@ -59,7 +64,7 @@ const vendor=[];
 for(const file of (await fs.readdir(path.join(blizzard,'vendor'))).filter(n=>n.endsWith('.tgz')).sort()){
   vendor.push({file,sha256:createHash('sha256').update(await fs.readFile(path.join(blizzard,'vendor',file))).digest('hex')});
 }
-const receipt={schemaVersion:1,pins,vendor,hostPatches,terrainApiExports:['@modkit/blizzard-starcraft2/map/format','@modkit/blizzard-starcraft2/map/navigation','@modkit/blizzard-starcraft2/map/overview'],compatibilityPatchSha256:createHash('sha256').update(await fs.readFile(patch)).digest('hex'),
+const receipt={schemaVersion:1,pins,coreRevisionScope:'Images/models extension sources; Blizzard vendor Host/SDK packages retain their declared snapshot ABI',vendor,hostPatches,terrainApiExports:['@modkit/blizzard-starcraft2/map/format','@modkit/blizzard-starcraft2/map/navigation','@modkit/blizzard-starcraft2/map/overview'],compatibilityPatchSha256:createHash('sha256').update(await fs.readFile(patch)).digest('hex'),
   limitations:['Optional semantic RLE lattice overview disabled: public Core lacks its API',
     'Older public VFS hidden-path API uses recursive listing'],editorUsed:false,gameWrites:false};
 await fs.writeFile(path.join(blizzard,'sc2-mcp-runtime.json'),JSON.stringify(receipt,null,2)+'\n');

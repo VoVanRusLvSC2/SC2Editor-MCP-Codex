@@ -1,5 +1,17 @@
 # Changelog
 
+## Optional private game runtime integration
+
+- Add a compact `game` MCP profile and five tools forwarding the external
+  SC2GameToolkit's discovered runtime operations. Preserve native images and
+  failed/unsupported/inconclusive verdicts.
+- Require explicit local launch configuration, workspace-contained saved maps,
+  owned-session operations and source digest checks. Block launch/stop bypasses
+  inside recordings and scenarios; drain accepted requests before EOF shutdown.
+- Keep the private upstream runtime external to source and portable distribution.
+  Document source privacy limits and keep test instrumentation out of delivered maps.
+- Add bridge/stdio regressions and an outer-MCP verifier with opt-in live mode.
+
 ## SC2EditorToolkit verified scope — 2026-10-21
 
 - Publish a path-free native acceptance record, actual core regression status lines, a module readiness matrix and explicit unsupported/unverified scope. Keep private archives, generated user scripts, DLLs and screenshots local. The public product/MCP display title is SC2EditorToolkit; existing protocol IDs, tools, links and license attribution remain compatible.

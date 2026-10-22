@@ -1,0 +1,1975 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-22T00:48:42.076Z",
+  "kind": "Owned measured-group, surface-preservation and three-style native checkpoint; full roadmap remains open",
+  "scope": {
+    "mapMutations": "Fresh outer MCP sessions, existing generators and ordinary guarded transactions; shell prepares harness inputs only",
+    "freshFoundations": true,
+    "privateImplementationBundled": false,
+    "nativeNavigationRebuilt": false,
+    "arbitraryTopologyCertified": false,
+    "numericArtScoreClaimed": false
+  },
+  "features": [
+    "Measured prefab/group members share final-surface planning with named owned locations",
+    "Stable scatter/group slots, guarded ancestor height resnaps, independent record preservation",
+    "Member rectangles checked against roads, concave zone boundaries and explicit exclusions",
+    "Height-editing budget exposed before creation and during terrain analysis",
+    "Decoration-only passes preserve existing heights and texture masks; explicit routes remain separate",
+    "Read-only Unit/effect Actor model measurement without relaxing Doodad placement",
+    "Batch candidate metadata deduplicated by exact source key; every placement retained",
+    "Bulk XML movement/removal with sequentially equivalent result"
+  ],
+  "mcp": [
+    {
+      "id": "c2cf2207-1213-4fba-9b53-5bda115e9ca2",
+      "cases": [
+        {
+          "id": "mount",
+          "tool": "casc.mount",
+          "status": "passed",
+          "elapsedMs": 5607
+        },
+        {
+          "id": "groups",
+          "tool": "modkit.author",
+          "status": "passed",
+          "elapsedMs": 48171
+        },
+        {
+          "id": "repeat",
+          "tool": "modkit.author",
+          "status": "passed",
+          "elapsedMs": 2209
+        },
+        {
+          "id": "update",
+          "tool": "modkit.author",
+          "status": "passed",
+          "elapsedMs": 5009
+        },
+        {
+          "id": "export",
+          "tool": "map.export",
+          "status": "passed",
+          "elapsedMs": 1888
+        }
+      ],
+      "sourceUnchanged": true,
+      "requestBytes": 614,
+      "responseBytes": 18875
+    },
+    {
+      "id": "67ca3a3e-0948-43bb-a393-99503075afe1",
+      "cases": [
+        {
+          "id": "mount",
+          "tool": "casc.mount",
+          "status": "passed",
+          "elapsedMs": 5443
+        },
+        {
+          "id": "batch",
+          "tool": "modkit.batch",
+          "status": "passed",
+          "elapsedMs": 49361
+        }
+      ],
+      "sourceUnchanged": true,
+      "requestBytes": 1489,
+      "responseBytes": 5576
+    },
+    {
+      "id": "c7e971e3-1c75-4b23-b1df-12a827aaa979",
+      "cases": [
+        {
+          "id": "foundation",
+          "tool": "document.plan",
+          "status": "passed",
+          "elapsedMs": 837
+        },
+        {
+          "id": "create",
+          "tool": "document.create",
+          "status": "passed",
+          "elapsedMs": 260
+        }
+      ],
+      "sourceUnchanged": true,
+      "requestBytes": 479,
+      "responseBytes": 7147
+    },
+    {
+      "id": "e1776e4c-91f2-42a7-b34f-cb5265a4be8c",
+      "cases": [
+        {
+          "id": "industrial",
+          "tool": "document.plan",
+          "status": "passed",
+          "elapsedMs": 817
+        },
+        {
+          "id": "industrial_create",
+          "tool": "document.create",
+          "status": "passed",
+          "elapsedMs": 169
+        },
+        {
+          "id": "settlement",
+          "tool": "document.plan",
+          "status": "passed",
+          "elapsedMs": 645
+        },
+        {
+          "id": "settlement_create",
+          "tool": "document.create",
+          "status": "passed",
+          "elapsedMs": 222
+        }
+      ],
+      "sourceUnchanged": true,
+      "requestBytes": 854,
+      "responseBytes": 14152
+    },
+    {
+      "id": "449f4558-133f-46f9-a626-17649bd4a097",
+      "cases": [
+        {
+          "id": "mount",
+          "tool": "casc.mount",
+          "status": "passed",
+          "elapsedMs": 6639
+        },
+        {
+          "id": "landscape",
+          "tool": "modkit.author",
+          "status": "passed",
+          "elapsedMs": 78521
+        },
+        {
+          "id": "repeat",
+          "tool": "modkit.author",
+          "status": "passed",
+          "elapsedMs": 6152
+        },
+        {
+          "id": "export",
+          "tool": "map.export",
+          "status": "passed",
+          "elapsedMs": 3504
+        }
+      ],
+      "sourceUnchanged": true,
+      "requestBytes": 536,
+      "responseBytes": 15169
+    },
+    {
+      "id": "7ba439fa-3bad-4b04-8197-677dc278b211",
+      "cases": [
+        {
+          "id": "mount",
+          "tool": "casc.mount",
+          "status": "passed",
+          "elapsedMs": 5626
+        },
+        {
+          "id": "landscape",
+          "tool": "modkit.author",
+          "status": "passed",
+          "elapsedMs": 58306
+        },
+        {
+          "id": "repeat",
+          "tool": "modkit.author",
+          "status": "passed",
+          "elapsedMs": 5141
+        },
+        {
+          "id": "export",
+          "tool": "map.export",
+          "status": "passed",
+          "elapsedMs": 2305
+        }
+      ],
+      "sourceUnchanged": true,
+      "requestBytes": 543,
+      "responseBytes": 14788
+    },
+    {
+      "id": "97eccd0c-01e5-4cc8-8a0f-9258c273408f",
+      "cases": [
+        {
+          "id": "geometry",
+          "tool": "terrain.plan",
+          "status": "passed",
+          "elapsedMs": 202
+        },
+        {
+          "id": "apply",
+          "tool": "terrain.apply",
+          "status": "passed",
+          "elapsedMs": 147
+        },
+        {
+          "id": "save",
+          "tool": "terrain.save",
+          "status": "passed",
+          "elapsedMs": 233
+        }
+      ],
+      "sourceUnchanged": true,
+      "requestBytes": 710,
+      "responseBytes": 24562
+    },
+    {
+      "id": "099a60ed-5b28-46f4-ba78-897c0546df21",
+      "cases": [
+        {
+          "id": "mount",
+          "tool": "casc.mount",
+          "status": "passed",
+          "elapsedMs": 6497
+        },
+        {
+          "id": "measure0",
+          "tool": "terrain.measure",
+          "status": "passed",
+          "elapsedMs": 55752
+        },
+        {
+          "id": "measure1",
+          "tool": "terrain.measure",
+          "status": "passed",
+          "elapsedMs": 1320
+        }
+      ],
+      "sourceUnchanged": true,
+      "requestBytes": 608,
+      "responseBytes": 20140
+    },
+    {
+      "id": "c579f7a6-267e-4574-b9d1-25f5ec66c01e",
+      "cases": [
+        {
+          "id": "mount",
+          "tool": "casc.mount",
+          "status": "passed",
+          "elapsedMs": 5369
+        },
+        {
+          "id": "landscape",
+          "tool": "modkit.author",
+          "status": "passed",
+          "elapsedMs": 49819
+        },
+        {
+          "id": "repeat",
+          "tool": "modkit.author",
+          "status": "passed",
+          "elapsedMs": 2247
+        },
+        {
+          "id": "units",
+          "tool": "placement.addBatch",
+          "status": "passed",
+          "elapsedMs": 14911
+        },
+        {
+          "id": "validate",
+          "tool": "placement.validate",
+          "status": "passed",
+          "elapsedMs": 604
+        },
+        {
+          "id": "apply",
+          "tool": "placement.apply",
+          "status": "passed",
+          "elapsedMs": 1046
+        },
+        {
+          "id": "save",
+          "tool": "ui.save",
+          "status": "passed",
+          "elapsedMs": 34
+        },
+        {
+          "id": "export",
+          "tool": "map.export",
+          "status": "passed",
+          "elapsedMs": 1501
+        }
+      ],
+      "sourceUnchanged": true,
+      "requestBytes": 3747,
+      "responseBytes": 55294
+    },
+    {
+      "id": "232be816-b01f-40ab-9f2a-3ce5e1f3eee0",
+      "cases": [
+        {
+          "id": "mount",
+          "tool": "casc.mount",
+          "status": "passed",
+          "elapsedMs": 8590
+        },
+        {
+          "id": "units",
+          "tool": "placement.addBatch",
+          "status": "passed",
+          "elapsedMs": 82288
+        }
+      ],
+      "sourceUnchanged": true,
+      "requestBytes": 3288,
+      "responseBytes": 10519
+    }
+  ],
+  "fixtures": [
+    {
+      "id": "forest_outpost",
+      "map": "work/landscape-art-corpus/ForestOutpost_v2/.sc2mcp-output/ForestArtSurfaces.SC2Map",
+      "manifest": "work/landscape-20261022/forest-art-surfaces-test.json",
+      "authored": {
+        "zones": 12,
+        "scatter": 268,
+        "measuredMembers": 32,
+        "buildings": 4
+      },
+      "review": {
+        "hierarchy": "The elevated fenced camp anchors a winding service route; a small relay clearing provides a secondary focus.",
+        "materials": "Leaf litter and green pockets survive subsequent tree passes; the concrete entrance is retained. Broad ground textures remain repetitive.",
+        "silhouette": "Two irregular tree belts, open road and grounded fence runs are visible. The palette still relies heavily on one tree family.",
+        "density": "Canopy and low plants have separate spacing, with a clear road and camp working area.",
+        "clearance": "Both unit types traversed the gate; all five road segments were checked bidirectionally."
+      },
+      "sha256": "ad96ee39ae0bcf6f89ba6ca603bf8ccd3997ec039dc7e48461d1c3320bfdb9ed",
+      "manifestSha256": "0150a7ed9f13e97c54f75a1506e26f6eb38dfc1693ef286557f2e3aa9f404a0b",
+      "jobs": [
+        "d8ab365c-8674-4f0d-98df-4b07ff9ddddc",
+        "6ca03477-2133-4b39-aa01-d9b2aba3650d"
+      ],
+      "traversals": 20,
+      "viewCaptures": 6,
+      "runs": [
+        {
+          "jobId": "d8ab365c-8674-4f0d-98df-4b07ff9ddddc",
+          "checks": [
+            {
+              "id": "archive",
+              "status": "passed",
+              "required": true
+            },
+            {
+              "id": "map.playable_bounds",
+              "status": "passed",
+              "required": true
+            },
+            {
+              "id": "game.launch",
+              "status": "passed",
+              "required": true
+            },
+            {
+              "id": "game.build",
+              "status": "passed",
+              "required": true
+            },
+            {
+              "id": "route:gateMarine:forward",
+              "status": "passed",
+              "required": true,
+              "observation": {
+                "type": "Marine",
+                "arrived": true,
+                "maxObservedDeviation": 0.00004987293499165782,
+                "maxDeviation": 2
+              }
+            },
+            {
+              "id": "route:gateMarine:reverse",
+              "status": "passed",
+              "required": true,
+              "observation": {
+                "type": "Marine",
+                "arrived": true,
+                "maxObservedDeviation": 0.00004987293499165782,
+                "maxDeviation": 2
+              }
+            },
+            {
+              "id": "route:gateMarauder:forward",
+              "status": "passed",
+              "required": true,
+              "observation": {
+                "type": "Marauder",
+                "arrived": true,
+                "maxObservedDeviation": 0.00004987293499165782,
+                "maxDeviation": 2
+              }
+            },
+            {
+              "id": "route:gateMarauder:reverse",
+              "status": "passed",
+              "required": true,
+              "observation": {
+                "type": "Marauder",
+                "arrived": true,
+                "maxObservedDeviation": 0.000049872934990661154,
+                "maxDeviation": 2
+              }
+            },
+            {
+              "id": "route:trailSouth:forward",
+              "status": "passed",
+              "required": true,
+              "observation": {
+                "type": "Marine",
+                "arrived": true,
+                "maxObservedDeviation": 0.00003162277660505071,
+                "maxDeviation": 2
+              }
+            },
+            {
+              "id": "route:trailSouth:reverse",
+              "status": "passed",
+              "required": true,
+              "observation": {
+                "type": "Marine",
+                "arrived": true,
+                "maxObservedDeviation": 0.000031622776604984886,
+                "maxDeviation": 2
+              }
+            },
+            {
+              "id": "route:trailBend:forward",
+              "status": "passed",
+              "required": true,
+              "observation": {
+                "type": "Marauder",
+                "arrived": true,
+                "maxObservedDeviation": 0.009235797461568997,
+                "maxDeviation": 2
+              }
+            },
+            {
+              "id": "route:trailBend:reverse",
+              "status": "passed",
+              "required": true,
+              "observation": {
+                "type": "Marauder",
+                "arrived": true,
+                "maxObservedDeviation": 0.008953274888093114,
+                "maxDeviation": 2
+              }
+            },
+            {
+              "id": "route:trailNorth:forward",
+              "status": "passed",
+              "required": true,
+              "observation": {
+                "type": "Marine",
+                "arrived": true,
+                "maxObservedDeviation": 0.009240607313884293,
+                "maxDeviation": 2
+              }
+            },
+            {
+              "id": "route:trailNorth:reverse",
+              "status": "passed",
+              "required": true,
+              "observation": {
+                "type": "Marine",
+                "arrived": true,
+                "maxObservedDeviation": 0.009507396501422774,
+                "maxDeviation": 2
+              }
+            },
+            {
+              "id": "view:overview",
+              "status": "passed",
+              "required": true,
+              "observation": {
+                "requested": {
+                  "x": 32,
+                  "y": 48,
+                  "distance": 145,
+                  "pitch": 72,
+                  "yaw": 90
+                },
+                "observed": {
+                  "target": {
+                    "x": 32,
+                    "y": 48
+                  },
+                  "pitch": 71.8945,
+                  "yaw": 90,
+                  "distance": 145
+                },
+                "includeUI": false,
+                "sha256": "8246fc495e76fe074ab90fba62e266e02d65ef42aab0bf891a063f437c3f8ba5"
+              }
+            },
+            {
+              "id": "view:base_detail",
+              "status": "passed",
+              "required": true,
+              "observation": {
+                "requested": {
+                  "x": 32,
+                  "y": 24,
+                  "distance": 43,
+                  "pitch": 50,
+                  "yaw": 195
+                },
+                "observed": {
+                  "target": {
+                    "x": 32,
+                    "y": 24
+                  },
+                  "pitch": 49.9219,
+                  "yaw": -165.0586,
+                  "distance": 43
+                },
+                "includeUI": false,
+                "sha256": "e9b8862e98f2141c7b41ae819461f372bcbfc87ed23434358889c447de31a45a"
+              }
+            },
+            {
+              "id": "view:trail_detail",
+              "status": "passed",
+              "required": true,
+              "observation": {
+                "requested": {
+                  "x": 32,
+                  "y": 62,
+                  "distance": 45,
+                  "pitch": 55,
+                  "yaw": 210
+                },
+                "observed": {
+                  "target": {
+                    "x": 32,
+                    "y": 62
+                  },
+                  "pitch": 54.8438,
+                  "yaw": -150.1172,
+                  "distance": 45
+                },
+                "includeUI": false,
+                "sha256": "2388dfb9e12394015bead608d9c9aaf6c9f1dee823da4738581057e24a355cfb"
+              }
+            },
+            {
+              "id": "game.diagnostics",
+              "status": "inconclusive",
+              "required": false,
+              "reason": "No unexpected errors observed in available sources; diagnostic coverage is partial"
+            },
+            {
+              "id": "game.capture",
+              "status": "passed",
+              "required": false
+            },
+            {
+              "id": "game.cleanup",
+              "status": "passed",
+              "required": true
+            },
+            {
+              "id": "artifact.unchanged",
+              "status": "passed",
+              "required": true
+            },
+            {
+              "id": "source.unchanged",
+              "status": "passed",
+              "required": true
+            }
+          ]
+        },
+        {
+          "jobId": "6ca03477-2133-4b39-aa01-d9b2aba3650d",
+          "checks": [
+            {
+              "id": "archive",
+              "status": "passed",
+              "required": true
+            },
+            {
+              "id": "map.playable_bounds",
+              "status": "passed",
+              "required": true
+            },
+            {
+              "id": "game.launch",
+              "status": "passed",
+              "required": true
+            },
+            {
+              "id": "game.build",
+              "status": "passed",
+              "required": true
+            },
+            {
+              "id": "route:gateMarine:forward",
+              "status": "passed",
+              "required": true,
+              "observation": {
+                "type": "Marine",
+                "arrived": true,
+                "maxObservedDeviation": 0.000049872934990170736,
+                "maxDeviation": 2
+              }
+            },
+            {
+              "id": "route:gateMarine:reverse",
+              "status": "passed",
+              "required": true,
+              "observation": {
+                "type": "Marine",
+                "arrived": true,
+                "maxObservedDeviation": 0.00004987293499165782,
+                "maxDeviation": 2
+              }
+            },
+            {
+              "id": "route:gateMarauder:forward",
+              "status": "passed",
+              "required": true,
+              "observation": {
+                "type": "Marauder",
+                "arrived": true,
+                "maxObservedDeviation": 0.000049872934990661154,
+                "maxDeviation": 2
+              }
+            },
+            {
+              "id": "route:gateMarauder:reverse",
+              "status": "passed",
+              "required": true,
+              "observation": {
+                "type": "Marauder",
+                "arrived": true,
+                "maxObservedDeviation": 0.000049872934990661154,
+                "maxDeviation": 2
+              }
+            },
+            {
+              "id": "route:trailSouth:forward",
+              "status": "passed",
+              "required": true,
+              "observation": {
+                "type": "Marine",
+                "arrived": true,
+                "maxObservedDeviation": 0.000031622776604980495,
+                "maxDeviation": 2
+              }
+            },
+            {
+              "id": "route:trailSouth:reverse",
+              "status": "passed",
+              "required": true,
+              "observation": {
+                "type": "Marine",
+                "arrived": true,
+                "maxObservedDeviation": 0.00003162277660505071,
+                "maxDeviation": 2
+              }
+            },
+            {
+              "id": "route:trailBend:forward",
+              "status": "passed",
+              "required": true,
+              "observation": {
+                "type": "Marauder",
+                "arrived": true,
+                "maxObservedDeviation": 0.008919641248390271,
+                "maxDeviation": 2
+              }
+            },
+            {
+              "id": "route:trailBend:reverse",
+              "status": "passed",
+              "required": true,
+              "observation": {
+                "type": "Marauder",
+                "arrived": true,
+                "maxObservedDeviation": 0.008953274888093114,
+                "maxDeviation": 2
+              }
+            },
+            {
+              "id": "route:trailNorth:forward",
+              "status": "passed",
+              "required": true,
+              "observation": {
+                "type": "Marine",
+                "arrived": true,
+                "maxObservedDeviation": 0.009240607313884293,
+                "maxDeviation": 2
+              }
+            },
+            {
+              "id": "route:trailNorth:reverse",
+              "status": "passed",
+              "required": true,
+              "observation": {
+                "type": "Marine",
+                "arrived": true,
+                "maxObservedDeviation": 0.009216353751383301,
+                "maxDeviation": 2
+              }
+            },
+            {
+              "id": "view:overview",
+              "status": "passed",
+              "required": true,
+              "observation": {
+                "requested": {
+                  "x": 32,
+                  "y": 48,
+                  "distance": 145,
+                  "pitch": 72,
+                  "yaw": 90
+                },
+                "observed": {
+                  "target": {
+                    "x": 32,
+                    "y": 48
+                  },
+                  "pitch": 71.8945,
+                  "yaw": 90,
+                  "distance": 145
+                },
+                "includeUI": false,
+                "sha256": "6ff73bdc55f82b12693b69bedb5646f976bd5dd3c0dd19e3d25d973a3c5539ac"
+              }
+            },
+            {
+              "id": "view:base_detail",
+              "status": "passed",
+              "required": true,
+              "observation": {
+                "requested": {
+                  "x": 32,
+                  "y": 24,
+                  "distance": 43,
+                  "pitch": 50,
+                  "yaw": 195
+                },
+                "observed": {
+                  "target": {
+                    "x": 32,
+                    "y": 24
+                  },
+                  "pitch": 49.9219,
+                  "yaw": -165.0586,
+                  "distance": 43
+                },
+                "includeUI": false,
+                "sha256": "87649defc419d12355dcd4c8624ea803ba949ebfa88efc9d7d7e6617308d3eed"
+              }
+            },
+            {
+              "id": "view:trail_detail",
+              "status": "passed",
+              "required": true,
+              "observation": {
+                "requested": {
+                  "x": 32,
+                  "y": 62,
+                  "distance": 45,
+                  "pitch": 55,
+                  "yaw": 210
+                },
+                "observed": {
+                  "target": {
+                    "x": 32,
+                    "y": 62
+                  },
+                  "pitch": 54.8438,
+                  "yaw": -150.1172,
+                  "distance": 45
+                },
+                "includeUI": false,
+                "sha256": "a538a075bcdc6a9245e404c38aa806f41b58c360803730387366c8b915a7526c"
+              }
+            },
+            {
+              "id": "game.diagnostics",
+              "status": "inconclusive",
+              "required": false,
+              "reason": "No unexpected errors observed in available sources; diagnostic coverage is partial"
+            },
+            {
+              "id": "game.capture",
+              "status": "passed",
+              "required": false
+            },
+            {
+              "id": "game.cleanup",
+              "status": "passed",
+              "required": true
+            },
+            {
+              "id": "artifact.unchanged",
+              "status": "passed",
+              "required": true
+            },
+            {
+              "id": "source.unchanged",
+              "status": "passed",
+              "required": true
+            }
+          ]
+        }
+      ],
+      "visualReview": {
+        "hierarchy": "The elevated fenced camp anchors a winding service route; a small relay clearing provides a secondary focus.",
+        "materials": "Leaf litter and green pockets survive subsequent tree passes; the concrete entrance is retained. Broad ground textures remain repetitive.",
+        "silhouette": "Two irregular tree belts, open road and grounded fence runs are visible. The palette still relies heavily on one tree family.",
+        "density": "Canopy and low plants have separate spacing, with a clear road and camp working area.",
+        "clearance": "Both unit types traversed the gate; all five road segments were checked bidirectionally.",
+        "reviewer": "Agent inspection of all three first-run views; repeat images passed capture/readback/transport checks only",
+        "status": "Scoped geometry/composition review; aesthetic author approval and a finished mission are not claimed"
+      }
+    },
+    {
+      "id": "industrial_arena",
+      "map": "work/landscape-art-corpus/Industrial_Arena/.sc2mcp-output/IndustrialArtMachinery.SC2Map",
+      "manifest": "work/landscape-20261022/industrial-machinery-test.json",
+      "authored": {
+        "zones": 7,
+        "scatter": 24,
+        "measuredMembers": 58,
+        "buildings": 4
+      },
+      "review": {
+        "hierarchy": "Two gates lead into a restrained combat floor; generators, corner towers and outer service machines create focal anchors.",
+        "materials": "Dark plates, metal framing and a distinct access strip define functions. Small repeated metal patterns are still visually busy.",
+        "silhouette": "Measured generators/towers/fans are grounded in reviewed views; security fencing encloses the arena.",
+        "density": "The fighting area stays open, with denser equipment at corners and outside service yards.",
+        "clearance": "North/south Marine and Marauder routes plus an internal east/west route were checked bidirectionally."
+      },
+      "sha256": "9e326ab187d089bff2c2413013e3abe6a7d31abe344b0e3ddb0a54888e8bc3a6",
+      "manifestSha256": "d35f618ff0f5c1045f0db8a21cbe4d8738dddd73999d79c2c7bd4531980c3a19",
+      "jobs": [
+        "477c64dd-ca33-4aa9-8a31-57d0fb6cee85",
+        "5410a442-7d07-40f4-a0d6-6e540c7a0f5b"
+      ],
+      "traversals": 12,
+      "viewCaptures": 6,
+      "runs": [
+        {
+          "jobId": "477c64dd-ca33-4aa9-8a31-57d0fb6cee85",
+          "checks": [
+            {
+              "id": "archive",
+              "status": "passed",
+              "required": true
+            },
+            {
+              "id": "map.playable_bounds",
+              "status": "passed",
+              "required": true
+            },
+            {
+              "id": "game.launch",
+              "status": "passed",
+              "required": true
+            },
+            {
+              "id": "game.build",
+              "status": "passed",
+              "required": true
+            },
+            {
+              "id": "route:mainMarine:forward",
+              "status": "passed",
+              "required": true,
+              "observation": {
+                "type": "Marine",
+                "arrived": true,
+                "maxObservedDeviation": 3.552713678800501e-15,
+                "maxDeviation": 2
+              }
+            },
+            {
+              "id": "route:mainMarine:reverse",
+              "status": "passed",
+              "required": true,
+              "observation": {
+                "type": "Marine",
+                "arrived": true,
+                "maxObservedDeviation": 3.552713678800501e-15,
+                "maxDeviation": 2
+              }
+            },
+            {
+              "id": "route:mainMarauder:forward",
+              "status": "passed",
+              "required": true,
+              "observation": {
+                "type": "Marauder",
+                "arrived": true,
+                "maxObservedDeviation": 7.105427357601002e-15,
+                "maxDeviation": 2
+              }
+            },
+            {
+              "id": "route:mainMarauder:reverse",
+              "status": "passed",
+              "required": true,
+              "observation": {
+                "type": "Marauder",
+                "arrived": true,
+                "maxObservedDeviation": 3.552713678800501e-15,
+                "maxDeviation": 2
+              }
+            },
+            {
+              "id": "route:arenaCross:forward",
+              "status": "passed",
+              "required": true,
+              "observation": {
+                "type": "Marine",
+                "arrived": true,
+                "maxObservedDeviation": 0,
+                "maxDeviation": 2
+              }
+            },
+            {
+              "id": "route:arenaCross:reverse",
+              "status": "passed",
+              "required": true,
+              "observation": {
+                "type": "Marine",
+                "arrived": true,
+                "maxObservedDeviation": 0,
+                "maxDeviation": 2
+              }
+            },
+            {
+              "id": "view:overview",
+              "status": "passed",
+              "required": true,
+              "observation": {
+                "requested": {
+                  "x": 32,
+                  "y": 32,
+                  "distance": 105,
+                  "pitch": 72,
+                  "yaw": 90
+                },
+                "observed": {
+                  "target": {
+                    "x": 32,
+                    "y": 32
+                  },
+                  "pitch": 71.8945,
+                  "yaw": 90,
+                  "distance": 105
+                },
+                "includeUI": false,
+                "sha256": "0144fa6665f557bed4cb9757a83812eae195f7842618a69dc49ef866495e2ce1"
+              }
+            },
+            {
+              "id": "view:arena_detail",
+              "status": "passed",
+              "required": true,
+              "observation": {
+                "requested": {
+                  "x": 32,
+                  "y": 33,
+                  "distance": 43,
+                  "pitch": 57,
+                  "yaw": 180
+                },
+                "observed": {
+                  "target": {
+                    "x": 32,
+                    "y": 33
+                  },
+                  "pitch": 56.9531,
+                  "yaw": 180,
+                  "distance": 43
+                },
+                "includeUI": false,
+                "sha256": "e7035d76b0c035c48e779f0bd8054c90ac5d2559af8965b73783d9dd88f5e54a"
+              }
+            },
+            {
+              "id": "view:gate_detail",
+              "status": "passed",
+              "required": true,
+              "observation": {
+                "requested": {
+                  "x": 32,
+                  "y": 17,
+                  "distance": 35,
+                  "pitch": 52,
+                  "yaw": 210
+                },
+                "observed": {
+                  "target": {
+                    "x": 32,
+                    "y": 17
+                  },
+                  "pitch": 51.8555,
+                  "yaw": -150.1172,
+                  "distance": 35
+                },
+                "includeUI": false,
+                "sha256": "29eda0b400fb002988720cca2591ec4e7dbd89af1f9df4ead3c7f02debcdb8d1"
+              }
+            },
+            {
+              "id": "game.diagnostics",
+              "status": "inconclusive",
+              "required": false,
+              "reason": "No unexpected errors observed in available sources; diagnostic coverage is partial"
+            },
+            {
+              "id": "game.capture",
+              "status": "passed",
+              "required": false
+            },
+            {
+              "id": "game.cleanup",
+              "status": "passed",
+              "required": true
+            },
+            {
+              "id": "artifact.unchanged",
+              "status": "passed",
+              "required": true
+            },
+            {
+              "id": "source.unchanged",
+              "status": "passed",
+              "required": true
+            }
+          ]
+        },
+        {
+          "jobId": "5410a442-7d07-40f4-a0d6-6e540c7a0f5b",
+          "checks": [
+            {
+              "id": "archive",
+              "status": "passed",
+              "required": true
+            },
+            {
+              "id": "map.playable_bounds",
+              "status": "passed",
+              "required": true
+            },
+            {
+              "id": "game.launch",
+              "status": "passed",
+              "required": true
+            },
+            {
+              "id": "game.build",
+              "status": "passed",
+              "required": true
+            },
+            {
+              "id": "route:mainMarine:forward",
+              "status": "passed",
+              "required": true,
+              "observation": {
+                "type": "Marine",
+                "arrived": true,
+                "maxObservedDeviation": 7.105427357601002e-15,
+                "maxDeviation": 2
+              }
+            },
+            {
+              "id": "route:mainMarine:reverse",
+              "status": "passed",
+              "required": true,
+              "observation": {
+                "type": "Marine",
+                "arrived": true,
+                "maxObservedDeviation": 7.105427357601002e-15,
+                "maxDeviation": 2
+              }
+            },
+            {
+              "id": "route:mainMarauder:forward",
+              "status": "passed",
+              "required": true,
+              "observation": {
+                "type": "Marauder",
+                "arrived": true,
+                "maxObservedDeviation": 7.105427357601002e-15,
+                "maxDeviation": 2
+              }
+            },
+            {
+              "id": "route:mainMarauder:reverse",
+              "status": "passed",
+              "required": true,
+              "observation": {
+                "type": "Marauder",
+                "arrived": true,
+                "maxObservedDeviation": 7.105427357601002e-15,
+                "maxDeviation": 2
+              }
+            },
+            {
+              "id": "route:arenaCross:forward",
+              "status": "passed",
+              "required": true,
+              "observation": {
+                "type": "Marine",
+                "arrived": true,
+                "maxObservedDeviation": 0,
+                "maxDeviation": 2
+              }
+            },
+            {
+              "id": "route:arenaCross:reverse",
+              "status": "passed",
+              "required": true,
+              "observation": {
+                "type": "Marine",
+                "arrived": true,
+                "maxObservedDeviation": 0,
+                "maxDeviation": 2
+              }
+            },
+            {
+              "id": "view:overview",
+              "status": "passed",
+              "required": true,
+              "observation": {
+                "requested": {
+                  "x": 32,
+                  "y": 32,
+                  "distance": 105,
+                  "pitch": 72,
+                  "yaw": 90
+                },
+                "observed": {
+                  "target": {
+                    "x": 32,
+                    "y": 32
+                  },
+                  "pitch": 71.8945,
+                  "yaw": 90,
+                  "distance": 105
+                },
+                "includeUI": false,
+                "sha256": "8cec5bd13ecdbab2de404e934abcc85404b0efb3d8e94a9cd366bd51fb2dfc6f"
+              }
+            },
+            {
+              "id": "view:arena_detail",
+              "status": "passed",
+              "required": true,
+              "observation": {
+                "requested": {
+                  "x": 32,
+                  "y": 33,
+                  "distance": 43,
+                  "pitch": 57,
+                  "yaw": 180
+                },
+                "observed": {
+                  "target": {
+                    "x": 32,
+                    "y": 33
+                  },
+                  "pitch": 56.9531,
+                  "yaw": 180,
+                  "distance": 43
+                },
+                "includeUI": false,
+                "sha256": "5d5f694f921589ceeb01f093e41bc364c59a65fbe2f32b89e97b2b6b2b82df19"
+              }
+            },
+            {
+              "id": "view:gate_detail",
+              "status": "passed",
+              "required": true,
+              "observation": {
+                "requested": {
+                  "x": 32,
+                  "y": 17,
+                  "distance": 35,
+                  "pitch": 52,
+                  "yaw": 210
+                },
+                "observed": {
+                  "target": {
+                    "x": 32,
+                    "y": 17
+                  },
+                  "pitch": 51.8555,
+                  "yaw": -150.1172,
+                  "distance": 35
+                },
+                "includeUI": false,
+                "sha256": "2cddac921b17a4c1355e9c8b70ae54829c5a9a2d5e3eced093b198663e3156de"
+              }
+            },
+            {
+              "id": "game.diagnostics",
+              "status": "inconclusive",
+              "required": false,
+              "reason": "No unexpected errors observed in available sources; diagnostic coverage is partial"
+            },
+            {
+              "id": "game.capture",
+              "status": "passed",
+              "required": false
+            },
+            {
+              "id": "game.cleanup",
+              "status": "passed",
+              "required": true
+            },
+            {
+              "id": "artifact.unchanged",
+              "status": "passed",
+              "required": true
+            },
+            {
+              "id": "source.unchanged",
+              "status": "passed",
+              "required": true
+            }
+          ]
+        }
+      ],
+      "visualReview": {
+        "hierarchy": "Two gates lead into a restrained combat floor; generators, corner towers and outer service machines create focal anchors.",
+        "materials": "Dark plates, metal framing and a distinct access strip define functions. Small repeated metal patterns are still visually busy.",
+        "silhouette": "Measured generators/towers/fans are grounded in reviewed views; security fencing encloses the arena.",
+        "density": "The fighting area stays open, with denser equipment at corners and outside service yards.",
+        "clearance": "North/south Marine and Marauder routes plus an internal east/west route were checked bidirectionally.",
+        "reviewer": "Agent inspection of all three first-run views; repeat images passed capture/readback/transport checks only",
+        "status": "Scoped geometry/composition review; aesthetic author approval and a finished mission are not claimed"
+      }
+    },
+    {
+      "id": "plateau_settlement",
+      "map": "work/landscape-art-corpus/Plateau_Settlement/.sc2mcp-output/SettlementArt.SC2Map",
+      "manifest": "work/landscape-20261022/settlement-art-test.json",
+      "authored": {
+        "zones": 9,
+        "scatter": 230,
+        "measuredMembers": 16,
+        "buildings": 20,
+        "cardinalRamps": 2
+      },
+      "review": {
+        "hierarchy": "Two inhabited plateaus are connected through a lower central route and two explicit cardinal ramps.",
+        "materials": "Working yards, crop strips, side paths and surrounding groves use different surface roles.",
+        "silhouette": "Hut/biodome dimensions were measured before placement. Native cliff walls and ramp joins require the recorded close views.",
+        "density": "Buildings cluster around local paths, with open central circulation and quieter outer groves.",
+        "clearance": "Both unit types cross each ramp in both directions; this is observed traversal, not a navigation-rebuild certificate."
+      },
+      "sha256": "04398925a0f647c8386105f481fbad8e623f1c0782f13133e564cedbba375fd8",
+      "manifestSha256": "dad81a59158c21161fd41b7a7082cabdc9a2e3a4fbd8026c8c136dde27c03b53",
+      "jobs": [
+        "875f39bf-07b6-4945-a187-63c5f038721b",
+        "a85ab364-d18c-4f8e-a718-a8690506ee8e"
+      ],
+      "traversals": 16,
+      "viewCaptures": 6,
+      "runs": [
+        {
+          "jobId": "875f39bf-07b6-4945-a187-63c5f038721b",
+          "checks": [
+            {
+              "id": "archive",
+              "status": "passed",
+              "required": true
+            },
+            {
+              "id": "map.playable_bounds",
+              "status": "passed",
+              "required": true
+            },
+            {
+              "id": "game.launch",
+              "status": "passed",
+              "required": true
+            },
+            {
+              "id": "game.build",
+              "status": "passed",
+              "required": true
+            },
+            {
+              "id": "route:westMarine:forward",
+              "status": "passed",
+              "required": true,
+              "observation": {
+                "type": "Marine",
+                "arrived": true,
+                "maxObservedDeviation": 0,
+                "maxDeviation": 1.8
+              }
+            },
+            {
+              "id": "route:westMarine:reverse",
+              "status": "passed",
+              "required": true,
+              "observation": {
+                "type": "Marine",
+                "arrived": true,
+                "maxObservedDeviation": 0,
+                "maxDeviation": 1.8
+              }
+            },
+            {
+              "id": "route:westMarauder:forward",
+              "status": "passed",
+              "required": true,
+              "observation": {
+                "type": "Marauder",
+                "arrived": true,
+                "maxObservedDeviation": 0,
+                "maxDeviation": 1.8
+              }
+            },
+            {
+              "id": "route:westMarauder:reverse",
+              "status": "passed",
+              "required": true,
+              "observation": {
+                "type": "Marauder",
+                "arrived": true,
+                "maxObservedDeviation": 0,
+                "maxDeviation": 1.8
+              }
+            },
+            {
+              "id": "route:eastMarine:forward",
+              "status": "passed",
+              "required": true,
+              "observation": {
+                "type": "Marine",
+                "arrived": true,
+                "maxObservedDeviation": 0,
+                "maxDeviation": 1.8
+              }
+            },
+            {
+              "id": "route:eastMarine:reverse",
+              "status": "passed",
+              "required": true,
+              "observation": {
+                "type": "Marine",
+                "arrived": true,
+                "maxObservedDeviation": 0,
+                "maxDeviation": 1.8
+              }
+            },
+            {
+              "id": "route:eastMarauder:forward",
+              "status": "passed",
+              "required": true,
+              "observation": {
+                "type": "Marauder",
+                "arrived": true,
+                "maxObservedDeviation": 0,
+                "maxDeviation": 1.8
+              }
+            },
+            {
+              "id": "route:eastMarauder:reverse",
+              "status": "passed",
+              "required": true,
+              "observation": {
+                "type": "Marauder",
+                "arrived": true,
+                "maxObservedDeviation": 0,
+                "maxDeviation": 1.8
+              }
+            },
+            {
+              "id": "view:overview",
+              "status": "passed",
+              "required": true,
+              "observation": {
+                "requested": {
+                  "x": 40,
+                  "y": 40,
+                  "distance": 130,
+                  "pitch": 72,
+                  "yaw": 90
+                },
+                "observed": {
+                  "target": {
+                    "x": 40,
+                    "y": 40
+                  },
+                  "pitch": 71.8945,
+                  "yaw": 90,
+                  "distance": 130
+                },
+                "includeUI": false,
+                "sha256": "37b837478e204c53d08fc00f7ac1cd3389e7598e0dd8c4dca833e080f46d6e71"
+              }
+            },
+            {
+              "id": "view:west_ramp",
+              "status": "passed",
+              "required": true,
+              "observation": {
+                "requested": {
+                  "x": 34,
+                  "y": 41,
+                  "distance": 39,
+                  "pitch": 55,
+                  "yaw": 200
+                },
+                "observed": {
+                  "target": {
+                    "x": 34,
+                    "y": 41
+                  },
+                  "pitch": 54.8438,
+                  "yaw": -160.1367,
+                  "distance": 39
+                },
+                "includeUI": false,
+                "sha256": "9acbd3aa5e680a14bf1a0582f96e94b9d307f3288aaee7178c457c727b8d6d27"
+              }
+            },
+            {
+              "id": "view:settlement_detail",
+              "status": "passed",
+              "required": true,
+              "observation": {
+                "requested": {
+                  "x": 20,
+                  "y": 41,
+                  "distance": 49,
+                  "pitch": 56,
+                  "yaw": 180
+                },
+                "observed": {
+                  "target": {
+                    "x": 20,
+                    "y": 41
+                  },
+                  "pitch": 55.8984,
+                  "yaw": 180,
+                  "distance": 49
+                },
+                "includeUI": false,
+                "sha256": "ad53e5a9cd794b1b160df1e75e4dada88784330c588c1f4b55677b97454d35fc"
+              }
+            },
+            {
+              "id": "game.diagnostics",
+              "status": "inconclusive",
+              "required": false,
+              "reason": "No unexpected errors observed in available sources; diagnostic coverage is partial"
+            },
+            {
+              "id": "game.capture",
+              "status": "passed",
+              "required": false
+            },
+            {
+              "id": "game.cleanup",
+              "status": "passed",
+              "required": true
+            },
+            {
+              "id": "artifact.unchanged",
+              "status": "passed",
+              "required": true
+            },
+            {
+              "id": "source.unchanged",
+              "status": "passed",
+              "required": true
+            }
+          ]
+        },
+        {
+          "jobId": "a85ab364-d18c-4f8e-a718-a8690506ee8e",
+          "checks": [
+            {
+              "id": "archive",
+              "status": "passed",
+              "required": true
+            },
+            {
+              "id": "map.playable_bounds",
+              "status": "passed",
+              "required": true
+            },
+            {
+              "id": "game.launch",
+              "status": "passed",
+              "required": true
+            },
+            {
+              "id": "game.build",
+              "status": "passed",
+              "required": true
+            },
+            {
+              "id": "route:westMarine:forward",
+              "status": "passed",
+              "required": true,
+              "observation": {
+                "type": "Marine",
+                "arrived": true,
+                "maxObservedDeviation": 0,
+                "maxDeviation": 1.8
+              }
+            },
+            {
+              "id": "route:westMarine:reverse",
+              "status": "passed",
+              "required": true,
+              "observation": {
+                "type": "Marine",
+                "arrived": true,
+                "maxObservedDeviation": 0,
+                "maxDeviation": 1.8
+              }
+            },
+            {
+              "id": "route:westMarauder:forward",
+              "status": "passed",
+              "required": true,
+              "observation": {
+                "type": "Marauder",
+                "arrived": true,
+                "maxObservedDeviation": 0,
+                "maxDeviation": 1.8
+              }
+            },
+            {
+              "id": "route:westMarauder:reverse",
+              "status": "passed",
+              "required": true,
+              "observation": {
+                "type": "Marauder",
+                "arrived": true,
+                "maxObservedDeviation": 0,
+                "maxDeviation": 1.8
+              }
+            },
+            {
+              "id": "route:eastMarine:forward",
+              "status": "passed",
+              "required": true,
+              "observation": {
+                "type": "Marine",
+                "arrived": true,
+                "maxObservedDeviation": 0,
+                "maxDeviation": 1.8
+              }
+            },
+            {
+              "id": "route:eastMarine:reverse",
+              "status": "passed",
+              "required": true,
+              "observation": {
+                "type": "Marine",
+                "arrived": true,
+                "maxObservedDeviation": 0,
+                "maxDeviation": 1.8
+              }
+            },
+            {
+              "id": "route:eastMarauder:forward",
+              "status": "passed",
+              "required": true,
+              "observation": {
+                "type": "Marauder",
+                "arrived": true,
+                "maxObservedDeviation": 0,
+                "maxDeviation": 1.8
+              }
+            },
+            {
+              "id": "route:eastMarauder:reverse",
+              "status": "passed",
+              "required": true,
+              "observation": {
+                "type": "Marauder",
+                "arrived": true,
+                "maxObservedDeviation": 0,
+                "maxDeviation": 1.8
+              }
+            },
+            {
+              "id": "view:overview",
+              "status": "passed",
+              "required": true,
+              "observation": {
+                "requested": {
+                  "x": 40,
+                  "y": 40,
+                  "distance": 130,
+                  "pitch": 72,
+                  "yaw": 90
+                },
+                "observed": {
+                  "target": {
+                    "x": 40,
+                    "y": 40
+                  },
+                  "pitch": 71.8945,
+                  "yaw": 90,
+                  "distance": 130
+                },
+                "includeUI": false,
+                "sha256": "8fbd4db65e2230211b1cf430be8ac072ce8060d9d90952310fe683048055cc1f"
+              }
+            },
+            {
+              "id": "view:west_ramp",
+              "status": "passed",
+              "required": true,
+              "observation": {
+                "requested": {
+                  "x": 34,
+                  "y": 41,
+                  "distance": 39,
+                  "pitch": 55,
+                  "yaw": 200
+                },
+                "observed": {
+                  "target": {
+                    "x": 34,
+                    "y": 41
+                  },
+                  "pitch": 54.8438,
+                  "yaw": -160.1367,
+                  "distance": 39
+                },
+                "includeUI": false,
+                "sha256": "26fdaee0ba64afefd4b1ec4c8264484f057676285d11e91e5d3744af5091dbaa"
+              }
+            },
+            {
+              "id": "view:settlement_detail",
+              "status": "passed",
+              "required": true,
+              "observation": {
+                "requested": {
+                  "x": 20,
+                  "y": 41,
+                  "distance": 49,
+                  "pitch": 56,
+                  "yaw": 180
+                },
+                "observed": {
+                  "target": {
+                    "x": 20,
+                    "y": 41
+                  },
+                  "pitch": 55.8984,
+                  "yaw": 180,
+                  "distance": 49
+                },
+                "includeUI": false,
+                "sha256": "20406e24ff6cb5ba5ee71a433988272379acbd7ef01a83cfcd8ac98ae6e7feb3"
+              }
+            },
+            {
+              "id": "game.diagnostics",
+              "status": "inconclusive",
+              "required": false,
+              "reason": "No unexpected errors observed in available sources; diagnostic coverage is partial"
+            },
+            {
+              "id": "game.capture",
+              "status": "passed",
+              "required": false
+            },
+            {
+              "id": "game.cleanup",
+              "status": "passed",
+              "required": true
+            },
+            {
+              "id": "artifact.unchanged",
+              "status": "passed",
+              "required": true
+            },
+            {
+              "id": "source.unchanged",
+              "status": "passed",
+              "required": true
+            }
+          ]
+        }
+      ],
+      "visualReview": {
+        "hierarchy": "Two inhabited plateaus are connected through a lower central route and two explicit cardinal ramps.",
+        "materials": "Working yards, crop strips, side paths and surrounding groves use different surface roles.",
+        "silhouette": "Hut/biodome dimensions were measured before placement. Native cliff walls and ramp joins require the recorded close views.",
+        "density": "Buildings cluster around local paths, with open central circulation and quieter outer groves.",
+        "clearance": "Both unit types cross each ramp in both directions; this is observed traversal, not a navigation-rebuild certificate.",
+        "reviewer": "Agent inspection of all three first-run views; repeat images passed capture/readback/transport checks only",
+        "status": "Scoped geometry/composition review; aesthetic author approval and a finished mission are not claimed"
+      }
+    }
+  ],
+  "nativeMatrix": {
+    "cleanLaunches": 6,
+    "retainedBridgeCount": 1,
+    "traversals": 48,
+    "viewCaptures": 18,
+    "sourceAndArtifactUnchanged": true,
+    "cleanupPassed": true,
+    "diagnostics": "Partial sources only; optional inconclusive checks retained",
+    "engineBuild": "5.0.17.98310"
+  },
+  "regressions": {
+    "tests": 1282,
+    "pass": 1281,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 1,
+    "testConcurrency": 4,
+    "reportSha256": "c3847e56609dc2477d1e99ea10d2c6291f9f0a08caea283480bd6a3eb6fd0162",
+    "scope": "All compiled repository test files and terrain-surface tests; existing platform-dependent shell case remains skipped"
+  },
+  "efficiency": {
+    "batchResponse": {
+      "before": {
+        "id": "c579f7a6-267e-4574-b9d1-25f5ec66c01e",
+        "responseBytes": 35231,
+        "candidates": 20
+      },
+      "after": {
+        "id": "232be816-b01f-40ab-9f2a-3ce5e1f3eee0",
+        "responseBytes": 7991,
+        "candidates": 2
+      },
+      "operations": 20,
+      "argumentsEqual": true,
+      "operationsEqual": true,
+      "scope": "Parsed JSON response bytes on the same 20-building request; different source snapshots and load conditions, not a duration or billing-token benchmark"
+    },
+    "bulkXml": {
+      "recordedAt": "2026-10-21T23:01:05.973Z",
+      "scope": "Synthetic 1000-Doodad XML in memory, one run, no SC2 or engine footprint claim",
+      "count": 1000,
+      "removed": 500,
+      "sourceBytes": 135179,
+      "moveSequentialMs": 6136.4518,
+      "moveBulkMs": 7.226399999999558,
+      "removeSequentialMs": 2032.629100000001,
+      "removeBulkMs": 3.781699999999546,
+      "byteIdentical": true,
+      "resultSha256": "81b3acaf4fa2845c6e6470a37f81f0c80a5b18b48cb4600b8424f218b5674feb"
+    },
+    "tokenUsage": "Not measured; JSON bytes and scoped wall-clock timings are proxies only"
+  },
+  "portable": {
+    "candidate": "release/SC2EditorToolkit-OwnedGroups-dev11-20261022",
+    "published": false,
+    "compiledCopiesMatch": true,
+    "mapTestCliBundled": true,
+    "startedAt": "2026-10-22T00:36:16.461Z",
+    "gameLaunched": false,
+    "texturePreservationSchema": true,
+    "actorMeasurementSchema": true,
+    "landscapeSchema": true,
+    "viewSchema": true,
+    "measuredBoundsSchema": true,
+    "ownedGroupSchema": true,
+    "runtimeIdentity": {
+      "provenance": "pinned_release",
+      "releaseTag": "v0.1.0-dev.11",
+      "archiveSha256": "514096c72332f4d6629dee4a33a092957d3ee02a9c45281bb3a7ad59031c30f3",
+      "verifiedFiles": 113,
+      "binaryOverride": false
+    },
+    "nativeUiSchema": true,
+    "launchDisabledPlan": true,
+    "terrainRepairPlan": true,
+    "outcome": "passed",
+    "exitCode": 0,
+    "finishedAt": "2026-10-22T00:36:22.867Z",
+    "privacy": {
+      "passed": true,
+      "checkedFiles": 9933,
+      "privateSourceFiles": 2331,
+      "privateCorpusCompared": true,
+      "violations": [],
+      "scope": "Explicit private paths/debug/test artifacts and exact external C++/Python/Galaxy source copies, including renamed files. Not proof against transformed snippets or binary reverse engineering."
+    }
+  },
+  "retainedFailures": [
+    {
+      "proof": "eccecfdd-a4a1-4dcc-ac9f-60b9c25d37e3",
+      "reason": "Verifier eagerly resolved a batch-local reference before the batch ran",
+      "resolution": "Suite and batch reference scopes separated; retry passed without source mutation"
+    },
+    {
+      "proof": "376cc806-af29-4906-8bb4-8c4cdc80de7d",
+      "reason": "Height 9.5 exceeded the fine-height budget of the height-8 foundation",
+      "resolution": "Exposed actual editing bounds and used a lower new foundation; native channel interpretation unchanged"
+    },
+    {
+      "proof": "07d78781-1d21-46cf-bff1-28e55d937094",
+      "reason": "The whole road stroke extended beyond its location",
+      "resolution": "Authored route corrected before mutation"
+    },
+    {
+      "proof": "f28532cd-e52e-48b4-b7b4-13407b8957dd",
+      "reason": "Ramp center failed the supported lattice alignment",
+      "resolution": "Aligned center to the measured cardinal profile; original failure retained"
+    },
+    {
+      "proof": "14f79317-75df-4282-842a-cdad7881f891",
+      "reason": "The Doodad-only passport correctly rejected Unit Actors",
+      "resolution": "Added explicit read-only Actor measurement; placement eligibility stays strict"
+    }
+  ],
+  "sourceFingerprints": [
+    {
+      "file": "src/modules/terrain/landscapeOwnership.ts",
+      "sha256LfUtf8": "49f2eee177b6b2653ad83efd59f777bf87818b346b5d45a43fe53c9b8ea6566a"
+    },
+    {
+      "file": "src/modules/terrain/workspace.ts",
+      "sha256LfUtf8": "35ece00de18b48913db6ae69a5a88b03fb7e43da5f3b641d13c2dbaa42350792"
+    },
+    {
+      "file": "src/modules/terrain/schemas.ts",
+      "sha256LfUtf8": "35ccc89e397cc265197b9d6867f12c10adc35ec9d558abcf82d6a20dd1c3aece"
+    },
+    {
+      "file": "src/modules/terrain/recipes.ts",
+      "sha256LfUtf8": "bfe0e7139df82e7d35a4719537afdb8c2056ed02174f634cdd7242820afbbc31"
+    },
+    {
+      "file": "src/modules/terrain/document.ts",
+      "sha256LfUtf8": "f4e04285ac6a6a6b35356f3078f521ea2dae8725628f0c6e9cb5d920f2a6abf9"
+    },
+    {
+      "file": "src/modules/terrain/tools.ts",
+      "sha256LfUtf8": "c4059a13a2644df5c051694608d004d58d0915e0ed372bad646d5d4bbf7b9624"
+    },
+    {
+      "file": "src/modules/placement/compositionGeometry.ts",
+      "sha256LfUtf8": "8e5b75f8d281652b30b06383ec0796ebad1aea34edca277a08683da22a92c3e1"
+    },
+    {
+      "file": "src/modules/placement/compositions.ts",
+      "sha256LfUtf8": "5fb8f3c4dfc91edbd4249445edec51ef924fe6df565037c223701ec591dd2c50"
+    },
+    {
+      "file": "src/modules/placement/decorPrefabs.ts",
+      "sha256LfUtf8": "1326c5da350778ececb0de6bea30208cbe35143c04c77660032f8ad7611c16e6"
+    },
+    {
+      "file": "src/modules/placement/document.ts",
+      "sha256LfUtf8": "7d37e2dcec2b30d70518446aed3c866f9ebbfefa20bc83d3a07d86bbcd473af0"
+    },
+    {
+      "file": "src/modules/placement/measuredGroups.ts",
+      "sha256LfUtf8": "71ccc78df6582d4f24bacc7c6bcc6745c7e3f244cbdf0855c231354d41041246"
+    },
+    {
+      "file": "src/modules/placement/groupClearance.ts",
+      "sha256LfUtf8": "1e361e2ee7265098591ccb70c50ded4380fa6a703b5778c9a93745146e899901"
+    },
+    {
+      "file": "src/modules/placement/workspace.ts",
+      "sha256LfUtf8": "3ae52d35be465fe86274f97b44dcbc22674f237aaf104c917e06bb63a58b69b0"
+    },
+    {
+      "file": "src/modules/placement/decorPalette.ts",
+      "sha256LfUtf8": "2fd3089a15cc0fbadd866942e0d3b9d0bcac0a53c7b0c0cab9ded4af0bbf5b1f"
+    },
+    {
+      "file": "src/modules/document/workspace.ts",
+      "sha256LfUtf8": "5fcc2811de5f5e810088820bde207b258b7f526c508399a8b3ab6dc95350696e"
+    },
+    {
+      "file": "src/modules/document/tools.ts",
+      "sha256LfUtf8": "9f0088e2321022edbacdba146443dd246b4c335c4a102626abe24fc46eaca055"
+    },
+    {
+      "file": "src/app/authoringScript.ts",
+      "sha256LfUtf8": "445d6e529a4b872c6de130ac1e31de8bec4391fc91534e9125d983f66904f836"
+    },
+    {
+      "file": "src/app/authoringTools.ts",
+      "sha256LfUtf8": "94449ef3e4c06e684b7e6148f2ec79d2082e7194fa82e07319379de791ed5e16"
+    },
+    {
+      "file": "src/app/mcpBatch.ts",
+      "sha256LfUtf8": "b84fd74d58e80c3edec4525fbeb903ce975fb6a9645534e8996b91143a290aca"
+    },
+    {
+      "file": "src/modules/browse/workspace.ts",
+      "sha256LfUtf8": "6dff5fa0b8b73c0848c51133562370a11ad562947d34ee7b6fc2b99ca9457c8b"
+    },
+    {
+      "file": "scripts/toolkit-suite-references.mjs",
+      "sha256LfUtf8": "930ef40e57eac837f78721e6e6b4c7a528c12df0781109f32848b1b0b170dfa6"
+    },
+    {
+      "file": "scripts/verify-toolkit-integration.mjs",
+      "sha256LfUtf8": "f3281e9fc2bd3a40e5d228d6bf7ec0f765b32bed339442e236e7522d94dcf7b7"
+    },
+    {
+      "file": "scripts/run-map-tests.mjs",
+      "sha256LfUtf8": "1308ed6d3f46398399952c0e3c6ecc2ba330bacd7413879d907ffdcbc9e7b729"
+    },
+    {
+      "file": "scripts/build-windows-portable.mjs",
+      "sha256LfUtf8": "08cbe03842bcd1ebba59f1ab0d9d4bce4ea7955758264430839cb6af8bcc15d9"
+    },
+    {
+      "file": "src/modules/testing/workspace.ts",
+      "sha256LfUtf8": "0b3a795857d3c1b8b5e47934f0822c17472d4b86468db6fa53eb6f6ce56e60c7"
+    },
+    {
+      "file": "src/modules/testing/schemas.ts",
+      "sha256LfUtf8": "02bbd7415477094510268918ae72fc618131a6adfd4b3d9f2d546327d9300ef0"
+    },
+    {
+      "file": "src/modules/testing/tools.ts",
+      "sha256LfUtf8": "0fc64cd2d594e4cb671da154efac44a99ca6db629588c418c386625ae7f29d9c"
+    },
+    {
+      "file": "src/modules/testing/playableBounds.ts",
+      "sha256LfUtf8": "8f186a39f8931aae0db14cd15868962840443f05f1cf8d93a431f32b78b1215f"
+    },
+    {
+      "file": "src/modules/testing/routeGeometry.ts",
+      "sha256LfUtf8": "84b68527e02659420fbfb100f4679d3346c62318f398717f651571276ac1677b"
+    },
+    {
+      "file": "src/modules/testing/gate.ts",
+      "sha256LfUtf8": "2ae9a1a356335ca1c7785d0654dca589a55a2a2f0d86efd330b6aa61252bb5fe"
+    }
+  ],
+  "openCoverage": [
+    "Authoritative native navigation/collision/buildability operations",
+    "Other cliff sets, widths, arbitrary organic joins and incremental cliff/ramp ownership",
+    "Broader GUI-library save/reopen/startup and Data ability cost/cooldown/presentation corpus",
+    "Editor visibility/default fidelity on these fresh art fixtures",
+    "Audio/FaceFX and complete native diagnostic coverage",
+    "Art refinement, balance and complete mission playtesting"
+  ],
+  "activation": {
+    "freshOuterMcp": true,
+    "sharedDirectConnectionForceRestarted": false,
+    "neighborProcessesRestarted": false
+  },
+  "protection": "Public distribution excludes private SDK source, runtime binaries, instrumentation and test maps. This is source-distribution exclusion, not resistance to binary reverse engineering."
+}

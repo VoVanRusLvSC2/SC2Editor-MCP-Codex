@@ -8,7 +8,7 @@ import {StyleCatalog} from './styleCatalog.js';
 import {ModelMeasurements,type MeasuredModel,type Vec3} from '../assets/measurement.js';
 import {modelSheetPng,type View,type ModelCard} from '../assets/measurementRender.js';
 
-export const decorMeasureSchema=z.object({id:z.string().min(1).optional(),key:z.string().min(1).optional(),objectId:z.number().int().nonnegative().optional(),variation:z.number().int().min(0).max(9999).optional(),scale:z.number().positive().max(10).default(1),rotation:z.number().finite().default(0),preview:z.boolean().default(true),includeImage:z.boolean().default(true)}).strict();
+export const decorMeasureSchema=z.object({id:z.string().min(1).optional(),key:z.string().min(1).optional(),representation:z.enum(['Doodad','Actor']).default('Doodad'),objectId:z.number().int().nonnegative().optional(),variation:z.number().int().min(0).max(9999).optional(),scale:z.number().positive().max(10).default(1),rotation:z.number().finite().default(0),preview:z.boolean().default(true),includeImage:z.boolean().default(true)}).strict();
 export const decorPaletteSchema=z.object({tileset:z.string().min(1),section:z.enum(['decor','vegetation']).default('decor'),query:z.string().max(128).default(''),ids:z.array(z.string().min(1)).min(1).max(12).optional(),offset:z.number().int().nonnegative().default(0),limit:z.number().int().min(1).max(12).default(6),view:z.enum(['top','side','isometric']).default('isometric'),pixelsPerUnit:z.number().positive().max(512).optional(),reference:z.boolean().default(true),includeImage:z.boolean().default(true)}).strict();
 type Field={path:string;value?:string;link?:string;attrs:Record<string,string>};
 function flat(fields:DataField[]):Field[]{return fields.flatMap(f=>[f,...flat(f.children)]);}
@@ -53,7 +53,7 @@ export class DecorPalette {
   const a=decorMeasureSchema.parse(input);let selector=a.key??a.id,placement:Vec3=[1,1,1],rotation=a.rotation,variation=a.variation;
   if(a.objectId!==undefined){const raw=await this.measurements.workspace.readRaw('Objects'),o=new PlacementDocument(raw.text).list().find(o=>o.id===a.objectId);if(!o||o.kind!=='ObjectDoodad'||!o.catalogId)throw new Error('DECOR_PLACED_DOODAD_NOT_FOUND');if(selector&&selector!==o.catalogId)throw new Error('DECOR_OBJECT_SELECTOR_CONFLICT');selector=o.catalogId;placement=catalogScale(o.scale);rotation+=Number(o.rotation??0);variation??=o.variation===undefined?undefined:Number(o.variation);}
   if(!selector)throw new Error('DECOR_ID_KEY_OR_OBJECT_REQUIRED');
-  const actor=await this.entry(selector,'Actor');if(actor.placeableRepresentation?.kind!=='Doodad')throw new Error('DECOR_NOT_PLACEABLE_DOODAD: '+actor.id);
+  const actor=await this.entry(selector,'Actor');if(a.representation==='Doodad'&&actor.placeableRepresentation?.kind!=='Doodad')throw new Error('DECOR_NOT_PLACEABLE_DOODAD: '+actor.id);
   const modelId=value(actor,'Model')??actor.id,model=await this.entry(modelId,'Model',actor.dependency),file=value(model,'File')??value(model,'Model')??model.assetPaths.find(p=>/\.m3$/i.test(p));
   if(!file||!/\.m3$/i.test(file))throw new Error('DECOR_MODEL_FILE_UNRESOLVED: '+modelId+'; mount catalog metadata for Core.SC2Mod and the declared dependencies with casc.mount');
   const min=catalogScale(value(model,'ScaleMin')),max=catalogScale(value(model,'ScaleMax')??value(model,'ScaleMin'));
@@ -73,7 +73,7 @@ export class DecorPalette {
   const render=()=>modelSheetPng(cards,{view,pixelsPerUnit,reference});const output=await this.measurements.writeDerived(key,'png',async()=>(await render()).bytes);
   return {pngFile:output.file,cacheHit:output.cacheHit,view,scale:'shared model units across every card',geometryOnly:true};
  }
- async measure(input:z.input<typeof decorMeasureSchema>){return this.browse.withSnapshot(async()=>{const a=decorMeasureSchema.parse(input),d=await this.resolve(a),images=[];if(a.preview)for(const view of ['top','side','isometric'] as const)images.push(await this.image([{id:d.actor.id,model:d.measured}],view));return {...this.summary(d),images,pngFile:images.at(-1)?.pngFile};});}
+ async measure(input:z.input<typeof decorMeasureSchema>){return this.browse.withSnapshot(async()=>{const a=decorMeasureSchema.parse(input),d=await this.resolve(a),images=[];if(a.preview)for(const view of ['top','side','isometric'] as const)images.push(await this.image([{id:d.actor.id,model:d.measured}],view));return {...this.summary(d),representation:a.representation,placeableAsDoodad:d.actor.placeableRepresentation?.kind==='Doodad',images,pngFile:images.at(-1)?.pngFile};});}
  async palette(input:z.input<typeof decorPaletteSchema>){return this.browse.withSnapshot(async()=>{
   const a=decorPaletteSchema.parse(input),page=await this.catalog.query({tileset:a.tileset,section:a.section,query:a.query,offset:a.offset,limit:a.limit});if(!('items' in page))throw new Error('DECOR_PALETTE_PAGE_REQUIRED');const rows=a.ids?.map(id=>({id}))??page.items??[],items=[],cards=[];
   for(const row of rows){try{const d=await this.resolve({id:row.id,variation:0});items.push({reference:row,...this.summary(d)});cards.push({id:d.actor.id,model:d.measured});}catch(e){items.push({id:row.id,status:'unavailable',error:e instanceof Error?e.message:String(e)});}}

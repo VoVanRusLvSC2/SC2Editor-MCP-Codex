@@ -9,8 +9,10 @@ import console from 'node:console';
 const root=fileURLToPath(new URL('../',import.meta.url));
 const pin=JSON.parse(await fs.readFile(path.join(root,'native-toolkit-release.json'),'utf8'));
 if(!/^\d+\.\d+\.\d+(?:-rc\.\d+)?$/.test(pin.version)||!Number.isSafeInteger(pin.nativeProtocol)||pin.nativeProtocol<1||!/^[a-f0-9]{64}$/.test(pin.archiveSha256))throw Error('NATIVE_RELEASE_PIN_INVALID');
-const version=pin.version,name=`SC2NativeToolkit-v${version}-win-x64.zip`;
-const url=`https://github.com/VoVanRusLvSC2/SC2NativeToolkit/releases/download/v${version}/${name}`;
+const repository=pin.repository??'VoVanRusLvSC2/SC2NativeToolkit',prefix=pin.assetPrefix??'SC2NativeToolkit';
+if(!/^[A-Za-z0-9_-]+\/[A-Za-z0-9_.-]+$/.test(repository)||!/^SC2(?:Editor|Native)Toolkit$/.test(prefix))throw Error('NATIVE_RELEASE_LOCATION_INVALID');
+const version=pin.version,name=`${prefix}-v${version}-win-x64.zip`;
+const url=`https://github.com/${repository}/releases/download/v${version}/${name}`;
 const home=path.join(root,'.native-toolkit-runtime',version);
 const sha=data=>createHash('sha256').update(data).digest('hex');
 const get=async url=>{const r=await globalThis.fetch(url);if(!r.ok)throw Error(`NATIVE_DOWNLOAD_HTTP_${r.status}`);return Buffer.from(await r.arrayBuffer());};
@@ -27,7 +29,7 @@ const find=async dir=>{for(const e of await fs.readdir(dir,{withFileTypes:true})
 const executable=await find(home);if(!executable)throw Error('NATIVE_EXECUTABLE_MISSING');
 const build=JSON.parse(await fs.readFile(path.join(home,'BUILD.json'),'utf8'));
 if(build.version!==version||build.nativeProtocol!==pin.nativeProtocol)throw Error('NATIVE_PACKAGE_PROTOCOL_MISMATCH');
-const receipt={version,release:`https://github.com/VoVanRusLvSC2/SC2NativeToolkit/releases/tag/v${version}`,
+const receipt={version,release:`https://github.com/${repository}/releases/tag/v${version}`,
   archiveSha256:expected,executable:path.relative(home,executable),executableSha256:sha(await fs.readFile(executable)),
   nativeProtocol:build.nativeProtocol,sourceCommit:build.sourceCommit,diagnosticPreview:build.diagnosticPreview===true,editorStarted:false};
 await fs.writeFile(path.join(home,'sc2-mcp-runtime.json'),JSON.stringify(receipt,null,2)+'\n');

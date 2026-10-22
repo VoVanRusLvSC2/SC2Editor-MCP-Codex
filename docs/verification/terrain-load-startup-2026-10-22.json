@@ -1,0 +1,240 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-22T02:31:03.252Z",
+  "scope": "Restricted old foundation load repair and original library-qualified GUI startup; broader roadmap remains open",
+  "features": [
+    "Shared component-level load inspector reused by document, terrain, map and test planning",
+    "Guarded standalone legacy repair plan with no-op repeats",
+    "Exact-archive bounded neutral read preflight and digest cache",
+    "Native-saved artifact checked independently",
+    "Bounded upstream launch reasons and optional read-only debugger/capture diagnostics"
+  ],
+  "fixtures": {
+    "invalidSourceSha256": "afb281d1baabb85c3d53b82f7aa01b4d1f88294e3e9b28830628a5de61e9e310",
+    "repairedSha256": "6a5ce7353aa09c8c611fcedfcab9fc13b1ccab1ad371f6a9479f55f64b4b5b1c",
+    "archiveEntryCount": 38,
+    "changedComponents": [
+      "t3SyncHeightMap",
+      "t3Terrain.xml"
+    ],
+    "unchangedComponents": 36,
+    "changedSyncBytes": [
+      29,
+      33,
+      37
+    ],
+    "preservedPayloads": [
+      "Heights",
+      "textures",
+      "cliff levels",
+      "hidden flags",
+      "Objects",
+      "Triggers",
+      "MapScript.galaxy",
+      "DocumentInfo",
+      "MapInfo",
+      "DocumentHeader"
+    ]
+  },
+  "mcp": {
+    "import": "7c1438d8-bda6-46df-9ef6-8a42946d84cd",
+    "repair": "b06234b9-d5da-46dc-98d2-0016b60099f7",
+    "invalidArchivePreflight": "6abadade-7bda-440b-9ba2-e4514943a0ba",
+    "nativeEditor": "6ad42b08-a4f6-458f-b074-6536e9ec6505"
+  },
+  "native": {
+    "gameRelease": "v0.1.0-dev.11",
+    "editorRelease": "0.10.0-rc.1",
+    "gameBuild": "5.0.17.98310",
+    "cleanLaunches": 2,
+    "retainedGameBridges": 1,
+    "library": "A1B2C3D4",
+    "expectedLife": 42,
+    "customScriptFallback": false,
+    "runs": [
+      {
+        "jobId": "8c682ef8-25f2-4b41-a28c-b089d54bcb26",
+        "sourceSha256": "6a5ce7353aa09c8c611fcedfcab9fc13b1ccab1ad371f6a9479f55f64b4b5b1c",
+        "createdAt": "2026-10-22T02:06:44.094Z",
+        "finishedAt": "2026-10-22T02:07:03.788Z",
+        "checks": [
+          {
+            "id": "archive",
+            "status": "passed",
+            "required": true
+          },
+          {
+            "id": "map.terrain_load",
+            "status": "passed",
+            "required": false
+          },
+          {
+            "id": "game.launch",
+            "status": "passed",
+            "required": true
+          },
+          {
+            "id": "game.build",
+            "status": "passed",
+            "required": true
+          },
+          {
+            "id": "game.ready",
+            "status": "passed",
+            "required": true
+          },
+          {
+            "id": "scenario:libraryStartup",
+            "status": "passed",
+            "required": true
+          },
+          {
+            "id": "game.diagnostics",
+            "status": "inconclusive",
+            "required": false
+          },
+          {
+            "id": "game.capture",
+            "status": "passed",
+            "required": false
+          },
+          {
+            "id": "game.cleanup",
+            "status": "passed",
+            "required": true
+          },
+          {
+            "id": "artifact.unchanged",
+            "status": "passed",
+            "required": true
+          },
+          {
+            "id": "source.unchanged",
+            "status": "passed",
+            "required": true
+          }
+        ]
+      },
+      {
+        "jobId": "e8cfee80-23b8-4ae6-9b2c-80c5e918b60f",
+        "sourceSha256": "6a5ce7353aa09c8c611fcedfcab9fc13b1ccab1ad371f6a9479f55f64b4b5b1c",
+        "createdAt": "2026-10-22T02:07:04.310Z",
+        "finishedAt": "2026-10-22T02:07:23.229Z",
+        "checks": [
+          {
+            "id": "archive",
+            "status": "passed",
+            "required": true
+          },
+          {
+            "id": "map.terrain_load",
+            "status": "passed",
+            "required": false
+          },
+          {
+            "id": "game.launch",
+            "status": "passed",
+            "required": true
+          },
+          {
+            "id": "game.build",
+            "status": "passed",
+            "required": true
+          },
+          {
+            "id": "game.ready",
+            "status": "passed",
+            "required": true
+          },
+          {
+            "id": "scenario:libraryStartup",
+            "status": "passed",
+            "required": true
+          },
+          {
+            "id": "game.diagnostics",
+            "status": "inconclusive",
+            "required": false
+          },
+          {
+            "id": "game.capture",
+            "status": "passed",
+            "required": false
+          },
+          {
+            "id": "game.cleanup",
+            "status": "passed",
+            "required": true
+          },
+          {
+            "id": "artifact.unchanged",
+            "status": "passed",
+            "required": true
+          },
+          {
+            "id": "source.unchanged",
+            "status": "passed",
+            "required": true
+          }
+        ]
+      }
+    ],
+    "editor": {
+      "jobId": "2a3b725d-1b5c-488c-91ab-3e8361aeecda",
+      "sourceUnchanged": true,
+      "compilePassed": true,
+      "saveVerified": true,
+      "reopenVerified": true,
+      "savedReopenedComponentsEqual": true
+    },
+    "diagnostics": "Partial available sources; optional inconclusive result retained"
+  },
+  "limitations": [
+    "Only aligned identity v114/v115 structure is inspected",
+    "Repair only accepts diagnosed v115 level-one uncut legacy profile",
+    "No arbitrary cliff/ramp/topology repair or navigation rebuild",
+    "No general GUI semantic equivalence claim",
+    "No private runtime implementation, instrumentation or test archive is published"
+  ],
+  "sourceFingerprints": {
+    "src/modules/terrain/loadContract.ts": "ee233c25a4cf2c1ccb90f553245f9a7004703f913388de3459f1db8c66d227be",
+    "src/archive/terrainLoadContract.ts": "75268a7b8bb6045f0ada82c409c4c4ef6479d4dbe77b2172929ce6153a3e3c43",
+    "src/modules/testing/workspace.ts": "55f5d44bcdfcb4c8b84f9902aa5252ba10d674d1b138f07374e6c55eae2ff2cb",
+    "src/modules/terrain/workspace.ts": "533658e5fbd860c97cf4832e44a289e02aa6a5974302a9f0ea7bde96f00c5a2f",
+    "src/modules/map/workspace.ts": "1daa7412fd0023cc3df069eab7bf8cae7d58f986620ae961cb073d788236478b"
+  },
+  "regressions": {
+    "tests": 1295,
+    "pass": 1294,
+    "fail": 0,
+    "skipped": 1,
+    "testConcurrency": 4,
+    "reportSha256": "20b0f41181d2741fb79b0d3d8313843635c70274dafd76c1185536010a3307e3",
+    "scope": "Complete compiled repository and terrain-surface suite"
+  },
+  "portable": {
+    "candidate": "release/SC2EditorToolkit-LoadRepair-dev11-20261022",
+    "published": false,
+    "smokePassed": true,
+    "gameLaunchedDuringSmoke": false,
+    "externalGameRuntimeFilesVerified": 113,
+    "compiledFingerprints": {
+      "modules/terrain/loadContract.js": "26f69590590f52fcacbaa2e246c803b20a01c9214476dff90fc51db1a49481ea",
+      "modules/document/codecs/terrainLoadContract.js": "cbb1027dc1a35edf6d6ae7696d3cf6734012931100a6cc7ef9371364f17f5dd4",
+      "archive/terrainLoadContract.js": "e75cb33ed451bd6e1b1733f2d5f42076a5b38c1196a51da6b328220e2ac9b56d",
+      "modules/testing/workspace.js": "caf0a4d1536a073a8ad048f8919eadd9dc9882b256b7b56c6d00e0e042dd594c",
+      "modules/terrain/workspace.js": "f6436cde41e99977cde61c04330c4139cb9cf68157d72a05fb619b4601b628a7",
+      "modules/map/workspace.js": "07961fc1f4fe91d83d5811b4a4a254f7a98cbef4eb7fcb615de470f703e56d0b",
+      "modules/trigger/authoring.js": "3dd7645c0a7b93a5ddc51a6407d5182460083921ea39481c598795f59059c931",
+      "app/authoringScript.js": "def03f897ae5fc7ec9357cc4a44bb4228491ca872401f385124b73eaef3ee3bb"
+    },
+    "privacy": {
+      "passed": true,
+      "checkedFiles": 9936,
+      "privateSourceFiles": 2331,
+      "privateCorpusCompared": true,
+      "violations": [],
+      "scope": "Explicit private paths/debug/test artifacts and exact external C++/Python/Galaxy source copies, including renamed files. Not proof against transformed snippets or binary reverse engineering."
+    }
+  }
+}

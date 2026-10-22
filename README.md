@@ -2,7 +2,8 @@
 
 **Verified scope:** supported MCP authoring workflows and original Editor checks
 on recorded fixtures. The native DLL connection, GUI compilation, save/reopen and
-map/camera rendering work in the verified setup. See the
+map/camera rendering have renewed scoped acceptance with Toolkit 0.10.0-rc.1
+under Vulkan, including a native-saved GUI/Data archive tested in the game. See the
 [acceptance matrix and reproducible checks](docs/VERIFICATION.md) for evidence and
 the features still awaiting engine/gameplay validation.
 
@@ -18,9 +19,14 @@ and three scoped [project skills](.agents/skills/README.md). These are runtime a
 authoring inputs, not optional local reports. Verify them with
 `npm run catalog:verify` and `npm run docs:check-language`.
 
-[Native Editor checks](docs/NATIVE_EDITOR.md) use the optional pinned Toolkit 0.9.2-rc.1
+[Native Editor checks](docs/NATIVE_EDITOR.md) use the optional pinned Toolkit 0.10.0-rc.1
 backend; `map.preview` remains the fast ModKit preview. Native compilation,
 save/reopen, rendered appearance and gameplay have distinct verification scopes.
+
+[Private game tests](docs/NATIVE_GAME.md) can use a separately installed
+SC2GameToolkit through `game.status/tools/attach/call/detach`. The integration
+does not bundle its private sources or instrument delivered maps. Game launch
+requires explicit local configuration; the existing Editor adapter is independent.
 
 Original code: Copyright (c) 2026 **VoVanRusLvSC2**
 (vladimir.lencmanis@gmail.com), under the [custom attribution license](LICENSE).

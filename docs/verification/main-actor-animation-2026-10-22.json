@@ -1,0 +1,449 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-22T10:58:45.609Z",
+  "scope": "Asset-verified main CActorUnit ability animation authoring, guarded plans and scoped native regression checks; not universal animation or final-art certification",
+  "implementation": {
+    "tool": "data.actor.ability_animation",
+    "operation": "recipe.unitAbilityAnimation",
+    "compactCommand": "data actor.ability_animation",
+    "actualModelInventory": true,
+    "localOverridesFirst": true,
+    "declaredSupplementalAssets": true,
+    "pinsAssetRevision": true,
+    "stagedLocalAssetReadGuard": true,
+    "preservesNativeEvents": true,
+    "createsSecondPrimaryActor": false,
+    "bindings": "Stable per-binding labels; cast/channel/finish Start and explicit Stop/death/movement cleanup; native phase timing uses indexed CastIntroTime0",
+    "unresolvedCoverage": "Unknown parents/ownership/sequence reject; missing supplemental coverage remains partial",
+    "nativePlaybackReceipt": "not_checked"
+  },
+  "mcp": {
+    "authorId": "78f2ebf5-4f44-4efb-8e3d-8f2c3e43e0e5",
+    "plannedAndApplied": true,
+    "trueByteIdenticalRepeat": true,
+    "model": {
+      "id": "Marine",
+      "file": "mods/liberty.sc2mod/base.sc2assets/assets/units/terran/marine/marine.m3",
+      "sha256": "56fc0f53681f12bafe7b4239aa4fe9117786dd0029eb1517d53af6b883bf7e13"
+    },
+    "assetRevision": "a23f0a1d370998b76e750bc1f3a235588d5cef6a4bd39595a0627de40f7c2959",
+    "sequences": {
+      "cast": "Attack",
+      "channel": "Spell",
+      "finish": "Spell"
+    },
+    "negatives": [
+      {
+        "file": "main-actor-negative-mcp.json",
+        "codes": [
+          "UNIT_ANIMATION_SEQUENCE_MISSING",
+          "UNIT_ANIMATION_STALE_ASSET_REVISION",
+          "UNIT_ANIMATION_LOCAL_MAIN_ACTOR_REQUIRED"
+        ]
+      },
+      {
+        "file": "main-actor-portable-negative.json",
+        "codes": [
+          "UNIT_ANIMATION_SEQUENCE_MISSING",
+          "UNIT_ANIMATION_STALE_ASSET_REVISION",
+          "UNIT_ANIMATION_LOCAL_MAIN_ACTOR_REQUIRED"
+        ]
+      }
+    ],
+    "ordinaryMapWrites": "Actual MCP preview/plan/apply/save/export only"
+  },
+  "native": {
+    "ordinaryArchiveSha256": "501f6b4c968ae1b773b2b1feb4e9f6a24136ae1c3b2634c5687707befefadf75",
+    "ordinaryGalaxyUnchanged": true,
+    "gameBuild": "5.0.17.98310",
+    "gameToolkit": "v0.1.0-dev.11",
+    "cleanRegressionLaunches": 2,
+    "runs": [
+      {
+        "jobId": "18fae74f-b67c-4a66-8850-de9c4fcd8768",
+        "movementOutAndBack": "passed",
+        "xpLevels": [
+          1,
+          2,
+          2,
+          3
+        ],
+        "life": [
+          1000,
+          1100,
+          1100,
+          1200
+        ],
+        "damage": [
+          500,
+          505,
+          510
+        ],
+        "sourceUnchanged": true,
+        "cleanup": true
+      },
+      {
+        "jobId": "9433f9e7-5c70-4d39-802c-488ec3dab617",
+        "movementOutAndBack": "passed",
+        "xpLevels": [
+          1,
+          2,
+          2,
+          3
+        ],
+        "life": [
+          1000,
+          1100,
+          1100,
+          1200
+        ],
+        "damage": [
+          500,
+          505,
+          510
+        ],
+        "sourceUnchanged": true,
+        "cleanup": true
+      }
+    ],
+    "originalEditor": {
+      "jobId": "e42a8473-20e7-43ca-ab3f-e8799d5f86ff",
+      "load": "passed",
+      "compile": "passed",
+      "saveReopen": "not_checked"
+    },
+    "recordings": [
+      {
+        "suiteId": "51b889fb-4e08-462e-be2e-f76970a3a731",
+        "label": "cancel",
+        "frames": 22,
+        "outputs": {
+          "video": {
+            "file": "work/launch-diagnostics-20261022/MainActor-cancel-video.mp4",
+            "sha256": "27a48d1f2a45f685dbcdb45b6042ce51cb113110e4ad6e142cd28e9ae4efb366",
+            "bytes": 419293
+          },
+          "audio": {
+            "file": "work/launch-diagnostics-20261022/MainActor-cancel-audio.wav",
+            "sha256": "8fb3d82dc915ebf3a9ed4ef59a8a394dbedc295363f34371c4447137787072a4",
+            "bytes": 1278876
+          },
+          "before": {
+            "file": "work/launch-diagnostics-20261022/MainActor-cancel-before.png",
+            "sha256": "502f089461627df80dd14f6f2836057cd2b5578f84ff389beb33e6cd197b99ef",
+            "bytes": 1485506
+          },
+          "after": {
+            "file": "work/launch-diagnostics-20261022/MainActor-cancel-after.png",
+            "sha256": "7fcf1f00f4e7caefd0756815af616a797fcd52242700683bca7080b5599a1432",
+            "bytes": 1487048
+          }
+        },
+        "audio": {
+          "nonzero": 299522,
+          "peak": 0.001163406646810472,
+          "scope": "Owned-process mixed audio, not isolated animation sound"
+        },
+        "events": [
+          {
+            "kind": "ability",
+            "gameTime": 4.125,
+            "ability": "QualityVeteranStrike",
+            "stage": -4
+          },
+          {
+            "kind": "ability",
+            "gameTime": 4.125,
+            "ability": "stop",
+            "stage": -3
+          },
+          {
+            "kind": "ability",
+            "gameTime": 4.125,
+            "ability": "stop",
+            "stage": -6
+          }
+        ],
+        "nativeSequenceReadback": "not_available_in_this_test"
+      },
+      {
+        "suiteId": "51b889fb-4e08-462e-be2e-f76970a3a731",
+        "label": "body",
+        "frames": 41,
+        "outputs": {
+          "video": {
+            "file": "work/launch-diagnostics-20261022/MainActor-body-video.mp4",
+            "sha256": "57715dd60b848c347598d3b2f20a00a458a19d5600aaa6debca7679c0b0e46db",
+            "bytes": 573179
+          },
+          "audio": {
+            "file": "work/launch-diagnostics-20261022/MainActor-body-audio.wav",
+            "sha256": "87e9987026918dcd1e07e8674c1bb7ac524f9b79c9fb9be9f0c5dc2c617689d5",
+            "bytes": 2319612
+          },
+          "before": {
+            "file": "work/launch-diagnostics-20261022/MainActor-body-before.png",
+            "sha256": "fba81b0f7d9a07631fb878494d825dd1a5ff477179bc39e9ea980f77192fc088",
+            "bytes": 1475507
+          },
+          "after": {
+            "file": "work/launch-diagnostics-20261022/MainActor-body-after.png",
+            "sha256": "2c0c959d1f2686fcbc58ba2e47a7a10426eaa5fae01d8a1066fb570e999ab8f4",
+            "bytes": 1475211
+          },
+          "cast": {
+            "file": "work/launch-diagnostics-20261022/MainActor-body-cast.png",
+            "sha256": "a7a71cf7eaeac6cca9a5c5a1fb705660c6cb0bb0bb2d0e2e6f487fafc7a9fcab",
+            "bytes": 1472901
+          }
+        },
+        "audio": {
+          "nonzero": 568214,
+          "peak": 0.0019170932937413454,
+          "scope": "Owned-process mixed audio, not isolated animation sound"
+        },
+        "events": [
+          {
+            "kind": "ability",
+            "gameTime": 5.25,
+            "ability": "QualityVeteranStrike",
+            "stage": -3
+          },
+          {
+            "kind": "ability",
+            "gameTime": 5.25,
+            "ability": "QualityVeteranStrike",
+            "stage": 0
+          },
+          {
+            "kind": "ability",
+            "gameTime": 5.25,
+            "ability": "QualityVeteranStrike",
+            "stage": 1
+          },
+          {
+            "kind": "ability",
+            "gameTime": 5.25,
+            "ability": "QualityVeteranStrike",
+            "stage": 2
+          },
+          {
+            "kind": "ability",
+            "gameTime": 5.25,
+            "ability": "QualityVeteranStrike",
+            "stage": 3
+          },
+          {
+            "kind": "ability",
+            "gameTime": 8.25,
+            "ability": "QualityVeteranStrike",
+            "stage": 4
+          },
+          {
+            "kind": "damage",
+            "gameTime": 8.25,
+            "amount": 500
+          },
+          {
+            "kind": "ability",
+            "gameTime": 8.25,
+            "ability": "QualityVeteranStrike",
+            "stage": 5
+          },
+          {
+            "kind": "ability",
+            "gameTime": 8.25,
+            "ability": "QualityVeteranStrike",
+            "stage": -6
+          }
+        ],
+        "nativeSequenceReadback": "not_available_in_this_test"
+      },
+      {
+        "suiteId": "aae29d0d-568a-4c9c-adf6-fb6ede526aa1",
+        "label": "complete",
+        "frames": 35,
+        "outputs": {
+          "video": {
+            "file": "work/launch-diagnostics-20261022/MainActor-complete-video.mp4",
+            "sha256": "f697b5eb58449451531c5c1f31204202518b9a3317de785366237d66babe8a1d",
+            "bytes": 532317
+          },
+          "audio": {
+            "file": "work/launch-diagnostics-20261022/MainActor-complete-audio.wav",
+            "sha256": "6981e137e7578aa94cf32d72cbb969db504a1f730fd8f96752d09e1f6ab0990d",
+            "bytes": 2031452
+          },
+          "before": {
+            "file": "work/launch-diagnostics-20261022/MainActor-complete-before.png",
+            "sha256": "949f44deeb62fc790fb8a2126fc304b09db9289e74dec4e0a8a3cebba7ff0233",
+            "bytes": 1475714
+          },
+          "after": {
+            "file": "work/launch-diagnostics-20261022/MainActor-complete-after.png",
+            "sha256": "c0db5b1a37b128b043c0ba4c78c0cb8d2e869bb85c494fb906621b05d55afd50",
+            "bytes": 1477990
+          }
+        },
+        "audio": {
+          "nonzero": 500990,
+          "peak": 0.0044815922155976295,
+          "scope": "Owned-process mixed audio, not isolated animation sound"
+        },
+        "events": [
+          {
+            "kind": "ability",
+            "gameTime": 3.75,
+            "ability": "QualityVeteranStrike",
+            "stage": -3
+          },
+          {
+            "kind": "ability",
+            "gameTime": 3.75,
+            "ability": "QualityVeteranStrike",
+            "stage": 0
+          },
+          {
+            "kind": "ability",
+            "gameTime": 3.875,
+            "ability": "QualityVeteranStrike",
+            "stage": 1
+          },
+          {
+            "kind": "ability",
+            "gameTime": 3.875,
+            "ability": "QualityVeteranStrike",
+            "stage": 2
+          },
+          {
+            "kind": "ability",
+            "gameTime": 3.875,
+            "ability": "QualityVeteranStrike",
+            "stage": 3
+          },
+          {
+            "kind": "ability",
+            "gameTime": 6.875,
+            "ability": "QualityVeteranStrike",
+            "stage": 4
+          },
+          {
+            "kind": "damage",
+            "gameTime": 6.875,
+            "amount": 45
+          },
+          {
+            "kind": "unit_died",
+            "gameTime": 6.875
+          },
+          {
+            "kind": "ability",
+            "gameTime": 6.875,
+            "ability": "QualityVeteranStrike",
+            "stage": 5
+          },
+          {
+            "kind": "ability",
+            "gameTime": 6.875,
+            "ability": "QualityVeteranStrike",
+            "stage": -6
+          }
+        ],
+        "nativeSequenceReadback": "not_available_in_this_test"
+      }
+    ],
+    "cancel": "Target remains45HP, caster remains level1/1000HP, order clears",
+    "nonlethalComplete": "Target2000HP loses500 without XP-burst occlusion",
+    "pixelReview": "Visible pose/orientation change during cast and return to a normal stance. Exact selected sequence playback, channel-specific motion, finish Spell suitability and universal cleanup remain unverified; no native current-animation-name query was used.",
+    "recordingHarnessCorrection": {
+      "suiteId": "51b889fb-4e08-462e-be2e-f76970a3a731",
+      "outcome": "incomplete_or_failed",
+      "reason": "One completion record request used unsupported duration; cancel/body cases passed. Corrected after_seconds completion retry passed separately.",
+      "retryId": "aae29d0d-568a-4c9c-adf6-fb6ede526aa1"
+    },
+    "diagnostics": "Available sources report no unexpected errors; coverage remains partial/inconclusive"
+  },
+  "regressions": {
+    "tests": 1350,
+    "pass": 1349,
+    "fail": 0,
+    "skipped": 1,
+    "concurrency": 4,
+    "sha256": "2448dd31e654ab9f90bf94ad6496269e878e9d28043a877323159ac0c41a39cc",
+    "initialRun": "Retained initial TAP: an unchanged binary test fixture did not create the intended draft; corrected to changed bytes. One old transport test also hit its15sec deadline during parallel native authoring. The corrected complete run passed with bounded test concurrency.",
+    "initialSha256": "9954a40fced0170a7a916d9560a1eccb0751f3953659e79d49d833947698f66a",
+    "eslint": "passed",
+    "documentationLanguage": "passed"
+  },
+  "portable": {
+    "candidate": "SC2EditorToolkit-MainActor-dev11-20261022",
+    "published": false,
+    "compiledFingerprints": {
+      "modules/terrain/operations.js": "4f1dbda387eb5dc5156a444dabcf8f9350fe13a6235273f5c54c882c748278eb",
+      "modules/terrain/nativeGeometry.js": "1770c3eefbca6c30eca93c7fbb9a58b0ceb19954ed1342cab060ca92df4b2271",
+      "modules/terrain/landscapeOwnership.js": "e3d4ee66ab664e8326546c2f3005c9d8aa95a08529db44bb59459f0aa91856e5",
+      "modules/terrain/nativeTopologyOwnership.js": "fd21de0876e6e610ffb0631fb11604d2d02e57df6eee17864506b6c26836cc94",
+      "modules/terrain/schemas.js": "2899b40dc06ac38960b28e3386e828fc97e140a890127166c18bdb94e5fd2736",
+      "modules/terrain/tools.js": "c3923c702f7987542b540205173a371a78c1451bde50bfcc6b1a7629032b8a32",
+      "modules/browse/workspace.js": "656b0d674d79a1db54334ea0fa57a47d4495e792ee1292157cbda35aa2a6814a",
+      "modules/terrain/loadContract.js": "26f69590590f52fcacbaa2e246c803b20a01c9214476dff90fc51db1a49481ea",
+      "modules/document/codecs/terrainLoadContract.js": "cbb1027dc1a35edf6d6ae7696d3cf6734012931100a6cc7ef9371364f17f5dd4",
+      "archive/terrainLoadContract.js": "e75cb33ed451bd6e1b1733f2d5f42076a5b38c1196a51da6b328220e2ac9b56d",
+      "modules/testing/workspace.js": "d3b95e219b7bb22cd00b3c43dc996549e6781373c6450d147c5fa54af8bd92e5",
+      "modules/terrain/workspace.js": "3c2099150d610f1ac7ca7d4d3d759fef9436ebf4e6c9e2fe8a5a90ffcf5a636c",
+      "modules/map/workspace.js": "07961fc1f4fe91d83d5811b4a4a254f7a98cbef4eb7fcb615de470f703e56d0b",
+      "modules/trigger/authoring.js": "3dd7645c0a7b93a5ddc51a6407d5182460083921ea39481c598795f59059c931",
+      "app/authoringScript.js": "afaec2a87e68e4fb0192afc0e8904aa05a46410486d9f8fcce4996d88cfd695a",
+      "app/mcpBatch.js": "fc88886fffd38fbaa2a7ea4e048713b1c5ab236298a8fed66d77fa24b30bad7f",
+      "modules/data/document.js": "2a003f2061251c18cfde806fc974379efae76ae061bf094bb15684aa409f21d1",
+      "modules/data/authoringValidation.js": "1122c9e2c2d0366259e9d956d1e7239ffe4cedffc1332d6062e0bcd0c8f1a963",
+      "modules/data/tools.js": "ef50dd0100ab199b97ac9798878405149ad83b6ecdbfd830136bac5bc944fb07",
+      "modules/data/workspace.js": "1fba7291adb1fac824ba333dbc3ea84d88af078035da13530e986a64b79e35fc",
+      "modules/data/abilityRecipes.js": "fc5c8d12bfe239ad8c91efb03023325c725e0beed4e8d3cff54f8bfa70e8eec5",
+      "modules/data/veterancyRecipe.js": "5a2718284da3c19a84c64cba198feebf4b25aa58b6d1ffa9d5332fbad5f34ce6",
+      "modules/data/cardBindings.js": "372dfe5195e291d78e33ce3e179f3c239d53e56dbd481fb056bcca123263b7a6",
+      "modules/data/unitAnimations.js": "abf7f6f91d6162b514d31f46b42d7962989c28c61054ad6baa29e9b92d3ad8bd",
+      "modules/assets/animationInventory.js": "3b40ca2ba28c6825d78aa6fdec2de0893711a21679b1f9cba5413f07e00a2665",
+      "modules/assets/workspace.js": "e6ec7cd90b36f26ddb8fe5bbc3d0272dbe3c9ce6b79200f173eb2c5389f57afe",
+      "app/project.js": "529cf5b06f12c99d8f067fdf826a82a690259feb1c8c4fb94574a2df566edd1a",
+      "modules/data/actorEvents.js": "bb32de4ed6bd07cd3e8f5651d40a43b40b31157720b043ddcdd5b1e451b6aedd"
+    },
+    "liveNegativeControls": "passed",
+    "privacy": {
+      "passed": true,
+      "checkedFiles": 9951,
+      "privateSourceFiles": 1113,
+      "privateCorpusCompared": true,
+      "violations": 0,
+      "scope": "Explicit private paths/debug/test artifacts and exact external C++/Python/Galaxy source copies, including renamed files. Not proof against transformed snippets or binary reverse engineering."
+    }
+  },
+  "openCoverage": [
+    "Exact channel/finish sequence playback and model-specific artistic suitability",
+    "Other target/charge/learn/talent/share profiles, visibility conditions and layered/dynamic model rules",
+    "Complex typed GUI native save/reopen on preserved pending handlers",
+    "Broader topology/navigation/buildability and finished mission art/balance"
+  ],
+  "sourceFingerprints": {
+    "src/modules/data/unitAnimations.ts": "be570fde8b624087f60ce5536194e35b445cced037fc099033bf147baed06583",
+    "src/modules/data/actorEvents.ts": "c1f433959626a7e8d3db681741774ecd54a7839bea0cf46e3818910a69d91b3a",
+    "src/modules/data/abilityRecipes.ts": "9b09ff1fb22e4bbaee26aafb09f3fa3b935a87dfedfc29dedfd6d6cbf9b7e14b",
+    "src/modules/data/workspace.ts": "2b572e95176a7f9ba6aab98f38d4f0207b3dfb9c8907f404b24591f385b2e916",
+    "src/modules/data/tools.ts": "a19a20bc070b857f218b4d827966e13fa730bcd6dbb7bc7ba5909a2f832bd625",
+    "src/modules/data/types.ts": "3a68d45cd1373a1578c9162bca2f3595f87809782d0ac8ae34fdc5d8d1f8c974",
+    "src/modules/assets/animationInventory.ts": "36791a202e3c9f4d326f9e250ef868440a0c4a77e1d02a5096d1c3b91f2fddb8",
+    "src/modules/assets/workspace.ts": "6ee7237ee9c600a67b94af33cad57b305aab7ee8cc989d88c2d213d0be40a12b",
+    "src/app/project.ts": "36698ab0aed70a4dc1db79cbca59ff91402ac726e892fae6db6d5b4b0e60c847",
+    "src/app/authoringScript.ts": "6074bd03477c934e56341b7c4328d3031d72cf982322d1691abfa90ffec282bc",
+    "src/app/mcpBatch.ts": "f4317b16d060eb8e8ed39f24e05e47d3aaff9ad5836d4d5cbe8d3eef678963aa",
+    "src/tests/animationInventory.test.ts": "cf8f7adf372965fda813743814b4bf6435e2eefee8805834be7dfc455c0fd85f",
+    "src/tests/dataAnimationWorkspace.test.ts": "0ecdf46d5d5eaeeff57a3896a7e3b461bd097d6208fe8e21ab180e336f49c0b2",
+    "src/tests/dataUnitAnimations.test.ts": "0d9d9896c200663c6cf5f433e57acca3c577186d4e71c9384cc40083506121b0",
+    "src/tests/support/animationModel.ts": "c3973f2a141feeef5999ce8f507fb30df364aba6fa043e9ac8a10d92b16e6ddd",
+    "src/tests/authoringScript.test.ts": "a175961ed6322a30e9559e14b4e18ec49378157549a0f0b684148637410c1404",
+    "src/tests/mcpBatch.test.ts": "38589921c20041623d4fa958305d165ca654d15d82b1571f417bd968efe3394c",
+    "AGENTS.md": "9524c9e7e6fa01b910c2bcd19c474d7f3a3b65f2add8975a980ff2b625540910",
+    "docs/AUTHORING_PROTOCOL.md": "4ef9d3ecdaff09971fa6bf479a41459edcfac2b612eff7a6eea77f777dc9aafa",
+    "docs/DATA_MCP.md": "0dbdcf89e9bde2e8492460d42d84fa6b353973317efa5f8460ad92283933cd83"
+  }
+}

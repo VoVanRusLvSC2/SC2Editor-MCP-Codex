@@ -14,9 +14,12 @@ const docs = new Set(policy.documentation.map(name => `docs/${name}`));
 const generated = new Set(policy.runtimeGeneratedFiles.map(name => `generated/${name}`));
 const inDirectory = (file, directories) => directories.some(dir => file.startsWith(dir));
 const entry = (category, reason) => ({ category, reason });
+const isLocalDirectory = file => inDirectory(file, policy.localDirectories)
+  || /^native\/build-[^/]+(?:\/|$)/.test(file)
+  || /(^|\/)(node_modules|__pycache__|\.git|build|CMakeFiles)(?:\/|$)/.test(file);
 
 function classify(file) {
-  if (inDirectory(file, policy.localDirectories) || /(^|\/)(node_modules|__pycache__|\.git|build|CMakeFiles)\//.test(file))
+  if (isLocalDirectory(file))
     return entry("local", "Local outputs, fixtures, inputs or build/cache directory");
   if (file.startsWith('resources/authoring-catalog/'))
     return /\.(?:json(?:\.gz)?|md)$/i.test(file)
@@ -60,7 +63,7 @@ async function visit(directory = "") {
       records.push({ file, bytes: 0, ...entry("local", "Symlink not followed") });
     } else if (item.isDirectory()) {
       const dir = `${file}/`;
-      if (inDirectory(dir, policy.localDirectories) || /(^|\/)(node_modules|__pycache__|\.git|build|CMakeFiles)\/$/.test(dir))
+      if (isLocalDirectory(dir))
         skippedDirectories.push(dir);
       else await visit(file);
     } else if (item.isFile()) {
@@ -73,6 +76,7 @@ records.sort((a, b) => a.file.localeCompare(b.file, "en"));
 const required = [...policy.rootFiles, ...generated, "generated/data-xsd-index/manifest.json",
   'resources/authoring-catalog/manifest.json','resources/authoring-catalog/IMPORT.json',
   'docs/verification/native-editor-0.9.2.json',
+  'docs/verification/toolkit-update-2026-10-21.json',
   '.agents/skills/sc2-mission-authoring/SKILL.md','.agents/skills/sc2-terrain-composition/SKILL.md','.agents/skills/sc2-data-trigger-systems/SKILL.md',
   "vendor/blizzard-models/LICENSE-GPL-2.0.txt", "vendor/blizzard-models/browser/material-bundle.js",
   "vendor/blizzard-models/dist/m3/native/model.js", "vendor/blizzard-models/src/m3/native/structures.xml",

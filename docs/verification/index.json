@@ -1,0 +1,253 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-22T17:52:37.546Z",
+  "scope": "Inventory of retained records and explicit roadmap coverage. This does not supersede native observations or refresh historical source fingerprints.",
+  "records": [
+    {
+      "id": "editor_092",
+      "file": "docs/verification/native-editor-0.9.2.json",
+      "role": "historical",
+      "sha256": "5399b884abb6070d5d1c4a5c4c4cc474e6a96cfc772ae43a6f7465749e1b97d3"
+    },
+    {
+      "id": "toolkit_1021",
+      "file": "docs/verification/toolkit-update-2026-10-21.json",
+      "role": "historical",
+      "sha256": "820233865269548927e404e7432c374e7d222da1258a132547038fc107d2b8c4"
+    },
+    {
+      "id": "game_dev11",
+      "file": "docs/verification/game-toolkit-dev11-2026-10-21.json",
+      "role": "historical",
+      "sha256": "ecd28e78ce7c6ef81e617744b6211ffaf9a0371e3d41a868361e53a7bab11d9d"
+    },
+    {
+      "id": "terrain_junctions",
+      "file": "docs/verification/terrain-junctions-2026-10-21.json",
+      "role": "historical",
+      "sha256": "c28b57a0f1385a95905655c44fad551795c9c343a6a41ad76fb97b64d92085e5"
+    },
+    {
+      "id": "landscape_initial",
+      "file": "docs/verification/landscape-2026-10-22.json",
+      "role": "historical",
+      "sha256": "9e50aa14e172550ff148198c908fa99366b637198fecad934a5c263249faed82"
+    },
+    {
+      "id": "landscape_groups",
+      "file": "docs/verification/landscape-groups-2026-10-22.json",
+      "role": "historical",
+      "sha256": "f13a394b1f8986eeb32f678738cfd41606555000a9a618448d60fd76a4773103"
+    },
+    {
+      "id": "terrain_load",
+      "file": "docs/verification/terrain-load-startup-2026-10-22.json",
+      "role": "scoped",
+      "sha256": "cd65b088a0d24d9fe14aa117c13ca63b720db349fe2d2910342401d0b08262a0"
+    },
+    {
+      "id": "instant_data",
+      "file": "docs/verification/instant-data-quality-2026-10-22.json",
+      "role": "historical",
+      "sha256": "ba695dcb70d52789a7f283082bbd30e4b136d7825b897113be4ccfc5465ccf7a"
+    },
+    {
+      "id": "gui_events",
+      "file": "docs/verification/gui-core-events-2026-10-22.json",
+      "role": "scoped",
+      "sha256": "0e0d95ab07b0534bcf186fb565cd3badf7e7311e34c8daeea0c26c2f4c66423b"
+    },
+    {
+      "id": "terrain_order",
+      "file": "docs/verification/terrain-operation-order-2026-10-22.json",
+      "role": "historical",
+      "sha256": "37b82826c0a8a43cbdeec18c0dddaa2c3759dee184ff26eff9d8759db36f949b"
+    },
+    {
+      "id": "native_ownership",
+      "file": "docs/verification/landscape-native-ownership-2026-10-22.json",
+      "role": "scoped",
+      "sha256": "6dda1d1b19da5135e0395c129ecc6296901a04e5f86ba80963ca472b56da51b6"
+    },
+    {
+      "id": "targeted_data",
+      "file": "docs/verification/targeted-data-quality-2026-10-22.json",
+      "role": "historical",
+      "sha256": "dd0bac3bf7b6cd36a4b78abf9f3d6f5d8846eaf0695cb562576abcc146ddb842"
+    },
+    {
+      "id": "veterancy",
+      "file": "docs/verification/native-veterancy-2026-10-22.json",
+      "role": "scoped",
+      "sha256": "412a93b9ece15b67e7a3f2c0bd601962123fb1777d6b6e5d6d2c90ff5332f0d7"
+    },
+    {
+      "id": "data_card",
+      "file": "docs/verification/data-card-quality-2026-10-22.json",
+      "role": "scoped",
+      "sha256": "1d44e22c478ba8d19ac0d033bb262cce360c0e88c7d5cdaf4ff5a5ec8d3b4a8e"
+    },
+    {
+      "id": "main_actor",
+      "file": "docs/verification/main-actor-animation-2026-10-22.json",
+      "role": "scoped",
+      "sha256": "660e260a3cf793a329381ac1b8c94c00906cfefb6f6aaa3684a31d39f31ebf59"
+    },
+    {
+      "id": "unit_animation_phases",
+      "file": "docs/verification/native-unit-animation-phases-2026-10-22.json",
+      "role": "scoped",
+      "sha256": "cfecfe269b8f617ae8ee3fc817330e69e7cc5187ecc9afbda7b3a13bbf0c6efd"
+    },
+    {
+      "id": "actor_death_data_groups",
+      "file": "docs/verification/main-actor-death-data-groups-2026-10-22.json",
+      "role": "scoped",
+      "sha256": "7f099c229ce92858e44dd0b1b84a9f44bcf6c3d4c048096e4210e02bf59099a6"
+    },
+    {
+      "id": "combat_actor_lifecycle",
+      "file": "docs/verification/native-combat-main-actor-2026-10-22.json",
+      "role": "scoped",
+      "sha256": "a46eef6b9a6a04c979c859a095b6161a951ee0510cbf7dabe0f807b02da96968"
+    },
+    {
+      "id": "gui_native_roundtrip",
+      "file": "docs/verification/gui-native-roundtrip-2026-10-22.json",
+      "role": "scoped",
+      "sha256": "8d953208021d35e07643c3740a523e035866d6a84e25bcfbeb292170290180dd"
+    },
+    {
+      "id": "native_junction_matrix",
+      "file": "docs/verification/native-junction-matrix-2026-10-22.json",
+      "role": "scoped",
+      "sha256": "79233d571db5aaed3fbc50ca6f02e7d55209b4c18a70cad7658a9d8fa699f12b"
+    },
+    {
+      "id": "gui_context_roundtrip",
+      "file": "docs/verification/gui-context-roundtrip-2026-10-22.json",
+      "role": "scoped",
+      "sha256": "88422e65e68c1a07d44bb7864ce934330c06f8b3d6ea19bbee2ee0c796f14df3"
+    },
+    {
+      "id": "startup_history",
+      "file": "docs/verification/startup-history-2026-10-22.json",
+      "role": "scoped",
+      "sha256": "9e4f16d2cc17cd9252a2c9bb1db6076b79263fcdd71a45decc8c9c90e8d62c24"
+    },
+    {
+      "id": "point_projectile_bounds",
+      "file": "docs/verification/point-projectile-bounds-2026-10-22.json",
+      "role": "scoped",
+      "sha256": "c63eb1139425e6822b0c4b292f4abbbdc092a023f6b8c3fcb86f278455ab71c1"
+    },
+    {
+      "id": "native_charges_range",
+      "file": "docs/verification/native-charges-range-2026-10-22.json",
+      "role": "scoped",
+      "sha256": "decb75ff666ac164e842475a94e0a6e0b266e94f7a2113171afa392ab0ab2f80"
+    }
+  ],
+  "coverage": [
+    {
+      "id": "saved_map_startup",
+      "required": true,
+      "state": "partial",
+      "records": [
+        "terrain_load",
+        "gui_events",
+        "toolkit_1021",
+        "gui_native_roundtrip",
+        "startup_history"
+      ],
+      "reason": "Known Galaxy/GUI/Data/dependency fixtures, representative complex GUI native save/reopen and negative startup cases passed. Retained startup history and native callback-state readiness now pass twice on the unchanged events fixture. General startup stability remains incomplete; an earlier unexplained frontend exit and stalled native handler are retained."
+    },
+    {
+      "id": "regional_native_profile",
+      "required": true,
+      "state": "passed",
+      "records": [
+        "native_ownership"
+      ],
+      "reason": "Restricted V115 identity/even grid, rectangular two-cell cliff strokes and cardinal width-four ramps only; three exact archives, six launches and 48 traversals."
+    },
+    {
+      "id": "broad_topology_navigation",
+      "required": true,
+      "state": "partial",
+      "records": [
+        "terrain_junctions",
+        "native_ownership",
+        "native_junction_matrix",
+        "point_projectile_bounds"
+      ],
+      "reason": "Fresh twelve-orientation Agria fixture passed56 Marine/Marauder traversals, level2-to3 ramps and native detail review. Other saddle/void/edge/width/diagonal profiles and authoritative path/collision/buildability remain open. Default Unit-pivot containment and MapInfo stale-save guards now prevent this reproduced placement error; they are not native footprint/path/collision/buildability results."
+    },
+    {
+      "id": "owned_landscape_workflow",
+      "required": true,
+      "state": "partial",
+      "records": [
+        "landscape_groups",
+        "native_ownership"
+      ],
+      "reason": "Existing zones, textures, measured groups, dependency rebuilds and regional native ownership are implemented. Old style-fixture records retain their exact prior source scope; final composition acceptance remains separate."
+    },
+    {
+      "id": "gui_roundtrip",
+      "required": true,
+      "state": "partial",
+      "records": [
+        "gui_context_roundtrip",
+        "startup_history"
+      ],
+      "reason": "The unchanged306-element EventsMap now passes two current frozen save/reopen/recompile/game launches, retained startup-death history, both real UI clicks and final44/23 callback markers. Other imported-library/control/runtime registration semantics and an earlier unexplained save stall remain outside this corpus."
+    },
+    {
+      "id": "data_ability_corpus",
+      "required": true,
+      "state": "partial",
+      "records": [
+        "targeted_data",
+        "veterancy",
+        "data_card",
+        "main_actor",
+        "unit_animation_phases",
+        "actor_death_data_groups",
+        "combat_actor_lifecycle",
+        "point_projectile_bounds",
+        "native_charges_range"
+      ],
+      "reason": "Direct EMP-derived native charges now pass two frozen launches across four pool scopes, natural recovery, finite/depleted/empty stocks, disabled gate and spend-two affordability. Range is explicitly level0 and normal far/blocked orders are checked. Broader profiles, learn/talent, isolated sound and final presentation remain open."
+    },
+    {
+      "id": "compact_authoring_cache",
+      "required": true,
+      "state": "passed",
+      "records": [
+        "native_ownership",
+        "actor_death_data_groups"
+      ],
+      "reason": "Real MCP same-catalog grouping reduced one warm no-op three-command Data save from82.3s/6 internal calls to37.5s/2; bytes and duration are scoped proxies, not billed-token savings. Prior regional ownership benchmark retains its exact scope."
+    },
+    {
+      "id": "private_runtime_boundary",
+      "required": true,
+      "state": "passed",
+      "records": [
+        "native_charges_range"
+      ],
+      "reason": "Current local frozen charge/range candidate checked9963 entries against1113 external private source files with zero violations. SDK/test maps excluded; unpublished artifact and no reverse-engineering guarantee."
+    },
+    {
+      "id": "art_and_gameplay_review",
+      "required": true,
+      "state": "not_checked",
+      "records": [
+        "landscape_groups",
+        "native_ownership"
+      ],
+      "reason": "Technical frames were reviewed. Finished mission composition, readable selection/UI, balance and human aesthetic approval remain open."
+    }
+  ]
+}

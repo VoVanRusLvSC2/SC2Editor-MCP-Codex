@@ -84,6 +84,7 @@ export class MapWorkspace {
     const terrain = await this.terrain.inspect(directory);
     if("error" in terrain && terrain.error) issues.push({ severity:"error",code:"TERRAIN_INVALID",message:terrain.error });
     if("nativeIntegrity" in terrain && terrain.nativeIntegrity) issues.push(...terrain.nativeIntegrity.issues);
+    if("nativeLoad" in terrain && terrain.nativeLoad) issues.push(...terrain.nativeLoad.issues);
     if(mapInfo && terrain.dimensions?.vertices) {
       if(terrain.dimensions.vertices[0] !== mapInfo.cells[0]+1 || terrain.dimensions.vertices[1] !== mapInfo.cells[1]+1) issues.push({ severity:"error",code:"MAP_TERRAIN_DIMENSION_MISMATCH",message:"MapInfo cells and height-map vertices disagree" });
     }

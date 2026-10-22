@@ -1,7 +1,8 @@
-export const publicModules = ["ui", "cutscene", "cutscene-preview", "text", "data", "browse", "placement", "ai", "terrain", "map", "script", "casc", "settings", "document", "assets", "lighting", "editor"] as const;
+export const publicModules = ["ui", "cutscene", "cutscene-preview", "text", "data", "browse", "placement", "ai", "terrain", "map", "script", "casc", "settings", "document", "assets", "lighting", "editor", "game"] as const;
 export type PublicModule = typeof publicModules[number];
 
 const profiles: Record<string, PublicModule[]> = {
+  game: ['game'],
   editor: ['ui','editor'],
   "cutscene-preview": ["ui","cutscene","cutscene-preview","casc","assets","data","lighting"],
   assets: ["ui", "casc", "assets"],

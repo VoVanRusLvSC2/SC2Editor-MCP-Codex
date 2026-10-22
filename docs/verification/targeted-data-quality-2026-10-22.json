@@ -1,0 +1,245 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-22T06:49:11.668Z",
+  "scope": "Targeted native Data execution recipe from explicit CAbilEffectTarget templates; one unit-target Snipe fixture plus instant-regression checks and source-scope status reporting",
+  "implementation": {
+    "tool": "data.ability.target",
+    "operation": "recipe.targetAbility",
+    "compactCommand": "data ability.target",
+    "templateRequired": true,
+    "inherited": "Target filters, validators, cursor, cast timing and other native template behavior remain inherited; no unit/point inference",
+    "overrides": [
+      "effect",
+      "button",
+      "energy and neutralized inherited life/resource costs",
+      "unit-scoped cooldown",
+      "optional range",
+      "optional indexed local unit/card binding"
+    ],
+    "localTemplateFix": "The evolving target catalog replaces its old parse once; genuinely competing active declarations still reject"
+  },
+  "mcp": {
+    "import": "1497012f-254b-4d83-9cbc-b1304dcc16bc",
+    "authoring": "73ed799f-84dd-4791-8884-0b830307f10a",
+    "authoringVerdict": "incomplete_or_failed",
+    "authoringReason": "Data and compact target recipe saved successfully; later placement harness expected plan.id instead of the tool's actual id. No placement apply/export occurred in that run.",
+    "correctedPlacementAndExport": "60e7ecec-187f-4805-ba43-cf301f3c7b74",
+    "instantCurrentWriterNoOp": "b2180ce4-66eb-4c41-9452-03e12140df92",
+    "currentWriterPreservedCatalogAndArchive": true
+  },
+  "native": {
+    "engineBuild": "5.0.17.98310",
+    "gameToolkit": "v0.1.0-dev.11",
+    "targetArchiveSha256": "58f5255e848ef7ce1a1353dde8ba8a6dae2f6f7dbec6dbd022ce4eea3c78062f",
+    "targetArchiveCatalogMatchesCurrentSource": true,
+    "ordinaryGalaxyUnchanged": true,
+    "instantAbilityDeclarationUnchanged": true,
+    "acceptedCorpusCleanLaunches": 4,
+    "retainedBridgesForCorpus": 2,
+    "runs": [
+      {
+        "kind": "target",
+        "jobId": "dc9914fa-8f73-4f96-81de-891714609520",
+        "sourceSha256": "58f5255e848ef7ce1a1353dde8ba8a6dae2f6f7dbec6dbd022ce4eea3c78062f",
+        "createdAt": "2026-10-22T06:33:32.012Z",
+        "finishedAt": "2026-10-22T06:34:08.627Z",
+        "scenarios": [
+          "scenario:nativeTargetingAndEnergyGuards",
+          "scenario:firstCastAndEarlyReuse",
+          "scenario:cooldownAndSecondCast"
+        ],
+        "sourceAndArtifactUnchanged": true,
+        "cleanup": true
+      },
+      {
+        "kind": "target",
+        "jobId": "08f7387b-8b46-4cfc-b7d2-dbe5a293ed68",
+        "sourceSha256": "58f5255e848ef7ce1a1353dde8ba8a6dae2f6f7dbec6dbd022ce4eea3c78062f",
+        "createdAt": "2026-10-22T06:34:09.295Z",
+        "finishedAt": "2026-10-22T06:34:45.189Z",
+        "scenarios": [
+          "scenario:nativeTargetingAndEnergyGuards",
+          "scenario:firstCastAndEarlyReuse",
+          "scenario:cooldownAndSecondCast"
+        ],
+        "sourceAndArtifactUnchanged": true,
+        "cleanup": true
+      },
+      {
+        "kind": "instant",
+        "jobId": "009765ac-0ec4-4fb9-b833-c0338b82e7a6",
+        "sourceSha256": "f4a193e06b00a81b30eef53c2bf89423c40e753bf9b11dfc5a12849f04a0a546",
+        "createdAt": "2026-10-22T06:25:50.202Z",
+        "finishedAt": "2026-10-22T06:26:21.157Z",
+        "scenarios": [
+          "scenario:firstCastAndEarlyReuse",
+          "scenario:cooldownAndSecondCast"
+        ],
+        "sourceAndArtifactUnchanged": true,
+        "cleanup": true
+      },
+      {
+        "kind": "instant",
+        "jobId": "ed8f0714-822b-4db0-9d37-9d039f1830b9",
+        "sourceSha256": "f4a193e06b00a81b30eef53c2bf89423c40e753bf9b11dfc5a12849f04a0a546",
+        "createdAt": "2026-10-22T06:26:21.511Z",
+        "finishedAt": "2026-10-22T06:26:52.144Z",
+        "scenarios": [
+          "scenario:firstCastAndEarlyReuse",
+          "scenario:cooldownAndSecondCast"
+        ],
+        "sourceAndArtifactUnchanged": true,
+        "cleanup": true
+      }
+    ],
+    "targetingObservations": {
+      "mechanicalTarget": "No energy expenditure or target damage in the bounded observation",
+      "outsideRange": "No energy expenditure or target damage with caster Speed=0 and target outside range6; the normal submitted order may remain pending until stopped",
+      "insufficientEnergy": "Caster with energy10 did not spend energy or damage a valid target",
+      "orderAcceptance": "Native order submission returned accepted=true; this is not an explicit rejection/invalid-target reason or execution confirmation"
+    },
+    "validCasts": {
+      "damage": [
+        30,
+        30
+      ],
+      "targetLife": [
+        500,
+        470,
+        440
+      ],
+      "casterEnergy": [
+        100,
+        75,
+        50
+      ],
+      "earlyReuseProtected": true,
+      "cooldownRecovered": true,
+      "wait": "Damage event after the pre-order cursor, then exact vitals; not immediate submission acknowledgement"
+    },
+    "editor": {
+      "projectJob": "7b393ed4-b035-4de1-9041-f45ec4f0e2d2",
+      "nativeJob": "47715407-1757-41c3-8b89-3f84ce82bcf5",
+      "loadAndCompile": "passed",
+      "saveReopen": "not_checked",
+      "sourceAndArtifactUnchanged": true
+    },
+    "presentation": {
+      "proof": "95b0edc8-9366-43d2-aef8-a55a94ecf410",
+      "extraCleanLaunches": 1,
+      "nativeActors": [
+        {
+          "actorDataId": "ArenaTargetVisual",
+          "nativeClass": "CActorModel",
+          "gameTime": 3.5625
+        },
+        {
+          "actorDataId": "ArenaTargetSound",
+          "nativeClass": "CActorSound",
+          "gameTime": 3.5625
+        }
+      ],
+      "visualReview": "Reviewed exact before, impact and after frames; orange impact streaks visible at the target in Target-impact.png. This is a small technical impact, not a complete final ability design.",
+      "frameSha256": "db741fb2617f2c6d520bd351930ea4717910b2fd8b9c7c761c5d04174c13f079",
+      "videoSha256": "0abc82563ce45189658cea86a5983cd01279e0abacb7ee0549c205f760aa5e2a",
+      "audio": {
+        "source": "owned_process_audio",
+        "sha256": "3fadaabf9fd8bd191c75c2cbac11f33b01f2c205186c8921dded688b2c4f1240",
+        "nonzero": 179275,
+        "peak": 0.0009397139074280858,
+        "physicalSpeakerOutput": "not_checked"
+      },
+      "completeCastTravelAnimationDesign": false
+    },
+    "diagnostics": "Optional game sources remain partial/inconclusive; original Editor load/compile passed on this exact archive"
+  },
+  "regressions": {
+    "tests": 1317,
+    "pass": 1316,
+    "fail": 0,
+    "skipped": 1,
+    "reportSha256": "09f468ac6063e5c0c3c1b5d71e028c9d1d325272ea2ab30bfd73530b918cd959",
+    "testConcurrency": 4,
+    "focusedAbilityAndAuthoringTests": 13,
+    "evidenceStatusTests": 2
+  },
+  "evidenceStatus": {
+    "tool": "npm run evidence:status",
+    "noNativeExecution": true,
+    "recordDigestsAndSourceScopesSeparated": true,
+    "partialNotUpgradedBySourceMatch": true,
+    "unsafePathDigestAndEmptyCoverageGuards": true,
+    "oldBroadEvidenceGate": "Still fails on historical source drift; not waived"
+  },
+  "retainedFailures": [
+    {
+      "proof": "a3f6e020-55ce-426b-adff-34b9dfcd74d4",
+      "reason": "Misspelled fixture Unit Attribute instead of native Attributes was strictly rejected before Data staging; corrected against queried native declarations."
+    },
+    {
+      "jobs": [
+        "9e0c2b8e-3397-4323-a9fa-349e464b7ab7",
+        "07addd7a-279e-4ae1-a708-1b2a52a51ea9"
+      ],
+      "reason": "Old instant fixture inspected energy before the inherited Snipe cast point. Later event/vitals proved execution; corrected suite waits for actual damage without changing expected costs or damage."
+    },
+    {
+      "reason": "An unsupported editor.timeout manifest key was rejected before native startup. The separate valid manifest passed."
+    }
+  ],
+  "portable": {
+    "candidate": "release/SC2EditorToolkit-TargetAbility-dev11-20261022",
+    "published": false,
+    "smokePassed": true,
+    "targetAbilitySchema": true,
+    "compiledFingerprints": {
+      "modules/terrain/operations.js": "4f1dbda387eb5dc5156a444dabcf8f9350fe13a6235273f5c54c882c748278eb",
+      "modules/terrain/nativeGeometry.js": "1770c3eefbca6c30eca93c7fbb9a58b0ceb19954ed1342cab060ca92df4b2271",
+      "modules/terrain/landscapeOwnership.js": "e3d4ee66ab664e8326546c2f3005c9d8aa95a08529db44bb59459f0aa91856e5",
+      "modules/terrain/nativeTopologyOwnership.js": "fd21de0876e6e610ffb0631fb11604d2d02e57df6eee17864506b6c26836cc94",
+      "modules/terrain/schemas.js": "2899b40dc06ac38960b28e3386e828fc97e140a890127166c18bdb94e5fd2736",
+      "modules/terrain/tools.js": "c3923c702f7987542b540205173a371a78c1451bde50bfcc6b1a7629032b8a32",
+      "modules/browse/workspace.js": "656b0d674d79a1db54334ea0fa57a47d4495e792ee1292157cbda35aa2a6814a",
+      "modules/terrain/loadContract.js": "26f69590590f52fcacbaa2e246c803b20a01c9214476dff90fc51db1a49481ea",
+      "modules/document/codecs/terrainLoadContract.js": "cbb1027dc1a35edf6d6ae7696d3cf6734012931100a6cc7ef9371364f17f5dd4",
+      "archive/terrainLoadContract.js": "e75cb33ed451bd6e1b1733f2d5f42076a5b38c1196a51da6b328220e2ac9b56d",
+      "modules/testing/workspace.js": "d3b95e219b7bb22cd00b3c43dc996549e6781373c6450d147c5fa54af8bd92e5",
+      "modules/terrain/workspace.js": "3c2099150d610f1ac7ca7d4d3d759fef9436ebf4e6c9e2fe8a5a90ffcf5a636c",
+      "modules/map/workspace.js": "07961fc1f4fe91d83d5811b4a4a254f7a98cbef4eb7fcb615de470f703e56d0b",
+      "modules/trigger/authoring.js": "3dd7645c0a7b93a5ddc51a6407d5182460083921ea39481c598795f59059c931",
+      "app/authoringScript.js": "238a66f5c107851235c7c59d8e4819de880b8630737c7d4c71d18c4bedb05d46",
+      "modules/data/document.js": "2a003f2061251c18cfde806fc974379efae76ae061bf094bb15684aa409f21d1",
+      "modules/data/authoringValidation.js": "1122c9e2c2d0366259e9d956d1e7239ffe4cedffc1332d6062e0bcd0c8f1a963",
+      "modules/data/tools.js": "7a84efcc7bd76f7d6b7a8ea828a4d898f559bf1de0d77a66cd2ede77e1b2f321",
+      "modules/data/workspace.js": "121097afa16564646da9d5d7178f55c79db3cd325b0097ffbed2c61f3be55a0f",
+      "modules/data/abilityRecipes.js": "11a1b1ea9f50984871fbce0ea8af08bf1251941bfae716d3f95da92725080dfa"
+    },
+    "dataRejectionIsError": true,
+    "privacy": {
+      "passed": true,
+      "checkedFiles": 9944,
+      "privateSourceFiles": 2331,
+      "privateCorpusCompared": true,
+      "violations": [],
+      "scope": "Explicit private paths/debug/test artifacts and exact external C++/Python/Galaxy source copies, including renamed files. Not proof against transformed snippets or binary reverse engineering."
+    }
+  },
+  "openCoverage": [
+    "Point-target templates, cursor/validator variants, channel/cancel behavior and charge profiles",
+    "Veterancy/progression fixtures and broader Data mechanics",
+    "Complete player-facing cast/travel/impact design and physical audio output",
+    "Complex typed GUI original save/reopen remains pending",
+    "Broad topology/navigation/buildability and finished mission aesthetic/balance acceptance"
+  ],
+  "sourceFingerprints": {
+    "src/modules/data/abilityRecipes.ts": "ddf986c121ad026e4c9de546b3f18480f486e7574f15fade001cbfdbd43ea532",
+    "src/modules/data/types.ts": "fd10a5eab6b56e6b46e80573f0dcb4af9b608c4fc3fc1e9ccb83eedd36c55ef0",
+    "src/modules/data/tools.ts": "a697fbdc50786ac8ce476a6788a1f59e909b03e30f07a60797e9d7410de80e76",
+    "src/modules/data/workspace.ts": "868ba45182e99e27e75fada7995be8587e2ac8d499377cbd96710b84fedf313a",
+    "src/app/authoringScript.ts": "a9f32bfbcc4b7efd3b2c19618df47a3b61d49df875c48107dad645842b3b0796",
+    "src/tests/dataAbilityRecipes.test.ts": "6802e636391fe927e0bbc91b6fb1aaa4edcc35c8cae75843036d01742bb501e3",
+    "src/tests/authoringScript.test.ts": "afd3a896b8d7a620e4fb8c4f99ed94ce3a5934317cc8ad94eb492b13a3956994",
+    "scripts/evidence-status.mjs": "d3ac4d81059995e143430b559c95b3c6ff0bf96dae22bcea013ae0d0a3413917",
+    "src/tests/evidenceStatus.test.ts": "450de024600df72be34e816f36162e3dab1d0aa862a226f49e4ba1e54aefbe0a"
+  }
+}

@@ -25,16 +25,21 @@ export class ModkitIntegration {
   private backendRoots='';
   private retiring:Promise<unknown>=Promise.resolve();
   private queue:Promise<unknown>=Promise.resolve();
+  private runtimeDigest?:string;
   constructor(readonly workspace:Workspace,readonly install:string,readonly dependencies:()=>string[]=()=>[]){}
   status(){return {available:modkitAvailable(),runtimeRoot:modkitHome(),nodeSupported:Number(process.versions.node.split('.')[0])>=22,
     data:'canonical ModKit ModContext',mapPreview:'ModKit world renderer',terrain:'native format editors and static navigation; engine validation separate',casc:'ModKit local installation reader',localOnly:true,gameWrites:false};}
-  async provenance(){return {...this.status(),...(modkitAvailable()?{pin:JSON.parse(await fs.readFile(path.join(modkitHome(),'sc2-mcp-runtime.json'),'utf8'))}:{setup:'npm run modkit:setup'})};}
+  async provenance(){if(!modkitAvailable())return {...this.status(),setup:'npm run modkit:setup'};const bytes=await fs.readFile(path.join(modkitHome(),'sc2-mcp-runtime.json'));return {...this.status(),pin:JSON.parse(bytes.toString('utf8')),receiptSha256:sha(bytes),loadedReceiptSha256:this.runtimeDigest??null,restartRequired:!!this.runtimeDigest&&this.runtimeDigest!==sha(bytes)};}
   async port():Promise<Backend>{
+    if(!modkitAvailable())throw Error('MODKIT_RUNTIME_NOT_INSTALLED: run npm run modkit:setup');
+    const runtimeDigest=sha(await fs.readFile(path.join(modkitHome(),'sc2-mcp-runtime.json')));
+    if(this.runtimeDigest&&this.runtimeDigest!==runtimeDigest)throw Error('MODKIT_RUNTIME_CHANGED_RESTART_REQUIRED: reconnect MCP after changing its installed modules');
     const build=await fs.readFile(path.join(this.install,'.build.info')).catch((e:NodeJS.ErrnoException)=>{if(e.code==='ENOENT')return Buffer.alloc(0);throw e;});
     const roots=JSON.stringify([this.dependencies(),sha(build)]);
     if(this.backend&&this.backendRoots!==roots)this.reset();
     if(!this.backend)this.backend=(async()=>{
       this.backendRoots=roots;
+      this.runtimeDigest=runtimeDigest;
       await this.retiring;
       if(!modkitAvailable())throw Error('MODKIT_RUNTIME_NOT_INSTALLED: run npm run modkit:setup');
       if(Number(process.versions.node.split('.')[0])<22)throw Error('MODKIT_REQUIRES_NODE_22');
@@ -94,7 +99,10 @@ export class ModkitIntegration {
       await fs.mkdir(path.dirname(target),{recursive:true});
       if(packed)await fs.writeFile(temporary,entries[0].bytes,{flag:'wx'});
       else {await fs.mkdir(temporary);for(const entry of entries){const file=this.workspace.resolveUserPath(path.join(temporary,entry.relative));await fs.mkdir(path.dirname(file),{recursive:true});await fs.writeFile(file,entry.bytes,{flag:'wx'});}}
-      try{await fs.rename(temporary,target);}catch(e){if(!existsSync(target))throw e;}
+      for(let attempt=0;;attempt++){
+        try{await fs.rename(temporary,target);break;}
+        catch(e){if(existsSync(target))break;if(attempt>=5||!['EPERM','EACCES','EBUSY'].includes((e as NodeJS.ErrnoException).code??''))throw e;await new Promise(r=>setTimeout(r,25*(attempt+1)));}
+      }
     }
     // Never trust a previous partial/tampered cache as an immutable source snapshot.
     for(const entry of entries){const file=this.workspace.resolveUserPath(packed?target:path.join(target,entry.relative));if(sha(await fs.readFile(file))!==sha(entry.bytes))throw Error('MODKIT_SNAPSHOT_INTEGRITY_MISMATCH');}

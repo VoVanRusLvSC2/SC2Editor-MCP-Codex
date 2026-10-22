@@ -1,0 +1,488 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-22T20:01:10.468Z",
+  "status": "passed_with_scoped_limits",
+  "scope": "Direct level-zero EMP-derived native charges and explicit level-zero range. Not all ability classes/cost schemas, art or finished mission certification",
+  "implementation": {
+    "tool": "data.ability.charges",
+    "operation": "recipe.abilityCharges",
+    "compactCommand": "data ability.charges",
+    "mechanics": "Native Data charge pools; normal ability orders, no trigger counters, forced resets or direct effect substitution",
+    "positiveRecovery": "TimeStart and TimeUse use the declared recovery duration",
+    "finiteStock": "TimeUse0; partial/empty starts use native TimeStart-1 to suppress initial refill",
+    "disabledGate": "max0/use0",
+    "rangeFix": "Range index0 replaces the parent current-level range",
+    "identity": "New execution recipes own AbilSetId",
+    "scopeLocations": [
+      "Abil",
+      "Unit",
+      "Player",
+      "Global"
+    ],
+    "unsupported": [
+      "Behavior/OffCost/per-command charges",
+      "Other ability classes or ambiguous/unindexed direct local costs",
+      "Fractional charge counts"
+    ],
+    "testPrerequisites": "Two active live owners and explicit Sight32 for declared range32 casters; source settings/vision authored through MCP",
+    "observation": "Before each order, drain history through returned cursors until hasMore=false. Match damage to the new caster and order game time; await the native ability complete phase before another cast"
+  },
+  "source": "work/data-acceptance-20261022/ChargesRecipe/.sc2mcp-output/ChargesRecipe_R6.SC2Map",
+  "sourceSha256": "eadad9c8063c2c559722c10b9ad26e1238750bd3758e2c94a254e8a51ff074c5",
+  "engineBuild": "5.0.17.98310",
+  "cleanLaunches": 2,
+  "sameMcpWorkflow": true,
+  "nativeEditor": {
+    "jobId": "2cdfe387-9eb8-4ff8-9a9f-f4ac2e77071d",
+    "outcome": "passed",
+    "sourceUnchanged": true,
+    "load": {
+      "verified": true,
+      "diagnostics": {
+        "newErrorsClear": true,
+        "inspectionComplete": true,
+        "newErrorCount": 0,
+        "newWarningCount": 0,
+        "knownNewErrorCount": 0,
+        "newErrors": [],
+        "newWarnings": [],
+        "compilerErrors": null
+      }
+    },
+    "compile": {
+      "verified": true,
+      "diagnostics": {
+        "newErrorsClear": null,
+        "inspectionComplete": null,
+        "newErrorCount": null,
+        "newWarningCount": null,
+        "knownNewErrorCount": null,
+        "compilerErrors": []
+      }
+    },
+    "report": "K:\\SC2_MAP_Workspace\\SC2Editor-MCP-Codex\\work\\data-acceptance-20261022\\ChargesRecipe\\.sc2mcp-output\\ne\\jobs\\2cdfe387-9eb8-4ff8-9a9f-f4ac2e77071d\\result.json"
+  },
+  "runs": [
+    {
+      "iteration": 1,
+      "state": "passed",
+      "recovery": {
+        "initial": {
+          "gameTime": 2.125,
+          "chargesLeft": 1,
+          "energy": 100
+        },
+        "empty": {
+          "gameTime": 5.875,
+          "chargesLeft": 0,
+          "energy": 99
+        },
+        "one": {
+          "gameTime": 12.25,
+          "chargesLeft": 1,
+          "energy": 99
+        },
+        "two": {
+          "gameTime": 24.125,
+          "chargesLeft": 2,
+          "energy": 99
+        }
+      },
+      "scopeResults": [
+        {
+          "location": "Abil",
+          "finalStock": [
+            0,
+            1,
+            1
+          ],
+          "energy": [
+            98,
+            99,
+            99
+          ],
+          "targetLife": 340
+        },
+        {
+          "location": "Unit",
+          "finalStock": [
+            0,
+            1,
+            1
+          ],
+          "energy": [
+            98,
+            99,
+            99
+          ],
+          "targetLife": 340
+        },
+        {
+          "location": "Player",
+          "finalStock": [
+            0,
+            0,
+            1
+          ],
+          "energy": [
+            99,
+            99,
+            99
+          ],
+          "targetLife": 380
+        },
+        {
+          "location": "Global",
+          "finalStock": [
+            0,
+            0,
+            0
+          ],
+          "energy": [
+            99,
+            99,
+            100
+          ],
+          "targetLife": 420
+        }
+      ],
+      "unlimited": {
+        "casts": 3,
+        "energy": 97
+      },
+      "spendTwo": {
+        "max": 3,
+        "left": 1,
+        "energy": 99
+      },
+      "finiteStarts": [
+        {
+          "ability": "ChargeFixedStart",
+          "initial": 1,
+          "final": 0,
+          "energy": 99,
+          "targetLife": 460
+        },
+        {
+          "ability": "ChargeEmptyStart",
+          "initial": 0,
+          "final": 0,
+          "energy": 100,
+          "targetLife": 500
+        }
+      ],
+      "sourceUnchanged": true,
+      "stopped": true,
+      "causalCasts": 19,
+      "blockedOrders": 12,
+      "allNativeComplete": true,
+      "baselinePages": 31,
+      "activePlayers": [
+        {
+          "id": 1,
+          "type": 1,
+          "status": 1,
+          "minerals": 0,
+          "vespene": 0
+        },
+        {
+          "id": 2,
+          "type": 2,
+          "status": 1,
+          "minerals": 0,
+          "vespene": 0
+        }
+      ]
+    },
+    {
+      "iteration": 2,
+      "state": "passed",
+      "recovery": {
+        "initial": {
+          "gameTime": 1.875,
+          "chargesLeft": 1,
+          "energy": 100
+        },
+        "empty": {
+          "gameTime": 5.625,
+          "chargesLeft": 0,
+          "energy": 99
+        },
+        "one": {
+          "gameTime": 12.375,
+          "chargesLeft": 1,
+          "energy": 99
+        },
+        "two": {
+          "gameTime": 24.25,
+          "chargesLeft": 2,
+          "energy": 99
+        }
+      },
+      "scopeResults": [
+        {
+          "location": "Abil",
+          "finalStock": [
+            0,
+            1,
+            1
+          ],
+          "energy": [
+            98,
+            99,
+            99
+          ],
+          "targetLife": 340
+        },
+        {
+          "location": "Unit",
+          "finalStock": [
+            0,
+            1,
+            1
+          ],
+          "energy": [
+            98,
+            99,
+            99
+          ],
+          "targetLife": 340
+        },
+        {
+          "location": "Player",
+          "finalStock": [
+            0,
+            0,
+            1
+          ],
+          "energy": [
+            99,
+            99,
+            99
+          ],
+          "targetLife": 380
+        },
+        {
+          "location": "Global",
+          "finalStock": [
+            0,
+            0,
+            0
+          ],
+          "energy": [
+            99,
+            99,
+            100
+          ],
+          "targetLife": 420
+        }
+      ],
+      "unlimited": {
+        "casts": 3,
+        "energy": 97
+      },
+      "spendTwo": {
+        "max": 3,
+        "left": 1,
+        "energy": 99
+      },
+      "finiteStarts": [
+        {
+          "ability": "ChargeFixedStart",
+          "initial": 1,
+          "final": 0,
+          "energy": 99,
+          "targetLife": 460
+        },
+        {
+          "ability": "ChargeEmptyStart",
+          "initial": 0,
+          "final": 0,
+          "energy": 100,
+          "targetLife": 500
+        }
+      ],
+      "sourceUnchanged": true,
+      "stopped": true,
+      "causalCasts": 19,
+      "blockedOrders": 12,
+      "allNativeComplete": true,
+      "baselinePages": 31,
+      "activePlayers": [
+        {
+          "id": 1,
+          "type": 1,
+          "status": 1,
+          "minerals": 0,
+          "vespene": 0
+        },
+        {
+          "id": 2,
+          "type": 2,
+          "status": 1,
+          "minerals": 0,
+          "vespene": 0
+        }
+      ]
+    }
+  ],
+  "actualMcpAuthoring": [
+    "6014586e-48fc-4a87-96c4-de60d758b09a",
+    "3a471256-ab28-4a69-912b-a90b0ddb98ab",
+    "c8540038-f55e-4ae3-81b3-214a4233ce7d",
+    "e028936e-b518-40ab-979f-6f0314cdaefa",
+    "6ee51554-5203-4125-95f7-f6c7a4cc417f",
+    "493940af-3bc2-48fe-a62d-a0bae1845d52",
+    "63c26554-a8be-47e0-bfed-4791040ea1de"
+  ],
+  "grouping": {
+    "commands": 18,
+    "internalSteps": [
+      "data.apply",
+      "modkit.save"
+    ],
+    "scope": "A complete same-catalog ability/charge group; not billed-token or general speed evidence"
+  },
+  "regressions": {
+    "full": {
+      "file": "work/launch-diagnostics-20261022/charges-full-tests-r3.tap",
+      "sha256": "0650a4cfbc033255582e3184a13e9c29c036f79f8b50f0c7397ee54970b9e9b0",
+      "tests": 1400,
+      "pass": 1399,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 1
+    },
+    "focused": {
+      "file": "work/launch-diagnostics-20261022/charges-focused-r3.tap",
+      "sha256": "a789be7d35560f4a500b50bb6327e57f79d2f6ae3389de82bcf7476aa91321ef",
+      "tests": 29,
+      "pass": 29,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0
+    },
+    "lint": "charges-lint-r3.log",
+    "build": "charges-build-r3.log",
+    "releaseBuild": "charges-release-build-r3.log"
+  },
+  "frozenRunner": {
+    "candidate": "C:\\Users\\Vladimir\\AppData\\Local\\SC2EditorToolkit\\Candidates\\Charges-20261022-b05951bb-4e8c-4d85-9c96-08d1ef75cb18",
+    "published": false,
+    "sourceStableDuringBuild": true,
+    "sourceSnapshotSha256": "ebb5f3a7d07fbcb6d53c1e8725a9673e78a97d3a7bfd12ce5422d117bb2d8a51",
+    "compiledFiles": 352
+  },
+  "privacy": {
+    "passed": true,
+    "checkedFiles": 9963,
+    "privateSourceFiles": 1113,
+    "privateCorpusCompared": true,
+    "violations": [],
+    "scope": "Explicit private paths/debug/test artifacts and exact external C++/Python/Galaxy source copies, including renamed files. Not proof against transformed snippets or binary reverse engineering."
+  },
+  "retainedFailures": [
+    {
+      "file": "work/launch-diagnostics-20261022/charges-native-1.json",
+      "scope": "Partial CountStart with TimeStart0 refilled immediately; expected initial1 was observed2. Fixed in the general recipe."
+    },
+    {
+      "file": "work/launch-diagnostics-20261022/charges-native-2.json",
+      "scope": "Far cast did not execute with the unindexed inherited range. The target recipe now writes Range index0; the failed event wait remains retained."
+    },
+    {
+      "file": "work/launch-diagnostics-20261022/charges-native-partial-probe.json",
+      "scope": "Far negative-timer observations were confounded by range and do not establish timer rejection. A later close-target probe isolated TimeStart-1 and passed depletion."
+    },
+    {
+      "id": "8da8e558-ba6b-446f-be9c-1d992aa62066",
+      "scope": "Malformed diagnostic used field.set instead of field.setAttribute. Strict Data validation rejected the invalid value carrier before staging."
+    },
+    {
+      "file": "work/launch-diagnostics-20261022/charges-native-3.json",
+      "scope": "Player2 was live None despite placed units. Its normal order did not execute; fixture player creation and active-roster assertions were added."
+    },
+    {
+      "file": "work/launch-diagnostics-20261022/charges-native-4.json",
+      "scope": "Player2 was active, but its far cast still did not spend energy. A separate same-unit close/far probe isolated target-distance/visibility context before the Sight32 fixture change."
+    },
+    {
+      "file": "work/launch-diagnostics-20261022/charges-native-5.json",
+      "scope": "A pre-action cursor still pointed into retained history. The C order at62.625 matched A damage at53.125. Explicit page draining plus caster/time matching corrected the test observer."
+    },
+    {
+      "file": "work/launch-diagnostics-20261022/charges-native-6.json",
+      "scope": "First unlimited cast hit before the native complete phase. An immediate duplicate order during finish did not execute. Acceptance now waits native complete for every positive cast instead of assuming zero cooldown means ready."
+    }
+  ],
+  "openCoverage": [
+    "Learn/talent recipes and broader Data/charge combinations remain open",
+    "No new command-card pixels, main-unit animation or isolated sound acceptance in this mechanics fixture",
+    "Runtime event registration with explicit target trigger remains a separate confirmed GUI authoring gap",
+    "Authoritative pathing/footprint/buildability and finished composition/UI/balance remain open",
+    "Local unpublished candidate; exact private-source comparison is not reverse-engineering protection",
+    "Cross-ability shared links, nonqueued recovery and broader charge/lifetime/control combinations remain outside this corpus",
+    "Promote the proven paged pre-action event baseline into reusable MCP test orchestration to avoid repeating this client helper",
+    "Native instant charges and nonzero cooldown/charge combinations are not covered by this target-only corpus"
+  ],
+  "artifacts": {
+    "work/launch-diagnostics-20261022/charges-native-7.json": "8471d7bc28f555ab3dd246765a83b3a4b33a7fde5d267aa0be2a5efd84f56636",
+    "work/launch-diagnostics-20261022/charges-native-7.ndjson": "c4920683ce90c96c1f0f25879782f441ef46964cf5be7e79ce1f290a70fb22d1",
+    "work/launch-diagnostics-20261022/charges-r6-candidate.json": "850d738e80b682bcd4b0b2f0541d5889244690d7ee5801f03e892c7e7346af01",
+    "work/launch-diagnostics-20261022/charges-r3-source-before.json": "ebb5f3a7d07fbcb6d53c1e8725a9673e78a97d3a7bfd12ce5422d117bb2d8a51",
+    "work/launch-diagnostics-20261022/charges-acceptance-specs.json": "84015af196d75b5dfd69c81c9eb6a2fd83934eba64ce00b801a548f6ab1d51c4",
+    "work/launch-diagnostics-20261022/charges-native-1.json": "b6d34ebf8df67b52845ca46340a55c2182e6a17a5e2daebc1b80065e20e95f98",
+    "work/launch-diagnostics-20261022/charges-native-2.json": "8ec3850ff189bb7f446bf80dcc1e924927c05e928c41ccee141e1408099d0708",
+    "work/launch-diagnostics-20261022/charges-native-3.json": "8da1ba9803ed2e0bce4c0985fea639eb40b9872b8bf9172a23f1fc7e759accb1",
+    "work/launch-diagnostics-20261022/charges-native-4.json": "db29c0d3d4051802b570087faf2a8467abb3cf13b881e1958921898dfc29c16e",
+    "work/launch-diagnostics-20261022/charges-native-5.json": "62fee2cb2aa55c1fb5984fbcb6c8882e45fc226e707920e53717f97a83bf3ec2",
+    "work/launch-diagnostics-20261022/charges-native-6.json": "6b33bcf63ce9da19aaef3cab8ebadb274b8176b26ab4fc21d3220040afbadb9a",
+    "work/launch-diagnostics-20261022/charges-native-start-probe.json": "e1081216cfdbe6b1a042f5a17b671edcc83a85c546b4d90f24682963fbfcfde0",
+    "work/launch-diagnostics-20261022/charges-native-zero-probe.json": "54f4a374d5237c0536bc10330230040fbb64c683abbc50d7ba3676d8d16b17d2",
+    "work/launch-diagnostics-20261022/charges-native-partial-probe.json": "fcb2073691914fa49fe2e76de7c2ad1d0d14b175830f97ea3337e2a798964e78",
+    "work/launch-diagnostics-20261022/charges-native-near-probe.json": "d5aaaccea86c950763020aa804e8b4e01578f331bbb3837e78e87f148d6d8338",
+    "work/launch-diagnostics-20261022/charges-native-other-owner-probe.json": "27fddf59ec7dc49fb54b522ac41ee4150b2616b00bf4fa885b8113b63fd66ad1",
+    "work/launch-diagnostics-20261022/verify-charges.mjs": "edbf5b906f2e9f5aaffeebc0b49bf6946abc86af3096e0c73ca05dde41a810db"
+  },
+  "sourceFingerprints": {
+    "src/modules/data/abilityCharges.ts": "93bd5c28d5fc73f146b9f60a2e5c37d18e48c63aadd72173de2cc86ffb5d5518",
+    "src/modules/data/abilityRecipes.ts": "2b9dc3fb21c1c43f1543ad39966c3abb331e1917eb89da8b86fccc6e6c6e3c6e",
+    "src/modules/data/workspace.ts": "8b655fc67e1bf1ecd4552279ce2265a30a2c7b420fb18f2710667604fc612a3b",
+    "src/modules/data/tools.ts": "e0e8b251109a8d7a94968867216babb2d136d3265d735302de84e3dbe2e95a3a",
+    "src/modules/data/types.ts": "c8c64c4ab877e4294bc7c1ded19cf5ca3c6651302125c319dfb13295b7a238b3",
+    "src/app/authoringScript.ts": "716e30e3c7d0332516cc947586fe66d8f4925c58267c5fe8a3afb954ef82629f",
+    "src/app/authoringDataGroups.ts": "f9cde329f69834dbabfc0508b8552841257b8984058bb164e3242435ccf7dc9b",
+    "src/integrations/game/bridge.ts": "78e3985ff3d2280de340668e28706158519e7d2369342e08183d398b52d2976f",
+    "src/tests/dataAbilityCharges.test.ts": "219475da513009145accc228b7c88c0fcc2bbb52aad8238eeeaa8072ca686205",
+    "src/tests/dataAbilityRecipes.test.ts": "ef5c1a6497f45188402a1dba56403f4f43e1629900d7efa5885a09a07bf40c93",
+    "scripts/check-distribution-privacy.mjs": "747bb50d8e7c0ed8ec034f7759ec6bfca4424b8a348f872b68c1ce9095ed03da",
+    "game-toolkit-release.json": "7c8e2329dd4af5513e8fbc4f0a98cd4442fedc5460129fbc7291c3be4a5c96cf",
+    "native-toolkit-release.json": "3603dfc4b0bd20b83a4e44042c63a668596b4068b6bda8c84f814a10dde24831",
+    "docs/DATA_MCP.md": "9338d8c00c9de088373943a1d0c83c6e961d2d973c7dfddc9303689aaa8782c9",
+    "docs/AUTHORING_PROTOCOL.md": "ea397e260ecd9b7cdc973998667bd9a85a2db009f512f108ddd39d7e35697287",
+    "docs/PROJECT_TESTS.md": "02cc76187e6c8b816c41d4d8f30474f18cb2f9888ffbcf3ae5c469a6127bf616"
+  },
+  "diagnostics": {
+    "scope": "Runtime reads are partial, including unconsumed diagnostic history; no global all-clear is claimed",
+    "runs": [
+      {
+        "allSourcesClear": null,
+        "hasMore": true,
+        "dropped": false,
+        "messages": 31,
+        "severityCounts": {
+          "info": 31
+        }
+      },
+      {
+        "allSourcesClear": null,
+        "hasMore": true,
+        "dropped": false,
+        "messages": 23,
+        "severityCounts": {
+          "info": 23
+        }
+      }
+    ]
+  }
+}

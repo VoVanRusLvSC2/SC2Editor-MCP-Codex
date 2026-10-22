@@ -59,7 +59,7 @@ const record={mode:live?'live_native':'frontend_only',startedAt:new Date().toISO
 try{
   record.initialize=await rpc('initialize',{protocolVersion:'2025-11-25',capabilities:{},clientInfo:{name:'SC2EditorToolkit acceptance',version:'1'}});
   child.stdin.write(JSON.stringify({jsonrpc:'2.0',method:'notifications/initialized'})+'\n');
-  record.tools=(await rpc('tools/list',{})).tools.map(t=>t.name).filter(n=>n.startsWith('editor.'));assert.equal(record.tools.length,7);
+  record.tools=(await rpc('tools/list',{})).tools.map(t=>t.name).filter(n=>n.startsWith('editor.'));assert.equal(record.tools.length,9);
   record.status=(await call('editor.status',{connect:true})).value;
   assert.equal(record.status.frontend.server.version,record.status.expectedVersion);assert.equal(record.status.frontend.tools.length,18);
   if(live){

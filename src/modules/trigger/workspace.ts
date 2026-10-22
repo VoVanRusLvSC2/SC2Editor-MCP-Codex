@@ -23,6 +23,8 @@ import type { XmlNode } from '../../core/types.js';
 import { normalizeCustomScriptLayout } from './scriptLayout.js';
 import {upsertCustomScripts,customScriptsSchema,type CustomScriptsArgs} from './customScripts.js';
 import {inspectRevisedGui} from './revisedImport.js';
+import {bindNativeGuiContext} from './nativeImport.js';
+import type {NativeGuiEvidence} from '../../integrations/native/guiEvidence.js';
 
 type Kind = 'Event' | 'Action';
 const key = (library: string, type: string, id: string) => JSON.stringify([library,type,id]);
@@ -118,6 +120,7 @@ function graft(target: string, source: string, sourceTrigger: string, targetTrig
 }
 
 export class TriggerWorkspace {
+  nativeGuiArtifact?: (jobId:string)=>Promise<NativeGuiEvidence>;
   constructor(private readonly workspace: Workspace,private readonly registryFile=projectPath('generated/trigger-authoring-registry.json'),private readonly data=new DataWorkspace(workspace),private readonly casc?:CascWorkspace) {this.libraries=new TriggerLibraries(workspace,data,casc);}
   private readonly libraries:TriggerLibraries;
   private async stringFiles():Promise<string[]> {return (await fs.readdir(this.workspace.root,{withFileTypes:true})).filter(e=>e.isDirectory()&&!/^Base\.SC2Data$/i.test(e.name)&&/^[a-z]{4}\.SC2Data$/i.test(e.name)).map(e=>e.name+'/LocalizedData/TriggerStrings.txt').sort();}
@@ -236,15 +239,26 @@ export class TriggerWorkspace {
     return {...generated,source:undefined,sourceBytes:Buffer.byteLength(generated.source),sourceSha256:digest(generated.source),transaction,validation,converterUsed:false};
   }
   recipeSkirmish(options:SkirmishOptions){return this.planBatch(skirmishRecipe(options));}
-  async importRevised(args:{file:string;stringsFile?:string;expectedSourceSha256:string;expectedRuntimeSha256:string;dryRun:boolean;stage:boolean}){
+  async importRevised(args:{file:string;stringsFile?:string;nativeJobId?:string;expectedSourceSha256:string;expectedRuntimeSha256:string;dryRun:boolean;stage:boolean}):Promise<{counts:ReturnType<typeof inspectRevisedGui>;validation:unknown;transaction:Awaited<ReturnType<Workspace['applyRawTransaction']>>;inputSha256:string;runtimeSha256:string;semanticEquivalence:string;compiler:string;nativeContext:unknown}>{
+    if(!this.workspace.trackingReads)return this.workspace.withReadSet(()=>this.importRevised(args));
     const input=await this.workspace.readRaw(args.file),source=await this.workspace.readRaw('Triggers'),runtime=await this.workspace.readRaw('MapScript.galaxy');
     if(digest(source.text)!==args.expectedSourceSha256||digest(runtime.text)!==args.expectedRuntimeSha256)throw new Error('GUI_IMPORT_SOURCE_STALE');
-    const counts=inspectRevisedGui(input.text),context=await this.libraries.context(registry(this.registryFile)),generated=emitGuiGalaxy(input.text,context.registry);
-    const validation=await new ScriptWorkspace(this.workspace).validateSource(generated.source);
-    if(!validation.valid)throw new Error('GUI_IMPORT_RUNTIME_ERRORS: '+JSON.stringify(validation.diagnostics.filter(d=>d.severity==='error').slice(0,10)));
+    const counts=inspectRevisedGui(input.text,{nativeLibraries:!!args.nativeJobId});
+    let generated:{source:string},validation:unknown,nativeContext:unknown;
+    if(args.nativeJobId){
+      if(!this.nativeGuiArtifact)throw Error('GUI_NATIVE_COMPILER_NOT_CONFIGURED: use a profile with editor and script');
+      const proof=await this.nativeGuiArtifact(args.nativeJobId);
+      if(proof.xmlSha256!==digest(input.text))throw Error('GUI_NATIVE_XML_MISMATCH');
+      const bound=await bindNativeGuiContext(this.workspace,proof);generated={source:bound.source};nativeContext=bound.context;
+      validation={valid:true,compiler:'ORIGINAL_EDITOR',jobId:args.nativeJobId,scope:'Exact XML and matching template components; gameplay equivalence is separate'};
+    }else{
+      const context=await this.libraries.context(registry(this.registryFile));generated=emitGuiGalaxy(input.text,context.registry);
+      const checked=await new ScriptWorkspace(this.workspace).validateSource(generated.source);validation=checked;
+      if(!checked.valid)throw new Error('GUI_IMPORT_RUNTIME_ERRORS: '+JSON.stringify(checked.diagnostics.filter(d=>d.severity==='error').slice(0,10)));
+    }
     const strings=args.stringsFile?await this.workspace.readRaw(args.stringsFile):undefined;
     const labels:Record<string,string>=strings?JSON.parse(strings.text):{};
-    if(Array.isArray(labels)||typeof labels!=='object'||labels===null||Object.keys(labels).length>10000||Object.entries(labels).some(([k,v])=>!/^(Category|Trigger|FunctionDef|Variable|ParamDef)\/Name\/[A-Fa-f0-9]+$/.test(k)||typeof v!=='string'||/[\r\n]/.test(v)))throw new Error('GUI_IMPORT_LABELS');
+    if(Array.isArray(labels)||typeof labels!=='object'||labels===null||Object.keys(labels).length>10000||Object.entries(labels).some(([k,v])=>!/^(Category|Trigger|FunctionDef|Variable|ParamDef)\/Name\/(?:lib_[A-Za-z0-9]+_)?[A-Fa-f0-9]+$/.test(k)||typeof v!=='string'||/[\r\n]/.test(v)))throw new Error('GUI_IMPORT_LABELS');
     const locales=await this.stringFiles();if(!locales.length)locales.push('enUS.SC2Data/LocalizedData/TriggerStrings.txt');
     const files=['Triggers','MapScript.galaxy',args.file,...(args.stringsFile?[args.stringsFile]:[]),...locales];
     const transaction=await this.workspace.applyRawTransaction(this.workspace.coupledDraftFiles(files),files=>{
@@ -252,7 +266,7 @@ export class TriggerWorkspace {
       const next=new Map(files);next.set('Triggers',input.text);next.set('MapScript.galaxy',generated.source);
       for(const file of locales){const table=new StringTableDocument(files.get(file)??'');for(const [key,value]of Object.entries(labels))table.set(key,value);next.set(file,table.source);}return next;
     },{dryRun:args.dryRun,stage:args.stage,backup:true,summary:'Import reviewed full GUI tree and generate its runtime atomically'});
-    return {counts,validation,transaction,inputSha256:digest(input.text),runtimeSha256:digest(generated.source),semanticEquivalence:'NOT_PROVEN',compiler:'NOT_EXECUTED'};
+    return {counts,validation,transaction,inputSha256:digest(input.text),runtimeSha256:digest(generated.source),semanticEquivalence:'NOT_PROVEN',compiler:args.nativeJobId?'NATIVE_PASSED':'NOT_EXECUTED',nativeContext};
   }
   async planFile(file:string){const raw=await this.workspace.readRaw(file);if(!raw.exists&&!raw.staged)throw new Error('GUI_PLAN_FILE_MISSING');if(Buffer.byteLength(raw.text)>1024*1024)throw new Error('GUI_PLAN_FILE_BYTE_LIMIT');const value=JSON.parse(raw.text);return Array.isArray(value)?this.planBatch(value):this.plan(value);}
   async planBatch(requests:GuiRequest[]){

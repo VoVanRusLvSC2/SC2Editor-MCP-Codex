@@ -1,0 +1,675 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-21T22:16:22.938Z",
+  "kind": "Incremental location, cache and native-view checkpoint; not full roadmap readiness",
+  "scope": {
+    "authoring": "Map mutations used fresh outer MCP sessions through retained existing generators/transactions, not a shell map writer",
+    "fixture": "Three owned zones on an existing GUI/Data foundation, with a road reservation and a dependent clearing",
+    "nativeNavigationRebuilt": false,
+    "allTopologyCertified": false,
+    "artQualityAccepted": false
+  },
+  "implementation": {
+    "ownedChannels": [
+      "Height-map vertices and sync words",
+      "Texture mask nibbles and dominant sync cells",
+      "Generated decoration IDs"
+    ],
+    "sameValueBrushCoverage": true,
+    "manualEditConflicts": true,
+    "independentUnselectedZonesPreserved": true,
+    "overlayDependencyClosure": true,
+    "exactActorPalette": true,
+    "atomicGroup": "Terrain + Objects + ComponentList + ownership",
+    "preserveHeightMode": "No height writes/claims unless an explicit route flatten is requested",
+    "cache": "Content/draft/directory dependency replay into current transaction guards; includes absent optional schema manifest",
+    "compactEntry": "terrain landscape file=plans/locations.json",
+    "nativeViews": "game.views plus project.test.report(includeImage:true,viewId); camera readback and PNG integrity only",
+    "measuredMemberBounds": {
+      "newFrame": "member: catalog-scaled local bounds receive placement scale and member/group rotation",
+      "legacyFrame": "group: already oriented/scaled in group axes, retained when the field is absent",
+      "cornerSupportRegressions": "passed, including an enlarged/rotated member with a wet support corner",
+      "realCascPrefabMcp": "passed",
+      "sourceUnchanged": true,
+      "engineFootprints": "not_checked"
+    }
+  },
+  "releaseDiscovery": {
+    "editor": {
+      "published_at": "2026-10-21T13:51:05Z",
+      "tag_name": "v0.10.0-rc.1"
+    },
+    "game": {
+      "published_at": "2026-10-21T17:55:46Z",
+      "tag_name": "v0.1.0-dev.11"
+    },
+    "modkit": {
+      "localCommit": "78104889bed092d901516044bd90734df8d5caac",
+      "remoteHead": "78104889bed092d901516044bd90734df8d5caac"
+    },
+    "method": "GitHub releases sorted by published_at and git ls-remote; not the unsorted releases API first element"
+  },
+  "authoringTimings": {
+    "before": {
+      "id": "1ed4ffe1-587b-4afa-a34f-86a74171ebe7",
+      "cases": [
+        {
+          "id": "water",
+          "tool": "terrain.water.inspect",
+          "elapsedMs": 70,
+          "status": "passed"
+        },
+        {
+          "id": "mount",
+          "tool": "casc.mount",
+          "elapsedMs": 5297,
+          "status": "passed"
+        },
+        {
+          "id": "create",
+          "tool": "modkit.author",
+          "elapsedMs": 57143,
+          "status": "passed"
+        },
+        {
+          "id": "repeat",
+          "tool": "modkit.author",
+          "elapsedMs": 51866,
+          "status": "passed"
+        },
+        {
+          "id": "update",
+          "tool": "modkit.author",
+          "elapsedMs": 55276,
+          "status": "passed"
+        },
+        {
+          "id": "export",
+          "tool": "map.export",
+          "elapsedMs": 1814,
+          "status": "passed"
+        }
+      ],
+      "outerCalls": 7,
+      "serializedRequestBytes": 845,
+      "serializedResponseBytes": 22042,
+      "scope": "JSON tool/argument and parsed body bytes, excluding transport headers; not model usage or billing tokens"
+    },
+    "after": {
+      "id": "0557b7c3-7531-437e-978a-d0a3a8212db5",
+      "cases": [
+        {
+          "id": "water",
+          "tool": "terrain.water.inspect",
+          "elapsedMs": 83,
+          "status": "passed"
+        },
+        {
+          "id": "mount",
+          "tool": "casc.mount",
+          "elapsedMs": 6311,
+          "status": "passed"
+        },
+        {
+          "id": "create",
+          "tool": "modkit.author",
+          "elapsedMs": 51037,
+          "status": "passed"
+        },
+        {
+          "id": "repeat",
+          "tool": "modkit.author",
+          "elapsedMs": 2457,
+          "status": "passed"
+        },
+        {
+          "id": "update",
+          "tool": "modkit.author",
+          "elapsedMs": 4939,
+          "status": "passed"
+        },
+        {
+          "id": "export",
+          "tool": "map.export",
+          "elapsedMs": 1628,
+          "status": "passed"
+        }
+      ],
+      "outerCalls": 7,
+      "serializedRequestBytes": 845,
+      "serializedResponseBytes": 22034,
+      "scope": "JSON tool/argument and parsed body bytes, excluding transport headers; not model usage or billing tokens"
+    },
+    "preserve": {
+      "id": "85945ba9-0694-40e9-b266-4e8cfc0aa274",
+      "cases": [
+        {
+          "id": "mount",
+          "tool": "casc.mount",
+          "elapsedMs": 5423,
+          "status": "passed"
+        },
+        {
+          "id": "preserve",
+          "tool": "modkit.author",
+          "elapsedMs": 49450,
+          "status": "passed"
+        },
+        {
+          "id": "repeat",
+          "tool": "modkit.author",
+          "elapsedMs": 3093,
+          "status": "passed"
+        },
+        {
+          "id": "export",
+          "tool": "map.export",
+          "elapsedMs": 2209,
+          "status": "passed"
+        }
+      ],
+      "outerCalls": 5,
+      "serializedRequestBytes": 691,
+      "serializedResponseBytes": 15400,
+      "scope": "JSON tool/argument and parsed body bytes, excluding transport headers; not model usage or billing tokens"
+    }
+  },
+  "game": {
+    "build": "5.0.17.98310",
+    "sourceSha256": "e272769c7a12f0a8f640d8a360feebebe50de43858e3fcd700065a1c8648146e",
+    "runtime": {
+      "provenance": "pinned_release",
+      "releaseTag": "v0.1.0-dev.11",
+      "archiveSha256": "514096c72332f4d6629dee4a33a092957d3ee02a9c45281bb3a7ad59031c30f3",
+      "verifiedFiles": 113,
+      "binaryOverride": false
+    },
+    "originalHeightRecipe": {
+      "launches": 2,
+      "checks": 8,
+      "sourceSha256": "7a542dfd25169f5590ae3e3f69bb032ada67cdaadec89ff9824499e15c8390df"
+    },
+    "preservedHeightRecipe": {
+      "launches": 2,
+      "routeChecks": 8,
+      "viewChecks": 4,
+      "maxObservedDeviation": 1.7763568394002505e-15,
+      "sameRetainedBridge": true,
+      "retainedBridgeIdentitySha256": "516f1ab76e2bc07e86f197c224203004d386426d7a5c782c2229e8a7d59c576c",
+      "runs": [
+        {
+          "id": "a601313a-8900-497e-90e8-4dd6498e0078",
+          "outcome": "passed",
+          "sourceSha256": "e272769c7a12f0a8f640d8a360feebebe50de43858e3fcd700065a1c8648146e",
+          "checks": [
+            {
+              "id": "archive",
+              "status": "passed",
+              "required": true
+            },
+            {
+              "id": "map.playable_bounds",
+              "status": "passed",
+              "required": true
+            },
+            {
+              "id": "game.launch",
+              "status": "passed",
+              "required": true
+            },
+            {
+              "id": "game.build",
+              "status": "passed",
+              "required": true
+            },
+            {
+              "id": "route:forestMarine:forward",
+              "status": "passed",
+              "required": true,
+              "observation": {
+                "type": "Marine",
+                "arrived": true,
+                "trajectorySamples": 31,
+                "maxObservedDeviation": 0,
+                "maxDeviation": 2
+              }
+            },
+            {
+              "id": "route:forestMarine:reverse",
+              "status": "passed",
+              "required": true,
+              "observation": {
+                "type": "Marine",
+                "arrived": true,
+                "trajectorySamples": 32,
+                "maxObservedDeviation": 1.7763568394002505e-15,
+                "maxDeviation": 2
+              }
+            },
+            {
+              "id": "route:forestMarauder:forward",
+              "status": "passed",
+              "required": true,
+              "observation": {
+                "type": "Marauder",
+                "arrived": true,
+                "trajectorySamples": 32,
+                "maxObservedDeviation": 0,
+                "maxDeviation": 2
+              }
+            },
+            {
+              "id": "route:forestMarauder:reverse",
+              "status": "passed",
+              "required": true,
+              "observation": {
+                "type": "Marauder",
+                "arrived": true,
+                "trajectorySamples": 24,
+                "maxObservedDeviation": 1.7763568394002505e-15,
+                "maxDeviation": 2
+              }
+            },
+            {
+              "id": "view:overview",
+              "status": "passed",
+              "required": true,
+              "observation": {
+                "requested": {
+                  "x": 76,
+                  "y": 106,
+                  "distance": 90,
+                  "pitch": 60,
+                  "yaw": 180
+                },
+                "observed": {
+                  "target": {
+                    "x": 76,
+                    "y": 106
+                  },
+                  "pitch": 59.9414,
+                  "yaw": 180,
+                  "distance": 90
+                },
+                "includeUI": false,
+                "sha256": "4571935d771a15d65d7da1f5a7b45a6008a776b9e3268d866a7d61b3c36338a6",
+                "visualReview": "not_checked"
+              }
+            },
+            {
+              "id": "view:road_detail",
+              "status": "passed",
+              "required": true,
+              "observation": {
+                "requested": {
+                  "x": 58,
+                  "y": 104,
+                  "distance": 36,
+                  "pitch": 55,
+                  "yaw": 210
+                },
+                "observed": {
+                  "target": {
+                    "x": 58,
+                    "y": 104
+                  },
+                  "pitch": 54.8438,
+                  "yaw": -150.1172,
+                  "distance": 36
+                },
+                "includeUI": false,
+                "sha256": "424f1570460e90325d20fabd20ddc5fc4360c649561d99a65b1d7858d9c5de4f",
+                "visualReview": "not_checked"
+              }
+            },
+            {
+              "id": "game.diagnostics",
+              "status": "inconclusive",
+              "required": false,
+              "reason": "No unexpected errors observed in available sources; diagnostic coverage is partial"
+            },
+            {
+              "id": "game.capture",
+              "status": "passed",
+              "required": false
+            },
+            {
+              "id": "game.cleanup",
+              "status": "passed",
+              "required": true
+            },
+            {
+              "id": "artifact.unchanged",
+              "status": "passed",
+              "required": true
+            },
+            {
+              "id": "source.unchanged",
+              "status": "passed",
+              "required": true
+            }
+          ]
+        },
+        {
+          "id": "82215a25-1004-4b87-a32f-5cc322c5b195",
+          "outcome": "passed",
+          "sourceSha256": "e272769c7a12f0a8f640d8a360feebebe50de43858e3fcd700065a1c8648146e",
+          "checks": [
+            {
+              "id": "archive",
+              "status": "passed",
+              "required": true
+            },
+            {
+              "id": "map.playable_bounds",
+              "status": "passed",
+              "required": true
+            },
+            {
+              "id": "game.launch",
+              "status": "passed",
+              "required": true
+            },
+            {
+              "id": "game.build",
+              "status": "passed",
+              "required": true
+            },
+            {
+              "id": "route:forestMarine:forward",
+              "status": "passed",
+              "required": true,
+              "observation": {
+                "type": "Marine",
+                "arrived": true,
+                "trajectorySamples": 29,
+                "maxObservedDeviation": 1.7763568394002505e-15,
+                "maxDeviation": 2
+              }
+            },
+            {
+              "id": "route:forestMarine:reverse",
+              "status": "passed",
+              "required": true,
+              "observation": {
+                "type": "Marine",
+                "arrived": true,
+                "trajectorySamples": 29,
+                "maxObservedDeviation": 0,
+                "maxDeviation": 2
+              }
+            },
+            {
+              "id": "route:forestMarauder:forward",
+              "status": "passed",
+              "required": true,
+              "observation": {
+                "type": "Marauder",
+                "arrived": true,
+                "trajectorySamples": 30,
+                "maxObservedDeviation": 1.7763568394002505e-15,
+                "maxDeviation": 2
+              }
+            },
+            {
+              "id": "route:forestMarauder:reverse",
+              "status": "passed",
+              "required": true,
+              "observation": {
+                "type": "Marauder",
+                "arrived": true,
+                "trajectorySamples": 26,
+                "maxObservedDeviation": 1.7763568394002505e-15,
+                "maxDeviation": 2
+              }
+            },
+            {
+              "id": "view:overview",
+              "status": "passed",
+              "required": true,
+              "observation": {
+                "requested": {
+                  "x": 76,
+                  "y": 106,
+                  "distance": 90,
+                  "pitch": 60,
+                  "yaw": 180
+                },
+                "observed": {
+                  "target": {
+                    "x": 76,
+                    "y": 106
+                  },
+                  "pitch": 59.9414,
+                  "yaw": 180,
+                  "distance": 90
+                },
+                "includeUI": false,
+                "sha256": "1f6277c08fbfd59bcc86455a68a439079a8bfb72fc81a528ebfc42ff1379965f",
+                "visualReview": "not_checked"
+              }
+            },
+            {
+              "id": "view:road_detail",
+              "status": "passed",
+              "required": true,
+              "observation": {
+                "requested": {
+                  "x": 58,
+                  "y": 104,
+                  "distance": 36,
+                  "pitch": 55,
+                  "yaw": 210
+                },
+                "observed": {
+                  "target": {
+                    "x": 58,
+                    "y": 104
+                  },
+                  "pitch": 54.8438,
+                  "yaw": -150.1172,
+                  "distance": 36
+                },
+                "includeUI": false,
+                "sha256": "97fb08477290c64392db548fe5b10685b2904d2af0b7c32c7a22701fbfa17ebb",
+                "visualReview": "not_checked"
+              }
+            },
+            {
+              "id": "game.diagnostics",
+              "status": "inconclusive",
+              "required": false,
+              "reason": "No unexpected errors observed in available sources; diagnostic coverage is partial"
+            },
+            {
+              "id": "game.capture",
+              "status": "passed",
+              "required": false
+            },
+            {
+              "id": "game.cleanup",
+              "status": "passed",
+              "required": true
+            },
+            {
+              "id": "artifact.unchanged",
+              "status": "passed",
+              "required": true
+            },
+            {
+              "id": "source.unchanged",
+              "status": "passed",
+              "required": true
+            }
+          ]
+        }
+      ]
+    },
+    "visualReview": {
+      "inspectedFinalRun": "a601313a-8900-497e-90e8-4dd6498e0078",
+      "views": [
+        "overview",
+        "road_detail"
+      ],
+      "assessment": "Objects and reserved road are visible; no black terrain gap observed in these views. The transplanted forest is sparse, inherited lamps break its style, and transitions/material repetition remain weak. This is technical workflow acceptance, not a finished forest outpost or a 7/10 art claim.",
+      "threeDistinctFixturesAccepted": false
+    }
+  },
+  "regressions": {
+    "tests": 1263,
+    "pass": 1262,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 1,
+    "skippedCase": "failed archive reopening cannot replace a pre-existing map: shell fixture",
+    "testConcurrency": 4,
+    "reportSha256": "0f6b76da707b9aba3574a6880d9faedcc01a0accfae247301d79a13703c91c4f",
+    "scope": "All compiled repository test files and terrain-surface tests; one existing platform-dependent shell case disabled"
+  },
+  "retainedFailures": [
+    {
+      "kind": "Full-suite visibility hint assertion",
+      "resolution": "Restored concrete View > Show Layer / Layer > All hint while preserving generator/terrain/actor diagnostics; regressions passed"
+    },
+    {
+      "kind": "Full-suite stdio transport timeout during concurrent release build and Game work",
+      "observedCancelled": 1,
+      "limitMs": 15000,
+      "resolution": "No product timeout raised. Isolated transport retry and full suite at bounded concurrency passed; original failed log retained"
+    }
+  ],
+  "portable": {
+    "candidate": "Local, not published",
+    "outcome": "passed",
+    "compiledModuleCopiesMatch": true,
+    "mapTestCliBundled": true,
+    "landscapeSchema": true,
+    "viewSchema": true,
+    "measuredBoundsSchema": true,
+    "nativeUiSchema": true,
+    "launchDisabledPlan": true,
+    "gameLaunched": false,
+    "runtime": {
+      "provenance": "pinned_release",
+      "releaseTag": "v0.1.0-dev.11",
+      "archiveSha256": "514096c72332f4d6629dee4a33a092957d3ee02a9c45281bb3a7ad59031c30f3",
+      "verifiedFiles": 113,
+      "binaryOverride": false
+    },
+    "privacy": {
+      "passed": true,
+      "checkedFiles": 9930,
+      "privateSourceFiles": 2331,
+      "privateCorpusCompared": true,
+      "violations": [],
+      "scope": "Explicit private paths/debug/test artifacts and exact external C++/Python/Galaxy source copies, including renamed files. Not proof against transformed snippets or binary reverse engineering."
+    }
+  },
+  "sourceFingerprints": [
+    {
+      "file": "src/core/workspace.ts",
+      "sha256LfUtf8": "0cf00f0de8109d47053b31770bbe19eace8c4a59837f91fc0c6561f737982379"
+    },
+    {
+      "file": "src/core/discoveryPaths.ts",
+      "sha256LfUtf8": "c9d0b04be10fd4d10810aa7e27f72a2eb23358df2054210e94bdfbbd35bf9926"
+    },
+    {
+      "file": "src/modules/browse/workspace.ts",
+      "sha256LfUtf8": "6dff5fa0b8b73c0848c51133562370a11ad562947d34ee7b6fc2b99ca9457c8b"
+    },
+    {
+      "file": "src/modules/data/xsdRegistry.ts",
+      "sha256LfUtf8": "d7920c48c72863d1c435bb0e9be7100e16c3c40dec0039c9a09a1937a7e10e89"
+    },
+    {
+      "file": "src/modules/placement/locationSchemas.ts",
+      "sha256LfUtf8": "aee335edab2df0b13ac0b657fd5e7f1a499268ac228ce018e78a37f71234af82"
+    },
+    {
+      "file": "src/modules/placement/workspace.ts",
+      "sha256LfUtf8": "8eedc7cdf4227d3f3d203d21bb15b52a0f8c282cdca31e1ceb140f58076f4355"
+    },
+    {
+      "file": "src/modules/terrain/landscapeOwnership.ts",
+      "sha256LfUtf8": "ebdbe5577f599263030e6382e7bf95a16277dddfde703f1dc849b56ffeb814da"
+    },
+    {
+      "file": "src/modules/terrain/operations.ts",
+      "sha256LfUtf8": "18b3a9315b3a3efa8a0f5009943c753b7dbeca10a3654239f54ce745565a8c8c"
+    },
+    {
+      "file": "src/modules/terrain/document.ts",
+      "sha256LfUtf8": "e8942846745540eeafbfdb3368560b9c79913ee170871c52e4c9d234ac0f7304"
+    },
+    {
+      "file": "src/modules/terrain/schemas.ts",
+      "sha256LfUtf8": "faff0c280288d2553dd9bd354f99acd9beaea91510b9851e5894339621d295e4"
+    },
+    {
+      "file": "src/modules/terrain/recipes.ts",
+      "sha256LfUtf8": "ca119f0a1f7523076cdf34482e3b651347db324d08700df7d6641bc6a9993854"
+    },
+    {
+      "file": "src/modules/terrain/workspace.ts",
+      "sha256LfUtf8": "ee0c24adeb0a23b8713a8e3158ea38b17a97929f91a2542963b24e20ff447044"
+    },
+    {
+      "file": "src/modules/terrain/tools.ts",
+      "sha256LfUtf8": "1473bd84ae1877d9611bf081bd09324c1405accafd2d2654476a5870837a20dd"
+    },
+    {
+      "file": "src/modules/testing/schemas.ts",
+      "sha256LfUtf8": "02bbd7415477094510268918ae72fc618131a6adfd4b3d9f2d546327d9300ef0"
+    },
+    {
+      "file": "src/modules/testing/workspace.ts",
+      "sha256LfUtf8": "0b3a795857d3c1b8b5e47934f0822c17472d4b86468db6fa53eb6f6ce56e60c7"
+    },
+    {
+      "file": "src/modules/testing/tools.ts",
+      "sha256LfUtf8": "0fc64cd2d594e4cb671da154efac44a99ca6db629588c418c386625ae7f29d9c"
+    },
+    {
+      "file": "src/app/authoringScript.ts",
+      "sha256LfUtf8": "445d6e529a4b872c6de130ac1e31de8bec4391fc91534e9125d983f66904f836"
+    },
+    {
+      "file": "src/app/mcpBatch.ts",
+      "sha256LfUtf8": "b84fd74d58e80c3edec4525fbeb903ce975fb6a9645534e8996b91143a290aca"
+    },
+    {
+      "file": "scripts/run-map-tests.mjs",
+      "sha256LfUtf8": "1308ed6d3f46398399952c0e3c6ecc2ba330bacd7413879d907ffdcbc9e7b729"
+    },
+    {
+      "file": "src/modules/placement/compositionGeometry.ts",
+      "sha256LfUtf8": "8e5b75f8d281652b30b06383ec0796ebad1aea34edca277a08683da22a92c3e1"
+    },
+    {
+      "file": "src/modules/placement/compositions.ts",
+      "sha256LfUtf8": "8a7e108968b628314c8ae48f5353265c8e15e13fd163daf8f0919169165190bf"
+    },
+    {
+      "file": "src/modules/placement/decorPrefabs.ts",
+      "sha256LfUtf8": "1326c5da350778ececb0de6bea30208cbe35143c04c77660032f8ad7611c16e6"
+    },
+    {
+      "file": "scripts/build-windows-portable.mjs",
+      "sha256LfUtf8": "08cbe03842bcd1ebba59f1ab0d9d4bce4ea7955758264430839cb6af8bcc15d9"
+    }
+  ],
+  "openCoverage": [
+    "Measured infrastructure in whole-location ownership and three distinct art-reviewed fixtures",
+    "Incremental ownership of native cliff/ramp topology and other widths/tilesets",
+    "Authoritative engine navigation/buildability queries",
+    "Broader native GUI-library save/startup and Data ability-presentation corpus",
+    "Cold effective-catalog interpretation and remaining performance corpus"
+  ],
+  "activation": {
+    "freshOuterMcp": true,
+    "directConnection": "Existing direct Editor connection was not force-restarted; newly added tools require reconnecting that client",
+    "neighborProcessesRestarted": false
+  },
+  "protection": "Private implementation is excluded from distribution. This does not promise resistance to reverse engineering of separately distributed binaries."
+}

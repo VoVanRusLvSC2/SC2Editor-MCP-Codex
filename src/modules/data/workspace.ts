@@ -14,6 +14,13 @@ import { DataSchemaRegistry } from "./schemaRegistry.js";
 import { validateDataDocuments } from "./validator.js";
 import { parentClassCompatibility } from "./parentClasses.js";
 import {unitActorRecipe,effectModelRecipe,visualRecipePreloads} from './actorRecipes.js';
+import {instantAbilityRecipe,targetAbilityRecipe} from './abilityRecipes.js';
+import {abilityChargesRecipe} from './abilityCharges.js';
+import {projectileEffectRecipe,type CatalogPreload} from './projectileRecipe.js';
+import {veterancyRecipe} from './veterancyRecipe.js';
+import {unitAbilityAnimationRecipe} from './unitAnimations.js';
+import type {AnimationAssetSource,AnimationModelInventory} from '../assets/animationInventory.js';
+import {reviewCardBinding,cardReviewSummary,DataCardBindingError} from './cardBindings.js';
 import { validateDataAuthoring, DataAuthoringError, type DataAuthoringVerdict } from "./authoringValidation.js";
 import type { DataNativeFieldSpec, DataObject, DataObjectSelector, DataOperation, DataReference, DataValidationReport } from "./types.js";
 
@@ -94,6 +101,7 @@ export class DataWorkspace {
   dependencyRefresh?: () => Promise<void>;
   private readonly nativePackageProfiles=new Map<string,string>();
   nativeCatalogFiles:ReadonlySet<string>=new Set();
+  animationModelReader?: (resources:string[],sources:AnimationAssetSource[])=>Promise<AnimationModelInventory>;
   nativePackageProfile(root:string){return this.nativePackageProfiles.get(path.resolve(root));}
   removeDependencyRoot(root: string) {const absolute=path.resolve(root);this.nativePackageProfiles.delete(absolute); const index = this.extraRoots.indexOf(absolute); if (index >= 0) this.extraRoots.splice(index, 1); }
   addDependencyRoot(root: string,builtinPackage?:string) {
@@ -232,7 +240,9 @@ export class DataWorkspace {
     for(const entry of expanded){const layers=expanded.filter(o=>o.id===entry.id&&o.domain===entry.domain);if(layers.length>1){const declarations=new Map<string,Set<string>>();for(const layer of layers)for(const [id,raw]of Object.entries(layer.tokens??{})){const values=declarations.get(id)??new Set<string>();values.add(layer.attrs[id]??raw);declarations.set(id,values);}for(const [id,values]of declarations)if(values.size>1)layerTokenConflicts.add(id);}}
     chain.splice(0,chain.length,...expanded);
     const tokens:Record<string,string>={};
-    for(const entry of chain){Object.assign(tokens,entry.tokens ?? {});for(const id of Object.keys(tokens))if(entry.attrs[id]!==undefined)tokens[id]=entry.attrs[id];}
+    const tokenNames=new Set(chain.flatMap(entry=>[...Object.keys(entry.tokens??{}),...Object.keys(entry.tokenTypes??{})]));
+    for(const entry of chain){Object.assign(tokens,entry.tokens ?? {});for(const id of tokenNames)if(entry.attrs[id]!==undefined)tokens[id]=entry.attrs[id];}
+    if(object.id!==undefined)tokens.id=object.id;
     type Value = {path:string;value?:string;link?:string;attrs:Record<string,string>;declaredBy?:string;file?:string;declarationKey?:DataObject["declarationKey"];status:"resolved"|"unknown"|"removed";reason?:string;rawValue?:string};
     const fields = new Map<string,Value>();
     const issues:Array<{path:string;reason:string}>=[];
@@ -323,8 +333,14 @@ export class DataWorkspace {
       coverageIssues:[...records.issues,...cross?.issues??[]].slice(0,200),coveragePagination:{total:records.issues.length+(cross?.issues.length??0),truncated:records.issues.length+(cross?.issues.length??0)>200,details:"data.references issueOffset/issueLimit"},
       diagnostics: requested ? (await this.validate(requested)).diagnostics.slice(0, args.limit ?? 200) : [],
       schema: { mode: "observed-bundled-plus-dynamic", activeObjectTypes: new Set(all.filter(entry=>entry.engineActive===true).map((entry) => entry.ctype)).size, activeFieldPaths: new Set(all.filter(entry=>entry.engineActive===true).flatMap((entry) => this.flattened([entry]).map((field) => `${entry.ctype}.${field.path}`))).size, coverage: this.schema.coverage() },
-      operations: ["object.create", "object.clone", "object.rename", "object.delete", "object.setParent", "object.setAttribute", "object.removeAttribute", "field.set", "field.setLink", "field.setAttribute", "field.removeAttribute", "field.remove", "array.append", "native.add", "recipe.weaponBurn", "recipe.unitTextureByVital", "recipe.unitActor", "recipe.effectModel"],
+      operations: ["object.create", "object.clone", "object.rename", "object.delete", "object.setParent", "object.setAttribute", "object.removeAttribute", "field.set", "field.setLink", "field.setAttribute", "field.removeAttribute", "field.remove", "array.append", "native.add", "recipe.weaponBurn", "recipe.unitTextureByVital", "recipe.unitActor", "recipe.effectModel", "recipe.instantAbility", "recipe.targetAbility", "recipe.abilityCharges", "recipe.projectileEffect", "recipe.veterancy", "recipe.unitAbilityAnimation"],
       recipes: {
+        "recipe.abilityCharges": {tool:'data.ability.charges',requires:'One unambiguous local CAbilEffectInstant/Target with direct indexed Cost[0]',semantics:'Own the native Charge subtree; preserve effects, energy, cooldown and command card. Explicit Abil/Unit/Player/Global scope, own/default link and optional natural recovery; max0 disables the charge gate',limits:'Direct level-zero execution abilities only; shared state and recovery require native gameplay checks; no Behavior/OffCost or unindexed local costs'},
+        "recipe.projectileEffect": {tool:'data.effect.projectile',creates:['CEffectLaunchMissile','CActorAction','merged Preload.xml dependencies'],requires:'Explicit matching GenericAttack launch/impact source tokens, one ActionDamage event, unique native ammo/Missile Actor/Model, impact Effect, Damage Effect and impact Model',semantics:'Retain native ammo/mover, rebind launch/impact/damage and pin missile/impact/sound presentation instead of implicit new-ID asset lookups',limits:'Observed GenericAttack/GenericAttackMissile profile only; body animation, visual/audio playback and mechanics require native checks; single-catalog only'},
+        "recipe.unitAbilityAnimation": {tool:'data.actor.ability_animation',creates:['Owned ability phase events on one existing local main CActorUnit'],requires:'Unique active unit/ability/main Actor and resolved effective Model; actual installed/imported M3 sequence metadata',semantics:'Cast/channel/finish phase bindings, stop/death/movement cleanup; unrelated native events remain intact. Saved plans pin observed asset revision.',limits:'Single catalog; conservative ownership/parent guards; sequence existence does not establish native playback or artistic suitability'},
+        "recipe.veterancy": {tool:'data.hero.veterancy',creates:['CBehaviorVeterancy','local unit behavior binding and Hero flag'],requires:'Local unit with resolvable unambiguous parents and no other known veterancy; existing level Effect',semantics:'Solo kill XP; cumulative XP thresholds become native per-transition costs; level entries start at0 for displayed level1; cumulative life and four damage-kind deltas',limits:'Sharing disabled; presentation and actual native level/stat behavior require separate engine checks; single-catalog only'},
+        "recipe.instantAbility": {tool:'data.ability.instant',creates:['CAbilEffectInstant','optional local-unit ability/card binding'],requires:'One active same-class native template; existing effect and button; explicit indexed card when binding a local unit',semantics:'Inherit native execution defaults, set energy and unit cooldown, neutralize inherited life/resource cost and optionally research requirements. Existing ability replacement is explicit.',limits:'Single catalog only; other inherited behavior, native execution and presentation still require target tests'},
+        "recipe.targetAbility": {tool:'data.ability.target',creates:['CAbilEffectTarget','optional local-unit ability/card binding'],requires:'Explicit active same-class source template, existing effect/button, explicit indexed local unit/card when binding',semantics:'Native inherited target/filter/cursor semantics; optional range, energy, unit cooldown. Does not infer unit/point target behavior.',limits:'Single catalog only; valid/invalid targeting, execution and presentation require native tests'},
         "recipe.unitActor": {tool:'data.apply',creates:['native-class unit Actor'],requires:'One native source Actor with a GenericUnit template; explicit unit and Model',semantics:'Copy authored presentation, rebind unit events, pin display/build/placement Model and retain the source native class. replace:true explicitly rebuilds an existing Actor.',limits:'Concrete source layer overlays and full native rendering are not simulated'},
         "recipe.effectModel": {tool:'data.apply',creates:['CActorModel','merged Preload.xml dependencies'],semantics:'Native Start/Stop event, Source/Caster/Target context, host/site operation, inherited scale and one-shot orphan policy are explicit. stopEffect/stopEvent close the bracket. Model/Actor/Effect and related sound preloads are committed atomically. replace:true rebuilds an existing Actor.',limits:'Model existence is checked; engine playback remains a separate test'},
         "recipe.weaponBurn": { creates: ["CEffectDamage", "CBehaviorBuff", "CEffectApplyBehavior", "CEffectSet", "CActorModel"], patches: "carrierEffect.carrierPath", defaults: { carrierCtype: "CEffectCreatePersistent", carrierPath: "PeriodicEffectArray[0]", attachSite: "SOpAttachHead" } },
@@ -543,11 +559,11 @@ export class DataWorkspace {
     const preview=await this.apply({...request,dryRun:true,authoringPolicy:'strict',validate:true,allowInvalid:false});
     const after=await this.planFingerprint();
     if(before!==after)throw new Error('STALE_DATA_PLAN_DURING_PREVIEW');
-    const normalized={...request,authoringPolicy:'strict' as const,validate:true,allowInvalid:false};
+    const normalized={...request,operations:request.operations.map((op,index)=>op.op==='recipe.unitAbilityAnimation'?{...op,expectedAssetRevision:preview.applied.find(a=>a.index===index)?.animation?.assetRevision}:op),authoringPolicy:'strict' as const,validate:true,allowInvalid:false};
     const planId=createHash('sha256').update(JSON.stringify({request:normalized,fingerprint:after,preview:preview.files})).digest('hex');
     this.plans.set(planId,{request:normalized,fingerprint:after,schemaSources:referenceSchema.sources()});
     while(this.plans.size>64)this.plans.delete(this.plans.keys().next().value!);
-    return {planId,fingerprint:after,files:preview.files,applied:preview.applied,aliases:preview.aliases,validation:preview.validation,authoring:preview.authoring,readyToApply:preview.authoring.accepted,policy:'strict',editor:'NOT_RUN',runtime:'NOT_RUN'};
+    return {planId,fingerprint:after,files:preview.files,applied:preview.applied,aliases:preview.aliases,validation:preview.validation,authoring:preview.authoring,...preview.cardReviews?{cardReviews:preview.cardReviews,cardReviewCount:preview.cardReviewCount}:{},readyToApply:preview.authoring.accepted,policy:'strict',editor:'NOT_RUN',runtime:'NOT_RUN'};
   }
 
   async applyPlan(planId:string,dryRun=true,stage=true){
@@ -569,7 +585,7 @@ export class DataWorkspace {
     const componentFile = normalize(request.componentListFile ?? "ComponentList.SC2Components");
     const indexFile = normalize(request.gameDataIndexFile ?? "Base.SC2Data/GameData.xml");
     const records = await this.catalog();
-    const actorRecipeObjects=request.operations.some(o=>o.op==='recipe.unitActor'||o.op==='recipe.effectModel')?records.filter(r=>r.engineActive!==false).flatMap(r=>r.document.objects()):[];
+    const actorRecipeObjects=request.operations.some(o=>o.op==='recipe.unitActor'||o.op==='recipe.effectModel'||o.op==='recipe.instantAbility'||o.op==='recipe.targetAbility'||o.op==='recipe.veterancy')?records.filter(r=>r.engineActive!==false).flatMap(r=>r.document.objects()):[];
     const cross = await this.crossReferences();cross.issues.push(...this.actorIssues(records));
     const allReferences = [...this.references(records),...cross.references];
     for(const schema of referenceSchema.sources()){const source=await this.workspace.readDependency(schema.file);if(createHash('sha256').update(source).digest('hex')!==schema.sha256)throw new Error('STALE_DATA_SCHEMA_TRANSACTION');}
@@ -594,24 +610,47 @@ export class DataWorkspace {
       if (operation.op === "object.rename" && operation.updateReferences) for (const reference of incoming) if (records.some((record) => record.layer === "workspace" && record.file === reference.file) || cross.references.some(ref=>ref.file===reference.file)) referenceFiles.add(reference.file);
     }
     const visualRecipes=request.operations.filter((o):o is Extract<DataOperation,{op:'recipe.effectModel'}>=>o.op==='recipe.effectModel');
+    const hasProjectiles=request.operations.some(o=>o.op==='recipe.projectileEffect');
     const preloadFile=path.posix.join(path.posix.dirname(componentFile),'Preload.xml');
-    const files = this.workspace.coupledDraftFiles([targetFile, componentFile, indexFile, ...referenceFiles,...visualRecipes.length?[preloadFile]:[]]);
+    const files = this.workspace.coupledDraftFiles([targetFile, componentFile, indexFile, ...referenceFiles,...visualRecipes.length||hasProjectiles?[preloadFile]:[]]);
     if (files.length > 64) throw new Error(`Atomic Data rename touches ${files.length} files; narrow referenceFiles to at most 61 catalog files`);
     let validation: DataValidationReport | undefined;
     let authoring: DataAuthoringVerdict | undefined;
     let aliases: Record<string, string> = {};
-    let applied: Array<{ index: number; op: string; target?: string }> = [];
+    let applied: Array<{ index: number; op: string; target?: string;animation?:(ReturnType<typeof unitAbilityAnimationRecipe>&{assetRevision:string;assets:Array<{resource:string;sha256:string;build?:string}>;supplementalCoverage:string;warnings:string[]}) }> = [];
+    const cardReviews:Array<{operation:number;review:ReturnType<typeof cardReviewSummary>}>=[];
     const transaction = await this.workspace.applyRawTransaction(files, async (sources) => {
       const next = new Map(sources);
+      const projectilePreloads:CatalogPreload[]=[];
       const originalDocument = sources.get(targetFile) ? new DataDocument(sources.get(targetFile)!, targetFile) : DataDocument.create(targetFile);
       const document = sources.get(targetFile) ? new DataDocument(sources.get(targetFile)!, targetFile) : DataDocument.create(targetFile);
       const liveGraph=()=>{const live=records.map(record=>record.layer==='workspace'?{...record,document:record.file===targetFile?document:next.has(record.file)?new DataDocument(next.get(record.file)!,record.file):record.document}:record);if(!live.some(r=>r.layer==='workspace'&&r.file===targetFile))live.push({file:targetFile,absolute:this.workspace.resolveUserPath(targetFile),layer:'workspace',provenance:['workspace'],document});const refs=[...this.references(live),...cross.references.filter(r=>!next.has(r.file))];for(const [file,text]of next){const result=/\.galaxy$/i.test(file)?galaxyReferences(file,text):file==='Triggers'?guiReferences(file,text):file==='Objects'?objectReferences(file,text):undefined;if(result)refs.push(...result.references);}return {references:refs,issues:this.actorIssues(live)};};
       const aliasMap = new Map<string, string>();
       applied = [];
+      cardReviews.length=0;
       for (let index = 0; index < request.operations.length; index++) {
         const operation = request.operations[index];
         let target: string | undefined;
+        let animation:typeof applied[number]['animation'];
         switch (operation.op) {
+          case 'recipe.unitAbilityAnimation': {
+            if(!this.animationModelReader)throw Error('UNIT_ANIMATION_ASSET_RESOLVER_UNAVAILABLE');
+            const absolute=this.workspace.resolveUserPath(targetFile);
+            const active=[...records.filter(r=>r.engineActive!==false&&!(r.layer==='workspace'&&r.absolute===absolute)).flatMap(r=>r.document.objects().map(o=>({...o,file:r.absolute,layer:r.layer,engineActive:r.engineActive}))),...document.objects().map(o=>({...o,file:absolute,layer:'workspace',engineActive:true}))];
+            const unique=(domain:string,id:string)=>{const matches=active.filter(o=>o.domain===domain&&o.id===id);if(matches.length!==1)throw Error('UNIT_ANIMATION_DECLARATION_UNRESOLVED: '+domain+':'+id);return matches[0];};
+            const actor=unique('Actor',operation.actor),actorState=this.effective(actor,active),actorModel=actorState.fields.Model;
+            if(actorState.unresolvedParents.length||actorModel?.status!=='resolved'||!actorModel.value)throw Error('UNIT_ANIMATION_ACTOR_MODEL_UNRESOLVED');
+            const model=unique('Model',actorModel.value),modelState=this.effective(model,active),resource=modelState.fields.Model;
+            if(modelState.unresolvedParents.length||resource?.status!=='resolved'||!resource.value)throw Error('UNIT_ANIMATION_MODEL_RESOURCE_UNRESOLVED');
+            const required=Object.values(modelState.fields).filter(f=>/^RequiredAnims(?:\[|$)/.test(f.path)),unresolved=required.filter(f=>f.status==='unknown');
+            const resources=[...new Set([resource.value,...required.filter(f=>f.status==='resolved'&&f.value).map(f=>f.value!)])];
+            const roots=this.extraRoots.map(root=>({root,order:Math.max(-1,...records.filter(r=>r.layer==='dependency'&&r.dependencyAvailability==='DECLARED_AVAILABLE'&&(r.absolute===root||r.absolute.startsWith(root+path.sep))).map(r=>r.declarationOrder??-1))})).filter(r=>r.order>=0).sort((a,b)=>b.order-a.order);
+            const inventory=await this.animationModelReader(resources,[{root:this.workspace.root},...roots.map(r=>({root:r.root,package:this.nativePackageProfile(r.root)}))]);
+            if(operation.expectedAssetRevision!==undefined&&operation.expectedAssetRevision!==inventory.revision)throw Error('UNIT_ANIMATION_STALE_ASSET_REVISION');
+            const written=unitAbilityAnimationRecipe(document,active,operation,{actor:operation.actor,unit:operation.unit,actorModel:actorModel.value,file:inventory.file,sha256:inventory.sha256,animations:inventory.animations});
+            target=written.target;animation={...written,assetRevision:inventory.revision,assets:inventory.assets.map(({resource,sha256,build})=>({resource,sha256,...build?{build}:{}})),supplementalCoverage:unresolved.length?'partial':inventory.supplementalCoverage,warnings:[...inventory.warnings,...unresolved.map(f=>'Unresolved supplemental animation field: '+f.path)].slice(0,8)};
+            break;
+          }
           case "object.create": { const node = document.createObject(operation.ctype, operation.id, operation); target = document.objectKey(node); break; }
           case "object.clone": { const node = document.cloneObject(selectorAlias(operation.object, aliasMap), operation.id, operation.parent); target = document.objectKey(node); break; }
           case "object.rename": {
@@ -677,6 +716,34 @@ export class DataWorkspace {
           case "field.remove": { const selector = selectorAlias(operation.object, aliasMap); document.removeField(selector, operation.path); target = `${document.objectKey(document.resolve(selector))}.${operation.path}`; break; }
           case "array.append": { const selector = selectorAlias(operation.object, aliasMap); const added = document.appendArray(selector, operation.path, operation); target = `${document.objectKey(document.resolve(selector))}.${added}`; break; }
           case "native.add": { const selector = selectorAlias(operation.object, aliasMap); document.addNative(selector, operation.parentPath, operation.field); target = `${document.objectKey(document.resolve(selector))}.${operation.field.name}`; break; }
+          case "recipe.veterancy": {
+            const available=[...records.filter(r=>r.engineActive!==false&&!(r.layer==='workspace'&&r.absolute===this.workspace.resolveUserPath(targetFile))).flatMap(r=>r.document.objects()),...document.objects()];
+            target=veterancyRecipe(document,available,operation);break;
+          }
+          case "recipe.instantAbility": case "recipe.targetAbility": {
+            const available=[...actorRecipeObjects,...document.objects()];
+            for(const [domain,id]of [['Effect',operation.effect],['Button',operation.button]])if(!available.some(o=>o.domain===domain&&o.id===id))throw Error('ABILITY_RECIPE_REFERENCE_MISSING: '+domain+':'+id);
+            // Replace the current target catalog's old parse with the evolving
+            // document once. Other active declarations remain genuinely ambiguous.
+            const sourceObjects=[...records.filter(r=>r.engineActive!==false&&!(r.layer==='workspace'&&r.absolute===this.workspace.resolveUserPath(targetFile))).flatMap(r=>r.document.objects()),...document.objects()];
+            const candidates=sourceObjects.filter(o=>o.domain==='Abil'&&o.id===(operation.sourceAbility??'Stimpack'));
+            if(candidates.length!==1)throw Error((operation.op==='recipe.instantAbility'?'INSTANT':'TARGET')+'_ABILITY_SOURCE_AMBIGUOUS_OR_MISSING: '+(operation.sourceAbility??'Stimpack')+'; mount the target\'s declared native catalogs and choose one source declaration');
+            if(operation.unit&&operation.card){
+              const review=reviewCardBinding(sourceObjects,operation.unit,{ability:operation.id,button:operation.button,...operation.card});
+              if(!review.accepted)throw new DataCardBindingError(review);
+              cardReviews.push({operation:index,review:cardReviewSummary(review)});
+            }
+            target=operation.op==='recipe.instantAbility'?instantAbilityRecipe(document,candidates[0],operation):targetAbilityRecipe(document,candidates[0],operation);break;
+          }
+          case "recipe.abilityCharges": {
+            const active=[...records.filter(r=>r.engineActive!==false&&!(r.layer==='workspace'&&r.absolute===this.workspace.resolveUserPath(targetFile))).flatMap(r=>r.document.objects()),...document.objects()];
+            if(active.filter(o=>o.domain==='Abil'&&o.id===operation.id).length!==1)throw Error('ABILITY_CHARGES_ACTIVE_IDENTITY_AMBIGUOUS');
+            target=abilityChargesRecipe(document,operation);break;
+          }
+          case "recipe.projectileEffect": {
+            const active=[...records.filter(r=>r.engineActive!==false&&!(r.layer==='workspace'&&r.absolute===this.workspace.resolveUserPath(targetFile))).flatMap(r=>r.document.objects()),...document.objects()];
+            const written=projectileEffectRecipe(document,active,operation);projectilePreloads.push(...written.preloads);target=written.target;break;
+          }
           case "recipe.unitActor": {
             const available=[...actorRecipeObjects,...document.objects()];
             for(const [domain,id] of [['Unit',operation.unit],['Model',operation.model]])if(!available.some(o=>o.domain===domain&&o.id===id))throw new Error('ACTOR_RECIPE_REFERENCE_MISSING: '+domain+':'+id);
@@ -761,10 +828,10 @@ export class DataWorkspace {
           if (!target) throw new Error(`Operation ${index} did not produce an alias target`);
           const objectTarget = target.split(".", 1)[0]; aliasMap.set(operation.as, objectTarget);
         }
-        applied.push({ index, op: operation.op, target });
+        applied.push({ index, op: operation.op, target,...animation?{animation}:{} });
       }
       next.set(targetFile, document.source);
-      if(visualRecipes.length)next.set(preloadFile,visualRecipePreloads(sources.get(preloadFile)??'',document,visualRecipes));
+      if(visualRecipes.length||projectilePreloads.length)next.set(preloadFile,visualRecipePreloads(sources.get(preloadFile)??'',document,visualRecipes,projectilePreloads));
       next.set(componentFile, componentListWithGameData(next.get(componentFile) ?? ""));
       next.set(indexFile, gameDataIndexWithCatalog(next.get(indexFile) ?? "", targetFile));
       if ((request.validate ?? true) || request.authoringPolicy !== "compatibility") {
@@ -781,9 +848,14 @@ export class DataWorkspace {
       return next;
     }, { dryRun: request.dryRun ?? true, stage: request.stage ?? true, backup: request.backup ?? true, expectedSha256: request.expectedSha256, summary: `Apply ${request.operations.length} Data operations atomically` });
     const nativeMutations = request.operations.reduce((total, operation) => total + (operation.op === "recipe.weaponBurn" ? 6 : operation.op === "recipe.unitTextureByVital" ? operation.textures.length * 2 + 2 : 1), 0);
-    return { ...transaction, applied, aliases, validation, authoring: authoring ? {...authoring,executionPolicy:request.authoringPolicy === "compatibility"?"COMPATIBILITY":"STRICT"} : {status:"INCOMPLETE",accepted:false,parse:"PASS",completeness:"INCOMPLETE",executionPolicy:"COMPATIBILITY",staticValidation:"INCOMPLETE",editor:"NOT_RUN",runtime:"NOT_RUN",diagnostics:[],scope:"Authoring validation disabled"}, authoringPolicy: request.authoringPolicy ?? "strict",referenceCoverage:"PARTIAL",referenceScope:"Declared XSD XML carriers, supported actor selectors/messages, GUI gamelinks, Objects v27 and supported native Galaxy arguments within configured roots",excludedScope:["Unknown free-text/custom carriers","Unconfigured external consumers"], efficiency: { toolCalls: 1, operations: request.operations.length, nativeMutations, files: transaction.files.length, includesValidation: request.validate ?? true, includesDiff: true } };
+    return { ...transaction, applied, aliases, validation,...cardReviews.length?{cardReviews:cardReviews.slice(0,16),cardReviewCount:cardReviews.length}:{}, authoring: authoring ? {...authoring,executionPolicy:request.authoringPolicy === "compatibility"?"COMPATIBILITY":"STRICT"} : {status:"INCOMPLETE",accepted:false,parse:"PASS",completeness:"INCOMPLETE",executionPolicy:"COMPATIBILITY",staticValidation:"INCOMPLETE",editor:"NOT_RUN",runtime:"NOT_RUN",diagnostics:[],scope:"Authoring validation disabled"}, authoringPolicy: request.authoringPolicy ?? "strict",referenceCoverage:"PARTIAL",referenceScope:"Declared XSD XML carriers, supported actor selectors/messages, GUI gamelinks, Objects v27 and supported native Galaxy arguments within configured roots",excludedScope:["Unknown free-text/custom carriers","Unconfigured external consumers"], efficiency: { toolCalls: 1, operations: request.operations.length, nativeMutations, files: transaction.files.length, includesValidation: request.validate ?? true, includesDiff: true } };
   }
 
+  async cardCheck(unit:string,offset=0,limit=25){
+    const objects=(await this.catalog()).filter(r=>r.engineActive!==false).flatMap(r=>r.document.objects());
+    const review=reviewCardBinding(objects,unit),{accepted,...summary}=cardReviewSummary(review);
+    return {...summary,bindingAccepted:accepted,status:!review.layoutResolved?'unverified':review.conflicts.length?'review_required':'no_known_conflicts',bindings:review.bindings.slice(offset,offset+limit),offset,total:review.bindings.length,nextOffset:offset+limit<review.bindings.length?offset+limit:null,scope:'Known active Unit-parent cards, measured implicit-root/explicit-index overlays. Shared-face/cell findings do not prove simultaneous native visibility or actual user hotkeys; no engine presentation acceptance.'};
+  }
   async validate(file = "Base.SC2Data/GameData/UnitData.xml"): Promise<DataValidationReport> {
     const records = await this.catalog();
     if (!records.some((record) => record.layer === "workspace" && record.file === normalize(file))) {

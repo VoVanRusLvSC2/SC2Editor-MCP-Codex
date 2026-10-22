@@ -1,0 +1,861 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-21T20:35:34.949Z",
+  "kind": "Restricted native terrain junction acceptance, not full MCP readiness",
+  "scope": {
+    "gameBuild": "5.0.17.98310",
+    "tileset": "Agria",
+    "cliffStep": "1 to 2",
+    "rampWidth": 4,
+    "groundTypes": [
+      "Marine",
+      "Marauder"
+    ],
+    "directions": [
+      "west",
+      "east",
+      "north",
+      "south"
+    ],
+    "authoring": "All map changes used fresh outer MCP sessions; no parallel shell map writer",
+    "nativeNavigationRebuilt": false,
+    "allCliffsCertified": false
+  },
+  "directionCorrection": {
+    "nativeEnum": {
+      "south": 0,
+      "north": 1,
+      "west": 2,
+      "east": 3
+    },
+    "source": "Original Editor-saved City fixture, matching frame up/right vectors",
+    "oldMappingWasIncorrect": true
+  },
+  "render": {
+    "outcome": "passed",
+    "sourceUnchanged": true,
+    "sourceSha256": "19b5d1884d9173907f0ebd9b26c7653f73aedaba3fffbc1ddf611e405e199997",
+    "images": [
+      {
+        "images": [
+          {
+            "sha256": "67a0aa6ef3ec3c6c0cc1217d37f30b7fcd276bf624e4003e5bdebc4ca34ea052",
+            "bytes": 2123941
+          }
+        ]
+      },
+      {
+        "images": [
+          {
+            "sha256": "01795ecef06af845680fa9632c51294dbeab7574fe7dfea171be0bcec4a9895c",
+            "bytes": 1895293
+          }
+        ]
+      },
+      {
+        "images": [
+          {
+            "sha256": "455cb52aba95bf4b0e44bd0132d47c67135765cdc02c7b40006cbeb59d41a4e7",
+            "bytes": 1901864
+          }
+        ]
+      },
+      {
+        "images": [
+          {
+            "sha256": "ab823fe224101d29cf2b232962895395ff9c99e6f376f4ebb8b4f8d1d5337cef",
+            "bytes": 1952752
+          }
+        ]
+      },
+      {
+        "images": [
+          {
+            "sha256": "ffd7717fb1348a71fd84dcff2daa18a7897fae9d307baeb720efd8f4fae2e53b",
+            "bytes": 1814386
+          }
+        ]
+      }
+    ],
+    "visualReview": "Inspected overview and four native game close-ups: all tested side caps closed, no black gap at the ramps. Unrelated existing bright effect above the overview remains outside this geometry check."
+  },
+  "traversal": {
+    "outcome": "passed",
+    "checks": 32,
+    "maxDeviation": 2,
+    "maxObservedDeviation": 0,
+    "corridorScope": "Sampled unit centers relative to the endpoint segment; not unsampled motion or footprint clearance",
+    "sameRetainedBridge": true,
+    "retainedBridgeIdentitySha256": "a0f84efec3b4ae84349ceebc799e4fbc863f749bacb00c9325d7e0e8c76d66fe",
+    "runs": [
+      {
+        "id": "f468f3df-b367-4dd3-ab8a-555ec99543d0",
+        "outcome": "passed",
+        "sourceSha256": "19b5d1884d9173907f0ebd9b26c7653f73aedaba3fffbc1ddf611e405e199997",
+        "gameRuntime": {
+          "provenance": "pinned_release",
+          "releaseTag": "v0.1.0-dev.11",
+          "archiveSha256": "514096c72332f4d6629dee4a33a092957d3ee02a9c45281bb3a7ad59031c30f3",
+          "verifiedFiles": 113,
+          "binaryOverride": false
+        },
+        "checks": [
+          {
+            "id": "archive",
+            "status": "passed"
+          },
+          {
+            "id": "map.playable_bounds",
+            "status": "passed"
+          },
+          {
+            "id": "game.launch",
+            "status": "passed"
+          },
+          {
+            "id": "game.build",
+            "status": "passed"
+          },
+          {
+            "id": "route:westMarine:forward",
+            "status": "passed",
+            "evidence": {
+              "type": "Marine",
+              "mobility": "ground",
+              "mobilitySource": "manifest_declaration",
+              "expected": "arrive",
+              "arrived": true,
+              "trajectorySamples": 16,
+              "maxObservedDeviation": 0,
+              "maxDeviation": 2,
+              "corridorScope": "sampled_unit_centers",
+              "trajectoryFile": "K:\\SC2_MAP_Workspace\\SC2Editor-MCP-Codex\\.sc2mcp-output\\project-tests\\f468f3df-b367-4dd3-ab8a-555ec99543d0\\route_westMarine_forward_trajectory.json"
+            }
+          },
+          {
+            "id": "route:westMarine:reverse",
+            "status": "passed",
+            "evidence": {
+              "type": "Marine",
+              "mobility": "ground",
+              "mobilitySource": "manifest_declaration",
+              "expected": "arrive",
+              "arrived": true,
+              "trajectorySamples": 16,
+              "maxObservedDeviation": 0,
+              "maxDeviation": 2,
+              "corridorScope": "sampled_unit_centers",
+              "trajectoryFile": "K:\\SC2_MAP_Workspace\\SC2Editor-MCP-Codex\\.sc2mcp-output\\project-tests\\f468f3df-b367-4dd3-ab8a-555ec99543d0\\route_westMarine_reverse_trajectory.json"
+            }
+          },
+          {
+            "id": "route:westMarauder:forward",
+            "status": "passed",
+            "evidence": {
+              "type": "Marauder",
+              "mobility": "ground",
+              "mobilitySource": "manifest_declaration",
+              "expected": "arrive",
+              "arrived": true,
+              "trajectorySamples": 16,
+              "maxObservedDeviation": 0,
+              "maxDeviation": 2,
+              "corridorScope": "sampled_unit_centers",
+              "trajectoryFile": "K:\\SC2_MAP_Workspace\\SC2Editor-MCP-Codex\\.sc2mcp-output\\project-tests\\f468f3df-b367-4dd3-ab8a-555ec99543d0\\route_westMarauder_forward_trajectory.json"
+            }
+          },
+          {
+            "id": "route:westMarauder:reverse",
+            "status": "passed",
+            "evidence": {
+              "type": "Marauder",
+              "mobility": "ground",
+              "mobilitySource": "manifest_declaration",
+              "expected": "arrive",
+              "arrived": true,
+              "trajectorySamples": 16,
+              "maxObservedDeviation": 0,
+              "maxDeviation": 2,
+              "corridorScope": "sampled_unit_centers",
+              "trajectoryFile": "K:\\SC2_MAP_Workspace\\SC2Editor-MCP-Codex\\.sc2mcp-output\\project-tests\\f468f3df-b367-4dd3-ab8a-555ec99543d0\\route_westMarauder_reverse_trajectory.json"
+            }
+          },
+          {
+            "id": "route:eastMarine:forward",
+            "status": "passed",
+            "evidence": {
+              "type": "Marine",
+              "mobility": "ground",
+              "mobilitySource": "manifest_declaration",
+              "expected": "arrive",
+              "arrived": true,
+              "trajectorySamples": 16,
+              "maxObservedDeviation": 0,
+              "maxDeviation": 2,
+              "corridorScope": "sampled_unit_centers",
+              "trajectoryFile": "K:\\SC2_MAP_Workspace\\SC2Editor-MCP-Codex\\.sc2mcp-output\\project-tests\\f468f3df-b367-4dd3-ab8a-555ec99543d0\\route_eastMarine_forward_trajectory.json"
+            }
+          },
+          {
+            "id": "route:eastMarine:reverse",
+            "status": "passed",
+            "evidence": {
+              "type": "Marine",
+              "mobility": "ground",
+              "mobilitySource": "manifest_declaration",
+              "expected": "arrive",
+              "arrived": true,
+              "trajectorySamples": 17,
+              "maxObservedDeviation": 0,
+              "maxDeviation": 2,
+              "corridorScope": "sampled_unit_centers",
+              "trajectoryFile": "K:\\SC2_MAP_Workspace\\SC2Editor-MCP-Codex\\.sc2mcp-output\\project-tests\\f468f3df-b367-4dd3-ab8a-555ec99543d0\\route_eastMarine_reverse_trajectory.json"
+            }
+          },
+          {
+            "id": "route:eastMarauder:forward",
+            "status": "passed",
+            "evidence": {
+              "type": "Marauder",
+              "mobility": "ground",
+              "mobilitySource": "manifest_declaration",
+              "expected": "arrive",
+              "arrived": true,
+              "trajectorySamples": 17,
+              "maxObservedDeviation": 0,
+              "maxDeviation": 2,
+              "corridorScope": "sampled_unit_centers",
+              "trajectoryFile": "K:\\SC2_MAP_Workspace\\SC2Editor-MCP-Codex\\.sc2mcp-output\\project-tests\\f468f3df-b367-4dd3-ab8a-555ec99543d0\\route_eastMarauder_forward_trajectory.json"
+            }
+          },
+          {
+            "id": "route:eastMarauder:reverse",
+            "status": "passed",
+            "evidence": {
+              "type": "Marauder",
+              "mobility": "ground",
+              "mobilitySource": "manifest_declaration",
+              "expected": "arrive",
+              "arrived": true,
+              "trajectorySamples": 17,
+              "maxObservedDeviation": 0,
+              "maxDeviation": 2,
+              "corridorScope": "sampled_unit_centers",
+              "trajectoryFile": "K:\\SC2_MAP_Workspace\\SC2Editor-MCP-Codex\\.sc2mcp-output\\project-tests\\f468f3df-b367-4dd3-ab8a-555ec99543d0\\route_eastMarauder_reverse_trajectory.json"
+            }
+          },
+          {
+            "id": "route:northMarine:forward",
+            "status": "passed",
+            "evidence": {
+              "type": "Marine",
+              "mobility": "ground",
+              "mobilitySource": "manifest_declaration",
+              "expected": "arrive",
+              "arrived": true,
+              "trajectorySamples": 20,
+              "maxObservedDeviation": 0,
+              "maxDeviation": 2,
+              "corridorScope": "sampled_unit_centers",
+              "trajectoryFile": "K:\\SC2_MAP_Workspace\\SC2Editor-MCP-Codex\\.sc2mcp-output\\project-tests\\f468f3df-b367-4dd3-ab8a-555ec99543d0\\route_northMarine_forward_trajectory.json"
+            }
+          },
+          {
+            "id": "route:northMarine:reverse",
+            "status": "passed",
+            "evidence": {
+              "type": "Marine",
+              "mobility": "ground",
+              "mobilitySource": "manifest_declaration",
+              "expected": "arrive",
+              "arrived": true,
+              "trajectorySamples": 19,
+              "maxObservedDeviation": 0,
+              "maxDeviation": 2,
+              "corridorScope": "sampled_unit_centers",
+              "trajectoryFile": "K:\\SC2_MAP_Workspace\\SC2Editor-MCP-Codex\\.sc2mcp-output\\project-tests\\f468f3df-b367-4dd3-ab8a-555ec99543d0\\route_northMarine_reverse_trajectory.json"
+            }
+          },
+          {
+            "id": "route:northMarauder:forward",
+            "status": "passed",
+            "evidence": {
+              "type": "Marauder",
+              "mobility": "ground",
+              "mobilitySource": "manifest_declaration",
+              "expected": "arrive",
+              "arrived": true,
+              "trajectorySamples": 23,
+              "maxObservedDeviation": 0,
+              "maxDeviation": 2,
+              "corridorScope": "sampled_unit_centers",
+              "trajectoryFile": "K:\\SC2_MAP_Workspace\\SC2Editor-MCP-Codex\\.sc2mcp-output\\project-tests\\f468f3df-b367-4dd3-ab8a-555ec99543d0\\route_northMarauder_forward_trajectory.json"
+            }
+          },
+          {
+            "id": "route:northMarauder:reverse",
+            "status": "passed",
+            "evidence": {
+              "type": "Marauder",
+              "mobility": "ground",
+              "mobilitySource": "manifest_declaration",
+              "expected": "arrive",
+              "arrived": true,
+              "trajectorySamples": 22,
+              "maxObservedDeviation": 0,
+              "maxDeviation": 2,
+              "corridorScope": "sampled_unit_centers",
+              "trajectoryFile": "K:\\SC2_MAP_Workspace\\SC2Editor-MCP-Codex\\.sc2mcp-output\\project-tests\\f468f3df-b367-4dd3-ab8a-555ec99543d0\\route_northMarauder_reverse_trajectory.json"
+            }
+          },
+          {
+            "id": "route:southMarine:forward",
+            "status": "passed",
+            "evidence": {
+              "type": "Marine",
+              "mobility": "ground",
+              "mobilitySource": "manifest_declaration",
+              "expected": "arrive",
+              "arrived": true,
+              "trajectorySamples": 28,
+              "maxObservedDeviation": 0,
+              "maxDeviation": 2,
+              "corridorScope": "sampled_unit_centers",
+              "trajectoryFile": "K:\\SC2_MAP_Workspace\\SC2Editor-MCP-Codex\\.sc2mcp-output\\project-tests\\f468f3df-b367-4dd3-ab8a-555ec99543d0\\route_southMarine_forward_trajectory.json"
+            }
+          },
+          {
+            "id": "route:southMarine:reverse",
+            "status": "passed",
+            "evidence": {
+              "type": "Marine",
+              "mobility": "ground",
+              "mobilitySource": "manifest_declaration",
+              "expected": "arrive",
+              "arrived": true,
+              "trajectorySamples": 27,
+              "maxObservedDeviation": 0,
+              "maxDeviation": 2,
+              "corridorScope": "sampled_unit_centers",
+              "trajectoryFile": "K:\\SC2_MAP_Workspace\\SC2Editor-MCP-Codex\\.sc2mcp-output\\project-tests\\f468f3df-b367-4dd3-ab8a-555ec99543d0\\route_southMarine_reverse_trajectory.json"
+            }
+          },
+          {
+            "id": "route:southMarauder:forward",
+            "status": "passed",
+            "evidence": {
+              "type": "Marauder",
+              "mobility": "ground",
+              "mobilitySource": "manifest_declaration",
+              "expected": "arrive",
+              "arrived": true,
+              "trajectorySamples": 27,
+              "maxObservedDeviation": 0,
+              "maxDeviation": 2,
+              "corridorScope": "sampled_unit_centers",
+              "trajectoryFile": "K:\\SC2_MAP_Workspace\\SC2Editor-MCP-Codex\\.sc2mcp-output\\project-tests\\f468f3df-b367-4dd3-ab8a-555ec99543d0\\route_southMarauder_forward_trajectory.json"
+            }
+          },
+          {
+            "id": "route:southMarauder:reverse",
+            "status": "passed",
+            "evidence": {
+              "type": "Marauder",
+              "mobility": "ground",
+              "mobilitySource": "manifest_declaration",
+              "expected": "arrive",
+              "arrived": true,
+              "trajectorySamples": 24,
+              "maxObservedDeviation": 0,
+              "maxDeviation": 2,
+              "corridorScope": "sampled_unit_centers",
+              "trajectoryFile": "K:\\SC2_MAP_Workspace\\SC2Editor-MCP-Codex\\.sc2mcp-output\\project-tests\\f468f3df-b367-4dd3-ab8a-555ec99543d0\\route_southMarauder_reverse_trajectory.json"
+            }
+          },
+          {
+            "id": "game.diagnostics",
+            "status": "inconclusive",
+            "reason": "No unexpected errors observed in available sources; diagnostic coverage is partial"
+          },
+          {
+            "id": "game.capture",
+            "status": "passed"
+          },
+          {
+            "id": "game.cleanup",
+            "status": "passed"
+          },
+          {
+            "id": "artifact.unchanged",
+            "status": "passed"
+          },
+          {
+            "id": "source.unchanged",
+            "status": "passed"
+          }
+        ]
+      },
+      {
+        "id": "974cfbb7-5ab9-4e1d-8857-95db930a869b",
+        "outcome": "passed",
+        "sourceSha256": "19b5d1884d9173907f0ebd9b26c7653f73aedaba3fffbc1ddf611e405e199997",
+        "gameRuntime": {
+          "provenance": "pinned_release",
+          "releaseTag": "v0.1.0-dev.11",
+          "archiveSha256": "514096c72332f4d6629dee4a33a092957d3ee02a9c45281bb3a7ad59031c30f3",
+          "verifiedFiles": 113,
+          "binaryOverride": false
+        },
+        "checks": [
+          {
+            "id": "archive",
+            "status": "passed"
+          },
+          {
+            "id": "map.playable_bounds",
+            "status": "passed"
+          },
+          {
+            "id": "game.launch",
+            "status": "passed"
+          },
+          {
+            "id": "game.build",
+            "status": "passed"
+          },
+          {
+            "id": "route:westMarine:forward",
+            "status": "passed",
+            "evidence": {
+              "type": "Marine",
+              "mobility": "ground",
+              "mobilitySource": "manifest_declaration",
+              "expected": "arrive",
+              "arrived": true,
+              "trajectorySamples": 17,
+              "maxObservedDeviation": 0,
+              "maxDeviation": 2,
+              "corridorScope": "sampled_unit_centers",
+              "trajectoryFile": "K:\\SC2_MAP_Workspace\\SC2Editor-MCP-Codex\\.sc2mcp-output\\project-tests\\974cfbb7-5ab9-4e1d-8857-95db930a869b\\route_westMarine_forward_trajectory.json"
+            }
+          },
+          {
+            "id": "route:westMarine:reverse",
+            "status": "passed",
+            "evidence": {
+              "type": "Marine",
+              "mobility": "ground",
+              "mobilitySource": "manifest_declaration",
+              "expected": "arrive",
+              "arrived": true,
+              "trajectorySamples": 17,
+              "maxObservedDeviation": 0,
+              "maxDeviation": 2,
+              "corridorScope": "sampled_unit_centers",
+              "trajectoryFile": "K:\\SC2_MAP_Workspace\\SC2Editor-MCP-Codex\\.sc2mcp-output\\project-tests\\974cfbb7-5ab9-4e1d-8857-95db930a869b\\route_westMarine_reverse_trajectory.json"
+            }
+          },
+          {
+            "id": "route:westMarauder:forward",
+            "status": "passed",
+            "evidence": {
+              "type": "Marauder",
+              "mobility": "ground",
+              "mobilitySource": "manifest_declaration",
+              "expected": "arrive",
+              "arrived": true,
+              "trajectorySamples": 16,
+              "maxObservedDeviation": 0,
+              "maxDeviation": 2,
+              "corridorScope": "sampled_unit_centers",
+              "trajectoryFile": "K:\\SC2_MAP_Workspace\\SC2Editor-MCP-Codex\\.sc2mcp-output\\project-tests\\974cfbb7-5ab9-4e1d-8857-95db930a869b\\route_westMarauder_forward_trajectory.json"
+            }
+          },
+          {
+            "id": "route:westMarauder:reverse",
+            "status": "passed",
+            "evidence": {
+              "type": "Marauder",
+              "mobility": "ground",
+              "mobilitySource": "manifest_declaration",
+              "expected": "arrive",
+              "arrived": true,
+              "trajectorySamples": 17,
+              "maxObservedDeviation": 0,
+              "maxDeviation": 2,
+              "corridorScope": "sampled_unit_centers",
+              "trajectoryFile": "K:\\SC2_MAP_Workspace\\SC2Editor-MCP-Codex\\.sc2mcp-output\\project-tests\\974cfbb7-5ab9-4e1d-8857-95db930a869b\\route_westMarauder_reverse_trajectory.json"
+            }
+          },
+          {
+            "id": "route:eastMarine:forward",
+            "status": "passed",
+            "evidence": {
+              "type": "Marine",
+              "mobility": "ground",
+              "mobilitySource": "manifest_declaration",
+              "expected": "arrive",
+              "arrived": true,
+              "trajectorySamples": 18,
+              "maxObservedDeviation": 0,
+              "maxDeviation": 2,
+              "corridorScope": "sampled_unit_centers",
+              "trajectoryFile": "K:\\SC2_MAP_Workspace\\SC2Editor-MCP-Codex\\.sc2mcp-output\\project-tests\\974cfbb7-5ab9-4e1d-8857-95db930a869b\\route_eastMarine_forward_trajectory.json"
+            }
+          },
+          {
+            "id": "route:eastMarine:reverse",
+            "status": "passed",
+            "evidence": {
+              "type": "Marine",
+              "mobility": "ground",
+              "mobilitySource": "manifest_declaration",
+              "expected": "arrive",
+              "arrived": true,
+              "trajectorySamples": 17,
+              "maxObservedDeviation": 0,
+              "maxDeviation": 2,
+              "corridorScope": "sampled_unit_centers",
+              "trajectoryFile": "K:\\SC2_MAP_Workspace\\SC2Editor-MCP-Codex\\.sc2mcp-output\\project-tests\\974cfbb7-5ab9-4e1d-8857-95db930a869b\\route_eastMarine_reverse_trajectory.json"
+            }
+          },
+          {
+            "id": "route:eastMarauder:forward",
+            "status": "passed",
+            "evidence": {
+              "type": "Marauder",
+              "mobility": "ground",
+              "mobilitySource": "manifest_declaration",
+              "expected": "arrive",
+              "arrived": true,
+              "trajectorySamples": 17,
+              "maxObservedDeviation": 0,
+              "maxDeviation": 2,
+              "corridorScope": "sampled_unit_centers",
+              "trajectoryFile": "K:\\SC2_MAP_Workspace\\SC2Editor-MCP-Codex\\.sc2mcp-output\\project-tests\\974cfbb7-5ab9-4e1d-8857-95db930a869b\\route_eastMarauder_forward_trajectory.json"
+            }
+          },
+          {
+            "id": "route:eastMarauder:reverse",
+            "status": "passed",
+            "evidence": {
+              "type": "Marauder",
+              "mobility": "ground",
+              "mobilitySource": "manifest_declaration",
+              "expected": "arrive",
+              "arrived": true,
+              "trajectorySamples": 16,
+              "maxObservedDeviation": 0,
+              "maxDeviation": 2,
+              "corridorScope": "sampled_unit_centers",
+              "trajectoryFile": "K:\\SC2_MAP_Workspace\\SC2Editor-MCP-Codex\\.sc2mcp-output\\project-tests\\974cfbb7-5ab9-4e1d-8857-95db930a869b\\route_eastMarauder_reverse_trajectory.json"
+            }
+          },
+          {
+            "id": "route:northMarine:forward",
+            "status": "passed",
+            "evidence": {
+              "type": "Marine",
+              "mobility": "ground",
+              "mobilitySource": "manifest_declaration",
+              "expected": "arrive",
+              "arrived": true,
+              "trajectorySamples": 16,
+              "maxObservedDeviation": 0,
+              "maxDeviation": 2,
+              "corridorScope": "sampled_unit_centers",
+              "trajectoryFile": "K:\\SC2_MAP_Workspace\\SC2Editor-MCP-Codex\\.sc2mcp-output\\project-tests\\974cfbb7-5ab9-4e1d-8857-95db930a869b\\route_northMarine_forward_trajectory.json"
+            }
+          },
+          {
+            "id": "route:northMarine:reverse",
+            "status": "passed",
+            "evidence": {
+              "type": "Marine",
+              "mobility": "ground",
+              "mobilitySource": "manifest_declaration",
+              "expected": "arrive",
+              "arrived": true,
+              "trajectorySamples": 16,
+              "maxObservedDeviation": 0,
+              "maxDeviation": 2,
+              "corridorScope": "sampled_unit_centers",
+              "trajectoryFile": "K:\\SC2_MAP_Workspace\\SC2Editor-MCP-Codex\\.sc2mcp-output\\project-tests\\974cfbb7-5ab9-4e1d-8857-95db930a869b\\route_northMarine_reverse_trajectory.json"
+            }
+          },
+          {
+            "id": "route:northMarauder:forward",
+            "status": "passed",
+            "evidence": {
+              "type": "Marauder",
+              "mobility": "ground",
+              "mobilitySource": "manifest_declaration",
+              "expected": "arrive",
+              "arrived": true,
+              "trajectorySamples": 17,
+              "maxObservedDeviation": 0,
+              "maxDeviation": 2,
+              "corridorScope": "sampled_unit_centers",
+              "trajectoryFile": "K:\\SC2_MAP_Workspace\\SC2Editor-MCP-Codex\\.sc2mcp-output\\project-tests\\974cfbb7-5ab9-4e1d-8857-95db930a869b\\route_northMarauder_forward_trajectory.json"
+            }
+          },
+          {
+            "id": "route:northMarauder:reverse",
+            "status": "passed",
+            "evidence": {
+              "type": "Marauder",
+              "mobility": "ground",
+              "mobilitySource": "manifest_declaration",
+              "expected": "arrive",
+              "arrived": true,
+              "trajectorySamples": 16,
+              "maxObservedDeviation": 0,
+              "maxDeviation": 2,
+              "corridorScope": "sampled_unit_centers",
+              "trajectoryFile": "K:\\SC2_MAP_Workspace\\SC2Editor-MCP-Codex\\.sc2mcp-output\\project-tests\\974cfbb7-5ab9-4e1d-8857-95db930a869b\\route_northMarauder_reverse_trajectory.json"
+            }
+          },
+          {
+            "id": "route:southMarine:forward",
+            "status": "passed",
+            "evidence": {
+              "type": "Marine",
+              "mobility": "ground",
+              "mobilitySource": "manifest_declaration",
+              "expected": "arrive",
+              "arrived": true,
+              "trajectorySamples": 27,
+              "maxObservedDeviation": 0,
+              "maxDeviation": 2,
+              "corridorScope": "sampled_unit_centers",
+              "trajectoryFile": "K:\\SC2_MAP_Workspace\\SC2Editor-MCP-Codex\\.sc2mcp-output\\project-tests\\974cfbb7-5ab9-4e1d-8857-95db930a869b\\route_southMarine_forward_trajectory.json"
+            }
+          },
+          {
+            "id": "route:southMarine:reverse",
+            "status": "passed",
+            "evidence": {
+              "type": "Marine",
+              "mobility": "ground",
+              "mobilitySource": "manifest_declaration",
+              "expected": "arrive",
+              "arrived": true,
+              "trajectorySamples": 21,
+              "maxObservedDeviation": 0,
+              "maxDeviation": 2,
+              "corridorScope": "sampled_unit_centers",
+              "trajectoryFile": "K:\\SC2_MAP_Workspace\\SC2Editor-MCP-Codex\\.sc2mcp-output\\project-tests\\974cfbb7-5ab9-4e1d-8857-95db930a869b\\route_southMarine_reverse_trajectory.json"
+            }
+          },
+          {
+            "id": "route:southMarauder:forward",
+            "status": "passed",
+            "evidence": {
+              "type": "Marauder",
+              "mobility": "ground",
+              "mobilitySource": "manifest_declaration",
+              "expected": "arrive",
+              "arrived": true,
+              "trajectorySamples": 28,
+              "maxObservedDeviation": 0,
+              "maxDeviation": 2,
+              "corridorScope": "sampled_unit_centers",
+              "trajectoryFile": "K:\\SC2_MAP_Workspace\\SC2Editor-MCP-Codex\\.sc2mcp-output\\project-tests\\974cfbb7-5ab9-4e1d-8857-95db930a869b\\route_southMarauder_forward_trajectory.json"
+            }
+          },
+          {
+            "id": "route:southMarauder:reverse",
+            "status": "passed",
+            "evidence": {
+              "type": "Marauder",
+              "mobility": "ground",
+              "mobilitySource": "manifest_declaration",
+              "expected": "arrive",
+              "arrived": true,
+              "trajectorySamples": 22,
+              "maxObservedDeviation": 0,
+              "maxDeviation": 2,
+              "corridorScope": "sampled_unit_centers",
+              "trajectoryFile": "K:\\SC2_MAP_Workspace\\SC2Editor-MCP-Codex\\.sc2mcp-output\\project-tests\\974cfbb7-5ab9-4e1d-8857-95db930a869b\\route_southMarauder_reverse_trajectory.json"
+            }
+          },
+          {
+            "id": "game.diagnostics",
+            "status": "inconclusive",
+            "reason": "No unexpected errors observed in available sources; diagnostic coverage is partial"
+          },
+          {
+            "id": "game.capture",
+            "status": "passed"
+          },
+          {
+            "id": "game.cleanup",
+            "status": "passed"
+          },
+          {
+            "id": "artifact.unchanged",
+            "status": "passed"
+          },
+          {
+            "id": "source.unchanged",
+            "status": "passed"
+          }
+        ]
+      }
+    ]
+  },
+  "repair": {
+    "legacyRamp": {
+      "outcome": "passed",
+      "compactSave": true,
+      "repairedArchiveSha256": "19b5d1884d9173907f0ebd9b26c7653f73aedaba3fffbc1ddf611e405e199997",
+      "byteIdenticalToFreshGeneration": true,
+      "repeat": {
+        "outcome": "passed",
+        "sourceUnchanged": true
+      },
+      "scope": "Only diagnosed old direction codes with exact measured frame and channel matching; other profiles or edited channels reject"
+    },
+    "cliff": {
+      "outcome": "passed",
+      "diff": {
+        "coarseVerticesChanged": 0,
+        "baseHeightsChanged": 0,
+        "fineVerticesChanged": 163,
+        "components": [
+          {
+            "name": "t3HeightMap",
+            "beforeSha256": "3bd9f56410bb930c28c03fc23d00d951865353c5c07d52616bd9faefb24aedd6",
+            "afterSha256": "adb5ca99b8a61871bf1d81bee5d7c136b542bba7edcb77c531ac941d4cc84987",
+            "byteIdentical": false
+          },
+          {
+            "name": "t3SyncCliffLevel",
+            "beforeSha256": "4f9e7768c908a9ebc14ef8394d237bb9c63634ab35e58689481116a5102ad319",
+            "afterSha256": "4f9e7768c908a9ebc14ef8394d237bb9c63634ab35e58689481116a5102ad319",
+            "byteIdentical": true
+          },
+          {
+            "name": "t3CellFlags",
+            "beforeSha256": "01a6f112b57fcd4ab238542be68516c27f8d0b20a8b27952f12d94ad00f47cc1",
+            "afterSha256": "01a6f112b57fcd4ab238542be68516c27f8d0b20a8b27952f12d94ad00f47cc1",
+            "byteIdentical": true
+          },
+          {
+            "name": "t3SyncHeightMap",
+            "beforeSha256": "fbc93855c3e9e7c4af7389f10706f7a77a694b4653f41d3fac69742b93345bc2",
+            "afterSha256": "d49eb70959e70b8feec8d3f1797789f64e900ce1166de897253c613501474ebc",
+            "byteIdentical": false
+          },
+          {
+            "name": "t3Terrain.xml",
+            "beforeSha256": "45996a1cd5c39f6629fefc163bb9796c7eb0ca30b5adff2397b7d9ed84ccb43f",
+            "afterSha256": "45996a1cd5c39f6629fefc163bb9796c7eb0ca30b5adff2397b7d9ed84ccb43f",
+            "byteIdentical": true
+          }
+        ]
+      },
+      "visualTransport": "passed",
+      "visualReview": "Repaired concave and tiny plateau native game frames inspected as closed. Existing coarse outline and base heights retained."
+    }
+  },
+  "retainedFailures": [
+    {
+      "sourceSha256": "10065fd8f13581aa06b60736673884738e1d4f972c2fc7d3d7f89ea8d874bcd4",
+      "movement": "passed",
+      "visualReview": "failed: wrong native enum produced black side-cap gaps in three rotated directions; movement was insufficient evidence"
+    },
+    {
+      "tool": "modkit.author",
+      "failure": "Terrain lifecycle used planId instead of id and failed saving a no-change apply",
+      "resolution": "Correct plan reference plus applied-plan save/no-change source recheck; transport regressions and compact legacy repair/repeat passed"
+    }
+  ],
+  "portable": {
+    "outcome": "passed",
+    "finishedAt": "2026-10-21T20:34:52.851Z",
+    "terrainRepairSchema": true,
+    "nativeUiSchema": true,
+    "gameRuntime": {
+      "provenance": "pinned_release",
+      "releaseTag": "v0.1.0-dev.11",
+      "archiveSha256": "514096c72332f4d6629dee4a33a092957d3ee02a9c45281bb3a7ad59031c30f3",
+      "verifiedFiles": 113,
+      "binaryOverride": false
+    },
+    "gameLaunched": false
+  },
+  "regressions": {
+    "tests": 65,
+    "pass": 65,
+    "fail": 0,
+    "skipped": 0,
+    "tapSha256": "928c39655f4cdbc70ea23a7608ac701794a4c0fec3e3922c36bd5e459b1e1284",
+    "scope": "Selected terrain, archive, game bridge, map-suite, privacy and compact MCP transport tests"
+  },
+  "sourceFingerprints": [
+    {
+      "file": "src/modules/terrain/nativeGeometry.ts",
+      "sha256LfUtf8": "2a26c06a0a3ee3400df353049c49d78ce29eeb07af93f619fe3af80c133a6806"
+    },
+    {
+      "file": "src/modules/terrain/cliffProfile.ts",
+      "sha256LfUtf8": "8df1b3e0bb0e7afada06dbda553a03d7e27070a2d899eb85f9091589c25a24ce"
+    },
+    {
+      "file": "src/modules/terrain/rampProfile.ts",
+      "sha256LfUtf8": "41ff58ebda4f30e9a219d72f817f479838283513dbfda855b000a327ef76d8bd"
+    },
+    {
+      "file": "src/modules/terrain/surface/format/terrain-params.ts",
+      "sha256LfUtf8": "40a17455ff3eac500e46a822eaa3863b966caa006c3522f7b5521714e3ebddd9"
+    },
+    {
+      "file": "src/modules/terrain/types.ts",
+      "sha256LfUtf8": "670dbe38296104b255bd82e795a119e1685ee0b1b47d1c05c7ce204cc7779ddd"
+    },
+    {
+      "file": "src/modules/terrain/schemas.ts",
+      "sha256LfUtf8": "05a017c9abc2551fbc47005a8bdc4f51bae104943f4fa61b629dc63e135c87c0"
+    },
+    {
+      "file": "src/modules/terrain/tools.ts",
+      "sha256LfUtf8": "559cd3b91ac045948dba98cd94b5da250cb8fff54ef484de3588840e57e382c8"
+    },
+    {
+      "file": "src/modules/terrain/workspace.ts",
+      "sha256LfUtf8": "d7063b430199dabb27b8c610ab297318158280279101098a214df954fb98e19f"
+    },
+    {
+      "file": "src/modules/terrain/operations.ts",
+      "sha256LfUtf8": "be66b9d483d52bff52c5353e43729948147105b93575336d8e1726e1a00b8fa8"
+    },
+    {
+      "file": "src/modules/testing/schemas.ts",
+      "sha256LfUtf8": "b95a7791814e03e481ca9c1588524de8134aed94a2d4c89075cc82087e35f8f7"
+    },
+    {
+      "file": "src/modules/testing/workspace.ts",
+      "sha256LfUtf8": "be29ae54a15c7aa287ba64a6fef72de8e832415994e9bea48caa938a07623584"
+    },
+    {
+      "file": "src/modules/testing/routeGeometry.ts",
+      "sha256LfUtf8": "84b68527e02659420fbfb100f4679d3346c62318f398717f651571276ac1677b"
+    },
+    {
+      "file": "src/app/authoringScript.ts",
+      "sha256LfUtf8": "297de1858ccb2f02d2401beb0463249cd875e52d02385f21aa106d8d2f1c76ea"
+    }
+  ],
+  "openCoverage": [
+    "Other ramp widths, diagonal/merged ramps and tilesets",
+    "Arbitrary saddle, multilevel and void cliff joins",
+    "Authoritative native path/collision/buildability queries or regeneration",
+    "Whole-location incremental ownership and visual acceptance corpus",
+    "Extended GUI-library native save/runtime and Data ability presentation"
+  ],
+  "activation": {
+    "freshOuterMcp": true,
+    "directConnection": "Existing direct sc2editor registry lacks the new repair tools; connection restart remains necessary. No neighbor process restarted"
+  }
+}

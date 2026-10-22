@@ -1,9 +1,22 @@
 # Current project status
 
 The current public product name is **SC2EditorToolkit**. Start with the
-[verified-scope matrix and public evidence](VERIFICATION.md): the latest core
-run has 287 passes, no failures and one Windows platform skip; the native MCP
-chain and four PNG image payload/hash checks passed on the recorded fixture.
+[verified-scope matrix and public evidence](VERIFICATION.md), which distinguishes
+dated observations from current source scope. Inherited command-card guards now
+reject known slot/cell/shared-face conflicts; zero-speed movement availability
+has a bounded warning. Two new launches verify normal movement and native kill-XP
+progression. Original Editor load/compile and 1328 regression checks passed, with
+one Windows platform skip. Reviewed HUD frames have nine command icons and no
+hotkey modal; the small level burst stays in frame. Main-unit ability animation
+and other presentation profiles remain unverified. The preceding targeted
+ability checkpoint has four successful corpus launches and separate impact/audio.
+Regional
+native ownership has three exact
+ordinary archives, six clean game launches and 48 ground traversals. A local
+portable passed schema/fingerprint checks and private-source exclusion. The full
+roadmap remains incomplete; use `npm run evidence:status` for explicit unresolved
+requirements and historical source drift. The pinned Editor Toolkit is
+0.10.0-rc.1 (protocol 11); private GameToolkit is v0.1.0-dev.11.
 
 The public module selections share one Workspace and transaction coordinator.
 Script also registers `trigger.*` authoring. `modkit.capabilities` reports the

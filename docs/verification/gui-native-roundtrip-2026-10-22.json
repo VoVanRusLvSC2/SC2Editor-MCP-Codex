@@ -1,0 +1,224 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-22T14:45:49.902Z",
+  "scope": "Declared representative GUI corpus: original Editor save/close/disk reopen, preserved native GUI IDs and source, exact native-saved artifact recompile and gameplay",
+  "engineBuild": "5.0.17.98310",
+  "editorToolkit": "v0.10.0-rc.1",
+  "gameToolkit": "v0.1.0-dev.11",
+  "cleanLaunches": 3,
+  "fixtures": [
+    {
+      "name": "typedCore",
+      "source": "work/gui-acceptance-20261022/TypedCoreMap/.sc2mcp-output/GuiTypedCore.SC2Map",
+      "sourceSha256": "5fbacf0662e7c780d06aae76bf17199ced9db58aad67cadb2b5299487b88fabc",
+      "guiElements": 174,
+      "customScriptFallback": false,
+      "runs": [
+        {
+          "jobId": "711845cf-05c5-4363-bfe9-616579b9397d",
+          "createdAt": "2026-10-22T14:17:52.981Z",
+          "finishedAt": "2026-10-22T14:21:00.176Z",
+          "artifact": {
+            "file": "K:\\SC2_MAP_Workspace\\SC2Editor-MCP-Codex\\.sc2mcp-output\\project-tests\\711845cf-05c5-4363-bfe9-616579b9397d\\Final.SC2Map",
+            "sha256": "69b2fe99e4d583f4eb9a6f44bda8981619f41be86f1e722bcb932d4dd1521c12",
+            "origin": "native_saved"
+          },
+          "editorJobId": "287bbd34-a962-4873-86c1-0c94c0481b1a",
+          "artifactRevalidationJobId": "1d470eb0-c22b-49d1-a427-f5054269fda7",
+          "nativeSaveReopenVerified": true,
+          "sourceAndArtifactUnchanged": true,
+          "nativeComponentsChanged": [
+            "(attributes)",
+            "DocumentHeader"
+          ],
+          "components": {
+            "Triggers": {
+              "bytes": 30255,
+              "sha256": "05381d8acf4824ea8f9d4d2dbee8bf3cb957c07cc6e12076bb5793fd52310cb5",
+              "byteEqual": true
+            },
+            "MapScript.galaxy": {
+              "bytes": 8292,
+              "sha256": "cd0454a8d72a60cbdc8879c697fdce31aa6c75330af54c5b9440c10f630b0027",
+              "byteEqual": true
+            },
+            "Objects": {
+              "bytes": 2182,
+              "sha256": "781ce349ec2abaa434a607a2ed4248b4768210c178df25b8ca2f07dd7f1f1b6b",
+              "byteEqual": true
+            },
+            "t3Terrain.xml": {
+              "bytes": 6117,
+              "sha256": "8cb945adc1ca575f5b25011435e7266aa76d19094a3b247ecc215b08d12c19e9",
+              "byteEqual": true
+            }
+          },
+          "scenarios": [
+            "library",
+            "nested",
+            "record",
+            "preset",
+            "localArray"
+          ],
+          "diagnostics": "inconclusive",
+          "cleanup": true
+        }
+      ]
+    },
+    {
+      "name": "eventsAndDialog",
+      "source": "work/gui-acceptance-20261022/EventsMap/.sc2mcp-output/GuiEvents.SC2Map",
+      "sourceSha256": "b7ed5bc7e4a79e64182930531910731698bd806233e051414f36fd67bda58cf4",
+      "guiElements": 306,
+      "customScriptFallback": false,
+      "runs": [
+        {
+          "jobId": "e686006c-b177-42b7-ac68-4448f5cf599c",
+          "createdAt": "2026-10-22T14:22:56.231Z",
+          "finishedAt": "2026-10-22T14:26:05.209Z",
+          "artifact": {
+            "file": "K:\\SC2_MAP_Workspace\\SC2Editor-MCP-Codex\\.sc2mcp-output\\project-tests\\e686006c-b177-42b7-ac68-4448f5cf599c\\Final.SC2Map",
+            "sha256": "5c97e98d421d86e3b67ceaf90f1cbb94362c10027e9c307ff458bcd6f2c4479c",
+            "origin": "native_saved"
+          },
+          "editorJobId": "d18cd6d3-6e84-4df4-a158-9069dc7606cf",
+          "artifactRevalidationJobId": "51c0cad5-8dff-41b1-a3ff-b52edb82027c",
+          "nativeSaveReopenVerified": true,
+          "sourceAndArtifactUnchanged": true,
+          "nativeComponentsChanged": [
+            "(attributes)",
+            "DocumentHeader"
+          ],
+          "components": {
+            "Triggers": {
+              "bytes": 53025,
+              "sha256": "d49e54e48341a74cfb37b0e52f1a07bbbed70b7f1b14cbb7c0a6e1be33e21f6d",
+              "byteEqual": true
+            },
+            "MapScript.galaxy": {
+              "bytes": 13101,
+              "sha256": "729cf5661c53752cb58e43c9f45ab472950eddc8e2d53d68e6e0d521b38430c1",
+              "byteEqual": true
+            },
+            "Objects": {
+              "bytes": 2182,
+              "sha256": "781ce349ec2abaa434a607a2ed4248b4768210c178df25b8ca2f07dd7f1f1b6b",
+              "byteEqual": true
+            },
+            "t3Terrain.xml": {
+              "bytes": 6117,
+              "sha256": "8cb945adc1ca575f5b25011435e7266aa76d19094a3b247ecc215b08d12c19e9",
+              "byteEqual": true
+            }
+          },
+          "scenarios": [
+            "eventsAndUI",
+            "library",
+            "nested",
+            "record",
+            "preset",
+            "localArray"
+          ],
+          "diagnostics": "inconclusive",
+          "cleanup": true
+        },
+        {
+          "jobId": "afe413e7-7ac3-4af1-9d53-df1da2c1b00e",
+          "createdAt": "2026-10-22T14:26:05.661Z",
+          "finishedAt": "2026-10-22T14:28:49.527Z",
+          "artifact": {
+            "file": "K:\\SC2_MAP_Workspace\\SC2Editor-MCP-Codex\\.sc2mcp-output\\project-tests\\afe413e7-7ac3-4af1-9d53-df1da2c1b00e\\Final.SC2Map",
+            "sha256": "5c97e98d421d86e3b67ceaf90f1cbb94362c10027e9c307ff458bcd6f2c4479c",
+            "origin": "native_saved"
+          },
+          "editorJobId": "ab70a756-07d6-488d-819f-b507919eefcc",
+          "artifactRevalidationJobId": "21b7cfaa-91d7-47b2-80d1-7ee0ee97bc86",
+          "nativeSaveReopenVerified": true,
+          "sourceAndArtifactUnchanged": true,
+          "nativeComponentsChanged": [
+            "(attributes)",
+            "DocumentHeader"
+          ],
+          "components": {
+            "Triggers": {
+              "bytes": 53025,
+              "sha256": "d49e54e48341a74cfb37b0e52f1a07bbbed70b7f1b14cbb7c0a6e1be33e21f6d",
+              "byteEqual": true
+            },
+            "MapScript.galaxy": {
+              "bytes": 13101,
+              "sha256": "729cf5661c53752cb58e43c9f45ab472950eddc8e2d53d68e6e0d521b38430c1",
+              "byteEqual": true
+            },
+            "Objects": {
+              "bytes": 2182,
+              "sha256": "781ce349ec2abaa434a607a2ed4248b4768210c178df25b8ca2f07dd7f1f1b6b",
+              "byteEqual": true
+            },
+            "t3Terrain.xml": {
+              "bytes": 6117,
+              "sha256": "8cb945adc1ca575f5b25011435e7266aa76d19094a3b247ecc215b08d12c19e9",
+              "byteEqual": true
+            }
+          },
+          "scenarios": [
+            "eventsAndUI",
+            "library",
+            "nested",
+            "record",
+            "preset",
+            "localArray"
+          ],
+          "diagnostics": "inconclusive",
+          "cleanup": true
+        }
+      ]
+    }
+  ],
+  "features": [
+    "Library-qualified startup and map-root functions coexist",
+    "Nested loop, arithmetic, If/Else",
+    "Global/local arrays and record members",
+    "Function parameters/defaults/returns",
+    "Native presets",
+    "Real Dialog control activation with EventPlayer/EventDialogControl and a per-player array",
+    "Timer and EventUnit death callback"
+  ],
+  "originalToSaved": {
+    "byteIdentical": [
+      "Triggers",
+      "MapScript.galaxy",
+      "Objects",
+      "t3Terrain.xml"
+    ],
+    "nativeComponentChanges": [
+      "(attributes)",
+      "DocumentHeader"
+    ],
+    "guiElements": [
+      174,
+      306
+    ],
+    "customScriptFallback": false
+  },
+  "retainedFailure": {
+    "jobId": "42719146-5c69-4d18-90b3-0db34269cd03",
+    "outcome": "incomplete",
+    "reason": "Earlier save-document handler did not produce a terminal result; worker later confirmed absent. Same source subsequently passed fresh runs; stall root cause remains unknown and no SDK fix is claimed."
+  },
+  "diagnostics": "Available game sources observed no unexpected errors; optional game diagnostics remain inconclusive. Original Editor reported confirmed native commands and complete scoped inspection.",
+  "openCoverage": [
+    "Other library/type/event/control variants and imported third-party semantics are outside this corpus",
+    "Optional game diagnostics are partial",
+    "An earlier native save worker stalled with unknown root cause; new passing runs do not prove that failure fixed"
+  ],
+  "sourceFingerprints": {
+    "src/modules/trigger/authoring.ts": "7315afd447199f194d1a2023cbd454c78ceb5260c42051c41b1665a609acc408",
+    "src/modules/trigger/workspace.ts": "15b96423b8ce16760633f7e2638a565baee28d55ce1e434621ed8122be23558e",
+    "src/modules/trigger/revisedImport.ts": "1bc92ad2acd6398189b5d1a480e4434746c24caf9856d54a790774a1f14ab69d",
+    "src/integrations/native/bridge.ts": "c1dfaa6a0d28f90d58ec65d4e63100549ff0d80dc56a7c3df4bd19b7f42a2ef2",
+    "src/modules/testing/workspace.ts": "8c67f01667e59cc300a0a466b6f7abc4f525820b59ebd3a614bb00b0e6c587ec",
+    "src/modules/testing/schemas.ts": "c12888a63ea271858d4efd6f1c80564a3422b521aa0fa4698495a8cb33e1f713",
+    "scripts/run-map-tests.mjs": "f5e0ddd70f988dd0c7a4147d1c1164b3231925f6098146c9b24fefe343022437"
+  }
+}

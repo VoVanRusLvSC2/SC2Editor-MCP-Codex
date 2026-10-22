@@ -4,7 +4,8 @@ import {PointWorkspace,pointPlanSchema} from "./points.js";
 import { McpServer } from "@modelcontextprotocol/server";
 import * as z from "zod/v4";
 import { PlacementWorkspace } from "./workspace.js";
-import { terrainGenerateOptions } from "../terrain/schemas.js";
+import {position, bounds, area, exclusion, commonFiles, location, createLocationSchema} from "./locationSchemas.js";
+export {createLocationSchema} from "./locationSchemas.js";
 import {
   scatterDoodadsSchema,
   snapObjectsSchema,
@@ -23,54 +24,12 @@ function textResult(value: unknown) {
   };
 }
 
-const position = z.object({
-  x: z.number().finite(),
-  y: z.number().finite(),
-  z: z.number().finite(),
-});
 const scale3 = z.object({
   x: z.number().positive(),
   y: z.number().positive(),
   z: z.number().positive(),
 });
 const scale = z.union([z.number().positive(), scale3]);
-const bounds = z.object({
-  minX: z.number(),
-  minY: z.number(),
-  maxX: z.number(),
-  maxY: z.number(),
-  minZ: z.number().optional(),
-  maxZ: z.number().optional(),
-});
-const area = z.discriminatedUnion("type", [
-  z.object({
-    type: z.literal("circle"),
-    center: position,
-    radius: z.number().positive(),
-  }),
-  z.object({
-    type: z.literal("rectangle"),
-    minX: z.number(),
-    minY: z.number(),
-    maxX: z.number(),
-    maxY: z.number(),
-    z: z.number(),
-  }),
-]);
-const exclusion = z.discriminatedUnion("type", [
-  z.object({
-    type: z.literal("circle"),
-    center: z.object({ x: z.number(), y: z.number() }),
-    radius: z.number().positive(),
-  }),
-  z.object({
-    type: z.literal("rectangle"),
-    minX: z.number(),
-    minY: z.number(),
-    maxX: z.number(),
-    maxY: z.number(),
-  }),
-]);
 const layout = z.discriminatedUnion("type", [
   z.object({ type: z.literal("single") }),
   z.object({
@@ -97,10 +56,6 @@ const layout = z.discriminatedUnion("type", [
     exclusionZones: z.array(exclusion).max(100).optional(),
   }),
 ]);
-const commonFiles = {
-  objectFile: z.string().default("Objects"),
-  componentListFile: z.string().default("ComponentList.SC2Components"),
-};
 const selector = {
   query: z.string().optional(),
   id: z.string().optional(),
@@ -123,55 +78,10 @@ const addCommon = {
   layout: layout.optional(),
   bounds: bounds.optional(),
 };
-const location = {
-  queries: z.array(z.string()).max(30).optional(),
-  area,
-  objectCount: z.number().int().min(1).max(5000).optional(),
-  objectBudget: z.number().int().min(1).max(5000).optional(),
-  density: z.number().positive().optional(),
-  seed: z.number().int().default(1),
-  minimumDistance: z.number().nonnegative().default(0),
-  scaleRange: z
-    .object({ min: z.number().positive(), max: z.number().positive() })
-    .optional(),
-  rotationRange: z.object({ min: z.number(), max: z.number() }).optional(),
-  exclusionZones: z.array(exclusion).max(100).optional(),
-  candidateOverrides: z.array(z.string()).max(100).optional(),
-  excludedObjects: z.array(z.string()).max(500).optional(),
-  dependency: z.string().optional(),
-  ...commonFiles,
-  bounds: bounds.optional(),
-  landmarkCount: z.number().int().min(0).max(100).optional(),
-  includeUnits: z.boolean().default(false),
-  terrain: z.object(terrainGenerateOptions).strict().optional(),
-  maxSlope: z.number().finite().nonnegative().optional(),
-};
-
 export interface PlacementToolContext {
   workspace: PlacementWorkspace;
 }
 export const addPlacementSchema = z.object(addCommon);
-export const createLocationSchema = z.object({
-  locationType: z.enum([
-    "forest",
-    "desert",
-    "city",
-    "village",
-    "industrial",
-    "militaryBase",
-    "ruins",
-    "swamp",
-    "cave",
-    "alien",
-    "terran",
-    "protoss",
-    "zerg",
-    "mixedNature",
-    "custom",
-  ]),
-  ...location,
-});
-
 export function registerPlacementTools(
   server: McpServer,
   context: PlacementToolContext,
@@ -380,26 +290,7 @@ export function registerPlacementTools(
     {
       description:
         "Create one complete object-based forest/desert/city/village/industrial/base/ruins/swamp/cave/alien/Terran/Protoss/Zerg/custom location plan. Uses browse.*, deterministic seed, spacing and exclusions; one plan becomes one atomic transaction.",
-      inputSchema: z.object({
-        locationType: z.enum([
-          "forest",
-          "desert",
-          "city",
-          "village",
-          "industrial",
-          "militaryBase",
-          "ruins",
-          "swamp",
-          "cave",
-          "alien",
-          "terran",
-          "protoss",
-          "zerg",
-          "mixedNature",
-          "custom",
-        ]),
-        ...location,
-      }),
+      inputSchema: createLocationSchema,
     },
     async (args) => {
       if (args.terrain) {

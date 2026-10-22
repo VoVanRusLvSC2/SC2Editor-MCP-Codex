@@ -1,8 +1,10 @@
 import {readJsonPlanFile} from '../../core/jsonPlanFile.js';
+import {landscapePlanSchema} from './landscapeOwnership.js';
 import { registerTerrainSurfaceTools } from "./surface/tools.js";
 import { McpServer } from "@modelcontextprotocol/server";
 import * as z from "zod/v4";
 import { TerrainWorkspace } from "./workspace.js";
+import {inspectTerrainLoadContract} from './loadContract.js';
 import type { TerrainOperation } from "./types.js";
 import { parseTerrainRecipe } from "./xmlRecipe.js";
 import {
@@ -10,7 +12,7 @@ import {
   terrainPointSchema,
   terrainAreaSchema,
   terrainPlanSchema,
-  terrainGenerateSchema, terrainLandscapeSchema,
+  terrainGenerateSchema,
   terrainFeatureSchema,
   terrainApplySchema, terrainVisibilitySchema, terrainTextureBrushSchema,
 } from "./schemas.js";
@@ -29,9 +31,13 @@ export function registerTerrainTools(
 
   registerTerrainSurfaceTools(server, context);
   const nativeDirectory={directory:z.string().default('')};
-  server.registerTool('terrain.cliff.paint',{description:'Plan native HMAP/CLIF/SMAP/LFCT and cliffCellList edits. v115 identity, rectangular 2-cell lattice, levels 0..3; all companion files are one guarded transaction. Engine validation separate.',inputSchema:z.object({...nativeDirectory,area:z.object({type:z.literal('rectangle'),minX:z.number().int(),minY:z.number().int(),maxX:z.number().int(),maxY:z.number().int()}).strict(),level:z.number().int().min(0).max(3),cliffSet:z.number().int().min(0).max(63).default(0),variation:z.number().int().min(0).max(3).default(0)}).strict()},async a=>textResult(await terrain.plan({directory:a.directory,operations:[{op:'cliff.paint',area:a.area,parameters:{level:a.level,cliffSet:a.cliffSet,variation:a.variation}}]})));
+  server.registerTool('terrain.load.inspect',{description:'Check native allocation declarations and SMAP Q12 geometry on aligned identity v114/v115 terrain. Other transforms are explicitly unverified. This is load-structure validation, not navigation or engine execution.',inputSchema:z.object(nativeDirectory).strict()},async a=>textResult(inspectTerrainLoadContract((await terrain.state(a.directory)).sources)));
+  server.registerTool('terrain.load.repair',{description:'Plan only the diagnosed old v115 level-one generator repair: restore an all-zero SMAP scale to Q12 identity and add a missing empty cliff allocation. Preserve all heights, masks, textures, cliff levels, hidden flags, objects and scripts. Existing topology, partial transforms and other missing fields reject. No writes until terrain.apply/save.',inputSchema:z.object(nativeDirectory).strict()},async a=>textResult(await terrain.plan({directory:a.directory,operations:[{op:'load.repair'}]})));
+  server.registerTool('terrain.cliff.repair',{description:'Plan canonical fine-vertex and companion-grid repair inside registered native cliff cells. Preserves coarse corners, authored base heights and hidden flags. Restricted v115 adjacent-level profile; unsupported joins and ramp contact reject before mutation. Apply the returned guarded plan; engine closure/navigation need native checks.',inputSchema:z.object({...nativeDirectory,area:z.object({type:z.literal('rectangle'),minX:z.number().int(),minY:z.number().int(),maxX:z.number().int(),maxY:z.number().int()}).strict()}).strict()},async a=>textResult(await terrain.plan({directory:a.directory,operations:[{op:'cliff.repair',area:a.area,parameters:{}}]})));
+  server.registerTool('terrain.cliff.paint',{description:'Plan native HMAP/CLIF/SMAP/LFCT and cliffCellList edits. v115 identity, rectangular 2-cell lattice; nonflat junctions require adjacent levels 1..3. Unmeasured saddle, multi-level and void joins are rejected. All companions are one guarded transaction. Engine validation separate.',inputSchema:z.object({...nativeDirectory,area:z.object({type:z.literal('rectangle'),minX:z.number().int(),minY:z.number().int(),maxX:z.number().int(),maxY:z.number().int()}).strict(),level:z.number().int().min(0).max(3),cliffSet:z.number().int().min(0).max(63).default(0),variation:z.number().int().min(0).max(3).default(0)}).strict()},async a=>textResult(await terrain.plan({directory:a.directory,operations:[{op:'cliff.paint',area:a.area,parameters:{level:a.level,cliffSet:a.cliffSet,variation:a.variation}}]})));
   server.registerTool('terrain.ramp.create',{description:'Plan a native cardinal width-4 ramp on an existing one-level cliff boundary. Measured p.SC2Map profile, no Editor invocation; supports the explicit v115 identity format.',inputSchema:z.object({...nativeDirectory,center:z.object({x:z.number().int(),y:z.number().int()}).strict(),direction:z.enum(['west','east','north','south']),lowerLevel:z.number().int().min(1).max(2).default(1),cliffSet:z.number().int().min(0).max(63).default(0)}).strict()},async a=>textResult(await terrain.plan({directory:a.directory,operations:[{op:'ramp.create',parameters:{center:a.center,direction:a.direction,lowerLevel:a.lowerLevel,cliffSet:a.cliffSet,width:4}}]})));
   server.registerTool('terrain.ramp.remove',{description:'Plan removal of one supported native cardinal ramp, rebuilding its step and companion grids. Unknown hard-tile handles are rejected.',inputSchema:z.object({...nativeDirectory,index:z.number().int().min(0)}).strict()},async a=>textResult(await terrain.plan({directory:a.directory,operations:[{op:'ramp.remove',parameters:{index:a.index}}]})));
+  server.registerTool('terrain.ramp.repair',{description:'Plan repair of the diagnosed legacy generator direction enum. Requires matching measured width-4 frames and all HMAP/CLIF/SMAP/LFCT channels. Changes only the ramp dir attribute; rejects other or edited profiles. Apply the returned guarded plan. Native render/navigation validation remains separate.',inputSchema:z.object({...nativeDirectory,index:z.number().int().min(0)}).strict()},async a=>textResult(await terrain.plan({directory:a.directory,operations:[{op:'ramp.repair',parameters:{index:a.index}}]})));
 
   const directory = z.object({ directory: z.string().default("") }).strict();
   for (const blend of [false, true]) server.registerTool(blend ? "terrain.blend" : "terrain.paint", {
@@ -70,7 +76,8 @@ export function registerTerrainTools(
   );
   server.registerTool("terrain.lighting.inspect",{description:"Inspect active tileset lighting binding and local native CLight states; dependency binding is returned separately, Editor validation not run.",inputSchema:directory},async a=>textResult(await terrain.lighting(a.directory)));
   server.registerTool("terrain.lighting.plan",{description:"Plan native CTerrain lighting assignment and CLight ambient/HDR settings. Use a new preset id with parent to isolate edits. Stage/save through Terrain transactions.",inputSchema:terrainPlanSchema},async a=> {if(!a.operations.every(o=>o.op.startsWith("lighting.")))throw new Error("LIGHTING_OPERATIONS_ONLY");return textResult(await terrain.plan(a as import("./types.js").TerrainPlanRequest));});
-  server.registerTool("terrain.landscape.plan",{description:"Generate an existing map landscape and optionally assign a resolved native lighting preset in one transaction. Uses existing palette; does not create a clean map or native cliffs.",inputSchema:terrainLandscapeSchema},async a=>textResult(await terrain.landscape(a)));
+  server.registerTool("terrain.landscape.plan",{description:"Plan a legacy landscape recipe/lighting, or named locations owning height/texture cells, measured groups and supported native topology. config.terrain.topology accepts two-cell rectangular cliff strokes and cardinal width-four ramps; complete halos must fit the zone. Independent native rows/manual edits are guarded. Initial flat foundation preparation is atomic and cannot silently migrate existing region preimages. Set heightMode/textureMode to preserve for decor-only passes; explicit routes still apply. Pass measured members through modkit.batch references. Changed zones/dependants and ancestor resnaps share one transaction. Native navigation is not rebuilt. Review, then terrain.apply/save.",inputSchema:landscapePlanSchema},async a=>textResult('intent' in a?await terrain.ownedLandscape(a.intent):await terrain.landscape(a)));
+  server.registerTool('terrain.landscape.plan_file',{description:'Plan the landscape request from a workspace JSON file (max 1 MiB). Same strict legacy or named-owned intent schema, source guards and atomic Terrain transaction. No write until apply/save.',inputSchema:z.object({file:z.string().min(1).max(512)}).strict()},async a=>{const input=landscapePlanSchema.parse(await readJsonPlanFile(terrain.workspace,a.file));return textResult('intent' in input?await terrain.ownedLandscape(input.intent):await terrain.landscape(input));});
   server.registerTool("terrain.water.inspect", {
     description:"Inspect flat v110 water rectangles, opaque body-section status and local CWater states. Rectangle extents are conservative exclusions, not wet-ground/pathing proof.",inputSchema:directory,
   },async a => { const state = await terrain.state(a.directory);return textResult({water:state.water?.list(),materials:state.waterCatalog?.list(),editor:"not run"}); });
@@ -98,7 +105,7 @@ export function registerTerrainTools(
     "terrain.analyze",
     {
       description:
-        "Analyze heights, slopes and protected geometry in an area or whole map.",
+        "Analyze heights, slopes, protected geometry and the common fine-height editing range in an area or whole map. Preserves stored coarse/base channels; native requantization and authoritative pathing remain unsupported.",
       inputSchema: z
         .object({
           directory: z.string().default(""),
@@ -264,17 +271,18 @@ export function registerTerrainTools(
     "terrain.save",
     {
       description:
-        "Commit all files of a staged terrain transaction together. Dry-run defaults to true; refuses files edited since staging.",
+        "Commit the complete staged terrain group by transactionId or applied planId. An unchanged plan rechecks its sources and reports unchanged without a write. Dry-run defaults to true; refuses files edited since staging.",
       inputSchema: z
         .object({
-          transactionId: z.string().min(1),
+          transactionId: z.string().min(1).optional(),
+          planId: z.string().min(1).optional(),
           dryRun: z.boolean().default(true),
           backup: z.boolean().default(true),
         })
-        .strict(),
+        .strict().refine(a=>(a.transactionId!==undefined)!==(a.planId!==undefined),'Specify exactly one transactionId or planId'),
     },
-    async ({ transactionId, ...options }) =>
-      textResult(await terrain.save(transactionId, options)),
+    async ({ transactionId, planId, ...options }) =>
+      textResult(planId?await terrain.savePlan(planId,options):await terrain.save(transactionId!, options)),
   );
   server.registerTool(
     "terrain.rollback",

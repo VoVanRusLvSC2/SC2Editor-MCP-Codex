@@ -120,6 +120,24 @@ void extractEntry(Archive & archive, const Entry & e, const fs::path & root) {
     } catch(...) { SFileCloseFile(file); throw; }
     SFileCloseFile(file);
 }
+void readEntry(Archive & archive, const Entry & e) {
+    if(e.size > 1024 * 1024u || internal(e.name)) throw std::runtime_error("ARCHIVE_ENTRY_READ_LIMIT");
+    SFileSetLocale(0); HANDLE file = nullptr;
+    check(SFileOpenFileEx(archive.handle, e.name.c_str(), SFILE_OPEN_FROM_MPQ, &file), "open entry " + e.name);
+    std::vector<unsigned char> bytes(e.size);
+    try {
+        DWORD locale = 0, read = 0;
+        check(SFileGetFileInfo(file, SFileInfoLocale, &locale, sizeof(locale), nullptr), "entry locale");
+        if(locale != 0) throw std::runtime_error("ARCHIVE_LOCALE_FALLBACK");
+        if(e.size) check(SFileReadFile(file, bytes.data(), e.size, &read, nullptr), "read entry " + e.name);
+        if(read != e.size) throw std::runtime_error("SHORT_ARCHIVE_READ");
+    } catch(...) { SFileCloseFile(file); throw; }
+    SFileCloseFile(file);
+    const char * hex = "0123456789abcdef";
+    std::cout << "{\"protocol\":\"sc2-mcp-entry-v1\",\"name\":" << quote(e.name) << ",\"locale\":0,\"size\":" << e.size << ",\"hex\":\"";
+    for(unsigned char b : bytes) std::cout << hex[b >> 4] << hex[b & 15];
+    std::cout << "\"}\n";
+}
 void printManifest(const std::vector<Entry> & entries, uint64_t offset) {
     std::cout << "{\"protocol\":\"sc2-mcp-storm-v1\",\"stormRevision\":\"44ebfbfc109d76e2a85bbd5d8b0c949df7e65c6f\",\"headerOffset\":" << offset << ",\"entries\":[";
     bool first = true;
@@ -182,16 +200,23 @@ void pack(const fs::path & root, const fs::path & output, const fs::path & plan)
 }
 int run(const std::vector<std::string> & args) {
     try {
-        if(args.size() < 3) throw std::runtime_error("Usage: inspect <archive> | extract <archive> <dir> | pack <dir> <archive> <plan.tsv>");
+        if(args.size() < 3) throw std::runtime_error("Usage: inspect <archive> | read <archive> <neutral-entry> | extract <archive> <dir> | pack <dir> <archive> <plan.tsv>");
         const std::string & op = args[1]; const fs::path source = fs::u8path(args[2]);
         if(op == "pack" && args.size() == 5) { pack(source, fs::u8path(args[3]), fs::u8path(args[4])); return 0; }
-        if(op != "inspect" && op != "extract") throw std::runtime_error("INVALID_OPERATION");
+        if(op != "inspect" && op != "extract" && op != "read") throw std::runtime_error("INVALID_OPERATION");
+        if(op == "read" && args.size() != 4) throw std::runtime_error("READ_ENTRY_REQUIRED");
         if(op == "extract" && args.size() != 4) throw std::runtime_error("EXTRACT_DESTINATION_REQUIRED");
         Archive archive;
         check(SFileOpenArchive(source.c_str(), 0, MPQ_OPEN_READ_ONLY | MPQ_OPEN_CHECK_SECTOR_CRC, &archive.handle), "open archive");
         ULONGLONG offset = 0;
         check(SFileGetFileInfo(archive.handle, SFileMpqHeaderOffset, &offset, sizeof(offset), nullptr), "header offset");
         auto entries = enumerate(archive);
+        if(op == "read") {
+            const auto wanted = folded(portable(args[3]));
+            auto entry = std::find_if(entries.begin(), entries.end(), [&](const Entry & e){ return e.locale == 0 && folded(portable(e.name)) == wanted; });
+            if(entry == entries.end()) throw std::runtime_error("NEUTRAL_ARCHIVE_ENTRY_NOT_FOUND");
+            readEntry(archive, *entry); return 0;
+        }
         if(op == "extract") {
             if(offset != 0) throw std::runtime_error("ARCHIVE_PREFIX_PRESERVATION_UNAVAILABLE");
             const fs::path root = fs::u8path(args[3]); fs::create_directories(root);

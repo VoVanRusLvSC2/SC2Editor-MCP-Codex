@@ -7,6 +7,10 @@ import { Workspace } from "../../core/workspace.js";
 import { bytesHash, type ByteOptions } from "../../core/binaryTransactions.js";
 import type { BrowseWorkspace } from "../browse/workspace.js";
 import type { PlacementWorkspace } from "../placement/workspace.js";
+import type {LocationRoute} from '../placement/types.js';
+import type {PlacementPlan,PlacementMutation,ExclusionZone} from '../placement/types.js';
+import {measuredObjects} from '../placement/measuredGroups.js';
+import {checkGroupClearance} from '../placement/groupClearance.js';
 import {
   PlacementDocument,
   componentListWithObjects,
@@ -24,6 +28,7 @@ import {
   parseState,
   TERRAIN_COMPONENTS,
   type TerrainState,
+  type TerrainTouches,
 } from "./operations.js";
 import {
   featureRecipe,
@@ -35,12 +40,17 @@ import {
 import { renderTerrainPng, type PreviewMode } from "./preview.js";
 import {
   terrainPlanSchema,
-  terrainGenerateSchema, terrainLandscapeSchema, terrainVisibilitySchema,
+  terrainGenerateSchema, terrainLandscapeSchema, terrainVisibilitySchema,terrainLocationSchema,
   terrainFeatureSchema,
 } from "./schemas.js";
-import { areaWeight } from "./geometry.js";
+import { areaWeight,areaDistance,areaBounds,corridorWithinArea } from "./geometry.js";
 import { inspectNativeIntegrity } from "./nativeIntegrity.js";
+import {inspectTerrainLoadContract} from './loadContract.js';
 import {modkitAvailable} from '../../integrations/modkit/runtime.js';
+import {landscapeIntentSchema,landscapeStateSchema,landscapeOrder,landscapeClosure,landscapeAncestors,landscapeHash,landscapeContext,objectFingerprints,restoreLandscapePatch,LandscapeTouches,LANDSCAPE_RECIPE_REVISION,type LandscapeState} from './landscapeOwnership.js';
+import {prepareNativeGeometryFoundation} from './nativeGeometry.js';
+import {restoreTopologyPatch,topologyConflicts} from './nativeTopologyOwnership.js';
+import type * as z from 'zod/v4';
 interface StoredPlan {
   summary: TerrainPlanSummary;
   before: Map<string, Buffer>;
@@ -120,6 +130,7 @@ export class TerrainWorkspace {
         surfaceVisibility: state.visibility?.inspect(),
         waterMaterials: state.waterCatalog?.list(),
         nativeIntegrity: inspectNativeIntegrity(data.sources, d.width - 1, d.height - 1),
+        nativeLoad: inspectTerrainLoadContract(data.sources),
         capabilities: this.support(state),
         nativeEditorVerified: false,
       };
@@ -161,7 +172,7 @@ export class TerrainWorkspace {
       proceduralStyles: Object.keys(TERRAIN_STYLES),
       wholeMapStamp: true,
       structuralCliffEditing: state.descriptor.version===115 && !!state.sync && !!state.visibility,
-      nativeGeometryProfile: "v115 identity; levels 0..3; rectangular two-cell lattice; cardinal width-4 ramps",
+      nativeGeometryProfile: "v115 identity; rectangular two-cell lattice; nonflat cliff joins between adjacent levels 1..3; saddle, multi-level and void joins rejected; cardinal width-4 ramps",
       nativeRampEditing: state.descriptor.version===115 && !!state.sync && !!state.visibility,
       pathingPainting: modkitAvailable()&&!!state.sources.get('CellAttribute_Pnp')?.length,
       modkitTerrainToolsAvailable:modkitAvailable(),
@@ -276,7 +287,10 @@ export class TerrainWorkspace {
       sum = 0,
       maxSlope = 0,
       count = 0,
-      protectedVertices = 0;
+      protectedVertices = 0,
+      editableVertices = 0,
+      commonMin = -Infinity,
+      commonMax = Infinity;
     for (let y = 0; y < s.heights.height; y++)
       for (let x = 0; x < s.heights.width; x++) {
         const p = s.heights.point(x, y);
@@ -286,7 +300,13 @@ export class TerrainWorkspace {
         max = Math.max(max, z);
         sum += z;
         count++;
-        if (s.heights.protected(x, y)) protectedVertices++;
+        if (s.heights.protected(x, y) || s.visibility?.touchesHiddenVertex(x, y)) protectedVertices++;
+        else {
+          const range = s.heights.editableRange(x, y);
+          commonMin = Math.max(commonMin, range.min);
+          commonMax = Math.min(commonMax, range.max);
+          editableVertices++;
+        }
         if (x < s.heights.width - 1 && y < s.heights.height - 1)
           maxSlope = Math.max(maxSlope, s.heights.sample(p).slope);
       }
@@ -295,6 +315,12 @@ export class TerrainWorkspace {
       height: count ? { min, max, mean: sum / count } : null,
       maxSlope,
       protectedVertices,
+      heightEditing: {
+        editableVertices,
+        commonRange: editableVertices && commonMin <= commonMax ? { min: commonMin, max: commonMax } : null,
+        scope: "Intersection of fine-height ranges on selected unprotected visible vertices; stored coarse/base channel preserved",
+        nativeRequantization: "unsupported",
+      },
       pathing: "unavailable",
       water: s.water?.list(),
     };
@@ -375,10 +401,11 @@ export class TerrainWorkspace {
     if (!resolved?.available) throw new Error(`WATER_DEPENDENCY_UNAVAILABLE: ${id}`);
     ready.add(id);
   }
-  async plan(request: TerrainPlanRequest): Promise<TerrainPlanSummary> {
+  async plan(request: TerrainPlanRequest, foundation?:Map<string,Buffer>,touches?:TerrainTouches): Promise<TerrainPlanSummary> {
     request = terrainPlanSchema.parse(request) as TerrainPlanRequest;
-    if (!request.operations.length || request.operations.length > 100)
-      throw new Error("Terrain plan requires 1..100 operations");
+    if (request.operations.length > 100)
+      throw new Error("Terrain plan accepts at most 100 operations");
+    if(request.operations.some(op=>op.op==='load.repair')&&request.operations.length!==1)throw Error('TERRAIN_LOAD_REPAIR_MUST_BE_STANDALONE');
     const directory = request.directory ?? "",
       data = await this.load(directory);
     const before = new Map(
@@ -388,11 +415,13 @@ export class TerrainWorkspace {
       ]),
     );
     let sources: Map<string, Buffer> = new Map(
-      [...data.sources].map(([n, b]) => [n, Buffer.from(b)]),
+      [...(foundation??data.sources)].map(([n, b]) => [n, Buffer.from(b)]),
     );
     const initial = parseState(sources);
     const integrity = inspectNativeIntegrity(sources, initial.descriptor.width - 1, initial.descriptor.height - 1);
     if (!integrity.valid) throw new Error("INVALID_TERRAIN_NATIVE_COMPONENTS: " + JSON.stringify(integrity.issues));
+    const load=inspectTerrainLoadContract(sources);
+    if(load.issues.some(i=>i.severity==='error')&&!(request.operations.length===1&&['load.repair','stamp.apply'].includes(request.operations[0].op)))throw Error('INVALID_TERRAIN_LOAD_CONTRACT: '+JSON.stringify(load.issues)+'; inspect terrain.load.repair before ordinary terrain edits');
     if (
       !request.operations.every((op) => op.op === "stamp.apply") &&
       initial.descriptor.scale.some((v) => v !== 1)
@@ -494,10 +523,13 @@ export class TerrainWorkspace {
         parseState(sources),
         request.operations,
         request.maxSlope,
+        touches,
       );
       issues = applied.issues;
       result = applied;
     }
+    const nextLoad=inspectTerrainLoadContract(sources);
+    if(nextLoad.issues.some(i=>i.severity==='error'))throw Error('INVALID_PLANNED_TERRAIN_LOAD_CONTRACT: '+JSON.stringify(nextLoad.issues));
     const waterDependencies = request.operations.some(op => op.op.startsWith("water.") || op.op.startsWith("lighting.")) ? await this.waterDependencySnapshot(directory) : undefined;
     const next = new Map(
       [...sources].map(([n, b]) => [this.file(directory, n), Buffer.from(b)]),
@@ -709,12 +741,22 @@ export class TerrainWorkspace {
     return {
       accepted: true,
       planId: id,
+      transactionId: transaction.transactionId,
       transaction,
       issues: p.summary.issues,
     };
   }
   async save(transactionId: string, options: Omit<ByteOptions, "stage"> = {}) {
     return this.workspace.binary.save(transactionId, options);
+  }
+  async savePlan(planId: string, options: Omit<ByteOptions, "stage"> = {}) {
+    const p=await this.checked(planId);
+    if(!p.applied)throw Error('TERRAIN_PLAN_NOT_APPLIED: '+planId);
+    if(p.transactionId)return this.save(p.transactionId,options);
+    // A truly unchanged apply creates no binary group. Recheck every source
+    // instead of inventing a transaction or failing a repeatable author command.
+    for(const [file,hash]of Object.entries(p.summary.sourceSha256))if(bytesHash((await this.workspace.binary.read(file)).bytes)!==hash)throw Error('STALE_TERRAIN_PLAN: '+file);
+    return {saved:false,unchanged:true,planId};
   }
   async rollback(transactionId: string, dryRun = true) {
     const result = await this.workspace.binary.rollback(transactionId, dryRun);
@@ -740,12 +782,153 @@ export class TerrainWorkspace {
     const generate={...options,area:options.area ?? {type:"rectangle" as const,minX:d.offset[0],minY:d.offset[1],maxX:d.offset[0]+(d.width-1)*d.scale[0],maxY:d.offset[1]+(d.height-1)*d.scale[1]}};
     return this.plan({directory:generate.directory,operations:[...this.generateOperations(generate,state),...(lighting ? [{op:"lighting.assign" as const,id:lighting}] : [])]});
   }
+  /** Extend the existing location generator with persistent regional ownership. */
+  async ownedLandscape(input:z.input<typeof landscapeIntentSchema>){
+    if(!this.placement||!this.browse)throw Error('PLACEMENT_CONTEXT_UNAVAILABLE');
+    const placement=this.placement,browse=this.browse;
+    return this.workspace.withReadSet(()=>browse.withSnapshot(async()=>{
+      if(this.workspace.draftFiles().length||this.workspace.binary.draftFiles().length)throw Error('LANDSCAPE_PENDING_DRAFTS: save or discard complete groups first');
+      const intent=landscapeIntentSchema.parse(input),file='.sc2mcp/locations.json',raw=await this.workspace.readRaw(file);
+      if(Buffer.byteLength(raw.text)>64*1024*1024)throw Error('LANDSCAPE_STATE_TOO_LARGE');
+      const original=raw.text?JSON.parse(raw.text) as z.input<typeof landscapeStateSchema>:undefined;
+      const data=await this.load(),initial=parseState(data.sources),context=landscapeContext(initial),old:LandscapeState=original?landscapeStateSchema.parse(original):{version:1,context,zones:[]},originalRecords=new Map(original?.zones.map(zone=>[zone.id,zone])??[]);
+      if(old.context!==context)throw Error('LANDSCAPE_COMPONENT_LAYOUT_CHANGED: review ownership after changing terrain layout or palette');
+      const oldOrder=landscapeOrder(old.zones),requestedOrder=landscapeOrder(intent.zones.map(z=>({...z,dependsOn:z.dependsOn.filter(id=>intent.zones.some(v=>v.id===id))})));
+      if(requestedOrder.length!==intent.zones.length)throw Error('LANDSCAPE_DUPLICATE_ZONE');
+      const definitions=new Map(old.zones.map(zone=>[zone.id,{id:zone.id,dependsOn:zone.dependsOn,purpose:zone.purpose,condition:zone.condition,config:zone.config}]));
+      for(const zone of intent.zones){if(zone.config.objectFile!=='Objects'||zone.config.componentListFile!=='ComponentList.SC2Components'||zone.config.terrain.directory!=='')throw Error('LANDSCAPE_ROOT_COMPONENTS_REQUIRED');definitions.set(zone.id,zone);}
+      if(definitions.size>32)throw Error('LANDSCAPE_ZONE_LIMIT');
+      const zones=[...definitions.values()],order=landscapeOrder(zones),byOld=new Map(old.zones.map(zone=>[zone.id,zone])),fingerprint=(await browse.index()).fingerprint;
+      if(old.zones.some(zone=>zone.generatorRevision>LANDSCAPE_RECIPE_REVISION))throw Error('LANDSCAPE_NEWER_GENERATOR_STATE');
+      const changed=new Set(intent.zones.filter(zone=>{const previous=byOld.get(zone.id);return !previous||previous.generatorRevision!==LANDSCAPE_RECIPE_REVISION||previous.requestHash!==landscapeHash(zone)||previous.browseFingerprint!==fingerprint;}).map(zone=>zone.id));
+      let rebuild=landscapeClosure(zones,changed);for(let size=-1;size!==rebuild.size;){size=rebuild.size;rebuild=landscapeClosure(zones,landscapeClosure(old.zones,rebuild));}
+      const objectRaw=await this.workspace.readRaw('Objects'),componentRaw=await this.workspace.readRaw('ComponentList.SC2Components');
+      const copy=()=>new Map([...data.sources].map(([name,b])=>[name,Buffer.from(b)]));
+      const document=()=>objectRaw.text?new PlacementDocument(objectRaw.text):PlacementDocument.create();
+      const restore=(sources:Map<string,Buffer>,doc:PlacementDocument,ids:Set<string>)=>{
+        const fingerprints=objectFingerprints(doc),remove:number[]=[];
+        for(const id of [...oldOrder].reverse()){if(!ids.has(id))continue;const zone=byOld.get(id)!;restoreTopologyPatch(sources,zone.topology,id);restoreLandscapePatch(sources,zone.patches,id);for(const object of zone.objects){if(fingerprints.get(object.id)!==object.fingerprint)throw Error('LANDSCAPE_OWNED_OBJECT_CHANGED: '+id+' '+object.id);remove.push(object.id);}}doc.removeMany(remove);
+      };
+      // Verify requested no-op zones through their overlay dependants as well.
+      restore(copy(),document(),landscapeClosure(old.zones,new Set([...intent.zones.map(z=>z.id),...rebuild])));
+      const sources=copy(),doc=document();restore(sources,doc,rebuild);
+      let outputContext=context,foundationPreparation:{changed:boolean;changedVertices:number;maxWorldDelta:number}|undefined;
+      if(rebuild.size&&zones.some(z=>z.config.terrain.topology&&(z.config.terrain.topology.cliffs.length||z.config.terrain.topology.ramps.length))){
+        const foundation=parseState(sources),standard=Number(foundation.descriptor.vert.attrs.standardHeight??8);
+        const relief=Math.max(0,...zones.map(z=>z.config.terrain.heightMode==='preserve'?0:z.config.terrain.relief??TERRAIN_STYLES[z.config.terrain.style].relief));
+        const prepared=prepareNativeGeometryFoundation(foundation,old.zones.length?0:Math.min(128,Math.ceil(Math.abs(standard)+relief+3)));
+        if(prepared.changed&&old.zones.length)throw Error('LANDSCAPE_NATIVE_FOUNDATION_MIGRATION_REQUIRED: existing region preimages cannot be silently requantized');
+        outputContext=landscapeContext(foundation);
+        foundationPreparation={changed:prepared.changed,changedVertices:prepared.vertices.size,maxWorldDelta:prepared.maxWorldDelta};
+      }
+      const occupied=new Set(doc.list().flatMap(o=>o.id===undefined?[]:[o.id])),reserved=new Set<number>();
+      for(const zone of old.zones)for(const object of zone.objects){if(reserved.has(object.id))throw Error('LANDSCAPE_DUPLICATE_OWNERSHIP: '+object.id);reserved.add(object.id);}
+      let nextId=1;for(const id of [...occupied,...reserved])nextId=Math.max(nextId,id+1);
+      const allocate=()=>{if(nextId>2_147_483_647)nextId=1;while(occupied.has(nextId)||reserved.has(nextId))nextId++;if(nextId>2_147_483_647)throw Error('LANDSCAPE_OBJECT_IDS_EXHAUSTED');const id=nextId++;occupied.add(id);return id;};
+      const records=new Map(old.zones.filter(zone=>!rebuild.has(zone.id)).map(zone=>[zone.id,zone]));
+      const operations:TerrainPlanRequest['operations']=[],issues:TerrainIssue[]=[],rebuilt:Array<{id:string;objects:number;reusedObjectIds:number}>=[];
+      const queue:Array<{id:string;area:TerrainArea}>=[],allRoutes=zones.flatMap(z=>z.config.terrain.routes);
+      let lastTerrainPlanId:string|undefined;
+      let changedVertices=0,changedTexturePixels=0;
+      for(const id of order){if(!rebuild.has(id))continue;const zone=definitions.get(id)!,args=zone.config,p= args.area;
+        const area:TerrainArea=p.type==='polygon'?{type:'polygon',points:p.points}:p.type==='circle'?{type:'circle',center:{x:p.center.x,y:p.center.y},radius:p.radius}:{type:'rectangle',minX:p.minX,minY:p.minY,maxX:p.maxX,maxY:p.maxY};
+        const {routes,topology,...settings}=args.terrain;
+        for(const route of routes)if((route.flatten||route.texture)&&!corridorWithinArea(area,route.points,route.width))throw Error('LOCATION_ROUTE_OUTSIDE_AREA: '+id);
+        const generation={...settings,area,seed:args.seed??settings.seed},state=parseState(sources),touches=new LandscapeTouches(state);
+        const roads=routes.flatMap(route=>(route.flatten?featureRecipe('road',route):route.texture?[{op:'texture.paint' as const,area:{type:'corridor' as const,points:route.points,width:route.width},texture:route.texture,edgeBlend:route.edgeBlend}]:[]).map(op=>({...op,protectedAreas:settings.protectedAreas})));
+        const generated=this.generateOperations(generation,state),native:TerrainPlanRequest['operations']=[
+          ...topology?.cliffs.map(c=>({op:'cliff.paint' as const,area:c.area,parameters:{level:c.level,cliffSet:c.cliffSet,variation:c.variation}}))??[],
+          ...topology?.ramps.map(r=>({op:'ramp.create' as const,parameters:{center:r.center,direction:r.direction,lowerLevel:r.lowerLevel,width:r.width,cliffSet:r.cliffSet}}))??[],
+        ];
+        const zoneOperations=[...generated.filter(op=>op.op.startsWith('height.')),...native,...generated.filter(op=>!op.op.startsWith('height.')),...roads];operations.push(...zoneOperations);if(operations.length>100)throw Error('LANDSCAPE_OPERATION_LIMIT: at most 100 generated operations in one atomic plan');
+        const terrainPlan=await this.plan({operations:zoneOperations,maxSlope:args.maxSlope},sources,touches),stored=await this.checked(terrainPlan.id);
+        const after=new Map(TERRAIN_COMPONENTS.map(name=>[name,Buffer.from(stored.next.get(name)!)])),patches=touches.patches(sources,after),nativePatch=touches.topology(sources,after),ancestors=landscapeAncestors(zones,id);
+        if(nativePatch){
+          const width=state.heights.width-1,protectedBoxes=(settings.protectedAreas??[]).map(p=>({type:'rectangle' as const,...areaBounds(p)}));
+          for(const cell of touches.nativeCells){const x=cell%(width/2)*2,y=Math.floor(cell/(width/2))*2;
+            try{checkGroupClearance({position:{x:x+1,y:y+1},corners:[{x,y},{x:x+2,y},{x,y:y+2},{x:x+2,y:y+2}]},area,[],protectedBoxes);}
+            catch(e){throw Error('LANDSCAPE_NATIVE_HALO_OR_PROTECTION_CONFLICT: '+id+' '+cell+' '+String(e),{cause:e});}
+          }
+        }
+        for(const other of records.values())if(!ancestors.has(other.id)&&(touches.conflicts(other.patches)||topologyConflicts(nativePatch,other.topology)))throw Error(`LANDSCAPE_OWNERSHIP_OVERLAP: ${id} touches ${other.id}; declare the actual overlay dependency`);
+        records.set(id,{...zone,requestHash:landscapeHash(zone),browseFingerprint:fingerprint,generatorRevision:LANDSCAPE_RECIPE_REVISION,patches,...nativePatch?{topology:nativePatch}:{},objects:[]});
+        sources.clear();for(const [name,bytes]of after)sources.set(name,bytes);
+        issues.push(...terrainPlan.issues);changedVertices+=terrainPlan.changedVertices;changedTexturePixels+=terrainPlan.changedTexturePixels;
+        queue.push({id,area});lastTerrainPlanId=terrainPlan.id;
+      }
+      // Every placement samples the complete dependency stack, not its parent's
+      // intermediate surface before a later clearing/road has been generated.
+      const finalState=parseState(sources),surface=lastTerrainPlanId?await this.surface('',lastTerrainPlanId):undefined;
+      // Restoration/removal can change the surface even if the new definition
+      // emits no height operations. Count the final map delta, not only new writes.
+      changedVertices=0;for(let y=0;y<finalState.heights.height;y++)for(let x=0;x<finalState.heights.width;x++)if(Math.abs(finalState.heights.z(x,y)-initial.heights.z(x,y))>1e-12)changedVertices++;
+      if(queue.some(({id})=>{const c=definitions.get(id)!.config;return c.objectCount!==0||c.groups.length>0;})&&!surface?.waterCoverageKnown)throw Error('LANDSCAPE_WATER_COVERAGE_UNAVAILABLE');
+      const plannedGroups=new Map<string,Array<{plan:PlacementPlan;slots:string[]}>>(),groupExclusions:ExclusionZone[]=[];
+      for(const {id,area}of queue){const args=definitions.get(id)!.config;
+        if(new Set(args.groups.map(g=>g.id)).size!==args.groups.length)throw Error('LANDSCAPE_DUPLICATE_GROUP: '+id);
+        if(args.groups.reduce((n,g)=>n+g.members.length,0)>5000)throw Error('LANDSCAPE_ZONE_OBJECT_LIMIT');
+        const groupPlans:Array<{plan:PlacementPlan;slots:string[]}>=[];
+        for(const group of args.groups){
+          const objects=measuredObjects(group,surface!,(geometry,member)=>{try{groupExclusions.push(checkGroupClearance(geometry,area,allRoutes,args.exclusionZones??[]));}catch(e){throw Error(String(e)+' '+id+'/'+group.id+'/'+member.id,{cause:e});}});
+          const plan=await placement.addBatch({objects,bounds:args.bounds});groupPlans.push({plan,slots:objects.map((_,i)=>'group:'+group.id+':'+i)});
+        }
+        plannedGroups.set(id,groupPlans);
+      }
+      for(const {id}of queue){const args=definitions.get(id)!.config,groupPlans=plannedGroups.get(id)!;
+        const batches:Array<{plan:PlacementPlan;slots:string[];grounded:boolean}>=[];
+        if(args.objectCount!==0){const placed=await placement.createLocation({...args,reservedCorridors:allRoutes,exclusionZones:[...args.exclusionZones??[],...groupExclusions]},doc);batches.push({plan:placed.plan,slots:placed.plan.operations.map((_,i)=>'scatter:'+i),grounded:false});}
+        batches.push(...groupPlans.map(v=>({...v,grounded:true})));
+        if(batches.reduce((n,b)=>n+b.slots.length,0)>5000)throw Error('LANDSCAPE_ZONE_OBJECT_LIMIT');
+        const prior=byOld.get(id)?.objects??[],bySlot=new Map<string,number>();for(const o of prior)if(o.slot){if(bySlot.has(o.slot))throw Error('LANDSCAPE_DUPLICATE_SLOT: '+id);bySlot.set(o.slot,o.id);}
+        const additions:Array<Extract<PlacementMutation,{op:'add'}>>=[],slots:string[]=[];
+        let reusedObjectIds=0;
+        for(const batch of batches){const start=additions.length;for(const [i,op]of batch.plan.operations.entries()){
+          if(op.op!=='add')throw Error('LANDSCAPE_LOCATION_OPERATION_UNSUPPORTED');const sample=finalState.heights.sample(op.object.position),gx=(op.object.position.x-finalState.descriptor.offset[0])/finalState.descriptor.scale[0],gy=(op.object.position.y-finalState.descriptor.offset[1])/finalState.descriptor.scale[1];
+          if(sample.mask===0||finalState.visibility?.atGrid(gx,gy)||finalState.water?.at(op.object.position).length||(!batch.grounded&&args.maxSlope!==undefined&&sample.slope>args.maxSlope))throw Error('LANDSCAPE_OBJECT_UNSUITABLE_GROUND: '+id);
+          const slot=batch.slots[i],previousId=bySlot.get(slot)??(slot.startsWith('scatter:')&&prior[i]?.slot===undefined?prior[i]?.id:undefined),objectId=previousId&&!occupied.has(previousId)?(occupied.add(previousId),previousId):allocate();
+          if(objectId===previousId)reusedObjectIds++;
+          additions.push({op:'add',object:{...op.object,objectId,position:{...op.object.position,z:batch.grounded?op.object.position.z:sample.height},flags:{...op.object.flags,HeightAbsolute:'1'}}});slots.push(slot);
+        }batch.plan={...batch.plan,operations:additions.slice(start)};}
+        const added=doc.apply(additions).map(v=>v.objectId);for(const batch of batches){const validation=await placement.validateDocument(doc,batch.plan);if(!validation.valid)throw Error('LOCATION_PLACEMENT_VALIDATION_FAILED: '+id+' '+JSON.stringify(validation.issues.filter(i=>i.severity==='error')));}
+        const fingerprints=objectFingerprints(doc);records.set(id,{...records.get(id)!,objects:added.map((id,i)=>({id,slot:slots[i],fingerprint:fingerprints.get(id)!}))});
+        rebuilt.push({id,objects:added.length,reusedObjectIds});
+      }
+      const resnapped:Array<{id:string;objects:number}>=[],ancestorIds=new Set([...rebuild].flatMap(id=>[...landscapeAncestors(zones,id)]).filter(id=>!rebuild.has(id)));
+      const routesChanged=[...changed].some(id=>landscapeHash(definitions.get(id)?.config.terrain.routes??[])!==landscapeHash(byOld.get(id)?.config.terrain.routes??[]));
+      if(ancestorIds.size&&(changedVertices||routesChanged)){
+        const current=new Map(doc.list().flatMap(o=>o.id===undefined?[]:[[o.id,o] as const])),fingerprints=objectFingerprints(doc),moves:Array<Extract<PlacementMutation,{op:'move'}>>=[],updates=new Map<string,Set<number>>();
+        for(const id of ancestorIds){const record=records.get(id)!,p=record.config.area,area:TerrainArea=p.type==='polygon'?{type:'polygon',points:p.points}:p.type==='circle'?{type:'circle',center:{x:p.center.x,y:p.center.y},radius:p.radius}:{type:'rectangle',minX:p.minX,minY:p.minY,maxX:p.maxX,maxY:p.maxY},groupsToCheck=new Set<string>();
+          for(const object of record.objects){const placed=current.get(object.id);if(!placed?.position)continue;const [x,y,z]=placed.position.split(',').map(Number);if(![x,y,z].every(Number.isFinite))throw Error('LANDSCAPE_OWNED_POSITION_INVALID');
+            const groupSlot=object.slot?.startsWith('group:')?object.slot.split(':'):undefined,group=groupSlot?record.config.groups.find(g=>g.id===groupSlot[1]):undefined,member=groupSlot?group?.members[Number(groupSlot[2])]:undefined;if(groupSlot&&!member)throw Error('LANDSCAPE_GROUP_SLOT_MISMATCH');
+            if(routesChanged){if(group)groupsToCheck.add(group.id);else if(allRoutes.some(route=>areaDistance({type:'corridor',points:route.points,width:route.width},{x,y})>=0))throw Error('LANDSCAPE_ANCESTOR_ROUTE_CONFLICT: include '+id+' in the reviewed request');}
+            const sample=surface!.sampleGround({x,y}),desired=sample.height+(member?.heightOffset??0);if(Math.abs(desired-z)<=1e-6)continue;
+            if(fingerprints.get(object.id)!==object.fingerprint)throw Error('LANDSCAPE_OWNED_OBJECT_CHANGED: '+id+' '+object.id);
+            if(!surface!.waterCoverageKnown)throw Error('LANDSCAPE_WATER_COVERAGE_UNAVAILABLE');
+            if(sample.hidden||sample.mask===0||sample.protected||sample.water?.length||sample.slope>(group?.maxSlope??record.config.maxSlope??Infinity))throw Error('LANDSCAPE_ANCESTOR_UNSUITABLE_GROUND: '+id+' '+object.id);
+            if(group)groupsToCheck.add(group.id);moves.push({op:'move',objectId:object.id,position:{x,y,z:desired}});const ids=updates.get(id)??new Set<number>();ids.add(object.id);updates.set(id,ids);
+          }
+          for(const group of record.config.groups.filter(g=>groupsToCheck.has(g.id)))measuredObjects(group,surface!,geometry=>checkGroupClearance(geometry,area,allRoutes,record.config.exclusionZones??[]));
+        }
+        doc.moveMany(moves);const after=objectFingerprints(doc);for(const [id,ids]of updates){const record=records.get(id)!;records.set(id,{...record,objects:record.objects.map(o=>ids.has(o.id)?{...o,fingerprint:after.get(o.id)!}:o)});resnapped.push({id,objects:ids.size});}
+      }
+      const before=new Map([...data.sources].map(([name,b])=>[name,Buffer.from(b)])),next=new Map(sources),sourceSha256={...data.sourceSha256},diskSha256={...data.diskSha256};
+      for(const [name,text]of [['Objects',objectRaw.text],['ComponentList.SC2Components',componentRaw.text],[file,raw.text]]){before.set(name,Buffer.from(text));sourceSha256[name]=bytesHash(Buffer.from(text));diskSha256[name]=bytesHash((await this.workspace.binary.read(name,false)).bytes);}
+      next.set('Objects',Buffer.from(doc.source));next.set('ComponentList.SC2Components',Buffer.from(rebuild.size?componentListWithObjects(componentRaw.text):componentRaw.text));
+      const ledger={version:1 as const,context:outputContext,zones:order.map(id=>{const record=records.get(id)!,original=originalRecords.get(id);return original&&!rebuild.has(id)?resnapped.some(r=>r.id===id)?{...original,objects:record.objects}:original:record;})};landscapeStateSchema.parse(ledger);
+      const text=rebuild.size?JSON.stringify(ledger)+'\n':raw.text;
+      if(Buffer.byteLength(text)>64*1024*1024)throw Error('LANDSCAPE_STATE_TOO_LARGE');next.set(file,Buffer.from(text));
+      issues.push({severity:'warning',code:'LANDSCAPE_NATIVE_REVIEW_REQUIRED',message:'Owned height/texture cells, supported native cliff/ramp rows and decoration are reconciled. Declared overlays are rebuilt; model footprints, engine navigation and unowned-object resnapping require separate review.'});
+      const summary=this.remember('',operations,before,next,sourceSha256,diskSha256,{},issues,changedVertices,changedTexturePixels);this.plans.get(summary.id)!.browseFingerprint=fingerprint;
+      return {...summary,ownership:{file,rebuilt,resnapped,unchanged:order.filter(id=>!rebuild.has(id)&&!resnapped.some(r=>r.id===id)),totalZones:records.size,topologyZones:[...records.values()].filter(r=>r.topology).map(r=>r.id),foundationPreparation,scope:'Regional height/texture masks, supported native cliff/ramp rows, owned decoration and measured groups with explicit overlay dependencies',preservationScope:'Independent unselected zones are not revalidated or rewritten. Affected ancestor objects receive guarded height-only resnaps; route conflicts require a reviewed parent request.'},atomicComponents:'terrain + Objects + ComponentList + location ownership'};
+    }));
+  }
   async generate(args: GenerateArgs) {
     args = terrainGenerateSchema.parse(args);
     const s = await this.state(args.directory);
     return this.plan({directory:args.directory,operations:this.generateOperations(args,s)});
   }
   private generateOperations(args:GenerateArgs,s:TerrainState) {
+    if(args.textureMode==='preserve')return generateRecipe(args);
     let texture = args.materials?.base;
     const style = TERRAIN_STYLES[args.style];
     if (!texture)
@@ -768,15 +951,16 @@ export class TerrainWorkspace {
   }
   async createLocation(
     args: Parameters<PlacementWorkspace["createLocation"]>[0] & {
-      terrain: Omit<GenerateArgs, "area">;
+      terrain: Omit<GenerateArgs, "area"> & {routes?:LocationRoute[]};
       maxSlope?: number;
     },
   ) {
     if (!this.placement) throw new Error("PLACEMENT_CONTEXT_UNAVAILABLE");
     const placementArea = args.area;
-    if(placementArea.type==='polygon')throw new Error('LANDSCAPE_POLYGON_TERRAIN_UNSUPPORTED: use polygon decoration after native terrain planning');
     const area: TerrainArea =
-      placementArea.type === "circle"
+      placementArea.type === "polygon"
+        ? {type:"polygon",points:placementArea.points.map(p=>({x:p.x,y:p.y}))}
+        : placementArea.type === "circle"
         ? {
             type: "circle",
             center: { x: placementArea.center.x, y: placementArea.center.y },
@@ -789,14 +973,23 @@ export class TerrainWorkspace {
             maxX: placementArea.maxX,
             maxY: placementArea.maxY,
           };
-    const terrainPlan = await this.generate({
-      ...args.terrain,
+    const {routes,topology,...settings}=terrainLocationSchema.parse(args.terrain);
+    if(topology)throw Error('LOCATION_NATIVE_TOPOLOGY_REQUIRES_OWNED_INTENT: use terrain.landscape.plan intent');
+    for(const route of routes)if((route.flatten||route.texture)&&!corridorWithinArea(area,route.points,route.width))throw Error('LOCATION_ROUTE_OUTSIDE_AREA: the whole painted/flattened road must fit inside its location; use a separate road plan for cross-zone connections');
+    const generation={
+      ...settings,
       area,
       seed: args.seed ?? args.terrain.seed,
+    };
+    const source=await this.state(generation.directory);
+    const roads=routes.flatMap(route=>{
+      const operations=route.flatten?featureRecipe('road',route):route.texture?[{op:'texture.paint' as const,area:{type:'corridor' as const,points:route.points,width:route.width},texture:route.texture,edgeBlend:route.edgeBlend}]:[];
+      return operations.map(op=>({...op,protectedAreas:settings.protectedAreas}));
     });
+    const terrainPlan=await this.plan({directory:generation.directory,operations:[...this.generateOperations(generation,source),...roads]});
     const stored = await this.checked(terrainPlan.id);
     const state = await this.state("", terrainPlan.id);
-    const placed = await this.placement.createLocation(args);
+    const placed = await this.placement.createLocation({...args,reservedCorridors:[...(args.reservedCorridors??[]),...routes]});
     const preview = await this.placement.preview(placed.plan.id);
     if (!preview.validation.valid)
       throw new Error("LOCATION_PLACEMENT_VALIDATION_FAILED");
@@ -885,6 +1078,8 @@ export class TerrainWorkspace {
       objects: operations.length,
       composition: placed.composition,
       atomicComponents: "terrain + Objects + ComponentList",
+      reservedRoutes:routes.map(r=>({points:r.points,width:r.width})),
+      routeClearanceScope:'Decoration pivot exclusions; measured mesh bounds, engine pathing and buildability need separate checks',
       groundSnapping: true,
     };
   }

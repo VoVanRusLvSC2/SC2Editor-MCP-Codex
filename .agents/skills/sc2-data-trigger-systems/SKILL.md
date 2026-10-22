@@ -18,9 +18,14 @@ original Editor checks. Inspect actual tool schemas before using recipes.
    source/target hosts, site operations, animation lifecycle and preloads. Use the
    documented `recipe.unitActor`/`recipe.effectModel` scope where suitable; avoid
    duplicate primary unit actors.
+   Use `data.presentation.check` to review declared effect events and model links
+   together. It does not replace asset resolution or native playback evidence.
 4. Use Galaxy by default. For requested GUI, create native elements and real
    folders without an undisclosed parallel script. Keep locals and state with
    their owning system and shared helpers with shared functions.
+   Read `docs/TRIGGER_MCP.md` conversion preservation requirements for runtime
+   event registration, explicit trigger targets, reference/callback semantics and
+   localized `TriggerStrings`. Native compilation alone is not equivalence proof.
 5. Handle initialization, transitions, duplicate input, death, cleanup and restart.
    Keep UI state per player where needed. Use native command cards unless a
    separate ability interface is explicitly requested.

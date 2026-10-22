@@ -4,11 +4,42 @@
 
 `trigger.import_revised` stages a reviewed XML file from the workspace with its
 generated Galaxy and localized labels as one transaction. Supply the current
-Triggers and MapScript SHA-256 hashes. It requires exactly five flat folders
-(FUNCTIONS, MAIN, GAMEPLAY, OBJECTIVES, CINEMATICS), rejects ScriptCode and Custom
-Script fallbacks, validates local references and checks the emitted runtime.
-Save with `trigger.save`. This tool does not launch Trigger Revize or SC2 Editor;
-external conversion and semantic comparison remain explicit evidence.
+Triggers and MapScript SHA-256 hashes. Five main folders are a recommendation,
+not an import constraint; other counts, names and valid nested folders are allowed.
+The importer rejects ScriptCode and Custom Script fallbacks and validates scoped
+references and folder ownership. Save with `trigger.save`. It does not launch
+Trigger Revize or SC2 Editor; native conversion remains an explicit job.
+
+The default offline path checks its supported emitted runtime and rejects inline
+libraries. For libraries or other original-compiler semantics:
+
+1. Export the saved target context and call `editor.call` with method
+   `sc2_convert_xml`, its `template`, the reviewed `triggers_file`,
+   `scope: "mapRoot"` and `compile: true`. Use a template containing the intended
+   localization. Supply `context_label` when the native root name is ambiguous.
+2. Poll `editor.job`; require `nativeGuiImportEligible: true`. Compilation of one
+   library is not a complete map runtime. Calls with external `trigger_strings`
+   or `game_strings` overrides are not eligible for adoption; include these tables
+   in the template instead.
+3. Pass that job's `nativeJobId` to `trigger.import_revised` in the same MCP
+   session. The importer checks exact XML, original output bytes and every template
+   component except the replaced Triggers/runtime/TriggerStrings. Different Data,
+   Objects, metadata, dependencies or extra compile-context files stop import.
+   Save pending drafts before this operation. Template/output/context changes
+   invalidate the coupled transaction through save.
+
+This path retains library-qualified IDs and editable GUI folders and adopts the
+original compiler's Galaxy without a Custom Script wrapper. It requires an unpacked
+target matching the saved template. A native compile proves only that context;
+save/reopen and expected gameplay remain separate acceptance checks.
+
+The [2026-10-22 native corpus](verification/gui-core-events-2026-10-22.json)
+passed original generation/compilation and four clean gameplay launches across
+two exact archives. It covers library coexistence, nested control flow,
+structures, global/local arrays, presets, function defaults/parameters/returns,
+native Dialog click callbacks, event parameters and dynamic per-player indices.
+The complex typed-core save/reopen handler remains pending. Other functions,
+libraries and controls are not certified by this representative corpus.
 
 The offline emitter supports native boolean groups, exclusive If/Else If chains,
 integer increments, Skip Remaining and abilcmd literals with ValueId indices.
@@ -16,7 +47,37 @@ Unsupported constructs still fail before staging.
 
 `trigger.plan` creates native XML `Triggers`. By default, everything is at the root of the map, without a separate resource library. It does not invoke the converter. Reviewed external converter output can be imported separately as described above. The element model and canonical serialization are transferred from our AST project; the source files and SHA are listed in `generated/trigger-ast-reuse.json`.
 
+## Conversion preservation requirements
+
+Treat a native event declaration and runtime event registration separately.
+`TriggerAddEventTimer`, for example, may be indexed as a GUI event rather than an
+ordinary action. Runtime use needs a distinct representation carrying the
+explicit target `trigger` expression and the original call arguments. Do not
+silently hoist the call into startup, substitute the current trigger, or add
+guards to a callback to make conversion pass. If the current API cannot express
+this, report the unsupported case instead of claiming equivalent GUI output.
+
+Keep the template's localized `TriggerStrings` with the authored root/library
+and use the real context label. Missing root-name localization can prevent native
+context discovery even when the GUI graph is valid; an invented label or unrelated
+strings table is not a repair.
+
+Graph validation, native generation/compilation, exported-source comparison and
+gameplay are separate evidence. A compile pass alone does not establish conversion
+equivalence. Compare the original and native-exported source for reference and
+`structref` parameters, nested array indexing, callback bodies, explicit trigger
+targets and event argument references. Account for generated identifier changes
+without discarding semantic differences. Keep unresolved differences visible.
+
 ## Types and variables
+
+The original Editor can elide a mutable string's initial value when its exact
+spelling is a canonical scalar default (`"0"`, `"false"`, `"null"`), even with
+`ValueType=string`. New variable authoring retains these values through the stock
+Combine Strings expression with an empty literal. It creates no runtime helper,
+Native definition or raw script. Leading zeros, signs, decimals and whitespace
+remain direct string literals. Constant declarations and function-return literals
+retain their existing representation; previously saved GUI is not migrated.
 
 All 83 specific codes from the GUI dictionary provided are supported. The other 10 are void and contextual/generalized rules, not stand-alone variable declarations. `dialog`, `control`, `sound`, `portrait`, `unitfilter`, `wave`, `filepath`, attribute types and others retain their GUI name; they are not substituted for a universal string. Specialized values are given by calling a suitable function/reference; arbitrary numerical literals for living objects are not accepted.
 
@@ -142,3 +203,12 @@ Castomy Event receives implicit `trigger t`. For registration calls inside its b
 `trigger.recipe_skirmish` parameterizes the saved mission recipe instead of retransmitting a large JSON. Existing Objects IDs, ability, and UI templates are needed. `ui.recipe_timer`, `ui.assets.register`, `ui.assets.save`, `ui.hookup.validate` create/register only custom styles, DescIndex, and font/ui components.
 
 The SC2_MCP_PROFILE=map-builder profile shortens the initial list of schemes. The remaining tools are available through modkit.tools and modkit.enable_tools; the profile is all saved. modkit.usage measures MCP arguments and text responses through o200k_base and the length of handlers. Texts are not written into a log; actual model tokens, reasoning and billing are not available.
+
+
+Scalar variable and structure-field initializers can use a stock preset when the
+selected preset owner declares exactly the variable's GUI base type (for example,
+No Control for a control field). The initializer resolves the actual variable
+by owner and ID; foreign libraries and different base types remain errors.
+Event/Action argument selectors and nominal preset types keep their existing
+ParamDef and preset-owner validation. This does not create a Native definition
+or infer a conversion from a matching script-value string.

@@ -12,6 +12,24 @@ import {PlacementDocument} from '../modules/placement/document.js';
 import {CompositionWorkspace} from '../modules/placement/compositions.js';
 import type {TerrainWorkspace} from '../modules/terrain/workspace.js';
 import {createHash} from 'node:crypto';
+import {measuredMemberGeometry} from '../modules/placement/compositionGeometry.js';
+
+test('measured member support corners include member scale/rotation after the group transform',()=>{
+ const result=measuredMemberGeometry({x:10,y:20},Math.PI/2,{offset:{x:2,y:3},rotation:Math.PI/2,scale:2,boundsFrame:'member',horizontalBounds:{minX:0,minY:0,maxX:4,maxY:.25}});
+ assert.ok(Math.abs(result.position.x-7)<1e-9);assert.ok(Math.abs(result.position.y-22)<1e-9);
+ assert.ok(Math.abs(result.corners[3].x+1)<1e-9);assert.ok(Math.abs(result.corners[3].y-21.5)<1e-9);
+ const legacy=measuredMemberGeometry({x:10,y:20},Math.PI/2,{offset:{x:2,y:3},rotation:Math.PI/2,scale:2,horizontalBounds:{minX:0,minY:0,maxX:4,maxY:.25}});
+ assert.ok(Math.abs(legacy.corners[3].x-6.75)<1e-9);assert.ok(Math.abs(legacy.corners[3].y-26)<1e-9);
+});
+
+test('a rotated enlarged member rejects wet support beyond its untransformed bounds',async t=>{
+ const root=await fs.mkdtemp(path.join(os.tmpdir(),'sc2-compose-transform-'));t.after(()=>fs.rm(root,{recursive:true,force:true}));await fs.cp(path.resolve('src/tests/fixtures/browse-placement-map'),root,{recursive:true});
+ const ws=new Workspace(root),browse=new BrowseWorkspace(ws,new DataWorkspace(ws,new DataSchemaRegistry())),placement=new PlacementWorkspace(ws,browse),samples:Array<{x:number;y:number}>=[];
+ const terrain={surface:async()=>({waterCoverageKnown:true,sourceSha256:{},diskSha256:{},sampleGround:(p:{x:number;y:number})=>{samples.push(p);return {height:0,slope:0,mask:1,hidden:false,protected:false,water:p.x<8?[{}]:[]};}})} as unknown as TerrainWorkspace;
+ const composition=new CompositionWorkspace(ws,placement,browse,terrain);
+ await assert.rejects(composition.compose({zone:'rotated',tileset:'Agria',profile:'forest',recipe:'measured_group',anchor:{x:10,y:10},members:[{id:'AgriaTree',offset:{x:0,y:0},rotation:Math.PI,scale:2,boundsFrame:'member',horizontalBounds:{minX:0,minY:0,maxX:4,maxY:.25}}],dryRun:false}),/BOUNDS_UNSUITABLE_GROUND/);
+ assert.ok(samples.some(p=>p.x<8));assert.deepEqual(ws.draftFiles(),[]);
+});
 
 test('composition writes one owned group, repeats without duplicates, protects manual edits and terrain dependencies',async t=>{
  const root=await fs.mkdtemp(path.join(os.tmpdir(),'sc2-composition-'));t.after(()=>fs.rm(root,{recursive:true,force:true}));await fs.cp(path.resolve('src/tests/fixtures/browse-placement-map'),root,{recursive:true});

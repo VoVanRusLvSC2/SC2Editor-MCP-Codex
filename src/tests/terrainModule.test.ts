@@ -454,6 +454,26 @@ test("placement location plans include terrain + Objects atomically and snap doo
   }
 });
 // Keep the parser import exercised independently of Workspace.
+test('combined location planning supports an irregular polygon and preserves its concave cutout',async()=>{
+ const f=await fixture();
+ try{
+  await fs.cp('src/tests/fixtures/browse-placement-map',f.root,{recursive:true});
+  const browse=new BrowseWorkspace(f.workspace,new DataWorkspace(f.workspace)),placement=new PlacementWorkspace(f.workspace,browse),terrain=new TerrainWorkspace(f.workspace,browse,placement);placement.terrain=terrain;
+  const points=[{x:4,y:4},{x:28,y:4},{x:28,y:10},{x:10,y:10},{x:10,y:28},{x:4,y:28}];
+  const before=(await terrain.sample([{x:20,y:20}])).samples[0];
+  await assert.rejects(terrain.createLocation({locationType:'forest',area:{type:'polygon',points,z:0},objectCount:5,terrain:{style:'forest',routes:[{points:[{x:4,y:7},{x:28,y:7}],width:2,flatten:true}]}}),/LOCATION_ROUTE_OUTSIDE_AREA/);
+  assert.deepEqual(f.workspace.draftFiles(),[]);assert.deepEqual(f.workspace.binary.draftFiles(),[]);
+  const p=await terrain.createLocation({locationType:'forest',area:{type:'polygon',points,z:0},objectCount:5,seed:42,terrain:{style:'forest',materials:{base:'BelShirDirtLight'},routes:[{points:[{x:5,y:7},{x:27,y:7}],width:2,flatten:true,height:5,edgeBlend:0,texture:'BelShirDirtLight'}]}});
+  assert.equal(p.objects,5);assert.equal(p.atomicComponents,'terrain + Objects + ComponentList');
+  const after=(await terrain.sample([{x:20,y:20}],'',p.plan.id)).samples[0];assert.equal(after.height,before.height);assert.deepEqual(after.textures,before.textures);
+  assert.equal(p.reservedRoutes.length,1);assert.ok(p.plan.operations.some(o=>'area' in o&&o.area?.type==='corridor'));
+  assert.ok(Math.abs((await terrain.sample([{x:12,y:7}],'',p.plan.id)).samples[0].height-5)<.001);
+  const ids=new Set(new PlacementDocument((await f.workspace.readRaw('Objects')).text).list().map(o=>o.id));
+  await terrain.apply(p.plan.id,{dryRun:false});
+  const added=new PlacementDocument((await f.workspace.readRaw('Objects')).text).list().filter(o=>!ids.has(o.id));
+  for(const object of added){const [x,y]=object.position!.split(',').map(Number);assert.ok(x<10||y<10);assert.ok(Math.abs(y-7)>=1);}
+ }finally{await f.cleanup();}
+});
 import { PlacementDocument } from "../modules/placement/document.js";
 test("binary parsers reject truncated payloads and unknown versions", async () => {
   const f = await fixture();

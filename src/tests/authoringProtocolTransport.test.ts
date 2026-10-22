@@ -4,6 +4,7 @@ import {promises as fs} from 'node:fs';
 import path from 'node:path';
 import os from 'node:os';
 import {spawn} from 'node:child_process';
+import {gunzipSync} from 'node:zlib';
 
 test('workflow MCP discovers and executes organization/catalog through compact author commands',{timeout:30000},async t=>{
  const root=await fs.mkdtemp(path.join(os.tmpdir(),'sc2-author-protocol-'));t.after(()=>fs.rm(root,{recursive:true,force:true}));await fs.cp('src/tests/fixtures/browse-placement-map',root,{recursive:true});
@@ -20,4 +21,8 @@ test('workflow MCP discovers and executes organization/catalog through compact a
  const saved=await invoke('modkit.author',{script:'project organize genre=mission',mode:'save'});assert.equal(saved.ok,true);assert.equal(JSON.parse(await fs.readFile(path.join(root,'.sc2mcp/organization.json'),'utf8')).logicDefault,'galaxy');
  const checked=await invoke('modkit.author',{script:'project check'});assert.equal(checked.ok,true);
  const repeated=await invoke('modkit.author',{script:'project organize genre=mission',mode:'save'});assert.equal(repeated.ok,true);
+ for(const n of await fs.readdir('src/tests/fixtures/terrain-native/nydus'))await fs.writeFile(path.join(root,n.slice(0,-3)),gunzipSync(await fs.readFile(path.join('src/tests/fixtures/terrain-native/nydus',n))));
+ const before=await fs.readFile(path.join(root,'t3HeightMap'));
+ const terrain=await invoke('modkit.author',{script:'terrain raise rect=4,4,8,8 amount=0.5',mode:'save'});assert.equal(terrain.ok,true);assert.equal(terrain.steps.length,3);assert.ok(typeof terrain.steps[1].result.transactionId==='string');assert.notDeepEqual(await fs.readFile(path.join(root,'t3HeightMap')),before);
+ const repair=await invoke('modkit.author',{script:'terrain cliff.repair rect=4,4,8,8',mode:'save'});assert.equal(repair.ok,true);
 });

@@ -186,6 +186,14 @@ export class HeightMap {
       d.offset[2]
     );
   }
+  editableRange(x: number, y: number): { min: number; max: number } {
+    const i = 32 + (y * this.width + x) * 6, d = this.descriptor;
+    const base = this.bytes.readUInt16LE(i + 2);
+    const endpoint = (fine: number) => ((fine + base) * d.quantizeScale -
+      2 * d.quantizeBias) * d.scale[2] + d.offset[2];
+    const a = endpoint(0), b = endpoint(65535);
+    return { min: Math.min(a, b), max: Math.max(a, b) };
+  }
   setZ(x: number, y: number, z: number): number {
     const i = 32 + (y * this.width + x) * 6;
     const d = this.descriptor;
@@ -195,7 +203,7 @@ export class HeightMap {
     );
     if (fine < 0 || fine > 65535)
       throw new Error(
-        `HEIGHT_QUANTIZATION_RANGE: (${x},${y}); choose a smaller height change or an Editor-generated donor stamp`,
+        `HEIGHT_QUANTIZATION_RANGE: (${x},${y}); editable range ${JSON.stringify(this.editableRange(x, y))}; choose a smaller height change or an Editor-generated donor stamp`,
       );
     this.bytes.writeUInt16LE(fine, i);
     return this.z(x, y);
@@ -292,7 +300,7 @@ export class TextureMasks {
     )
       throw new Error("TEXTURE_MASK_SIZE_MISMATCH");
   }
-  private index(x: number, y: number, layer: number): number {
+  byteIndex(x: number, y: number, layer: number): number {
     return (
       64 +
       (layer * this.width * this.height) / 2 +
@@ -302,11 +310,11 @@ export class TextureMasks {
     );
   }
   get(x: number, y: number, layer: number): number {
-    const v = this.bytes[this.index(x, y, layer)];
+    const v = this.bytes[this.byteIndex(x, y, layer)];
     return x % 2 ? v & 15 : v >>> 4;
   }
   set(x: number, y: number, layer: number, v: number): void {
-    const i = this.index(x, y, layer);
+    const i = this.byteIndex(x, y, layer);
     const n = Math.max(0, Math.min(15, Math.round(v)));
     this.bytes[i] =
       x % 2 ? (this.bytes[i] & 240) | n : (this.bytes[i] & 15) | (n << 4);

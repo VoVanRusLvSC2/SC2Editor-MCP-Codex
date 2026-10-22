@@ -1,0 +1,589 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-22T14:00:15.159Z",
+  "scope": "Matched native Ghost/Marauder main Actor movement, ordinary weapon attacks before/after a finite channel and death; incremental verifier evidence preservation. Not universal Unit/Weapon/Model compatibility or finished mission art.",
+  "mcp": {
+    "authorSuite": "217fa562-2761-438a-9d16-be59b3bb7e40",
+    "ordinaryMapWrites": "Actual map.import, text.apply/save, data.apply/save and map.export; no shell component writer",
+    "ordinaryArchiveSha256": "7aae2580280abea0abfea743b428914856ea1b7a621f2b770f7475d49b10c9b1",
+    "localCatalog": "Base.SC2Data/GameData/CombatProbe.xml",
+    "matchingNativeUnitAndActorSources": [
+      "Ghost",
+      "Marauder"
+    ],
+    "primaryActorsPerUnit": 1,
+    "nativeWeaponsRetained": true,
+    "animationReceipts": [
+      {
+        "id": "QualityCombatGhostAnimation",
+        "target": "CActorUnit:QualityCombatGhostActor",
+        "events": 9,
+        "model": {
+          "id": "Ghost",
+          "file": "mods/liberty.sc2mod/base.sc2assets/assets/units/terran/ghostex3/ghostex3.m3",
+          "sha256": "47e87fa310117f14a292eeee653d14e9875f8121060d4db0e46f60b09c35b4ad"
+        },
+        "sequences": {
+          "cast": "Spell A",
+          "channel": "Spell B",
+          "finish": "Spell C"
+        },
+        "nativePlayback": "not_checked",
+        "assetRevision": "19cb6c9a4f681fc1092e394d576d763274ec229b846f1666a75d0fef61b00f8d",
+        "assets": [
+          {
+            "resource": "Assets\\Units\\Terran\\GhostEx3\\GhostEx3.m3",
+            "sha256": "47e87fa310117f14a292eeee653d14e9875f8121060d4db0e46f60b09c35b4ad",
+            "build": "1d231af579faf03e61a364722a3b87b4"
+          },
+          {
+            "resource": "Assets\\Units\\Terran\\Ghost_SwarmAnims\\Ghost_SwarmAnims.m3a",
+            "sha256": "afb5fdd65ed19a5f711c8bd0b815b142a79554f302cb69951f3bb37ece0f7376",
+            "build": "1d231af579faf03e61a364722a3b87b4"
+          }
+        ],
+        "supplementalCoverage": "resolved",
+        "warnings": []
+      },
+      {
+        "id": "QualityCombatMarauderAnimation",
+        "target": "CActorUnit:QualityCombatMarauderActor",
+        "events": 9,
+        "model": {
+          "id": "Marauder",
+          "file": "mods/liberty.sc2mod/base.sc2assets/assets/units/terran/marauder/marauder.m3",
+          "sha256": "cb5c5fe1b6e5fcf6411187aa4fb7db68cb7a68aaf3579f4c7446f489d6240869"
+        },
+        "sequences": {
+          "cast": "Attack Left",
+          "channel": "Attack Right",
+          "finish": "Stand Ready"
+        },
+        "nativePlayback": "not_checked",
+        "assetRevision": "c4caa138eea0aa0fcd9e1cc820607f98e7dcdeec6629e62f869717924e5fa0e8",
+        "assets": [
+          {
+            "resource": "Assets\\Units\\Terran\\Marauder\\Marauder.m3",
+            "sha256": "cb5c5fe1b6e5fcf6411187aa4fb7db68cb7a68aaf3579f4c7446f489d6240869",
+            "build": "1d231af579faf03e61a364722a3b87b4"
+          }
+        ],
+        "supplementalCoverage": "partial",
+        "warnings": [
+          "Unresolved supplemental animation field: RequiredAnims[#0]",
+          "Unresolved supplemental animation field: RequiredAnims[#1]"
+        ]
+      }
+    ]
+  },
+  "native": {
+    "suiteId": "c9508a75-d3a1-4863-94bf-e2b4033d6a0b",
+    "cases": 61,
+    "allCasesPassed": true,
+    "cleanLaunches": 2,
+    "sameRetainedBridge": true,
+    "gameBuild": "5.0.17.98310",
+    "gameToolkit": "v0.1.0-dev.11",
+    "sourceUnchanged": true,
+    "allOwnedSessionsDetached": true,
+    "externalArtifactsVolume": "C:",
+    "runs": [
+      {
+        "profile": "Ghost",
+        "session": "b36263f01a7b3e7a4f26df4fde05cbce",
+        "moveTo": {
+          "x": 28,
+          "y": 34
+        },
+        "movementWait": "passed",
+        "normalWeaponDamage": 20,
+        "weaponHitsBefore": 3,
+        "weaponHitsAfter": 3,
+        "channelPulses": 6,
+        "damagePerPulse": 50,
+        "channelDamage": 300,
+        "pulseIntervalSeconds": 0.5,
+        "castIntroSeconds": 1,
+        "observedPhaseTimes": [
+          {
+            "stage": 3,
+            "gameTime": 14.25
+          },
+          {
+            "stage": 4,
+            "gameTime": 15.25
+          },
+          {
+            "stage": 5,
+            "gameTime": 18.3125
+          },
+          {
+            "stage": -6,
+            "gameTime": 18.3125
+          }
+        ],
+        "mainActor": {
+          "createdInstance": 1,
+          "destroyedInstance": 1,
+          "createdGameTime": 2,
+          "destroyedGameTime": 30.25,
+          "nativeDestructorConfirmed": true
+        },
+        "residualWeaponDamageAfterDeath": [],
+        "residualScope": "An already launched native Marauder projectile may still hit after the shooter dies; primary Actor destruction does not imply projectile cancellation."
+      },
+      {
+        "profile": "Marauder",
+        "session": "b36263f01a7b3e7a4f26df4fde05cbce",
+        "moveTo": {
+          "x": 30,
+          "y": 34
+        },
+        "movementWait": "passed",
+        "normalWeaponDamage": 10,
+        "weaponHitsBefore": 3,
+        "weaponHitsAfter": 3,
+        "channelPulses": 6,
+        "damagePerPulse": 50,
+        "channelDamage": 300,
+        "pulseIntervalSeconds": 0.5,
+        "castIntroSeconds": 1,
+        "observedPhaseTimes": [
+          {
+            "stage": 3,
+            "gameTime": 47.375
+          },
+          {
+            "stage": 4,
+            "gameTime": 48.375
+          },
+          {
+            "stage": 5,
+            "gameTime": 51.4375
+          },
+          {
+            "stage": -6,
+            "gameTime": 51.4375
+          }
+        ],
+        "mainActor": {
+          "createdInstance": 175,
+          "destroyedInstance": 175,
+          "createdGameTime": 35,
+          "destroyedGameTime": 63.75,
+          "nativeDestructorConfirmed": true
+        },
+        "residualWeaponDamageAfterDeath": [],
+        "residualScope": "An already launched native Marauder projectile may still hit after the shooter dies; primary Actor destruction does not imply projectile cancellation."
+      },
+      {
+        "profile": "Ghost",
+        "session": "85d32ebfd3981aa548429757029614f4",
+        "moveTo": {
+          "x": 28,
+          "y": 34
+        },
+        "movementWait": "passed",
+        "normalWeaponDamage": 20,
+        "weaponHitsBefore": 2,
+        "weaponHitsAfter": 2,
+        "channelPulses": 6,
+        "damagePerPulse": 50,
+        "channelDamage": 300,
+        "pulseIntervalSeconds": 0.5,
+        "castIntroSeconds": 1,
+        "observedPhaseTimes": [
+          {
+            "stage": 3,
+            "gameTime": 13.875
+          },
+          {
+            "stage": 4,
+            "gameTime": 14.875
+          },
+          {
+            "stage": 5,
+            "gameTime": 17.9375
+          },
+          {
+            "stage": -6,
+            "gameTime": 17.9375
+          }
+        ],
+        "mainActor": {
+          "createdInstance": 1,
+          "destroyedInstance": 1,
+          "createdGameTime": 1.75,
+          "destroyedGameTime": 30,
+          "nativeDestructorConfirmed": true
+        },
+        "residualWeaponDamageAfterDeath": [],
+        "residualScope": "An already launched native Marauder projectile may still hit after the shooter dies; primary Actor destruction does not imply projectile cancellation."
+      },
+      {
+        "profile": "Marauder",
+        "session": "85d32ebfd3981aa548429757029614f4",
+        "moveTo": {
+          "x": 30,
+          "y": 34
+        },
+        "movementWait": "passed",
+        "normalWeaponDamage": 10,
+        "weaponHitsBefore": 3,
+        "weaponHitsAfter": 3,
+        "channelPulses": 6,
+        "damagePerPulse": 50,
+        "channelDamage": 300,
+        "pulseIntervalSeconds": 0.5,
+        "castIntroSeconds": 1,
+        "observedPhaseTimes": [
+          {
+            "stage": 3,
+            "gameTime": 47
+          },
+          {
+            "stage": 4,
+            "gameTime": 48
+          },
+          {
+            "stage": 5,
+            "gameTime": 51.0625
+          },
+          {
+            "stage": -6,
+            "gameTime": 51.0625
+          }
+        ],
+        "mainActor": {
+          "createdInstance": 175,
+          "destroyedInstance": 175,
+          "createdGameTime": 34.5,
+          "destroyedGameTime": 63,
+          "nativeDestructorConfirmed": true
+        },
+        "residualWeaponDamageAfterDeath": [],
+        "residualScope": "An already launched native Marauder projectile may still hit after the shooter dies; primary Actor destruction does not imply projectile cancellation."
+      }
+    ],
+    "media": [
+      {
+        "profile": "Ghost",
+        "session": "b36263f01a7b3e7a4f26df4fde05cbce",
+        "kind": "move",
+        "videoSha256": "6715766c3aa0a970158125b16fbf8e8b7b4210fd26532625f6c0dc17cb1e4936",
+        "frames": 28,
+        "firstGameTime": 3,
+        "lastGameTime": 6.625,
+        "capturedTimeSpanSeconds": 4.104560699999865,
+        "mixedAudioNonzero": 377831
+      },
+      {
+        "profile": "Ghost",
+        "session": "b36263f01a7b3e7a4f26df4fde05cbce",
+        "kind": "attack_before",
+        "videoSha256": "602cfbe8c3dd67d5b962a871718f7eb36720e4ebed920420a713505c83258394",
+        "frames": 29,
+        "firstGameTime": 8.625,
+        "lastGameTime": 12.25,
+        "capturedTimeSpanSeconds": 4.103191100000004,
+        "mixedAudioNonzero": 401512
+      },
+      {
+        "profile": "Ghost",
+        "session": "b36263f01a7b3e7a4f26df4fde05cbce",
+        "kind": "ability",
+        "videoSha256": "0d1db7b42a6af5d349f4a401c510d7d5895385ba05ebad94108b783f0d2ae197",
+        "frames": 63,
+        "firstGameTime": 14,
+        "lastGameTime": 22,
+        "capturedTimeSpanSeconds": 9.09615040000017,
+        "mixedAudioNonzero": 869046
+      },
+      {
+        "profile": "Ghost",
+        "session": "b36263f01a7b3e7a4f26df4fde05cbce",
+        "kind": "attack_after",
+        "videoSha256": "a3a1086e84862808651519cb995dc10d8c9a1ddbbb8648d7b7f2c6fd9fb90a82",
+        "frames": 27,
+        "firstGameTime": 24.625,
+        "lastGameTime": 28.25,
+        "capturedTimeSpanSeconds": 4.057621899999958,
+        "mixedAudioNonzero": 390175
+      },
+      {
+        "profile": "Ghost",
+        "session": "b36263f01a7b3e7a4f26df4fde05cbce",
+        "kind": "death",
+        "videoSha256": "9b754a4291ef78eea4d7aa36090eb2bcb1fbcffc057a39f85d179441961c244a",
+        "frames": 23,
+        "firstGameTime": 30,
+        "lastGameTime": 32.875,
+        "capturedTimeSpanSeconds": 3.0456799000000956,
+        "mixedAudioNonzero": 260721
+      },
+      {
+        "profile": "Marauder",
+        "session": "b36263f01a7b3e7a4f26df4fde05cbce",
+        "kind": "move",
+        "videoSha256": "8d7c2ebde57413346fe0098b7284595b11f51bdf05b4bf9754605acb5e79d9b9",
+        "frames": 26,
+        "firstGameTime": 36.125,
+        "lastGameTime": 39.625,
+        "capturedTimeSpanSeconds": 4.029125699999895,
+        "mixedAudioNonzero": 380506
+      },
+      {
+        "profile": "Marauder",
+        "session": "b36263f01a7b3e7a4f26df4fde05cbce",
+        "kind": "attack_before",
+        "videoSha256": "ac930fcdf5b2c83341cce36c3b89984df5186807035191b29c691fb2cc058dee",
+        "frames": 27,
+        "firstGameTime": 41.75,
+        "lastGameTime": 45.25,
+        "capturedTimeSpanSeconds": 4.105466100000058,
+        "mixedAudioNonzero": 401334
+      },
+      {
+        "profile": "Marauder",
+        "session": "b36263f01a7b3e7a4f26df4fde05cbce",
+        "kind": "ability",
+        "videoSha256": "36d776d425b921ebaa45acd1a2bef82c6feffc8c25637e1d9c004cbc830b7058",
+        "frames": 57,
+        "firstGameTime": 47.125,
+        "lastGameTime": 55.125,
+        "capturedTimeSpanSeconds": 9.02050650000001,
+        "mixedAudioNonzero": 873424
+      },
+      {
+        "profile": "Marauder",
+        "session": "b36263f01a7b3e7a4f26df4fde05cbce",
+        "kind": "attack_after",
+        "videoSha256": "892e0736063a03b11ef4e07035077a0179a18fa3c7cff746d8de97e6c4a17f38",
+        "frames": 24,
+        "firstGameTime": 57.875,
+        "lastGameTime": 61.375,
+        "capturedTimeSpanSeconds": 4.015612899999951,
+        "mixedAudioNonzero": 405265
+      },
+      {
+        "profile": "Marauder",
+        "session": "b36263f01a7b3e7a4f26df4fde05cbce",
+        "kind": "death",
+        "videoSha256": "ccd781204bb25ea94ad74b0366a9f2909cd7baff127fd1cced05b09caa755a6e",
+        "frames": 18,
+        "firstGameTime": 63.5,
+        "lastGameTime": 66.25,
+        "capturedTimeSpanSeconds": 3.054672499999924,
+        "mixedAudioNonzero": 297972
+      },
+      {
+        "profile": "Ghost",
+        "session": "85d32ebfd3981aa548429757029614f4",
+        "kind": "move",
+        "videoSha256": "231ea600012901c2e7182ccc980ab7992a046c0dedeeda2501ed4c6cda1bce33",
+        "frames": 27,
+        "firstGameTime": 2.75,
+        "lastGameTime": 6.375,
+        "capturedTimeSpanSeconds": 4.0281461000001855,
+        "mixedAudioNonzero": 387244
+      },
+      {
+        "profile": "Ghost",
+        "session": "85d32ebfd3981aa548429757029614f4",
+        "kind": "attack_before",
+        "videoSha256": "32eefe8b60cf3daefb944c95458a05961b38fd193181952c35f7afbdd6d9ec21",
+        "frames": 27,
+        "firstGameTime": 8.375,
+        "lastGameTime": 12,
+        "capturedTimeSpanSeconds": 4.073745899999949,
+        "mixedAudioNonzero": 398618
+      },
+      {
+        "profile": "Ghost",
+        "session": "85d32ebfd3981aa548429757029614f4",
+        "kind": "ability",
+        "videoSha256": "76baa793225c5f53e315bbf0defbaa80dfc11226a6a83b14e7568af579f10104",
+        "frames": 61,
+        "firstGameTime": 13.625,
+        "lastGameTime": 21.625,
+        "capturedTimeSpanSeconds": 9.081819099999848,
+        "mixedAudioNonzero": 862978
+      },
+      {
+        "profile": "Ghost",
+        "session": "85d32ebfd3981aa548429757029614f4",
+        "kind": "attack_after",
+        "videoSha256": "bde60c7194fc63abf0c4f2d73a5d3638c5aff6d25173f3a1681cf46738df4bb7",
+        "frames": 27,
+        "firstGameTime": 24.375,
+        "lastGameTime": 28,
+        "capturedTimeSpanSeconds": 4.104184900000064,
+        "mixedAudioNonzero": 403219
+      },
+      {
+        "profile": "Ghost",
+        "session": "85d32ebfd3981aa548429757029614f4",
+        "kind": "death",
+        "videoSha256": "737e8c2e06751211fa60d00a1f24d8435169c8c8d681107a753bc767d86a69e0",
+        "frames": 21,
+        "firstGameTime": 29.75,
+        "lastGameTime": 32.5,
+        "capturedTimeSpanSeconds": 3.0697722999998405,
+        "mixedAudioNonzero": 299446
+      },
+      {
+        "profile": "Marauder",
+        "session": "85d32ebfd3981aa548429757029614f4",
+        "kind": "move",
+        "videoSha256": "f2cb2e280cc679624012ec824dbd5a8592058d64a354677a6b52df84c0ae5845",
+        "frames": 26,
+        "firstGameTime": 35.625,
+        "lastGameTime": 39.25,
+        "capturedTimeSpanSeconds": 4.068847000000005,
+        "mixedAudioNonzero": 394079
+      },
+      {
+        "profile": "Marauder",
+        "session": "85d32ebfd3981aa548429757029614f4",
+        "kind": "attack_before",
+        "videoSha256": "035a8b527b3a6c5aa5820b64ee68c9f32401eb8659f190e5666af3afd4677852",
+        "frames": 26,
+        "firstGameTime": 41.25,
+        "lastGameTime": 44.875,
+        "capturedTimeSpanSeconds": 4.089179000000058,
+        "mixedAudioNonzero": 403066
+      },
+      {
+        "profile": "Marauder",
+        "session": "85d32ebfd3981aa548429757029614f4",
+        "kind": "ability",
+        "videoSha256": "3dc6b3c68b0239c681c5977d253f032b8dd0093af5eb4f59d65847b4c343840a",
+        "frames": 60,
+        "firstGameTime": 46.75,
+        "lastGameTime": 54.5,
+        "capturedTimeSpanSeconds": 9.025179199999911,
+        "mixedAudioNonzero": 870063
+      },
+      {
+        "profile": "Marauder",
+        "session": "85d32ebfd3981aa548429757029614f4",
+        "kind": "attack_after",
+        "videoSha256": "a801eaea26c688db2c2c0946a88f7bc78644fbe92d5c984cd2f159d5ef5eb2c8",
+        "frames": 26,
+        "firstGameTime": 57.25,
+        "lastGameTime": 60.875,
+        "capturedTimeSpanSeconds": 4.12102219999997,
+        "mixedAudioNonzero": 405529
+      },
+      {
+        "profile": "Marauder",
+        "session": "85d32ebfd3981aa548429757029614f4",
+        "kind": "death",
+        "videoSha256": "1555655216636040386bad27b43e7bdf9290be00188b63a7bb085fba53c19060",
+        "frames": 20,
+        "firstGameTime": 62.75,
+        "lastGameTime": 65.5,
+        "capturedTimeSpanSeconds": 3.1169199000000845,
+        "mixedAudioNonzero": 308836
+      }
+    ],
+    "originalEditor": {
+      "jobId": "4fa4b046-6df8-458c-b8f4-470e3f9b2fe9",
+      "load": "passed",
+      "compile": "passed",
+      "sourceSha256": "7aae2580280abea0abfea743b428914856ea1b7a621f2b770f7475d49b10c9b1",
+      "saveReopen": "not_checked"
+    },
+    "visualReview": "Reviewed native Ghost/Marauder body stance/recoil before and after the ability, Marauder movement and death. Corrected framing keeps Marauder above the HUD. No persistent finish-pose freeze observed in these profiles; no speculative finish-on-attack writer change was made.",
+    "nativeCurrentAnimationNameQuery": false,
+    "presentationLimits": [
+      "Marauder uses verified primary-M3 Attack Left/Attack Right/Stand Ready sequences, but two declared supplemental animation fields remain unresolved",
+      "SourceFinish can be interrupted by native combat; declared timing does not force a full recovery pose under all orders",
+      "Owned mixed audio is nonzero; isolated ability/weapon sounds are not separately certified",
+      "Recording diagnostics contain no warning/error in available messages; source coverage remains partial"
+    ]
+  },
+  "verifier": {
+    "implementation": "Append each returned MCP reply to transcript.ndjson and case transitions to cases.ndjson; atomically replace checkpoint.json. Final report remains required.",
+    "runningCheckpointMeansAcceptance": false,
+    "actualFinalJournalEqualsTranscript": true,
+    "completeFinalCases": 61,
+    "interruptedProcessTest": "Node test process exits23 mid-next-case; prior response/case survive, no result/pass fabricated",
+    "actualErrorJournalSuite": "6ba080e8-4397-4df7-a08a-3119e6474094",
+    "actualPositiveJournalSuite": "d0b7be30-0641-4910-9189-756cf92b9614",
+    "workerRestartOrSdkChanges": false
+  },
+  "retainedFailures": [
+    {
+      "id": "e9dfe192-3677-4aee-9cff-5aba7920f07c",
+      "reason": "Authoring referenced new localization too early and used literal Hotkey references. Strict Data rejected before staging; corrected text-first resource binding author passed."
+    },
+    {
+      "id": "b245628d-74da-467e-82f3-d75c023e7684",
+      "reason": "Native camera requested Y40 and read back Y36; whole suite rejected. Corrected coordinates retained."
+    },
+    {
+      "id": "0fea6718-f658-4652-b436-97043497222e",
+      "reason": "First launch completed both profiles; second attach reported GAME_FRONTEND_EXIT_1073807364. Verifier/controller later absent, no final transcript/result. Per-record manifests recovered locally; whole run remains incomplete. Exit root cause is unknown, not claimed fixed by journals."
+    },
+    {
+      "id": "a6698e6d-4e16-4d87-b111-976e53bf6684",
+      "reason": "Recorder returned fewer than13 frames during a4-second clip. Arbitrary frame-index assertion rejected the run. Replaced with timestamp span and sufficient samples; mechanics and actual body images are independently reviewed. Requested FPS is not guaranteed."
+    },
+    {
+      "id": "6ba080e8-4397-4df7-a08a-3119e6474094",
+      "reason": "Smoke map.inspect used repository root and safely refused a runtime dependency symlink. Correct map workspace passed; failure preserved as real error-journal evidence."
+    }
+  ],
+  "regressions": {
+    "full": {
+      "tests": 1364,
+      "passed": 1363,
+      "failed": 0,
+      "skipped": 1,
+      "concurrency": 4,
+      "sha256": "f5c01927768ecbf7e1dc967b6c37e8998379e712e1a1006aa6fd1842e53a607c"
+    },
+    "compiledFocused": {
+      "tests": 6,
+      "passed": 6,
+      "failed": 0,
+      "sha256": "a8e130315ddcaacacd58a9ecf04f9c890a8a0d7d77a028bd7734f4e545247f58"
+    },
+    "build": "passed",
+    "changedFileEslint": "passed",
+    "maintainedEnglishDocs": 117
+  },
+  "publication": {
+    "newPortable": false,
+    "commitOrPush": false,
+    "privateSdkSourcesOrInstrumentedCopiesPublished": false,
+    "oldPortableNotRefreshed": true
+  },
+  "openCoverage": [
+    "Arbitrary mismatched custom Unit/Weapon/source Actor/Model combinations and remaining supplemental animation fields",
+    "Wider point/projectile/charge/learn/talent/share profiles and isolated sound",
+    "General startup stability including unexplained retained frontend exit",
+    "Complex GUI save/reopen, broad topology/navigation/buildability and final mission art/balance",
+    "New portable build, privacy audit and complete current-revision acceptance"
+  ],
+  "sourceFingerprints": {
+    "scripts/toolkit-suite-journal.mjs": "908c68ae38bae7862b52a62e88d97d4a726bcf1ce6a2ebacb04a9a5855a533bc",
+    "scripts/verify-toolkit-integration.mjs": "68c11bdb6572937b0e7d7fb39e7881afd8a7e225f334774473dff08af9a05baa",
+    "src/tests/suiteJournal.test.ts": "7d57a5cc4be1d77155c35181e7b37a56cbe3837f672b28cf8bdbf2c23e144a86",
+    "src/integrations/game/bridge.ts": "78e3985ff3d2280de340668e28706158519e7d2369342e08183d398b52d2976f",
+    "src/integrations/game/transport.ts": "fb80efac59156e531fbd41f52e5aa951099a76461da224c2467ca223e0902360",
+    "src/integrations/native/bridge.ts": "c1dfaa6a0d28f90d58ec65d4e63100549ff0d80dc56a7c3df4bd19b7f42a2ef2",
+    "src/modules/testing/workspace.ts": "8c67f01667e59cc300a0a466b6f7abc4f525820b59ebd3a614bb00b0e6c587ec",
+    "src/modules/data/actorRecipes.ts": "b24b4108856cae38b013c9c4b03f71c29f5e1c2bbb1d37b7a2657175cbdf9109",
+    "src/modules/data/actorConstruction.ts": "1007dd87032b01f46f00f928d7d4373c72ad7b936b325fcd56f3fd0080193986",
+    "src/modules/data/unitAnimations.ts": "be570fde8b624087f60ce5536194e35b445cced037fc099033bf147baed06583",
+    "src/modules/data/workspace.ts": "dda3a628d7b86a03948d1fff7d2edcd3170d36fe9ee0682a76b83164ede2242c",
+    "src/modules/data/tools.ts": "a1125041f88e45d125b11d2eef497e4a2783bd682b31ebd3c04d963b1d49943e",
+    "src/modules/data/cardBindings.ts": "975bb32d4177f30e7fb87daf1f72fc4a1ffa0b0c108319881ac3352608b301c1",
+    "docs/PROJECT_TESTS.md": "69b7c7f2defd72259e903cb2e20cb975316e97db22a056837a163b072ceab864",
+    "docs/DATA_MCP.md": "c51e8bbd37a64435070cd93e0b3c674dc17318f664bd5dda4ed140342d901750",
+    "docs/AUTHORING_PROTOCOL.md": "2903b1321dc9e38f6a209eb1db9d46b2c280306d6e6ee32f3d2880e91e3c5b11",
+    "AGENTS.md": "9524c9e7e6fa01b910c2bcd19c474d7f3a3b65f2add8975a980ff2b625540910"
+  }
+}

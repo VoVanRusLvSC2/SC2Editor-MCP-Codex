@@ -2,7 +2,8 @@ import {spawn,type ChildProcessWithoutNullStreams} from 'node:child_process';
 import {nativeRelease} from './release.js';
 
 export interface NativeResult {content?:Array<{type:string;text?:string;data?:string;mimeType?:string}>;structuredContent?:Record<string,any>;isError?:boolean}
-export interface NativeClient {start():Promise<void>;call(name:string,args:Record<string,unknown>):Promise<NativeResult>;close():Promise<void>;info():unknown}
+export interface NativeTool {name:string;description:string;inputSchema:Record<string,unknown>}
+export interface NativeClient {start():Promise<void>;call(name:string,args:Record<string,unknown>):Promise<NativeResult>;close():Promise<void>;info():unknown;describe?():NativeTool[]}
 
 /** A retained stdio frontend; native requests are serialized by NativeEditorBridge. */
 export class NativeStdioClient implements NativeClient {
@@ -13,11 +14,13 @@ export class NativeStdioClient implements NativeClient {
   private buffer='';
   private serverInfo?:Record<string,unknown>;
   private tools=new Set<string>();
+  private definitions:NativeTool[]=[];
   constructor(private command:string,private args:string[],private cwd:string){}
   info(){return {connected:!!this.child&&!this.child.killed,server:this.serverInfo,tools:[...this.tools]};}
+  describe(){return this.definitions;}
   start():Promise<void>{return this.starting??=this.connect().catch(error=>{this.starting=undefined;throw error;});}
   private async connect(){
-    this.buffer='';this.tools.clear();this.serverInfo=undefined;
+    this.buffer='';this.tools.clear();this.definitions=[];this.serverInfo=undefined;
     const child=spawn(this.command,this.args,{cwd:this.cwd,windowsHide:true,stdio:['pipe','pipe','pipe']});this.child=child;
     child.stderr.resume(); // Native evidence is retained by the Toolkit, not mixed into MCP stdout.
     const fail=(error:Error)=>{for(const p of this.pending.values())p.reject(error);this.pending.clear();this.starting=undefined;if(this.child===child)this.child=undefined;};
@@ -40,7 +43,7 @@ export class NativeStdioClient implements NativeClient {
       await this.close();throw Error('NATIVE_TOOLKIT_VERSION_MISMATCH: expected '+nativeRelease.version);
     }
     child.stdin.write(JSON.stringify({jsonrpc:'2.0',method:'notifications/initialized'})+'\n');
-    const listed=await this.rpc('tools/list',{});this.tools=new Set(listed.tools.map((tool:{name:string})=>tool.name));
+    const listed=await this.rpc('tools/list',{});this.definitions=listed.tools;this.tools=new Set(listed.tools.map((tool:{name:string})=>tool.name));
   }
   private rpc(method:string,params:unknown):Promise<any>{
     const child=this.child;if(!child)return Promise.reject(Error('NATIVE_NOT_CONNECTED'));

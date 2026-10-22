@@ -1,0 +1,704 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-22T15:54:34.404Z",
+  "scope": "Fresh Agria V115 identity/even-grid geometry: concave bays, two-unit high neck, nearest supported edge margin, deliberate enclosed courtyard/island, and separated level1/2/3 transitions",
+  "source": "work/topology-matrix-20261022/Junctions/.sc2mcp-output/JunctionMatrix.SC2Map",
+  "sourceSha256": "9b8dd984266ce414826884bcdb4c2adef1af0eb5af680ea3c3918fa8153bbe68",
+  "gameBuild": "5.0.17.98310",
+  "authoring": {
+    "foundation": "6faa690d-2280-48b5-96dd-da58d53a4456",
+    "terrain": "c58e9ed4-b293-4259-9277-56be2094b2ca",
+    "actualMcp": true,
+    "parallelShellMapWriter": false
+  },
+  "components": {
+    "source": "work/topology-matrix-20261022/Junctions/.sc2mcp-output/JunctionMatrix.SC2Map",
+    "sha256": "9b8dd984266ce414826884bcdb4c2adef1af0eb5af680ea3c3918fa8153bbe68",
+    "dimensions": [
+      128,
+      96
+    ],
+    "nativeCliffSets": [
+      {
+        "i": "0",
+        "name": "AgriaCliff0"
+      },
+      {
+        "i": "1",
+        "name": "AgriaCliff1"
+      }
+    ],
+    "cliffCellLevels": {
+      "1-2": 421,
+      "2-3": 37
+    },
+    "cliffCornerPatterns": {
+      "1000": 12,
+      "1001": 105,
+      "1011": 4,
+      "1100": 94,
+      "1101": 5,
+      "1110": 6,
+      "0010": 12,
+      "0011": 96,
+      "0001": 10,
+      "0110": 99,
+      "0111": 5,
+      "0100": 10
+    },
+    "ramps": [
+      {
+        "dir": 3,
+        "lo": 1,
+        "hi": 2,
+        "center": [
+          78,
+          17
+        ]
+      },
+      {
+        "dir": 2,
+        "lo": 1,
+        "hi": 2,
+        "center": [
+          24,
+          77
+        ]
+      },
+      {
+        "dir": 3,
+        "lo": 1,
+        "hi": 2,
+        "center": [
+          80,
+          69
+        ]
+      },
+      {
+        "dir": 3,
+        "lo": 2,
+        "hi": 3,
+        "center": [
+          90,
+          69
+        ]
+      }
+    ],
+    "pointLevels": [
+      {
+        "x": 21,
+        "y": 21,
+        "level": 1,
+        "z": 7.999817446399998
+      },
+      {
+        "x": 52,
+        "y": 65,
+        "level": 1,
+        "z": 7.999817446399998
+      },
+      {
+        "x": 53,
+        "y": 69,
+        "level": 2,
+        "z": 9.999909043199999
+      },
+      {
+        "x": 93,
+        "y": 17,
+        "level": 2,
+        "z": 9.999909043199999
+      },
+      {
+        "x": 100,
+        "y": 69,
+        "level": 3,
+        "z": 12.00000064
+      },
+      {
+        "x": 2,
+        "y": 94,
+        "level": 2,
+        "z": 9.999909043199999
+      }
+    ],
+    "scope": "Static component inventory only; does not prove visual closure, native navigation or buildability"
+  },
+  "traversal": {
+    "cleanLaunches": 2,
+    "checks": 56,
+    "groundTypes": [
+      "Marine",
+      "Marauder"
+    ],
+    "sameRetainedBridges": true,
+    "maxObservedDeviation": 1.7763568394002505e-15,
+    "scope": "Observed sampled unit centers and arrival; not authoritative path/collision/buildability or altitude queries"
+  },
+  "runs": [
+    {
+      "jobId": "0489d154-dd16-4749-afc0-7d055b4a458f",
+      "createdAt": "2026-10-22T14:57:38.934Z",
+      "finishedAt": "2026-10-22T15:02:57.041Z",
+      "sourceSha256": "9b8dd984266ce414826884bcdb4c2adef1af0eb5af680ea3c3918fa8153bbe68",
+      "checks": [
+        {
+          "id": "archive",
+          "status": "passed"
+        },
+        {
+          "id": "editor",
+          "status": "passed"
+        },
+        {
+          "id": "map.terrain_load",
+          "status": "passed"
+        },
+        {
+          "id": "map.playable_bounds",
+          "status": "passed"
+        },
+        {
+          "id": "game.launch",
+          "status": "passed"
+        },
+        {
+          "id": "game.build",
+          "status": "passed"
+        },
+        {
+          "id": "route:bayFloorMarine:forward",
+          "status": "passed"
+        },
+        {
+          "id": "route:bayFloorMarine:reverse",
+          "status": "passed"
+        },
+        {
+          "id": "route:bayFloorMarauder:forward",
+          "status": "passed"
+        },
+        {
+          "id": "route:bayFloorMarauder:reverse",
+          "status": "passed"
+        },
+        {
+          "id": "route:neckEntranceMarine:forward",
+          "status": "passed"
+        },
+        {
+          "id": "route:neckEntranceMarine:reverse",
+          "status": "passed"
+        },
+        {
+          "id": "route:neckEntranceMarauder:forward",
+          "status": "passed"
+        },
+        {
+          "id": "route:neckEntranceMarauder:reverse",
+          "status": "passed"
+        },
+        {
+          "id": "route:narrowNeckMarine:forward",
+          "status": "passed"
+        },
+        {
+          "id": "route:narrowNeckMarine:reverse",
+          "status": "passed"
+        },
+        {
+          "id": "route:narrowNeckMarauder:forward",
+          "status": "passed"
+        },
+        {
+          "id": "route:narrowNeckMarauder:reverse",
+          "status": "passed"
+        },
+        {
+          "id": "route:edgeEntranceMarine:forward",
+          "status": "passed"
+        },
+        {
+          "id": "route:edgeEntranceMarine:reverse",
+          "status": "passed"
+        },
+        {
+          "id": "route:edgeEntranceMarauder:forward",
+          "status": "passed"
+        },
+        {
+          "id": "route:edgeEntranceMarauder:reverse",
+          "status": "passed"
+        },
+        {
+          "id": "route:courtyardRimMarine:forward",
+          "status": "passed"
+        },
+        {
+          "id": "route:courtyardRimMarine:reverse",
+          "status": "passed"
+        },
+        {
+          "id": "route:courtyardRimMarauder:forward",
+          "status": "passed"
+        },
+        {
+          "id": "route:courtyardRimMarauder:reverse",
+          "status": "passed"
+        },
+        {
+          "id": "route:tierOuterMarine:forward",
+          "status": "passed"
+        },
+        {
+          "id": "route:tierOuterMarine:reverse",
+          "status": "passed"
+        },
+        {
+          "id": "route:tierOuterMarauder:forward",
+          "status": "passed"
+        },
+        {
+          "id": "route:tierOuterMarauder:reverse",
+          "status": "passed"
+        },
+        {
+          "id": "route:tierInnerMarine:forward",
+          "status": "passed"
+        },
+        {
+          "id": "route:tierInnerMarine:reverse",
+          "status": "passed"
+        },
+        {
+          "id": "route:tierInnerMarauder:forward",
+          "status": "passed"
+        },
+        {
+          "id": "route:tierInnerMarauder:reverse",
+          "status": "passed"
+        },
+        {
+          "id": "view:overview",
+          "status": "passed"
+        },
+        {
+          "id": "view:eastBay",
+          "status": "passed"
+        },
+        {
+          "id": "view:northBay",
+          "status": "passed"
+        },
+        {
+          "id": "view:narrowNeck",
+          "status": "passed"
+        },
+        {
+          "id": "view:edgeCap",
+          "status": "passed"
+        },
+        {
+          "id": "view:courtyardIsland",
+          "status": "passed"
+        },
+        {
+          "id": "view:tierOverview",
+          "status": "passed"
+        },
+        {
+          "id": "view:tierRamp",
+          "status": "passed"
+        },
+        {
+          "id": "game.diagnostics",
+          "status": "inconclusive",
+          "reason": "No unexpected errors observed in available sources; diagnostic coverage is partial"
+        },
+        {
+          "id": "game.capture",
+          "status": "passed"
+        },
+        {
+          "id": "game.cleanup",
+          "status": "passed"
+        },
+        {
+          "id": "artifact.unchanged",
+          "status": "passed"
+        },
+        {
+          "id": "source.unchanged",
+          "status": "passed"
+        }
+      ],
+      "runtime": {
+        "provenance": "pinned_release",
+        "releaseTag": "v0.1.0-dev.11",
+        "archiveSha256": "514096c72332f4d6629dee4a33a092957d3ee02a9c45281bb3a7ad59031c30f3",
+        "verifiedFiles": 113,
+        "binaryOverride": false
+      }
+    },
+    {
+      "jobId": "8369d4db-3049-4c51-8047-32a8bac91e4d",
+      "createdAt": "2026-10-22T15:02:57.268Z",
+      "finishedAt": "2026-10-22T15:08:07.122Z",
+      "sourceSha256": "9b8dd984266ce414826884bcdb4c2adef1af0eb5af680ea3c3918fa8153bbe68",
+      "checks": [
+        {
+          "id": "archive",
+          "status": "passed"
+        },
+        {
+          "id": "editor",
+          "status": "passed"
+        },
+        {
+          "id": "map.terrain_load",
+          "status": "passed"
+        },
+        {
+          "id": "map.playable_bounds",
+          "status": "passed"
+        },
+        {
+          "id": "game.launch",
+          "status": "passed"
+        },
+        {
+          "id": "game.build",
+          "status": "passed"
+        },
+        {
+          "id": "route:bayFloorMarine:forward",
+          "status": "passed"
+        },
+        {
+          "id": "route:bayFloorMarine:reverse",
+          "status": "passed"
+        },
+        {
+          "id": "route:bayFloorMarauder:forward",
+          "status": "passed"
+        },
+        {
+          "id": "route:bayFloorMarauder:reverse",
+          "status": "passed"
+        },
+        {
+          "id": "route:neckEntranceMarine:forward",
+          "status": "passed"
+        },
+        {
+          "id": "route:neckEntranceMarine:reverse",
+          "status": "passed"
+        },
+        {
+          "id": "route:neckEntranceMarauder:forward",
+          "status": "passed"
+        },
+        {
+          "id": "route:neckEntranceMarauder:reverse",
+          "status": "passed"
+        },
+        {
+          "id": "route:narrowNeckMarine:forward",
+          "status": "passed"
+        },
+        {
+          "id": "route:narrowNeckMarine:reverse",
+          "status": "passed"
+        },
+        {
+          "id": "route:narrowNeckMarauder:forward",
+          "status": "passed"
+        },
+        {
+          "id": "route:narrowNeckMarauder:reverse",
+          "status": "passed"
+        },
+        {
+          "id": "route:edgeEntranceMarine:forward",
+          "status": "passed"
+        },
+        {
+          "id": "route:edgeEntranceMarine:reverse",
+          "status": "passed"
+        },
+        {
+          "id": "route:edgeEntranceMarauder:forward",
+          "status": "passed"
+        },
+        {
+          "id": "route:edgeEntranceMarauder:reverse",
+          "status": "passed"
+        },
+        {
+          "id": "route:courtyardRimMarine:forward",
+          "status": "passed"
+        },
+        {
+          "id": "route:courtyardRimMarine:reverse",
+          "status": "passed"
+        },
+        {
+          "id": "route:courtyardRimMarauder:forward",
+          "status": "passed"
+        },
+        {
+          "id": "route:courtyardRimMarauder:reverse",
+          "status": "passed"
+        },
+        {
+          "id": "route:tierOuterMarine:forward",
+          "status": "passed"
+        },
+        {
+          "id": "route:tierOuterMarine:reverse",
+          "status": "passed"
+        },
+        {
+          "id": "route:tierOuterMarauder:forward",
+          "status": "passed"
+        },
+        {
+          "id": "route:tierOuterMarauder:reverse",
+          "status": "passed"
+        },
+        {
+          "id": "route:tierInnerMarine:forward",
+          "status": "passed"
+        },
+        {
+          "id": "route:tierInnerMarine:reverse",
+          "status": "passed"
+        },
+        {
+          "id": "route:tierInnerMarauder:forward",
+          "status": "passed"
+        },
+        {
+          "id": "route:tierInnerMarauder:reverse",
+          "status": "passed"
+        },
+        {
+          "id": "view:overview",
+          "status": "passed"
+        },
+        {
+          "id": "view:eastBay",
+          "status": "passed"
+        },
+        {
+          "id": "view:northBay",
+          "status": "passed"
+        },
+        {
+          "id": "view:narrowNeck",
+          "status": "passed"
+        },
+        {
+          "id": "view:edgeCap",
+          "status": "passed"
+        },
+        {
+          "id": "view:courtyardIsland",
+          "status": "passed"
+        },
+        {
+          "id": "view:tierOverview",
+          "status": "passed"
+        },
+        {
+          "id": "view:tierRamp",
+          "status": "passed"
+        },
+        {
+          "id": "game.diagnostics",
+          "status": "inconclusive",
+          "reason": "No unexpected errors observed in available sources; diagnostic coverage is partial"
+        },
+        {
+          "id": "game.capture",
+          "status": "passed"
+        },
+        {
+          "id": "game.cleanup",
+          "status": "passed"
+        },
+        {
+          "id": "artifact.unchanged",
+          "status": "passed"
+        },
+        {
+          "id": "source.unchanged",
+          "status": "passed"
+        }
+      ],
+      "runtime": {
+        "provenance": "pinned_release",
+        "releaseTag": "v0.1.0-dev.11",
+        "archiveSha256": "514096c72332f4d6629dee4a33a092957d3ee02a9c45281bb3a7ad59031c30f3",
+        "verifiedFiles": 113,
+        "binaryOverride": false
+      }
+    }
+  ],
+  "views": {
+    "primary": [
+      {
+        "jobId": "0489d154-dd16-4749-afc0-7d055b4a458f",
+        "ids": [
+          "overview",
+          "eastBay",
+          "northBay",
+          "narrowNeck",
+          "edgeCap",
+          "courtyardIsland",
+          "tierOverview",
+          "tierRamp"
+        ]
+      },
+      {
+        "jobId": "8369d4db-3049-4c51-8047-32a8bac91e4d",
+        "ids": [
+          "overview",
+          "eastBay",
+          "northBay",
+          "narrowNeck",
+          "edgeCap",
+          "courtyardIsland",
+          "tierOverview",
+          "tierRamp"
+        ]
+      }
+    ],
+    "additional": {
+      "jobId": "b6801840-e899-457e-86f3-ebd03bd1a42c",
+      "createdAt": "2026-10-22T15:44:52.229Z",
+      "finishedAt": "2026-10-22T15:45:22.647Z",
+      "sourceSha256": "9b8dd984266ce414826884bcdb4c2adef1af0eb5af680ea3c3918fa8153bbe68",
+      "checks": [
+        {
+          "id": "archive",
+          "status": "passed"
+        },
+        {
+          "id": "map.terrain_load",
+          "status": "passed"
+        },
+        {
+          "id": "game.launch",
+          "status": "passed"
+        },
+        {
+          "id": "game.build",
+          "status": "passed"
+        },
+        {
+          "id": "view:wholeMap",
+          "status": "passed"
+        },
+        {
+          "id": "view:courtyardReverse",
+          "status": "passed"
+        },
+        {
+          "id": "view:tierRampReverse",
+          "status": "passed"
+        },
+        {
+          "id": "game.diagnostics",
+          "status": "inconclusive",
+          "reason": "No unexpected errors observed in available sources; diagnostic coverage is partial"
+        },
+        {
+          "id": "game.cleanup",
+          "status": "passed"
+        },
+        {
+          "id": "artifact.unchanged",
+          "status": "passed"
+        },
+        {
+          "id": "source.unchanged",
+          "status": "passed"
+        }
+      ],
+      "runtime": {
+        "provenance": "pinned_release",
+        "releaseTag": "v0.1.0-dev.11",
+        "archiveSha256": "514096c72332f4d6629dee4a33a092957d3ee02a9c45281bb3a7ad59031c30f3",
+        "verifiedFiles": 113,
+        "binaryOverride": false
+      }
+    },
+    "visualReview": "Reviewed primary detail images and fresh opposite courtyard/ramp faces: no black cap gaps observed. Deliberate low courtyard and high island remain intact. Whole-map framing is separate from geometric correctness.",
+    "firstOverview": "Delivered and read back, but clipped the near/far rows; retained as unsuitable for whole-map review"
+  },
+  "retainedFailures": [
+    {
+      "jobs": [
+        "2b92a051-6381-4daf-ad86-768296cabfe7",
+        "1733d30e-c207-44ef-81dc-f4bd8364df4a"
+      ],
+      "failure": "GUI generation/compile requested on an empty Triggers root with separately connected Galaxy. Native load passed; compile required an authored context. Native-GUI compilation of that source remains unverified; geometry checks use native load plus actual saved-script gameplay."
+    },
+    {
+      "jobId": "e6280fbe-7b83-45d7-9f29-647c73c6bad2",
+      "failure": "Requested distance260 was read back as4. The verifier rejected that whole-map view. Reverse detail images passed within the failed suite; corrected suite retained separately. No native camera-setter fix is claimed."
+    },
+    {
+      "jobId": "8121d8bc-dde5-4c2f-918d-18e7f755c576",
+      "failure": "Distance230 readback passed, but the whole view still cropped the long map axis. A later yaw270 frame shows all map edges; image inspection is independent of camera transport."
+    }
+  ],
+  "editorAndGame": {
+    "editorLoad": true,
+    "editorGuiCompile": false,
+    "gameExecutedSavedScript": true,
+    "diagnostics": "Optional game diagnostics remain partial/inconclusive",
+    "sourceAndArtifactUnchanged": true,
+    "cleanup": true
+  },
+  "regressions": {
+    "tests": 85,
+    "pass": 85,
+    "fail": 0,
+    "skipped": 0,
+    "tapSha256": "c6d036894bb42b11aaaab91ccb294b738e87ac484d42d2944befeb9d03361988"
+  },
+  "openCoverage": [
+    "Saddle and void joins, multi-level jumps, other cliff sets and ramp widths/diagonals",
+    "Whole-engine navigation/collision rebuild and authoritative path/buildability queries",
+    "Complete footprints/formations, general camera distance range and final art acceptance",
+    "Native GUI generation/compile of standalone Galaxy sources with an empty authored tree"
+  ],
+  "sourceFingerprints": {
+    "src/modules/terrain/nativeGeometry.ts": "92fcc23262ecf992bf11d0b4e36421291e03d2dc5282d7b1dcab899250b27856",
+    "src/modules/terrain/cliffProfile.ts": "8df1b3e0bb0e7afada06dbda553a03d7e27070a2d899eb85f9091589c25a24ce",
+    "src/modules/terrain/rampProfile.ts": "41ff58ebda4f30e9a219d72f817f479838283513dbfda855b000a327ef76d8bd",
+    "src/modules/terrain/operations.ts": "9eecdfc0b16d730b32a056548f1701ef52df8117fc75e901aa2e1a4a60d56598",
+    "src/modules/testing/schemas.ts": "66505d47a27d8f8b9725ae1fcdac1c74b4cccaf195978a44c2bbe8663e6999db",
+    "src/modules/testing/workspace.ts": "dee1b0877fbfc0833bdadbc1776a659f428fd84babe3f86d56a5abff605b12e2"
+  },
+  "frozenRunner": {
+    "portable": "release/SC2EditorToolkit-JunctionContext-20261022",
+    "privacy": {
+      "passed": true,
+      "checkedFiles": 9955,
+      "privateSourceFiles": 60,
+      "privateCorpusCompared": true,
+      "violations": []
+    },
+    "testedSourceManifestSha256": "1325e61b6127bd6e1ec874dcd2e009346f591b96278221772f13e88443ee5279",
+    "compiledFiles": {
+      "dist/modules/testing/schemas.js": "e3be6d518cbadabeda624cbcc6bc56ff68beeaba732dd4978971afd6339ee15b",
+      "dist/modules/testing/workspace.js": "1140463d84349112b612b2da2c97ffca72f4f6d6888c4cb808a3f0965c071f2e",
+      "dist/integrations/native/bridge.js": "ec4388f9d1129f373acc681a517ad6533473baf44e5b2f4267bc3b25ed4709ee",
+      "scripts/run-map-tests.mjs": "f5e0ddd70f988dd0c7a4147d1c1164b3231925f6098146c9b24fefe343022437",
+      "dist/modules/terrain/nativeGeometry.js": "1770c3eefbca6c30eca93c7fbb9a58b0ceb19954ed1342cab060ca92df4b2271"
+    }
+  }
+}

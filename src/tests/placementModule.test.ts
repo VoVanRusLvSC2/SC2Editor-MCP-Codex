@@ -29,6 +29,18 @@ test("PlacementDocument adds Unit and Doodad using their real distinct type attr
   assert.match(document.source, /<ObjectDoodad[^>]*Type="AgriaTree"/);
   assert.equal(document.validate().length, 0);
 });
+test('mixed batches retain every placement and return one candidate per resolved catalog entry',async()=>{
+ const f=await fixture();
+ try {
+  const objects=[...Array.from({length:20},(_,x)=>({kind:'Unit' as const,id:'Marine',position:{x,y:2,z:0},owner:1})),{kind:'Doodad' as const,id:'AgriaTree',position:{x:25,y:2,z:0}}];
+  const plan=await f.placement.addBatch({objects});
+  assert.equal(plan.operations.length,21);assert.equal(plan.operations.filter(o=>o.op==='add'&&o.object.catalogId==='Marine').length,20);
+  assert.equal(plan.candidates.length,2);assert.deepEqual(new Set(plan.candidates.map(c=>c.id)),new Set(['Marine','AgriaTree']));
+  const before=new PlacementDocument(await fs.readFile(path.join(f.root,'Objects'),'utf8')).list().length;
+  await f.placement.apply(plan.id,{dryRun:false,stage:false,backup:false});
+  assert.equal(new PlacementDocument(await fs.readFile(path.join(f.root,'Objects'),'utf8')).list().length,before+21);
+ }finally{await fs.rm(f.root,{recursive:true,force:true});}
+});
 
 test("line, grid, circle and seeded scatter planners are deterministic", () => {
   const origin = { x: 0, y: 0, z: 0 };

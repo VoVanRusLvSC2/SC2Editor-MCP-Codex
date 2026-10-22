@@ -1,0 +1,18 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {DataDocument} from '../modules/data/document.js';
+import {inspectEffectPresentation,presentationSchema} from '../modules/data/presentation.js';
+const declarations=(xml:string)=>new DataDocument(xml).objects().map(o=>({...o,file:'GameData/Presentation.xml'}));
+test('effect presentation audit distinguishes sound, unrelated prefixes and declared model bindings',()=>{
+ const objects=declarations('<Catalog><CEffectDamage id="Wave"/><CModel id="Ring"><Model value="Ring.m3"/></CModel><CActorSound id="Sound"><On Terms="Effect.Wave.Start" Send="Create"/></CActorSound><CActorModel id="Other"><Model value="Ring"/><On Terms="Effect.WaveExtra.Start" Send="Create"/></CActorModel></Catalog>');
+ const noVisual=inspectEffectPresentation(objects,{effects:['Wave']});assert.equal(noVisual.effects[0].presentation,'no_declared_visual_binding');assert.equal(noVisual.effects[0].bindings.length,1);
+ const visual=declarations('<Catalog><CActorModel id="RingActor"><Model value="Ring"/><On Terms="Effect.Wave.Start; At Source" Send="Create"/><On Terms="Effect.Wave.Stop" Send="AnimBracketStop BSD"/><Host Subject="_Selectable"/><HostSiteOps Ops="SOpShadow"/></CActorModel></Catalog>');
+ const linked=inspectEffectPresentation([...objects,...visual],{effects:['Wave']});assert.equal(linked.effects[0].presentation,'declared_links_found');assert.equal(linked.nativePlayback,'not_checked');
+ const a=linked.effects[0].bindings.find(a=>a.actor==='RingActor')!;assert.equal(a.events.length,2);assert.equal(a.siteOps,'SOpShadow');assert.equal(a.assetResolution,'not_checked');
+});
+test('missing models and inherited-only bindings are review findings, with explicit invisible exceptions',()=>{
+ const objects=declarations('<Catalog><CEffectDamage id="Pulse"/><CActorModel id="A" parent="Template"><Model value="Missing"/><On Terms="Effect.Pulse.Stop" Send="Create"/></CActorModel></Catalog>');
+ const r=inspectEffectPresentation(objects,{effects:['Pulse']});assert.equal(r.effects[0].presentation,'needs_resolution');assert.equal(r.effects[0].bindings[0].modelDeclaration,'unresolved');
+ const hidden=inspectEffectPresentation(objects,{effects:['Pulse'],invisible:[{effect:'Pulse',reason:'Internal targeting helper'}]});assert.equal(hidden.effects[0].presentation,'intentionally_invisible');assert.equal(hidden.effects[0].bindings.length,1);
+ assert.throws(()=>presentationSchema.parse({effects:['Pulse'],invisible:[{effect:'Other',reason:'helper'}]}));
+});

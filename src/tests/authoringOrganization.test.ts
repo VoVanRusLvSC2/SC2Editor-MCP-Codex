@@ -16,9 +16,9 @@ test('nested GUI folders reuse IDs and preserve executable XML and other librari
  const external='<Library Id="Other"><Root/><Element Type="Trigger" Id="11111111"><Identifier>Other</Identifier></Element></Library>';
  const source='<TriggerData><Root><Item Type="Trigger" Id="11111111"/></Root>'+executable+external+'</TriggerData>';
  const args={genre:'mission' as const,assignments:[{type:'Trigger' as const,id:'11111111',folder:'GAMEPLAY/WAVES'}]};
- const first=organizeTriggerXml(source,args);assert.equal(first.created.length,6);assert.equal(first.moved.length,1);assert.ok(first.xml.includes(executable));assert.ok(first.xml.includes(external));assert.equal(first.issues.length,0);
+ const first=organizeTriggerXml(source,args);assert.equal(first.created.length,2);assert.equal(first.moved.length,1);assert.ok(first.xml.includes(executable));assert.ok(first.xml.includes(external));assert.equal(first.issues.length,0);
  const second=organizeTriggerXml(first.xml,args);assert.equal(second.changed,false);assert.equal(second.created.length,0);assert.equal(second.moved.length,0);assert.deepEqual(second.folders,first.folders);
- assert.throws(()=>organizeTriggerXml(source,{folders:['UI']}),/MISSION_ROOT/);
+ assert.deepEqual(organizeTriggerXml(source,{folders:['UI']}).folders.map(f=>f.path),['UI']);
  assert.throws(()=>organizeTriggerXml(source,{folders:['GAMEPLAY/MISC']}),/Catch-all/);
 });
 
@@ -46,7 +46,7 @@ test('GUI organization localizes folders, dry-runs, stages atomically and reject
  const root=await fs.mkdtemp(path.join(os.tmpdir(),'sc2-organize-'));t.after(()=>fs.rm(root,{recursive:true,force:true}));
  await fs.writeFile(path.join(root,'Triggers'),'<TriggerData><Root/></TriggerData>');
  const ws=new Workspace(root),triggers=new TriggerWorkspace(ws);
- const dry=await triggers.organize({folders:['GAMEPLAY/AI']});assert.equal(dry.created.length,6);assert.equal(ws.draftFiles().length,0);
+ const dry=await triggers.organize({folders:['GAMEPLAY/AI']});assert.equal(dry.created.length,2);assert.equal(ws.draftFiles().length,0);
  await triggers.organize({folders:['GAMEPLAY/AI'],dryRun:false});
  assert.ok((await ws.readRaw('enUS.SC2Data/LocalizedData/TriggerStrings.txt')).text.includes('=GAMEPLAY'));
  await fs.appendFile(path.join(root,'Triggers'),'\n');await assert.rejects(ws.save('Triggers'),/STALE/);
@@ -60,6 +60,23 @@ test('Galaxy is default and existing source and manifest ownership survive repea
  assert.equal(await fs.readFile(file,'utf8'),'// Manual source\nvoid Waves() {}\n');assert.equal((await checkProjectOrganization(ws)).status,'pass');
  const manifest=JSON.parse(await fs.readFile(path.join(root,'.sc2mcp/organization.json'),'utf8'));assert.ok(manifest.systems.includes('GAMEPLAY/WAVES'));assert.ok(manifest.files.some((f:{file:string})=>f.file==='Scripts/GAMEPLAY/WAVES/Module.galaxy'));
  assert.equal(await fs.stat(path.join(root,'Triggers')).catch(()=>null),null);
+});
+
+test('five folders are a default suggestion, while explicit and existing organization override it',async t=>{
+ const empty='<TriggerData><Root/></TriggerData>';
+ assert.equal(organizeTriggerXml(empty,{}).folders.length,5);
+ for(const count of [3,7]){
+  const folders=Array.from({length:count},(_,i)=>`SYSTEM_${i}`);
+  const result=organizeTriggerXml(empty,{folders});
+  assert.deepEqual(result.folders.map(f=>f.path),folders);
+  assert.equal(organizeTriggerXml(result.xml,{}).changed,false);
+ }
+ const root=await fs.mkdtemp(path.join(os.tmpdir(),'sc2-custom-org-'));t.after(()=>fs.rm(root,{recursive:true,force:true}));
+ const ws=new Workspace(root),trigger=new TriggerWorkspace(ws);
+ await organizeProject(ws,trigger,{folders:['STARTUP','ROUNDS','UI'],dryRun:false});
+ const checked=await checkProjectOrganization(ws);assert.equal(checked.status,'pass');
+ assert.deepEqual('systems' in checked?checked.systems:[],['STARTUP','ROUNDS','UI']);
+ const again=await organizeProject(ws,trigger,{dryRun:false});assert.ok('systems' in again);if('systems' in again)assert.deepEqual(again.systems,['STARTUP','ROUNDS','UI']);
 });
 
 test('catalog pagination is complete, typed and bounded, including compressed data',async()=>{

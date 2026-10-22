@@ -1,0 +1,427 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-22T11:39:59.659Z",
+  "scope": "Finite channeled target ability and main Ghost Actor phase lifecycle on SC2 5.0.17.98310; not universal Model playback or a finished mission art verdict",
+  "implementation": {
+    "timingTools": [
+      "data.ability.instant",
+      "data.ability.target",
+      "data.apply recipe.instantAbility/targetAbility",
+      "modkit.author"
+    ],
+    "options": [
+      "castIntroTime",
+      "castOutroTime",
+      "finishTime"
+    ],
+    "semantics": "Explicit native level0 overrides; zero is retained, omission preserves source timing. Invalid values reject before mutation. A cast timing alone is not a channeled effect.",
+    "animationReceipt": "Logical primary/supplemental resources and hashes/build keys, bounded by8 assets; nativePlayback remains not_checked in authoring receipts"
+  },
+  "mcp": {
+    "authorId": "eb20e9d6-e652-4979-940a-8006ae55ed9a",
+    "compactSave": true,
+    "trueNativeTimingIndices": {
+      "CastIntroTime[0]": 1,
+      "CastOutroTime[0]": 0,
+      "FinishTime[0]": 2
+    },
+    "assets": [
+      {
+        "resource": "Assets\\Units\\Terran\\GhostEx3\\GhostEx3.m3",
+        "sha256": "47e87fa310117f14a292eeee653d14e9875f8121060d4db0e46f60b09c35b4ad",
+        "build": "1d231af579faf03e61a364722a3b87b4"
+      },
+      {
+        "resource": "Assets\\Units\\Terran\\Ghost_SwarmAnims\\Ghost_SwarmAnims.m3a",
+        "sha256": "afb5fdd65ed19a5f711c8bd0b815b142a79554f302cb69951f3bb37ece0f7376",
+        "build": "1d231af579faf03e61a364722a3b87b4"
+      }
+    ],
+    "ordinaryMapWrites": "Actual MCP import, Data recipes/operations, compact timing authoring, Text edits, save and export",
+    "pilotAuthorEnvelope": {
+      "id": "f95c1a0c-af40-48c1-b44e-06cc5097bd4b",
+      "outcome": "incomplete_or_failed",
+      "reason": "All author/save/export cases passed. The harness mistakenly declared its intentionally edited catalog as an immutable source; sourceUnchanged correctly returned false. Corrected timed authoring pins the earlier ordinary archive and passes."
+    }
+  },
+  "native": {
+    "suiteId": "1340bdb3-5956-467d-bd98-fd7003be10f8",
+    "gameToolkit": "v0.1.0-dev.11",
+    "gameBuild": "5.0.17.98310",
+    "ordinaryArchiveSha256": "25a0b3a5784b20bea2545b4678516d13ae160d230fdef423b25f07760a8edd21",
+    "cleanLaunches": 3,
+    "retainedBridgeAcrossLaunches": true,
+    "all47CasesPassed": true,
+    "sourceUnchanged": true,
+    "allSessionsDetached": true,
+    "originalEditor": {
+      "jobId": "283a8f06-3771-492d-ad79-ef525b512ed5",
+      "load": "passed",
+      "compile": "passed",
+      "saveReopen": "not_checked"
+    },
+    "naturalCompletion": {
+      "ticks": 6,
+      "damagePerTick": 50,
+      "totalDamage": 300,
+      "targetLife": 1700,
+      "preparationSeconds": 1,
+      "finishSeconds": 2
+    },
+    "cancelAndRecast": {
+      "targetLifeAfterCancel": 1900,
+      "noDamageAfterCancelEvent": true,
+      "targetLifeAfterRecast": 1600,
+      "fullRecastDamage": 300,
+      "orderClears": true,
+      "casterLife": 1000
+    },
+    "finishMovement": {
+      "target": {
+        "x": 27,
+        "y": 36
+      },
+      "reached": true,
+      "normalMoveOrder": true
+    },
+    "media": [
+      {
+        "label": "complete",
+        "frames": 68,
+        "outputs": {
+          "video": {
+            "file": "work/launch-diagnostics-20261022/Phase-complete-video.mp4",
+            "sha256": "566b72be0be7d3066e547ee5c6122c0cee3b07493f7153653d0efbeb01140e02",
+            "bytes": 745673
+          },
+          "audio": {
+            "file": "work/launch-diagnostics-20261022/Phase-complete-audio.wav",
+            "sha256": "bf693ff63f8387212fe54a8ae5fcd9101ca59ecc26e3321dd20ff87af9f7610e",
+            "bytes": 3876700
+          },
+          "before": {
+            "file": "work/launch-diagnostics-20261022/Phase-complete-before.png",
+            "sha256": "417b7690e68a80875584c3bbe6bb4551d45c4f9da0a1734fc33e87d158a30245",
+            "bytes": 1535582,
+            "gameTime": 3.75
+          },
+          "after": {
+            "file": "work/launch-diagnostics-20261022/Phase-complete-after.png",
+            "sha256": "c53efb9d12404566db787bee754997df14079b40b64161c7360182fcb3fae809",
+            "bytes": 1535392,
+            "gameTime": 12.625
+          },
+          "cast": {
+            "file": "work/launch-diagnostics-20261022/Phase-complete-cast.png",
+            "sha256": "84dcc09e882a65dcb77393d68e1cd6a455dcde208a351252f8b68254e85b7afa",
+            "bytes": 1532748,
+            "gameTime": 5.25
+          },
+          "channel": {
+            "file": "work/launch-diagnostics-20261022/Phase-complete-channel.png",
+            "sha256": "c080b6ad53b35c3fc0a265d30d8457c6d413c2a6f2af497548053646418aced2",
+            "bytes": 1532541,
+            "gameTime": 7.375
+          },
+          "finish": {
+            "file": "work/launch-diagnostics-20261022/Phase-complete-finish.png",
+            "sha256": "ef0a28c09cfac5f511bc6ee44d5270120657f5b02889b06f8640a44eb14509f5",
+            "bytes": 1530850,
+            "gameTime": 10.125
+          }
+        },
+        "phaseTimes": {
+          "3": 4.8125,
+          "4": 5.8125,
+          "5": 8.875,
+          "-6": 10.875
+        },
+        "damage": [
+          {
+            "sequence": 12,
+            "gameTime": 6.25,
+            "amount": 50
+          },
+          {
+            "sequence": 13,
+            "gameTime": 6.75,
+            "amount": 50
+          },
+          {
+            "sequence": 14,
+            "gameTime": 7.25,
+            "amount": 50
+          },
+          {
+            "sequence": 15,
+            "gameTime": 7.75,
+            "amount": 50
+          },
+          {
+            "sequence": 16,
+            "gameTime": 8.25,
+            "amount": 50
+          },
+          {
+            "sequence": 17,
+            "gameTime": 8.75,
+            "amount": 50
+          }
+        ],
+        "cancellation": [],
+        "diagnostics": {
+          "reportedProblems": [],
+          "coverage": "partial",
+          "unavailable": [
+            {
+              "source": "SoundDecoder",
+              "reason": "Post-handshake FMOD object observer armed; no SoundI.getOpenState call observed yet. Static FMOD 4.44.50 located, but native result observation unavailable: created=3, enabled=0, MH_ERROR_MEMORY_PROTECT"
+            }
+          ]
+        },
+        "audio": {
+          "status": "ok",
+          "nonzero": 938284,
+          "peak": 0.0025292416103184223,
+          "scope": "Owned-process mixed audio, not isolated ability sound"
+        }
+      },
+      {
+        "label": "cancel",
+        "frames": 29,
+        "outputs": {
+          "video": {
+            "file": "work/launch-diagnostics-20261022/Phase-cancel-video.mp4",
+            "sha256": "0d300ca5cd6e822120dccae2b1691a547a25c0c6f861fad09a920c8c69db6831",
+            "bytes": 543957
+          },
+          "audio": {
+            "file": "work/launch-diagnostics-20261022/Phase-cancel-audio.wav",
+            "sha256": "cf92031bb2add915218f67104b51fd29c589a5bb9f9f36c4fd36b059acf06780",
+            "bytes": 1807900
+          },
+          "before": {
+            "file": "work/launch-diagnostics-20261022/Phase-cancel-before.png",
+            "sha256": "386eda3ce37e566c54ff666b152be4a483e60ddc4c710e510d13033e350ca029",
+            "bytes": 1532133,
+            "gameTime": 5.5
+          },
+          "after": {
+            "file": "work/launch-diagnostics-20261022/Phase-cancel-after.png",
+            "sha256": "85e8ca3b3a9222b312a73177ba049f3dde129f6961ed82659e4e4a2dadf7932c",
+            "bytes": 1533401,
+            "gameTime": 9.625
+          }
+        },
+        "phaseTimes": {},
+        "damage": [
+          {
+            "sequence": 13,
+            "gameTime": 5.5,
+            "amount": 50
+          }
+        ],
+        "cancellation": [
+          {
+            "sequence": 14,
+            "gameTime": 5.625
+          }
+        ],
+        "diagnostics": {
+          "reportedProblems": [],
+          "coverage": "partial",
+          "unavailable": [
+            {
+              "source": "SoundDecoder",
+              "reason": "Post-handshake FMOD object observer armed; no SoundI.getOpenState call observed yet. Static FMOD 4.44.50 located, but native result observation unavailable: created=3, enabled=0, MH_ERROR_MEMORY_PROTECT"
+            }
+          ]
+        },
+        "audio": {
+          "status": "ok",
+          "nonzero": 430912,
+          "peak": 0.0025734223891049623,
+          "scope": "Owned-process mixed audio, not isolated ability sound"
+        }
+      },
+      {
+        "label": "recast",
+        "frames": 66,
+        "outputs": {
+          "video": {
+            "file": "work/launch-diagnostics-20261022/Phase-recast-video.mp4",
+            "sha256": "4bab6e1fa95e8f34de1bcbdd83d33a0eadfbedb558bfd8e734550d09f664bd55",
+            "bytes": 729780
+          },
+          "audio": {
+            "file": "work/launch-diagnostics-20261022/Phase-recast-audio.wav",
+            "sha256": "8e5d429295674a94887170d10fa6479a5fd0bb1c8baac7d2e9f5e17f89c92c6b",
+            "bytes": 3567436
+          },
+          "before": {
+            "file": "work/launch-diagnostics-20261022/Phase-recast-before.png",
+            "sha256": "9f1c64c00937cfaf192096f86f5549a92ef7bfeb727465d67d7ce7d861d46ad3",
+            "bytes": 1534072,
+            "gameTime": 11.75
+          },
+          "after": {
+            "file": "work/launch-diagnostics-20261022/Phase-recast-after.png",
+            "sha256": "6a139d59a83e2f7649aaef678ad3b6828a689e8de302c34e12ef36568fda7138",
+            "bytes": 1534807,
+            "gameTime": 20
+          }
+        },
+        "phaseTimes": {
+          "3": 11.875,
+          "4": 12.875,
+          "5": 15.9375,
+          "-6": 17.9375
+        },
+        "damage": [
+          {
+            "sequence": 25,
+            "gameTime": 13.3125,
+            "amount": 50
+          },
+          {
+            "sequence": 26,
+            "gameTime": 13.8125,
+            "amount": 50
+          },
+          {
+            "sequence": 27,
+            "gameTime": 14.3125,
+            "amount": 50
+          },
+          {
+            "sequence": 28,
+            "gameTime": 14.8125,
+            "amount": 50
+          },
+          {
+            "sequence": 29,
+            "gameTime": 15.3125,
+            "amount": 50
+          },
+          {
+            "sequence": 30,
+            "gameTime": 15.8125,
+            "amount": 50
+          }
+        ],
+        "cancellation": [],
+        "diagnostics": {
+          "reportedProblems": [],
+          "coverage": "partial",
+          "unavailable": [
+            {
+              "source": "SoundDecoder",
+              "reason": "Post-handshake FMOD object observer armed; no SoundI.getOpenState call observed yet. Static FMOD 4.44.50 located, but native result observation unavailable: created=3, enabled=0, MH_ERROR_MEMORY_PROTECT"
+            }
+          ]
+        },
+        "audio": {
+          "status": "ok",
+          "nonzero": 864014,
+          "peak": 0.0025615044869482517,
+          "scope": "Owned-process mixed audio, not isolated ability sound"
+        }
+      },
+      {
+        "label": "walk",
+        "frames": 27,
+        "outputs": {
+          "video": {
+            "file": "work/launch-diagnostics-20261022/Phase-walk-video.mp4",
+            "sha256": "58145a7bd7c25bb88b23424ae3e7c8038dab7128bb8f0ceb08ae380931c4d6bc",
+            "bytes": 534151
+          },
+          "audio": {
+            "file": "work/launch-diagnostics-20261022/Phase-walk-audio.wav",
+            "sha256": "484753ec99a8a059e9fe2bf0617ff371593a32d492c51e1993f2c11847087862",
+            "bytes": 1629364
+          },
+          "before": {
+            "file": "work/launch-diagnostics-20261022/Phase-walk-before.png",
+            "sha256": "7f6b68f3bd1b208927827e011cc8d0e2e33ac6907cecdb5ffc0f17213ba40168",
+            "bytes": 1530871,
+            "gameTime": 8.625
+          },
+          "after": {
+            "file": "work/launch-diagnostics-20261022/Phase-walk-after.png",
+            "sha256": "2bbd4615c605300a4646bb34dac45086b8fa37a3fb112f3727d5ad41b6b0f07f",
+            "bytes": 1536445,
+            "gameTime": 12.375
+          },
+          "moving": {
+            "file": "work/launch-diagnostics-20261022/Phase-walk-moving.png",
+            "sha256": "8e68fe0f64a85e73255717588605b9acf118e3f019e23765acdd30aee69591c4",
+            "bytes": 1537349,
+            "gameTime": 9.5
+          }
+        },
+        "phaseTimes": {},
+        "damage": [],
+        "cancellation": [
+          {
+            "sequence": 19,
+            "gameTime": 8.75
+          }
+        ],
+        "diagnostics": {
+          "reportedProblems": [],
+          "coverage": "partial",
+          "unavailable": [
+            {
+              "source": "SoundDecoder",
+              "reason": "Post-handshake FMOD object observer armed; no SoundI.getOpenState call observed yet. Static FMOD 4.44.50 located, but native result observation unavailable: created=3, enabled=0, MH_ERROR_MEMORY_PROTECT"
+            }
+          ]
+        },
+        "audio": {
+          "status": "ok",
+          "nonzero": 375870,
+          "peak": 0.0017935044597834349,
+          "scope": "Owned-process mixed audio, not isolated ability sound"
+        }
+      }
+    ],
+    "visualReview": "Ghost cast transition, sustained aim/laser during channel, recovery and moving-body frames reviewed. Scoped profile behavior, not a native current-animation-name/sequence-ID readback or all-model animation certification.",
+    "diagnostics": "No warning/error messages in the available recording diagnostics; sources remain partial. SoundDecoder is unavailable with MH_ERROR_MEMORY_PROTECT. Mixed owned audio capture is nonzero; isolated cast/channel/finish sound is unverified."
+  },
+  "regressions": {
+    "tests": 1351,
+    "pass": 1350,
+    "fail": 0,
+    "skipped": 1,
+    "concurrency": 4,
+    "sha256": "68fb277d29a7066bbf6a4e0a681ca9468e170022bb81296432c99157b4909c83",
+    "eslint": "passed",
+    "maintainedEnglishDocs": "passed"
+  },
+  "publication": {
+    "newPortable": false,
+    "lastFrozenPortable": "SC2EditorToolkit-MainActor-dev11-20261022 remains the prior snapshot; no updated code publication or SDK edits this turn",
+    "privateSourcesOrInstrumentedMapsPublished": false
+  },
+  "openCoverage": [
+    "Death during channel and native cleanup on other Models or animation variants",
+    "Point/projectile/charge/learn/talent/share profiles and broader conditional/layered semantics",
+    "Isolated ability sound and unavailable SoundDecoder observation",
+    "Complex typed GUI save/reopen, general topology/navigation/buildability and finished mission art/balance"
+  ],
+  "sourceFingerprints": {
+    "src/modules/data/abilityRecipes.ts": "034c4a069dc1b3cb9a59ed69f97fe9d39ce357ef013bfd830854651501c68ead",
+    "src/modules/data/tools.ts": "a1125041f88e45d125b11d2eef497e4a2783bd682b31ebd3c04d963b1d49943e",
+    "src/modules/data/workspace.ts": "dda3a628d7b86a03948d1fff7d2edcd3170d36fe9ee0682a76b83164ede2242c",
+    "src/modules/data/unitAnimations.ts": "be570fde8b624087f60ce5536194e35b445cced037fc099033bf147baed06583",
+    "src/modules/assets/animationInventory.ts": "36791a202e3c9f4d326f9e250ef868440a0c4a77e1d02a5096d1c3b91f2fddb8",
+    "src/app/authoringScript.ts": "6074bd03477c934e56341b7c4328d3031d72cf982322d1691abfa90ffec282bc",
+    "src/tests/dataAbilityRecipes.test.ts": "e06af918fc8084c7260fa2f857215116085aa43837ba497985f52b552c2fd152",
+    "src/tests/dataAnimationWorkspace.test.ts": "c1f33eb63559535f23bcb4a627d3b933594f51f400ea739b5a682d1074e4c32d",
+    "src/tests/authoringScript.test.ts": "10c16bce53fe31fbc53a466130f2317e09123805d059720c89d1824121fbe184",
+    "docs/DATA_MCP.md": "63cb28ee6ff255018cca57550d7c0eb9667997011eb61e6c6d5faae001954722",
+    "docs/AUTHORING_PROTOCOL.md": "2903b1321dc9e38f6a209eb1db9d46b2c280306d6e6ee32f3d2880e91e3c5b11",
+    "AGENTS.md": "9524c9e7e6fa01b910c2bcd19c474d7f3a3b65f2add8975a980ff2b625540910"
+  }
+}

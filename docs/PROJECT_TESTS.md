@@ -1,0 +1,341 @@
+# Reusable map tests through MCP
+
+The developer `verify-toolkit-integration.mjs` runner also preserves each returned
+tool response in `transcript.ndjson`, case transitions in `cases.ndjson` and an
+atomic `checkpoint.json`. An interrupted verifier can retain completed observations
+without its final report. A running checkpoint is not acceptance; inspect the
+actual process and the final digest-bound result before treating a suite as passed.
+These journals do not restart workers or modify the private Toolkit.
+
+`project.test.*` composes the existing retained Editor and game bridges. A workflow
+lease blocks conflicting mutable native commands during a test. Local status/job
+inspection remains available. Runs open private archive copies, detach their game
+sessions and release the bridges for the next map. They do not create new bridge
+instances or close shared frontends after every test. Server shutdown drains the
+runner before closing the frontends.
+
+Separate MCP processes use distinct retained worker/session directories, even
+when they share a workspace. Repeated tests in one process reuse its same bridges
+and directories. This prevents session-file collisions between chats; it does not
+remove the Editor/game's own system resource or concurrency limitations.
+
+The CLI accepts repeated `--manifest <relative.json>` arguments. It plans and
+executes these maps sequentially in one MCP process, retaining the same bridges.
+`--repeat 2` repeats each manifest before moving to the next. A failed check remains
+in the report and exit code; an unresolved plan stops the sequence before launch.
+
+Launch checks retain a bounded upstream reason, native status, runtime error flag
+and map-confirmation state. For `map_compile_failed`, evidence also retains up to
+three bounded `Script compile error:` summary lines with file/line information.
+Adjacent source-code context and complete injected scripts stay in the private
+response artifact. An unconfirmed Galaxy handshake is inconclusive,
+including an upstream tool error carrying that explicit status; it cannot pass
+acceptance. It does not establish a script compilation failure. Explicit native
+failures remain failed and unsupported requests remain unsupported. The runner
+still detaches owned sessions and does not run gameplay after unconfirmed launch.
+Before detaching an unconfirmed launch, the runner makes one bounded read-only
+`game.debug.inspect` request with `open:false` and records its response in
+`launch_debug.json`. This never opens the debugger, changes focus or injects
+input. Its optional inconclusive/unsupported check cannot certify map execution
+or replace the launch result. An unavailable debugger does not prevent cleanup.
+It also requests one UI-inclusive owned-process frame. A valid bounded PNG is
+stored as `Launch.png` with its digest and an explicit diagnostic purpose; this
+can show a loading/error screen, not proof that the requested map ran. A passed
+image transport check never upgrades an unconfirmed launch. Capture failures
+remain optional/inconclusive. Cancellation skips these extra diagnostic calls.
+Set `game.launchDiagnostics:false` to skip these requests. Upstream capture errors
+remain visible with a bounded reason and a private response-artifact path. A transport exception
+during attach does not trigger further calls to a possibly broken connection.
+
+## Entry points
+
+1. `project.test.plan({file:"tests/routes.json"})`, or an inline `manifest`, resolves
+   a saved map and explicit file dependencies without starting a worker.
+2. `project.test.run({planId})` explicitly starts a queued job. The operator's
+   `SC2_GAME_ALLOW_LAUNCH=1` configuration still applies.
+3. `project.test.status({jobId})` reads compact progress. A running native handler
+   remains running until actual completion; cancellation is cooperative.
+4. `project.test.report({jobId,offset:0,limit:10,includeImage:false})` pages evidence
+   and checks source, tested archive, manifest-file and explicit dependency digests against disk.
+   `includeImage:true` returns the final native PNG as an MCP image block. Add
+   `viewId:"overview"` to select a named `game.views` image instead; delivery
+   verifies its recorded digest before returning pixels.
+5. `project.test.cancel({jobId})` requests orderly cancellation and cleanup.
+
+Profiles containing `game` or `editor` expose these tools. Direct native commands
+remain available outside a leased workflow. Compact authoring supports
+`project.test.plan file=tests/routes.json` and `project.test.status jobId=...`.
+Running or cancelling through `modkit.author` requires explicit stage/save mode;
+plan mode cannot launch a test.
+
+## Manifest
+
+Coordinates must come from the actual map; this example has no universal defaults.
+Editor settings optionally select `renderBackend` (`auto`, `legacy` or `vulkan`);
+the same selection is used when revalidating a native-saved game artifact.
+Optional `scope`, `contextLabel` and `locale` disambiguate the native GUI root or
+library, including during exact-artifact revalidation. Native check failures
+retain a bounded phase error in the compact report. The Toolkit's GUI generation
+pipeline requires a real authored context; an empty GUI tree with separately
+connected Galaxy is not native-GUI compile acceptance. See
+[native compilation scope](NATIVE_EDITOR.md).
+Game settings independently accept `renderBackend` with the same choices and
+forward it to the retained GameToolkit on each map launch.
+
+`game.ready` can select a named unit by `type`, optional `owner` and XY `area`
+(`xmin`, `ymin`, `xmax`, `ymax`). Optional `state` declares exact native `life`,
+`shields` or `energy` values. The runner inspects up to 16 returned candidates per
+poll and rechecks alive/valid, type, owner, area and declared vitals. This allows a
+map's actual callback marker to establish readiness without a fixed delay.
+It is a scoped unit-state condition, not proof of general launch stability.
+
+Readiness by unit existence/vitals does not establish that its owner is an active
+participant. Compare the live `game.attach` / `game.status` player roster before
+issuing normal orders. Create intended participant slots through `settings.*`;
+units placed for a live `None` player can still be found while orders do not
+execute. Deliberate neutral/inactive-player tests need their own expectations.
+
+For an event expected during map startup, inspect retained history with
+`game.events`, or establish a cursor before the action being tested. Omitting the
+cursor from `game.wait` starts a new baseline; it does not replay that history.
+For a baseline before an action, consume `game.events` pages until `hasMore` is
+false and retain that response's `cursor`. Continue from returned cursors; never
+skip unread pages using `latestCursor`. Reusing a cursor from the first retained
+page can match an earlier damage event. Check the matched caster and event time
+against the new order as well as the amount/target.
+For serial ability casts, also await the native ability `complete` phase before
+the next order when the design requires completion. A projectile can deal damage
+while its caster is still finishing; zero cooldown alone does not establish
+readiness. Preserve deliberate interruption tests separately. Ability completion
+is a mechanics observation, not proof of a particular model animation.
+A cursor sampled after readiness can already include the startup event, so
+waiting only after it can time out despite correct map behavior. Keep event
+identity and resulting map state as separate assertions.
+
+Declare `game.startupEvents` to observe positive occurrences that may happen
+before readiness. Each entry has a distinct `id`, exact scalar `match` fields
+(nonempty `kind` and `source` are required), a real-time `timeout` in seconds
+(1..120, default 20) and optional `required` (default true). For example:
+
+```json
+"startupEvents": [{
+  "id": "startupDeath",
+  "match": {"kind": "unit_died", "source": "galaxy", "unitType": "Marine", "owner": 1},
+  "timeout": 8
+}]
+```
+
+After readiness and before routes/scenarios, the runner reads `game.events`
+without a cursor, drains retained pages using their returned `cursor` (never
+`latestCursor`), then polls that continuation for future events. All declarations
+share the same stream; their deadlines are independent. It never decodes or
+constructs opaque cursors or uses `game.wait` to replay history. Reports retain
+the matched event, page receipt, session/epoch/map-load identity and dropped flag.
+A stream identity change invalidates the combined observation. Missing metadata,
+nonadvancing history pages, the 256-page bound or an unobserved event at its
+deadline stays inconclusive. A directly observed positive match can pass despite
+retention loss, with `retentionComplete:false`; this does not certify full event
+coverage or the absence of other events. Keep callback state assertions in a
+separate ordinary scenario; an event occurrence alone does not prove that the
+map's handler produced its intended result.
+
+Before launching a suite with ground routes, the runner reads neutral MapInfo
+from the exact selected archive and checks the used route point centers against
+its playable interval (left/bottom inclusive, right/top exclusive). A point outside
+the interval fails before game launch. Unsupported metadata is reported as a
+required unsupported check, never accepted as valid terrain. Unit footprint
+clearance, engine pathing/collision and buildability remain separate checks.
+MapInfo is read with the bounded native component API without unpacking map assets,
+then cached by the complete archive digest within the retained test runner.
+
+The planner also checks the native terrain load structure with bounded neutral
+`t3Terrain.xml` / `t3SyncHeightMap` reads. For the measured aligned identity
+v114/v115 profile it checks allocation counts, dimensions and Q12 geometry.
+Known invalid structure blocks planning before either native bridge starts.
+Unsupported transforms remain optional/unverified and are preserved. Results
+are cached by the complete archive digest; a selected native-saved artifact is
+checked again with its own digest before launch. This is not a pathing check.
+
+`terrain.load.inspect` reports the component-level diagnosis. The explicit
+`terrain.load.repair` plan supports only the diagnosed legacy v115 level-one
+generator defect: an all-zero SMAP scale and/or missing empty cliff allocation.
+Apply/save uses the ordinary guarded terrain transaction. It preserves surface
+payloads, objects and gameplay. Other transforms and authored cliff topology
+are refused; a successful structural repair still needs an exact-archive test.
+
+```json
+{
+  "version": 1,
+  "map": "Maps/MyMap.SC2Map",
+  "label": "Main entrance",
+  "dependencies": [{"id": "MyMod", "file": "Mods/MyMod.SC2Mod"}],
+  "expectedGameBuild": "5.0.17.98310",
+  "editor": {"checks": ["load", "compile"], "required": true},
+  "game": {
+    "ready": {"type": "Marine", "owner": 1, "timeout": 20},
+    "points": {"outside": {"x": 40, "y": 48}, "inside": {"x": 48, "y": 48}},
+    "routes": [{"id": "entrance", "from": "outside", "to": "inside", "type": "Marine", "mobility": "ground", "bidirectional": true, "timeout": 20}],
+    "views": [{"id": "overview", "camera": {"x": 44, "y": 48, "distance": 55, "pitch": 60, "yaw": 180}}],
+    "capture": true
+  }
+}
+```
+
+The schema supports bounded assertion scenarios, exact build-specific diagnostic
+exceptions and negative Editor fixtures (`expected:"compile_failed"` or
+`"load_failed"`). Scenario steps use allowed `game.test.run` methods and explicit
+assertions; they cannot attach, detach or invoke arbitrary methods. Native Data
+owns ability mechanics; scenarios issue orders and observe those mechanics.
+
+`game.record` is a separate native operation, not a permitted nested scenario
+step. Use a separate recording milestone instead of inserting it as a delay.
+For event-driven assertions, obtain a cursor with `game.events` before the
+action and inspect `game.wait`'s returned matched event object. Match actual
+localized UI text and verify callback state separately from click acceptance.
+
+Up to eight named `game.views` entries capture repeatable native viewpoints after
+routes/scenarios. Each supplies explicit camera target, distance, pitch and yaw;
+UI is excluded unless `includeUI:true`. The runner requires a finite native camera
+readback within 0.5 world units/degrees (yaw wraps), then a bounded native PNG.
+Missing readback/image remains inconclusive; a mismatched camera fails. Every
+image retains its digest and `visualReview:"not_checked"`: successful camera and
+capture operations do not establish good framing, visible content or art quality.
+Use overview and gameplay-scale views, then inspect the returned pixels.
+`scripts/run-map-tests.mjs --view overview` delivers that image through MCP and
+verifies its digest; `--image` without `--view` retains final-frame delivery.
+
+Routes create test-owned fixtures, check their actual spawn position/type/life,
+issue an ordinary move, sample trajectories and confirm arrival. Each direction
+uses a fresh fixture. Cleanup checks invalid-unit readback. When enabled, route
+frames are captured before cleanup. An invalid/displaced spawn is a prerequisite
+failure, not a pathfinding verdict. Combat, death or missing observation prevents
+an arrival claim.
+
+For a ramp or gate that could be bypassed, set route `maxDeviation` in world
+units. Every sampled unit center, including the initial position, must stay
+within that distance of the closed segment between the declared endpoints.
+An observed detour fails even if arrival succeeds. Evidence records the maximum
+observed deviation and sample count. This checks sampled centers, not the full
+engine path, unsampled motion or footprint clearance; omit it for intentionally
+curved routes or split those routes into meaningful segments.
+
+Changed map, manifest-file or explicit dependency digests reject stale plans and
+make old reports inapplicable to current inputs. Raw responses, trajectories and
+images stay in ignored `.sc2mcp-output/project-tests/`. These private directories
+may contain user-specific diagnostics and do not belong in source publication.
+
+## Verdict scope
+
+Checks are passed, failed, unsupported, inconclusive or not_checked. Required
+unsupported/incomplete checks prevent acceptance. An observed failed assertion
+fails the suite even when optional. A negative fixture can pass by observing its
+expected failure; that does not make its map playable. Read the manifest's scope
+alongside the verdict.
+
+Movement plane is declared by the test author: current upstream inspection has no
+authoritative movement-plane query. Use known target Data and its provenance.
+The runner never substitutes a flyer. Timeout does not prove an obstruction;
+blocked-route non-arrival remains inconclusive. Arrival across an expected blocked
+crossing is a definite failure. Buildability, collision and native navigation
+rebuilding are not inferred from painting or movement.
+
+Diagnostics retain source coverage. Existing Actor warnings are not suppressed.
+Collection is bounded and partial coverage remains inconclusive. Set
+`diagnostics.required` when that uncertainty should block acceptance. A captured
+frame still needs visual review.
+
+Explicit archive digests do not pin all transitive installed/CASC dependencies.
+By default, the game tests a byte-identical copy of the saved source. To test a
+native serialization instead, set `editor.gameArtifact:"native_saved"` together
+with a successful `save_reopen` check and a game suite. The runner requires native
+save/reopen confirmations and component equality, verifies the owned artifact's
+size/hash, copies it to `Final.SC2Map`, and repeats native load/compile on that exact
+archive before launching it. `testedArtifact` identifies the tested bytes and
+their origin separately from `sourceSha256`. Stale/foreign artifacts stop launch.
+The source is preserved; this option does not publish or replace the delivered map.
+Its orchestration and negative guards have regression coverage and one live
+GUI/Data fixture passed this workflow with Toolkit 0.10/Vulkan. Native Galaxy export injection remains
+outside this supported workflow.
+
+## Reproduce
+
+```powershell
+npm run build
+node scripts/run-map-tests.mjs --workspace "K:/Maps/Project" --manifest tests/routes.json
+node scripts/run-map-tests.mjs --workspace "K:/Maps/Project" --manifest tests/routes.json --live --repeat 2 --image
+```
+
+The first invocation plans only. `--live` explicitly runs; `--repeat 2` reuses one
+MCP process and its bridges. `--image` checks actual MCP PNG delivery and its
+digest. The CLI prints compact summaries; `--verbose` includes details. Configure
+the external runtime as described in [NATIVE_GAME.md](NATIVE_GAME.md).
+
+## Current evidence
+
+The [card/availability follow-up](verification/data-card-quality-2026-10-22.json)
+uses a new exact archive with a distinct localized button and normal movement
+speed. Two launches verify a real move-out/return and the native XP/stat sequence;
+original Editor load/compile passed. The recording verifies actual camera target
+readback, reads native command controls and retains reviewed command-card/level
+frames. Missing main-unit ability animation, user hotkey variants and final art
+remain separate checks. The historical warning/camera evidence below is retained.
+
+The [veterancy fixture](verification/native-veterancy-2026-10-22.json) passed two
+launches with native solo kill XP. The intermediate100-total-XP control remains
+level2; level3 starts at150 total XP. Stat deltas apply natively, and original
+Editor load/compile passed. An extra HUD/feedback recording retains an actual
+hotkey warning and camera clamp. Successful Data assertions do not accept those
+UI/presentation findings or imply a finished talent/selection interface.
+
+The [targeted ability fixture](verification/targeted-data-quality-2026-10-22.json)
+passed original Editor load/compile and two clean game launches. Its Snipe
+template has a cast point: wait for a damage event after the pre-order cursor,
+then assert energy, target life and cooldown. Immediate order acceptance cannot
+establish those results. Bounded invalid-target/range/energy controls preserve
+vitals; the normal order submission itself is still accepted by the native API.
+The earlier instant fixture passed two new launches after the shared recipe
+refactor. Native target-impact pixels and owned audio have separate evidence.
+
+The later owned-topology fixture has three ordinary archive revisions and six
+clean launches, with 48 Marine/Marauder traversals. Regional plateau removal,
+restoration and ramp relocation preserve the independent east geometry and
+stable decoration IDs. Reviewed detail frames show filled ramps and closed caps
+in these views; a separate overview corrects the original poor framing. See
+[restricted ownership evidence](verification/landscape-native-ownership-2026-10-22.json).
+
+On 2026-10-22, two complex GUI archives passed four clean launches on build
+`5.0.17.98310`, including real Dialog callbacks and event parameters. A separate
+negative readiness fixture failed at its intended deadline, then detached with
+source/artifact hashes intact; a missing explicit dependency blocked planning
+before native startup. See [the scoped record](verification/gui-core-events-2026-10-22.json).
+The [instant Data ability record](verification/instant-data-quality-2026-10-22.json)
+also contains two clean launches verifying energy, damage, early reuse protection,
+cooldown recovery and another cast, plus separately reviewed native presentation.
+These fixture classes extend startup coverage without establishing universal
+map compatibility. A later [representative GUI roundtrip](verification/gui-native-roundtrip-2026-10-22.json)
+passed three native save/reopen and exact-saved-artifact gameplay cycles, preserving
+all174/306 GUI Elements. Other imported-library/control variants, an earlier
+unexplained save-handler stall and partial game diagnostics remain unresolved.
+
+The 0.10/Vulkan native-saved GUI/Data run on 2026-10-21 passed load, save/reopen,
+native compile, exact-artifact revalidation and game launch on `5.0.17.98310`.
+Marine arrived in both directions, fixture cleanup and source/artifact hashes
+passed, and the final PNG was delivered through MCP. Original source SHA-256:
+`58b1b17f7a7f44f0d19150333cf9c2b97ed0e51e9863b8e4ff8ace99d345e108`.
+Tested native-saved SHA-256:
+`ebecf4e66c6285c6a671cfc6f56963bb7a3aee5b15b68ef845ba2548fbb9c8b8`.
+Runtime diagnostics remained partial; the reviewed startup image retained Tarmac
+warnings and showed hero-selection UI. Ability execution/VFX and the full startup
+corpus are not established by this route check.
+
+On 2026-10-21 a real outer MCP run on SC2 `5.0.17.98310` launched the seed map,
+observed Marine and Marauder traverse a declared route in both directions, removed
+fixtures and detached with the source unchanged. The first unsuitable spawn was
+rejected; a clear route was then selected from sampled terrain. This verifies
+that route and the workflow, not every cliff/ramp case. Source SHA-256:
+`3353d3d319cca3abef9e805aef3e87386b52887800a7a76ae4a3f23d87580c73`.
+
+The user also reported on 2026-10-21 that movement worked on all three previously
+authored maps they tested. This is positive user-observed evidence; exact map
+revisions, tested routes and build identities were not supplied with that
+statement, so keep it separate from the automated fixture.

@@ -1,0 +1,174 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-22T04:27:29.930Z",
+  "scope": "Representative original GUI compilation and native gameplay; complex save/reopen remains pending",
+  "engineBuild": "5.0.17.98310",
+  "editorToolkit": "v0.10.0-rc.1",
+  "gameToolkit": "v0.1.0-dev.11",
+  "features": [
+    "Library-qualified GUI startup coexists with newly authored map-root logic",
+    "Nested integer loop, arithmetic and If/Else",
+    "Global/local arrays and record members, including arrays inside structures",
+    "Map-local functions, default arguments, parameters and return values",
+    "Native presets",
+    "Real native Dialog button with localized text",
+    "EventDialogControl/EventPlayer callback parameters and dynamic per-player array index",
+    "Elapsed-time event and EventUnit death callback"
+  ],
+  "fixtures": [
+    {
+      "name": "typedCore",
+      "archiveSha256": "5fbacf0662e7c780d06aae76bf17199ced9db58aad67cadb2b5299487b88fabc",
+      "cleanLaunches": 2,
+      "retainedBridges": 1,
+      "customScriptFallback": false,
+      "runs": [
+        {
+          "jobId": "638fb956-366b-4468-99fd-03143d646a1c",
+          "createdAt": "2026-10-22T04:08:13.011Z",
+          "finishedAt": "2026-10-22T04:08:38.966Z",
+          "scenarios": [
+            "library",
+            "nested",
+            "record",
+            "preset",
+            "localArray"
+          ],
+          "sourceAndArtifactGuards": true,
+          "cleanup": true
+        },
+        {
+          "jobId": "2969f564-e6d3-48ab-be49-e98ed1392c8d",
+          "createdAt": "2026-10-22T04:08:39.261Z",
+          "finishedAt": "2026-10-22T04:09:03.256Z",
+          "scenarios": [
+            "library",
+            "nested",
+            "record",
+            "preset",
+            "localArray"
+          ],
+          "sourceAndArtifactGuards": true,
+          "cleanup": true
+        }
+      ]
+    },
+    {
+      "name": "eventsAndDialog",
+      "archiveSha256": "b7ed5bc7e4a79e64182930531910731698bd806233e051414f36fd67bda58cf4",
+      "cleanLaunches": 2,
+      "retainedBridges": 1,
+      "customScriptFallback": false,
+      "runs": [
+        {
+          "jobId": "6dbbe6b0-0dff-4c84-be8f-91e72a2f3405",
+          "createdAt": "2026-10-22T04:23:49.435Z",
+          "finishedAt": "2026-10-22T04:24:18.879Z",
+          "scenarios": [
+            "eventsAndUI",
+            "library",
+            "nested",
+            "record",
+            "preset",
+            "localArray"
+          ],
+          "sourceAndArtifactGuards": true,
+          "cleanup": true,
+          "nativeUI": {
+            "visibleButton": true,
+            "locale": "ruRU",
+            "firstClickMarker": 14,
+            "secondClickMarker": 15,
+            "realNormalHandlersConfirmed": true
+          },
+          "events": {
+            "deathKind": "unit_died",
+            "eventUnitBranchMarker": 44,
+            "elapsedTimerMarker": 23
+          }
+        },
+        {
+          "jobId": "79c5a9ca-e534-46cc-9bce-1d3dda4c343e",
+          "createdAt": "2026-10-22T04:24:19.680Z",
+          "finishedAt": "2026-10-22T04:24:47.926Z",
+          "scenarios": [
+            "eventsAndUI",
+            "library",
+            "nested",
+            "record",
+            "preset",
+            "localArray"
+          ],
+          "sourceAndArtifactGuards": true,
+          "cleanup": true,
+          "nativeUI": {
+            "visibleButton": true,
+            "locale": "ruRU",
+            "firstClickMarker": 14,
+            "secondClickMarker": 15,
+            "realNormalHandlersConfirmed": true
+          },
+          "events": {
+            "deathKind": "unit_died",
+            "eventUnitBranchMarker": 44,
+            "elapsedTimerMarker": 23
+          }
+        }
+      ]
+    }
+  ],
+  "nativeEditor": {
+    "generationAndCompilation": true,
+    "originalGenerator": true,
+    "replacementEmitter": false,
+    "finalArchiveLoad": true,
+    "finalArchiveCompilation": true,
+    "finalArchiveSourceUnchanged": true,
+    "jobId": "af61507b-4ca9-4859-82ce-0fcd4f188075",
+    "saveReopen": "pending on separate typed-core native save handler; no forced termination",
+    "diagnostics": {
+      "load": "complete scoped Messages inspection, zero new errors/warnings",
+      "compile": "compiler errors empty; broader diagnostic completeness unknown"
+    },
+    "authoringHarness": {
+      "caseResults": "all five assertions passed",
+      "overallVerdict": "incomplete_or_failed",
+      "reason": "Harness monitored MapScript.galaxy as immutable although authorized native adoption deliberately replaced it. Retained as failed; subsequent game checks and per-native-job final-archive guards independently passed.",
+      "futureHarnessCorrected": true
+    }
+  },
+  "negativeCorpus": {
+    "missingDependency": {
+      "proof": "e721ec3b-d70d-4671-a0ac-ae0b5a32d4f2",
+      "ready": false,
+      "engineStarted": false
+    },
+    "readinessTimeout": {
+      "jobId": "423690a6-35ae-4b05-b104-c34d4b174e54",
+      "expectedVerdict": "failed",
+      "observedVerdict": "failed",
+      "reason": "Named startup unit was not observed before the deadline",
+      "cleanup": true,
+      "sourceUnchanged": true
+    }
+  },
+  "retainedFailures": [
+    "First UI query used English text in the ruRU engine and correctly found no control; Russian text matches the visible native button",
+    "The first events assertion expected matched=true; game.wait returns the matched event object. Both old failures are retained; corrected strict checks passed on two new clean launches"
+  ],
+  "diagnosticCoverage": "Game diagnostic sources remain partial; optional diagnostic check is inconclusive",
+  "openCoverage": [
+    "Original Editor save/reopen for the complex typed-core fixture",
+    "Other library/type/event/control variants, custom Event definitions and imported third-party trigger semantics",
+    "Finished hero-selection design, mission balance and aesthetic approval"
+  ],
+  "sourceFingerprints": {
+    "src/modules/trigger/authoring.ts": "7315afd447199f194d1a2023cbd454c78ceb5260c42051c41b1665a609acc408",
+    "src/modules/trigger/workspace.ts": "15b96423b8ce16760633f7e2638a565baee28d55ce1e434621ed8122be23558e",
+    "src/modules/trigger/revisedImport.ts": "1bc92ad2acd6398189b5d1a480e4434746c24caf9856d54a790774a1f14ab69d",
+    "src/integrations/native/bridge.ts": "c1dfaa6a0d28f90d58ec65d4e63100549ff0d80dc56a7c3df4bd19b7f42a2ef2",
+    "src/modules/testing/workspace.ts": "8c67f01667e59cc300a0a466b6f7abc4f525820b59ebd3a614bb00b0e6c587ec",
+    "src/modules/testing/schemas.ts": "c12888a63ea271858d4efd6f1c80564a3422b521aa0fa4698495a8cb33e1f713",
+    "scripts/toolkit-suite-assertions.mjs": "3b3aab0ba86740d1dde322907aa9e1efd737e7fcc0d1d15578f92e1997374104"
+  }
+}

@@ -2,9 +2,19 @@
 
 Our MCP uses public Host/SDK and SC2 bootloader from [ModKit](https://github.com/hometlt/ModKit) and [ModKit-Blizzard](https://github.com/hometlt/ModKit-Blizzard). `map.preview` uses their world renderer, not the `terrain.preview` technical picture.
 
-Installation of an additional local runtime: `npm run modkit:setup` from the root of the project. Node.js 22+, Git and access to npm/GitHub are needed during installation. Audits are recorded: Core `72253b49adff4f572c4763cd1ca5c980264afe41`, Blizzard `78104889bed092d901516044bd90734df8d5caac`. Platform packages are taken from Blizzard vendor archives; their SHA256, source revisions and patch hash are recorded in `.modkit-runtime/ModKit-Blizzard/sc2-mcp-runtime.json`. This is not an automatic update to an arbitrary HEAD.
+Install the optional local runtime with `npm run modkit:setup`. Node.js 22+, Git and npm/GitHub access are needed during installation. Reviewed sources are Core `7e3c856ba290b8abde55b1f7e4d93383179e8b9f` (image/model extensions) and Blizzard `78104889bed092d901516044bd90734df8d5caac`. Host/SDK platform packages retain Blizzard's declared vendor snapshot ABI; this is not an upgrade of the entire Core platform. Their hashes, revisions and local compatibility patches are recorded in `.modkit-runtime/ModKit-Blizzard/sc2-mcp-runtime.json`.
 
 Once installed, restart MCP. `modkit.runtime` shows the state. The other directory is `SC2_MODKIT_HOME`; the installed game is `SC2_CASC_ROOT`.
+
+The retained loader records its loaded receipt digest. A runtime receipt changed
+in the same process requires an MCP restart; it cannot silently combine cached ESM
+modules with newly installed files. On 2026-10-21 a fresh outer MCP suite passed
+Data/Marine field reads, terrain-only and effective-catalog navigation, model and
+texture preview, PNG/image delivery and source preservation. The catalog resolved
+10 footprints and reduced walkable/buildable cells. `counts.blockers` counts special
+blocker entities, not every occupied footprint cell. Static navigation still does
+not certify the game pathfinder. The bounded preview omitted models beyond its
+explicit budget; native rendering parity remains unverified.
 
 ## Teams.
 

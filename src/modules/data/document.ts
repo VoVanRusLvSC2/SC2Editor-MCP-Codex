@@ -367,21 +367,23 @@ export class DataDocument {
     };
   }
 
-  private tokens(entry: XmlNode): Record<string,string> {
-    const result:Record<string,string>={};
+  private tokenMetadata(entry: XmlNode): {values:Record<string,string>;types:Record<string,string>} {
+    const values:Record<string,string>={},types:Record<string,string>={};
     for(const m of this.source.slice(entry.start,entry.end).matchAll(/<!--[\s\S]*?-->|<!\[CDATA\[[\s\S]*?\]\]>|<\?token\s+([\s\S]*?)\?>/g)) {
       if(m[1]===undefined)continue;
       const node=scanXml("<token "+m[1]+"/>").nodes[0];
-      if(node?.attrs.id && node.attrs.value!==undefined)result[node.attrs.id]=node.attrs.value;
+      if(node?.attrs.id){types[node.attrs.id]=node.attrs.type??'';if(node.attrs.value!==undefined)values[node.attrs.id]=node.attrs.value;}
     }
-    return result;
+    return {values,types};
   }
 
+  private tokens(entry: XmlNode): Record<string,string> {return this.tokenMetadata(entry).values;}
+
   objects(includeRaw = false): DataObject[] {
-    return this.entries().map((node) => ({
-      objectIdentity:{domain:dataDomainFromType(node.tag),id:node.attrs.id},declarationKey:{file:this.sourceFile,start:node.start},tokens:this.tokens(node), ctype: node.tag, domain: dataDomainFromType(node.tag), id: node.attrs.id, parent: node.attrs.parent,
+    return this.entries().map((node) => {const metadata=this.tokenMetadata(node);return {
+      objectIdentity:{domain:dataDomainFromType(node.tag),id:node.attrs.id},declarationKey:{file:this.sourceFile,start:node.start},tokens:metadata.values,tokenTypes:metadata.types, ctype: node.tag, domain: dataDomainFromType(node.tag), id: node.attrs.id, parent: node.attrs.parent,
       isDefault: node.attrs.default === "1", attrs: { ...node.attrs }, fields: this.children(node).map((child) => this.toField(child, [], includeRaw)),
       sourcePath: this.sourceFile, rawSource: includeRaw ? this.source.slice(node.start, node.end) : undefined,
-    }));
+    };});
   }
 }

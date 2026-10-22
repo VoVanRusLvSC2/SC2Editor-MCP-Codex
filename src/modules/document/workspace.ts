@@ -9,6 +9,7 @@ import { DocumentDependencies, type DependencyResolution } from "./dependencies.
 import { documentPlanSchema, type DocumentRequest, type DependencyRequest } from "./schemas.js";
 import { generateFoundation, type FoundationManifest } from "./manifest.js";
 import { validateFoundation } from "./validation.js";
+import { parseState } from "../terrain/operations.js";
 interface StoredPlan {
     id: string;
     request: DocumentRequest;
@@ -89,7 +90,15 @@ export class DocumentWorkspace {
         this.plans.set(id, { id, request, resolution, files: generated.files, manifest, ...destinations });
         while (this.plans.size > 4)
             this.plans.delete(this.plans.keys().next().value!);
-        return { id, valid: true, ...destinations, foundation: { ...manifest, files: rows.map(row => ({ file: row.file, size: row.size, sha256: row.sha256 })) }, resolvedDependencies: { direct: resolution.direct, ordered: resolution.ordered }, validation, authoredObjects: 0, authoredGameplayFunctions: 0, authoredTriggers: 0, scriptBootstrap: request.kind === 'map' ? 'Empty InitMap entry point only' : 'none', sourceBuild: resolution.source.build };
+        const heights = manifest.terrain ? parseState(generated.files).heights : undefined;
+        const range = heights?.editableRange(0, 0), initial = heights?.z(0, 0);
+        const heightEditing = heights && range && initial !== undefined ? {
+            commonRange: range, initialHeight: initial,
+            upwardRoom: range.max - initial, downwardRoom: initial - range.min,
+            scope: 'Uniform fresh foundation; fine-height editing with stored coarse/base channel preserved',
+            nativeRequantization: 'unsupported',
+        } : undefined;
+        return { id, valid: true, ...destinations, foundation: { ...manifest, heightEditing, files: rows.map(row => ({ file: row.file, size: row.size, sha256: row.sha256 })) }, resolvedDependencies: { direct: resolution.direct, ordered: resolution.ordered }, validation, authoredObjects: 0, authoredGameplayFunctions: 0, authoredTriggers: 0, scriptBootstrap: request.kind === 'map' ? 'Empty InitMap entry point only' : 'none', sourceBuild: resolution.source.build };
     }
     private get(id: string) { const plan = this.plans.get(id); if (!plan)
         throw new Error('DOCUMENT_PLAN_NOT_FOUND'); return plan; }

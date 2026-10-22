@@ -1,0 +1,294 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-22T07:49:29.286Z",
+  "scope": "Native solo kill-XP veterancy, cumulative level thresholds/stat deltas and compact CSV authoring; technical fixture with explicitly unresolved UI/presentation findings",
+  "implementation": {
+    "tool": "data.hero.veterancy",
+    "operation": "recipe.veterancy",
+    "compactCommand": "data hero.veterancy id=HeroXP unit=Hero levelEffect=LevelUp xp=0,50,150 lifeDelta=100 damageDelta=5",
+    "nativeTable": [
+      {
+        "index": 0,
+        "cost": 0
+      },
+      {
+        "index": 1,
+        "cost": 50
+      },
+      {
+        "index": 2,
+        "cost": 100
+      }
+    ],
+    "levelsBeginAtOne": true,
+    "cumulativeThresholds": [
+      0,
+      50,
+      150
+    ],
+    "lifeAndDamageDeltas": "Additive across levels; four damage kinds, no trigger progression state",
+    "sharing": false,
+    "levelEffectRequired": true,
+    "guards": [
+      "Strict increasing cumulative thresholds, bounded per-level and total stat deltas",
+      "Local Unit, existing level Effect, unambiguous Unit parents and no other known veterancy",
+      "Explicit replacement owns behavior fields; stable Unit binding and independent fields remain"
+    ]
+  },
+  "mcp": {
+    "foundation": "b271551f-6e68-4459-bd81-719485de2f12",
+    "initialAuthor": "fc7f1d17-d058-4d02-9e24-8af90342cabe",
+    "correctedGeneratorApply": "fc554ff7-49cd-4b03-b5c6-6cf976c8c93a",
+    "compactCurrentWriterNoOp": "81de25a4-d0c6-45d8-8a9b-bcd99d2edf00",
+    "catalogAndArchiveUnchangedOnRepeat": true
+  },
+  "native": {
+    "engineBuild": "5.0.17.98310",
+    "gameToolkit": "v0.1.0-dev.11",
+    "ordinaryArchiveSha256": "64ec7a4a8b136ff1f4e8ab8d5fa1b141ac2bcaff9fddff9563064318831fc6ad",
+    "catalogMatchesCurrentSource": true,
+    "ordinaryGalaxyUnchanged": true,
+    "cleanGameplayLaunches": 2,
+    "retainedBridges": 1,
+    "runs": [
+      {
+        "jobId": "63885831-4559-4f60-9e84-a86bef30bdf0",
+        "createdAt": "2026-10-22T07:17:54.386Z",
+        "finishedAt": "2026-10-22T07:18:30.216Z",
+        "states": [
+          {
+            "scenario": "nativeVeterancyBaseline",
+            "level": 1,
+            "life": 1000
+          },
+          {
+            "scenario": "nativeLevel2",
+            "level": 2,
+            "life": 1100
+          },
+          {
+            "scenario": "belowThirdLevelThreshold",
+            "level": 2,
+            "life": 1100
+          },
+          {
+            "scenario": "nativeLevel3",
+            "level": 3,
+            "life": 1200
+          }
+        ],
+        "sourceAndArtifactUnchanged": true,
+        "cleanup": true
+      },
+      {
+        "jobId": "d0689da8-b764-4f9a-856f-3a497174d7a7",
+        "createdAt": "2026-10-22T07:18:30.676Z",
+        "finishedAt": "2026-10-22T07:19:03.863Z",
+        "states": [
+          {
+            "scenario": "nativeVeterancyBaseline",
+            "level": 1,
+            "life": 1000
+          },
+          {
+            "scenario": "nativeLevel2",
+            "level": 2,
+            "life": 1100
+          },
+          {
+            "scenario": "belowThirdLevelThreshold",
+            "level": 2,
+            "life": 1100
+          },
+          {
+            "scenario": "nativeLevel3",
+            "level": 3,
+            "life": 1200
+          }
+        ],
+        "sourceAndArtifactUnchanged": true,
+        "cleanup": true
+      }
+    ],
+    "killAwards": [
+      50,
+      50,
+      50
+    ],
+    "cumulativeXP": [
+      0,
+      50,
+      100,
+      150
+    ],
+    "levels": [
+      1,
+      2,
+      2,
+      3
+    ],
+    "life": [
+      1000,
+      1100,
+      1100,
+      1200
+    ],
+    "practiceDamage": [
+      500,
+      505,
+      510
+    ],
+    "practiceLife": [
+      2000,
+      1500,
+      995,
+      485
+    ],
+    "progressionOwner": "Native Data; test code submits normal orders and reads state only",
+    "editor": {
+      "projectJob": "b3572c5a-d8a5-446c-8c80-f18468da4375",
+      "nativeJob": "b59824fc-27d5-448f-8c1e-9be5a8b809fa",
+      "loadAndCompile": "passed",
+      "saveReopen": "not_checked",
+      "sourceAndArtifactUnchanged": true
+    },
+    "presentation": {
+      "proof": "8a4c63b7-a359-4b83-afd2-30e1dd3655d4",
+      "extraLaunches": 1,
+      "levelActors": [
+        {
+          "id": "QualityLevelVisual",
+          "nativeClass": "CActorModel",
+          "gameTime": 4
+        },
+        {
+          "id": "QualityLevelSound",
+          "nativeClass": "CActorSound",
+          "gameTime": 4
+        }
+      ],
+      "effectVisibleInReviewedFrame": true,
+      "nativeHudLevelsVisible": true,
+      "frameSha256": "85c7ad244c04ab86f660a69c1d0450bf176241ae2464831de53e75284922524f",
+      "videoSha256": "69fa8ffa2efed9065e7ae3a11d82f885a0b9b3bfef8010d8575d5aa1bc38b6ca",
+      "audio": {
+        "source": "owned_process_audio",
+        "nonzero": 220902,
+        "peak": 0.00431291526183486,
+        "sha256": "cdba662140e7cece91e9fdfcb61753ec844ce8bcacf89afac77f004b375a048e",
+        "scope": "Combined strike and level-up action; not isolated level sound or physical speakers"
+      },
+      "acceptedAsFinishedPresentation": false,
+      "findings": [
+        "Visible native hotkey-conflict warning: the technical strike reused ArenaTarget button face already bound to another ability",
+        "Large EMP model scale3 is partly clipped; camera request36,44 reads back36,36 due native bounds"
+      ],
+      "camera": {
+        "requested": {
+          "x": 36,
+          "y": 44,
+          "distance": 24,
+          "pitch": 65,
+          "yaw": 180
+        },
+        "actual": {
+          "target": {
+            "x": 36,
+            "y": 36
+          },
+          "pitch": 64.8633,
+          "yaw": 180,
+          "distance": 24
+        }
+      },
+      "nextFix": "Add inherited command-card conflict review/guards and unique button/hotkey; improve native camera clamp reporting and measured level-effect framing"
+    },
+    "diagnostics": "Available game diagnostics remain partial/inconclusive; the HUD warning and camera clamp are retained rather than hidden"
+  },
+  "retainedFailures": {
+    "ordinaryArchiveSha256": "90ee543b76e9a9298dc5fdc4088c48a209505c79214eeea14c3aa4e4654e1d85",
+    "jobs": [
+      "03cfb542-a7f3-41f7-8a31-fdebd0c5afe3",
+      "988ded71-eacc-4220-93f2-8f6dbd7a9988"
+    ],
+    "cause": "Extra zero row started at level2; cumulative XP values were incorrectly written as native transition costs. Corrected the reusable generator, not expected levels or only one map. The intermediate100-XP control remains level2."
+  },
+  "regressions": {
+    "tests": 1319,
+    "pass": 1318,
+    "fail": 0,
+    "skipped": 1,
+    "reportSha256": "d6b7fe030aec5818db1d85df2ad9c622f347a26c098ed41346802ff235bf908a",
+    "testConcurrency": 4,
+    "focusedRecipeAndAuthoringTests": 14
+  },
+  "portable": {
+    "candidate": "release/SC2EditorToolkit-Veterancy-dev11-20261022",
+    "published": false,
+    "smokePassed": true,
+    "veterancySchema": true,
+    "compiledFingerprints": {
+      "modules/terrain/operations.js": "4f1dbda387eb5dc5156a444dabcf8f9350fe13a6235273f5c54c882c748278eb",
+      "modules/terrain/nativeGeometry.js": "1770c3eefbca6c30eca93c7fbb9a58b0ceb19954ed1342cab060ca92df4b2271",
+      "modules/terrain/landscapeOwnership.js": "e3d4ee66ab664e8326546c2f3005c9d8aa95a08529db44bb59459f0aa91856e5",
+      "modules/terrain/nativeTopologyOwnership.js": "fd21de0876e6e610ffb0631fb11604d2d02e57df6eee17864506b6c26836cc94",
+      "modules/terrain/schemas.js": "2899b40dc06ac38960b28e3386e828fc97e140a890127166c18bdb94e5fd2736",
+      "modules/terrain/tools.js": "c3923c702f7987542b540205173a371a78c1451bde50bfcc6b1a7629032b8a32",
+      "modules/browse/workspace.js": "656b0d674d79a1db54334ea0fa57a47d4495e792ee1292157cbda35aa2a6814a",
+      "modules/terrain/loadContract.js": "26f69590590f52fcacbaa2e246c803b20a01c9214476dff90fc51db1a49481ea",
+      "modules/document/codecs/terrainLoadContract.js": "cbb1027dc1a35edf6d6ae7696d3cf6734012931100a6cc7ef9371364f17f5dd4",
+      "archive/terrainLoadContract.js": "e75cb33ed451bd6e1b1733f2d5f42076a5b38c1196a51da6b328220e2ac9b56d",
+      "modules/testing/workspace.js": "d3b95e219b7bb22cd00b3c43dc996549e6781373c6450d147c5fa54af8bd92e5",
+      "modules/terrain/workspace.js": "3c2099150d610f1ac7ca7d4d3d759fef9436ebf4e6c9e2fe8a5a90ffcf5a636c",
+      "modules/map/workspace.js": "07961fc1f4fe91d83d5811b4a4a254f7a98cbef4eb7fcb615de470f703e56d0b",
+      "modules/trigger/authoring.js": "3dd7645c0a7b93a5ddc51a6407d5182460083921ea39481c598795f59059c931",
+      "app/authoringScript.js": "0eeeabe489c6ced2d68df20a2e0c4204427441766107f82040e96aee5a01b668",
+      "modules/data/document.js": "2a003f2061251c18cfde806fc974379efae76ae061bf094bb15684aa409f21d1",
+      "modules/data/authoringValidation.js": "1122c9e2c2d0366259e9d956d1e7239ffe4cedffc1332d6062e0bcd0c8f1a963",
+      "modules/data/tools.js": "ed1ee188ff1f2ee6c6c5733deaf4765914ae755d83418c4b19f754e86b81240b",
+      "modules/data/workspace.js": "c54489ebb00d36bb4752ecbed69fec89c552e35f2136cd0c960ca749545d77ad",
+      "modules/data/abilityRecipes.js": "11a1b1ea9f50984871fbce0ea8af08bf1251941bfae716d3f95da92725080dfa",
+      "modules/data/veterancyRecipe.js": "5a2718284da3c19a84c64cba198feebf4b25aa58b6d1ffa9d5332fbad5f34ce6"
+    },
+    "dataRejectionIsError": true,
+    "privacy": {
+      "passed": true,
+      "checkedFiles": 9946,
+      "privateSourceFiles": 2331,
+      "privateCorpusCompared": true,
+      "violations": [],
+      "scope": "Explicit private paths/debug/test artifacts and exact external C++/Python/Galaxy source copies, including renamed files. Not proof against transformed snippets or binary reverse engineering."
+    }
+  },
+  "upstreamChecked": {
+    "checkedOn": "2026-10-22",
+    "editor": {
+      "tag": "v0.10.0-rc.1",
+      "publishedAt": "2026-10-21T13:51:05Z",
+      "url": "https://github.com/VoVanRusLvSC2/SC2EditorToolkit/releases/tag/v0.10.0-rc.1"
+    },
+    "game": {
+      "tag": "v0.1.0-dev.11",
+      "publishedAt": "2026-10-21T17:55:46Z"
+    },
+    "modkitBlizzard": "78104889bed092d901516044bd90734df8d5caac",
+    "modkitCore": "7e3c856ba290b8abde55b1f7e4d93383179e8b9f",
+    "method": "GitHub API published release metadata and current git remote HEADs; no newer release/HEAD observed"
+  },
+  "openCoverage": [
+    "Inherited command-card/button/hotkey conflict guards and useful native camera framing",
+    "Other veterancy/share/attribute/talent/learn/charge profiles and layered Unit parents",
+    "Point-target and complete ability presentation variants",
+    "Complex typed GUI original save/reopen remains pending on preserved native handlers",
+    "Broad topology/native navigation/buildability and finished mission art/balance"
+  ],
+  "sourceFingerprints": {
+    "src/modules/data/veterancyRecipe.ts": "ce8e50f99fbddd7e4aa3adbf13fda29fe5bf2a2bab8f753a6564e5d71e027dd0",
+    "src/modules/data/types.ts": "4b26f2d0d1ecc417d67a2c12ea4608212255207384b6c2d85f1d4195b934882a",
+    "src/modules/data/tools.ts": "d5230910a8c97d466bc52d2972706452aac5382681dbda531fe1d16b9a682beb",
+    "src/modules/data/workspace.ts": "b205c230a045dd23d862c777a7ff16951002d864bab2090d77fa88cb142d28b4",
+    "src/app/authoringScript.ts": "c95752083ee8e86be1e993f2d0b35b433011016c74934040222009cda6826e45",
+    "src/tests/dataVeterancyRecipe.test.ts": "9d33ca0fe851c91c7cada53b58401b6b706b0adc87dd6e4b8bbb742fe403a0f4",
+    "src/tests/authoringScript.test.ts": "f37562a5187fb8eb7104eda6d4b7ec0b6c6e5066ae09e653802970f04eaf8ed4"
+  }
+}

@@ -41,6 +41,14 @@ The target catalogues must be mounted first, including inherited defaults from `
 - The preview is untextured rest geometry, not the SC2 material/animation renderer. The reference Marine is raw M3 scale 1, not an independently certified engine-sized unit.
 - Visual bounds are separate from navigation and building footprints. Footprint links are reported without inventing their occupied cells. Engine collision, animated envelopes, actor events and visibility need engine review.
 
+Measured prefab members now declare `boundsFrame:"member"`: their horizontal
+bounds include catalog scale but exclude placement scale/rotation. Composition
+support samples apply the member's placement scale and rotation, then the group
+transform. Older members without this field retain `"group"` semantics, where
+bounds were already oriented/scaled in the group's local axes. Do not relabel old
+bounds without recomputing them. The checks sample pivot and support corners;
+they do not prove clearance across the complete mesh or an engine footprint.
+
 ## Group constraints and caching
 
 The planner centres geometry using its actual pivot, adjusts the bottom to ground, preserves variation, records exact Actor keys, and reserves a corridor (or the landing square). Measured horizontal bounds cannot overlap the reserved area or other group bounds. Green polygons in group images show the reserved area. Geometry checks operate in local coordinates; world reservations also report their conservative rotated AABBs.

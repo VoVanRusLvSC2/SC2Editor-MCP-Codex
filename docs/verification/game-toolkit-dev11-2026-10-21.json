@@ -1,0 +1,479 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-21T20:33:04.295Z",
+  "kind": "Pinned private game integration: bounded fixture acceptance, not full MCP readiness",
+  "release": {
+    "repository": "VoVanRusLvSC2/SC2GameToolkit",
+    "version": "0.1.0-dev.11",
+    "frontendVersion": "0.1.0-dev",
+    "asset": "SC2GameToolkit-0.1.0-dev.zip",
+    "archiveSha256": "514096c72332f4d6629dee4a33a092957d3ee02a9c45281bb3a7ad59031c30f3",
+    "manifestSha256": "cfc91e77b987ff117ab1fc39c011d77862b215ddf7e1e2d3c7d0a392e55d7fde",
+    "provenance": "pinned_release",
+    "releaseTag": "v0.1.0-dev.11",
+    "verifiedFiles": 113,
+    "binaryOverride": false
+  },
+  "directConnection": {
+    "nativeUiSchemaObserved": true,
+    "statusAttached": false,
+    "configurationUpdated": true,
+    "neighborProcessesStopped": false,
+    "scope": "Observed refreshed native UI schema in this chat, not a claim about every other chat connection"
+  },
+  "extended": {
+    "outcome": "passed",
+    "calledOperations": [
+      "game.attach",
+      "game.camera.set",
+      "game.capture",
+      "game.debug.inspect",
+      "game.detach",
+      "game.diagnostics",
+      "game.events",
+      "game.fixture",
+      "game.order",
+      "game.record",
+      "game.selection.set",
+      "game.status",
+      "game.test.run",
+      "game.ui.activate",
+      "game.ui.inspect",
+      "game.units.find",
+      "game.units.inspect",
+      "game.wait"
+    ],
+    "all18Called": true,
+    "sourceSha256": "58b1b17f7a7f44f0d19150333cf9c2b97ed0e51e9863b8e4ff8ace99d345e108",
+    "sourceUnchanged": true,
+    "fixtureCleaned": true,
+    "detached": true,
+    "nativeUi": {
+      "status": "passed",
+      "pagination": true,
+      "textAndPathFilter": true,
+      "effectiveStateAndGeometry": true,
+      "normalOpenCloseHandlers": true,
+      "menuHiddenAfterResume": true
+    },
+    "debugger": {
+      "status": "ok",
+      "coverage": "owned native window/control text; tables over 128 rows require a control handle and pagination; engine internals are not inferred"
+    },
+    "recording": {
+      "status": "ok",
+      "mp4Sha256": "b26d67d7733e9cc791738bdc8adf2b2b80560cef47091760e3272537f75bd738",
+      "audioChecked": false
+    },
+    "pngSha256": "b6d451c23d1983b8ddbd8fb7ccec840d544a6e66b474ed8627fb854b76d88e42",
+    "visualReview": "Inspected: native terrain, placed objects, hero-selection dialog and test Phoenix visible. Existing Tarmac warnings retained."
+  },
+  "lifecycle": {
+    "outcome": "passed",
+    "runs": [
+      {
+        "outcome": "passed",
+        "sourceSha256": "58b1b17f7a7f44f0d19150333cf9c2b97ed0e51e9863b8e4ff8ace99d345e108",
+        "gameRuntime": {
+          "provenance": "pinned_release",
+          "releaseTag": "v0.1.0-dev.11",
+          "archiveSha256": "514096c72332f4d6629dee4a33a092957d3ee02a9c45281bb3a7ad59031c30f3",
+          "verifiedFiles": 113,
+          "binaryOverride": false
+        },
+        "checks": [
+          {
+            "id": "archive",
+            "status": "passed",
+            "required": true
+          },
+          {
+            "id": "map.playable_bounds",
+            "status": "passed",
+            "required": true
+          },
+          {
+            "id": "game.launch",
+            "status": "passed",
+            "required": true
+          },
+          {
+            "id": "game.build",
+            "status": "passed",
+            "required": true
+          },
+          {
+            "id": "route:knownFloor:forward",
+            "status": "passed",
+            "required": true
+          },
+          {
+            "id": "route:knownFloor:reverse",
+            "status": "passed",
+            "required": true
+          },
+          {
+            "id": "scenario:nativeMenu",
+            "status": "passed",
+            "required": true
+          },
+          {
+            "id": "game.diagnostics",
+            "status": "inconclusive",
+            "required": false,
+            "reason": "No unexpected errors observed in available sources; diagnostic coverage is partial"
+          },
+          {
+            "id": "game.capture",
+            "status": "passed",
+            "required": false
+          },
+          {
+            "id": "game.cleanup",
+            "status": "passed",
+            "required": true
+          },
+          {
+            "id": "artifact.unchanged",
+            "status": "passed",
+            "required": true
+          },
+          {
+            "id": "source.unchanged",
+            "status": "passed",
+            "required": true
+          }
+        ]
+      },
+      {
+        "outcome": "passed",
+        "sourceSha256": "58b1b17f7a7f44f0d19150333cf9c2b97ed0e51e9863b8e4ff8ace99d345e108",
+        "gameRuntime": {
+          "provenance": "pinned_release",
+          "releaseTag": "v0.1.0-dev.11",
+          "archiveSha256": "514096c72332f4d6629dee4a33a092957d3ee02a9c45281bb3a7ad59031c30f3",
+          "verifiedFiles": 113,
+          "binaryOverride": false
+        },
+        "checks": [
+          {
+            "id": "archive",
+            "status": "passed",
+            "required": true
+          },
+          {
+            "id": "map.playable_bounds",
+            "status": "passed",
+            "required": true
+          },
+          {
+            "id": "game.launch",
+            "status": "passed",
+            "required": true
+          },
+          {
+            "id": "game.build",
+            "status": "passed",
+            "required": true
+          },
+          {
+            "id": "route:knownFloor:forward",
+            "status": "passed",
+            "required": true
+          },
+          {
+            "id": "route:knownFloor:reverse",
+            "status": "passed",
+            "required": true
+          },
+          {
+            "id": "scenario:nativeMenu",
+            "status": "passed",
+            "required": true
+          },
+          {
+            "id": "game.diagnostics",
+            "status": "inconclusive",
+            "required": false,
+            "reason": "No unexpected errors observed in available sources; diagnostic coverage is partial"
+          },
+          {
+            "id": "game.capture",
+            "status": "passed",
+            "required": false
+          },
+          {
+            "id": "game.cleanup",
+            "status": "passed",
+            "required": true
+          },
+          {
+            "id": "artifact.unchanged",
+            "status": "passed",
+            "required": true
+          },
+          {
+            "id": "source.unchanged",
+            "status": "passed",
+            "required": true
+          }
+        ]
+      },
+      {
+        "outcome": "passed",
+        "sourceSha256": "fff4de4d11052685fd4df05849a49dc824edf9c43f30f0fba7c01ccd9e108146",
+        "gameRuntime": {
+          "provenance": "pinned_release",
+          "releaseTag": "v0.1.0-dev.11",
+          "archiveSha256": "514096c72332f4d6629dee4a33a092957d3ee02a9c45281bb3a7ad59031c30f3",
+          "verifiedFiles": 113,
+          "binaryOverride": false
+        },
+        "checks": [
+          {
+            "id": "archive",
+            "status": "passed",
+            "required": true
+          },
+          {
+            "id": "map.playable_bounds",
+            "status": "passed",
+            "required": true
+          },
+          {
+            "id": "game.launch",
+            "status": "passed",
+            "required": true
+          },
+          {
+            "id": "game.build",
+            "status": "passed",
+            "required": true
+          },
+          {
+            "id": "route:knownFloor:forward",
+            "status": "passed",
+            "required": true
+          },
+          {
+            "id": "route:knownFloor:reverse",
+            "status": "passed",
+            "required": true
+          },
+          {
+            "id": "scenario:nativeMenu",
+            "status": "passed",
+            "required": true
+          },
+          {
+            "id": "game.diagnostics",
+            "status": "inconclusive",
+            "required": false,
+            "reason": "No unexpected errors observed in available sources; diagnostic coverage is partial"
+          },
+          {
+            "id": "game.capture",
+            "status": "passed",
+            "required": false
+          },
+          {
+            "id": "game.cleanup",
+            "status": "passed",
+            "required": true
+          },
+          {
+            "id": "artifact.unchanged",
+            "status": "passed",
+            "required": true
+          },
+          {
+            "id": "source.unchanged",
+            "status": "passed",
+            "required": true
+          }
+        ]
+      },
+      {
+        "outcome": "passed",
+        "sourceSha256": "fff4de4d11052685fd4df05849a49dc824edf9c43f30f0fba7c01ccd9e108146",
+        "gameRuntime": {
+          "provenance": "pinned_release",
+          "releaseTag": "v0.1.0-dev.11",
+          "archiveSha256": "514096c72332f4d6629dee4a33a092957d3ee02a9c45281bb3a7ad59031c30f3",
+          "verifiedFiles": 113,
+          "binaryOverride": false
+        },
+        "checks": [
+          {
+            "id": "archive",
+            "status": "passed",
+            "required": true
+          },
+          {
+            "id": "map.playable_bounds",
+            "status": "passed",
+            "required": true
+          },
+          {
+            "id": "game.launch",
+            "status": "passed",
+            "required": true
+          },
+          {
+            "id": "game.build",
+            "status": "passed",
+            "required": true
+          },
+          {
+            "id": "route:knownFloor:forward",
+            "status": "passed",
+            "required": true
+          },
+          {
+            "id": "route:knownFloor:reverse",
+            "status": "passed",
+            "required": true
+          },
+          {
+            "id": "scenario:nativeMenu",
+            "status": "passed",
+            "required": true
+          },
+          {
+            "id": "game.diagnostics",
+            "status": "inconclusive",
+            "required": false,
+            "reason": "No unexpected errors observed in available sources; diagnostic coverage is partial"
+          },
+          {
+            "id": "game.capture",
+            "status": "passed",
+            "required": false
+          },
+          {
+            "id": "game.cleanup",
+            "status": "passed",
+            "required": true
+          },
+          {
+            "id": "artifact.unchanged",
+            "status": "passed",
+            "required": true
+          },
+          {
+            "id": "source.unchanged",
+            "status": "passed",
+            "required": true
+          }
+        ]
+      }
+    ],
+    "sameRetainedBridge": true,
+    "scope": "Two launches each of two archives from the same previously validated GUI/Data foundation; not two independent map genres"
+  },
+  "metadataReader": {
+    "implementation": "The lifecycle runs used the initial extraction-based MapInfo read. The bounded native read was subsequently verified on the same metadata and through an additional current-reader positive/expected-negative MCP sequence.",
+    "nativeArchiveHelperSha256": "f61733f5bb5fbb9733f8a9a2a4fa802123341127a985235a2e1e60501262103a",
+    "positive": "passed",
+    "negativeBlockedBeforeLaunch": true
+  },
+  "retainedFailure": {
+    "renderBackend": "legacy",
+    "status": "failed",
+    "stage": "before handshake",
+    "hostExitCode": 536936448,
+    "sourceUnchanged": true,
+    "cause": "Not established. Subsequent auto-selected Vulkan runs passed."
+  },
+  "privacy": {
+    "passed": true,
+    "checkedFiles": 9924,
+    "privateSourceFiles": 2331,
+    "privateCorpusCompared": true,
+    "violations": [],
+    "scope": "Installed private release plus neighboring private source corpus compared. Original test source archives remained byte-identical. This is not reverse-engineering resistance.",
+    "privateRuntimeBundled": false,
+    "ordinaryDeliveredMapsRequireToolkit": false
+  },
+  "regressions": {
+    "tests": 65,
+    "pass": 65,
+    "fail": 0,
+    "skipped": 0,
+    "tapSha256": "928c39655f4cdbc70ea23a7608ac701794a4c0fec3e3922c36bd5e459b1e1284",
+    "scope": "Selected game, project-test, archive entry, native cliff profile, privacy and focused MCP transport regressions"
+  },
+  "sourceFingerprints": [
+    {
+      "file": "game-toolkit-release.json",
+      "sha256LfUtf8": "7c8e2329dd4af5513e8fbc4f0a98cd4442fedc5460129fbc7291c3be4a5c96cf"
+    },
+    {
+      "file": "src/integrations/game/runtime.ts",
+      "sha256LfUtf8": "cdbf80b0d4ff188a38427907d5adc00adc6326e5a40c49f6582761a42211c014"
+    },
+    {
+      "file": "src/integrations/game/bridge.ts",
+      "sha256LfUtf8": "c92c1503caba401c087a00934cd68b26a0693ac5cc508cf4eae568f85117f793"
+    },
+    {
+      "file": "src/integrations/game/tools.ts",
+      "sha256LfUtf8": "a727816566d0720bc3995a08c029ead4800147b250911f681a6e4afe08e5276e"
+    },
+    {
+      "file": "src/integrations/game/transport.ts",
+      "sha256LfUtf8": "fb80efac59156e531fbd41f52e5aa951099a76461da224c2467ca223e0902360"
+    },
+    {
+      "file": "src/modules/testing/workspace.ts",
+      "sha256LfUtf8": "be29ae54a15c7aa287ba64a6fef72de8e832415994e9bea48caa938a07623584"
+    },
+    {
+      "file": "src/modules/testing/schemas.ts",
+      "sha256LfUtf8": "b95a7791814e03e481ca9c1588524de8134aed94a2d4c89075cc82087e35f8f7"
+    },
+    {
+      "file": "src/modules/testing/playableBounds.ts",
+      "sha256LfUtf8": "8f186a39f8931aae0db14cd15868962840443f05f1cf8d93a431f32b78b1215f"
+    },
+    {
+      "file": "src/modules/testing/routeGeometry.ts",
+      "sha256LfUtf8": "84b68527e02659420fbfb100f4679d3346c62318f398717f651571276ac1677b"
+    },
+    {
+      "file": "src/archive/archiveAdapter.ts",
+      "sha256LfUtf8": "5908359384bb86defd7063425ea550c38a237e0fcd6b8c1bf9cd66fd4b50600a"
+    },
+    {
+      "file": "native/archive.cpp",
+      "sha256LfUtf8": "54361878d44b421500326ae1461e503216de658a54cfac5f259255cb42924590"
+    },
+    {
+      "file": "scripts/build-native-archive.mjs",
+      "sha256LfUtf8": "3d7eb75815ab0efe835448642fdccdc29f210d15a8165117e28cfe508825c030"
+    },
+    {
+      "file": "scripts/setup-game-toolkit.mjs",
+      "sha256LfUtf8": "918d63ffd8c4752a77b2e10aa56de8bc0f2bda4d5514fee1e5864b63af4a933b"
+    },
+    {
+      "file": "scripts/verify-native-game.mjs",
+      "sha256LfUtf8": "831c0d39b31dcbcda728ab98dc7a397b1b365d7e9fe6a30470ba5b7571eeda65"
+    },
+    {
+      "file": "scripts/check-distribution-privacy.mjs",
+      "sha256LfUtf8": "747bb50d8e7c0ed8ec034f7759ec6bfca4424b8a348f872b68c1ce9095ed03da"
+    },
+    {
+      "file": "scripts/build-windows-portable.mjs",
+      "sha256LfUtf8": "1823ccb374ac50646b1fcba037475bfd631f032272ba70b0603c70bbfb4a3ec2"
+    }
+  ],
+  "openCoverage": [
+    "General startup/dependency corpus",
+    "Ramp profiles/tilesets beyond the restricted Agria cardinal fixture; authoritative collision/buildability",
+    "Extended GUI-library save/game initialization",
+    "Native ability execution/cost/cooldown/visual and audio corpus",
+    "All renderer/game-build/UI variants"
+  ]
+}

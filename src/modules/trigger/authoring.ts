@@ -134,12 +134,28 @@ export function collectGuiValues(request:GuiRequest){
  request.calls.forEach(call);request.variables?.forEach(v=>{if(v.initial)value(v.initial);});request.functions?.forEach(f=>{f.calls.forEach(call);f.variables?.forEach(v=>{if(v.initial)value(v.initial);});f.parameters?.forEach(p=>{if(p.default)value(p.default);});if(f.returns)value(f.returns);});request.structures?.forEach(s=>s.fields.forEach(v=>{if(v.initial)value(v.initial);}));return values;
 }
 
+function canonicalScalarDefaultString(value:unknown){
+ if(typeof value!=='string')return false;
+ try{const scalar=JSON.parse(value);return (scalar===null||scalar===false||scalar===0)&&JSON.stringify(scalar)===value;}catch{return false;}
+}
+
 class Renderer {
  readonly elements:string[]=[];
  private nodes=0;
  private readonly variables:ReturnType<typeof inspectGuiVariables>;
  private readonly definitions:GuiDefinitions;
  constructor(private readonly library:string,private readonly nextId:()=>string,private readonly xml:string,private readonly r:Registry,private readonly context:RenderContext){this.variables=[...inspectGuiVariables(xml,library),...(r.externalVariables??[]).filter(v=>v.library!==library)];this.definitions=definitionsFor(xml,library,r);}
+ initializer(value:GuiValue,type:GuiType,paramId:string,context:RenderContext){
+  const variable=this.variables.find(v=>v.id===context.initializing&&v.library===this.library);
+  if(variable&&!variable.constant&&type.type==='string'&&value.kind==='literal'&&value.type==='string'&&canonicalScalarDefaultString(value.value)){
+   // The original Editor elides these scalar spellings in Variable/Value,
+   // even with ValueType=string. A stock expression keeps the explicit value.
+   const concat=resolveFunction('native:CombineStrings',this.r,'Expression',{type:'string'});
+   if(concat.parameters.length!==2||concat.parameters.some(p=>p.type!=='string'))throw Error('GUI_STRING_INITIALIZER_CARRIER_SIGNATURE');
+   value={kind:'call',function:'native:CombineStrings',args:{[concat.parameters[0].id]:{kind:'literal',type:'string',value:''},[concat.parameters[1].id]:value}};
+  }
+  return this.value(value,type,paramId,context,0);
+ }
  private allocate(){if(++this.nodes>2000)throw new Error('GUI_RENDER_NODE_LIMIT');return this.nextId();}
  private infer(v:GuiValue,context:RenderContext,expected?:GuiType):GuiType {
   if(v.kind==='literal')return {type:v.type};
@@ -163,7 +179,7 @@ class Renderer {
   let owners=this.definitions.presets.filter(d=>(d.library??'')===ownerLibrary&&(ownerName?(d.id===ownerName||d.name===ownerName):ownerId?d.id===ownerId:true));
   const requested=v.kind==='presetBits'?v.values:[v.id??v.name??''];
   if(owners.length!==1&&v.kind==='preset')owners=owners.filter(d=>d.values.some(ref=>this.definitions.presetValues.some(pv=>pv.id===ref.id&&pv.library===(ref.library??d.library)&&(pv.id===requested[0]||pv.name===requested[0]))));
-  if(owners.length===1){const owner=owners[0],members=requested.map(name=>{const found=this.definitions.presetValues.filter(pv=>owner.values.some(ref=>ref.id===pv.id&&(ref.library??owner.library)===pv.library)&&(pv.id===name||pv.name===name));if(found.length!==1)throw new Error('GUI_PRESET_MISMATCH');return found[0];});
+  if(owners.length===1){const owner=owners[0],candidates=this.definitions.presetValues.filter(pv=>owner.values.some(ref=>ref.id===pv.id&&(ref.library??owner.library)===pv.library)),members=requested.map(name=>{const found=candidates.filter(pv=>pv.id===name||pv.name===name);if(found.length!==1)throw new Error('GUI_PRESET_MISMATCH: '+JSON.stringify(name)+' is not a unique member of '+(owner.library?owner.library+'::':'')+(owner.name??owner.id)+'; available='+candidates.slice(0,12).map(pv=>pv.name??pv.id).join(', ')+(candidates.length>12?', ...':''));return found[0];});
    if(v.kind==='presetBits'&&!owner.asBits)throw new Error('GUI_PRESET_NOT_BITS');
    if(v.kind==='preset'&&v.id&&v.name&&members[0].name!==v.name)throw new Error('GUI_PRESET_MISMATCH');
    return {type:{type:'preset',presetId:owner.id,typeLibrary:owner.library??'',typeElement:{type:'Preset' as const,id:owner.id,library:owner.library??''}},members,baseType:owner.baseType};
@@ -243,7 +259,11 @@ class Renderer {
   if(depth>16)throw new Error('GUI_EXPRESSION_DEPTH_LIMIT');
   if(p?.flags?.includes('ParamFlagVariableOnly')&&!['variable','parameter'].includes(v.kind)||want.type==='anyvariable'&&!['variable','parameter'].includes(v.kind))throw new Error('GUI_VARIABLE_ARGUMENT_REQUIRED');
   if(v.kind==='preset'||v.kind==='presetBits'){
-   const selected=this.selectedPreset(v,want,p);if(want.type==='preset'&&!sameGuiType(want,selected.type)||!['preset','anypreset','anycompare','anytype'].includes(want.type)&&!p?.selectorPresetId)throw new Error('GUI_PRESET_MISMATCH');
+   const selected=this.selectedPreset(v,want,p);
+   // Scalar variable/field initializers have no ParamDef selector. Their preset
+   // owner must instead declare the exact GUI base type of the owned variable.
+   const initializerPreset=depth===0&&!p&&!!context.initializing&&selected.baseType===want.type&&this.variables.some(variable=>variable.id===context.initializing&&variable.library===this.library&&sameGuiType(variable,want));
+   if(want.type==='preset'&&!sameGuiType(want,selected.type)||!['preset','anypreset','anycompare','anytype'].includes(want.type)&&!p?.selectorPresetId&&!initializerPreset)throw new Error('GUI_PRESET_MISMATCH');
    return selected.members.map(member=>`<${v.kind==='presetBits'?'ValuePreset':'Preset'} Type="PresetValue"${localRef(member.library??'Ntve')} Id="${member.id}"/>`).join('');
   }
   const actual=this.infer(v,context,want.type==='anyvariable'?undefined:want);
@@ -295,7 +315,7 @@ export function renderCall(call:GuiCall,library:string,nextId:()=>string,xml:str
  const renderer=new Renderer(library,nextId,xml,r,context),id=renderer.call(call,context,depth);return {id,elements:renderer.elements.join('\n'),kind:call.kind};
 }
 export function renderInitializer(value:GuiValue,type:GuiType,paramId:string,library:string,nextId:()=>string,xml:string,r:Registry,context:RenderContext){
- const renderer=new Renderer(library,nextId,xml,r,context),body=renderer.value(value,type,paramId,context,0);return {body,elements:renderer.elements.join('\n')};
+ const renderer=new Renderer(library,nextId,xml,r,context),body=renderer.initializer(value,type,paramId,context);return {body,elements:renderer.elements.join('\n')};
 }
 
 /** Render a batch against one immutable symbol table; no XML re-scan per argument. */

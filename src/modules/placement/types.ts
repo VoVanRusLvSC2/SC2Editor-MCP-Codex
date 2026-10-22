@@ -39,6 +39,15 @@ export type ExclusionZone =
       maxY: number;
     };
 
+export interface LocationRoute {
+  points:Array<{x:number;y:number}>;
+  width:number;
+  texture?:string;
+  flatten?:boolean;
+  height?:number;
+  edgeBlend?:number;
+}
+
 export interface PlacementObject {
   objectId?: number;
   kind: "Unit" | "Doodad";

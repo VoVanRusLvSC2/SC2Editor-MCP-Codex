@@ -1,0 +1,214 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-22T08:55:34.384Z",
+  "scope": "Known inherited command-card conflicts, zero-speed availability warning, localized unique button and a framed native XP fixture",
+  "implementation": {
+    "tool": "data.card.check",
+    "automaticRecipeGuard": [
+      "data.ability.instant",
+      "data.ability.target",
+      "data.apply recipe.instantAbility/targetAbility",
+      "data.plan/apply_plan"
+    ],
+    "supported": "Unique active Unit-parent chain, fresh implicit root cards and numeric indexed overlays with removed/partial entries",
+    "rejected": [
+      "Another command in the selected inherited slot",
+      "Unintentional same-page cell overlap",
+      "Unintentional shared Button face between commands",
+      "Unresolved/layered parents or unsupported array merge profile"
+    ],
+    "conditionalException": "card.conflictReason records explicit intent only; cannot waive another command slot or unresolved inheritance",
+    "availabilityWarning": "CARD_MOVE_AT_ZERO_SPEED for literal inherited Speed0 with move commands; does not reject stationary designs",
+    "readonlyPagination": true,
+    "compactReceiptsBounded": true
+  },
+  "mcp": {
+    "initialBadBindingObserved": [
+      "CARD_SHARED_BUTTON_FACE"
+    ],
+    "rejectedBeforeWrite": true,
+    "portableBadProposalRejected": true,
+    "catalogAndFrozenArchiveUnchangedOnRejection": true,
+    "uniqueButtonAuthor": "b2ab208f-f353-401d-9431-1cb171db6ced",
+    "mobilityAuthor": "c7609c89-42f6-4d1d-bb99-6a7d5f79ab4d",
+    "ordinaryMapWrites": "Actual MCP authoring/save/export only",
+    "portableDependencyControl": "Without installed/configured ModKit, native Marine parent remains unverified; after explicit external SC2_MODKIT_HOME configuration the precise shared-face rejection passed. Failed prerequisite harness artifact retained."
+  },
+  "native": {
+    "gameBuild": "5.0.17.98310",
+    "gameToolkit": "v0.1.0-dev.11",
+    "ordinaryArchiveSha256": "7f456651a719816d2527f8df4f587f3fe5c396048fa5398e25fe37738688b629",
+    "ordinaryGalaxyUnchanged": true,
+    "cleanGameLaunches": 2,
+    "retainedBridges": 1,
+    "runs": [
+      {
+        "jobId": "3fd26fe5-0d32-495f-9b58-598ea5456136",
+        "sourceUnchanged": true,
+        "cleanup": true,
+        "movementOutAndBack": "passed",
+        "xpLevels": [
+          1,
+          2,
+          2,
+          3
+        ],
+        "life": [
+          1000,
+          1100,
+          1100,
+          1200
+        ],
+        "practiceDamage": [
+          500,
+          505,
+          510
+        ]
+      },
+      {
+        "jobId": "19a2ed41-4c5b-4af9-b3df-245e244d648c",
+        "sourceUnchanged": true,
+        "cleanup": true,
+        "movementOutAndBack": "passed",
+        "xpLevels": [
+          1,
+          2,
+          2,
+          3
+        ],
+        "life": [
+          1000,
+          1100,
+          1100,
+          1200
+        ],
+        "practiceDamage": [
+          500,
+          505,
+          510
+        ]
+      }
+    ],
+    "editor": {
+      "projectJob": "b6283dcd-7877-4aad-9a3a-deb6cc9cc2f7",
+      "loadCompile": "passed",
+      "saveReopen": "not_checked"
+    },
+    "extraRecordingLaunches": 1,
+    "recording": "9cf8a2de-0e05-4bf6-807c-b612fde28abe",
+    "camera": {
+      "target": {
+        "x": 28,
+        "y": 36
+      },
+      "pitch": 64.8633,
+      "yaw": 180,
+      "distance": 24
+    },
+    "presentation": {
+      "reviewedCommandIcons": 9,
+      "standardCommands": [
+        "Move",
+        "Stop",
+        "Hold position",
+        "Patrol",
+        "Attack"
+      ],
+      "nativeControlsRead": 15,
+      "readOnlyUi": true,
+      "hotkeyConflictModalVisibleInReviewedFrames": false,
+      "heroAndLevelEffectInFrame": true,
+      "levelEffectScale": 0.55,
+      "strikeEffectScale": 1,
+      "levelHudBefore": 1,
+      "levelHudAfter": 2,
+      "button": "QualityVeteranStrike",
+      "declaredHotkey": "D",
+      "enUsAndRuRuNameTooltip": true,
+      "tooltipMatchesBaseDamageCostCooldown": true,
+      "images": {
+        "before": "7bd01b3ecea87667631bfb64c0135361491f89559f9c1ff432bfc9ef8ce2a096",
+        "impact": "f59eeb32fe2ad309e18bd4062c02e824767bab6203af304302ad6b329fe37249",
+        "after": "09106c926334cd1c728f8d45669ca6b1e218f99cb9861527fa43effd914c554f"
+      },
+      "videoSha256": "cc54bd1e2c835f78a20b5090ed569fd4b79a9f985895ab652ae9d2535cdb3491",
+      "audio": {
+        "nonzero": 210756,
+        "peak": 0.0036840455140918493,
+        "sha256": "ef68d552b12c9b88bcbb4e89bb222468faa65bbb6c91124c333660bc536e2a07",
+        "scope": "Combined strike/kill/level-up owned process audio"
+      },
+      "scope": "Human review of these native frames, not automatic appearance scoring or universal hotkey compatibility; native frame-tree cells alone do not prove populated icons"
+    },
+    "diagnostics": "No unexpected errors in available sources; diagnostic coverage remains partial/inconclusive"
+  },
+  "regressions": {
+    "tests": 1329,
+    "pass": 1328,
+    "fail": 0,
+    "skipped": 1,
+    "concurrency": 2,
+    "sha256": "b440ca9ac5eb2f4f7d9a8755dbc0d137f629835e8590a3f6bc01b5a242d89dcb",
+    "firstBroaderRun": "One focused-profile transport test timed out at15sec while suites overlapped; retained failed TAP. Isolated rerun passed in3.37sec and the complete concurrency2 run passed.",
+    "firstRunSha256": "b30f81622a31ccb8db9d47ba326dc0494417e595216785e4b49172a646c74896",
+    "eslint": "passed",
+    "documentationLanguage": "passed"
+  },
+  "portable": {
+    "candidate": "SC2EditorToolkit-CardGuard-dev11-20261022",
+    "published": false,
+    "schemas": true,
+    "compiledFingerprints": {
+      "modules/terrain/operations.js": "4f1dbda387eb5dc5156a444dabcf8f9350fe13a6235273f5c54c882c748278eb",
+      "modules/terrain/nativeGeometry.js": "1770c3eefbca6c30eca93c7fbb9a58b0ceb19954ed1342cab060ca92df4b2271",
+      "modules/terrain/landscapeOwnership.js": "e3d4ee66ab664e8326546c2f3005c9d8aa95a08529db44bb59459f0aa91856e5",
+      "modules/terrain/nativeTopologyOwnership.js": "fd21de0876e6e610ffb0631fb11604d2d02e57df6eee17864506b6c26836cc94",
+      "modules/terrain/schemas.js": "2899b40dc06ac38960b28e3386e828fc97e140a890127166c18bdb94e5fd2736",
+      "modules/terrain/tools.js": "c3923c702f7987542b540205173a371a78c1451bde50bfcc6b1a7629032b8a32",
+      "modules/browse/workspace.js": "656b0d674d79a1db54334ea0fa57a47d4495e792ee1292157cbda35aa2a6814a",
+      "modules/terrain/loadContract.js": "26f69590590f52fcacbaa2e246c803b20a01c9214476dff90fc51db1a49481ea",
+      "modules/document/codecs/terrainLoadContract.js": "cbb1027dc1a35edf6d6ae7696d3cf6734012931100a6cc7ef9371364f17f5dd4",
+      "archive/terrainLoadContract.js": "e75cb33ed451bd6e1b1733f2d5f42076a5b38c1196a51da6b328220e2ac9b56d",
+      "modules/testing/workspace.js": "d3b95e219b7bb22cd00b3c43dc996549e6781373c6450d147c5fa54af8bd92e5",
+      "modules/terrain/workspace.js": "3c2099150d610f1ac7ca7d4d3d759fef9436ebf4e6c9e2fe8a5a90ffcf5a636c",
+      "modules/map/workspace.js": "07961fc1f4fe91d83d5811b4a4a254f7a98cbef4eb7fcb615de470f703e56d0b",
+      "modules/trigger/authoring.js": "3dd7645c0a7b93a5ddc51a6407d5182460083921ea39481c598795f59059c931",
+      "app/authoringScript.js": "6365369ed8f4246dd3b8b676b49da7820a933a693c31fe7d2aca65f3116ef50b",
+      "app/mcpBatch.js": "d5ba43a19bb4fed4191229d6bbee841417e60d24c7aee6d382a1a1ec78c0c6c3",
+      "modules/data/document.js": "2a003f2061251c18cfde806fc974379efae76ae061bf094bb15684aa409f21d1",
+      "modules/data/authoringValidation.js": "1122c9e2c2d0366259e9d956d1e7239ffe4cedffc1332d6062e0bcd0c8f1a963",
+      "modules/data/tools.js": "5b2490f35a507ea9ab75f8449ef15b10e55183f3b2a084701bd290e1a741d60a",
+      "modules/data/workspace.js": "c27aeeb31130dab4b23af57ab3f9b4dde69cbcfbb38229f6a9a93cdc146f63a3",
+      "modules/data/abilityRecipes.js": "11a1b1ea9f50984871fbce0ea8af08bf1251941bfae716d3f95da92725080dfa",
+      "modules/data/veterancyRecipe.js": "5a2718284da3c19a84c64cba198feebf4b25aa58b6d1ffa9d5332fbad5f34ce6",
+      "modules/data/cardBindings.js": "372dfe5195e291d78e33ce3e179f3c239d53e56dbd481fb056bcca123263b7a6"
+    },
+    "authoringAndCardRejectionsAreErrors": true,
+    "privacy": {
+      "passed": true,
+      "privateCorpusCompared": true,
+      "violations": 0,
+      "scope": "Explicit private paths/debug/test artifacts and exact external C++/Python/Galaxy source copies, including renamed files. Not proof against transformed snippets or binary reverse engineering."
+    }
+  },
+  "openCoverage": [
+    "Main CActorUnit custom ability cast/channel/interruption/completion animation and model-sequence verification; policy now explicit",
+    "Other user hotkey profiles, validators, charges, point targets, learn/talents and shared veterancy",
+    "Conditional visibility and unsupported/layered array profiles",
+    "Complex typed GUI native save/reopen on preserved pending handlers",
+    "Broad native topology/navigation/buildability and final mission art/balance"
+  ],
+  "sourceFingerprints": {
+    "src/modules/data/cardBindings.ts": "975bb32d4177f30e7fb87daf1f72fc4a1ffa0b0c108319881ac3352608b301c1",
+    "src/modules/data/abilityRecipes.ts": "871197ca59864b822ae042024db9c462d2484c10980df7519ce758f7485113b0",
+    "src/modules/data/workspace.ts": "34aca0f4b09bbfb28238278ddeab41dd91c066ac96cf9b02847f6e9e14245d31",
+    "src/modules/data/tools.ts": "df4402b546b990d696ff1870f519563726233499ad17aa0679e1f514092854be",
+    "src/app/authoringScript.ts": "4954e2aff473f30c7e0f7a18d413a21d8343d18358b8f0e9891e8055b2541eac",
+    "src/app/mcpBatch.ts": "8bf3574ac73ceb54022bf58ca7618745a0f931523286ab03f3c1183fc85f8eff",
+    "src/tests/dataCardBindings.test.ts": "6d4f18f6b366bcc38fa95dee1a255487a29edfb4d6d134db8877407caf01d239",
+    "src/tests/authoringScript.test.ts": "65ac90f681e923ec6babdfb26bcfab3009b950b41a8a0bd5ab80923b3cf35331",
+    "AGENTS.md": "9524c9e7e6fa01b910c2bcd19c474d7f3a3b65f2add8975a980ff2b625540910",
+    "docs/AUTHORING_PROTOCOL.md": "af5e7c5d77a973330c5031297c9931ff2a496d767283c7e97527a05e975a3f07",
+    "docs/DATA_MCP.md": "39d9974f8a7cb14dd849902485ffc81767dc27c31b5944d505d12a0f35f2a9f5"
+  }
+}

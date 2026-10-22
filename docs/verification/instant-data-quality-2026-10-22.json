@@ -1,0 +1,223 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-22T04:00:26.290Z",
+  "scope": "Reusable native instant-ability and truthful-verification checkpoint; full quality roadmap remains open",
+  "features": [
+    "data.ability.instant and recipe.instantAbility use a verified same-class native template",
+    "Data energy/cooldown and explicit local-unit command-card indices",
+    "Compact authoring can create/save the ability and place a Unit without hand-written plan JSON",
+    "Placement compact lifecycle uses the actual id; scatter uses plan.id",
+    "Inherited native token attributes retain declared types; unknown/missing typed targets reject",
+    "Strict Data rejection is an MCP error with no staged file",
+    "Suite assertions support value/equals and reject unknown/empty operators before dispatch",
+    "Compiler summary lines expose file/line while source context stays in private artifacts"
+  ],
+  "mcp": {
+    "authorAndPresentation": "28bf30c9-eace-4e83-bbf2-e346191ea8c7",
+    "recording": "aa78c5f0-67f0-4af0-814f-16d8fb192ee6",
+    "strictHistoricalAssertionReplay": [
+      {
+        "kind": "repair",
+        "proof": "b06234b9-d5da-46dc-98d2-0016b60099f7",
+        "cases": 9,
+        "assertions": 11,
+        "status": "passed"
+      },
+      {
+        "kind": "preflight",
+        "proof": "6abadade-7bda-440b-9ba2-e4514943a0ba",
+        "cases": 1,
+        "assertions": 3,
+        "status": "passed"
+      },
+      {
+        "kind": "editor",
+        "proof": "6ad42b08-a4f6-458f-b074-6536e9ec6505",
+        "cases": 1,
+        "assertions": 4,
+        "status": "passed"
+      }
+    ]
+  },
+  "fixture": {
+    "sha256": "f4a193e06b00a81b30eef53c2bf89423c40e753bf9b11dfc5a12849f04a0a546",
+    "mechanicsInData": true,
+    "privateInstrumentationInOrdinaryArchive": false,
+    "sourceTemplate": "Stimpack",
+    "ability": "ArenaPulse",
+    "effect": "ArenaPulseSearch",
+    "model": "GhostEMPAttackImpactEffect",
+    "energyCost": 25,
+    "cooldownSeconds": 5,
+    "cooldownLocation": "Unit",
+    "damage": 10,
+    "card": {
+      "page": 0,
+      "slot": 8,
+      "row": 2,
+      "column": 1
+    }
+  },
+  "native": {
+    "engineBuild": "5.0.17.98310",
+    "gameRelease": "v0.1.0-dev.11",
+    "mechanics": {
+      "cleanLaunches": 2,
+      "retainedBridges": 1,
+      "runs": [
+        {
+          "jobId": "d102f7cf-c9b1-4d0a-87e6-7022fb71795f",
+          "sourceSha256": "f4a193e06b00a81b30eef53c2bf89423c40e753bf9b11dfc5a12849f04a0a546",
+          "createdAt": "2026-10-22T03:48:04.309Z",
+          "finishedAt": "2026-10-22T03:48:34.435Z",
+          "firstCast": {
+            "energy": 75,
+            "targetLife": 490,
+            "cooldownActive": true
+          },
+          "earlyReuse": {
+            "submitted": true,
+            "energyUnchanged": 75,
+            "targetLifeUnchanged": 490
+          },
+          "readyAgain": {
+            "cooldownRemaining": 0
+          },
+          "secondCast": {
+            "energy": 50,
+            "targetLife": 480
+          },
+          "cleanupAndSourceGuards": true,
+          "diagnostics": "Optional partial-coverage check remains inconclusive"
+        },
+        {
+          "jobId": "2f0dc263-6e80-4127-8e2b-9b969efadb1e",
+          "sourceSha256": "f4a193e06b00a81b30eef53c2bf89423c40e753bf9b11dfc5a12849f04a0a546",
+          "createdAt": "2026-10-22T03:48:34.564Z",
+          "finishedAt": "2026-10-22T03:49:03.888Z",
+          "firstCast": {
+            "energy": 75,
+            "targetLife": 490,
+            "cooldownActive": true
+          },
+          "earlyReuse": {
+            "submitted": true,
+            "energyUnchanged": 75,
+            "targetLifeUnchanged": 490
+          },
+          "readyAgain": {
+            "cooldownRemaining": 0
+          },
+          "secondCast": {
+            "energy": 50,
+            "targetLife": 480
+          },
+          "cleanupAndSourceGuards": true,
+          "diagnostics": "Optional partial-coverage check remains inconclusive"
+        }
+      ]
+    },
+    "presentation": {
+      "separateOwnedRecording": true,
+      "frames": 12,
+      "actualDurationSeconds": 2,
+      "videoSha256": "389a33e34d7f79195849d00ae04af64e8730c5b2e9bd2687e36cc3d261ee415c",
+      "nativeVisualEffectVerified": false,
+      "agentReviewedVisibleFrame": true,
+      "review": "Native before/impact frames show the EMP model; intentionally large technical marker, not final art/balance acceptance",
+      "audio": {
+        "status": "ok",
+        "source": "owned_process_audio",
+        "nonzero": 164423,
+        "peak": 0.0019789328798651695,
+        "renderedFrames": 168000,
+        "supportedStreams": 2,
+        "unknownLayoutStreams": 0,
+        "physicalSpeakerAudibilityClaimed": false
+      },
+      "pixelHashes": {
+        "before": "2a76893e98d37f0809de20aa40a917276fb547194f3ee5f889a2378b7bac8511",
+        "impact": "b157b1897d2b0f096e60639efc8211f3d9441cb65987d85c0590bac270d41283",
+        "after": "98e876fb1b0b8cab400874c8c4c16bf2dccfdae45cca84724ff9c90064ace799"
+      }
+    }
+  },
+  "regressions": {
+    "tests": 1301,
+    "pass": 1300,
+    "fail": 0,
+    "skipped": 1,
+    "reportSha256": "b6cb93dc05dd8e399ebca7d0080cf7c548a52c3564a5b60e65780dea4d9dd879",
+    "testConcurrency": 4
+  },
+  "portable": {
+    "candidate": "release/SC2EditorToolkit-InstantData-dev11-20261022",
+    "published": false,
+    "smokePassed": true,
+    "externalGameFilesVerified": 113,
+    "scopedDataErrorProbePassed": true,
+    "privacy": {
+      "passed": true,
+      "checkedFiles": 9937,
+      "privateSourceFiles": 2331,
+      "privateCorpusCompared": true,
+      "violations": [],
+      "scope": "Explicit private paths/debug/test artifacts and exact external C++/Python/Galaxy source copies, including renamed files. Not proof against transformed snippets or binary reverse engineering."
+    },
+    "compiledFingerprints": {
+      "modules/terrain/loadContract.js": "26f69590590f52fcacbaa2e246c803b20a01c9214476dff90fc51db1a49481ea",
+      "modules/document/codecs/terrainLoadContract.js": "cbb1027dc1a35edf6d6ae7696d3cf6734012931100a6cc7ef9371364f17f5dd4",
+      "archive/terrainLoadContract.js": "e75cb33ed451bd6e1b1733f2d5f42076a5b38c1196a51da6b328220e2ac9b56d",
+      "modules/testing/workspace.js": "d3b95e219b7bb22cd00b3c43dc996549e6781373c6450d147c5fa54af8bd92e5",
+      "modules/terrain/workspace.js": "f6436cde41e99977cde61c04330c4139cb9cf68157d72a05fb619b4601b628a7",
+      "modules/map/workspace.js": "07961fc1f4fe91d83d5811b4a4a254f7a98cbef4eb7fcb615de470f703e56d0b",
+      "modules/trigger/authoring.js": "3dd7645c0a7b93a5ddc51a6407d5182460083921ea39481c598795f59059c931",
+      "app/authoringScript.js": "7ef7b344e07ab675142d5d1071c77d269386705eefb6617885ab12745b642b80",
+      "modules/data/document.js": "2a003f2061251c18cfde806fc974379efae76ae061bf094bb15684aa409f21d1",
+      "modules/data/authoringValidation.js": "1122c9e2c2d0366259e9d956d1e7239ffe4cedffc1332d6062e0bcd0c8f1a963",
+      "modules/data/tools.js": "9d96132663d49c44e45c5a0c48330f605b1e0819dece7add264539982ccb70e4",
+      "modules/data/workspace.js": "e24058703f27b5e32ee24cdd9519d106cba35fadc79187e10602a6e7a75834d1",
+      "modules/data/abilityRecipes.js": "85133d48356a62d8e9779c873aa5129aa6dc430db5c485fd1057139b0a4173f9"
+    }
+  },
+  "currentUpstreamCheck": {
+    "checkedOn": "2026-10-22",
+    "editor": {
+      "tag": "v0.10.0-rc.1",
+      "publishedAt": "2026-10-21T13:51:05Z",
+      "url": "https://github.com/VoVanRusLvSC2/SC2EditorToolkit/releases/tag/v0.10.0-rc.1"
+    },
+    "game": {
+      "tag": "v0.1.0-dev.11",
+      "publishedAt": "2026-10-21T17:55:46Z"
+    },
+    "modkitBlizzard": {
+      "sha": "78104889bed092d901516044bd90734df8d5caac",
+      "url": "https://github.com/hometlt/ModKit-Blizzard"
+    },
+    "modkitCore": {
+      "sha": "7e3c856ba290b8abde55b1f7e4d93383179e8b9f",
+      "url": "https://github.com/hometlt/ModKit"
+    },
+    "verification": "GitHub API sorted by publication date; installed ModKit heads equal current upstream heads"
+  },
+  "openCoverage": [
+    "Complex typed GUI original-Editor save handler remains pending; not accepted",
+    "Other native execution templates, abilities, targeting, charges, levels and presentation variants",
+    "Arbitrary cliff/ramp topology, native navigation rebuild/collision/buildability",
+    "Physical speaker output and complete diagnostics",
+    "Finished mission balance and aesthetic acceptance"
+  ],
+  "sourceFingerprints": {
+    "src/modules/data/abilityRecipes.ts": "130b5aab3c074b7fefddf6619e39a9df898c63f0c089668b63f2b96d251a2da8",
+    "src/modules/data/document.ts": "c2748df07da1133d614f990f7d812cd60728299daedcb1163609f5c4afd41c73",
+    "src/modules/data/types.ts": "244556dc3036c7b062ed80a3da091114ecfb66ef2bf396440e36693244c9c2df",
+    "src/modules/data/authoringValidation.ts": "80319c9966cf3e299c8c584ceb8e5e8ecf7afad0a02b856e72f847483d0225e4",
+    "src/modules/data/tools.ts": "cbb01b39d1adad62f16f6cf7f655119a16acd08ef77f0296a6ffaed40c96ff77",
+    "src/modules/data/workspace.ts": "cd90caba7b833562d6b1b039f8337b38de6859353e49ca96715feefe03fe0513",
+    "src/modules/testing/workspace.ts": "8c67f01667e59cc300a0a466b6f7abc4f525820b59ebd3a614bb00b0e6c587ec",
+    "src/app/authoringScript.ts": "e7eda3387a9c91f50b9a6a82305cbe0fc974c0578e44395810f2aa38c4e422d8",
+    "scripts/toolkit-suite-assertions.mjs": "3b3aab0ba86740d1dde322907aa9e1efd737e7fcc0d1d15578f92e1997374104",
+    "scripts/verify-toolkit-integration.mjs": "42ea895abfb26f9c8c243c92925280a19272198f7660383db72ac54264ef4ef7"
+  }
+}

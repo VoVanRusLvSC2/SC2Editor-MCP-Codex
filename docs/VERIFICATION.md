@@ -2,10 +2,149 @@
 
 ## Readiness
 
-**The tested MCP authoring workflows and original Editor bridge work.** The
-current bridge uses SC2 Native Toolkit **0.9.2-rc.1**, native protocol **11**, on
-Windows x64 / Editor **5.0.17.98310**. This is a working toolkit for supported
-formats and workflows. It does not implement or certify every Editor/game feature.
+The [native charge/range checkpoint](verification/native-charges-range-2026-10-22.json)
+adds a guarded native Charge recipe, initial-stock handling and explicit level0
+range overrides. The exact target-ability archive passed Editor load/compile and
+two fresh launches:38 causal casts,24 blocked orders, four pool scopes and five
+additional stock/recovery profiles. Each cast waited native completion. Full
+regression:1399pass/1 skipped shell fixture. This is a scoped mechanics corpus;
+diagnostics remain partial and the complete quality roadmap is still open.
+
+The [card and availability checkpoint](verification/data-card-quality-2026-10-22.json)
+adds inherited command-card guards and zero-speed availability warnings to the
+MCP. A new ordinary archive passed two clean launches: movement out/back, native
+XP thresholds and life/damage deltas. Original Editor load/compile passed; the
+reviewed recording shows nine command icons, no hotkey modal and an in-frame
+level burst. Full tests:1328 pass/1 skip. Static card resolution is restricted to
+the declared supported array/parent profile; user hotkey variants, main-unit
+ability animation and finished mission presentation remain open.
+
+The historical [native veterancy checkpoint](verification/native-veterancy-2026-10-22.json)
+verifies solo kill XP and cumulative stat progression through the high-level
+Data/CSV recipe. Native levels1→2→2→3 at total XP0→50→100→150 passed twice;
+life and damage deltas applied without trigger progression. Original Editor
+load/compile and a compact current-writer no-op passed. Full tests:1318 pass/1 skip.
+An extra recording shows native HUD progression and visible level feedback, but
+also a hotkey-conflict warning and camera-clipped large effect. Presentation is
+not accepted as finished; inherited card guards and camera framing remain next.
+
+The [targeted Data checkpoint](verification/targeted-data-quality-2026-10-22.json)
+adds an explicit native-template ability recipe and local-template resolution.
+The Snipe-based archive passed original Editor load/compile and two clean game
+launches; the instant regression passed two further launches. Controls observe
+no spend/damage on a mechanical target, outside range with an immobile caster,
+or with insufficient energy. Valid casts verified 30 damage and 25 energy twice,
+early reuse protection and cooldown recovery. Order acceptance confirms submission,
+not execution or an explicit illegal-target reason. Separate native impact frames
+were reviewed and owned-process PCM was nonzero. Full regression:1316 pass/1 skip;
+the local TargetAbility portable passed schema/fingerprint/privacy checks. Other
+targeting templates, charges, progression and finished presentation remain open.
+
+The [regional native topology checkpoint](verification/landscape-native-ownership-2026-10-22.json)
+adds owned cliff/ramp rows, independent zone rebuild/removal, guarded ancestor
+object resnap and catalog cache reuse across native terrain edits. Three exact
+ordinary archives passed six clean launches and 48 Marine/Marauder traversals.
+The east region's native rows and binary channels remained identical while the
+west region was lowered and restored. The full compiled suite passed 1312 tests
+with one skipped shell case. Detail frames and a supplemental overview were
+reviewed; the original clipped overview is retained as unsuitable framing.
+The local NativeOwnership portable passed 20 compiled fingerprint checks and a
+private-source comparison against 2331 external files with zero violations.
+This restricted native profile does not certify arbitrary topology, native
+navigation rebuilding, buildability, finished art or the full roadmap.
+
+The [owned location checkpoint](verification/landscape-groups-2026-10-22.json)
+adds measured infrastructure, surface-preserving decor passes, height-editing
+budgets and read-only Unit/effect Actor measurements. Three freshly created maps
+passed six clean game launches, 48 corridor-bound traversals and 18 view captures
+through one retained bridge. All nine first-run views were inspected; repeated
+captures establish transport/readback only. The full regression run passed 1281
+tests with one existing skipped shell case. A 20-building batch returned 7,991
+JSON bytes instead of 35,231 while keeping identical operations. These are
+scoped technical results, not a numeric art score or full roadmap readiness.
+
+**Supported authoring workflows have recorded evidence; the full roadmap remains
+open.** The current pin is SC2EditorToolkit **0.10.0-rc.1**, native protocol **11**,
+on Windows x64 / Editor **5.0.17.98310**. Renewed Vulkan runs passed core native
+load/Data, GUI compilation/export, save/reopen, original images and corrected
+camera A/B/A. The exact native-saved GUI/Data archive then passed game launch,
+bidirectional Marine movement, image delivery and cleanup. Partial runtime
+diagnostics and visible Tarmac warnings remain explicit. An initial startup
+sendError 187 and a mostly black camera fixture are retained as earlier failures.
+All 18 upstream methods were called through MCP on recorded fixtures, including
+native GUI XML conversion, cutscene timing/frame capture and a decoded silent
+H.264 export. Audio export was not tested by that silent fixture.
+
+Fresh outer MCP checks passed updated ModKit Data/navigation/model preview and
+the declared-effect presentation audit. The full topology/startup/library and
+ability/cutscene coverage matrices remain open. Refer to the
+[historical broad update record](verification/toolkit-update-2026-10-21.json).
+
+The private GameToolkit is now pinned to `v0.1.0-dev.11`; all 18 operations passed
+an extended MCP fixture run, including native UI handler activation and silent
+MP4 recording. Repeated lifecycle checks, current release integrity and source
+exclusion are in the [game update evidence](verification/game-toolkit-dev11-2026-10-21.json).
+
+The later library-import extension passed original conversion, guarded adoption
+and export through MCP, but its new fixture failed two game handshakes. An original
+save handler on that fixture remains active beyond its advisory deadline; it was
+not force-killed. Two subsequent game launches of the known GUI/Data foundation
+passed in the same retained game bridge. These results do not certify library
+startup or a general save/reopen path.
+
+Four cardinal ramps were generated through MCP. A first game fixture used a point
+outside MapInfo's playable bounds. After moving the generated pad inside bounds,
+the engine still displaced the test unit at creation; traversal was not accepted.
+The explicit no-pathing paint layer was already clear. The remaining cause is not
+established; geometry/cache/collision checks remain open. Native geometry plans
+now expose `NATIVE_NAVIGATION_NOT_REBUILT` rather than implying that file writes
+rebuilt engine navigation. Earlier successful movement evidence remains valid for
+its own maps.
+
+The first cliff correction now derives non-ramp CLIF words from the four coarse
+corners instead of one fine vertex. It matches 396 original native cells across
+12 non-saddle orientations; unsupported saddle, multi-level and void joins are
+rejected. A separate generated fixture launched through MCP, showed a closed
+convex cap and tiny plateau in reviewed game frames, and passed Marine placement
+on both levels plus a high-pad move. A follow-up canonical HMAP/SMAP pass changed
+163 fine vertices while leaving every coarse vertex and base height unchanged.
+Its generated map passed live Marine placement at a concave corner, and reviewed
+UI-free frames show that L-shaped join and the tiny plateau closed. Fine patterns
+for all 12 orientations were selected from original native observations. This is a bounded improvement,
+not a claim that all black gaps are fixed.
+
+A later cardinal-ramp check isolated another generator bug: native direction
+codes had been treated as compass angles. Correct enum/frame pairs now agree
+with the original City corpus. Reviewed close-ups show closed side caps in all
+four supported directions. On the corrected exact archive, two clean launches
+passed 32 Marine/Marauder ascent/descent checks in one retained bridge, with
+sampled trajectory corridors preventing a bypass from counting as success.
+Maximum observed deviation was 1.33 world units at a 2-unit limit. This accepts
+that width-four, adjacent-level Agria fixture, not all ramp widths/tilesets or
+an authoritative navigation/collision rebuild.
+
+`terrain.cliff.repair` normalizes registered fine-vertex joins without replacing
+coarse corners/base heights. `terrain.ramp.repair` repairs only the diagnosed
+legacy direction profile after full measured-channel checks. Its compact MCP
+save produced a byte-identical archive to fresh corrected generation; a repeat
+left all source terrain bytes unchanged. See the
+[terrain checkpoint evidence](verification/terrain-junctions-2026-10-21.json).
+
+The later [location checkpoint](verification/landscape-2026-10-22.json) records
+incremental zone ownership, exact Actor palettes, dependency-aware rebuilds and
+content-verified Browse caching. A same-map warm repeat fell from 51.87 s to
+2.46 s; a parent/overlay update from 55.28 s to 4.94 s. Cold interpretation still
+takes about a minute on that fixture. This is measured server time, not token
+billing. Named native viewpoints verify camera readback and deliver digest-checked
+PNGs through `project.test.report`; art quality still requires pixel review.
+These newer source fingerprints supersede earlier fingerprints for the modules
+they name without extending the scope of historical native results.
+
+Ground suites now check route centers against playable bounds read from exact
+MapInfo bytes, using a bounded native component read and archive-digest cache.
+A known route passed with the new reader. A Seed-map point inside the full terrain
+but outside its playable left boundary failed before game launch, with source
+and private artifact unchanged. These bounds do not certify collision/clearance.
 
 The public product name is **SC2EditorToolkit**. Existing repository links,
 `sc2editor-mcp`, tool names, environment variables and historical license/source
@@ -13,7 +152,7 @@ credits retain their compatibility identities. A repository relocation is separa
 
 ## Original DLL and protocol acceptance
 
-The [machine-readable record](verification/native-editor-0.9.2.json) publishes a
+The historical [machine-readable record](verification/native-editor-0.9.2.json) publishes a
 bounded, path-free extract of real local results: package/executable identities,
 protocols, timestamps, source/artifact hashes, camera readback and source scope.
 Private maps, generated user Galaxy, DLLs and screenshots are not committed.
@@ -56,8 +195,8 @@ actual original Editor operation. Unchecked engine behavior remains unchecked.
 | AI | Bounded metadata/authoring regressions | Universal live AI behavior |
 | Assets | Existing metadata/measurement/palette evidence | Engine collision shapes and complete asset resolution |
 | Custom cutscene renderer | Offline authoring/preview and historical material/sampler tests | Full lighting/material/shadow/postprocess, animation blending and FaceFX parity |
-| Toolkit cutscene/audio/video | Available upstream; separate from these seven wrappers | Not locally certified by this acceptance; enumeration is not execution |
-| Gameplay | Historical user observations are map-specific | No general campaign/balance/navigation/ability/performance certificate |
+| Toolkit cutscene/audio/video | Original cutscene load/seek/frame and silent MP4 passed; all 18 upstream methods have actual fixture calls; nine public Editor tools | Audio export, all FaceFX/links/assets and argument combinations remain open |
+| Gameplay | Optional GameToolkit adapter and manifest suite: seed launch/handshake; actual Marine and Marauder arrival in both directions on one declared route; selection, diagnostics, capture and cleanup; dev.11 native menu inspection/activation and silent recording; see [scope](NATIVE_GAME.md) | General startup matrix, all cliff/ramp routes, UI variants and ability presentation remain open; diagnostics remain partial; no general campaign/balance/performance certificate |
 
 Exact core regression files, totals, platform skip and TAP hashes are recorded in
 the JSON. This run is broader than the native bridge suite, but is not the entire
@@ -74,13 +213,29 @@ npm run build:release
 npm run lint
 npm run catalog:verify
 npm run docs:check-language
+npm run evidence:status
 npm run evidence:check
 npm run native:setup
 npm run native:verify
 ```
 
-`evidence:check` checks the published record against its source fingerprints; it
-does not launch an Editor or turn recorded checks into a new native run.
+`evidence:status` reads the [digest-bound record index](verification/index.json)
+and reports each record's declared source scope as matched or changed, without
+rewriting historical fingerprints. `--details` lists changed source files;
+`--require-ready` exits 2 while a required roadmap item is partial, stale,
+unsupported, failed or not checked. A source match retains the original fixture
+scope and does not extend its native observations. Broken record digests, unsafe
+paths or invalid coverage fail the query. The current index has unresolved
+requirements and deliberately reports `roadmapReady:false`.
+
+`evidence:check` retains the earlier broad acceptance gate. It currently fails
+because the 2026-10-21 aggregate's source fingerprints changed during later
+implementation. Its failure is retained; the new status inventory does not waive
+it or certify those old observations against changed code.
+`evidence:check` checks evidence integrity and scoped current acceptance;
+it does not launch an Editor or certify every feature. Source changes require
+renewed evidence scope. `--integrity-only` checks retained record integrity
+without requiring the current scoped acceptance gate to pass.
 `native:setup` installs the complete pinned, checksum/version/protocol-checked
 package and preserves notices. It does not start an Editor or auto-upgrade to a
 future version. Restart an existing MCP connection after rebuilding/upgrading.
@@ -106,5 +261,6 @@ Focused automated checks:
 node --test dist/tests/nativeEditor.test.js dist/tests/mcpBatch.test.js dist/tests/authoringProtocolTransport.test.js dist/tests/focusedProfileTransport.test.js
 ```
 
+[Quality improvement roadmap](MCP_QUALITY_ROADMAP.md) ·
 [Native lifecycle/details](NATIVE_EDITOR.md) · [Project status](PROJECT_STATUS.md) ·
 [Authoring rules](AUTHORING_PROTOCOL.md) · [Historical snapshot](CAPABILITIES_REPORT.md)

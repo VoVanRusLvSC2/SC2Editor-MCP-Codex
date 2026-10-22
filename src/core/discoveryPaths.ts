@@ -2,5 +2,5 @@
  * Locale entry directories remain eligible native content.
  */
 export function internalWorkspaceDirectory(name: string): boolean {
-  return name.startsWith(".sc2mcp-") && name !== ".sc2mcp-locales";
+  return name === '.sc2mcp' || name.startsWith(".sc2mcp-") && name !== ".sc2mcp-locales";
 }

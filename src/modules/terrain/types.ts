@@ -115,8 +115,9 @@ export type TerrainOperation =
   | ({ op: "water.material" } & import("./waterCatalog.js").WaterMaterialPatch)
   | { op: "water.remove"; index: number }
   | { op: "stamp.apply"; donorDirectory: string }
+  | { op: "load.repair" }
   | {
-      op: "cliff.paint" | "ramp.create" | "ramp.remove" | "pathing.paint";
+      op: "cliff.paint" | "cliff.repair" | "ramp.create" | "ramp.remove" | "ramp.repair" | "pathing.paint";
       area?: TerrainArea;
       parameters: Record<string, unknown>;
     };

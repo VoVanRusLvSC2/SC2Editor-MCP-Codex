@@ -9,7 +9,7 @@ const project = await createProject(process.env.SC2_UI_ROOT ?? process.cwd(), {l
 console.error(`[sc2editor-mcp] workspace: ${project.workspace.root}; profile=${selection.profile}; modules=${[...selection.modules].join(",")}; shared transaction coordinator`);
 const handle=serveStdio(() => createProjectServer(project));
 let closing=false;
-const close=async()=>{if(closing)return;closing=true;await project.nativeEditor.close();project.casc.close();await project.modkit.close();await handle.close();};
+const close=async()=>{if(closing)return;closing=true;await project.testing.close();await project.nativeGame.close();await project.nativeEditor.close();project.casc.close();await project.modkit.close();await handle.close();};
 process.stdin.once('end',()=>{void close();});
 process.once('SIGINT',()=>{void close();});
 process.once('SIGTERM',()=>{void close();});

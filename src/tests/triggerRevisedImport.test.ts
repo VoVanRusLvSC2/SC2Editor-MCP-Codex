@@ -10,12 +10,33 @@ import {inspectRevisedGui} from '../modules/trigger/revisedImport.js';
 const names=['FUNCTIONS','MAIN','GAMEPLAY','OBJECTIVES','CINEMATICS'];
 const tree='<TriggerData><Root>'+names.map((_,i)=>`<Item Type="Category" Id="0000000${i}"/>`).join('')+'</Root>'+names.map((n,i)=>`<Element Type="Category" Id="0000000${i}"><Identifier>${n}</Identifier></Element>`).join('')+'</TriggerData>';
 const hash=(s:string)=>createHash('sha256').update(s).digest('hex');
-test('revised GUI import rejects script fallback and incomplete or nested organization',()=>{
+
+test('native GUI inspection resolves library-qualified IDs and preserves library folders',()=>{
+ const library=(id:string,other:string)=>`<Library Id="${id}"><Root><Item Type="Category" Library="${id}" Id="AA"/></Root><Element Type="Category" Id="AA"><Identifier>HELPERS</Identifier><Item Type="FunctionDef" Library="${id}" Id="BB"/></Element><Element Type="FunctionDef" Id="BB"><FunctionDef Type="FunctionDef" Library="${other}" Id="CC"/></Element><Element Type="FunctionDef" Id="CC"/></Library>`;
+ const xml='<TriggerData><Root><Item Type="Library" Id="ABCD"/><Item Type="Library" Id="EF01"/></Root>'+library('ABCD','EF01')+library('EF01','ABCD')+'</TriggerData>';
+ assert.throws(()=>inspectRevisedGui(xml),/NATIVE_LIBRARY_COMPILER_REQUIRED/);
+ const counts=inspectRevisedGui(xml,{nativeLibraries:true});assert.equal(counts.functions,4);assert.deepEqual(counts.libraries,[{library:'ABCD',folders:['HELPERS']},{library:'EF01',folders:['HELPERS']}]);
+ assert.throws(()=>inspectRevisedGui(xml.replace('Id="CC"/>','Id="BAD"/>'),{nativeLibraries:true}),/DANGLING/);
+ assert.throws(()=>inspectRevisedGui(xml.replace('</TriggerData>','<Library Id="ABCD"><Root/></Library></TriggerData>'),{nativeLibraries:true}),/LIBRARY_SCOPE/);
+ assert.throws(()=>inspectRevisedGui(xml.replace('<Identifier>HELPERS</Identifier>','<ScriptCode>Call();</ScriptCode>'),{nativeLibraries:true}),/SCRIPT_FALLBACK/);
+ const external=inspectRevisedGui(xml.replace('Library="EF01" Id="CC"','Library="External" Id="CC"'),{nativeLibraries:true});assert.deepEqual(external.externalLibraries,['External']);
+});
+test('revised GUI import rejects script fallback and invalid folder ownership',()=>{
  assert.equal(inspectRevisedGui(tree).customScripts,0);
  assert.throws(()=>inspectRevisedGui(tree.replace('</TriggerData>','<Element Type="CustomScript" Id="A"/></TriggerData>')),/SCRIPT_FALLBACK/);
  assert.throws(()=>inspectRevisedGui(tree.replace('</TriggerData>','<Element Type="Param" Id="A"><ScriptCode>Call();</ScriptCode></Element></TriggerData>')),/SCRIPT_FALLBACK/);
- assert.throws(()=>inspectRevisedGui(tree.replace('CINEMATICS','EXTRA')),/FIVE_FLAT_FOLDERS/);
- assert.throws(()=>inspectRevisedGui(tree.replace('<Identifier>MAIN</Identifier>','<Identifier>MAIN</Identifier><Item Type="Category" Id="00000000"/>')),/NESTED_FOLDER/);
+ assert.ok(inspectRevisedGui(tree.replace('CINEMATICS','EXTRA')).folders.includes('EXTRA'));
+ assert.throws(()=>inspectRevisedGui(tree.replace('<Identifier>MAIN</Identifier>','<Identifier>MAIN</Identifier><Item Type="Category" Id="00000000"/>')),/MULTIPLE_OWNERS/);
+ assert.throws(()=>inspectRevisedGui(tree.replace('<Identifier>MAIN</Identifier>','<Identifier>MAIN</Identifier><Item Type="Category" Id="MISSING"/>')),/DANGLING/);
+ assert.throws(()=>inspectRevisedGui(tree.replace('<Identifier>MAIN</Identifier>','<Identifier>MAIN</Identifier><Item Type="Category" Id="00000001"/>')),/MULTIPLE_OWNERS|CYCLE/);
+});
+test('revised GUI import accepts fewer or more folders and valid nesting without changing input',()=>{
+ for(const count of [0,3,7]){
+  const xml='<TriggerData><Root>'+Array.from({length:count},(_,i)=>`<Item Type="Category" Id="F${i}"/>`).join('')+'</Root>'+Array.from({length:count},(_,i)=>`<Element Type="Category" Id="F${i}"><Identifier>SYSTEM_${i}</Identifier></Element>`).join('')+'</TriggerData>';
+  assert.equal(inspectRevisedGui(xml).folders.length,count);
+ }
+ const nested=tree.replace('<Root><Item Type="Category" Id="00000000"/>','<Root>').replace('<Identifier>MAIN</Identifier>','<Identifier>MAIN</Identifier><Item Type="Category" Id="00000000"/>');
+ assert.ok(inspectRevisedGui(nested).folders.includes('MAIN/FUNCTIONS'));
 });
 test('revised GUI import pins both sources and stages tree/runtime/labels as one guarded transaction',async t=>{
  const root=await fs.mkdtemp(path.join(os.tmpdir(),'sc2-revised-import-'));t.after(()=>fs.rm(root,{recursive:true,force:true}));

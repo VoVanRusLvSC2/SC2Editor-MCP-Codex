@@ -2,6 +2,7 @@ import { promises as fs } from "node:fs";
 import path from "node:path";
 import process from "node:process";
 import { buildPeLauncher } from "./build-pe-launcher.mjs";
+import {checkDistributionPrivacy} from './check-distribution-privacy.mjs';
 
 const projectRoot = process.cwd();
 const output = path.resolve(process.argv[2] ?? "release/SC2-UI-Workbench-Windows");
@@ -23,6 +24,9 @@ await fs.cp(path.join(projectRoot,'scripts/modkit'),path.join(app,'scripts/modki
 await fs.copyFile(path.join(projectRoot,'scripts/setup-modkit-runtime.mjs'),path.join(app,'scripts/setup-modkit-runtime.mjs'));
 await fs.copyFile(path.join(projectRoot,'scripts/setup-native-toolkit.mjs'),path.join(app,'scripts/setup-native-toolkit.mjs'));
 await fs.copyFile(path.join(projectRoot,'native-toolkit-release.json'),path.join(app,'native-toolkit-release.json'));
+await fs.copyFile(path.join(projectRoot,'game-toolkit-release.json'),path.join(app,'game-toolkit-release.json'));
+await fs.copyFile(path.join(projectRoot,'scripts/setup-game-toolkit.mjs'),path.join(app,'scripts/setup-game-toolkit.mjs'));
+await fs.copyFile(path.join(projectRoot,'scripts/run-map-tests.mjs'),path.join(app,'scripts/run-map-tests.mjs'));
 const runtimeSchemas=["cutscene-schema.json","text-font-style-schema.json","font-style-corpus.json","ai-module-schema.json","data-editor-schema.json","data-observed-schema.json", "galaxy-native-api.json", "trigger-authoring-registry.json", "trigger-skirmish-recipe.json", "o200k_base.tiktoken", "o200k_base.sha256", "TIKTOKEN_LICENSE.txt"];
 await fs.mkdir(path.join(app,"generated"),{recursive:true});
 for(const file of runtimeSchemas)await fs.copyFile(path.join(projectRoot,"generated",file),path.join(app,"generated",file));
@@ -63,6 +67,8 @@ await fs.copyFile(path.join(projectRoot,"windows","SC2-MCP-CUTSCENE-PREVIEW.cmd"
 await fs.copyFile(path.join(projectRoot, "windows", "README-WINDOWS.md"), path.join(output, "README-WINDOWS.md"));
 await fs.copyFile(path.join(projectRoot, "README.md"), path.join(output, "README.md"));
 await fs.copyFile(path.join(projectRoot, "README_LEGACY.md"), path.join(output, "README_LEGACY.md"));
+await fs.copyFile(path.join(projectRoot,'AGENTS.md'),path.join(output,'AGENTS.md'));
+await fs.cp(path.join(projectRoot,'.agents','skills'),path.join(output,'.agents','skills'),{recursive:true});
 await fs.mkdir(path.join(output,"generated"),{recursive:true});
 for(const file of runtimeSchemas)await fs.copyFile(path.join(projectRoot,"generated",file),path.join(output,"generated",file));
 await fs.cp(path.join(projectRoot,"generated","data-xsd-index"),path.join(output,"generated","data-xsd-index"),{recursive:true});
@@ -72,9 +78,7 @@ for (const file of ["casc-tools.json", "settings-tools.json", "settings-evidence
   await fs.copyFile(source, path.join(output, "generated", file));
 }
 await fs.cp(path.join(projectRoot, "docs"), path.join(output, "docs"), { recursive: true });
-const examplesSource = path.join(projectRoot, "examples");
-try { await fs.access(examplesSource); await fs.cp(examplesSource, path.join(output, "examples"), { recursive: true }); }
-catch (error) { if (error.code !== "ENOENT") throw error; }
+// Private test maps and generated examples are not runtime dependencies.
 await buildPeLauncher(path.join(output, "SC2-UI-Workbench.exe"));
 
 const {version}=JSON.parse(await fs.readFile(path.join(projectRoot,"package.json"),"utf8"));
@@ -92,7 +96,8 @@ await fs.writeFile(path.join(output, "BUILD-INFO.json"), `${JSON.stringify({
   version,
   bundledArchiveBackend: true,
   bundledCascBackend: true,
-  publicModules: 15,
+  publicModules: 18,
+  privateGameToolkitBundled: false,
   mcpLauncher: "SC2-MCP.cmd",
   mcpDefaultProfile: "all",
   settingsEditorValidation: "NOT_EXECUTED",
@@ -102,4 +107,7 @@ await fs.writeFile(path.join(output, "BUILD-INFO.json"), `${JSON.stringify({
   requiresInstalledNode: !bundledNode,
   launcher: "SC2-UI-Workbench.exe",
 }, null, 2)}\n`, "utf8");
-process.stdout.write(`${JSON.stringify({ output, bundledNode }, null, 2)}\n`);
+const privacy=await checkDistributionPrivacy(output,{privateRoots:process.env.SC2_GAME_TOOLKIT_HOME?[process.env.SC2_GAME_TOOLKIT_HOME]:[]});
+await fs.writeFile(path.join(output,'PRIVACY-CHECK.json'),JSON.stringify(privacy,null,2)+'\n');
+if(!privacy.passed)throw Error('PORTABLE_PRIVACY_CHECK_FAILED: '+privacy.violations.map(v=>v.file).join(', '));
+process.stdout.write(`${JSON.stringify({ output, bundledNode, privacy }, null, 2)}\n`);

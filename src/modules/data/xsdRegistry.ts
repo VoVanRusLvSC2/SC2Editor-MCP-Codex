@@ -60,13 +60,13 @@ export class DataXsdRegistry {
   private manifestValue?: DataXsdManifest | null;
   private readonly typeCache = new Map<string, DataXsdType | undefined>();
 
-  constructor(private readonly manifestFile = projectPath("generated/data-xsd-index/manifest.json")) {}
+  constructor(readonly manifestFile = projectPath("generated/data-xsd-index/manifest.json")) {}
 
   manifest(): DataXsdManifest | undefined {
     if(this.pinnedDepth&&this.manifestValue!==undefined)return this.manifestValue??undefined;
     let revision:string;
     try{const stat=statSync(this.manifestFile);revision=stat.size+":"+stat.mtimeMs;}catch(error){if((error as NodeJS.ErrnoException).code!=="ENOENT")throw error;revision="missing";}
-    if(this.revision!==revision){this.revision=revision;this.manifestValue=undefined;this.typeCache.clear();this.shardHashes.clear();this.consumedSources.clear();}
+    if(this.revision!==revision){this.revision=revision;this.manifestValue=undefined;this.manifestHash=undefined;this.typeCache.clear();this.shardHashes.clear();this.consumedSources.clear();}
     if (this.manifestValue !== undefined) return this.manifestValue ?? undefined;
     try {const text=readFileSync(this.manifestFile,"utf8");this.manifestHash=createHash("sha256").update(text).digest("hex");this.manifestValue = JSON.parse(text) as DataXsdManifest; }
     catch (error) {

@@ -48,7 +48,7 @@ test('arena roots put shared definitions before main code, preserving unrelated 
  const p=scanXml(result.xml),root=p.nodes.find(n=>n.tag==='Root')!,refs=root.childIds.map(i=>p.nodes[i]).filter(n=>n.tag==='Item');
  const category=(id:string)=>p.nodes.find(n=>n.tag==='Element'&&n.attrs.Type==='Category'&&n.attrs.Id===id)!;
  const identifiers=refs.map(r=>{const n=category(r.attrs.Id),v=n.childIds.map(i=>p.nodes[i]).find(n=>n.tag==='Identifier')!;return result.xml.slice(v.startTagEnd,v.endTagStart);});
- assert.deepEqual(identifiers,['FUNCTIONS','MAIN','GAMEPLAY','ROUNDS']);
+ assert.deepEqual(identifiers,['FUNCTIONS','MAIN','ROUNDS']);
 });
 
 test('remove deletes an exact declaration and its folder item, preserving other elements',()=>{

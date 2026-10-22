@@ -1,6 +1,15 @@
 import type {XmlNode} from '../../core/types.js';
 export interface ActorEdge {value:string;domain:string;start:number;end:number;raw:string;unknown:boolean}
 export interface ActorIssue {targetDomain?:string;code:string;offset:number}
+/** These measured signatures contain animation labels/properties, not catalog
+ * links. Extra commands/unknown argument forms remain unverified. */
+function opaqueAnimationMessage(raw:string){
+ const word='[A-Za-z_][A-Za-z0-9_]*',props='[A-Za-z0-9_]+(?:,[A-Za-z0-9_]+)*',number='-?\\d+(?:\\.\\d+)?';
+ return new RegExp('^AnimPlay '+word+' '+props+'(?: (?:PlayForever|0))?(?: '+number+'){0,3}$').test(raw)
+  ||new RegExp('^AnimBracketStart '+word+' '+props+'$').test(raw)
+  ||new RegExp('^Anim(?:Clear|BracketStop|GroupApply|GroupRemove) '+word+'$').test(raw)
+  ||/^AnimBaseline(?:Start|Stop)$/.test(raw);
+}
 /** Explicit event selectors/texture messages only; not an actor-message interpreter. */
 export function actorEvents(source:string,entry:XmlNode,nodes:XmlNode[],resolve:(raw:string)=>string) {
  const references:ActorEdge[]=[],issues:ActorIssue[]=[];
@@ -15,15 +24,15 @@ export function actorEvents(source:string,entry:XmlNode,nodes:XmlNode[],resolve:
     else if(!child.selfClosing)values.push({raw:source.slice(child.startTagEnd,child.endTagStart),start:child.startTagEnd});
    }
    for(const value of values){
-    const pattern=carrier==='Terms'?/\b(UnitBirth|UnitDeath|UnitRevive|UnitMorph|Effect)\.([^\s.;]+)/g:carrier==='Send'?/\b(TextureSelectById)\s+([^\s;]+)/g:undefined;
+    const pattern=carrier==='Terms'?/\b(UnitBirth|UnitDeath|UnitRevive|UnitMorph|Effect|Abil)\.([^\s.;]+)/g:carrier==='Send'?/\b(TextureSelectById)\s+([^\s;]+)/g:undefined;
     if(!pattern){if(value.raw&&!value.raw.startsWith('_'))issues.push({targetDomain:'Actor',code:'ACTOR_TARGET_SCOPE_UNKNOWN',offset:value.start});continue;}
     for(const m of value.raw.matchAll(pattern)){
-     const domain=m[1]==='TextureSelectById'?'Texture':m[1]==='Effect'?'Effect':'Unit';
+     const domain=m[1]==='TextureSelectById'?'Texture':m[1]==='Effect'?'Effect':m[1]==='Abil'?'Abil':'Unit';
      const start=value.start+m.index!+m[0].lastIndexOf(m[2]),resolved=resolve(m[2]),unknown=resolved.includes('##')||/[&*?]/.test(resolved);
      if(unknown)issues.push({targetDomain:domain,code:'ACTOR_DYNAMIC_REFERENCE',offset:start});
      references.push({value:resolved,domain,start,end:start+m[2].length,raw:m[2],unknown});
     }
-    if(carrier==='Send'&&value.raw.trim()&&!/^(Create|Destroy|TextureSelectById)\b/.test(value.raw.trim()))issues.push({code:'ACTOR_MESSAGE_SIGNATURE_UNKNOWN',offset:value.start});
+    if(carrier==='Send'&&value.raw.trim()&&!/^(Create|Destroy|TextureSelectById)\b/.test(value.raw.trim())&&!opaqueAnimationMessage(value.raw.trim()))issues.push({code:'ACTOR_MESSAGE_SIGNATURE_UNKNOWN',offset:value.start});
     if(carrier==='Terms'&&/\b(UnitBirth|UnitDeath|UnitRevive|UnitMorph|Effect)\b(?!\.)/.test(value.raw))issues.push({targetDomain:/\bEffect\b/.test(value.raw)?'Effect':'Unit',code:'ACTOR_SELECTOR_SCOPE_UNKNOWN',offset:value.start});
    }
   }

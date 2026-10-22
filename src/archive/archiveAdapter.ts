@@ -91,6 +91,16 @@ export async function inspectArchive(archive: string, options: ArchiveOptions = 
   if(!adapter.native) throw new Error("ARCHIVE_INSPECTION_REQUIRES_NATIVE_BACKEND");
   return parseManifest(await runAdapter(adapter.path, ["inspect", source], options.timeoutMs));
 }
+/** Read one neutral component up to 1 MiB without extracting an entire map. */
+export async function readArchiveEntry(archive:string,name:string,options:ArchiveOptions={}):Promise<Buffer>{
+  const source=path.resolve(archive);assertArchive(source);const normalized=safeArchivePath(name);
+  if(toolFile(normalized)||['(listfile)','(attributes)','(signature)'].includes(normalized.toLowerCase()))throw Error('ARCHIVE_COMPONENT_READ_FORBIDDEN');
+  if(!(await fs.lstat(source)).isFile())throw Error('ARCHIVE_SOURCE_NOT_FILE');
+  const adapter=resolveArchiveAdapter(options.adapter);if(!adapter.native)throw Error('ARCHIVE_ENTRY_READ_REQUIRES_NATIVE_BACKEND');
+  const value=JSON.parse(await runAdapter(adapter.path,['read',source,normalized],options.timeoutMs??60000));
+  if(value.protocol!=='sc2-mcp-entry-v1'||typeof value.name!=='string'||value.name.replaceAll('\\','/').toLowerCase()!==normalized.toLowerCase()||value.locale!==0||!Number.isInteger(value.size)||value.size<0||value.size>1024*1024||typeof value.hex!=='string'||value.hex.length!==value.size*2||!/^[a-f0-9]*$/.test(value.hex))throw Error('ARCHIVE_ENTRY_READ_INVALID');
+  return Buffer.from(value.hex,'hex');
+}
 /** Hashes and pins the complete eligible tree, excluding only known tool/internal files. */
 export async function directoryManifest(root: string): Promise<DirectoryEntry[]> {
   const result: DirectoryEntry[] = [], seen = new Set<string>(); let total = 0;

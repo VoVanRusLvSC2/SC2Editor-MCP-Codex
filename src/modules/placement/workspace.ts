@@ -1,6 +1,8 @@
 import type { TerrainWorkspace } from "../terrain/workspace.js";
 import { createHash } from "node:crypto";
 import { promises as fs } from "node:fs";
+import path from 'node:path';
+import {MapInfoDocument} from '../map/mapInfo.js';
 import { Workspace } from "../../core/workspace.js";
 import { BrowseWorkspace } from "../browse/workspace.js";
 import type { BrowseSearchResult } from "../browse/types.js";
@@ -47,6 +49,7 @@ const LOCATION_TERMS: Record<LocationType, string[]> = {
 };
 
 interface PlanObjectArgs {
+  outsidePlayableReason?: string;
   objectFile?: string;
   componentListFile?: string;
   query?: string;
@@ -130,6 +133,24 @@ export class PlacementWorkspace {
     }
     const sourceSha256: Record<string, string> = {};
     const diskSha256: Record<string, string> = {};
+    const unitPositions:Position3[]=[];
+    const moved=input.operations.filter((op):op is Extract<PlacementMutation,{op:'move'}>=>op.op==='move');
+    const placed=moved.length?new PlacementDocument((await this.workspace.readRaw(input.objectFile)).text,input.objectFile).list():[];
+    for(const op of input.operations){if(op.op==='add'&&op.object.kind==='Unit')unitPositions.push(op.object.position);else if(op.op==='move'&&placed.find(o=>o.id===op.objectId)?.kind==='ObjectUnit')unitPositions.push(op.position);}
+    const playableWarnings:string[]=[];
+    if(unitPositions.length){
+      const file=path.posix.join(path.posix.dirname(input.objectFile.replaceAll('\\','/')),'MapInfo'),effective=await this.workspace.binary.read(file),disk=await this.workspace.binary.read(file,false);
+      sourceSha256[file]=textHash(effective.bytes);diskSha256[file]=textHash(disk.bytes);
+      let info:MapInfoDocument|undefined;try{info=new MapInfoDocument(effective.bytes);}catch{playableWarnings.push('Unit playable-bound check unavailable: missing or unsupported MapInfo. Engine clamping and footprint clearance remain unverified.');}
+      if(info){
+        const b=info.playableBounds,outside=unitPositions.filter(p=>p.x<b.left||p.x>=b.right||p.y<b.bottom||p.y>=b.top);
+        const reason=(input.request as {outsidePlayableReason?:unknown}).outsidePlayableReason;
+        if(outside.length){
+          if(typeof reason!=='string'||!reason.trim()||reason.length>160)throw Error('UNIT_OUTSIDE_PLAYABLE_BOUNDS: '+JSON.stringify({bounds:b,positions:outside.slice(0,8),outsideCount:outside.length})+'; select playable coordinates or provide outsidePlayableReason for an intentional off-area placement. Engine clamping is not disabled by that exception.');
+          playableWarnings.push('Explicit outsidePlayableReason: '+reason.trim()+'. '+outside.length+' Unit pivots lie outside MapInfo playable bounds; native clamping remains possible.');
+        }
+      }
+    }
     for (const file of [input.objectFile, input.componentListFile]) {
       const effective = await this.workspace.readRaw(file);
       const disk = await this.workspace.readRaw(file, false);
@@ -151,10 +172,11 @@ export class PlacementWorkspace {
       ),
       warnings: [
         ...input.warnings,
+        ...playableWarnings,
         "Placement format is reference-supported; this build has not been opened/saved by SC2Editor.",
         ...(!input.bounds
           ? [
-              "Map bounds are unavailable: supply explicit bounds before trusting coordinates.",
+              "No explicit placement bounds supplied; the separate Unit playable check uses supported MapInfo. Footprint and full placement clearance remain unverified.",
             ]
           : []),
       ],
@@ -306,6 +328,7 @@ export class PlacementWorkspace {
   }
 
   async addBatch(args: {
+    outsidePlayableReason?:string;
     objectFile?: string;
     componentListFile?: string;
     objects: Array<
@@ -321,6 +344,7 @@ export class PlacementWorkspace {
     const operations: PlacementMutation[] = [];
     const candidates: BrowseSearchResult[] = [];
     const resolvedSelectors = new Map<string, Awaited<ReturnType<PlacementWorkspace["resolvePlaceable"]>>>();
+    const candidateKeys = new Set<string>();
     for (const object of args.objects) {
       const selector = JSON.stringify([object.kind, object.id, object.key, object.query, object.catalogType]);
       let resolved = resolvedSelectors.get(selector);
@@ -350,13 +374,16 @@ export class PlacementWorkspace {
           ...(object.flags ? { flags: object.flags } : {}),
         },
       });
-      const compact = await this.browse.search({
-        ids: [resolved.id],
-        catalogType: resolved.catalogType,
-        dependency: resolved.dependency,
-        limit: 1,
-      });
-      if (compact.results[0]) candidates.push(compact.results[0]);
+      if (!candidateKeys.has(resolved.key)) {
+        candidateKeys.add(resolved.key);
+        const compact = await this.browse.search({
+          ids: [resolved.id],
+          catalogType: resolved.catalogType,
+          dependency: resolved.dependency,
+          limit: 1,
+        });
+        if (compact.results[0]) candidates.push(compact.results[0]);
+      }
     }
     return this.remember({
       request: { type: "batch", ...args },
@@ -631,6 +658,7 @@ export class PlacementWorkspace {
   }
 
   async mutate(args: {
+    outsidePlayableReason?:string;
     op: "move" | "rotate" | "scale" | "remove";
     objectFile?: string;
     componentListFile?: string;
@@ -712,6 +740,7 @@ export class PlacementWorkspace {
 
   async createLocation(args: {
     locationType: LocationType;
+    candidateIds?:string[];
     queries?: string[];
     area: PlacementArea;
     objectCount?: number;
@@ -722,6 +751,7 @@ export class PlacementWorkspace {
     scaleRange?: { min: number; max: number };
     rotationRange?: { min: number; max: number };
     exclusionZones?: ExclusionZone[];
+    reservedCorridors?:Array<{points:Array<{x:number;y:number}>;width:number}>;
     candidateOverrides?: string[];
     excludedObjects?: string[];
     dependency?: string;
@@ -730,7 +760,7 @@ export class PlacementWorkspace {
     bounds?: PlacementBounds;
     landmarkCount?: number;
     includeUnits?: boolean;
-  }) {
+  },foundation?:PlacementDocument) {
     if (args.includeUnits)
       throw new Error(
         "createLocation includeUnits is not enabled in this evidence tier; add units explicitly with placement.addUnit",
@@ -740,7 +770,7 @@ export class PlacementWorkspace {
       ...LOCATION_TERMS[args.locationType],
       ...(args.candidateOverrides ?? []),
     ];
-    if (!queries.length)
+    if (!queries.length&&!args.candidateIds?.length)
       throw new Error("custom location requires queries or candidateOverrides");
     const excluded = new Set(
       (args.excludedObjects ?? []).map((value) => value.toLowerCase()),
@@ -748,7 +778,11 @@ export class PlacementWorkspace {
     const candidateMap = new Map<string, BrowseSearchResult>();
     const searches: Array<{ query: string; total: number; accepted: number }> =
       [];
-    for (const query of uniqueStrings(queries)) {
+    if(args.candidateIds?.length){
+      if(args.queries?.length||args.candidateOverrides?.length)throw Error('LOCATION_CANDIDATE_SELECTION_CONFLICT: use exact candidateIds or query selection');
+      for(const id of uniqueStrings(args.candidateIds)){const resolved=await this.resolvePlaceable('Doodad',{id,catalogType:'Actor'});if(excluded.has(id.toLowerCase()))continue;const candidate=(await this.browse.search({ids:[id],catalogType:'Actor',dependency:resolved.dependency,limit:40})).results.find(c=>c.key===resolved.key);if(!candidate)throw Error('LOCATION_EXACT_CANDIDATE_NOT_INDEXED: '+id);candidateMap.set(candidate.key,candidate);searches.push({query:id,total:1,accepted:1});}
+    }
+    for (const query of args.candidateIds?.length?[]:uniqueStrings(queries)) {
       const result = await this.browse.search({
         query,
         objectKind: "Doodad",
@@ -839,6 +873,10 @@ export class PlacementWorkspace {
         seed,
         exclusionZones,
       },
+      {existingPoints:foundation?.list().flatMap(o=>{if(!o.position||!['ObjectDoodad','ObjectUnit'].includes(o.kind))return [];const [x,y,z]=o.position.split(',').map(Number);return [{x,y,z}];}),acceptPoint:p=>(args.reservedCorridors??[]).every(route=>route.points.slice(1).every((b,i)=>{
+        const a=route.points[i],dx=b.x-a.x,dy=b.y-a.y,n=dx*dx+dy*dy,t=n?Math.max(0,Math.min(1,((p.x-a.x)*dx+(p.y-a.y)*dy)/n)):0;
+        return Math.hypot(p.x-a.x-t*dx,p.y-a.y-t*dy)>=route.width/2;
+      }))},
     );
     const scaleMin = args.scaleRange?.min ?? 1;
     const scaleMax = args.scaleRange?.max ?? scaleMin;
@@ -871,6 +909,7 @@ export class PlacementWorkspace {
       request: {
         type: "createLocation",
         ...args,
+        ...(foundation?{foundationHash:textHash(foundation.source)}:{}),
         candidateKeys: candidates.map((entry) => entry.key),
       },
       objectFile: args.objectFile ?? "Objects",
@@ -974,7 +1013,7 @@ export class PlacementWorkspace {
     return this.validateDocument(document);
   }
 
-  private async validateDocument(
+  async validateDocument(
     document: PlacementDocument,
     plan?: PlacementPlan,
   ): Promise<PlacementValidationReport> {
@@ -1062,7 +1101,7 @@ export class PlacementWorkspace {
       editorVisibility: {
         placedObjects: (() => { try { return document.list().length; } catch { return 0; } })(),
         editorLayerState: "UNOBSERVABLE" as const,
-        hint: "Object presence/XML validity do not prove native 3D rendering. Check the live Units/Doodads layers, but if they are already enabled, investigate generated placement, terrain heights, catalog/actor initialization and Editor diagnostics. Saved TerrainLayersVisible bits alone are not a diagnosis.",
+        hint: "Object presence/XML validity do not prove native 3D rendering. Check View > Show Layer and Layer > All for the live Units/Doodads layers. If they are already enabled, investigate generated placement, terrain heights, catalog/actor initialization and Editor diagnostics. Saved TerrainLayersVisible bits alone are not a diagnosis.",
       },
       checks: {
         xml: issues.some((entry) => entry.code === "MALFORMED_XML")
@@ -1123,8 +1162,12 @@ export class PlacementWorkspace {
       };
     const transaction = await this.workspace.applyRawTransaction(
       [plan.objectFile, plan.componentListFile],
-      (sources) => {
+      async (sources) => {
         const next = new Map(sources);
+        for(const file of Object.keys(plan.sourceSha256).filter(file=>file!==plan.objectFile&&file!==plan.componentListFile)){
+          const effective=await this.workspace.binary.read(file),disk=await this.workspace.readBinaryDependency(this.workspace.resolveUserPath(file),true);
+          if(textHash(effective.bytes)!==plan.sourceSha256[file]||textHash(disk)!==plan.diskSha256[file])throw Error('STALE_PLACEMENT_PLAN: '+file);
+        }
         const source = sources.get(plan.objectFile) ?? "";
         const document = source
           ? new PlacementDocument(source, plan.objectFile)

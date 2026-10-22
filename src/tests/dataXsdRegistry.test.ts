@@ -16,3 +16,15 @@ test("declared Data XSD registry reads a compact manifest and one selected type 
   assert.equal(registry.describe("cunit")?.fields[0]?.name, "LifeMax");
   assert.equal(registry.describe("CMissing"), undefined);
 });
+
+test("removing the optional XSD manifest clears its source digest", async (t) => {
+  const root = await fs.mkdtemp(path.join(os.tmpdir(), "sc2-xsd-missing-"));
+  t.after(() => fs.rm(root, { recursive: true, force: true }));
+  const file = path.join(root, "manifest.json"), registry = new DataXsdRegistry(file);
+  assert.equal(registry.manifestFile, file);
+  assert.deepEqual(registry.sources(), []);
+  await fs.writeFile(file, JSON.stringify({schemaVersion:"1",types:[]}));
+  assert.equal(registry.sources().length, 1);
+  await fs.unlink(file);
+  assert.deepEqual(registry.sources(), []);
+});

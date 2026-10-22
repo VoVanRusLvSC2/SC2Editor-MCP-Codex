@@ -1,6 +1,16 @@
-# Browse / Placement MCP — alpha.6
+# Browse / Placement MCP
 
 ## Architecture
+
+Unit add/batch/move plans automatically check their affected pivots against a
+supported local MapInfo playable rectangle, separately from full terrain bounds.
+Left/bottom are inclusive; right/top are exclusive. Outside pivots reject before
+staging unless the request supplies a nonempty `outsidePlayableReason` for
+intentional staging; the exception does not disable native clamping. Doodads are
+unaffected. Missing/unsupported MapInfo produces an explicit unverified warning.
+MapInfo bytes participate in plan stale guards and staged-save dependencies.
+This is center containment, not footprint, collision, buildability or pathing
+certification. Existing unrelated placements are preserved.
 
 `BrowseWorkspace` indexes structured definitions from the existing `DataWorkspace`/schema registry, localized labels from the existing `StringTableDocument`, and loose physical files. No catalog whitelist is introduced. Unknown C* classes remain generic definitions and are not automatically considered placeable.
 
@@ -8,7 +18,15 @@
 
 Search returns bounded ranked JSON. Exact IDs, case-insensitive substrings, Unicode tokens, labels, text keys, file paths and linked IDs contribute to `matchedBy`. Use `ids` for batch ID searches and `offset`/`limit` for pagination. Confidence is a heuristic, not an editor acceptance probability.
 
-Index snapshots are cached in memory and invalidated by file path/size/mtime and existing staged-draft hashes. Unchanged searches do not reread catalog XML. A changed fingerprint currently rebuilds the snapshot; per-file persistent index caching is not implemented. Force refresh after an external edit that deliberately preserves both mtime and size. Newly staged, not-yet-created catalog files require save/refresh.
+Index snapshots are cached in memory. File stats are a cheap precheck; reuse also
+verifies recorded content bytes, effective drafts and filtered directory membership.
+These dependencies are replayed into the current transaction's stale guards.
+Same-size edits with restored timestamps invalidate the content fingerprint.
+Unchanged requests reuse parsed catalog objects, rather than repeating effective
+inheritance/reference analysis. An explicit refresh remains available; persistent
+per-file index caching is not implemented. Objects/Triggers consumer-reference
+scans remain in the separate Data tools and do not invalidate the catalog-link
+index merely because placed content changed.
 
 ## Roots and dependencies
 

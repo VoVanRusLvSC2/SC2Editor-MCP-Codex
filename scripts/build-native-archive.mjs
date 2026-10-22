@@ -13,7 +13,7 @@ async function run(args) {
     child.once("error",reject); child.once("close",code => code === 0 ? resolve() : reject(new Error(`cmake exited ${code}`)));
   });
 }
-await run(["-S",path.join(root,"native"),"-B",build,"-DCMAKE_BUILD_TYPE=Release",`-DCMAKE_RUNTIME_OUTPUT_DIRECTORY=${output}`,`-DCMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE=${output}`]);
+await run(["-S",path.join(root,"native"),"-B",build,"-DCMAKE_BUILD_TYPE=Release","-DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded",`-DCMAKE_RUNTIME_OUTPUT_DIRECTORY=${output}`,`-DCMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE=${output}`]);
 await run(["--build",build,"--config","Release","--parallel","4"]);
 await fs.stat(path.join(output,`sc2-mcp-archive${platform === "windows" ? ".exe" : ""}`));
 process.stdout.write(JSON.stringify({ platform,output,editorValidation:"NOT_EXECUTED" })+"\n");

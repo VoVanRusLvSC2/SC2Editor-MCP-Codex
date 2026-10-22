@@ -3,6 +3,7 @@ import type { DataDiagnostic, DataField, DataObject, DataReference } from './typ
 import type { DataXsdField, DataXsdType } from './xsdRegistry.js';
 import {parentClassCompatibility} from './parentClasses.js';
 import {concreteActorCreateConflict} from './actorConstruction.js';
+import {dataDomainFromType} from './domains.js';
 
 interface RecordView { file:string; layer:'workspace'|'dependency'; engineActive?:boolean; document:DataDocument }
 export interface DataAuthoringVerdict {
@@ -49,14 +50,26 @@ function validateScalar(value:string,type:string|DataXsdType|undefined,file:stri
   if(/^xs:(?:decimal|float|double)$/.test(name)&&!Number.isFinite(Number(value)))out.push(diagnostic('DATA_AUTHOR_NUMBER_INVALID',`'${value}' is not numeric`,file,path));
 }
 function memberType(member:DataXsdField):string|DataXsdType|undefined {return member.inlineType ?? member.type;}
-function validateAttributes(attrs:Record<string,string>,owner:string|DataXsdType,file:string,path:string,out:DataDiagnostic[],oldAttrs:Record<string,string>={}):void {
+function validateAttributes(attrs:Record<string,string>,owner:string|DataXsdType,file:string,path:string,out:DataDiagnostic[],oldAttrs:Record<string,string>={},tokens:ReadonlyMap<string,string>=new Map()):void {
   const members=referenceSchema.members(owner);
   for(const [name,value] of Object.entries(attrs)){
     if(oldAttrs[name]===value)continue;
     const member=members.find(m=>m.kind==='attribute'&&m.name===name);
-    if(!member){out.push(diagnostic('DATA_AUTHOR_ATTRIBUTE_UNKNOWN',`Attribute '${name}' is absent from declared ${typeof owner==='string'?owner:owner.name}`,file,`${path}@${name}`));continue;}
+    if(!member){if(tokens.has(name)){validateScalar(value,tokens.get(name)||undefined,file,`${path}@${name}`,out);continue;}out.push(diagnostic('DATA_AUTHOR_ATTRIBUTE_UNKNOWN',`Attribute '${name}' is absent from declared ${typeof owner==='string'?owner:owner.name}`,file,`${path}@${name}`));continue;}
     validateScalar(value,memberType(member),file,`${path}@${name}`,out);
   }
+}
+
+/** Root token overrides are native attributes declared by this entry/parent chain,
+ * not arbitrary extensions to the XSD. Keep their catalog-link types for validation. */
+function inheritedTokenTypes(object:DataObject,indexed:DataObject[]):Map<string,string>{
+ const result=new Map<string,string>(),queue=[object],seen=new Set<string>();
+ for(let i=0;i<queue.length;i++){
+  const o=queue[i];for(const name of new Set([...Object.keys(o.tokens??{}),...Object.keys(o.tokenTypes??{})]))if(!result.has(name))result.set(name,o.tokenTypes?.[name]??'');
+  const parent=o.domain+'\0'+o.parent;if(!o.parent||seen.has(parent))continue;seen.add(parent);
+  queue.push(...indexed.filter(p=>p.domain===o.domain&&p.id===o.parent));
+ }
+ return result;
 }
 function validateFields(fields:DataField[],oldFields:DataField[],owner:string|DataXsdType,file:string,object:DataObject,out:DataDiagnostic[]):void {
   const members=referenceSchema.members(owner);
@@ -80,6 +93,7 @@ export function validateDataAuthoring(file:string,before:DataDocument,after:Data
   const diagnostics:DataDiagnostic[]=[];
   const originals=before.objects(),current=after.objects();
   const indexed=records.filter(r=>r.engineActive!==false).flatMap(r=>r.document.objects());
+  const incomplete=coverageIssues.length>0||records.some(r=>r.engineActive===undefined);
   for(const object of current){
     const old=originals.find(o=>key(o)===key(object));
     if(old&&JSON.stringify({attrs:old.attrs,fields:old.fields})===JSON.stringify({attrs:object.attrs,fields:object.fields}))continue;
@@ -88,7 +102,16 @@ export function validateDataAuthoring(file:string,before:DataDocument,after:Data
     if(parents.length&&parents.every(parent=>parentClassCompatibility(object.ctype,parent.ctype)==='incompatible'))diagnostics.push(diagnostic('DATA_PARENT_CLASS_INCOMPATIBLE',`${object.ctype} cannot inherit '${object.parent}' (${parents[0].ctype}); use the native parent's class`,file,pathOf(object)+'@parent','L3'));
     const declared=referenceSchema.describe(object.ctype);
     if(!declared){diagnostics.push(diagnostic('DATA_AUTHOR_TYPE_UNKNOWN',`Type '${object.ctype}' is absent from the indexed XSD`,file,pathOf(object)));continue;}
-    if(!old||JSON.stringify(old.attrs)!==JSON.stringify(object.attrs))validateAttributes(object.attrs,object.ctype,file,pathOf(object),diagnostics,old?.attrs);
+    if(!old||JSON.stringify(old.attrs)!==JSON.stringify(object.attrs)){
+      const tokens=inheritedTokenTypes(object,indexed);
+      validateAttributes(object.attrs,object.ctype,file,pathOf(object),diagnostics,old?.attrs,tokens);
+      for(const [name,type]of tokens){
+        const value=object.attrs[name],domain=/^C[A-Za-z]+Link$/.test(type)?dataDomainFromType(type):undefined;
+        if(!domain||!value||value===old?.attrs[name])continue;
+        if(value.includes('##'))diagnostics.push(diagnostic('DATA_AUTHOR_REFERENCE_DYNAMIC',`Cannot resolve authored token '${name}'`,file,pathOf(object)+'@'+name,'L3'));
+        else if(!external.get(domain)?.has(value)&&!indexed.some(o=>o.domain===domain&&o.id===value))diagnostics.push(diagnostic(incomplete?'DATA_AUTHOR_REFERENCE_SCOPE_INCOMPLETE':'DATA_AUTHOR_REFERENCE_MISSING',`Authored ${domain} token '${name}' reference '${value}' does not resolve in the active catalog`,file,pathOf(object)+'@'+name,'L3'));
+      }
+    }
     validateFields(object.fields,old?.fields??[],object.ctype,file,object,diagnostics);
   }
   const oldRefs=new Set(before.references().map(r=>`${r.object}\0${r.path}\0${r.carrier}\0${r.value}`));
@@ -99,7 +122,6 @@ export function validateDataAuthoring(file:string,before:DataDocument,after:Data
     if(ref.resolution==='unknown'){diagnostics.push(diagnostic('DATA_AUTHOR_REFERENCE_DYNAMIC',`Cannot resolve authored reference '${ref.rawExpression??ref.value}'`,file,ref.path,'L3'));continue;}
     if(!external.get(ref.targetDomain)?.has(ref.value)&&!indexed.some(o=>o.id===ref.value&&o.domain===ref.targetDomain))missing.push({...ref,file});
   }
-  const incomplete=coverageIssues.length>0||records.some(r=>r.engineActive===undefined);
   for(const ref of missing)diagnostics.push(diagnostic(incomplete?'DATA_AUTHOR_REFERENCE_SCOPE_INCOMPLETE':'DATA_AUTHOR_REFERENCE_MISSING',`Authored ${ref.targetDomain} reference '${ref.value}' does not resolve in the active catalog${incomplete?' (catalog scope incomplete)':''}`,file,ref.path,'L3'));
   const accepted=diagnostics.length===0;
   return {parse:'PASS',completeness:incomplete?'INCOMPLETE':'COMPLETE',executionPolicy:'STRICT',status:accepted?(incomplete?'INCOMPLETE':'VERIFIED_STATIC'):incomplete&&diagnostics.every(d=>d.code==='DATA_AUTHOR_REFERENCE_SCOPE_INCOMPLETE')?'INCOMPLETE':'REJECTED',accepted,staticValidation:accepted?'PASS':incomplete?'INCOMPLETE':'FAIL',editor:'NOT_RUN',runtime:'NOT_RUN',diagnostics,scope:'XSD declarations and typed references in the active loaded catalog; Editor and runtime not executed'};

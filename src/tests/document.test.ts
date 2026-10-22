@@ -26,6 +26,19 @@ async function fixture(t:{after(fn:()=>Promise<unknown>):void}){
  return{root,workspace,document,sourceFiles,setBuild:(s:string)=>{current=s;}};
 }
 const mapRequest=(destination='map')=>({kind:'map',destination,map:{width:64,height:48},terrain:{enabled:true,tileSet:'Test',initialTexture:'Grass'},dependencies:{mode:'custom',entries:[]},locales:['ruRU','enUS']});
+test('foundation plan and terrain analysis disclose the actual fine-height editing budget',async t=>{
+ const f=await fixture(t), request=mapRequest();
+ const high=await f.document.plan({...request,terrain:{...request.terrain,baseHeight:8}});
+ assert.ok(high.foundation.heightEditing!.upwardRoom<1.01);
+ const low=await f.document.plan({...request,destination:'low',terrain:{...request.terrain,baseHeight:4}});
+ assert.ok(low.foundation.heightEditing!.upwardRoom>4.99);
+ await f.document.create(low.id,false);
+ const terrain=new TerrainWorkspace(new Workspace(path.join(f.root,'low')));
+ const result=await terrain.analyze('',{type:'rectangle',minX:8,minY:8,maxX:12,maxY:12});
+ assert.deepEqual(result.heightEditing.commonRange,low.foundation.heightEditing!.commonRange);
+ assert.equal(result.heightEditing.nativeRequantization,'unsupported');
+ assert.ok(result.heightEditing.editableVertices>0);
+});
 test('native H2CS reader handles an independently supplied complete Header and rejects every truncation',async()=>{const b=gunzipSync(await fs.readFile('src/tests/fixtures/map-native/nydus/DocumentHeader.gz'));const h=readDocumentHeader(b);assert.equal(h.major,5);assert.equal(h.build,97563);assert.equal(h.dependencies.length,2);assert.ok(h.strings.length>10);for(let n=0;n<b.length;n++)assert.throws(()=>readDocumentHeader(b.subarray(0,n)));});
 test('v2 marker matches the native 44-byte build tuple, timestamp and tag order',()=>{const b=versionMarker('info',{major:5,minor:0,patch:17,build:98310},1791718395,1);assert.equal(b.toString('hex'),'636465736f666e6902000000068001000500000000000000110000000680010001000000fb73cb6a01000000');assert.equal(readVersion(b).tag,'info');assert.throws(()=>versionMarker('bad',{major:5,minor:0,patch:17,build:98310},1),/ARGUMENT/);});
 test('fresh MapInfo has complete verified core, standard empty players and exactly empty variant/lighting tail',()=>{for(const[w,h]of[[32,32],[64,48],[256,256]]){const b=createMapInfo(w,h,'Test',8,1791718395),d=validateEmptyMapInfo(b);assert.deepEqual(d.core.cells,[w,h]);assert.deepEqual(d.players.map(p=>[p.id,p.control]),[[0,'Neutral'],[1,'User'],[15,'Hostile']]);assert.equal(d.preservedTailBytes,52);assert.equal(d.core.integrityVerified,true);}});

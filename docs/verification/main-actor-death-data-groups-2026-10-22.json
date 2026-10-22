@@ -1,0 +1,231 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-22T12:45:10.818Z",
+  "scope": "Main Ghost CActorUnit death during finite channel, private external evidence storage and compact same-catalog Data transactions. Scoped native/runtime observations, not full-roadmap readiness.",
+  "mainActor": {
+    "mainActorCount": 1,
+    "ability": "QualityVeteranStrike",
+    "profile": "Native Ghost presentation; supported Spell A/B/C binding on the main CActorUnit. Prior cast/channel/finish/cancel/walk evidence remains in its exact record.",
+    "normalLifecycle": "Native Ghost movement, attack and death handlers are retained. These new native runs inspect death and replacement; they do not add an independent ordinary weapon-attack acceptance claim.",
+    "nativeCurrentAnimationNameQuery": false,
+    "staticAnimationReceiptsStillNotChecked": true
+  },
+  "native": {
+    "suiteId": "b725d607-2a4c-4bb3-a3a7-ed512b424292",
+    "all41CasesPassed": true,
+    "gameBuild": "5.0.17.98310",
+    "gameToolkit": "v0.1.0-dev.11",
+    "ordinaryArchiveSha256": "25a0b3a5784b20bea2545b4678516d13ae160d230fdef423b25f07760a8edd21",
+    "cleanLaunches": 2,
+    "sameRetainedBridge": true,
+    "privateCopies": true,
+    "sourceUnchanged": true,
+    "allSessionsDetached": true,
+    "runs": [
+      {
+        "session": "d5c8217cd102ed9f9190f49a48e9af72",
+        "createdActor": {
+          "id": "QualityVeteranActor",
+          "instance": 1,
+          "source": "engine",
+          "gameTime": 1.5
+        },
+        "destroyedActor": {
+          "instance": 1,
+          "source": "engine",
+          "gameTime": 4.625,
+          "observation": "native_destructor_return"
+        },
+        "unitDeathGameTime": 4.625,
+        "noFurtherDeadCasterDamageInRecordedWindow": true,
+        "targetLifeAfterDeath": 1900,
+        "replacementTicks": 6,
+        "replacementDamage": 300,
+        "targetLifeAfterReplacement": 1600,
+        "replacementIdle": true
+      },
+      {
+        "session": "b6356f4f34e17796a3c7e641f08c8a0c",
+        "createdActor": {
+          "id": "QualityVeteranActor",
+          "instance": 1,
+          "source": "engine",
+          "gameTime": 2.125
+        },
+        "destroyedActor": {
+          "instance": 1,
+          "source": "engine",
+          "gameTime": 5.25,
+          "observation": "native_destructor_return"
+        },
+        "unitDeathGameTime": 5.25,
+        "noFurtherDeadCasterDamageInRecordedWindow": true,
+        "targetLifeAfterDeath": 1900,
+        "replacementTicks": 6,
+        "replacementDamage": 300,
+        "targetLifeAfterReplacement": 1600,
+        "replacementIdle": true
+      }
+    ],
+    "media": [
+      {
+        "session": "d5c8217cd102ed9f9190f49a48e9af72",
+        "kind": "death",
+        "videoSha256": "2c2c46dde9cbadf0b433eed8fa353b2b81d57c11bb82879522c3b74070f230d0",
+        "frames": 24,
+        "frameSource": "hidden_game_backbuffer",
+        "beforeGameTime": 4.5,
+        "afterGameTime": 8.375,
+        "mixedAudioNonzero": 479672,
+        "diagnostics": "No warning/error in the available recording messages; source coverage remains partial."
+      },
+      {
+        "session": "d5c8217cd102ed9f9190f49a48e9af72",
+        "kind": "replacement",
+        "videoSha256": "b060e7f923d13959a16e5b66ceef974b5e70a4214eb45319d4a8910e75b79b17",
+        "frames": 40,
+        "frameSource": "hidden_game_backbuffer",
+        "beforeGameTime": 11.25,
+        "afterGameTime": 17.875,
+        "mixedAudioNonzero": 871801,
+        "diagnostics": "No warning/error in the available recording messages; source coverage remains partial."
+      },
+      {
+        "session": "b6356f4f34e17796a3c7e641f08c8a0c",
+        "kind": "death",
+        "videoSha256": "95c61cf69b8a29188a78c3aa74518f62586cb31a166eb9dd5f86c365ccf5f3f8",
+        "frames": 27,
+        "frameSource": "hidden_game_backbuffer",
+        "beforeGameTime": 5.125,
+        "afterGameTime": 9.375,
+        "mixedAudioNonzero": 467810,
+        "diagnostics": "No warning/error in the available recording messages; source coverage remains partial."
+      },
+      {
+        "session": "b6356f4f34e17796a3c7e641f08c8a0c",
+        "kind": "replacement",
+        "videoSha256": "1a7dde5c08c607b288d580eeff870a76713d8004665c8268b51ef541730c2344",
+        "frames": 45,
+        "frameSource": "hidden_game_backbuffer",
+        "beforeGameTime": 12,
+        "afterGameTime": 19.25,
+        "mixedAudioNonzero": 840190,
+        "diagnostics": "No warning/error in the available recording messages; source coverage remains partial."
+      }
+    ],
+    "visualReview": "First-run before/death/corpse/aftermath and replacement channel/idle frames reviewed. Body death and stopped beam visible; replacement resumes its own presentation. Other Models and isolated ability audio remain unverified.",
+    "sound": "Owned mixed audio is nonzero. No isolated cast/channel/death sound certification; native SoundDecoder coverage remains unavailable from the previous scoped run."
+  },
+  "externalArtifacts": {
+    "option": "SC2_GAME_WORK_ROOT",
+    "actualMcpStorage": "configured_external",
+    "volume": "C:",
+    "sameBridgeRootAcrossLaunches": true,
+    "disconnectedStatusCreatesFolders": false,
+    "guardedLocalRoot": true,
+    "rejects": [
+      "relative or volume/share root",
+      "workspace or Toolkit overlap",
+      "symlink/junction components",
+      "missing retained child"
+    ],
+    "defaultUnchanged": true,
+    "existingArtifactsMoved": false,
+    "sdkSourceModified": false
+  },
+  "compactData": {
+    "supported": [
+      "field.set",
+      "recipe.instantAbility",
+      "recipe.targetAbility",
+      "recipe.veterancy",
+      "recipe.unitAbilityAnimation"
+    ],
+    "maxOperationsPerGroup": 500,
+    "originalSchemasAndDefaults": true,
+    "orderedGraphValidation": true,
+    "atomicFailureBeforeSave": true,
+    "barriers": [
+      "different file",
+      "reads or unrelated tools",
+      "different transaction flags",
+      "advanced low-level operations",
+      "result references"
+    ],
+    "resultIds": "First group command ID is retained; ordered operations and full applied count are reported.",
+    "actualMcp": {
+      "transport": "Actual MCP stdio",
+      "catalogSha256": "8d0fb3eb49a26c8feb56d260f4304afa928957d773872171746d0f9a5c90f85d",
+      "noOpSourceBytesPreserved": true,
+      "comparison": {
+        "separate": {
+          "elapsedMs": 82333,
+          "requestBytes": 1015,
+          "responseBytes": 3704,
+          "underlyingCalls": 6
+        },
+        "grouped": {
+          "elapsedMs": 37519,
+          "requestBytes": 777,
+          "responseBytes": 2263,
+          "underlyingCalls": 2
+        }
+      },
+      "timeReductionPercent": 54.4,
+      "responseByteReductionPercent": 38.9,
+      "scope": "Warm same-process no-op save comparison on one catalog. Bytes are JSON-RPC text, not billed model tokens; duration includes original validation and save.",
+      "billedTokenSavings": "unknown"
+    }
+  },
+  "regressions": {
+    "full": {
+      "tests": 1360,
+      "passed": 1359,
+      "failed": 0,
+      "skipped": 1,
+      "concurrency": 4,
+      "sha256": "edd15ecab6e05f4b6f19bce9a495566adb830509e06968327352a55d435bf38b"
+    },
+    "laterAddedLifecycleCheck": {
+      "compiledFocusedTests": 7,
+      "passed": 7,
+      "failed": 0,
+      "sha256": "2b0d7ad94c131760d976a3bc8018b0f10d2ad9f31e946e8414e1a285eeca2bba",
+      "scope": "Additional plan/stage lifecycle check after full run; existing six Data-group tests repeated as the focused file."
+    },
+    "build": "passed",
+    "changedFileEslint": "passed",
+    "maintainedEnglishDocuments": 117
+  },
+  "publication": {
+    "newPortable": false,
+    "commitOrPush": false,
+    "privateSourcesOrInstrumentedMapsPublished": false,
+    "priorMainActorPortable": "Frozen prior snapshot, not rebuilt or silently refreshed",
+    "privacyBoundary": "New external storage and coalescer tests do not replace a portable publication audit or make reverse engineering impossible."
+  },
+  "openCoverage": [
+    "Other Model/main Actor animation profiles and independent normal weapon-attack runtime acceptance",
+    "Point/projectile/charge/learn/talent/shared-cooldown profiles and isolated matching ability sound",
+    "Complex native GUI save/reopen remains pending on existing retained jobs",
+    "Broad cliff junction/navigation/buildability matrix and finished mission composition/balance"
+  ],
+  "sourceFingerprints": {
+    "src/integrations/game/bridge.ts": "78e3985ff3d2280de340668e28706158519e7d2369342e08183d398b52d2976f",
+    "src/integrations/game/runtime.ts": "cdbf80b0d4ff188a38427907d5adc00adc6326e5a40c49f6582761a42211c014",
+    "src/app/authoringDataGroups.ts": "527a1acebe032611e85233c4fdd4343e4a0ef24297014815ae2ad51d7cd64d95",
+    "src/app/authoringScript.ts": "1c110c9f8aaa8694514a24bf8fb6ffd1cf1b5c81d80b624031f746e49220758b",
+    "src/app/mcpBatch.ts": "f89ee9d3b910fe8e8c07a7ac8255e3977aeb8d5870c390b631fc7d1059622aff",
+    "src/app/telemetry.ts": "86e81415853bddfab68f257c291c1851e6d517405c9abc2a135d77c633ad0e3b",
+    "src/modules/data/abilityRecipes.ts": "034c4a069dc1b3cb9a59ed69f97fe9d39ce357ef013bfd830854651501c68ead",
+    "src/modules/data/unitAnimations.ts": "be570fde8b624087f60ce5536194e35b445cced037fc099033bf147baed06583",
+    "src/modules/data/workspace.ts": "dda3a628d7b86a03948d1fff7d2edcd3170d36fe9ee0682a76b83164ede2242c",
+    "src/modules/data/tools.ts": "a1125041f88e45d125b11d2eef497e4a2783bd682b31ebd3c04d963b1d49943e",
+    "src/tests/authoringDataGroups.test.ts": "30f364c295cfbff71675a7b38bac942e6d95fb39fc69450ceb7b9a1cc219a8e8",
+    "src/tests/nativeGame.test.ts": "a7bc4341ccd162ed4f6175cb98b24751b6114d826bcef7b7b40711aa14099e55",
+    "docs/NATIVE_GAME.md": "41050db526b61d2036cb2c4ac92e68d96f9b5968167abaa34dd15512375cb9f4",
+    "docs/MCP_AUTHORING_SCRIPT.md": "37a95e193ec766776722a03085e710c6d75ede927240d42f04851d7f6c00a884",
+    "docs/AUTHORING_PROTOCOL.md": "2903b1321dc9e38f6a209eb1db9d46b2c280306d6e6ee32f3d2880e91e3c5b11",
+    "AGENTS.md": "9524c9e7e6fa01b910c2bcd19c474d7f3a3b65f2add8975a980ff2b625540910"
+  }
+}

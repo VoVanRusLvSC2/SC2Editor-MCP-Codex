@@ -121,6 +121,21 @@ The preview contains modified byte ranges, `dirtyDependencies`, `requiresEditorR
 
 ## How the supported recording is executed
 
+Before authoring, `terrain.inspect.nativeLoad` or `terrain.load.inspect` checks
+the measured native load structure. Known invalid allocations or a singular
+sync-grid transform block ordinary edits, blueprint creation/export and map-test
+launch planning. Unsupported transformed profiles are preserved as unverified.
+
+`terrain.load.repair` plans a restricted legacy v115 repair, followed by the
+same `terrain.apply` / `terrain.save` transaction. It can restore all-zero SMAP
+scales to Q12 identity and insert a missing empty cliff-cell allocation only on
+the diagnosed level-one uncut profile. It preserves heights, textures, masks,
+hidden flags, objects and scripts, and refuses partial transforms, ramps and
+other authored topology. An unchanged repeat performs no write. Compact authoring
+supports `terrain load.inspect` and `terrain load.repair`; save mode expands the
+latter to the same apply/save tools. This does not rebuild navigation or repair
+arbitrary cliff joins. Test the resulting exact archive in the engine.
+
 1. Select a map and read `terrain.inspect`, `terrain.capabilities`, palette and necessary samples.
 2. Make `terrain.plan`, `terrain.generate`, `terrain.road`/`terrain.river`/`terrain.lake` and other feature tools, `terrain.recipe.plan`, `terrain.water.plan` or lighting plan.
 3. Check the returned `planId`, limitations, diff and `terrain.preview`/`terrain.validate`.

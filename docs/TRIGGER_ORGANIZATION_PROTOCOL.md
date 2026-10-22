@@ -1,14 +1,16 @@
 # StarCraft II — Trigger Organization Protocol for AI
 
-Version: 1.1
+Version: 1.2
 
 ## Purpose
 
 Organize StarCraft II map triggers by responsibility and game genre. This document is a project convention, not executable code or an editor import format.
 
-## Mission maps: exactly five top-level folders
+## Mission maps: five recommended top-level folders
 
-Use these English names without numeric prefixes:
+Start with these English names without numeric prefixes when they fit the map.
+Five is a recommendation, not a required count or a maximum. Omit unused systems,
+add meaningful systems when needed, and preserve an existing coherent structure:
 
 ```text
 FUNCTIONS
@@ -28,7 +30,7 @@ CINEMATICS
 
 Keep system-specific functions and variables with their owning system where the editor permits it. Keep local variables inside their corresponding elements. Place shared configuration and global state under MAIN when no single gameplay system owns them.
 
-Use subfolders only when needed. Do not add extra top-level folders to a mission map. Gameplay UI and audio belong with the gameplay system that uses them; objective messages belong with OBJECTIVES; cinematic UI and audio belong with CINEMATICS. Shared helpers belong in FUNCTIONS.
+Use subfolders or additional top-level folders when needed. Gameplay UI and audio normally belong with the gameplay system that uses them; objective messages belong with OBJECTIVES; cinematic UI and audio belong with CINEMATICS. Shared helpers belong in FUNCTIONS.
 
 Optional mission subfolders:
 
@@ -48,7 +50,7 @@ CINEMATICS
     OUTRO
 ```
 
-The five-folder rule applies to mission maps. The following genre templates may use additional top-level system folders.
+The five-folder recommendation is a starting point for missions. The following genre templates also adapt to the map's actual systems.
 
 ## Other genres
 
@@ -57,7 +59,7 @@ Start with FUNCTIONS, MAIN and GAMEPLAY. Add only the systems the map actually n
 | Genre | Suggested system folders |
 |---|---|
 | Classic RTS / melee | ECONOMY — income and spending; BASES — bases and starting locations; TECH — progression and technology; VICTORY — win conditions; AI — computer-player behavior. |
-| Co-op mission | Keep the five mission folders. Under GAMEPLAY, optionally add WAVES, COMMANDERS, DIFFICULTY and MUTATORS. Keep shared mission tasks in OBJECTIVES. |
+| Co-op mission | Start with the recommended mission folders. Under GAMEPLAY, optionally add WAVES, COMMANDERS, DIFFICULTY and MUTATORS. Keep shared mission tasks in OBJECTIVES. |
 | Tower Defense | PATHS — enemy routes; WAVES — wave management; TOWERS — tower logic; UPGRADES — upgrades; LIVES — lives and escaped enemies. |
 | Survival / base defense | SPAWNING — enemy creation; WAVES — wave scheduling; BASE_DEFENSE — defense mechanics; SCALING — difficulty growth; BOSSES — boss encounters. |
 | RPG / Action RPG | HEROES — hero systems; ABILITIES — ability logic; QUESTS — quests; INVENTORY — items; LOOT — drops; PROGRESSION — levels and advancement; DUNGEONS — dungeon systems. |
@@ -70,7 +72,7 @@ Start with FUNCTIONS, MAIN and GAMEPLAY. Add only the systems the map actually n
 
 ## Organization rules
 
-1. Use English UPPER_SNAKE_CASE folder names. Use the exact five top-level names specified above for mission maps.
+1. Use English UPPER_SNAKE_CASE folder names. The five mission folders above are recommended, not mandatory.
 2. Create only necessary folders. Do not create empty systems just to fill a template.
 3. Group elements by responsibility. Keep each system's triggers, dedicated functions and related state together where possible.
 4. Place only cross-system helpers in FUNCTIONS.
@@ -87,7 +89,7 @@ Start with FUNCTIONS, MAIN and GAMEPLAY. Add only the systems the map actually n
 
 1. Identify the map genre and required systems.
 2. Inspect the existing structure if a map already exists.
-3. For a mission map, use exactly FUNCTIONS, MAIN, GAMEPLAY, OBJECTIVES and CINEMATICS at the top level.
+3. For a mission map, consider FUNCTIONS, MAIN, GAMEPLAY, OBJECTIVES and CINEMATICS; keep only useful systems and add others as needed.
 4. For other genres, select the relevant system folders from the table.
 5. Assign every new element to one owning system.
 6. Extract a shared function only when multiple systems need it.
@@ -95,4 +97,4 @@ Start with FUNCTIONS, MAIN and GAMEPLAY. Add only the systems the map actually n
 
 ## Instruction to include in a larger AI protocol
 
-> Organize StarCraft II triggers by system and responsibility. For mission maps, use exactly five top-level folders: FUNCTIONS, MAIN, GAMEPLAY, OBJECTIVES and CINEMATICS, without numeric prefixes. Put shared helpers in FUNCTIONS, startup and mission coordination in MAIN, mechanics and AI in GAMEPLAY, mission tasks in OBJECTIVES, and scripted scenes in CINEMATICS. Add subfolders only when needed. For other genres, use the relevant system folders from this protocol. Avoid duplicate responsibilities and catch-all folders. Preserve existing references and gameplay behavior.
+> Organize StarCraft II triggers by system and responsibility. For mission maps, five top-level folders are recommended: FUNCTIONS, MAIN, GAMEPLAY, OBJECTIVES and CINEMATICS, without numeric prefixes. Their count and names are not mandatory: use fewer or more meaningful systems as needed. Put shared helpers in FUNCTIONS, startup and mission coordination in MAIN, mechanics and AI in GAMEPLAY, mission tasks in OBJECTIVES, and scripted scenes in CINEMATICS when those systems exist. Add subfolders only when needed. For other genres, use the relevant system folders from this protocol. Avoid duplicate responsibilities and catch-all folders. Preserve existing references and gameplay behavior.

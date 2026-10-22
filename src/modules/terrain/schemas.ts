@@ -200,12 +200,15 @@ export const terrainOperationSchema = z.discriminatedUnion("op", [
   z
     .object({ op: z.literal("stamp.apply"), donorDirectory: z.string().min(1) })
     .strict(),
+  z.object({op:z.literal('load.repair')}).strict(),
   z
     .object({
       op: z.enum([
         "cliff.paint",
+        "cliff.repair",
         "ramp.create",
         "ramp.remove",
+        "ramp.repair",
         "pathing.paint",
       ]),
       area: terrainAreaSchema.optional(),
@@ -216,7 +219,7 @@ export const terrainOperationSchema = z.discriminatedUnion("op", [
 export const terrainPlanSchema = z
   .object({
     directory: z.string().default(""),
-    operations: z.array(terrainOperationSchema).min(1).max(100),
+    operations: z.array(terrainOperationSchema).max(100),
     maxSlope: number.nonnegative().optional(),
   })
   .strict();
@@ -235,6 +238,8 @@ export const terrainStyleSchema = z.enum([
 export const terrainGenerateOptions = {
   directory: z.string().default(""),
   style: terrainStyleSchema,
+  heightMode: z.enum(['generate','preserve']).default('generate'),
+  textureMode: z.enum(['generate','preserve']).default('generate'),
   seed: z.number().int().default(1),
   relief: number.nonnegative().max(128).optional(),
   wavelength: number.positive().optional(),
@@ -251,6 +256,11 @@ export const terrainGenerateOptions = {
 export const terrainGenerateSchema = z
   .object({ ...terrainGenerateOptions, area: terrainAreaSchema })
   .strict();
+export const nativeTopologyIntentSchema=z.object({
+ cliffs:z.array(z.object({area:terrainRectangleSchema,level:z.number().int().min(1).max(3),cliffSet:z.number().int().min(0).max(63).default(0),variation:z.number().int().min(0).max(3).default(0)}).strict()).max(16).default([]),
+ ramps:z.array(z.object({id:z.string().regex(/^[A-Za-z][A-Za-z0-9_-]{0,63}$/),center:terrainPointSchema,direction:z.enum(['west','south','east','north']),lowerLevel:z.number().int().min(1).max(2).default(1),cliffSet:z.number().int().min(0).max(63).default(0),width:z.literal(4).default(4)}).strict()).max(16).default([]),
+}).strict().refine(v=>new Set(v.ramps.map(r=>r.id)).size===v.ramps.length,'Duplicate native ramp id');
+export const terrainLocationSchema=z.object({...terrainGenerateOptions,topology:nativeTopologyIntentSchema.optional(),routes:z.array(z.object({points:z.array(terrainPointSchema).min(2).max(100),width:number.positive(),texture:z.string().min(1).optional(),flatten:z.boolean().default(false),height:number.optional(),edgeBlend:number.nonnegative().optional()}).strict()).max(16).default([])}).strict();
 export const terrainLandscapeSchema = terrainGenerateSchema.extend({area:terrainAreaSchema.optional(),lighting:z.string().min(1).max(255).optional()}).strict();
 export const terrainFeatureSchema = z
   .object({
