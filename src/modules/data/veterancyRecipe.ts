@@ -3,8 +3,8 @@ import type {DataObject,DataNativeFieldSpec} from './types.js';
 export interface VeterancyLevel {xp:number;lifeDelta?:number;damageDelta?:number}
 export interface VeterancyRecipe {id:string;unit:string;levelEffect:string;levels:VeterancyLevel[];xpFraction?:number;replace?:boolean}
 
-/** One solo kill-XP behavior with cumulative per-level stat deltas. Native Data
- * awards experience and applies levels; no parallel trigger progression state. */
+/** Native kill-XP behavior with cumulative per-level stat deltas. The map-wide
+ * CGame recipient search is separate; this recipe never silently changes it. */
 export function veterancyRecipe(document:DataDocument,available:readonly DataObject[],args:VeterancyRecipe){
  const error=(reason:string)=>Error('VETERANCY_RECIPE_'+reason);
  if(args.levels.length<1||args.levels.length>100||args.levels[0].xp!==0)throw error('LEVEL_TABLE');
@@ -38,8 +38,8 @@ export function veterancyRecipe(document:DataDocument,available:readonly DataObj
   {name:'Flags',index:'CombineNumericModifications',value:1},{name:'Flags',index:'CombineXP',value:1},
   {name:'XPFraction',index:'Kills',value:args.xpFraction??1},{name:'SharedXPFraction',index:'Kills',value:0},
   {name:'SharedXPRadius',index:'Kills',value:0},{name:'TargetFilters',index:'Kills',value:'-;Player,Ally,Neutral,Hallucination'},
-  // Core defaults include every same-player recipient. A zero shared fraction
-  // does not remove those recipients from the native XP divisor.
+  // This owns behavior-level sharing only. Core's map-wide recipient search
+  // still applies unless explicitly configured through data.xp.search.
   {name:'ShareFilters',index:'Kills',value:'Self;Ally,Neutral,Enemy,Hallucination'},
   // Native entries count levels from one and consume XP at each transition.
   // An extra zero entry starts at level2; cumulative thresholds must become costs.

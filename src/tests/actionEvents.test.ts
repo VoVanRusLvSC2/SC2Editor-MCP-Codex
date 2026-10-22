@@ -58,6 +58,18 @@ test('UI activation uses the same time/identity observation without inventing an
  const event={kind:'dialog_control',source:'galaxy',control:'actual-control',gameTime:11},f=reader([page(),page({events:[event]})]);
  const result=await observeActionEvents(r,f.options);assert.equal(result.status,'passed');assert.equal(result.events.length,1);assert.equal(f.calls[1].method,'game.ui.activate');
 });
+const uiRequest=actionEventsSchema.parse({action:{method:'game.ui.activate',arguments:{control:'session:nui:1'}},events:[{id:'click',match:{kind:'ui',source:'galaxy',controlId:1,player:1,eventType:0}}],timeout:1});
+const uiEvent={kind:'ui',source:'galaxy',controlId:1,player:1,eventType:0,gameTime:11};
+const uiReply=(changes:Record<string,unknown>={},clickChanges:Record<string,unknown>={}):GameResult=>({content:[{type:'text',text:JSON.stringify({status:'ok',session:'session',normalUIHandlerConfirmed:true,clickEvent:{kind:'native_ui_click',accepted:true,originalHandlerReturned:true,gameTimeExact:true,gameTimeSource:'native_TimerGetElapsed_counter',gameTime:11,...clickChanges},...changes})}]});
+test('native UI response uses its exact click clock and requires post-action full stream identity',async()=>{
+ const f=reader([page(),page({events:[uiEvent]})],uiReply()),r=await observeActionEvents(uiRequest,f.options);assert.equal(r.status,'passed');assert.equal(r.orderGameTime,11);assert.equal(r.actionClock,'native_ui_click.gameTime');assert.equal(r.actionIdentity,'ui_session_then_event_pages');assert.equal(r.action?.runtimeEpoch,undefined);assert.equal(r.action?.gameTime,undefined);assert.equal(r.events.length,1);assert.equal(f.calls.filter(c=>c.method==='game.ui.activate').length,1);
+ const changed=reader([page(),page({runtimeEpoch:'changed',events:[uiEvent]})],uiReply()),invalid=await observeActionEvents(uiRequest,changed.options);assert.equal(invalid.status,'inconclusive');assert.equal(invalid.events[0].matched,undefined);assert.equal(invalid.continuation,undefined);
+});
+test('UI fallback rejects uncertain handler clocks, conflicting identity and pre-baseline time without retries',async()=>{
+ for(const [body,click]of [[{session:'other'},{}],[{runtimeEpoch:'other'},{}],[{mapLoadSerial:2},{}],[{}, {gameTimeExact:false}],[{}, {originalHandlerReturned:false}],[{}, {gameTimeSource:'wall_clock'}],[{}, {gameTime:9}]]){
+  const f=reader([page(),page({events:[uiEvent]})],uiReply(body,click)),r=await observeActionEvents(uiRequest,f.options);assert.equal(r.status,'inconclusive');assert.equal(r.actionSubmitted,true);assert.equal(r.events[0].matched,undefined);assert.equal(f.calls.length,2);
+ }
+});
 test('evidence-write failures stop before submission or retain a known submitted state without retries',async()=>{
  for(const failing of ['baseline_1','action','observation_1']){
   const f=reader([page(),page({events:[hit,complete]})]);f.options.record=async(name)=>{if(name===failing)throw Error('disk full');};

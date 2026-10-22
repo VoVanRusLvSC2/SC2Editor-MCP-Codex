@@ -124,8 +124,9 @@ test('action observation owns the complete bridge queue, retains receipts and re
  let release!:()=>void,submitted!:()=>void,orderCount=0,pages=0;
  const held=new Promise<void>(r=>{release=r;}),started=new Promise<void>(r=>{submitted=r;});
  const f=await fixture(t,undefined,async(name)=>{
-  if(name==='game.order'){orderCount++;submitted();if(orderCount===1)await held;return ok({status:'ok',...identity,gameTime:10,accepted:true});}
-  if(name==='game.events')return ok({status:'ok',...identity,gameTime:12,events:++pages%2===0?[{kind:'damage',source:'galaxy',sourceUnit:'caster',unit:'victim',amount:40,gameTime:11},{kind:'ability',source:'galaxy',unit:'caster',ability:'Pulse',stageName:'complete',gameTime:12}]:[],cursor:'tail-'+pages,hasMore:false,dropped:false});
+  if(name==='game.order'){orderCount++;submitted();if(orderCount===1)await held;return ok({status:'ok',...identity,gameTime:7+orderCount*3,accepted:true});}
+  // Keep each drained baseline, submitted action and returned events in time order.
+  if(name==='game.events')return ok({status:'ok',...identity,gameTime:9+orderCount*3,events:++pages%2===0?[{kind:'damage',source:'galaxy',sourceUnit:'caster',unit:'victim',amount:40,gameTime:8+orderCount*3},{kind:'ability',source:'galaxy',unit:'caster',ability:'Pulse',stageName:'complete',gameTime:9+orderCount*3}]:[],cursor:'tail-'+pages,hasMore:false,dropped:false});
   return ok({status:'ok'});
  });
  await f.bridge.attach('Map.SC2Map');const action=f.bridge.action(request);await started;const queued=f.bridge.call('game.status',{});await new Promise(r=>setImmediate(r));assert.equal(f.calls.some(c=>c.name==='game.status'),false);release();const report=await action;await queued;

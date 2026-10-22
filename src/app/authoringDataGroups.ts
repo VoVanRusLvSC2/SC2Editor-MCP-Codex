@@ -1,6 +1,6 @@
 import type {BatchStep,BatchTool} from './mcpBatch.js';
 
-const recipes=new Map([['data.ability.instant','recipe.instantAbility'],['data.ability.target','recipe.targetAbility'],['data.ability.charges','recipe.abilityCharges'],['data.effect.projectile','recipe.projectileEffect'],['data.hero.veterancy','recipe.veterancy'],['data.hero.learn','recipe.learn'],['data.actor.ability_animation','recipe.unitAbilityAnimation']]);
+const recipes=new Map([['data.ability.instant','recipe.instantAbility'],['data.ability.target','recipe.targetAbility'],['data.ability.charges','recipe.abilityCharges'],['data.effect.projectile','recipe.projectileEffect'],['data.hero.veterancy','recipe.veterancy'],['data.xp.search','recipe.xpSearch'],['data.hero.learn','recipe.learn'],['data.actor.ability_animation','recipe.unitAbilityAnimation']]);
 type Candidate={step:BatchStep;save?:BatchStep;width:number;key:string;args:Record<string,unknown>;operations:unknown[]};
 
 /** Group only schema-verified, adjacent, same-catalog authoring commands. Advanced

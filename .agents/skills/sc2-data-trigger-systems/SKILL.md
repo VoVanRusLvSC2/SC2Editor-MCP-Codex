@@ -14,6 +14,10 @@ original Editor checks. Inspect actual tool schemas before using recipes.
 2. Keep ability mechanics, costs, cooldowns, command cards and XP/veterancy in Data.
    Triggers coordinate flow, selection, objectives, UI and persistence and issue
    native orders. Do not add competing cooldown or progression loops.
+   Native kill XP also uses the map-wide gameplay recipient search. Inspect it
+   when multiple heroes split rewards; `data.xp.search radius=0` explicitly
+   disables nearby search for the whole map. A hero recipe must not silently
+   override that policy. Verify the killer and nearby control heroes separately.
 3. Include cast/travel/hit or area presentation and sound. Check Start/Stop events,
    source/target hosts, site operations, animation lifecycle and preloads. Use the
    documented `recipe.unitActor`/`recipe.effectModel` scope where suitable; avoid

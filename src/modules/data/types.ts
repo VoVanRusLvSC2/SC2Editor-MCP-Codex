@@ -94,6 +94,7 @@ export type DataObjectSelector = string | { id: string; ctype?: string; domain?:
 export type DataOperation =
   | ({op:'recipe.unitAbilityAnimation'} & import('./unitAnimations.js').UnitAbilityAnimationRecipe)
   | ({op:'recipe.veterancy'} & import('./veterancyRecipe.js').VeterancyRecipe)
+  | ({op:'recipe.xpSearch'} & import('./xpSearchRecipe.js').XPSearchRecipe)
   | ({op:'recipe.learn'} & import('./learnRecipe.js').LearnRecipe)
   | ({op:'recipe.instantAbility'} & import('./abilityRecipes.js').InstantAbilityRecipe)
   | ({op:'recipe.targetAbility'} & import('./abilityRecipes.js').TargetAbilityRecipe)

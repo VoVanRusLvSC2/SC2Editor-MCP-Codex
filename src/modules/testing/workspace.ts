@@ -12,8 +12,9 @@ import {NativeWorkflowGate} from './gate.js';
 import {readArchiveMapInfo,routeBoundsCheck} from './playableBounds.js';
 import {routeDeviation} from './routeGeometry.js';
 import {observeStartupEvents} from './startupEvents.js';
+import {runActionCheck} from './actionChecks.js';
 
-type Game=Pick<NativeGameBridge,'configuration'|'status'|'attach'|'call'|'detach'>;
+type Game=Pick<NativeGameBridge,'configuration'|'status'|'attach'|'call'|'detach'> & Partial<Pick<NativeGameBridge,'action'>>;
 type Editor=Pick<NativeEditorBridge,'status'|'check'|'job'>;
 interface Runtime {game:Game;editor:Editor}
 interface Identity {file:string;sha256:string;id?:string}
@@ -76,7 +77,7 @@ export class ProjectTestWorkspace {
   if(manifest.game?.routes.some(r=>r.expected==='blocked'))issues.push({id:'navigation.authoritative_query',status:'unsupported',required:false,reason:'No direct engine path query; a move timeout cannot prove an obstruction'});
   const p:Plan={id:randomUUID(),manifest,manifestSha256:digest(JSON.stringify(manifest)),source,dependencies,issues,capabilities:{game,groundMobility:'Declared by the test author; runtime inspection does not expose the movement plane',dependencyScope:'Explicit file digests plus native load and observed runtime build; installed transitive dependencies are not fully pinned'}};
   if(this.plans.size>=32)this.plans.delete(this.plans.keys().next().value!);this.plans.set(p.id,p);
-  return {planId:p.id,map:manifest.map,sourceSha256:source.sha256,manifestSha256:p.manifestSha256,dependencies:dependencies.map(d=>({id:d.id,sha256:d.sha256})),issues,capabilities:p.capabilities,suites:{editor:manifest.editor?.checks??[],routes:manifest.game?.routes.length??0,scenarios:manifest.game?.scenarios.length??0,views:manifest.game?.views.length??0},ready:!issues.some(c=>c.required&&c.status!=='passed')};
+  return {planId:p.id,map:manifest.map,sourceSha256:source.sha256,manifestSha256:p.manifestSha256,dependencies:dependencies.map(d=>({id:d.id,sha256:d.sha256})),issues,capabilities:p.capabilities,suites:{editor:manifest.editor?.checks??[],routes:manifest.game?.routes.length??0,scenarios:manifest.game?.scenarios.length??0,actions:manifest.game?.actions.length??0,views:manifest.game?.views.length??0},ready:!issues.some(c=>c.required&&c.status!=='passed')};
  }
  async planFile(file:string){const source=await this.identity(file),bytes=await fs.readFile(source.file);if(bytes.length>256*1024)throw Error('TEST_MANIFEST_SIZE_LIMIT');if(digest(bytes)!==source.sha256)throw Error('TEST_MANIFEST_STALE');const result=await this.plan(JSON.parse(bytes.toString('utf8')));this.plans.get(result.planId)!.manifestFile=source;return {...result,manifestFileSha256:source.sha256};}
  async run(planId:string){
@@ -214,6 +215,14 @@ export class ProjectTestWorkspace {
     }
     for(const route of m.game.routes){for(const reverse of route.bidirectional?[false,true]:[false]){this.checkCancel(j);j.phase='route:'+route.id;await this.route(j,runtime.game,route,reverse);}}
     for(const s of m.game.scenarios){this.checkCancel(j);j.phase='scenario:'+s.id;const r=await runtime.game.call('game.test.run',{steps:s.steps});await this.record(j,'scenario_'+s.id,r);j.checks.push({id:'scenario:'+s.id,status:responseState(r),required:s.required,evidence:{report:path.join(j.directory,'scenario_'+s.id+'.json')}});}
+    let actionBlocked=false;
+    for(const action of m.game.actions){
+     this.checkCancel(j);j.phase='action:'+action.id;
+     if(actionBlocked){const skipped={status:'inconclusive' as const,reason:'A prior action check was not confirmed; this action was not submitted',actionSubmitted:false};await this.record(j,'action_'+action.id+'_result',skipped);j.checks.push({id:'action:'+action.id,...skipped,required:action.required});continue;}
+     const observed=await runActionCheck(action,{call:(method,args)=>runtime!.game.call(method,args),action:runtime.game.action?args=>runtime!.game.action!(args):undefined,checkCancel:()=>this.checkCancel(j),record:(name,value)=>this.record(j,'action_'+action.id+'_'+name,value)});
+     j.checks.push({id:'action:'+action.id,status:observed.status,required:action.required,reason:observed.reason,evidence:{report:path.join(j.directory,'action_'+action.id+'_result.json'),actionSubmitted:observed.actionSubmitted,matchedEvents:observed.observation?.events.filter(e=>e.matched).length??0,scope:observed.scope}});
+     actionBlocked=observed.status!=='passed';
+    }
     for(const view of m.game.views){this.checkCancel(j);j.phase='view:'+view.id;await this.view(j,runtime.game,view);}
     j.phase='diagnostics';const after=await runtime.game.call('game.diagnostics',{...(testBody(before).cursor?{cursor:testBody(before).cursor}:{}),limit:128});await this.record(j,'diagnostics_after',after);
     const diagnostics=[...testBody(before).messages??[],...testBody(after).messages??[]];const unexpected=diagnostics.filter((d:any)=>d.severity==='error'&&!m.game!.diagnostics.expected.some(e=>e.source===d.source&&e.text===(d.text??d.message)&&e.build===build));

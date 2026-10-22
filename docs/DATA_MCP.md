@@ -41,6 +41,10 @@ Use the structured tool's `entries` array for multiple commands in one pool.
 Native starting-point accounting, level gates, rank execution and visible button
 states require original-game checks. Successful generation and XML validation
 alone do not establish those behaviors or a finished talent-selection interface.
+The [native Learn/XP fixture](verification/native-learn-xp-2026-10-23.json) now
+records two launches with three point profiles, native level/max-rank gates and
+actual per-rank damage/energy results. Direct numeric point-pool introspection,
+real command-card activation and larger talent/UI variants remain separate.
 
 Instant/target ability recipes accept `castIntroTime`, `castOutroTime` and
 `finishTime` as explicit overrides of native `CastIntroTime[0]`,
@@ -81,15 +85,27 @@ native exclusivity. Different Button faces can still use conflicting hotkeys;
 localized/default keys and user profiles require actual runtime review. Low-level
 Data operations remain available for layouts outside this supported recipe scope.
 
-`data.hero.veterancy` / `recipe.veterancy` creates one native solo kill-XP
+`data.hero.veterancy` / `recipe.veterancy` creates one native kill-XP
 `CBehaviorVeterancy` and binds it to a local Unit with its Hero flag. Supply
 `levels:[{xp:0},{xp:50,lifeDelta:100,damageDelta:5},{xp:150,...}]` using cumulative
 XP thresholds. The first threshold is zero; later thresholds strictly increase.
 The native level table begins at index0 for displayed level1 and stores transition
 costs, so these thresholds serialize as 0,50,100. An extra zero row would start
 the hero at level2. Deltas accumulate across levels; damage affects Melee, Ranged,
-Splash and Spell. Kill sharing is disabled, friendly/neutral/hallucination targets
-are excluded, and `xpFraction` defaults to1. No trigger counter is introduced.
+Splash and Spell. Per-behavior sharing is disabled, friendly/neutral/hallucination
+targets are excluded, and `xpFraction` defaults to1. The map-wide native recipient
+search remains inherited. No trigger counter is introduced.
+
+`data.xp.search` / `recipe.xpSearch` explicitly configures **map-wide**
+`CGame:Dflt.VeterancySearchRadius`. Core defaults to10: nearby heroes may split
+kill XP even when the behavior has zero SharedXPFraction/SharedXPRadius. Use
+`data xp.search radius=0` for a killer-only recipient search; this preserves
+behavior-level sharing settings and unrelated gameplay fields. The radius is
+required and nonnegative; changing an existing local value requires `replace=true`.
+A hero recipe never silently changes this setting for every unit on the map.
+Native XP eligibility/filters, learning points and the final UI remain separate
+checks. In the three-hero diagnostic fixture, radius10 gave each hero16.6665 of
+a50-XP kill; radius0 gave the killer50 and the two controls0.
 
 An existing `levelEffect` is required for feedback. Its Model/sound binding needs
 separate presentation checks. The Unit's parents must resolve unambiguously;

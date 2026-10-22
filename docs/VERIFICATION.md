@@ -2,6 +2,28 @@
 
 ## Readiness
 
+The [runtime-registration checkpoint](verification/native-runtime-registration-2026-10-23.json)
+adds typed explicit-target `Registration` calls without ScriptCode/Custom Script.
+Original Editor generation/compile retained the target parameter and local timer;
+two game launches passed phase, receiver and exactly-one-callback controls.
+Full regression:1426pass/1skip;36 focused checks. The native save/reopen job is
+still running beyond its observation deadline: no saved/reopened artifact or
+roundtrip equivalence is accepted. Static support for108 matched native signatures
+is broader than the single live timer profile; four uncertain bindings reject.
+The complete quality roadmap remains open.
+
+The [native Learn/XP checkpoint](verification/native-learn-xp-2026-10-23.json)
+checks three native point profiles, level/max-rank gates and per-rank effects
+through two clean launches. Thirty Learn orders,14 causal damage/energy casts
+and14 XP kills passed; original Editor Data load and generated Galaxy compilation
+passed. The map-wide Core recipient search caused nearby heroes to divide kill
+XP despite zero behavior-level sharing. Explicit `data.xp.search radius=0` gave
+the killer50 and both controls0 in a separate read-only diagnostic. Hero recipes
+preserve this map-wide policy by default. Full regression:1422pass/1skip. Reviewed
+frames show native Learn/execute icons and level3, with diagnostic fixture clutter
+and an edge-framed unit; this is not finished mission UI/art. Real UI activation,
+larger talent systems and the complete roadmap remain open.
+
 The [action-event checkpoint](verification/action-events-2026-10-22.json) moves
 pre-action history drainage and time/caster-bound observation into `game.action`.
 Two clean launches of the unchanged charge fixture passed six ordinary casts,

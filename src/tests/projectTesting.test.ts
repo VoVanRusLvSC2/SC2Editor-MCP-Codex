@@ -49,6 +49,18 @@ async function fixture(t:test.TestContext,options:{blocked?:boolean;detour?:bool
  return {root,ws,tests,calls,runtime,gate,owned:()=>owned,closes:()=>closes,mapInfoReads:()=>mapInfoReads,setMapInfo:(bytes:Buffer)=>{mapInfo=bytes;}};
 }
 const manifest={version:1,map:'Map.SC2Map',expectedGameBuild:'5.0.17.98310',game:{capture:false,points:{start:{x:12,y:20},end:{x:19,y:22}},routes:[{id:'gate',from:'start',to:'end',type:'Marine',mobility:'ground',timeout:1}]}};
+test('reusable action checks lease the same primitive and leave legacy $ref scenarios as one unchanged batch',async t=>{
+ const f=await fixture(t),steps=[{id:'find',method:'game.units.find',arguments:{type:'Marine'}},{method:'game.units.inspect',arguments:{unit:{$ref:'find.units.0.id'}}}],action={id:'click',action:{method:'game.ui.activate',arguments:{control:'button'}},events:[{id:'clicked',match:{kind:'dialog_used',source:'galaxy'}}]};
+ let submitted=0;(f.runtime.game as any).action=async(request:any)=>{assert.ok(f.gate.busy);submitted++;return {status:'passed',actionSubmitted:true,events:request.events.map((e:any)=>({...e,matched:e.match})),baselinePages:1,observationPages:1,eventsRead:1,dropped:false,scope:'Primitive test contract'};};
+ const p=await f.tests.plan({version:1,map:'Map.SC2Map',game:{capture:false,scenarios:[{id:'legacy',steps}],actions:[action]}}),r=await finished(f.tests,(await f.tests.run(p.planId)).jobId);
+ assert.equal(p.suites.actions,1);assert.equal(r.outcome,'passed');assert.equal(submitted,1);assert.deepEqual(f.calls.filter(c=>c.method==='game.test.run').map(c=>c.args),[{steps}]);assert.equal(r.checks.find(c=>c.id==='action:click')?.status,'passed');assert.equal(f.gate.busy,null);assert.equal(f.owned(),false);
+});
+test('an uncertain action prevents later actions from submitting and leaves their required verdict explicit',async t=>{
+ const f=await fixture(t);let submitted=0;(f.runtime.game as any).action=async()=>{submitted++;throw Error('ambiguous transport');};
+ const action={action:{method:'game.ui.activate',arguments:{control:'button'}},events:[{id:'clicked',match:{kind:'dialog_used',source:'galaxy'}}]};
+ const p=await f.tests.plan({version:1,map:'Map.SC2Map',game:{capture:false,actions:[{id:'first',required:false,...action},{id:'second',...action}]}}),r=await finished(f.tests,(await f.tests.run(p.planId)).jobId);
+ assert.equal(submitted,1);assert.equal(r.outcome,'inconclusive');assert.equal(r.checks.find(c=>c.id==='action:first')?.evidence?.actionSubmitted,'unknown');assert.equal(r.checks.find(c=>c.id==='action:second')?.status,'inconclusive');assert.equal(f.gate.busy,null);assert.equal(f.owned(),false);
+});
 async function finished(tests:ProjectTestWorkspace,id:string){for(let i=0;i<2000;i++){const s=tests.status(id);if(s.state==='completed'||s.state==='cancelled')return tests.report(id,0,32);await new Promise(r=>setTimeout(r,2));}throw Error('Test runner did not finish');}
 
 const overview={id:'overview',camera:{x:16,y:20,distance:40,pitch:55,yaw:180}};

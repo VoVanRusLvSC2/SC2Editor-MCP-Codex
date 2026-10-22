@@ -51,8 +51,33 @@ Unsupported constructs still fail before staging.
 
 Treat a native event declaration and runtime event registration separately.
 `TriggerAddEventTimer`, for example, may be indexed as a GUI event rather than an
-ordinary action. Runtime use needs a distinct representation carrying the
-explicit target `trigger` expression and the original call arguments. Do not
+ordinary action. Runtime use now has a distinct `Registration` representation:
+
+```json
+{
+  "kind": "Registration",
+  "function": "TriggerAddEventTimer",
+  "trigger": {"kind": "trigger", "name": "Receiver"},
+  "args": {"t": {"kind": "variable", "name": "Clock"}}
+}
+```
+
+The `trigger` is an explicit typed GUI expression: a trigger element reference
+(`id` or unique `name`, optional `library`), variable/array/member, function
+parameter or supported call. Event arguments retain their normal aliases,
+types, defaults and reference flags. Registration executes at its Action/body
+position, including local parameter evaluation; it is not an initialization Event.
+Ordinary `Action` calls to event-only definitions still reject.
+
+The serializer creates a hidden native Action signature with the verified
+first `trigger` argument and typed parameter bindings. The visible call and all
+arguments remain GUI elements; it adds no ScriptCode or Custom Script. Only
+Ntve native Event definitions with matching authoritative native/API-to-GUI
+identities are accepted. Arbitrary library/custom Event wrappers are separate;
+their runtime registration is not inferred. Original Editor compilation,
+save/reopen and actual callbacks remain distinct acceptance gates.
+
+Keep the explicit target `trigger` expression and original call arguments. Do not
 silently hoist the call into startup, substitute the current trigger, or add
 guards to a callback to make conversion pass. If the current API cannot express
 this, report the unsupported case instead of claiming equivalent GUI output.

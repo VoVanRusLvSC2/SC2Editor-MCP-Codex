@@ -109,6 +109,22 @@ advertised by the external Toolkit or an allowed nested `game.test.run` step.
 UI events need actual inspected IDs and exact native event fields; this wrapper
 does not invent a callback schema or prove its resulting state.
 
+The native UI endpoint reports an exact handler-return time in `clickEvent`
+instead of top-level `gameTime`/epoch/map serial. For that declared profile the
+adapter requires the matching session, confirmed original native handler,
+accepted `native_ui_click`, exact owned timer-counter clock and no contradictory
+identity fields. It reports `actionClock=native_ui_click.gameTime` and
+`actionIdentity=ui_session_then_event_pages`; it does not fill in absent fields.
+A following event page must still match the full baseline session/epoch/map
+identity before any positive verdict. Earlier clocks, uncertain handler timing
+or map replacement remain inconclusive. The actual UI callback schema and
+control IDs are explicit caller filters, not inferred from a frame-registry ID.
+
+Reusable manifests expose the same primitive through `game.actions`, with
+before/after state assertions and local `$from` query bindings. See
+[action checks](PROJECT_TESTS.md#reusable-action-observations). Upstream
+`game.test.run` remains unchanged and does not accept nested `game.action`.
+
 Each event has an exact scalar `match` including `kind` and `source`. The workflow
 returns matched events and compact page counts; redacted request, response and
 page receipts remain under the bridge's private `action-<uuid>` directory.

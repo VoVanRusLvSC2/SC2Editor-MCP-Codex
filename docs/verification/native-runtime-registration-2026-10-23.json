@@ -1,0 +1,278 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-22T22:58:56.220Z",
+  "status": "native_mechanics_passed_roundtrip_pending",
+  "scope": "Explicit-target native GUI event registration, not universal Event/libraries or completed save/reopen acceptance",
+  "source": "work/gui-acceptance-20261023/RuntimeRegistration/.sc2mcp-output/RuntimeRegistration.SC2Map",
+  "sourceSha256": "92ad6c70f8855b4938fc16012e4848f6a8ef930e8f9348bfb51b930f059b0dbe",
+  "sourceUnchanged": true,
+  "privateSdkModified": false,
+  "representation": {
+    "kind": "Registration",
+    "explicitTriggerExpression": true,
+    "guiTriggerReference": "ValueType trigger + ValueElement Trigger",
+    "typedNativeActionCarrier": true,
+    "scriptCodeFallback": false,
+    "customScriptFallback": false,
+    "ordinaryActionEventCallsStillReject": true,
+    "sourceOfTruth": "Triggers"
+  },
+  "staticSupport": {
+    "acceptedNativeSignatures": 108,
+    "unverifiedBindings": [
+      {
+        "id": "548F27E8",
+        "name": "TriggerAddEventGameTimeEvent",
+        "reason": "Error: GUI_REGISTRATION_NATIVE_SIGNATURE"
+      },
+      {
+        "id": "E9556756",
+        "name": "TriggerAddEventSelectedPurchaseItemChanged",
+        "reason": "Error: GUI_REGISTRATION_NATIVE_GUI_BINDING"
+      },
+      {
+        "id": "4555A6F2",
+        "name": "TriggerAddEventSelectedPurchaseCategoryChanged",
+        "reason": "Error: GUI_REGISTRATION_NATIVE_GUI_BINDING"
+      },
+      {
+        "id": "2CA8C1EF",
+        "name": "TriggerAddEventUnitSpendVital",
+        "reason": "Error: GUI_REGISTRATION_NATIVE_SIGNATURE"
+      }
+    ],
+    "scope": "Static signature/API-to-GUI identity inventory; not native execution coverage"
+  },
+  "nativeGui": {
+    "authorReceipt": "work/toolkit-verification/c9d3f245-44ec-40b8-ad6e-cdb628a561a8/result.json",
+    "conversionReceipt": "work/toolkit-verification/0e6e20a4-189f-43b7-b17b-1d677c243c49/cases.ndjson",
+    "nativeGenerationPassed": true,
+    "nativeCompilePassed": true,
+    "nativeImportCompiler": "NATIVE_PASSED",
+    "mapScriptSha256": "ae934dc23e9c26793a3423671f89759f6d46339e5609ca21aff3ee0626ad7345",
+    "triggersSha256": "d954b3660d3351ebf415b4aabec6d1e719a9e791aedd05eba5ca9fa3cee74072",
+    "observedStatements": [
+      "void gf_RegInstall (trigger lp_destination, timer lp_clock)",
+      "TriggerAddEventTimer(lp_destination, lv_LocalClock);",
+      "Wait(0.6, c_timeGame);",
+      "gv_RegPhase = 7;",
+      "gf_RegInstall(gt_RegReceiverB, gv_RegClocks[0]);",
+      "TimerStart(gv_RegClocks[0], 0.4, false, c_timeGame);"
+    ],
+    "parameterScope": "Explicit target parameter, timer parameter with reference flag, local timer copy and caller array-element reference; no added callback condition or timing hoist"
+  },
+  "saveReopen": {
+    "state": "running",
+    "jobId": "457436bb-0dcc-48e1-abc7-907e91a7511d",
+    "phase": "save_reopen",
+    "deadlineExceeded": true,
+    "accepted": false,
+    "scope": "Live owned handler remains running. Source compiled and gameplay passed; saved/reopened artifact equivalence and execution have NOT been established. Do not restart or force-stop solely because observation deadline elapsed."
+  },
+  "cleanLaunches": 2,
+  "sameRetainedGameBridge": true,
+  "runs": [
+    {
+      "iteration": 1,
+      "state": "passed",
+      "mapConfirmed": true,
+      "engineVersion": "5.0.17.98310",
+      "readiness": {
+        "gameTime": 2.5,
+        "life": 33
+      },
+      "checks": [
+        {
+          "name": "library",
+          "expected": 42,
+          "observed": 42,
+          "gameTime": 2.75,
+          "unit": "d1ce8aee9e598436cbd0e7cc754104ca:u:2"
+        },
+        {
+          "name": "wrongReceiver",
+          "expected": 9,
+          "observed": 9,
+          "gameTime": 3,
+          "unit": "d1ce8aee9e598436cbd0e7cc754104ca:u:3"
+        },
+        {
+          "name": "selectedReceiver",
+          "expected": 22,
+          "observed": 22,
+          "gameTime": 3.25,
+          "unit": "d1ce8aee9e598436cbd0e7cc754104ca:u:4"
+        },
+        {
+          "name": "registrationPhase",
+          "expected": 7,
+          "observed": 7,
+          "gameTime": 3.5,
+          "unit": "d1ce8aee9e598436cbd0e7cc754104ca:u:5"
+        },
+        {
+          "name": "exactlyOneCallback",
+          "expected": 1,
+          "observed": 1,
+          "gameTime": 3.75,
+          "unit": "d1ce8aee9e598436cbd0e7cc754104ca:u:6"
+        },
+        {
+          "name": "wrongTimerAlreadyCompleted",
+          "expected": 33,
+          "observed": 33,
+          "gameTime": 4,
+          "unit": "d1ce8aee9e598436cbd0e7cc754104ca:u:1"
+        }
+      ],
+      "gracefulDetach": true,
+      "sourceUnchanged": true,
+      "diagnostics": {
+        "allSourcesClear": null,
+        "hasMore": true,
+        "dropped": false,
+        "returnedMessages": 96,
+        "errors": 0,
+        "warnings": 0,
+        "scope": "Partial retained history; no global all-clear"
+      }
+    },
+    {
+      "iteration": 2,
+      "state": "passed",
+      "mapConfirmed": true,
+      "engineVersion": "5.0.17.98310",
+      "readiness": {
+        "gameTime": 2.5,
+        "life": 33
+      },
+      "checks": [
+        {
+          "name": "library",
+          "expected": 42,
+          "observed": 42,
+          "gameTime": 2.75,
+          "unit": "cdbfa52054cac300111ac922126a18b5:u:2"
+        },
+        {
+          "name": "wrongReceiver",
+          "expected": 9,
+          "observed": 9,
+          "gameTime": 3,
+          "unit": "cdbfa52054cac300111ac922126a18b5:u:3"
+        },
+        {
+          "name": "selectedReceiver",
+          "expected": 22,
+          "observed": 22,
+          "gameTime": 3.25,
+          "unit": "cdbfa52054cac300111ac922126a18b5:u:4"
+        },
+        {
+          "name": "registrationPhase",
+          "expected": 7,
+          "observed": 7,
+          "gameTime": 3.5,
+          "unit": "cdbfa52054cac300111ac922126a18b5:u:5"
+        },
+        {
+          "name": "exactlyOneCallback",
+          "expected": 1,
+          "observed": 1,
+          "gameTime": 3.75,
+          "unit": "cdbfa52054cac300111ac922126a18b5:u:6"
+        },
+        {
+          "name": "wrongTimerAlreadyCompleted",
+          "expected": 33,
+          "observed": 33,
+          "gameTime": 4,
+          "unit": "cdbfa52054cac300111ac922126a18b5:u:1"
+        }
+      ],
+      "gracefulDetach": true,
+      "sourceUnchanged": true,
+      "diagnostics": {
+        "allSourcesClear": null,
+        "hasMore": true,
+        "dropped": false,
+        "returnedMessages": 96,
+        "errors": 0,
+        "warnings": 0,
+        "scope": "Partial retained history; no global all-clear"
+      }
+    }
+  ],
+  "acceptanceMeaning": {
+    "selectedReceiver": 22,
+    "otherReceiver": 9,
+    "phaseAtCallback": 7,
+    "callbackCount": 1,
+    "wrongTimerCompleted": 33,
+    "libraryControl": 42,
+    "scope": "The initial timer expires before runtime registration. Only the selected receiver fires after registration, at phase7. A second timer then expires at phase9 without a second callback. Completion marker is written only after that timer has finished."
+  },
+  "regressions": {
+    "tests": 1427,
+    "pass": 1426,
+    "skip": 1,
+    "fail": 0,
+    "cancelled": 0,
+    "concurrency": 4,
+    "focused": 36,
+    "build": true,
+    "releaseBuild": true,
+    "lint": true,
+    "englishDocumentationFiles": 117
+  },
+  "candidate": {
+    "published": false,
+    "compiledFiles": 356,
+    "privacy": {
+      "passed": true,
+      "checkedFiles": 9970,
+      "privateSourceFiles": 1113,
+      "privateCorpusCompared": true,
+      "violations": [],
+      "scope": "Explicit private paths/debug/test artifacts and exact external C++/Python/Galaxy source copies, including renamed files. Not proof against transformed snippets or binary reverse engineering."
+    },
+    "sourceStableDuringBuild": true
+  },
+  "sourceFingerprints": [
+    {
+      "file": "src/modules/trigger/registration.ts",
+      "sha256LfUtf8": "6112b5337ae6ac8b46c5f603398be2a2b6420055cb313f100e4e0c6d8d07fcbf"
+    },
+    {
+      "file": "src/modules/trigger/authoring.ts",
+      "sha256LfUtf8": "91c39ad4f8ff4aebe7c742b56d1331688bcc72e972c03797cad227d6cfd9b862"
+    },
+    {
+      "file": "src/modules/trigger/functions.ts",
+      "sha256LfUtf8": "a8d2d9fe4474899bad6a70be5a96d69eb130b8f95ab811e8dbbc49154347d704"
+    },
+    {
+      "file": "src/modules/trigger/schemas.ts",
+      "sha256LfUtf8": "1a33a4a71f6f221628d3d331241ad5c963725954810b540b28f8be07b4a75bb7"
+    },
+    {
+      "file": "src/modules/trigger/runtime.ts",
+      "sha256LfUtf8": "0688240367eab686ea10d9a4f5a6248e51a56dcce080d85f00a5a8da6760c1b8"
+    },
+    {
+      "file": "src/modules/trigger/workspace.ts",
+      "sha256LfUtf8": "504ec995ec5510c6c79e945499a14a94c43d40f7a13b306c2af8539f7e339168"
+    },
+    {
+      "file": "src/modules/trigger/tools.ts",
+      "sha256LfUtf8": "99f7b6d3ded7348ff29caa70019c435df55ed67b7d083f2b743d930849641551"
+    }
+  ],
+  "remaining": [
+    "Current live save/reopen handler must reach an authoritative terminal result; compile and execute the exact saved artifact before accepting roundtrip",
+    "Four API-to-GUI native bindings remain unsupported; they are rejected rather than guessed",
+    "Other108 static native registration signatures have not all been executed in game",
+    "Arbitrary custom/library Event wrappers, callback/control/structref variants remain separate",
+    "The complete MCP quality roadmap, native navigation and final mission composition/UI/art remain open"
+  ]
+}

@@ -8,6 +8,38 @@ acceptance corpus and remaining phases below are still open. See
 
 Execution ledger:
 
+- Explicit-target runtime GUI registration now uses a separate `Registration`
+  call and typed trigger-element/variable/parameter expressions. The native
+  Action signature keeps original argument binding and Action/body position;
+  it does not add ScriptCode or treat an ordinary Event as an Action. Static
+  API-to-GUI identity checks accept108 native signatures and explicitly reject
+  four unverified bindings. Original Editor generation/compile preserved the
+  destination/timer/local/array call. Two ordinary-map game launches passed the
+  selected-receiver, wrong-receiver, phase7, exactly-one callback, wrong-timer and
+  library controls. Full regression:1426pass/1skip; focused:36pass; build/release,
+  lint and English checks passed. The356-file local candidate passed9970-entry
+  privacy comparison against1113 private sources. The save/reopen handler remains
+  live beyond its observation deadline; exact saved-artifact parity/execution
+  is not accepted. Do not restart that worker on a timeout. See
+  [registration evidence](verification/native-runtime-registration-2026-10-23.json).
+
+- Native Learn progression now passes two frozen-runtime launches: three point
+  profiles,30 Learn orders,14 causal damage/energy/completion casts and14 XP kills.
+  Rank effects10/20/35 and energy1/2/3, level gates, exhausted points, per-level
+  points and maximum rank were checked through native state and real execution.
+  The original hidden Editor loaded the Data and generated/compiled Galaxy.
+  A separate read-only named-XP observer exposed Core's map-wide recipient search:
+  radius10 divided50 XP between three nearby heroes; behavior ShareFilters alone
+  did not fix it. Radius0 gave the killer50 and both controls0. New explicit
+  `data.xp.search` configures this map-wide policy, preserves unrelated fields and
+  rejects a conflicting second catalog owner. Hero recipes no longer promise
+  solo rewards from behavior fields alone. Full regression:1422pass/1skip;
+  focused:30pass; build/release/lint/English checks passed. The355-file candidate
+  passed9968-entry privacy review against1113 private sources and remains local.
+  Command-card frames were reviewed; real UI activation, larger talent systems,
+  isolated sound, finished art, GUI runtime registration and native navigation
+  remain open. See [Learn/XP evidence](verification/native-learn-xp-2026-10-23.json).
+
 - Added `game.action`: one bridge-serialized workflow drains returned history
   cursors, submits one normal order/UI activation and observes exact event fields
   at or after the action time on the same stream. Ability damage binds the
@@ -486,9 +518,10 @@ establish a numeric art-quality score.
 Confirmed authoring gap: `TriggerAddEventTimer` is indexed as `FlagEvent` /
 `FlagNative`; resolving it as an Action currently rejects with
 `GUI_FUNCTION_ROLE_OR_TYPE`. Its GUI parameter `t` is the timer, not the
-compiler-supplied target trigger. The current call schema has no explicit
-registration target. Add a distinct typed runtime-registration representation
-that preserves target expression, argument evaluation and execution position.
+compiler-supplied target trigger. The new `Registration` call now carries the
+explicit target expression and preserves argument evaluation/execution position
+for matched native definitions. A two-launch timer fixture passes, but its
+save/reopen handler and exact saved-artifact execution remain unaccepted.
 Do not fix this by accepting an event as an Action, substituting the current
 trigger or moving the call into startup. Test registration after initialization,
 different target triggers and reference/callback arguments; compare native

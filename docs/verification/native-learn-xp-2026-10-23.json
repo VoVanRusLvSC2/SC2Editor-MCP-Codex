@@ -1,0 +1,939 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-22T22:26:02.246Z",
+  "status": "passed_with_scoped_limits",
+  "scope": "Native CAbilLearn Data point/rank profiles and explicit map-wide kill-XP recipient search; not universal talents, UI activation or finished map quality",
+  "entries": [
+    "data.hero.learn",
+    "data.xp.search",
+    "data.hero.veterancy"
+  ],
+  "source": "work/data-acceptance-20261022/LearnRecipe/.sc2mcp-output/LearnRecipe_R9.SC2Map",
+  "sourceSha256": "4943668961189bf09c7c62d29331b8827ef1034d8946f18d43b05998f1c060a8",
+  "privateSdkModified": false,
+  "mapAuthoredThroughMcp": {
+    "fixture": "work/toolkit-verification/3b114c0d-31d3-418e-8667-a29ba255c7ca/result.json",
+    "finalHighLevel": "work/toolkit-verification/12467a7b-740c-43a4-9cd9-8d7b974c7235/result.json",
+    "tools": [
+      "modkit.author",
+      "data.hero.learn",
+      "modkit.save",
+      "map.export"
+    ],
+    "diagnosticObserverConnectedInFinalMap": false,
+    "scope": "Normal archived map; dedicated named-XP observer is only connected in separate diagnostic archives. Gameplay testing uses the Toolkit-owned private clone."
+  },
+  "nativeEditor": {
+    "jobId": "b7efe62c-2ce7-4527-9817-80224c6b3bd6",
+    "loadVerified": true,
+    "nativeDataModuleLoaded": true,
+    "nativeGenerationVerified": true,
+    "nativeCompilePassed": true,
+    "generatedGalaxySha256": "019819de72739d63d7ddae47fdd31455a638e3948f6244f000aea7460374fb6d",
+    "loadDiagnostics": {
+      "newErrorsClear": true,
+      "inspectionComplete": true,
+      "newErrorCount": 0,
+      "newWarningCount": 0,
+      "knownNewErrorCount": 0,
+      "newErrors": [],
+      "newWarnings": [],
+      "compilerErrors": null
+    },
+    "compileErrors": [],
+    "sourceUnchanged": true,
+    "saveReopenChecked": false,
+    "scope": "Original hidden Editor validates Data and generates/compiles GUI Galaxy; actual archived script is also exercised by the two game launches. No new save/reopen or arbitrary-body roundtrip claim."
+  },
+  "xpRecipientDiagnosis": {
+    "defaultRadius": 10,
+    "behaviorFilterOnlyDidNotSolve": true,
+    "shared": {
+      "archive": "work/data-acceptance-20261022/LearnRecipe/.sc2mcp-output/LearnRecipe_R7_Observer.SC2Map",
+      "sha256": "422ca46860f046c23e54e8127ffb7ec2dc51435aa25d491e5cb8101a19a8681c",
+      "observed": {
+        "Rich": {
+          "unit": "b3dd1197db262d5f1253a573812c2243:u:1",
+          "gameTime": 6.75,
+          "xp": 16.6665,
+          "level": 1,
+          "genericLevel": 1,
+          "source": 1
+        },
+        "Fixed": {
+          "unit": "b3dd1197db262d5f1253a573812c2243:u:2",
+          "gameTime": 7.75,
+          "xp": 16.6665,
+          "level": 1,
+          "genericLevel": 1,
+          "source": 2
+        },
+        "Growth": {
+          "unit": "b3dd1197db262d5f1253a573812c2243:u:3",
+          "gameTime": 8.75,
+          "xp": 16.6665,
+          "level": 1,
+          "genericLevel": 1,
+          "source": 3
+        }
+      }
+    },
+    "radiusZero": {
+      "archive": "work/data-acceptance-20261022/LearnRecipe/.sc2mcp-output/LearnRecipe_R8_Observer.SC2Map",
+      "sha256": "42aaf2e49551213583c1bb9b5802dfd1a2f14bb0676c58690107dfde1ad62cb4",
+      "observed": {
+        "Rich": {
+          "unit": "3041103aee2183626e96ca6e075bb5d2:u:1",
+          "gameTime": 6.5,
+          "xp": 50,
+          "level": 2,
+          "genericLevel": 2,
+          "source": 1
+        },
+        "Fixed": {
+          "unit": "3041103aee2183626e96ca6e075bb5d2:u:2",
+          "gameTime": 7.5,
+          "xp": 0,
+          "level": 1,
+          "genericLevel": 1,
+          "source": 2
+        },
+        "Growth": {
+          "unit": "3041103aee2183626e96ca6e075bb5d2:u:3",
+          "gameTime": 8.5,
+          "xp": 0,
+          "level": 1,
+          "genericLevel": 1,
+          "source": 3
+        }
+      }
+    },
+    "measurement": "Selected-hero source signature plus native UnitXPGetCurrentXP/UnitXPGetCurrentLevel, exported only through dedicated marker vitals. No XP writes, simulated level counter or XPGainEnable call. Each kill uses a normal Data ability against a50-KillXP victim.",
+    "result": "Radius10 divided50 XP among three nearby heroes (16.6665 each). Radius0 gave the killer50/level2 and both controls0/level1. Behavior ShareFilters alone did not disable the map-wide search."
+  },
+  "configuredPointProfiles": [
+    {
+      "name": "Rich",
+      "points": 10,
+      "pointsPerLevel": 0
+    },
+    {
+      "name": "Fixed",
+      "points": 2,
+      "pointsPerLevel": 0
+    },
+    {
+      "name": "Growth",
+      "points": 0,
+      "pointsPerLevel": 1
+    }
+  ],
+  "pointObservationScope": "Native command disabled flags, learned rank, unchanged execution energy during learning and actual cast results; no direct numeric read of the internal Learn point pool.",
+  "cleanLaunches": 2,
+  "sameRetainedBridge": true,
+  "runs": [
+    {
+      "iteration": 1,
+      "state": "passed",
+      "mapConfirmed": true,
+      "session": "c7a3c865376b0122ef307d67e26ced6f",
+      "engineVersion": "5.0.17.98310",
+      "profiles": [
+        {
+          "name": "Rich",
+          "state": "passed",
+          "initialLevel": 1,
+          "initialPulsePresent": false,
+          "learning": [
+            {
+              "command": 0,
+              "ability": "LearnRichPulse",
+              "expectedNativeRank": 0,
+              "observedNativeRank": 0,
+              "expectedEnabled": true,
+              "disabledBefore": false,
+              "energyUnchanged": true
+            },
+            {
+              "command": 0,
+              "ability": "LearnRichPulse",
+              "expectedNativeRank": 0,
+              "observedNativeRank": 0,
+              "expectedEnabled": false,
+              "disabledBefore": true,
+              "energyUnchanged": true
+            },
+            {
+              "command": 0,
+              "ability": "LearnRichPulse",
+              "expectedNativeRank": 1,
+              "observedNativeRank": 1,
+              "expectedEnabled": true,
+              "disabledBefore": false,
+              "energyUnchanged": true
+            },
+            {
+              "command": 0,
+              "ability": "LearnRichPulse",
+              "expectedNativeRank": 1,
+              "observedNativeRank": 1,
+              "expectedEnabled": false,
+              "disabledBefore": true,
+              "energyUnchanged": true
+            },
+            {
+              "command": 0,
+              "ability": "LearnRichPulse",
+              "expectedNativeRank": 2,
+              "observedNativeRank": 2,
+              "expectedEnabled": true,
+              "disabledBefore": false,
+              "energyUnchanged": true
+            },
+            {
+              "command": 0,
+              "ability": "LearnRichPulse",
+              "expectedNativeRank": 2,
+              "observedNativeRank": 2,
+              "expectedEnabled": false,
+              "disabledBefore": true,
+              "energyUnchanged": true
+            }
+          ],
+          "casts": [
+            {
+              "ability": "LearnRichPulse",
+              "damage": 10,
+              "energy": 1,
+              "observedLifeDelta": 10,
+              "observedEnergyDelta": 1,
+              "status": "passed",
+              "eventSource": "galaxy",
+              "damageTime": 4.125,
+              "actionTime": 4,
+              "nativeCompletionObserved": true
+            },
+            {
+              "ability": "LearnRichPulse",
+              "damage": 20,
+              "energy": 2,
+              "observedLifeDelta": 20,
+              "observedEnergyDelta": 2,
+              "status": "passed",
+              "eventSource": "galaxy",
+              "damageTime": 8.3125,
+              "actionTime": 8.25,
+              "nativeCompletionObserved": true
+            },
+            {
+              "ability": "LearnRichPulse",
+              "damage": 35,
+              "energy": 3,
+              "observedLifeDelta": 35,
+              "observedEnergyDelta": 3,
+              "status": "passed",
+              "eventSource": "galaxy",
+              "damageTime": 13.5625,
+              "actionTime": 13.5,
+              "nativeCompletionObserved": true
+            }
+          ],
+          "kills": [
+            {
+              "status": "passed",
+              "expectedLevel": 2,
+              "observedLevel": 2
+            },
+            {
+              "status": "passed",
+              "expectedLevel": 2,
+              "observedLevel": 2
+            },
+            {
+              "status": "passed",
+              "expectedLevel": 3,
+              "observedLevel": 3
+            }
+          ],
+          "final": {
+            "level": 3,
+            "energy": 94,
+            "dummyLife": 1935
+          }
+        },
+        {
+          "name": "Fixed",
+          "state": "passed",
+          "initialLevel": 1,
+          "initialPulsePresent": false,
+          "learning": [
+            {
+              "command": 0,
+              "ability": "LearnFixedPulse",
+              "expectedNativeRank": 0,
+              "observedNativeRank": 0,
+              "expectedEnabled": true,
+              "disabledBefore": false,
+              "energyUnchanged": true
+            },
+            {
+              "command": 1,
+              "ability": "LearnFixedSpark",
+              "expectedNativeRank": 0,
+              "observedNativeRank": 0,
+              "expectedEnabled": true,
+              "disabledBefore": false,
+              "energyUnchanged": true
+            },
+            {
+              "command": 0,
+              "ability": "LearnFixedPulse",
+              "expectedNativeRank": 0,
+              "observedNativeRank": 0,
+              "expectedEnabled": false,
+              "disabledBefore": true,
+              "energyUnchanged": true
+            }
+          ],
+          "casts": [
+            {
+              "ability": "LearnFixedPulse",
+              "damage": 10,
+              "energy": 1,
+              "observedLifeDelta": 10,
+              "observedEnergyDelta": 1,
+              "status": "passed",
+              "eventSource": "galaxy",
+              "damageTime": 19.375,
+              "actionTime": 19.25,
+              "nativeCompletionObserved": true
+            },
+            {
+              "ability": "LearnFixedSpark",
+              "damage": 7,
+              "energy": 0,
+              "observedLifeDelta": 7,
+              "observedEnergyDelta": 0,
+              "status": "passed",
+              "eventSource": "galaxy",
+              "damageTime": 21.75,
+              "actionTime": 21.75,
+              "nativeCompletionObserved": true
+            }
+          ],
+          "kills": [
+            {
+              "status": "passed",
+              "expectedLevel": 2,
+              "observedLevel": 2
+            }
+          ],
+          "final": {
+            "level": 2,
+            "energy": 99,
+            "dummyLife": 1983
+          }
+        },
+        {
+          "name": "Growth",
+          "state": "passed",
+          "initialLevel": 1,
+          "initialPulsePresent": false,
+          "learning": [
+            {
+              "command": 0,
+              "ability": "LearnGrowthPulse",
+              "expectedNativeRank": 0,
+              "observedNativeRank": 0,
+              "expectedEnabled": true,
+              "disabledBefore": false,
+              "energyUnchanged": true
+            },
+            {
+              "command": 1,
+              "ability": "LearnGrowthSpark",
+              "expectedNativeRank": null,
+              "observedNativeRank": null,
+              "expectedEnabled": false,
+              "disabledBefore": true,
+              "energyUnchanged": true
+            },
+            {
+              "command": 1,
+              "ability": "LearnGrowthSpark",
+              "expectedNativeRank": 0,
+              "observedNativeRank": 0,
+              "expectedEnabled": true,
+              "disabledBefore": false,
+              "energyUnchanged": true
+            },
+            {
+              "command": 0,
+              "ability": "LearnGrowthPulse",
+              "expectedNativeRank": 0,
+              "observedNativeRank": 0,
+              "expectedEnabled": false,
+              "disabledBefore": true,
+              "energyUnchanged": true
+            },
+            {
+              "command": 0,
+              "ability": "LearnGrowthPulse",
+              "expectedNativeRank": 0,
+              "observedNativeRank": 0,
+              "expectedEnabled": false,
+              "disabledBefore": true,
+              "energyUnchanged": true
+            },
+            {
+              "command": 0,
+              "ability": "LearnGrowthPulse",
+              "expectedNativeRank": 1,
+              "observedNativeRank": 1,
+              "expectedEnabled": true,
+              "disabledBefore": false,
+              "energyUnchanged": true
+            }
+          ],
+          "casts": [
+            {
+              "ability": "LearnGrowthPulse",
+              "damage": 10,
+              "energy": 1,
+              "observedLifeDelta": 10,
+              "observedEnergyDelta": 1,
+              "status": "passed",
+              "eventSource": "galaxy",
+              "damageTime": 27,
+              "actionTime": 26.875,
+              "nativeCompletionObserved": true
+            },
+            {
+              "ability": "LearnGrowthPulse",
+              "damage": 20,
+              "energy": 2,
+              "observedLifeDelta": 20,
+              "observedEnergyDelta": 2,
+              "status": "passed",
+              "eventSource": "galaxy",
+              "damageTime": 35.8125,
+              "actionTime": 35.75,
+              "nativeCompletionObserved": true
+            }
+          ],
+          "kills": [
+            {
+              "status": "passed",
+              "expectedLevel": 2,
+              "observedLevel": 2
+            },
+            {
+              "status": "passed",
+              "expectedLevel": 2,
+              "observedLevel": 2
+            },
+            {
+              "status": "passed",
+              "expectedLevel": 3,
+              "observedLevel": 3
+            }
+          ],
+          "final": {
+            "level": 3,
+            "energy": 97,
+            "dummyLife": 1970
+          }
+        }
+      ],
+      "commandCard": {
+        "nativeControls": 15,
+        "camera": {
+          "target": {
+            "x": 24,
+            "y": 24
+          },
+          "pitch": 64.8633,
+          "yaw": 180,
+          "distance": 24
+        },
+        "review": "Both retained images were inspected: visible Learn/execute icons and native level3 bar; disabled max-rank icon and available secondary learning icon. This is a diagnostic card, not finished UI/art; selected unit is near the frame edge and the reused fixture has unrelated clutter/supply overflow."
+      },
+      "diagnostics": {
+        "allSourcesClear": null,
+        "hasMore": true,
+        "dropped": false,
+        "returnedMessages": 34,
+        "errors": 0,
+        "warnings": 0,
+        "scope": "Partial native/log coverage with unread retained history; no global all-clear"
+      },
+      "gracefulDetach": true,
+      "sourceUnchanged": true
+    },
+    {
+      "iteration": 2,
+      "state": "passed",
+      "mapConfirmed": true,
+      "session": "1f90dfac26c8b9c03eba4d74378a87e4",
+      "engineVersion": "5.0.17.98310",
+      "profiles": [
+        {
+          "name": "Rich",
+          "state": "passed",
+          "initialLevel": 1,
+          "initialPulsePresent": false,
+          "learning": [
+            {
+              "command": 0,
+              "ability": "LearnRichPulse",
+              "expectedNativeRank": 0,
+              "observedNativeRank": 0,
+              "expectedEnabled": true,
+              "disabledBefore": false,
+              "energyUnchanged": true
+            },
+            {
+              "command": 0,
+              "ability": "LearnRichPulse",
+              "expectedNativeRank": 0,
+              "observedNativeRank": 0,
+              "expectedEnabled": false,
+              "disabledBefore": true,
+              "energyUnchanged": true
+            },
+            {
+              "command": 0,
+              "ability": "LearnRichPulse",
+              "expectedNativeRank": 1,
+              "observedNativeRank": 1,
+              "expectedEnabled": true,
+              "disabledBefore": false,
+              "energyUnchanged": true
+            },
+            {
+              "command": 0,
+              "ability": "LearnRichPulse",
+              "expectedNativeRank": 1,
+              "observedNativeRank": 1,
+              "expectedEnabled": false,
+              "disabledBefore": true,
+              "energyUnchanged": true
+            },
+            {
+              "command": 0,
+              "ability": "LearnRichPulse",
+              "expectedNativeRank": 2,
+              "observedNativeRank": 2,
+              "expectedEnabled": true,
+              "disabledBefore": false,
+              "energyUnchanged": true
+            },
+            {
+              "command": 0,
+              "ability": "LearnRichPulse",
+              "expectedNativeRank": 2,
+              "observedNativeRank": 2,
+              "expectedEnabled": false,
+              "disabledBefore": true,
+              "energyUnchanged": true
+            }
+          ],
+          "casts": [
+            {
+              "ability": "LearnRichPulse",
+              "damage": 10,
+              "energy": 1,
+              "observedLifeDelta": 10,
+              "observedEnergyDelta": 1,
+              "status": "passed",
+              "eventSource": "galaxy",
+              "damageTime": 4.5,
+              "actionTime": 4.375,
+              "nativeCompletionObserved": true
+            },
+            {
+              "ability": "LearnRichPulse",
+              "damage": 20,
+              "energy": 2,
+              "observedLifeDelta": 20,
+              "observedEnergyDelta": 2,
+              "status": "passed",
+              "eventSource": "galaxy",
+              "damageTime": 8.6875,
+              "actionTime": 8.625,
+              "nativeCompletionObserved": true
+            },
+            {
+              "ability": "LearnRichPulse",
+              "damage": 35,
+              "energy": 3,
+              "observedLifeDelta": 35,
+              "observedEnergyDelta": 3,
+              "status": "passed",
+              "eventSource": "galaxy",
+              "damageTime": 13.8125,
+              "actionTime": 13.75,
+              "nativeCompletionObserved": true
+            }
+          ],
+          "kills": [
+            {
+              "status": "passed",
+              "expectedLevel": 2,
+              "observedLevel": 2
+            },
+            {
+              "status": "passed",
+              "expectedLevel": 2,
+              "observedLevel": 2
+            },
+            {
+              "status": "passed",
+              "expectedLevel": 3,
+              "observedLevel": 3
+            }
+          ],
+          "final": {
+            "level": 3,
+            "energy": 94,
+            "dummyLife": 1935
+          }
+        },
+        {
+          "name": "Fixed",
+          "state": "passed",
+          "initialLevel": 1,
+          "initialPulsePresent": false,
+          "learning": [
+            {
+              "command": 0,
+              "ability": "LearnFixedPulse",
+              "expectedNativeRank": 0,
+              "observedNativeRank": 0,
+              "expectedEnabled": true,
+              "disabledBefore": false,
+              "energyUnchanged": true
+            },
+            {
+              "command": 1,
+              "ability": "LearnFixedSpark",
+              "expectedNativeRank": 0,
+              "observedNativeRank": 0,
+              "expectedEnabled": true,
+              "disabledBefore": false,
+              "energyUnchanged": true
+            },
+            {
+              "command": 0,
+              "ability": "LearnFixedPulse",
+              "expectedNativeRank": 0,
+              "observedNativeRank": 0,
+              "expectedEnabled": false,
+              "disabledBefore": true,
+              "energyUnchanged": true
+            }
+          ],
+          "casts": [
+            {
+              "ability": "LearnFixedPulse",
+              "damage": 10,
+              "energy": 1,
+              "observedLifeDelta": 10,
+              "observedEnergyDelta": 1,
+              "status": "passed",
+              "eventSource": "galaxy",
+              "damageTime": 19.75,
+              "actionTime": 19.625,
+              "nativeCompletionObserved": true
+            },
+            {
+              "ability": "LearnFixedSpark",
+              "damage": 7,
+              "energy": 0,
+              "observedLifeDelta": 7,
+              "observedEnergyDelta": 0,
+              "status": "passed",
+              "eventSource": "galaxy",
+              "damageTime": 22.125,
+              "actionTime": 22.125,
+              "nativeCompletionObserved": true
+            }
+          ],
+          "kills": [
+            {
+              "status": "passed",
+              "expectedLevel": 2,
+              "observedLevel": 2
+            }
+          ],
+          "final": {
+            "level": 2,
+            "energy": 99,
+            "dummyLife": 1983
+          }
+        },
+        {
+          "name": "Growth",
+          "state": "passed",
+          "initialLevel": 1,
+          "initialPulsePresent": false,
+          "learning": [
+            {
+              "command": 0,
+              "ability": "LearnGrowthPulse",
+              "expectedNativeRank": 0,
+              "observedNativeRank": 0,
+              "expectedEnabled": true,
+              "disabledBefore": false,
+              "energyUnchanged": true
+            },
+            {
+              "command": 1,
+              "ability": "LearnGrowthSpark",
+              "expectedNativeRank": null,
+              "observedNativeRank": null,
+              "expectedEnabled": false,
+              "disabledBefore": true,
+              "energyUnchanged": true
+            },
+            {
+              "command": 1,
+              "ability": "LearnGrowthSpark",
+              "expectedNativeRank": 0,
+              "observedNativeRank": 0,
+              "expectedEnabled": true,
+              "disabledBefore": false,
+              "energyUnchanged": true
+            },
+            {
+              "command": 0,
+              "ability": "LearnGrowthPulse",
+              "expectedNativeRank": 0,
+              "observedNativeRank": 0,
+              "expectedEnabled": false,
+              "disabledBefore": true,
+              "energyUnchanged": true
+            },
+            {
+              "command": 0,
+              "ability": "LearnGrowthPulse",
+              "expectedNativeRank": 0,
+              "observedNativeRank": 0,
+              "expectedEnabled": false,
+              "disabledBefore": true,
+              "energyUnchanged": true
+            },
+            {
+              "command": 0,
+              "ability": "LearnGrowthPulse",
+              "expectedNativeRank": 1,
+              "observedNativeRank": 1,
+              "expectedEnabled": true,
+              "disabledBefore": false,
+              "energyUnchanged": true
+            }
+          ],
+          "casts": [
+            {
+              "ability": "LearnGrowthPulse",
+              "damage": 10,
+              "energy": 1,
+              "observedLifeDelta": 10,
+              "observedEnergyDelta": 1,
+              "status": "passed",
+              "eventSource": "galaxy",
+              "damageTime": 27.6875,
+              "actionTime": 27.5,
+              "nativeCompletionObserved": true
+            },
+            {
+              "ability": "LearnGrowthPulse",
+              "damage": 20,
+              "energy": 2,
+              "observedLifeDelta": 20,
+              "observedEnergyDelta": 2,
+              "status": "passed",
+              "eventSource": "galaxy",
+              "damageTime": 36.8125,
+              "actionTime": 36.75,
+              "nativeCompletionObserved": true
+            }
+          ],
+          "kills": [
+            {
+              "status": "passed",
+              "expectedLevel": 2,
+              "observedLevel": 2
+            },
+            {
+              "status": "passed",
+              "expectedLevel": 2,
+              "observedLevel": 2
+            },
+            {
+              "status": "passed",
+              "expectedLevel": 3,
+              "observedLevel": 3
+            }
+          ],
+          "final": {
+            "level": 3,
+            "energy": 97,
+            "dummyLife": 1970
+          }
+        }
+      ],
+      "commandCard": {
+        "nativeControls": 15,
+        "camera": {
+          "target": {
+            "x": 24,
+            "y": 24
+          },
+          "pitch": 64.8633,
+          "yaw": 180,
+          "distance": 24
+        },
+        "review": "Both retained images were inspected: visible Learn/execute icons and native level3 bar; disabled max-rank icon and available secondary learning icon. This is a diagnostic card, not finished UI/art; selected unit is near the frame edge and the reused fixture has unrelated clutter/supply overflow."
+      },
+      "diagnostics": {
+        "allSourcesClear": null,
+        "hasMore": true,
+        "dropped": false,
+        "returnedMessages": 33,
+        "errors": 0,
+        "warnings": 0,
+        "scope": "Partial native/log coverage with unread retained history; no global all-clear"
+      },
+      "gracefulDetach": true,
+      "sourceUnchanged": true
+    }
+  ],
+  "totals": {
+    "profiles": 6,
+    "learnOrders": 30,
+    "positiveCasts": 14,
+    "xpKills": 14
+  },
+  "images": [
+    {
+      "file": "work/launch-diagnostics-20261022/learn-native-final-4-image-0.png",
+      "sha256": "91c1a279b407c867f6f19458f2476652a5a179cbbe0198fb5d367f77ff6600ef",
+      "bytes": 1446684,
+      "tool": "game.call",
+      "reviewed": true
+    },
+    {
+      "file": "work/launch-diagnostics-20261022/learn-native-final-4-image-1.png",
+      "sha256": "19e22ec0bfdea6ccd0949ca3be475426bcc36b0529590067832fef5bf3ed8d43",
+      "bytes": 1444230,
+      "tool": "game.call",
+      "reviewed": true
+    }
+  ],
+  "regressions": {
+    "tests": 1423,
+    "pass": 1422,
+    "skipped": 1,
+    "fail": 0,
+    "cancelled": 0,
+    "concurrency": 4,
+    "focused": 30,
+    "build": true,
+    "releaseBuild": true,
+    "lint": true,
+    "englishDocumentationFiles": 117
+  },
+  "candidate": {
+    "compiledFiles": 355,
+    "published": false,
+    "privacy": {
+      "passed": true,
+      "checkedFiles": 9968,
+      "privateSourceFiles": 1113,
+      "privateCorpusCompared": true,
+      "violations": [],
+      "scope": "Explicit private paths/debug/test artifacts and exact external C++/Python/Galaxy source copies, including renamed files. Not proof against transformed snippets or binary reverse engineering."
+    },
+    "sourceStableDuringBuild": true
+  },
+  "sourceFingerprints": [
+    {
+      "file": "src/modules/data/learnRecipe.ts",
+      "sha256LfUtf8": "de5726b7425220cbcf22b900b2d7b1eb65525496e5fb381d6b0036a07f047a61"
+    },
+    {
+      "file": "src/modules/data/xpSearchRecipe.ts",
+      "sha256LfUtf8": "bfe41abcb46c6f0dedba959e09e4606a89aa00e9220a7cd3ba597a41b6c1c029"
+    },
+    {
+      "file": "src/modules/data/veterancyRecipe.ts",
+      "sha256LfUtf8": "e5de60371621eaffe763df6ac06243565127e06cd08ff2ccb83e42970b44ea07"
+    },
+    {
+      "file": "src/modules/data/cardBindings.ts",
+      "sha256LfUtf8": "b7a0f7ecee312e21cbbe289ba61a0a0322d147978f2106eee222b48920f6bc5f"
+    },
+    {
+      "file": "src/modules/data/tools.ts",
+      "sha256LfUtf8": "09136e649587cb0327f267eaa9a49b8bbe3802a41290ad99bd5f54a7d3e4e168"
+    },
+    {
+      "file": "src/modules/data/types.ts",
+      "sha256LfUtf8": "c335015b6e7414a3f2758614ba5894b47099d829f6dd13235511726a1adeef56"
+    },
+    {
+      "file": "src/modules/data/workspace.ts",
+      "sha256LfUtf8": "1fcc39a89beb1116ce0346637db964fe039e866f093755d1d3c0d98655ac245d"
+    },
+    {
+      "file": "src/app/authoringScript.ts",
+      "sha256LfUtf8": "59d93a9544e694630280412196963d92430d8e18b2361426b412aa6c0e36187b"
+    },
+    {
+      "file": "src/app/authoringDataGroups.ts",
+      "sha256LfUtf8": "ad64fafcde9145c78bb4a8e877852421fd2073500a7b5e147d42cb7b0db6e040"
+    },
+    {
+      "file": "src/integrations/game/actionEvents.ts",
+      "sha256LfUtf8": "425c234f559a243f7a69e10ae287da02be4af2b15cdd01446a6e7b120585e16a"
+    },
+    {
+      "file": "src/integrations/game/bridge.ts",
+      "sha256LfUtf8": "65057d196bd5e7d07332ada1fc66c65d76360448fb99f3f9923370bfd1d28108"
+    },
+    {
+      "file": "src/integrations/game/tools.ts",
+      "sha256LfUtf8": "a0ca4c7a05a64ff15e05e221038cf4258c4b36bbca87eb0930ca5bf89408c390"
+    }
+  ],
+  "retainedFailures": [
+    {
+      "attempts": [
+        1,
+        2,
+        3
+      ],
+      "kind": "full Learn verifier",
+      "result": "Level2 gate did not open after a50-XP kill because nearby native recipient search split the reward."
+    },
+    {
+      "attempts": [
+        2,
+        3,
+        5,
+        7
+      ],
+      "kind": "exploratory probes",
+      "result": "Level-effect, victim-owner/target-filter and behavior ShareFilters variants did not resolve shared XP."
+    }
+  ],
+  "remaining": [
+    "Other CAbilLearn kinds, libraries, requirements, conditional cards, larger talent systems and per-player UI variants",
+    "Direct native point-pool introspection and real command-card UI activation for this new fixture",
+    "Isolated spell sound and exact main-unit animation-name acceptance; no new body-animation or finished-art claim",
+    "Authoritative native pathing/collision/buildability and the wider cliff/ramp corpus",
+    "Explicit-target GUI runtime event registration and broad imported semantics",
+    "Full docs/MCP_QUALITY_ROADMAP.md completion remains open"
+  ]
+}

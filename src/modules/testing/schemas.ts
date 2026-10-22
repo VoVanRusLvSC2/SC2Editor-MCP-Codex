@@ -1,4 +1,5 @@
 import * as z from 'zod/v4';
+import {actionCheckSchema} from './actionChecks.js';
 
 const name=z.string().regex(/^[A-Za-z][A-Za-z0-9_-]{0,63}$/);
 const point=z.object({x:z.number().finite(),y:z.number().finite()}).strict();
@@ -18,6 +19,7 @@ export const testManifestSchema=z.object({
   points:z.record(name,point).default({}),
   routes:z.array(z.object({id:name,from:name,to:name,type:z.string().min(1),owner:z.number().int().min(0).max(15).default(1),mobility:z.literal('ground'),expected:z.enum(['arrive','blocked']).default('arrive'),timeout:z.number().int().min(1).max(120).default(20),tolerance:z.number().min(0.1).max(3).default(0.75),maxDeviation:z.number().finite().min(0.1).max(4096).optional(),bidirectional:z.boolean().default(true),required:z.boolean().default(true)}).strict()).max(16).default([]),
   scenarios:z.array(z.object({id:name,required:z.boolean().default(true),steps:z.array(step).min(1).max(32)}).strict()).max(16).default([]),
+  actions:z.array(actionCheckSchema).max(16).default([]),
   views:z.array(view).max(8).default([]),
   diagnostics:z.object({required:z.boolean().default(false),expected:z.array(z.object({source:z.string().min(1),text:z.string().min(1),build:z.string().min(1)}).strict()).max(32).default([])}).strict().default({required:false,expected:[]}),
   capture:z.boolean().default(true)
@@ -33,6 +35,7 @@ export const testManifestSchema=z.object({
  for(const e of m.game?.startupEvents??[]){if(ids.has(e.id))c.addIssue({code:'custom',message:'Duplicate check ID: '+e.id});ids.add(e.id);}
  for(const r of m.game?.routes??[]){if(!m.game?.points[r.from]||!m.game?.points[r.to])c.addIssue({code:'custom',message:'Route endpoint missing: '+r.id});if(r.from===r.to)c.addIssue({code:'custom',message:'Route endpoints must differ: '+r.id});if(ids.has(r.id))c.addIssue({code:'custom',message:'Duplicate check ID: '+r.id});ids.add(r.id);}
  for(const s of m.game?.scenarios??[]){if(ids.has(s.id))c.addIssue({code:'custom',message:'Duplicate check ID: '+s.id});ids.add(s.id);}
+ for(const a of m.game?.actions??[]){if(ids.has(a.id))c.addIssue({code:'custom',message:'Duplicate check ID: '+a.id});ids.add(a.id);}
  for(const v of m.game?.views??[]){if(ids.has(v.id))c.addIssue({code:'custom',message:'Duplicate check ID: '+v.id});ids.add(v.id);}
 });
 export type TestManifest=z.infer<typeof testManifestSchema>;

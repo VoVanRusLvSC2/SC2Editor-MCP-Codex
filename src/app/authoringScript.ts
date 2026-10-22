@@ -30,6 +30,7 @@ export const authoringGuide={
     'data ability.charges id=TargetPulse max=3 start=3 use=1 regen=8 location=Unit',
     'data effect.projectile id=PointLaunch sourceEffect=EMPLaunchMissile sourceActor=GhostEMPAttack impactEffect=PointSearch damageEffect=PointDamage impactModel=GhostEMPAttackImpactEffect',
     'data hero.veterancy id=HeroXP unit=Hero levelEffect=LevelUp xp=0,50,150 lifeDelta=100 damageDelta=5',
+    'data xp.search radius=0',
     'data hero.learn id=HeroLearn unit=Hero veterancy=HeroXP ability=Pulse button=LearnPulse card.page=0 card.slot=14 card.row=1 card.column=3',
     'data actor.ability_animation id=PulseMotion actor=HeroActor unit=Hero ability=Pulse cast=Attack loopCast=true',
     'logic function file=Scripts/Waves.galaxy <<END\\nvoid SpawnWave() { }\\nEND',
@@ -86,7 +87,7 @@ const directCommands=new Set([
   'terrain.objects.snap','terrain.ramp.fit','terrain.modkit.inspect','terrain.modkit.plan_file',
   'placement.scan','placement.validate','placement.geometry_check','placement.addUnit',
   'placement.addDoodad','placement.addBatch','placement.scatterDoodads','placement.snapToTerrain',
-  'data.peek','data.query','data.context','data.resolve','data.validate','data.card.check','data.set','data.ability.instant','data.ability.target','data.ability.charges','data.effect.projectile','data.hero.veterancy','data.hero.learn','data.actor.ability_animation',
+  'data.peek','data.query','data.context','data.resolve','data.validate','data.card.check','data.set','data.ability.instant','data.ability.target','data.ability.charges','data.effect.projectile','data.hero.veterancy','data.xp.search','data.hero.learn','data.actor.ability_animation',
   'script.inspect','script.validate','script.symbols','script.context',
   'trigger.inspect','trigger.validate','trigger.plan_file','trigger.plan','trigger.custom_script',
   'trigger.search_functions','trigger.describe_functions','trigger.types',
@@ -190,8 +191,8 @@ function shorthand(name:string,args:Args,block?:string):{tool:string;args:Args;s
     for(const key of ['ability','button','minLevel','levelSkip','card']){const value=take(args,key);if(value!==undefined)entry[key]=value;}
     args.entries=[entry];
   }
-  if(name==='data.ability.instant'||name==='data.ability.target'||name==='data.ability.charges'||name==='data.effect.projectile'||name==='data.hero.veterancy'||name==='data.hero.learn'||name==='data.actor.ability_animation'){
-    const file=take(args,'file')??(name==='data.actor.ability_animation'?'Base.SC2Data/GameData/ActorData.xml':name==='data.effect.projectile'?'Base.SC2Data/GameData/EffectData.xml':'Base.SC2Data/GameData/UnitData.xml');
+  if(name==='data.ability.instant'||name==='data.ability.target'||name==='data.ability.charges'||name==='data.effect.projectile'||name==='data.hero.veterancy'||name==='data.xp.search'||name==='data.hero.learn'||name==='data.actor.ability_animation'){
+    const file=take(args,'file')??(name==='data.actor.ability_animation'?'Base.SC2Data/GameData/ActorData.xml':name==='data.effect.projectile'?'Base.SC2Data/GameData/EffectData.xml':name==='data.xp.search'?'Base.SC2Data/GameData/GameData.xml':'Base.SC2Data/GameData/UnitData.xml');
     return {tool:name,args:{file,...args},saveFile:String(file)};
   }
   if(name==='document.empty'){
@@ -268,7 +269,7 @@ function lifecycle(command:{tool:string;args:Args;saveFile?:string},mode:AuthorM
   }else if(command.tool==='placement.addUnit'||command.tool==='placement.addDoodad'||command.tool==='placement.addBatch'||command.tool==='placement.scatterDoodads'){
     apply={id:base+'_apply',tool:'placement.apply',args:{planId:command.tool==='placement.scatterDoodads'?{$from:base+'.plan.id'}:from('id'),dryRun:false,stage:true}};
     if(mode==='save')save={id:base+'_save',tool:'modkit.save',args:{file:'Objects'}};
-  }else if(command.tool==='data.apply'||command.tool==='data.ability.instant'||command.tool==='data.ability.target'||command.tool==='data.ability.charges'||command.tool==='data.effect.projectile'||command.tool==='data.hero.veterancy'||command.tool==='data.hero.learn'||command.tool==='data.actor.ability_animation'||command.tool==='text.apply'){
+  }else if(command.tool==='data.apply'||command.tool==='data.ability.instant'||command.tool==='data.ability.target'||command.tool==='data.ability.charges'||command.tool==='data.effect.projectile'||command.tool==='data.hero.veterancy'||command.tool==='data.xp.search'||command.tool==='data.hero.learn'||command.tool==='data.actor.ability_animation'||command.tool==='text.apply'){
     first.args={...first.args,dryRun:false,stage:true};
     if(mode==='save'){
       if(!command.saveFile)throw new Error('AUTHOR_SAVE_FILE_REQUIRED');

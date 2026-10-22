@@ -15,7 +15,7 @@ export function declareFunctions(xml:string,declarations:GuiFunction[],library:s
   const requestedReturn=f.kind==='Condition'?(f.returnType??{type:'bool'}):f.returnType,returnType=requestedReturn?resolveGuiType(requestedReturn,xml,library,r):undefined;
   if(f.flags?.includes('CreateThread')&&f.kind!=='Action')throw new Error('GUI_THREAD_ACTION_ONLY');
   if(f.kind==='Condition'&&returnType?.type!=='bool'||valueFunction&&(!returnType||!f.returns)||!valueFunction&&(f.returnType||f.returns))throw new Error('GUI_FUNCTION_RETURN_CONTRACT');
-  if(f.kind==='Event'&&(!f.calls.length||f.variables?.length)||f.calls.some(c=>c.kind!==(f.kind==='Event'?'Event':'Action')))throw new Error('GUI_FUNCTION_BODY_ROLE');
+  if(f.kind==='Event'&&(!f.calls.length||f.variables?.length)||f.calls.some(c=>f.kind==='Event'?c.kind!=='Event':c.kind!=='Action'&&c.kind!=='Registration'))throw new Error('GUI_FUNCTION_BODY_ROLE');
   const id=nextId(),parameters=(f.parameters??[]).map(p=>({...p,...resolveGuiType(p,xml,library,r),id:nextId()}));
   const flag=f.kind==='Function'?'Call':f.kind;
   const fragment=parameters.map(p=>`<Element Type="ParamDef" Id="${p.id}"><Identifier>${encode(p.name)}</Identifier><ParameterType>${typeElementFragment(p,xml,library,r??{functions:[],schemaVersion:1,build:0,source:'map',sha256:''})}</ParameterType>${p.reference?'<ParamFlagReference/>':''}${p.multiple?'<ParamFlagMultiple/>':''}${p.variableOnly?'<ParamFlagVariableOnly/>':''}${p.preload?'<ParamFlagPreload/>':''}${p.matchConstant?'<ParamFlagMatchConst/>':''}${p.alternateDisplay?'<ParamFlagAltDisplay/>':''}${p.limits?`<Limits Value="${encode(p.limits)}"/>`:''}</Element>`).join('')+

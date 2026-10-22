@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "recordedAt": "2026-10-22T17:52:37.546Z",
+  "recordedAt": "2026-10-22T22:58:56.228Z",
   "scope": "Inventory of retained records and explicit roadmap coverage. This does not supersede native observations or refresh historical source fingerprints.",
   "records": [
     {
@@ -152,6 +152,18 @@
       "file": "docs/verification/action-events-2026-10-22.json",
       "role": "scoped",
       "sha256": "b9b89f822954b858c7989a3aab4413f6995174c034cb136b972cbc611b46f765"
+    },
+    {
+      "id": "native_learn_xp",
+      "file": "docs/verification/native-learn-xp-2026-10-23.json",
+      "role": "scoped",
+      "sha256": "70c92c632a68d5186eba6b36b62069d60ca346a650a0d26a9cdc42cdec56d167"
+    },
+    {
+      "id": "runtime_registration",
+      "file": "docs/verification/native-runtime-registration-2026-10-23.json",
+      "role": "scoped",
+      "sha256": "32da4a1ef8e8610d40383eb5773ac849de119a5913b0d706e7e939c2188b826b"
     }
   ],
   "coverage": [
@@ -206,9 +218,10 @@
       "state": "partial",
       "records": [
         "gui_context_roundtrip",
-        "startup_history"
+        "startup_history",
+        "runtime_registration"
       ],
-      "reason": "The unchanged306-element EventsMap now passes two current frozen save/reopen/recompile/game launches, retained startup-death history, both real UI clicks and final44/23 callback markers. Other imported-library/control/runtime registration semantics and an earlier unexplained save stall remain outside this corpus."
+      "reason": "Native explicit-target Registration now preserves the generated target/timer/local/array call and passes two game launches with exact one-callback/phase/wrong-target controls. Its own save/reopen handler is still live beyond observation deadline; exact saved-artifact equivalence/execution is not accepted. Earlier306-element roundtrips retain their original scope; broader imported semantics remain open."
     },
     {
       "id": "data_ability_corpus",
@@ -223,9 +236,10 @@
         "actor_death_data_groups",
         "combat_actor_lifecycle",
         "point_projectile_bounds",
-        "native_charges_range"
+        "native_charges_range",
+        "native_learn_xp"
       ],
-      "reason": "Direct EMP-derived native charges now pass two frozen launches across four pool scopes, natural recovery, finite/depleted/empty stocks, disabled gate and spend-two affordability. Range is explicitly level0 and normal far/blocked orders are checked. Broader profiles, learn/talent, isolated sound and final presentation remain open."
+      "reason": "Two frozen launches now pass three native Learn point profiles, rank/level/max gates,14 damage/energy/completion casts and14 XP kills. A separate named-XP diagnostic reproduced16.6665-per-hero sharing and verified the explicit map-wide radius0 policy gives50 only to the killer. Broader Learn/talent/UI activation, sound and final presentation remain open."
     },
     {
       "id": "compact_authoring_cache",

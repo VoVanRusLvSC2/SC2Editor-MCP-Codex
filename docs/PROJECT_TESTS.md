@@ -23,6 +23,64 @@ The CLI accepts repeated `--manifest <relative.json>` arguments. It plans and
 executes these maps sequentially in one MCP process, retaining the same bridges.
 `--repeat 2` repeats each manifest before moving to the next. A failed check remains
 in the report and exit code; an unresolved plan stops the sequence before launch.
+Use `--entry <compiled-index.js>` to select an explicitly frozen MCP build; the
+default remains this checkout's `dist/index.js`. Maps still run through MCP.
+
+## Reusable action observations
+
+`game.actions` adds bounded before/action/event/after checks to a map manifest.
+Existing `game.scenarios` are still forwarded unchanged to the SDK as one batch,
+including their upstream `$ref` semantics. Action checks have their own local
+`$from` scope, shared with `modkit.batch`; they do not split those SDK batches.
+
+```json
+{
+  "id": "pulse",
+  "before": [
+    {"id": "caster", "method": "game.units.find",
+     "arguments": {"type": "Caster", "owner": 1, "limit": 2},
+     "expect": {"units.length": 1, "units.0.alive": true}},
+    {"id": "target", "method": "game.units.find",
+     "arguments": {"type": "Dummy", "owner": 0, "limit": 2},
+     "expect": {"units.length": 1, "units.0.alive": true}}
+  ],
+  "action": {"method": "game.order", "arguments": {
+    "unit": {"$from": "caster.units.0.id"}, "action": "ability",
+    "ability": "Pulse", "command": 0,
+    "target_unit": {"$from": "target.units.0.id"}
+  }},
+  "events": [{"id": "hit", "match": {
+    "kind": "damage", "source": "galaxy", "amount": 40,
+    "unit": {"$from": "target.units.0.id"}
+  }}],
+  "after": [{"id": "health", "method": "game.units.inspect",
+    "arguments": {"unit": {"$from": "target.units.0.id"}},
+    "expect": {"unit.life": 460}}]
+}
+```
+
+An entry has `id`, optional `required` (default true), `before`, `action`,
+`events`, optional observation `timeout`1..120 and `waitForComplete`, and `after`.
+There are at most16 entries and16 queries per before/after phase. Query IDs use
+letters/digits/underscores and are unique within the entry. Their structured
+response bodies are available through `$from`; after checks can also reference
+`observation`. Forward, unsafe, duplicate and upstream `$ref` links reject.
+Queries support status, unit find/inspect, selection, camera and UI inspection.
+They never submit hidden orders, fixture mutations or UI clicks.
+
+The action delegates once to the retained bridge's `game.action`, under the
+existing workflow lease. This preserves paged baselines, source-caster binding,
+stream/time checks and default ability completion. Event `kind`/`source` are
+explicit literals; remaining exact scalar matches may use `$from`. UI activation
+uses `game.ui.activate` and actual inspected control IDs. Verify callback state
+in `after`; a handler return or event alone is not a gameplay/art verdict.
+Query `expect` paths use exact structured equality, without coercion or arithmetic.
+
+An unconfirmed action blocks later action entries, with explicit inconclusive
+verdicts and no submissions. Ambiguous submission stays `unknown`; it is never
+retried. Legacy scenarios and their earlier committed effects remain intact.
+Complete replies, action requests/observations and each result are private JSON
+receipts. Missing bridge support is unsupported, not a simulated success.
 
 Launch checks retain a bounded upstream reason, native status, runtime error flag
 and map-confirmation state. For `map_compile_failed`, evidence also retains up to

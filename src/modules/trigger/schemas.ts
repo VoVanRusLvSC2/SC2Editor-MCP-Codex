@@ -12,12 +12,16 @@ export const guiValueSchema:z.ZodType<GuiValue>=z.lazy(()=>z.discriminatedUnion(
  z.object({kind:z.literal('presetBits'),preset:name,values:z.array(name).max(32),library:z.string().max(128).optional()}).strict(),
  z.object({kind:z.literal('gamelink'),domain:name,id:name}).strict(),
  z.object({kind:z.literal('unit'),objectId:z.number().int().min(1).max(0xffffffff)}).strict(),
+ z.object({kind:z.literal('trigger'),id:name.optional(),name:name.optional(),library:z.string().max(128).optional()}).strict().refine(v=>!!v.id||!!v.name,'Trigger ID or name required'),
  z.object({kind:z.literal('text'),value:z.string().max(16384),translations:translations.optional()}).strict(),
  z.object({kind:z.literal('nativeCall'),function:name}).strict(),
  z.object({kind:z.literal('call'),function:name,args:z.record(z.string(),z.union([guiValueSchema,z.array(guiValueSchema).max(100)])).default({}),children:z.array(z.object({role:name,call:guiCallSchema}).strict()).max(100).optional()}).strict(),
  z.object({kind:z.enum(['block','customScript']),source:z.string().max(16384)}).strict()
 ]));
-export const guiCallSchema:z.ZodType<GuiCall>=z.lazy(()=>z.object({kind:z.enum(['Event','Condition','Action']),function:name,args:z.record(z.string(),z.union([guiValueSchema,z.array(guiValueSchema).max(100)])).default({}),children:z.array(z.object({role:name,call:guiCallSchema}).strict()).max(100).optional()}).strict());
+export const guiCallSchema:z.ZodType<GuiCall>=z.lazy(()=>z.discriminatedUnion('kind',[
+ z.object({kind:z.enum(['Event','Condition','Action']),function:name,args:z.record(z.string(),z.union([guiValueSchema,z.array(guiValueSchema).max(100)])).default({}),children:z.array(z.object({role:name,call:guiCallSchema}).strict()).max(100).optional()}).strict(),
+ z.object({kind:z.literal('Registration'),function:name,trigger:guiValueSchema,args:z.record(z.string(),z.union([guiValueSchema,z.array(guiValueSchema).max(100)])).default({})}).strict()
+]));
 const identifier=z.string().regex(/^[A-Za-z_][A-Za-z0-9_]*$/).max(128);
 const typed={type:z.enum(GUI_VARIABLE_TYPES),gameType:name.optional(),typeElement:z.object({type:z.enum(['Preset','Structure']).optional(),library:z.string().max(128).optional(),id:name.optional(),name:name.optional()}).strict().refine(v=>!!v.id||!!v.name).optional()};
 const validType=(v:{type:string;gameType?:string;typeElement?:unknown})=>(v.type==='gamelink'?!!v.gameType:!v.gameType)&&(['preset','struct'].includes(v.type)?!!v.typeElement:!v.typeElement);

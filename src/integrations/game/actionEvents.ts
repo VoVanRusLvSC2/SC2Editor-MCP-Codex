@@ -34,6 +34,8 @@ type State='passed'|'failed'|'unsupported'|'inconclusive';
 export interface ActionEventsReport {
  status:State;actionSubmitted:boolean|'unknown';reason?:string;
  action?:Record<string,unknown>;orderGameTime?:number;
+ actionClock?:'response.gameTime'|'native_ui_click.gameTime';
+ actionIdentity?:'full_response'|'ui_session_then_event_pages';
  events:Array<{id:string;match:Record<string,unknown>;matched?:Record<string,unknown>}>;
  baselinePages:number;observationPages:number;eventsRead:number;dropped:boolean;
  continuation?:EventContinuation;
@@ -57,7 +59,7 @@ export async function observeActionEvents(input:ActionEventsRequest,options:Opti
  const observations:ActionEventsReport['events']=request.events.map(e=>({id:e.id,match:{...e.match,...ability&&e.match.kind==='damage'?{sourceUnit:args.unit}:{},...ability&&e.match.kind==='ability'?{unit:args.unit,ability:args.ability}:{}}}));
  if(ability&&request.waitForComplete!==false)observations.push({id:'$complete',match:{kind:'ability',source:'galaxy',unit:args.unit,ability:args.ability,stageName:'complete'}});
  const report:ActionEventsReport={status:'inconclusive',actionSubmitted:false,events:observations,baselinePages:0,observationPages:0,eventsRead:0,dropped:false,scope:'Post-baseline event correlation by exact fields, stream identity and action time; no unique native cast identity, visual or absence certification'};
- let cursor=options.continuation?.cursor,identity=options.continuation?.stream;
+ let cursor=options.continuation?.cursor,identity=options.continuation?.stream,baselineTime:number|undefined;
  const stop=(status:State,reason:string,invalidate=false)=>{report.status=status;report.reason=reason;if(invalidate){delete report.continuation;for(const e of report.events)delete e.matched;}return report;};
  async function page(phase:'baseline'|'observation'){
   let result:GameResult;
@@ -79,7 +81,7 @@ export async function observeActionEvents(input:ActionEventsRequest,options:Opti
  for(;;){
   if(report.baselinePages>=256||now()>=baselineDeadline)return stop('inconclusive','Pre-action baseline could not drain within its 256-page/10-second bound');
   const body=await page('baseline');if(!body)return report;
-  if(!body.hasMore)break;
+  if(!body.hasMore){baselineTime=body.gameTime;break;}
  }
  let result:GameResult;
  report.actionSubmitted='unknown';
@@ -89,8 +91,18 @@ export async function observeActionEvents(input:ActionEventsRequest,options:Opti
  const action=gameBody(result),current=stream(action);report.action=action;
  if(result.isError||action.status!=='ok')return stop(action.status==='unsupported'?'unsupported':action.status==='failed'?'failed':'inconclusive','Action did not return an accepted response; it was not retried');
  if(action.accepted===false)return stop('failed','The runtime explicitly refused the submitted action');
- if(!current||!identity||!same(identity,current)||typeof action.gameTime!=='number'||!Number.isFinite(action.gameTime))return stop('inconclusive','Action response lacks the unchanged stream identity and finite game time',true);
- report.orderGameTime=action.gameTime;
+ if(current&&identity&&same(identity,current)&&typeof action.gameTime==='number'&&Number.isFinite(action.gameTime)){
+  report.orderGameTime=action.gameTime;report.actionClock='response.gameTime';report.actionIdentity='full_response';
+ }else{
+  // The native UI endpoint reports its exact handler-return clock in clickEvent,
+  // with session but no epoch/map serial. Do not invent those response fields:
+  // success still requires a following event page with the full baseline identity.
+  const click=action.clickEvent;
+  const confirmed=request.action.method==='game.ui.activate'&&identity&&action.session===identity.session&&action.normalUIHandlerConfirmed===true&&click&&typeof click==='object'&&!Array.isArray(click)&&click.kind==='native_ui_click'&&click.accepted===true&&click.originalHandlerReturned===true&&click.gameTimeExact===true&&click.gameTimeSource==='native_TimerGetElapsed_counter'&&typeof click.gameTime==='number'&&Number.isFinite(click.gameTime)&&(action.runtimeEpoch===undefined||action.runtimeEpoch===identity.runtimeEpoch)&&(action.mapLoadSerial===undefined||action.mapLoadSerial===identity.mapLoadSerial);
+  if(!confirmed)return stop('inconclusive','Action response lacks the unchanged stream identity and finite game time',true);
+  report.orderGameTime=click.gameTime;report.actionClock='native_ui_click.gameTime';report.actionIdentity='ui_session_then_event_pages';
+ }
+ if(report.orderGameTime!==undefined&&baselineTime!==undefined&&report.orderGameTime<baselineTime)return stop('inconclusive','Action clock predates the drained event baseline',true);
  const deadline=now()+request.timeout*1000;
  while(now()<deadline&&report.observationPages<256){
   const body=await page('observation');if(!body)return report;
