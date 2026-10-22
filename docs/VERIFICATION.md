@@ -2,6 +2,16 @@
 
 ## Readiness
 
+The [action-event checkpoint](verification/action-events-2026-10-22.json) moves
+pre-action history drainage and time/caster-bound observation into `game.action`.
+Two clean launches of the unchanged charge fixture passed six ordinary casts,
+native completion,120 total damage per launch and energy100→97. Full regression:
+1410pass/1 skipped shell fixture;71 focused checks. The wrapper holds its bridge
+queue and never retries an ambiguous action. Native multi-page histories, real
+UI activation through this wrapper and unique overlapping-cast attribution remain
+outside this live corpus. The private SDK and authored map were not modified;
+diagnostic coverage remains partial and the complete roadmap is still open.
+
 The [native charge/range checkpoint](verification/native-charges-range-2026-10-22.json)
 adds a guarded native Charge recipe, initial-stock handling and explicit level0
 range overrides. The exact target-ability archive passed Editor load/compile and

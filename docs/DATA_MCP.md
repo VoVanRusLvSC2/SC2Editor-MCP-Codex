@@ -10,6 +10,38 @@ animations work; model-sequence and native playback review remain separate.
 
 ## Public tools
 
+### Native ability learning
+
+`data.hero.learn` / `recipe.learn` creates one `CAbilLearn` point pool on a local
+hero and binds real `Learn1`..`Learn20` native command-card entries. Parameters
+are `id`, `unit`, `veterancy`, `points` (default0), `pointsPerLevel` (default1),
+`entries` and explicit `replace`. Each entry declares `command`1..20, `ability`,
+`button`, `minLevel` (default1), `levelSkip` (default1), and an explicit `card`
+page/slot/row/column. These are native Data fields, not trigger counters.
+
+Execution abilities remain separately authored local `CAbilEffectInstant` or
+`CAbilEffectTarget` records with an explicit positive `Levels` value. Configure
+their actual per-rank Effect/Cost/timing fields with explicit native indices;
+this recipe does not invent higher-rank mechanics or presentation. The bound
+unparented `CBehaviorVeterancy` must expose an explicit contiguous level table.
+Unknown/layered references, unreachable ranks, competing Learn/veterancy pools
+and card conflicts reject before staging. About five trigger folders has no
+relationship to the native20-command Learn capacity.
+
+Explicit replacement owns the Learn record and its same-unit Learn command
+bindings, releasing obsolete owned slots while preserving unrelated cards.
+Use distinct localized learn and execute Button faces/hotkeys. The compact
+single-entry form is:
+
+```text
+data hero.learn id=HeroLearn unit=Hero veterancy=HeroXP ability=Pulse button=LearnPulse command=1 card.page=0 card.slot=14 card.row=1 card.column=3
+```
+
+Use the structured tool's `entries` array for multiple commands in one pool.
+Native starting-point accounting, level gates, rank execution and visible button
+states require original-game checks. Successful generation and XML validation
+alone do not establish those behaviors or a finished talent-selection interface.
+
 Instant/target ability recipes accept `castIntroTime`, `castOutroTime` and
 `finishTime` as explicit overrides of native `CastIntroTime[0]`,
 `CastOutroTime[0]` and `FinishTime[0]`. Zero is an explicit override. Native timing

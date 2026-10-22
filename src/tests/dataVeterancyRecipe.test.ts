@@ -10,6 +10,7 @@ test('veterancy recipe binds native solo kill-XP levels and cumulative deltas wi
  assert.equal(b.ctype,'CBehaviorVeterancy');assert.equal(u.fields.find(f=>f.name==='LifeMax')?.value,'1000');
  assert.equal(u.fields.filter(f=>f.name==='BehaviorArray'&&f.link==='Progression').length,1);
  assert.equal(b.fields.find(f=>f.name==='SharedXPFraction')?.value,'0');
+ assert.equal(b.fields.find(f=>f.name==='ShareFilters'&&f.index==='Kills')?.value,'Self;Ally,Neutral,Enemy,Hallucination');
  assert.deepEqual(b.fields.filter(f=>f.name==='VeterancyLevelArray').map(f=>[f.index,f.attrs.MinVeterancyXP]),[['0','0'],['1','50'],['2','100']]);
  const once=d.source;veterancyRecipe(d,d.objects(),{...args,replace:true});assert.equal(d.source,once);
  assert.throws(()=>veterancyRecipe(d,d.objects(),args),/REPLACE_REQUIRED/);

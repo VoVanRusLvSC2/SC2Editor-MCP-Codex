@@ -1,0 +1,645 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-22T20:42:13.179Z",
+  "status": "passed_with_scoped_limits",
+  "scope": "Reusable direct-MCP action/event correlation on an unchanged native charge fixture; not universal event causality, UI or map-test compatibility",
+  "entry": "game.action",
+  "source": "work/data-acceptance-20261022/ChargesRecipe/.sc2mcp-output/ChargesRecipe_R6.SC2Map",
+  "sourceSha256": "eadad9c8063c2c559722c10b9ad26e1238750bd3758e2c94a254e8a51ff074c5",
+  "mapAuthoringChanges": false,
+  "privateSdkModified": false,
+  "engineBuild": {
+    "status": "not_independently_queried_in_this_invocation",
+    "priorFixtureRecord": "docs/verification/native-charges-range-2026-10-22.json"
+  },
+  "runtimePin": {
+    "repository": "VoVanRusLvSC2/SC2GameToolkit",
+    "version": "0.1.0-dev.11",
+    "frontendVersion": "0.1.0-dev",
+    "asset": "SC2GameToolkit-0.1.0-dev.zip",
+    "archiveSha256": "514096c72332f4d6629dee4a33a092957d3ee02a9c45281bb3a7ad59031c30f3",
+    "manifestSha256": "cfc91e77b987ff117ab1fc39c011d77862b215ddf7e1e2d3c7d0a392e55d7fde"
+  },
+  "cleanLaunches": 2,
+  "sameRetainedBridge": true,
+  "runs": [
+    {
+      "iteration": 1,
+      "session": "56384fcabef457297304fdeb3042a4e0",
+      "epoch": "4cd8c42905a9b009194f4b73eff550f2",
+      "mapLoadSerial": 1,
+      "mapConfirmed": true,
+      "activeOwner": {
+        "id": 1,
+        "type": 1,
+        "status": 1,
+        "minerals": 0,
+        "vespene": 0
+      },
+      "casts": [
+        {
+          "orderGameTime": 2.375,
+          "matched": {
+            "sequence": 9,
+            "gameTime": 2.8125,
+            "kind": "damage",
+            "unit": "56384fcabef457297304fdeb3042a4e0:u:2",
+            "unitType": "ChargeUnlimitedDummy",
+            "unitMetadataCurrent": true,
+            "owner": 0,
+            "position": {
+              "x": 50,
+              "y": 26
+            },
+            "unitMetadataGameTime": 2.8125,
+            "amount": 40,
+            "sourceUnit": "56384fcabef457297304fdeb3042a4e0:u:1",
+            "source": "galaxy"
+          },
+          "complete": {
+            "sequence": 10,
+            "gameTime": 5.0625,
+            "kind": "ability",
+            "unit": "56384fcabef457297304fdeb3042a4e0:u:1",
+            "unitType": "ChargeUnlimitedCaster",
+            "unitMetadataCurrent": true,
+            "owner": 1,
+            "position": {
+              "x": 44,
+              "y": 26
+            },
+            "unitMetadataGameTime": 5.0625,
+            "ability": "ChargeUnlimited",
+            "stage": -6,
+            "stageName": "complete",
+            "source": "galaxy"
+          },
+          "elapsedMs": 3251,
+          "baselinePages": 1,
+          "observationPages": 15,
+          "dropped": false,
+          "receipt": {
+            "file": "C:\\Users\\Vladimir\\AppData\\Local\\SC2EditorToolkit\\NativeGameEvidence\\f1b93b4e-18b2-42c2-8f2e-13a4778f6939\\action-356de1ba-157f-44b5-8176-0195c8d60167\\result.json",
+            "sha256": "ced07e2ca4e26abaf548efa27cbf1eca50317d06291f82db6c2eee332ee43f4d"
+          }
+        },
+        {
+          "orderGameTime": 5.375,
+          "matched": {
+            "sequence": 19,
+            "gameTime": 5.6875,
+            "kind": "damage",
+            "unit": "56384fcabef457297304fdeb3042a4e0:u:2",
+            "unitType": "ChargeUnlimitedDummy",
+            "unitMetadataCurrent": true,
+            "owner": 0,
+            "position": {
+              "x": 50,
+              "y": 26
+            },
+            "unitMetadataGameTime": 5.6875,
+            "amount": 40,
+            "sourceUnit": "56384fcabef457297304fdeb3042a4e0:u:1",
+            "source": "galaxy"
+          },
+          "complete": {
+            "sequence": 20,
+            "gameTime": 7.9375,
+            "kind": "ability",
+            "unit": "56384fcabef457297304fdeb3042a4e0:u:1",
+            "unitType": "ChargeUnlimitedCaster",
+            "unitMetadataCurrent": true,
+            "owner": 1,
+            "position": {
+              "x": 44,
+              "y": 26
+            },
+            "unitMetadataGameTime": 7.9375,
+            "ability": "ChargeUnlimited",
+            "stage": -6,
+            "stageName": "complete",
+            "source": "galaxy"
+          },
+          "elapsedMs": 3145,
+          "baselinePages": 1,
+          "observationPages": 13,
+          "dropped": false,
+          "receipt": {
+            "file": "C:\\Users\\Vladimir\\AppData\\Local\\SC2EditorToolkit\\NativeGameEvidence\\f1b93b4e-18b2-42c2-8f2e-13a4778f6939\\action-e2388fdd-2df3-4fdc-8345-0af15b40958c\\result.json",
+            "sha256": "b8eb077605983f8181c8c775ba3f0c3d77f7a2355897fb6c408d0b59ac3a077d"
+          }
+        },
+        {
+          "orderGameTime": 8.25,
+          "matched": {
+            "sequence": 29,
+            "gameTime": 8.5625,
+            "kind": "damage",
+            "unit": "56384fcabef457297304fdeb3042a4e0:u:2",
+            "unitType": "ChargeUnlimitedDummy",
+            "unitMetadataCurrent": true,
+            "owner": 0,
+            "position": {
+              "x": 50,
+              "y": 26
+            },
+            "unitMetadataGameTime": 8.5625,
+            "amount": 40,
+            "sourceUnit": "56384fcabef457297304fdeb3042a4e0:u:1",
+            "source": "galaxy"
+          },
+          "complete": {
+            "sequence": 31,
+            "gameTime": 10.8125,
+            "kind": "ability",
+            "unit": "56384fcabef457297304fdeb3042a4e0:u:1",
+            "unitType": "ChargeUnlimitedCaster",
+            "unitMetadataCurrent": true,
+            "owner": 1,
+            "position": {
+              "x": 44,
+              "y": 26
+            },
+            "unitMetadataGameTime": 10.8125,
+            "ability": "ChargeUnlimited",
+            "stage": -6,
+            "stageName": "complete",
+            "source": "galaxy"
+          },
+          "elapsedMs": 3165,
+          "baselinePages": 1,
+          "observationPages": 14,
+          "dropped": false,
+          "receipt": {
+            "file": "C:\\Users\\Vladimir\\AppData\\Local\\SC2EditorToolkit\\NativeGameEvidence\\f1b93b4e-18b2-42c2-8f2e-13a4778f6939\\action-a06044c8-eb92-4e30-823a-e6dd9eac7ff6\\result.json",
+            "sha256": "ddc0851f5deae454426e4cb9ea15047d0fa26576d8327703a16b1a3f1a51d4bd"
+          }
+        }
+      ],
+      "initialLife": 500,
+      "finalLife": 380,
+      "finalEnergy": 97,
+      "cleanup": {
+        "stopped": true,
+        "sourceUnchanged": true
+      },
+      "diagnostics": {
+        "status": "ok",
+        "sources": [
+          {
+            "source": "OutputDebugString",
+            "access": "partial",
+            "clear": null,
+            "dropped": false,
+            "coverage": "OutputDebugString only; engine diagnostics require logs"
+          },
+          {
+            "source": "EngineLog",
+            "access": "partial",
+            "scope": "process",
+            "clear": null,
+            "cursor": 0,
+            "hasMore": false,
+            "dropped": false,
+            "reset": false,
+            "retainedEntries": 0,
+            "coverage": "original native engine log strings; UI-thread snapshot, independent of file flush and visibility filters; not every engine subsystem emits here",
+            "reason": null
+          },
+          {
+            "source": "TriggerDebugger",
+            "access": "partial",
+            "characterCursor": 9157,
+            "hasMore": false,
+            "clear": null
+          },
+          {
+            "source": "2026-10-22 23.37.15 SystemInfo.txt",
+            "access": "partial",
+            "bytes": 5623,
+            "clear": null
+          },
+          {
+            "source": "2026-10-22 23.37.18 Graphics.txt",
+            "access": "partial",
+            "bytes": 3049,
+            "clear": null
+          },
+          {
+            "source": "Galaxy",
+            "access": "partial",
+            "clear": null,
+            "reason": "Engine log coverage is not guaranteed; absence of messages is not proof of absence of errors"
+          },
+          {
+            "source": "Data",
+            "access": "partial",
+            "clear": null,
+            "reason": "Engine log coverage is not guaranteed; absence of messages is not proof of absence of errors"
+          },
+          {
+            "source": "actors",
+            "access": "partial",
+            "clear": null,
+            "reason": "Engine log coverage is not guaranteed; absence of messages is not proof of absence of errors"
+          },
+          {
+            "source": "models",
+            "access": "partial",
+            "clear": null,
+            "reason": "Engine log coverage is not guaranteed; absence of messages is not proof of absence of errors"
+          },
+          {
+            "source": "textures",
+            "access": "partial",
+            "clear": null,
+            "reason": "Engine log coverage is not guaranteed; absence of messages is not proof of absence of errors"
+          },
+          {
+            "source": "sounds",
+            "access": "partial",
+            "clear": null,
+            "reason": "Engine log coverage is not guaranteed; absence of messages is not proof of absence of errors"
+          },
+          {
+            "source": "SoundDecoder",
+            "access": "partial",
+            "clear": null,
+            "scope": "process",
+            "cursor": 0,
+            "hasMore": false,
+            "dropped": false,
+            "versionHex": 279632,
+            "binaryVersionHex": 279632,
+            "objectObservationArmed": true,
+            "openStateCalls": 284,
+            "preexistingSoundsCovered": false,
+            "coverage": "Actual SoundI.getOpenState return results through observed live FMOD 4 objects; sounds loaded before observation are not covered; numeric failures have no original diagnostic text.",
+            "reason": null
+          }
+        ],
+        "hasMore": true,
+        "allSourcesClear": null
+      }
+    },
+    {
+      "iteration": 2,
+      "session": "9bf3162df8e87d985c06566fecfc77b5",
+      "epoch": "51eea321dbd775b65f9521f9acb45a67",
+      "mapLoadSerial": 1,
+      "mapConfirmed": true,
+      "activeOwner": {
+        "id": 1,
+        "type": 1,
+        "status": 1,
+        "minerals": 0,
+        "vespene": 0
+      },
+      "casts": [
+        {
+          "orderGameTime": 2.125,
+          "matched": {
+            "sequence": 9,
+            "gameTime": 2.5625,
+            "kind": "damage",
+            "unit": "9bf3162df8e87d985c06566fecfc77b5:u:2",
+            "unitType": "ChargeUnlimitedDummy",
+            "unitMetadataCurrent": true,
+            "owner": 0,
+            "position": {
+              "x": 50,
+              "y": 26
+            },
+            "unitMetadataGameTime": 2.5625,
+            "amount": 40,
+            "sourceUnit": "9bf3162df8e87d985c06566fecfc77b5:u:1",
+            "source": "galaxy"
+          },
+          "complete": {
+            "sequence": 10,
+            "gameTime": 4.8125,
+            "kind": "ability",
+            "unit": "9bf3162df8e87d985c06566fecfc77b5:u:1",
+            "unitType": "ChargeUnlimitedCaster",
+            "unitMetadataCurrent": true,
+            "owner": 1,
+            "position": {
+              "x": 44,
+              "y": 26
+            },
+            "unitMetadataGameTime": 4.8125,
+            "ability": "ChargeUnlimited",
+            "stage": -6,
+            "stageName": "complete",
+            "source": "galaxy"
+          },
+          "elapsedMs": 3337,
+          "baselinePages": 1,
+          "observationPages": 13,
+          "dropped": false,
+          "receipt": {
+            "file": "C:\\Users\\Vladimir\\AppData\\Local\\SC2EditorToolkit\\NativeGameEvidence\\f1b93b4e-18b2-42c2-8f2e-13a4778f6939\\action-93f64d83-c0f1-459d-857b-481e2c289d24\\result.json",
+            "sha256": "216e60f9d95331e6e81cba3e1b099b6299edb1cf275be31fe3e7812945c85497"
+          }
+        },
+        {
+          "orderGameTime": 5.125,
+          "matched": {
+            "sequence": 19,
+            "gameTime": 5.4375,
+            "kind": "damage",
+            "unit": "9bf3162df8e87d985c06566fecfc77b5:u:2",
+            "unitType": "ChargeUnlimitedDummy",
+            "unitMetadataCurrent": true,
+            "owner": 0,
+            "position": {
+              "x": 50,
+              "y": 26
+            },
+            "unitMetadataGameTime": 5.4375,
+            "amount": 40,
+            "sourceUnit": "9bf3162df8e87d985c06566fecfc77b5:u:1",
+            "source": "galaxy"
+          },
+          "complete": {
+            "sequence": 20,
+            "gameTime": 7.6875,
+            "kind": "ability",
+            "unit": "9bf3162df8e87d985c06566fecfc77b5:u:1",
+            "unitType": "ChargeUnlimitedCaster",
+            "unitMetadataCurrent": true,
+            "owner": 1,
+            "position": {
+              "x": 44,
+              "y": 26
+            },
+            "unitMetadataGameTime": 7.6875,
+            "ability": "ChargeUnlimited",
+            "stage": -6,
+            "stageName": "complete",
+            "source": "galaxy"
+          },
+          "elapsedMs": 3163,
+          "baselinePages": 1,
+          "observationPages": 13,
+          "dropped": false,
+          "receipt": {
+            "file": "C:\\Users\\Vladimir\\AppData\\Local\\SC2EditorToolkit\\NativeGameEvidence\\f1b93b4e-18b2-42c2-8f2e-13a4778f6939\\action-74c65308-208c-4161-820d-5bd552dbc2f5\\result.json",
+            "sha256": "246aac01037bf118dc75b8ff174f51e8342063a0b08e7713cea8654b60c8e48a"
+          }
+        },
+        {
+          "orderGameTime": 8,
+          "matched": {
+            "sequence": 29,
+            "gameTime": 8.3125,
+            "kind": "damage",
+            "unit": "9bf3162df8e87d985c06566fecfc77b5:u:2",
+            "unitType": "ChargeUnlimitedDummy",
+            "unitMetadataCurrent": true,
+            "owner": 0,
+            "position": {
+              "x": 50,
+              "y": 26
+            },
+            "unitMetadataGameTime": 8.3125,
+            "amount": 40,
+            "sourceUnit": "9bf3162df8e87d985c06566fecfc77b5:u:1",
+            "source": "galaxy"
+          },
+          "complete": {
+            "sequence": 30,
+            "gameTime": 10.5625,
+            "kind": "ability",
+            "unit": "9bf3162df8e87d985c06566fecfc77b5:u:1",
+            "unitType": "ChargeUnlimitedCaster",
+            "unitMetadataCurrent": true,
+            "owner": 1,
+            "position": {
+              "x": 44,
+              "y": 26
+            },
+            "unitMetadataGameTime": 10.5625,
+            "ability": "ChargeUnlimited",
+            "stage": -6,
+            "stageName": "complete",
+            "source": "galaxy"
+          },
+          "elapsedMs": 3018,
+          "baselinePages": 1,
+          "observationPages": 13,
+          "dropped": false,
+          "receipt": {
+            "file": "C:\\Users\\Vladimir\\AppData\\Local\\SC2EditorToolkit\\NativeGameEvidence\\f1b93b4e-18b2-42c2-8f2e-13a4778f6939\\action-43c990ff-0357-4599-9878-cec32a9f4992\\result.json",
+            "sha256": "52718fb1874c4b2fed2638cf2bfd490f3f0850f92987a7598ace2934ed6ff7ad"
+          }
+        }
+      ],
+      "initialLife": 500,
+      "finalLife": 380,
+      "finalEnergy": 97,
+      "cleanup": {
+        "stopped": true,
+        "sourceUnchanged": true
+      },
+      "diagnostics": {
+        "status": "ok",
+        "sources": [
+          {
+            "source": "OutputDebugString",
+            "access": "partial",
+            "clear": null,
+            "dropped": false,
+            "coverage": "OutputDebugString only; engine diagnostics require logs"
+          },
+          {
+            "source": "EngineLog",
+            "access": "partial",
+            "scope": "process",
+            "clear": null,
+            "cursor": 0,
+            "hasMore": false,
+            "dropped": false,
+            "reset": false,
+            "retainedEntries": 0,
+            "coverage": "original native engine log strings; UI-thread snapshot, independent of file flush and visibility filters; not every engine subsystem emits here",
+            "reason": null
+          },
+          {
+            "source": "TriggerDebugger",
+            "access": "partial",
+            "characterCursor": 8768,
+            "hasMore": false,
+            "clear": null
+          },
+          {
+            "source": "2026-10-22 23.37.47 SystemInfo.txt",
+            "access": "partial",
+            "bytes": 5623,
+            "clear": null
+          },
+          {
+            "source": "2026-10-22 23.37.50 Graphics.txt",
+            "access": "partial",
+            "bytes": 3049,
+            "clear": null
+          },
+          {
+            "source": "Galaxy",
+            "access": "partial",
+            "clear": null,
+            "reason": "Engine log coverage is not guaranteed; absence of messages is not proof of absence of errors"
+          },
+          {
+            "source": "Data",
+            "access": "partial",
+            "clear": null,
+            "reason": "Engine log coverage is not guaranteed; absence of messages is not proof of absence of errors"
+          },
+          {
+            "source": "actors",
+            "access": "partial",
+            "clear": null,
+            "reason": "Engine log coverage is not guaranteed; absence of messages is not proof of absence of errors"
+          },
+          {
+            "source": "models",
+            "access": "partial",
+            "clear": null,
+            "reason": "Engine log coverage is not guaranteed; absence of messages is not proof of absence of errors"
+          },
+          {
+            "source": "textures",
+            "access": "partial",
+            "clear": null,
+            "reason": "Engine log coverage is not guaranteed; absence of messages is not proof of absence of errors"
+          },
+          {
+            "source": "sounds",
+            "access": "partial",
+            "clear": null,
+            "reason": "Engine log coverage is not guaranteed; absence of messages is not proof of absence of errors"
+          },
+          {
+            "source": "SoundDecoder",
+            "access": "partial",
+            "clear": null,
+            "scope": "process",
+            "cursor": 0,
+            "hasMore": false,
+            "dropped": false,
+            "versionHex": 279632,
+            "binaryVersionHex": 279632,
+            "objectObservationArmed": true,
+            "openStateCalls": 300,
+            "preexistingSoundsCovered": false,
+            "coverage": "Actual SoundI.getOpenState return results through observed live FMOD 4 objects; sounds loaded before observation are not covered; numeric failures have no original diagnostic text.",
+            "reason": null
+          }
+        ],
+        "hasMore": true,
+        "allSourcesClear": null
+      }
+    }
+  ],
+  "implementation": {
+    "allowedActions": [
+      "game.order",
+      "game.ui.activate"
+    ],
+    "drainsActualReturnedCursors": true,
+    "usesLatestCursor": false,
+    "atomicBridgeQueue": true,
+    "reusesValidatedTail": true,
+    "exactScalarMatches": true,
+    "bindsAbilityCaster": true,
+    "checksActionAndEventGameTime": true,
+    "nativeCompletionDefault": true,
+    "actionRetries": false,
+    "ambiguousSubmission": "unknown",
+    "streamReplacementInvalidatesMatches": true,
+    "baselineBound": "256 pages / 10 real seconds",
+    "observationBound": "256 pages / 1..120 requested real seconds",
+    "positiveMatchesDoNotCertifyAbsence": true
+  },
+  "regressions": {
+    "full": {
+      "file": "work/launch-diagnostics-20261022/action-events-full.tap",
+      "sha256": "d5ec0624278dd792253a938bda5d3f2d3ec49f4c1d6753cbcfd9895cf9ea167a",
+      "tests": 1411,
+      "pass": 1410,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 1
+    },
+    "focused": {
+      "file": "work/launch-diagnostics-20261022/action-events-focused-final.tap",
+      "sha256": "8f2c0bf80dcba96d7ee199b27b5bbdf42b2f5791f35e5137882e27e7f2a1dd88",
+      "tests": 71,
+      "pass": 71,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0
+    },
+    "lint": "Affected source/tests passed ESLint",
+    "build": "Build and release build passed"
+  },
+  "frozenRunner": {
+    "candidate": "C:\\Users\\Vladimir\\AppData\\Local\\SC2EditorToolkit\\Candidates\\ActionEvents-20261022-92c2e72d-9252-4fcc-9151-9cc5d5eb5dfa",
+    "published": false,
+    "compiledFiles": 353,
+    "sourceStableDuringBuild": true,
+    "sourceSnapshotSha256": "0492b6588255597a2cc7378c3f9edf107da5aa9ea8b8cce7c01ef6b8a768224c"
+  },
+  "privacy": {
+    "passed": true,
+    "checkedFiles": 9965,
+    "privateSourceFiles": 1113,
+    "privateCorpusCompared": true,
+    "violations": [],
+    "scope": "Explicit private paths/debug/test artifacts and exact external C++/Python/Galaxy source copies, including renamed files. Not proof against transformed snippets or binary reverse engineering."
+  },
+  "retainedFailures": [
+    {
+      "file": "work/launch-diagnostics-20261022/action-events-native-1.json",
+      "reason": "Verifier tried modkit.enable_tools in the game-only profile, which already exposes its tools and does not advertise that method. No game launched."
+    },
+    {
+      "file": "work/launch-diagnostics-20261022/action-events-native-2.json",
+      "reason": "Verifier inherited no private runtime path. Explicit pinned external runtime configuration was then provided. No game launched."
+    }
+  ],
+  "limits": [
+    "Actual native baseline pages were single-page; multi-page, stale-event, stream-replacement, write/transport-loss and queue cases have synthetic regression coverage, not new live acceptance",
+    "Native UI activation through this wrapper is not live-tested",
+    "No unique native cast ID: simultaneous indistinguishable same-caster effects need independent state/effect context",
+    "No new art, audio, animation-name or command-card acceptance",
+    "No fresh Editor compilation: the unchanged ordinary map retains its earlier exact-archive charge/range compilation record",
+    "Runtime diagnostic sources remain partial, with unread history and allSourcesClear null",
+    "No billed-token or before/after performance claim; one external wrapper request still performs native page reads",
+    "project.test scenarios still use upstream game.test.run; the new direct wrapper is not a nested upstream operation",
+    "Learn/talent, broader charges/GUI semantics, authoritative navigation/buildability and finished art/UI/balance remain open"
+  ],
+  "artifacts": {
+    "work/launch-diagnostics-20261022/action-events-native-1.json": "5df6449c28eb802a95a2606b424d3fd33e7d480b59903a51323d03849098f3dd",
+    "work/launch-diagnostics-20261022/action-events-native-2.json": "6460fc7edf7326d1ffaf664e661959c93f914f7d9ea5ebb4abc916a8d15dd4e8",
+    "work/launch-diagnostics-20261022/action-events-native-3.json": "0b95776e38df783687eee527cbeb221fc807c733c6e232e3f9471a4537d38a4e",
+    "work/launch-diagnostics-20261022/action-events-native-3.ndjson": "0ca100b0052943c27b03ff40cc60381eae3ac687aa3d6f83e136c42b91a08628",
+    "work/launch-diagnostics-20261022/action-events-candidate.json": "55132b71f9750adb6b9774c87802280f41dc9bf83bcfc8c0c61e28e4318ccc34",
+    "work/launch-diagnostics-20261022/action-events-source-before.json": "0492b6588255597a2cc7378c3f9edf107da5aa9ea8b8cce7c01ef6b8a768224c"
+  },
+  "sourceFingerprints": {
+    "src/integrations/game/actionEvents.ts": "425c234f559a243f7a69e10ae287da02be4af2b15cdd01446a6e7b120585e16a",
+    "src/integrations/game/bridge.ts": "65057d196bd5e7d07332ada1fc66c65d76360448fb99f3f9923370bfd1d28108",
+    "src/integrations/game/tools.ts": "a0ca4c7a05a64ff15e05e221038cf4258c4b36bbca87eb0930ca5bf89408c390",
+    "src/integrations/game/transport.ts": "fb80efac59156e531fbd41f52e5aa951099a76461da224c2467ca223e0902360",
+    "src/integrations/game/runtime.ts": "cdbf80b0d4ff188a38427907d5adc00adc6326e5a40c49f6582761a42211c014",
+    "src/modules/testing/gate.ts": "2ae9a1a356335ca1c7785d0654dca589a55a2a2f0d86efd330b6aa61252bb5fe",
+    "src/tests/actionEvents.test.ts": "4bf61e62fa418378e3e190870fac295f18b3d090f48c85aa81a3e1538796c387",
+    "src/tests/nativeGame.test.ts": "9be5f789560fe5c0866e0c7462489bc4c405e32d2a4a803c1ada2f583b0636ae",
+    "scripts/check-distribution-privacy.mjs": "747bb50d8e7c0ed8ec034f7759ec6bfca4424b8a348f872b68c1ce9095ed03da",
+    "game-toolkit-release.json": "7c8e2329dd4af5513e8fbc4f0a98cd4442fedc5460129fbc7291c3be4a5c96cf",
+    "docs/NATIVE_GAME.md": "560096e5067dc9ae7b374835d8f132122ced206c2598967ae3273007757aa8b0",
+    "docs/PROJECT_TESTS.md": "4255d10bae1503e1d903fb1a2e9421bddbb9dd8f57fc6695658b38f61b3f6df4"
+  }
+}

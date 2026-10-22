@@ -103,6 +103,11 @@ false and retain that response's `cursor`. Continue from returned cursors; never
 skip unread pages using `latestCursor`. Reusing a cursor from the first retained
 page can match an earlier damage event. Check the matched caster and event time
 against the new order as well as the amount/target.
+For direct interactive checks, `game.action` now performs that drain, one order
+and exact time/caster-bound observation under a single retained-bridge queue.
+It waits for native ability completion by default and retains private receipts;
+see [action observation](NATIVE_GAME.md#one-action-and-its-observed-events).
+It is separate from the upstream `game.test.run` scenario vocabulary.
 For serial ability casts, also await the native ability `complete` phase before
 the next order when the design requires completion. A projectile can deal damage
 while its caster is still finishing; zero cooldown alone does not establish

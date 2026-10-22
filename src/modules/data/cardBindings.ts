@@ -46,13 +46,13 @@ export function unitCardState(objects:readonly DataObject[],unitId:string):CardS
  const declaredSpeed=speed!==undefined&&/^(?:\d+(?:\.\d*)?|\.\d+)$/.test(speed)?{value:Number(speed),declaredBy:speedOwner!.id!}:undefined;
  return {unit:unitId,lineage:lineage.map(o=>o.id!),bindings,issues,layoutResolved:issues.length===0,...declaredSpeed?{declaredSpeed}:{}};
 }
-export interface CardProposal {ability:string;button:string;page:number;slot:number;row:number;column:number;conflictReason?:string}
+export interface CardProposal {ability:string;command?:string;button:string;page:number;slot:number;row:number;column:number;conflictReason?:string}
 export function reviewCardBinding(objects:readonly DataObject[],unit:string,proposed?:CardProposal){
  const state=unitCardState(objects,unit),conflicts:CardIssue[]=[],warnings:CardIssue[]=[];
  const selected=proposed?state.bindings.find(b=>b.page===proposed.page&&b.slot===proposed.slot):undefined;
- if(proposed&&selected&&selected.attrs.AbilCmd!==proposed.ability+',Execute')conflicts.push({code:'CARD_SLOT_OCCUPIED',message:'Selected native slot belongs to another command',page:selected.page,slots:[selected.slot]});
+ if(proposed&&selected&&selected.attrs.AbilCmd!==proposed.ability+','+(proposed.command??'Execute'))conflicts.push({code:'CARD_SLOT_OCCUPIED',message:'Selected native slot belongs to another command',page:selected.page,slots:[selected.slot]});
  const active=state.bindings.filter(b=>!proposed||b.page!==proposed.page||b.slot!==proposed.slot);
- if(proposed)active.push({page:proposed.page,slot:proposed.slot,attrs:{Face:proposed.button,AbilCmd:proposed.ability+',Execute',Type:'AbilCmd',Row:String(proposed.row),Column:String(proposed.column)},declaredBy:unit});
+ if(proposed)active.push({page:proposed.page,slot:proposed.slot,attrs:{Face:proposed.button,AbilCmd:proposed.ability+','+(proposed.command??'Execute'),Type:'AbilCmd',Row:String(proposed.row),Column:String(proposed.column)},declaredBy:unit});
  for(let i=0;i<active.length;i++)for(let j=i+1;j<active.length;j++){
   const a=active[i],b=active[j];if(a.page!==b.page||command(a)===command(b))continue;
   if(proposed&&a.page!==proposed.page)continue;

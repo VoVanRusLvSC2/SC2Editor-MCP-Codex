@@ -18,6 +18,7 @@ import {instantAbilityRecipe,targetAbilityRecipe} from './abilityRecipes.js';
 import {abilityChargesRecipe} from './abilityCharges.js';
 import {projectileEffectRecipe,type CatalogPreload} from './projectileRecipe.js';
 import {veterancyRecipe} from './veterancyRecipe.js';
+import {learnRecipe} from './learnRecipe.js';
 import {unitAbilityAnimationRecipe} from './unitAnimations.js';
 import type {AnimationAssetSource,AnimationModelInventory} from '../assets/animationInventory.js';
 import {reviewCardBinding,cardReviewSummary,DataCardBindingError} from './cardBindings.js';
@@ -333,8 +334,9 @@ export class DataWorkspace {
       coverageIssues:[...records.issues,...cross?.issues??[]].slice(0,200),coveragePagination:{total:records.issues.length+(cross?.issues.length??0),truncated:records.issues.length+(cross?.issues.length??0)>200,details:"data.references issueOffset/issueLimit"},
       diagnostics: requested ? (await this.validate(requested)).diagnostics.slice(0, args.limit ?? 200) : [],
       schema: { mode: "observed-bundled-plus-dynamic", activeObjectTypes: new Set(all.filter(entry=>entry.engineActive===true).map((entry) => entry.ctype)).size, activeFieldPaths: new Set(all.filter(entry=>entry.engineActive===true).flatMap((entry) => this.flattened([entry]).map((field) => `${entry.ctype}.${field.path}`))).size, coverage: this.schema.coverage() },
-      operations: ["object.create", "object.clone", "object.rename", "object.delete", "object.setParent", "object.setAttribute", "object.removeAttribute", "field.set", "field.setLink", "field.setAttribute", "field.removeAttribute", "field.remove", "array.append", "native.add", "recipe.weaponBurn", "recipe.unitTextureByVital", "recipe.unitActor", "recipe.effectModel", "recipe.instantAbility", "recipe.targetAbility", "recipe.abilityCharges", "recipe.projectileEffect", "recipe.veterancy", "recipe.unitAbilityAnimation"],
+      operations: ["object.create", "object.clone", "object.rename", "object.delete", "object.setParent", "object.setAttribute", "object.removeAttribute", "field.set", "field.setLink", "field.setAttribute", "field.removeAttribute", "field.remove", "array.append", "native.add", "recipe.weaponBurn", "recipe.unitTextureByVital", "recipe.unitActor", "recipe.effectModel", "recipe.instantAbility", "recipe.targetAbility", "recipe.abilityCharges", "recipe.projectileEffect", "recipe.veterancy", "recipe.learn", "recipe.unitAbilityAnimation"],
       recipes: {
+        'recipe.learn': {tool:'data.hero.learn',requires:'Bound explicit unparented CBehaviorVeterancy table, local instant/target abilities with explicit Levels, valid distinct learn cards',semantics:'Native CAbilLearn points and per-level gains, Learn1..Learn20 commands, minimum/skip rank gates; execution Data remains separate',limits:'No competing learn pool, unknown inherited veterancy or implicit rank count. Native point/rank/UI behavior needs gameplay testing'},
         "recipe.abilityCharges": {tool:'data.ability.charges',requires:'One unambiguous local CAbilEffectInstant/Target with direct indexed Cost[0]',semantics:'Own the native Charge subtree; preserve effects, energy, cooldown and command card. Explicit Abil/Unit/Player/Global scope, own/default link and optional natural recovery; max0 disables the charge gate',limits:'Direct level-zero execution abilities only; shared state and recovery require native gameplay checks; no Behavior/OffCost or unindexed local costs'},
         "recipe.projectileEffect": {tool:'data.effect.projectile',creates:['CEffectLaunchMissile','CActorAction','merged Preload.xml dependencies'],requires:'Explicit matching GenericAttack launch/impact source tokens, one ActionDamage event, unique native ammo/Missile Actor/Model, impact Effect, Damage Effect and impact Model',semantics:'Retain native ammo/mover, rebind launch/impact/damage and pin missile/impact/sound presentation instead of implicit new-ID asset lookups',limits:'Observed GenericAttack/GenericAttackMissile profile only; body animation, visual/audio playback and mechanics require native checks; single-catalog only'},
         "recipe.unitAbilityAnimation": {tool:'data.actor.ability_animation',creates:['Owned ability phase events on one existing local main CActorUnit'],requires:'Unique active unit/ability/main Actor and resolved effective Model; actual installed/imported M3 sequence metadata',semantics:'Cast/channel/finish phase bindings, stop/death/movement cleanup; unrelated native events remain intact. Saved plans pin observed asset revision.',limits:'Single catalog; conservative ownership/parent guards; sequence existence does not establish native playback or artistic suitability'},
@@ -719,6 +721,10 @@ export class DataWorkspace {
           case "recipe.veterancy": {
             const available=[...records.filter(r=>r.engineActive!==false&&!(r.layer==='workspace'&&r.absolute===this.workspace.resolveUserPath(targetFile))).flatMap(r=>r.document.objects()),...document.objects()];
             target=veterancyRecipe(document,available,operation);break;
+          }
+          case 'recipe.learn': {
+            const available=[...records.filter(r=>r.engineActive!==false&&!(r.layer==='workspace'&&r.absolute===this.workspace.resolveUserPath(targetFile))).flatMap(r=>r.document.objects()),...document.objects()];
+            target=learnRecipe(document,available,operation);break;
           }
           case "recipe.instantAbility": case "recipe.targetAbility": {
             const available=[...actorRecipeObjects,...document.objects()];

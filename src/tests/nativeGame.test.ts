@@ -10,6 +10,8 @@ import {registerNativeGameTools} from '../integrations/game/tools.js';
 import type {McpServer} from '@modelcontextprotocol/server';
 import {createHash} from 'node:crypto';
 import {verifyGameRuntime} from '../integrations/game/runtime.js';
+import {actionEventsSchema} from '../integrations/game/actionEvents.js';
+import {NativeWorkflowGate} from '../modules/testing/gate.js';
 const ok=(data:unknown):GameResult=>({content:[{type:'text',text:JSON.stringify(data)}]});
 async function fixture(t:test.TestContext,env:NodeJS.ProcessEnv={SC2_GAME_ALLOW_LAUNCH:'1'},handler?:GameClient['call']){
   const root=await fs.mkdtemp(path.join(os.tmpdir(),'sc2-game-'));t.after(()=>fs.rm(root,{recursive:true,force:true}));
@@ -110,12 +112,35 @@ test('idle detach is idempotent; failed detach stays an MCP error and can be ret
   const result=await tools.get('game.detach').callback({});assert.equal(result.isError,true);
   await assert.rejects(f.bridge.attach('Map.SC2Map'),/ALREADY_OWNED/);fail=false;assert.equal((await f.bridge.detach()).stopped,true);
 });
-test('five compact tools expose strict launch and operation contracts',async t=>{
+test('compact game tools expose strict launch, action and operation contracts',async t=>{
   const {bridge}=await fixture(t),tools=new Map<string,any>();
   registerNativeGameTools({registerTool:(name:string,config:unknown,callback:unknown)=>tools.set(name,{config,callback})} as unknown as McpServer,bridge);
-  assert.equal(tools.size,5);assert.throws(()=>tools.get('game.attach').config.inputSchema.parse({map:'M.SC2Map',pid:123}));
+  assert.equal(tools.size,6);assert.throws(()=>tools.get('game.attach').config.inputSchema.parse({map:'M.SC2Map',pid:123}));
   assert.throws(()=>tools.get('game.attach').config.inputSchema.parse({map:'M.SC2Map',timeout:301}));
   const response=await tools.get('game.call').callback({method:'game.order',arguments:{}});assert.equal(response.isError,true);
+});
+test('action observation owns the complete bridge queue, retains receipts and reuses only returned cursors',async t=>{
+ const identity={session:'s',runtimeEpoch:'e',mapLoadSerial:1},request=actionEventsSchema.parse({action:{method:'game.order',arguments:{unit:'caster',action:'ability',ability:'Pulse'}},events:[{id:'hit',match:{kind:'damage',source:'galaxy',unit:'victim',amount:40}}]});
+ let release!:()=>void,submitted!:()=>void,orderCount=0,pages=0;
+ const held=new Promise<void>(r=>{release=r;}),started=new Promise<void>(r=>{submitted=r;});
+ const f=await fixture(t,undefined,async(name)=>{
+  if(name==='game.order'){orderCount++;submitted();if(orderCount===1)await held;return ok({status:'ok',...identity,gameTime:10,accepted:true});}
+  if(name==='game.events')return ok({status:'ok',...identity,gameTime:12,events:++pages%2===0?[{kind:'damage',source:'galaxy',sourceUnit:'caster',unit:'victim',amount:40,gameTime:11},{kind:'ability',source:'galaxy',unit:'caster',ability:'Pulse',stageName:'complete',gameTime:12}]:[],cursor:'tail-'+pages,hasMore:false,dropped:false});
+  return ok({status:'ok'});
+ });
+ await f.bridge.attach('Map.SC2Map');const action=f.bridge.action(request);await started;const queued=f.bridge.call('game.status',{});await new Promise(r=>setImmediate(r));assert.equal(f.calls.some(c=>c.name==='game.status'),false);release();const report=await action;await queued;
+ assert.equal(report.status,'passed');assert.deepEqual(f.calls.slice(1).map(c=>c.name),['game.events','game.order','game.events','game.status']);
+ const saved=JSON.parse(await fs.readFile(report.report,'utf8'));assert.equal(saved.status,'passed');assert.equal(saved.actionSubmitted,true);assert.equal(await fs.readFile(path.join(f.root,'Map.SC2Map'),'utf8'),'saved source');
+ const second=await f.bridge.action(request);assert.equal(second.status,'passed');assert.deepEqual(f.calls.filter(c=>c.name==='game.events').map(c=>c.args),[{}, {cursor:'tail-1'},{cursor:'tail-2'},{cursor:'tail-3'}]);
+ const gate=new NativeWorkflowGate(),free=gate.acquire('other-suite');assert.throws(()=>gate.protect(f.bridge).action(request),/NATIVE_WORKFLOW_BUSY/);free();
+ await f.bridge.detach();await assert.rejects(f.bridge.action(request),/OWNED_SESSION_REQUIRED/);
+});
+test('action tools expose explicit runtime refusal as an error and retain inconclusive observation as unknown',async t=>{
+ const identity={session:'s',runtimeEpoch:'e',mapLoadSerial:1};
+ const f=await fixture(t,undefined,async name=>name==='game.events'?ok({status:'ok',...identity,gameTime:10,events:[],cursor:'tail',hasMore:false,dropped:false}):ok({status:'ok',...identity,gameTime:10,accepted:false}));await f.bridge.attach('Map.SC2Map');
+ const tools=new Map<string,any>();registerNativeGameTools({registerTool:(name:string,config:unknown,callback:unknown)=>tools.set(name,{config,callback})} as unknown as McpServer,f.bridge);
+ const request=tools.get('game.action').config.inputSchema.parse({action:{method:'game.order',arguments:{unit:'caster',action:'stop'}},events:[{id:'event',match:{kind:'unit_order',source:'galaxy'}}]});
+ const result=await tools.get('game.action').callback(request);assert.equal(result.isError,true);const body=JSON.parse(result.content[0].text);assert.equal(body.status,'failed');assert.equal(body.actionSubmitted,true);
 });
 test('game stdio fragmented protocol, advertised version, errors and graceful EOF',async t=>{
   const root=await fs.mkdtemp(path.join(os.tmpdir(),'sc2-game-stdio-'));t.after(()=>fs.rm(root,{recursive:true,force:true}));

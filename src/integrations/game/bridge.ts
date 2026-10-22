@@ -4,6 +4,7 @@ import {createHash,randomUUID} from 'node:crypto';
 import type {Workspace} from '../../core/workspace.js';
 import {GameStdioClient,type GameClient,type GameResult} from './transport.js';
 import {verifyGameRuntime,type GameRuntimeIdentity} from './runtime.js';
+import {observeActionEvents,type ActionEventsRequest,type EventContinuation} from './actionEvents.js';
 
 const operations=new Set(['game.status','game.debug.inspect','game.diagnostics','game.units.find','game.units.inspect','game.selection.set','game.camera.set','game.capture','game.order','game.wait','game.events','game.record','game.fixture','game.ui.inspect','game.ui.activate','game.test.run']);
 const sha=(b:Buffer)=>createHash('sha256').update(b).digest('hex');
@@ -38,6 +39,7 @@ export class NativeGameBridge {
   private closing=false;
   private source?:{file:string;sha256:string};
   private runtimeIdentity?:GameRuntimeIdentity;
+  private eventContinuation?:EventContinuation;
   readonly work:string;
   private env:NodeJS.ProcessEnv;
   private externalWorkRoot?:string;
@@ -102,6 +104,7 @@ export class NativeGameBridge {
     if(!/\.sc2map$/i.test(real)||!(await fs.stat(real)).isFile())throw Error('GAME_SAVED_MAP_REQUIRED');
     const before=sha(await fs.readFile(real));await this.connect();
     this.source={file:real,sha256:before};
+    this.eventContinuation=undefined;
     const result=await this.invoke('game.attach',{map:real,timeout,render_backend:renderBackend});
     const unchanged=sha(await fs.readFile(real))===before;
     return {...result,isError:result.isError||!unchanged,content:[...result.content,{type:'text' as const,text:JSON.stringify({sourceUnchanged:unchanged,sourceSha256:before})}]};
@@ -119,6 +122,17 @@ export class NativeGameBridge {
     if(method!=='game.status'&&!this.source)throw Error('GAME_OWNED_SESSION_REQUIRED');
     await this.connect();return this.invoke(method,args);
   });}
+  async action(request:ActionEventsRequest){return this.serial(async()=>{
+    if(!this.source)throw Error('GAME_OWNED_SESSION_REQUIRED');
+    await this.connect();
+    const directory=path.join(this.work,'action-'+randomUUID());await fs.mkdir(directory,{recursive:true});
+    await fs.writeFile(path.join(directory,'request.json'),JSON.stringify(redactGameSecrets(request),null,2)+'\n');
+    const report=await observeActionEvents(request,{call:(method,args)=>this.invoke(method,args),continuation:this.eventContinuation,record:async(name,result)=>{await fs.writeFile(path.join(directory,name+'.json'),JSON.stringify(result,null,2)+'\n');}});
+    this.eventContinuation=report.continuation;
+    try{await fs.writeFile(path.join(directory,'result.json'),JSON.stringify(report,null,2)+'\n');}
+    catch{return {...report,status:'inconclusive' as const,reason:'Private action result could not be persisted; the action was not retried',report:path.join(directory,'result.json')};}
+    return {...report,report:path.join(directory,'result.json')};
+  });}
   async detach(){return this.serial(async()=>{
     if(!this.client||!this.source)return {stopped:true,sourceUnchanged:null};
     const status=await this.invoke('game.status',{});
@@ -127,7 +141,7 @@ export class NativeGameBridge {
     const result=idle?status:await this.invoke('game.detach',{});
     let unchanged:boolean|null=null;
     try{unchanged=sha(await fs.readFile(this.source.file))===this.source.sha256;}catch{/* Deleted/unreadable source is unknown. */}
-    const stopped=result.isError!==true;if(stopped)this.source=undefined;
+    const stopped=result.isError!==true;if(stopped){this.source=undefined;this.eventContinuation=undefined;}
     return {result,stopped,sourceUnchanged:unchanged};
   });}
   async close(){this.closing=true;await this.tail;await this.client?.close();this.source=undefined;}

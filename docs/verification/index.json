@@ -146,6 +146,12 @@
       "file": "docs/verification/native-charges-range-2026-10-22.json",
       "role": "scoped",
       "sha256": "decb75ff666ac164e842475a94e0a6e0b266e94f7a2113171afa392ab0ab2f80"
+    },
+    {
+      "id": "action_events",
+      "file": "docs/verification/action-events-2026-10-22.json",
+      "role": "scoped",
+      "sha256": "b9b89f822954b858c7989a3aab4413f6995174c034cb136b972cbc611b46f765"
     }
   ],
   "coverage": [
@@ -158,7 +164,8 @@
         "gui_events",
         "toolkit_1021",
         "gui_native_roundtrip",
-        "startup_history"
+        "startup_history",
+        "action_events"
       ],
       "reason": "Known Galaxy/GUI/Data/dependency fixtures, representative complex GUI native save/reopen and negative startup cases passed. Retained startup history and native callback-state readiness now pass twice on the unchanged events fixture. General startup stability remains incomplete; an earlier unexplained frontend exit and stalled native handler are retained."
     },
@@ -235,9 +242,9 @@
       "required": true,
       "state": "passed",
       "records": [
-        "native_charges_range"
+        "action_events"
       ],
-      "reason": "Current local frozen charge/range candidate checked9963 entries against1113 external private source files with zero violations. SDK/test maps excluded; unpublished artifact and no reverse-engineering guarantee."
+      "reason": "Current frozen action-event candidate checked9965 entries against1113 external private sources, zero violations. SDK/test maps excluded; local unpublished candidate and no reverse-engineering guarantee."
     },
     {
       "id": "art_and_gameplay_review",

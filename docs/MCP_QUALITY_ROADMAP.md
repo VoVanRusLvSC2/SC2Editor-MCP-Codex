@@ -8,6 +8,19 @@ acceptance corpus and remaining phases below are still open. See
 
 Execution ledger:
 
+- Added `game.action`: one bridge-serialized workflow drains returned history
+  cursors, submits one normal order/UI activation and observes exact event fields
+  at or after the action time on the same stream. Ability damage binds the
+  ordered caster, and native completion is awaited by default. Ambiguous action
+  responses are never retried; private page/response receipts are retained.
+  Two frozen-runtime launches of the unchanged charge fixture passed six casts,
+  life500→380 and energy100→97 per launch. Full regression:1410pass/1skip;
+  focused:71pass. Native multi-page histories and real UI activation through the
+  new wrapper remain unverified; synthetic pagination/identity/transport tests
+  pass. It is separate from the upstream `game.test.run` scenario vocabulary.
+  Exact cast-instance attribution, broad Data/GUI/navigation and final art remain
+  open. See [action-event evidence](verification/action-events-2026-10-22.json).
+
 - Added `data.ability.charges` / `recipe.abilityCharges` and compact commands,
   owning only the direct native Charge subtree. Initial recovery now retains a
   partial stock; finite partial/empty starts use the native initial-timer sentinel.

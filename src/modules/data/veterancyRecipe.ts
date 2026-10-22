@@ -38,6 +38,9 @@ export function veterancyRecipe(document:DataDocument,available:readonly DataObj
   {name:'Flags',index:'CombineNumericModifications',value:1},{name:'Flags',index:'CombineXP',value:1},
   {name:'XPFraction',index:'Kills',value:args.xpFraction??1},{name:'SharedXPFraction',index:'Kills',value:0},
   {name:'SharedXPRadius',index:'Kills',value:0},{name:'TargetFilters',index:'Kills',value:'-;Player,Ally,Neutral,Hallucination'},
+  // Core defaults include every same-player recipient. A zero shared fraction
+  // does not remove those recipients from the native XP divisor.
+  {name:'ShareFilters',index:'Kills',value:'Self;Ally,Neutral,Enemy,Hallucination'},
   // Native entries count levels from one and consume XP at each transition.
   // An extra zero entry starts at level2; cumulative thresholds must become costs.
   ...args.levels.map((level,index):DataNativeFieldSpec=>({name:'VeterancyLevelArray',index,attrs:{MinVeterancyXP:level.xp-(args.levels[index-1]?.xp??0)},children:[

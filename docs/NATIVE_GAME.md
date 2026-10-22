@@ -74,6 +74,58 @@ before claiming the direct connection has upgraded. Adapter discovery uses
 5. `game.detach({})` stops only that bridge's game and checks the source digest.
    Server EOF also drains accepted requests and gracefully closes the frontend.
 
+### One action and its observed events
+
+`game.action` holds the bridge queue across a history drain, one normal order or
+UI activation, and bounded event observation. For example, using actual returned
+unit IDs:
+
+```json
+{
+  "action": {"method": "game.order", "arguments": {
+    "unit": "<caster ID>", "action": "ability", "ability": "MyPulse",
+    "command": 0, "x": 24, "y": 30
+  }},
+  "events": [{"id": "hit", "match": {
+    "kind": "damage", "source": "galaxy", "unit": "<target ID>", "amount": 40
+  }}],
+  "timeout": 10
+}
+```
+
+The baseline consumes every returned `game.events` continuation until `hasMore`
+is false. It never jumps to `latestCursor`. Subsequent actions reuse the retained
+tail, draining unread pages before submission. The adapter correlates matched
+events with the same session, epoch and map-load identity and requires finite
+event time at or after the action response time. Ability damage automatically
+binds `sourceUnit` to the ordered caster; ability events bind its unit and ability.
+Contradictory caller filters reject before submission. Ability orders also await
+the native `complete` event by default; set `waitForComplete:false` for an explicit
+interruption test. This does not prove a particular animation or visual effect.
+
+Only `game.order` and `game.ui.activate` are action methods. Use their discovered
+upstream argument schemas. The wrapper is a local MCP workflow, not an operation
+advertised by the external Toolkit or an allowed nested `game.test.run` step.
+UI events need actual inspected IDs and exact native event fields; this wrapper
+does not invent a callback schema or prove its resulting state.
+
+Each event has an exact scalar `match` including `kind` and `source`. The workflow
+returns matched events and compact page counts; redacted request, response and
+page receipts remain under the bridge's private `action-<uuid>` directory.
+Baseline drainage is bounded to 256 pages/10 seconds, subsequent observation to
+256 pages and the requested 1..120 seconds. Missing events are inconclusive.
+Retention loss stays explicit even for a positive match; positive occurrence
+does not certify event absence or full diagnostic coverage.
+
+The action is never retried, including after transport or evidence-write errors.
+`actionSubmitted` distinguishes false, true (a response was received) and
+`"unknown"` (the response was lost). True does not mean execution succeeded.
+Unknown submission needs inspection before deciding on another action. Stream
+replacement invalidates accumulated matches. Same-time overlapping casts still
+need a distinguishable target/effect or independent state check: the runtime
+does not expose a unique cast identity, so correlation alone is not absolute
+causality. The command does not alter native Data costs or ability lifecycles.
+
 For native game/mod UI use
 `game.call({method:"game.ui.inspect",arguments:{scope:"native",name:"Menu",visible_only:true,limit:16}})`.
 The default `registered` scope still reads the instrumented map registry.
