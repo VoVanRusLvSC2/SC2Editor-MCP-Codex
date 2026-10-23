@@ -31,7 +31,8 @@ export function parseGuiDefinitions(xml:string,library=''):GuiDefinitions{
  xmlCache.set(cacheKey,defs);while(xmlCache.size>3)xmlCache.delete(xmlCache.keys().next().value!);return defs;
 }
 export function definitionsFor(xml:string,library:string,r?:Registry):GuiDefinitions{
- const local=parseGuiDefinitions(xml,library),external=r?.typeDefinitions??emptyDefinitions();
+ const scopes=[...new Set([library,'',...scanXml(xml).nodes.filter(n=>n.tag==='Library').map(n=>n.attrs.Id)])],local=emptyDefinitions(),external=r?.typeDefinitions??emptyDefinitions();
+ for(const scope of scopes){const definitions=parseGuiDefinitions(xml,scope);for(const field of ['presets','presetValues','structures','variables'] as const)(local[field] as unknown[]).push(...definitions[field]);}
  const combine=<T extends {id:string;library?:string}>(a:T[],b:T[])=>{const map=new Map(b.map(v=>[(v.library??'')+':'+v.id,v]));for(const v of a)map.set((v.library??'')+':'+v.id,v);return [...map.values()];};
  return {presets:combine(local.presets,external.presets),presetValues:combine(local.presetValues,external.presetValues),structures:combine(local.structures,external.structures),variables:combine(local.variables,external.variables)};
 }

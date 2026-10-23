@@ -1,0 +1,1418 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-23T00:51:55.768Z",
+  "status": "scoped_inline_library_runtime_and_gameplay_passed",
+  "scope": "Same three native-authored GUI graphs, emitted locally through MCP and executed twice each in SC2. No universal library equivalence, original-Editor save/reopen, all reference variants, navigation or mission-art certificate.",
+  "sourceFingerprints": [
+    {
+      "file": "src/modules/trigger/runtime.ts",
+      "sha256LfUtf8": "8a4ccb5e1412c908dbbf0f6a7777b72e23a02102c483ffe029cfc9a63d8d3cab"
+    },
+    {
+      "file": "src/modules/trigger/runtimeGraph.ts",
+      "sha256LfUtf8": "331dcc11390820f64da4f21739a5eb7c2e81cbe76af095d24e68819ff0bae496"
+    },
+    {
+      "file": "src/modules/trigger/revisedImport.ts",
+      "sha256LfUtf8": "cb5255f3d143b3c58bae3d0ad0020cce2c29fa22f9c7992b4f19a0cb4a088b45"
+    },
+    {
+      "file": "src/modules/trigger/workspace.ts",
+      "sha256LfUtf8": "b356c4b109e1e9f9912b21e91494461d83692e579c0742b66916e5e986676ea6"
+    },
+    {
+      "file": "src/modules/trigger/tools.ts",
+      "sha256LfUtf8": "ebec606884721910c19669e066184b517f589aa586e52fa875a8abe8ff076fcb"
+    },
+    {
+      "file": "src/modules/trigger/authoring.ts",
+      "sha256LfUtf8": "0a560696f1613c0b6e65f6acfc0e1b95ff6fac681d33bfbd6d45163a5a41e277"
+    },
+    {
+      "file": "generated/trigger-authoring-registry.json",
+      "sha256LfUtf8": "3b34c821a11644d9f4c1282de03bcf26df889a107a2aff3dc11a717a0a3104ee"
+    },
+    {
+      "file": "generated/galaxy-native-api.json",
+      "sha256LfUtf8": "93cb079b55e6037443a8465421741a956adf49a38e210e3684cd64e3fb740bc2"
+    },
+    {
+      "file": "scripts/mcp-session.mjs",
+      "sha256LfUtf8": "34f8888d8d778ac5c1a43429eb9bd3f58cd742c5382ab9059ec949ffc2a28834"
+    },
+    {
+      "file": "scripts/run-map-tests.mjs",
+      "sha256LfUtf8": "9471de409f9762360cf66c2de08a154dfcf584b8b0458e61f467bc0a6a1742b9"
+    },
+    {
+      "file": "package.json",
+      "sha256LfUtf8": "95655122435658570fdcc498cacf96ef94492a6bada5572af372179fceae82d7"
+    },
+    {
+      "file": "tsconfig.release.json",
+      "sha256LfUtf8": "a0ab07b71e3bf90d6a0533ec532b220c7022f7d80d9cfc6b8b73483c9ee0cf85"
+    }
+  ],
+  "implementation": {
+    "identity": "Library/Type/Id for definitions, values, variables, structures and formal parameter bindings; duplicate scoped keys reject",
+    "names": "Native lib<Id>_ namespaces for owned globals/functions/types/triggers; scoped locals and explicit empty-Library root references",
+    "initialization": "Explicit GUI Root library order; guarded inline variables and library startup; acyclic qualified dependency variable initialization",
+    "arrays": "Per-cell global/local initialization with bounded declared dimensions",
+    "recordReferences": "structref<...> signatures; static/VM member-mutation check only in this new corpus",
+    "imports": "Reviewed self-contained libraries use the local emitter and guarded GUI/runtime/localization transaction; unknown external implementation is not invented",
+    "noScriptFallback": true
+  },
+  "maps": [
+    {
+      "name": "RuntimeRegistration",
+      "components": "work/gui-library-runtime-20261023/RuntimeRegistration",
+      "archive": "work/gui-library-runtime-20261023/RuntimeRegistration/.sc2mcp-output/LibraryRuntime.SC2Map",
+      "archiveSha256": "d08a0add1744fccf069005253c3289ae9254ed97c22e972d241ca5aa6469dbe7",
+      "guiSha256": "d954b3660d3351ebf415b4aabec6d1e719a9e791aedd05eba5ca9fa3cee74072",
+      "galaxySha256": "b1b6cf58c66525f900dc950b17b457614d2cdf56d49b714252b4a6671ab79946",
+      "originalGalaxySha256": "ae934dc23e9c26793a3423671f89759f6d46339e5609ca21aff3ee0626ad7345",
+      "generatedCounts": {
+        "triggers": 4,
+        "functions": 2,
+        "variables": 3,
+        "structures": 0,
+        "libraries": [
+          "A1B2C3D4"
+        ]
+      },
+      "counts": {
+        "folders": [
+          "LIBRARY_TEST",
+          "MAIN",
+          "GAMEPLAY"
+        ],
+        "libraries": [
+          {
+            "library": "A1B2C3D4",
+            "folders": [
+              "MAIN"
+            ]
+          }
+        ],
+        "externalLibraries": [
+          "Ntve"
+        ],
+        "triggers": 4,
+        "functions": 3,
+        "variables": 4,
+        "calls": 31,
+        "customScripts": 0
+      },
+      "payloadParity": {
+        "name": "RuntimeRegistration",
+        "archive": "work/gui-library-runtime-20261023/RuntimeRegistration/.sc2mcp-output/LibraryRuntime.SC2Map",
+        "archiveSha256": "d08a0add1744fccf069005253c3289ae9254ed97c22e972d241ca5aa6469dbe7",
+        "changed": [
+          {
+            "file": "MapScript.galaxy",
+            "before": "ae934dc23e9c26793a3423671f89759f6d46339e5609ca21aff3ee0626ad7345",
+            "after": "b1b6cf58c66525f900dc950b17b457614d2cdf56d49b714252b4a6671ab79946"
+          }
+        ],
+        "unchanged": [
+          {
+            "file": "t3TextureMasks",
+            "sha256": "2f6c15de1c457389ddf991a7a06dd23e4f543e4877f3eb6d2eb7120bfe822ba2"
+          },
+          {
+            "file": "DocumentInfo.version",
+            "sha256": "7b54db08eab5dd57cacd703a6b25cbb0cb442743523b39a45af7254814f9c2ee"
+          },
+          {
+            "file": "MapInfo",
+            "sha256": "c125a13be567119b3fe56dab5186a89e0a2909d24934cb2b78e2bc4509419a18"
+          },
+          {
+            "file": "Minimap.tga",
+            "sha256": "829028470837d92b3937a8d599ec2672bb130b125114316cbcd4392e0b99fb97"
+          },
+          {
+            "file": "ComponentList.SC2Components",
+            "sha256": "063910a488c5f1869ed30ab47d2264a00acdb85a19de13bf71c4860ef5e83553"
+          },
+          {
+            "file": "ruRU.SC2Data/LocalizedData/GameStrings.txt",
+            "sha256": "8317196a82b1b0f9a9f64225dbccd1445c42a782018a78cc6ac7ca65efe04f5c"
+          },
+          {
+            "file": "GameText.version",
+            "sha256": "caf6bba8f6331c261c20d5ce4be039773028ada0c3f7380250f9f4165072d2bc"
+          },
+          {
+            "file": "DocumentInfo",
+            "sha256": "d6c829974f36c986ee211a18172e71df734fa809a907000f672ee1201a82937f"
+          },
+          {
+            "file": "NativeSuite.json",
+            "sha256": "3aeddaea348df3e20c0e17d7c55744c0d01830f98bc3986ffa0cfd0f46c6bcd1"
+          },
+          {
+            "file": "t3HardTile",
+            "sha256": "12afa86368acf6158758ce235c2e3879d6edfab41cc2eef6738c939e746b745d"
+          },
+          {
+            "file": "t3Terrain.version",
+            "sha256": "083de04eb258496293af3a47cca7aa12567539dadc050a5cf12d3ec284f84b0a"
+          },
+          {
+            "file": "Reviewed.xml",
+            "sha256": "ea914bedf66f1c8bf89a50e055af3f31f8bb9cc6d2f1f884d23ccc4dbf6d1717"
+          },
+          {
+            "file": "enUS.SC2Data/LocalizedData/GameStrings.txt",
+            "sha256": "8317196a82b1b0f9a9f64225dbccd1445c42a782018a78cc6ac7ca65efe04f5c"
+          },
+          {
+            "file": "t3FluffDoodad",
+            "sha256": "3f3f15b8480e7cf37d97bc9c4affe5af1348b352bbc1213a71da32195a88e937"
+          },
+          {
+            "file": "t3CellFlags",
+            "sha256": "943b78bb9e3d020823eb0a658f042956cc259125d7e222a9f9d83ad7d8064bd4"
+          },
+          {
+            "file": "t3HeightMap",
+            "sha256": "134e3142a3bde3854812721435f834e1d252b876346b59e2c72c21944a0d6360"
+          },
+          {
+            "file": "t3SyncCliffLevel",
+            "sha256": "7efc0b36c24a7173f1ed1555096697bd3518eb43a294c3fcdd8aa868b72d01a8"
+          },
+          {
+            "file": "t3Terrain.xml",
+            "sha256": "8cb945adc1ca575f5b25011435e7266aa76d19094a3b247ecc215b08d12c19e9"
+          },
+          {
+            "file": "Triggers.version",
+            "sha256": "706409e0e494f2df96ef65488652497962068d5be694947013a6b85c8a4380c7"
+          },
+          {
+            "file": "AuthorSuite.json",
+            "sha256": "80eca8c727c5b3fe46e90a11171395300176e362cc38fa8b59e5f681fdec71cb"
+          },
+          {
+            "file": "Template.SC2Map",
+            "sha256": "523d707a9a3c9aac24b4c4d16a4e159826d9a5b347468eba8e1932aee8bddf4d"
+          },
+          {
+            "file": "Attributes",
+            "sha256": "e168c65dfac460ab693e2a28e3796ca3e3466f881a289bb22cf18e55b85fb5fe"
+          },
+          {
+            "file": "t3Water",
+            "sha256": "c15e6e4da91564e9349a449302114f4248dfe1f2cebee1a29526cb5f41db5af5"
+          },
+          {
+            "file": "DocumentHeader",
+            "sha256": "4952b014e51989f388b03fa4f2b7c49a47fb0f26042ae2c679dd73fc0c9914c9"
+          },
+          {
+            "file": "Preload.xml",
+            "sha256": "f4cfe39298aa92f8a5b3b553899da0b7e4872164c35beb998d2f188f12c80b3f"
+          },
+          {
+            "file": "PreloadAssetDB.txt",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "file": "MapInfo.version",
+            "sha256": "66ce0bde090a0e863fb56cf4a7bec542df4420eff0510629af427f96c97e7750"
+          },
+          {
+            "file": "t3SyncHeightMap",
+            "sha256": "d145d7f67c14219c8e6d405f425ac8e4481d8a1a03c2ee2ec4e50fd7068c40c5"
+          },
+          {
+            "file": "GameData.version",
+            "sha256": "863511a56e768452c0c43bf4b6486bffadb50994716603ea8d423be2932d32ea"
+          },
+          {
+            "file": "Objects.version",
+            "sha256": "b41afcd511ec66c389501d9153a88b7f3811c68f22a8aa55cf227e17e370ebd4"
+          },
+          {
+            "file": "Triggers",
+            "sha256": "d954b3660d3351ebf415b4aabec6d1e719a9e791aedd05eba5ca9fa3cee74072"
+          },
+          {
+            "file": "t3SyncTextureInfo",
+            "sha256": "283ae7053475302f57f14c25944a540764ebec7b550036332f87ad181761297a"
+          },
+          {
+            "file": "Objects",
+            "sha256": "781ce349ec2abaa434a607a2ed4248b4768210c178df25b8ca2f07dd7f1f1b6b"
+          },
+          {
+            "file": "t3VertCol",
+            "sha256": "7709c16ada851a7e524b6fe2975bf0f4f1728a5ed1720b8d5c9f5ea896d63173"
+          },
+          {
+            "file": "Attributes.version",
+            "sha256": "327e819847bc1e2550b744e13c2e7742554a4b22dab835350a20edfe69ce7b94"
+          },
+          {
+            "file": "enUS.SC2Data/LocalizedData/TriggerStrings.txt",
+            "sha256": "d826d9546659582451c35052dde5dbcf82da2f02643186397150f21574f01c2e"
+          },
+          {
+            "file": "ruRU.SC2Data/LocalizedData/TriggerStrings.txt",
+            "sha256": "f7e86fbb8e54e4c9015a19e2f4e4e282fca2f6381adc8eea86d894ffe2777f36"
+          }
+        ],
+        "scope": "Imported map payload compared with original committed components; fresh archive export separately verified by MCP"
+      }
+    },
+    {
+      "name": "EventsMap",
+      "components": "work/gui-library-runtime-20261023/EventsMap",
+      "archive": "work/gui-library-runtime-20261023/EventsMap/.sc2mcp-output/LibraryRuntime.SC2Map",
+      "archiveSha256": "d9dec1232ec08efc3c3906f2c533f69ede9d5dfab894afd0ba9436f91fc65799",
+      "guiSha256": "d49e54e48341a74cfb37b0e52f1a07bbbed70b7f1b14cbb7c0a6e1be33e21f6d",
+      "galaxySha256": "819a403d9a4ddfb46e42c7c16ff09051147f0f10c82ce3451bb0cefcf928b66b",
+      "originalGalaxySha256": "729cf5661c53752cb58e43c9f45ab472950eddc8e2d53d68e6e0d521b38430c1",
+      "generatedCounts": {
+        "triggers": 6,
+        "functions": 4,
+        "variables": 6,
+        "structures": 1,
+        "libraries": [
+          "A1B2C3D4"
+        ]
+      },
+      "counts": {
+        "folders": [
+          "LIBRARY_TEST",
+          "SYSTEMS",
+          "SYSTEMS/VALIDATION",
+          "GAMEPLAY",
+          "GAMEPLAY/UI",
+          "GAMEPLAY/VALIDATION"
+        ],
+        "libraries": [
+          {
+            "library": "A1B2C3D4",
+            "folders": [
+              "MAIN"
+            ]
+          }
+        ],
+        "externalLibraries": [
+          "Ntve"
+        ],
+        "triggers": 6,
+        "functions": 4,
+        "variables": 13,
+        "calls": 81,
+        "customScripts": 0
+      },
+      "payloadParity": {
+        "name": "EventsMap",
+        "archive": "work/gui-library-runtime-20261023/EventsMap/.sc2mcp-output/LibraryRuntime.SC2Map",
+        "archiveSha256": "d9dec1232ec08efc3c3906f2c533f69ede9d5dfab894afd0ba9436f91fc65799",
+        "changed": [
+          {
+            "file": "MapScript.galaxy",
+            "before": "729cf5661c53752cb58e43c9f45ab472950eddc8e2d53d68e6e0d521b38430c1",
+            "after": "819a403d9a4ddfb46e42c7c16ff09051147f0f10c82ce3451bb0cefcf928b66b"
+          }
+        ],
+        "unchanged": [
+          {
+            "file": "t3TextureMasks",
+            "sha256": "2f6c15de1c457389ddf991a7a06dd23e4f543e4877f3eb6d2eb7120bfe822ba2"
+          },
+          {
+            "file": "DocumentInfo.version",
+            "sha256": "7b54db08eab5dd57cacd703a6b25cbb0cb442743523b39a45af7254814f9c2ee"
+          },
+          {
+            "file": "MapInfo",
+            "sha256": "c125a13be567119b3fe56dab5186a89e0a2909d24934cb2b78e2bc4509419a18"
+          },
+          {
+            "file": "Minimap.tga",
+            "sha256": "829028470837d92b3937a8d599ec2672bb130b125114316cbcd4392e0b99fb97"
+          },
+          {
+            "file": "ComponentList.SC2Components",
+            "sha256": "063910a488c5f1869ed30ab47d2264a00acdb85a19de13bf71c4860ef5e83553"
+          },
+          {
+            "file": "ruRU.SC2Data/LocalizedData/GameStrings.txt",
+            "sha256": "e70e2015ab1cd125092ea7468daf5d5815899223739759c9f6084bcb1e5b13b0"
+          },
+          {
+            "file": "GameText.version",
+            "sha256": "caf6bba8f6331c261c20d5ce4be039773028ada0c3f7380250f9f4165072d2bc"
+          },
+          {
+            "file": "DocumentInfo",
+            "sha256": "d6c829974f36c986ee211a18172e71df734fa809a907000f672ee1201a82937f"
+          },
+          {
+            "file": "NativeSuite.json",
+            "sha256": "3aeddaea348df3e20c0e17d7c55744c0d01830f98bc3986ffa0cfd0f46c6bcd1"
+          },
+          {
+            "file": "t3HardTile",
+            "sha256": "12afa86368acf6158758ce235c2e3879d6edfab41cc2eef6738c939e746b745d"
+          },
+          {
+            "file": "t3Terrain.version",
+            "sha256": "083de04eb258496293af3a47cca7aa12567539dadc050a5cf12d3ec284f84b0a"
+          },
+          {
+            "file": "Reviewed.xml",
+            "sha256": "ea914bedf66f1c8bf89a50e055af3f31f8bb9cc6d2f1f884d23ccc4dbf6d1717"
+          },
+          {
+            "file": "enUS.SC2Data/LocalizedData/GameStrings.txt",
+            "sha256": "862e6f66f653f94d4b94899112884a6ff50d1a8c751612dbbfb3b3bc3a15a1f1"
+          },
+          {
+            "file": "t3FluffDoodad",
+            "sha256": "3f3f15b8480e7cf37d97bc9c4affe5af1348b352bbc1213a71da32195a88e937"
+          },
+          {
+            "file": "t3CellFlags",
+            "sha256": "943b78bb9e3d020823eb0a658f042956cc259125d7e222a9f9d83ad7d8064bd4"
+          },
+          {
+            "file": "t3HeightMap",
+            "sha256": "134e3142a3bde3854812721435f834e1d252b876346b59e2c72c21944a0d6360"
+          },
+          {
+            "file": "t3SyncCliffLevel",
+            "sha256": "7efc0b36c24a7173f1ed1555096697bd3518eb43a294c3fcdd8aa868b72d01a8"
+          },
+          {
+            "file": "t3Terrain.xml",
+            "sha256": "8cb945adc1ca575f5b25011435e7266aa76d19094a3b247ecc215b08d12c19e9"
+          },
+          {
+            "file": "Triggers.version",
+            "sha256": "706409e0e494f2df96ef65488652497962068d5be694947013a6b85c8a4380c7"
+          },
+          {
+            "file": "AuthorSuite.json",
+            "sha256": "80eca8c727c5b3fe46e90a11171395300176e362cc38fa8b59e5f681fdec71cb"
+          },
+          {
+            "file": "Template.SC2Map",
+            "sha256": "523d707a9a3c9aac24b4c4d16a4e159826d9a5b347468eba8e1932aee8bddf4d"
+          },
+          {
+            "file": "Attributes",
+            "sha256": "e168c65dfac460ab693e2a28e3796ca3e3466f881a289bb22cf18e55b85fb5fe"
+          },
+          {
+            "file": "t3Water",
+            "sha256": "c15e6e4da91564e9349a449302114f4248dfe1f2cebee1a29526cb5f41db5af5"
+          },
+          {
+            "file": "DocumentHeader",
+            "sha256": "4952b014e51989f388b03fa4f2b7c49a47fb0f26042ae2c679dd73fc0c9914c9"
+          },
+          {
+            "file": "Preload.xml",
+            "sha256": "f4cfe39298aa92f8a5b3b553899da0b7e4872164c35beb998d2f188f12c80b3f"
+          },
+          {
+            "file": "PreloadAssetDB.txt",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "file": "MapInfo.version",
+            "sha256": "66ce0bde090a0e863fb56cf4a7bec542df4420eff0510629af427f96c97e7750"
+          },
+          {
+            "file": "t3SyncHeightMap",
+            "sha256": "d145d7f67c14219c8e6d405f425ac8e4481d8a1a03c2ee2ec4e50fd7068c40c5"
+          },
+          {
+            "file": "GameData.version",
+            "sha256": "863511a56e768452c0c43bf4b6486bffadb50994716603ea8d423be2932d32ea"
+          },
+          {
+            "file": "Objects.version",
+            "sha256": "b41afcd511ec66c389501d9153a88b7f3811c68f22a8aa55cf227e17e370ebd4"
+          },
+          {
+            "file": "Triggers",
+            "sha256": "d49e54e48341a74cfb37b0e52f1a07bbbed70b7f1b14cbb7c0a6e1be33e21f6d"
+          },
+          {
+            "file": "t3SyncTextureInfo",
+            "sha256": "283ae7053475302f57f14c25944a540764ebec7b550036332f87ad181761297a"
+          },
+          {
+            "file": "Objects",
+            "sha256": "781ce349ec2abaa434a607a2ed4248b4768210c178df25b8ca2f07dd7f1f1b6b"
+          },
+          {
+            "file": "t3VertCol",
+            "sha256": "7709c16ada851a7e524b6fe2975bf0f4f1728a5ed1720b8d5c9f5ea896d63173"
+          },
+          {
+            "file": "Attributes.version",
+            "sha256": "327e819847bc1e2550b744e13c2e7742554a4b22dab835350a20edfe69ce7b94"
+          },
+          {
+            "file": "enUS.SC2Data/LocalizedData/TriggerStrings.txt",
+            "sha256": "d7dae7987d7065100514f8397579672288dc9d16d0ac0c6908ccac77b59abb1e"
+          },
+          {
+            "file": "ruRU.SC2Data/LocalizedData/TriggerStrings.txt",
+            "sha256": "0f13aae94c74f7f930a9b464d93c68541abd31bba7536e84c8bf7ab495223289"
+          }
+        ],
+        "scope": "Imported map payload compared with original committed components; fresh archive export separately verified by MCP"
+      }
+    },
+    {
+      "name": "TypedCoreMap",
+      "components": "work/gui-library-runtime-20261023/TypedCoreMap",
+      "archive": "work/gui-library-runtime-20261023/TypedCoreMap/.sc2mcp-output/LibraryRuntime.SC2Map",
+      "archiveSha256": "4939dae3491ca11f6889ff7c23522a49dfc0a07296f0c35b7548fd276a4b6b4a",
+      "guiSha256": "05381d8acf4824ea8f9d4d2dbee8bf3cb957c07cc6e12076bb5793fd52310cb5",
+      "galaxySha256": "a0d167912d715cf82a1dbaf3403edb6ce555f21788494b0ef92be71fcd97f3d6",
+      "originalGalaxySha256": "cd0454a8d72a60cbdc8879c697fdce31aa6c75330af54c5b9440c10f630b0027",
+      "generatedCounts": {
+        "triggers": 2,
+        "functions": 4,
+        "variables": 3,
+        "structures": 1,
+        "libraries": [
+          "A1B2C3D4"
+        ]
+      },
+      "counts": {
+        "folders": [
+          "LIBRARY_TEST",
+          "SYSTEMS",
+          "SYSTEMS/VALIDATION"
+        ],
+        "libraries": [
+          {
+            "library": "A1B2C3D4",
+            "folders": [
+              "MAIN"
+            ]
+          }
+        ],
+        "externalLibraries": [
+          "Ntve"
+        ],
+        "triggers": 2,
+        "functions": 4,
+        "variables": 10,
+        "calls": 41,
+        "customScripts": 0
+      },
+      "payloadParity": {
+        "name": "TypedCoreMap",
+        "archive": "work/gui-library-runtime-20261023/TypedCoreMap/.sc2mcp-output/LibraryRuntime.SC2Map",
+        "archiveSha256": "4939dae3491ca11f6889ff7c23522a49dfc0a07296f0c35b7548fd276a4b6b4a",
+        "changed": [
+          {
+            "file": "MapScript.galaxy",
+            "before": "cd0454a8d72a60cbdc8879c697fdce31aa6c75330af54c5b9440c10f630b0027",
+            "after": "a0d167912d715cf82a1dbaf3403edb6ce555f21788494b0ef92be71fcd97f3d6"
+          }
+        ],
+        "unchanged": [
+          {
+            "file": "t3TextureMasks",
+            "sha256": "2f6c15de1c457389ddf991a7a06dd23e4f543e4877f3eb6d2eb7120bfe822ba2"
+          },
+          {
+            "file": "DocumentInfo.version",
+            "sha256": "7b54db08eab5dd57cacd703a6b25cbb0cb442743523b39a45af7254814f9c2ee"
+          },
+          {
+            "file": "MapInfo",
+            "sha256": "c125a13be567119b3fe56dab5186a89e0a2909d24934cb2b78e2bc4509419a18"
+          },
+          {
+            "file": "Minimap.tga",
+            "sha256": "829028470837d92b3937a8d599ec2672bb130b125114316cbcd4392e0b99fb97"
+          },
+          {
+            "file": "ComponentList.SC2Components",
+            "sha256": "063910a488c5f1869ed30ab47d2264a00acdb85a19de13bf71c4860ef5e83553"
+          },
+          {
+            "file": "ruRU.SC2Data/LocalizedData/GameStrings.txt",
+            "sha256": "e29f318cbd63dce63fe9db400a1f33672ad39f30da4a2ac1c661a87413b9e40e"
+          },
+          {
+            "file": "GameText.version",
+            "sha256": "caf6bba8f6331c261c20d5ce4be039773028ada0c3f7380250f9f4165072d2bc"
+          },
+          {
+            "file": "DocumentInfo",
+            "sha256": "d6c829974f36c986ee211a18172e71df734fa809a907000f672ee1201a82937f"
+          },
+          {
+            "file": "NativeSuite.json",
+            "sha256": "3aeddaea348df3e20c0e17d7c55744c0d01830f98bc3986ffa0cfd0f46c6bcd1"
+          },
+          {
+            "file": "t3HardTile",
+            "sha256": "12afa86368acf6158758ce235c2e3879d6edfab41cc2eef6738c939e746b745d"
+          },
+          {
+            "file": "t3Terrain.version",
+            "sha256": "083de04eb258496293af3a47cca7aa12567539dadc050a5cf12d3ec284f84b0a"
+          },
+          {
+            "file": "Reviewed.xml",
+            "sha256": "ea914bedf66f1c8bf89a50e055af3f31f8bb9cc6d2f1f884d23ccc4dbf6d1717"
+          },
+          {
+            "file": "enUS.SC2Data/LocalizedData/GameStrings.txt",
+            "sha256": "e29f318cbd63dce63fe9db400a1f33672ad39f30da4a2ac1c661a87413b9e40e"
+          },
+          {
+            "file": "t3FluffDoodad",
+            "sha256": "3f3f15b8480e7cf37d97bc9c4affe5af1348b352bbc1213a71da32195a88e937"
+          },
+          {
+            "file": "t3CellFlags",
+            "sha256": "943b78bb9e3d020823eb0a658f042956cc259125d7e222a9f9d83ad7d8064bd4"
+          },
+          {
+            "file": "t3HeightMap",
+            "sha256": "134e3142a3bde3854812721435f834e1d252b876346b59e2c72c21944a0d6360"
+          },
+          {
+            "file": "t3SyncCliffLevel",
+            "sha256": "7efc0b36c24a7173f1ed1555096697bd3518eb43a294c3fcdd8aa868b72d01a8"
+          },
+          {
+            "file": "t3Terrain.xml",
+            "sha256": "8cb945adc1ca575f5b25011435e7266aa76d19094a3b247ecc215b08d12c19e9"
+          },
+          {
+            "file": "Triggers.version",
+            "sha256": "706409e0e494f2df96ef65488652497962068d5be694947013a6b85c8a4380c7"
+          },
+          {
+            "file": "AuthorSuite.json",
+            "sha256": "80eca8c727c5b3fe46e90a11171395300176e362cc38fa8b59e5f681fdec71cb"
+          },
+          {
+            "file": "Template.SC2Map",
+            "sha256": "523d707a9a3c9aac24b4c4d16a4e159826d9a5b347468eba8e1932aee8bddf4d"
+          },
+          {
+            "file": "Attributes",
+            "sha256": "e168c65dfac460ab693e2a28e3796ca3e3466f881a289bb22cf18e55b85fb5fe"
+          },
+          {
+            "file": "t3Water",
+            "sha256": "c15e6e4da91564e9349a449302114f4248dfe1f2cebee1a29526cb5f41db5af5"
+          },
+          {
+            "file": "DocumentHeader",
+            "sha256": "4952b014e51989f388b03fa4f2b7c49a47fb0f26042ae2c679dd73fc0c9914c9"
+          },
+          {
+            "file": "Preload.xml",
+            "sha256": "f4cfe39298aa92f8a5b3b553899da0b7e4872164c35beb998d2f188f12c80b3f"
+          },
+          {
+            "file": "PreloadAssetDB.txt",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "file": "MapInfo.version",
+            "sha256": "66ce0bde090a0e863fb56cf4a7bec542df4420eff0510629af427f96c97e7750"
+          },
+          {
+            "file": "t3SyncHeightMap",
+            "sha256": "d145d7f67c14219c8e6d405f425ac8e4481d8a1a03c2ee2ec4e50fd7068c40c5"
+          },
+          {
+            "file": "GameData.version",
+            "sha256": "863511a56e768452c0c43bf4b6486bffadb50994716603ea8d423be2932d32ea"
+          },
+          {
+            "file": "Objects.version",
+            "sha256": "b41afcd511ec66c389501d9153a88b7f3811c68f22a8aa55cf227e17e370ebd4"
+          },
+          {
+            "file": "Triggers",
+            "sha256": "05381d8acf4824ea8f9d4d2dbee8bf3cb957c07cc6e12076bb5793fd52310cb5"
+          },
+          {
+            "file": "t3SyncTextureInfo",
+            "sha256": "283ae7053475302f57f14c25944a540764ebec7b550036332f87ad181761297a"
+          },
+          {
+            "file": "Objects",
+            "sha256": "781ce349ec2abaa434a607a2ed4248b4768210c178df25b8ca2f07dd7f1f1b6b"
+          },
+          {
+            "file": "t3VertCol",
+            "sha256": "7709c16ada851a7e524b6fe2975bf0f4f1728a5ed1720b8d5c9f5ea896d63173"
+          },
+          {
+            "file": "Attributes.version",
+            "sha256": "327e819847bc1e2550b744e13c2e7742554a4b22dab835350a20edfe69ce7b94"
+          },
+          {
+            "file": "enUS.SC2Data/LocalizedData/TriggerStrings.txt",
+            "sha256": "53206f43004419169edd9bd3184577a6a600ef231beb7ee90791465ca98a652c"
+          },
+          {
+            "file": "ruRU.SC2Data/LocalizedData/TriggerStrings.txt",
+            "sha256": "025e89dd104f96d202b493e6987749da0881e230175998abdf9a486b8526024a"
+          }
+        ],
+        "scope": "Imported map payload compared with original committed components; fresh archive export separately verified by MCP"
+      }
+    }
+  ],
+  "candidate": {
+    "file": "work/launch-diagnostics-20261022/library-runtime-candidate.json",
+    "sha256": "979b4eabe3fb30581227aa6a3178b6e2c6f1d44543fa1b79bde9f8ed8561b953",
+    "directory": "C:\\Users\\Vladimir\\AppData\\Local\\SC2EditorToolkit\\Candidates\\LibraryRuntime-20261023-f6ac7712-109b-4496-95db-7ae9241b97db",
+    "compiledFiles": 358,
+    "sourceSnapshotFiles": 367,
+    "sourceSnapshotSha256": "d1a9924bf67db90764bd16026f06dcd3c76594217cd125c3988d37041b2a7155",
+    "sourceStableDuringBuild": true,
+    "authoringToReleaseJs": "Byte-identical after removing only the exact trailing development sourceMappingURL comment from four GUI modules; release compiler disables source maps",
+    "initialBuildComparison": "Raw development/release JS hashes initially differed only by the development sourceMappingURL trailer. The same private candidate was reverified after inspecting that difference; no executable change was ignored."
+  },
+  "authoring": {
+    "transport": "Actual MCP map.import, trigger.generate_runtime, trigger.save and map.export",
+    "componentPayloadsCompared": 114,
+    "changedPerMap": [
+      "MapScript.galaxy"
+    ],
+    "unchangedComponentsPerMap": 37,
+    "graphStringsDataObjectsTerrainPreserved": true,
+    "originalEditorConversionInvoked": false,
+    "sourceTypecheck": "INCOMPLETE with zero reported errors; successful actual SC2 launch/execution is separate evidence"
+  },
+  "native": {
+    "successfulLaunches": 6,
+    "originalEditorCompileRenewed": false,
+    "gameCompilationAndHandshake": true,
+    "firstFourSuccessfulRunsShareOneRetainedFrontend": true,
+    "correctedRegistrationPairUsesSeparateRetainedFrontend": true,
+    "registrationMarkers": [
+      42,
+      9,
+      22,
+      7,
+      1,
+      33
+    ],
+    "typedCoreMarkers": [
+      42,
+      37,
+      31,
+      17,
+      31
+    ],
+    "realUiClicks": 4,
+    "uiCallbackLifePerRun": [
+      14,
+      15
+    ],
+    "runs": [
+      {
+        "jobId": "ea7c57d1-d477-4a88-a1f0-14654a07e90b",
+        "frontendGroup": "initial",
+        "map": "TypedCoreMap",
+        "file": ".sc2mcp-output/project-tests/ea7c57d1-d477-4a88-a1f0-14654a07e90b/result.json",
+        "sha256": "11b859f40d1fe7728381a41897e733509d740d6472832c19846a16a268a3a558",
+        "outcome": "passed",
+        "sourceSha256": "4939dae3491ca11f6889ff7c23522a49dfc0a07296f0c35b7548fd276a4b6b4a",
+        "build": "5.0.17.98310",
+        "runtime": "v0.1.0-dev.11",
+        "sourceUnchanged": true,
+        "artifactUnchanged": true,
+        "cleanup": {
+          "stopped": true,
+          "sourceUnchanged": true
+        },
+        "scenarios": [
+          {
+            "id": "library",
+            "file": ".sc2mcp-output/project-tests/ea7c57d1-d477-4a88-a1f0-14654a07e90b/scenario_library.json",
+            "sha256": "2cc5dde9a97009c99eaaf86d864c5f5485f4bfef94669ae9447df75de07eadd8",
+            "status": "passed",
+            "foundUnits": 1,
+            "life": 42,
+            "bridge": "f5a647b5-3a12-4542-ab16-c62272ef2803",
+            "session": "28ee8db76d8add39cb63d8c8a3df7845"
+          },
+          {
+            "id": "nested",
+            "file": ".sc2mcp-output/project-tests/ea7c57d1-d477-4a88-a1f0-14654a07e90b/scenario_nested.json",
+            "sha256": "0ce7c3b266ff29f257ce4642c8208b3ea9d7def1feb8eff61c8d34aac2a78d56",
+            "status": "passed",
+            "foundUnits": 1,
+            "life": 37,
+            "bridge": "f5a647b5-3a12-4542-ab16-c62272ef2803",
+            "session": "28ee8db76d8add39cb63d8c8a3df7845"
+          },
+          {
+            "id": "record",
+            "file": ".sc2mcp-output/project-tests/ea7c57d1-d477-4a88-a1f0-14654a07e90b/scenario_record.json",
+            "sha256": "ea71fb15302d523958c313db759de5d5faba03a9186cc3b4d08856510c0fb800",
+            "status": "passed",
+            "foundUnits": 1,
+            "life": 31,
+            "bridge": "f5a647b5-3a12-4542-ab16-c62272ef2803",
+            "session": "28ee8db76d8add39cb63d8c8a3df7845"
+          },
+          {
+            "id": "preset",
+            "file": ".sc2mcp-output/project-tests/ea7c57d1-d477-4a88-a1f0-14654a07e90b/scenario_preset.json",
+            "sha256": "4f49093a5995eda1be0938c4491c76a21fb5f59e01cf2e539114a262ee60ff14",
+            "status": "passed",
+            "foundUnits": 1,
+            "life": 17,
+            "bridge": "f5a647b5-3a12-4542-ab16-c62272ef2803",
+            "session": "28ee8db76d8add39cb63d8c8a3df7845"
+          },
+          {
+            "id": "localArray",
+            "file": ".sc2mcp-output/project-tests/ea7c57d1-d477-4a88-a1f0-14654a07e90b/scenario_localArray.json",
+            "sha256": "b77f6ce3580abd6c2aa94260421161bf13e94447a4ea9507df91028d4afa845b",
+            "status": "passed",
+            "foundUnits": 1,
+            "life": 31,
+            "bridge": "f5a647b5-3a12-4542-ab16-c62272ef2803",
+            "session": "28ee8db76d8add39cb63d8c8a3df7845"
+          }
+        ],
+        "actions": [],
+        "frame": {
+          "file": ".sc2mcp-output/project-tests/ea7c57d1-d477-4a88-a1f0-14654a07e90b/Game.png",
+          "sha256": "b5ad64b00b23749ca56bd92426cb65699735bc5c0c2619102bfd760a6c877ba5",
+          "review": "Inspected native frame: visible marker Marines and readable diagnostic button where present; sparse fixture, empty unselected command panel. Not mission art or hero/UI acceptance."
+        },
+        "diagnostics": {
+          "status": "inconclusive",
+          "allSourcesClear": null
+        }
+      },
+      {
+        "jobId": "5ca0f439-312b-47cb-8a81-c06fb8405a08",
+        "frontendGroup": "initial",
+        "map": "TypedCoreMap",
+        "file": ".sc2mcp-output/project-tests/5ca0f439-312b-47cb-8a81-c06fb8405a08/result.json",
+        "sha256": "8a5600f67a23d805244ba58697096de572e52f2d89905d46097ae133292568f6",
+        "outcome": "passed",
+        "sourceSha256": "4939dae3491ca11f6889ff7c23522a49dfc0a07296f0c35b7548fd276a4b6b4a",
+        "build": "5.0.17.98310",
+        "runtime": "v0.1.0-dev.11",
+        "sourceUnchanged": true,
+        "artifactUnchanged": true,
+        "cleanup": {
+          "stopped": true,
+          "sourceUnchanged": true
+        },
+        "scenarios": [
+          {
+            "id": "library",
+            "file": ".sc2mcp-output/project-tests/5ca0f439-312b-47cb-8a81-c06fb8405a08/scenario_library.json",
+            "sha256": "e09206ec97fe5ea723eb723fbcadd3e9ce97e6655511ad7ebe44b57b5c9ccc3e",
+            "status": "passed",
+            "foundUnits": 1,
+            "life": 42,
+            "bridge": "f5a647b5-3a12-4542-ab16-c62272ef2803",
+            "session": "f3c90df7838c450722384b36bed09b0e"
+          },
+          {
+            "id": "nested",
+            "file": ".sc2mcp-output/project-tests/5ca0f439-312b-47cb-8a81-c06fb8405a08/scenario_nested.json",
+            "sha256": "6e56ab2be94ca620ab634da9dc612d4a2d4c1b9563a5cdbfac59958b5e4f06fd",
+            "status": "passed",
+            "foundUnits": 1,
+            "life": 37,
+            "bridge": "f5a647b5-3a12-4542-ab16-c62272ef2803",
+            "session": "f3c90df7838c450722384b36bed09b0e"
+          },
+          {
+            "id": "record",
+            "file": ".sc2mcp-output/project-tests/5ca0f439-312b-47cb-8a81-c06fb8405a08/scenario_record.json",
+            "sha256": "ee8afe49f2c755f155acc1f3db9aad0f8297e8814c2d3831487fc58450156b8b",
+            "status": "passed",
+            "foundUnits": 1,
+            "life": 31,
+            "bridge": "f5a647b5-3a12-4542-ab16-c62272ef2803",
+            "session": "f3c90df7838c450722384b36bed09b0e"
+          },
+          {
+            "id": "preset",
+            "file": ".sc2mcp-output/project-tests/5ca0f439-312b-47cb-8a81-c06fb8405a08/scenario_preset.json",
+            "sha256": "85c4fd978cdfdce7768fc97208eecd00c0b7fba8506105aafb079fa2eb40230a",
+            "status": "passed",
+            "foundUnits": 1,
+            "life": 17,
+            "bridge": "f5a647b5-3a12-4542-ab16-c62272ef2803",
+            "session": "f3c90df7838c450722384b36bed09b0e"
+          },
+          {
+            "id": "localArray",
+            "file": ".sc2mcp-output/project-tests/5ca0f439-312b-47cb-8a81-c06fb8405a08/scenario_localArray.json",
+            "sha256": "44c49077cefe0804890b0d5830e649b34f8b47e1fab99acc6c0ddc72e36dd5e1",
+            "status": "passed",
+            "foundUnits": 1,
+            "life": 31,
+            "bridge": "f5a647b5-3a12-4542-ab16-c62272ef2803",
+            "session": "f3c90df7838c450722384b36bed09b0e"
+          }
+        ],
+        "actions": [],
+        "frame": {
+          "file": ".sc2mcp-output/project-tests/5ca0f439-312b-47cb-8a81-c06fb8405a08/Game.png",
+          "sha256": "1206a7896ca023a0a2ccba979e6e29c4ef646ccb11aa6223a109e1d6a29e7c75",
+          "review": "not_checked"
+        },
+        "diagnostics": {
+          "status": "inconclusive",
+          "allSourcesClear": null
+        }
+      },
+      {
+        "jobId": "70f2f3e4-c119-44e0-91e9-48212738ca2c",
+        "frontendGroup": "initial",
+        "map": "EventsMap",
+        "file": ".sc2mcp-output/project-tests/70f2f3e4-c119-44e0-91e9-48212738ca2c/result.json",
+        "sha256": "310d2dc43325b269a2164458940be9a9b130fadf62be05c169ec69d4e29fb64c",
+        "outcome": "passed",
+        "sourceSha256": "d9dec1232ec08efc3c3906f2c533f69ede9d5dfab894afd0ba9436f91fc65799",
+        "build": "5.0.17.98310",
+        "runtime": "v0.1.0-dev.11",
+        "sourceUnchanged": true,
+        "artifactUnchanged": true,
+        "cleanup": {
+          "stopped": true,
+          "sourceUnchanged": true
+        },
+        "scenarios": [
+          {
+            "id": "legacy_refs",
+            "file": ".sc2mcp-output/project-tests/70f2f3e4-c119-44e0-91e9-48212738ca2c/scenario_legacy_refs.json",
+            "sha256": "c604d5001192378e2680021d93484302ad0dfc174eb13d2b7bb40b4731058a4f",
+            "status": "passed",
+            "foundUnits": 1,
+            "life": 13,
+            "bridge": "f5a647b5-3a12-4542-ab16-c62272ef2803",
+            "session": "7b3f614dfeca0ceaa6e904868c52f6c9"
+          }
+        ],
+        "actions": [
+          {
+            "id": "click_1",
+            "file": ".sc2mcp-output/project-tests/70f2f3e4-c119-44e0-91e9-48212738ca2c/action_click_1_result.json",
+            "sha256": "209ba4b1bc892562e9b8130a3fb1f5dc0382e89320f3c452ecd5da4f78b254dc",
+            "status": "passed",
+            "callbackLife": 14,
+            "matched": [
+              {
+                "sequence": 2,
+                "gameTime": 5.375,
+                "kind": "ui",
+                "unit": null,
+                "controlId": 1,
+                "eventType": 0,
+                "player": 1,
+                "source": "galaxy"
+              }
+            ],
+            "bridge": "f5a647b5-3a12-4542-ab16-c62272ef2803"
+          },
+          {
+            "id": "click_2",
+            "file": ".sc2mcp-output/project-tests/70f2f3e4-c119-44e0-91e9-48212738ca2c/action_click_2_result.json",
+            "sha256": "a82eb014e396e386ad405084005b8389cc0fee728c886616850461dcfd4ca7f8",
+            "status": "passed",
+            "callbackLife": 15,
+            "matched": [
+              {
+                "sequence": 3,
+                "gameTime": 6.3125,
+                "kind": "ui",
+                "unit": null,
+                "controlId": 1,
+                "eventType": 0,
+                "player": 1,
+                "source": "galaxy"
+              }
+            ],
+            "bridge": "f5a647b5-3a12-4542-ab16-c62272ef2803"
+          }
+        ],
+        "frame": {
+          "file": ".sc2mcp-output/project-tests/70f2f3e4-c119-44e0-91e9-48212738ca2c/Game.png",
+          "sha256": "fb3137461b89d584bb6e778d3ef41a18fc14fc98140f8d462eaeff187e68381c",
+          "review": "Inspected native frame: visible marker Marines and readable diagnostic button where present; sparse fixture, empty unselected command panel. Not mission art or hero/UI acceptance."
+        },
+        "diagnostics": {
+          "status": "inconclusive",
+          "allSourcesClear": null
+        }
+      },
+      {
+        "jobId": "8b4d8322-bf46-4746-ac4e-9c2020c568ce",
+        "frontendGroup": "initial",
+        "map": "EventsMap",
+        "file": ".sc2mcp-output/project-tests/8b4d8322-bf46-4746-ac4e-9c2020c568ce/result.json",
+        "sha256": "6ba27689113695acd659cb5bca4020babc76012c112c85370eeb6ca00b4b9fb0",
+        "outcome": "passed",
+        "sourceSha256": "d9dec1232ec08efc3c3906f2c533f69ede9d5dfab894afd0ba9436f91fc65799",
+        "build": "5.0.17.98310",
+        "runtime": "v0.1.0-dev.11",
+        "sourceUnchanged": true,
+        "artifactUnchanged": true,
+        "cleanup": {
+          "stopped": true,
+          "sourceUnchanged": true
+        },
+        "scenarios": [
+          {
+            "id": "legacy_refs",
+            "file": ".sc2mcp-output/project-tests/8b4d8322-bf46-4746-ac4e-9c2020c568ce/scenario_legacy_refs.json",
+            "sha256": "a8a331a646092787401e1e26c874dd62eb5cefe4f33dbe83e17957715d930fdf",
+            "status": "passed",
+            "foundUnits": 1,
+            "life": 13,
+            "bridge": "f5a647b5-3a12-4542-ab16-c62272ef2803",
+            "session": "220696b268f3fbe1b063925ad79d2bfc"
+          }
+        ],
+        "actions": [
+          {
+            "id": "click_1",
+            "file": ".sc2mcp-output/project-tests/8b4d8322-bf46-4746-ac4e-9c2020c568ce/action_click_1_result.json",
+            "sha256": "73f53147bdb30e258ce1b10a2b9c0162c0d5ca7eb6dbedafb608ce788a4d642c",
+            "status": "passed",
+            "callbackLife": 14,
+            "matched": [
+              {
+                "sequence": 2,
+                "gameTime": 5.375,
+                "kind": "ui",
+                "unit": null,
+                "controlId": 1,
+                "eventType": 0,
+                "player": 1,
+                "source": "galaxy"
+              }
+            ],
+            "bridge": "f5a647b5-3a12-4542-ab16-c62272ef2803"
+          },
+          {
+            "id": "click_2",
+            "file": ".sc2mcp-output/project-tests/8b4d8322-bf46-4746-ac4e-9c2020c568ce/action_click_2_result.json",
+            "sha256": "c9fec832b6757d01c0438324a61c446650ae034bd9d7f7187b6c30ebc6faa892",
+            "status": "passed",
+            "callbackLife": 15,
+            "matched": [
+              {
+                "sequence": 3,
+                "gameTime": 6.3125,
+                "kind": "ui",
+                "unit": null,
+                "controlId": 1,
+                "eventType": 0,
+                "player": 1,
+                "source": "galaxy"
+              }
+            ],
+            "bridge": "f5a647b5-3a12-4542-ab16-c62272ef2803"
+          }
+        ],
+        "frame": {
+          "file": ".sc2mcp-output/project-tests/8b4d8322-bf46-4746-ac4e-9c2020c568ce/Game.png",
+          "sha256": "fe3105d891d44d56d7ef912f1e5f745e5a072dc5d6aef2cabe75aa8ecf55f7ce",
+          "review": "not_checked"
+        },
+        "diagnostics": {
+          "status": "inconclusive",
+          "allSourcesClear": null
+        }
+      },
+      {
+        "jobId": "6bf87851-33e7-40f9-acf4-003548ab274e",
+        "frontendGroup": "corrected_manifest",
+        "map": "RuntimeRegistration",
+        "file": ".sc2mcp-output/project-tests/6bf87851-33e7-40f9-acf4-003548ab274e/result.json",
+        "sha256": "3d0feadfd4d18bb09658c503093d28b0238fe8e410ef14fe4ed19fcda35c6598",
+        "outcome": "passed",
+        "sourceSha256": "d08a0add1744fccf069005253c3289ae9254ed97c22e972d241ca5aa6469dbe7",
+        "build": "5.0.17.98310",
+        "runtime": "v0.1.0-dev.11",
+        "sourceUnchanged": true,
+        "artifactUnchanged": true,
+        "cleanup": {
+          "stopped": true,
+          "sourceUnchanged": true
+        },
+        "scenarios": [
+          {
+            "id": "library",
+            "file": ".sc2mcp-output/project-tests/6bf87851-33e7-40f9-acf4-003548ab274e/scenario_library.json",
+            "sha256": "0e0a477b48566fca9d3d8c46e66d77b216531f784efd59e00aa5e12b30d59b93",
+            "status": "passed",
+            "foundUnits": 1,
+            "life": 42,
+            "bridge": "73cbabd4-6098-4ef6-9269-3021801b1711",
+            "session": "a22c39dc553a44bb6cfc9a301d73c6b1"
+          },
+          {
+            "id": "wrongReceiver",
+            "file": ".sc2mcp-output/project-tests/6bf87851-33e7-40f9-acf4-003548ab274e/scenario_wrongReceiver.json",
+            "sha256": "4cb4a5504c8efe7499ff0ec14f0c9959d3766fe09781117b9de63ba76614d0ea",
+            "status": "passed",
+            "foundUnits": 1,
+            "life": 9,
+            "bridge": "73cbabd4-6098-4ef6-9269-3021801b1711",
+            "session": "a22c39dc553a44bb6cfc9a301d73c6b1"
+          },
+          {
+            "id": "selectedReceiver",
+            "file": ".sc2mcp-output/project-tests/6bf87851-33e7-40f9-acf4-003548ab274e/scenario_selectedReceiver.json",
+            "sha256": "231b82ac7a48cef5b918ecb7320115b908dc52a4b76ad6120672cf5794c43732",
+            "status": "passed",
+            "foundUnits": 1,
+            "life": 22,
+            "bridge": "73cbabd4-6098-4ef6-9269-3021801b1711",
+            "session": "a22c39dc553a44bb6cfc9a301d73c6b1"
+          },
+          {
+            "id": "registrationPhase",
+            "file": ".sc2mcp-output/project-tests/6bf87851-33e7-40f9-acf4-003548ab274e/scenario_registrationPhase.json",
+            "sha256": "70f3a3ebdef0011a2a575bdcc01cf7b65583a108c271c57a26d283b34595f1c2",
+            "status": "passed",
+            "foundUnits": 1,
+            "life": 7,
+            "bridge": "73cbabd4-6098-4ef6-9269-3021801b1711",
+            "session": "a22c39dc553a44bb6cfc9a301d73c6b1"
+          },
+          {
+            "id": "exactlyOneCallback",
+            "file": ".sc2mcp-output/project-tests/6bf87851-33e7-40f9-acf4-003548ab274e/scenario_exactlyOneCallback.json",
+            "sha256": "a139a5bf922ad6608ebe723208f0d661567990fe7f119b68147d242a1bde9a4e",
+            "status": "passed",
+            "foundUnits": 1,
+            "life": 1,
+            "bridge": "73cbabd4-6098-4ef6-9269-3021801b1711",
+            "session": "a22c39dc553a44bb6cfc9a301d73c6b1"
+          },
+          {
+            "id": "wrongTimerAlreadyCompleted",
+            "file": ".sc2mcp-output/project-tests/6bf87851-33e7-40f9-acf4-003548ab274e/scenario_wrongTimerAlreadyCompleted.json",
+            "sha256": "5601cddc330833fd453437448737715df4392c871fca68dbc6e1b049f31cb176",
+            "status": "passed",
+            "foundUnits": 1,
+            "life": 33,
+            "bridge": "73cbabd4-6098-4ef6-9269-3021801b1711",
+            "session": "a22c39dc553a44bb6cfc9a301d73c6b1"
+          }
+        ],
+        "actions": [],
+        "frame": {
+          "file": ".sc2mcp-output/project-tests/6bf87851-33e7-40f9-acf4-003548ab274e/Game.png",
+          "sha256": "18c5dde9a041c11f4ebf448d3df4977269a99d479fbc709c08e24ef01642c085",
+          "review": "Inspected native frame: visible marker Marines and readable diagnostic button where present; sparse fixture, empty unselected command panel. Not mission art or hero/UI acceptance."
+        },
+        "diagnostics": {
+          "status": "inconclusive",
+          "allSourcesClear": null
+        }
+      },
+      {
+        "jobId": "099dfebd-60ce-4b5e-b2cc-9c01c178f118",
+        "frontendGroup": "corrected_manifest",
+        "map": "RuntimeRegistration",
+        "file": ".sc2mcp-output/project-tests/099dfebd-60ce-4b5e-b2cc-9c01c178f118/result.json",
+        "sha256": "8de93429ef5d9fa60d5be7cb714c3fb41a443359f350fc9012f5f1bac907086f",
+        "outcome": "passed",
+        "sourceSha256": "d08a0add1744fccf069005253c3289ae9254ed97c22e972d241ca5aa6469dbe7",
+        "build": "5.0.17.98310",
+        "runtime": "v0.1.0-dev.11",
+        "sourceUnchanged": true,
+        "artifactUnchanged": true,
+        "cleanup": {
+          "stopped": true,
+          "sourceUnchanged": true
+        },
+        "scenarios": [
+          {
+            "id": "library",
+            "file": ".sc2mcp-output/project-tests/099dfebd-60ce-4b5e-b2cc-9c01c178f118/scenario_library.json",
+            "sha256": "d85d0e192d4a6aee677e17014f96c9c6685fc0006093bc9e1c0051e7546896c7",
+            "status": "passed",
+            "foundUnits": 1,
+            "life": 42,
+            "bridge": "73cbabd4-6098-4ef6-9269-3021801b1711",
+            "session": "a45a52fe8db9e7035809addf8c53c032"
+          },
+          {
+            "id": "wrongReceiver",
+            "file": ".sc2mcp-output/project-tests/099dfebd-60ce-4b5e-b2cc-9c01c178f118/scenario_wrongReceiver.json",
+            "sha256": "badc1b2d3618bdb10d5e23248f7c3a435deb722fed08d50e1b42bdce86671d41",
+            "status": "passed",
+            "foundUnits": 1,
+            "life": 9,
+            "bridge": "73cbabd4-6098-4ef6-9269-3021801b1711",
+            "session": "a45a52fe8db9e7035809addf8c53c032"
+          },
+          {
+            "id": "selectedReceiver",
+            "file": ".sc2mcp-output/project-tests/099dfebd-60ce-4b5e-b2cc-9c01c178f118/scenario_selectedReceiver.json",
+            "sha256": "bc168729a7d6938e3f97158fce03439b53aebc4533141bd4cedb6b1c77fc59e1",
+            "status": "passed",
+            "foundUnits": 1,
+            "life": 22,
+            "bridge": "73cbabd4-6098-4ef6-9269-3021801b1711",
+            "session": "a45a52fe8db9e7035809addf8c53c032"
+          },
+          {
+            "id": "registrationPhase",
+            "file": ".sc2mcp-output/project-tests/099dfebd-60ce-4b5e-b2cc-9c01c178f118/scenario_registrationPhase.json",
+            "sha256": "e250ba67d807bd390c65d20dc842180de578322e187b1363d7075cf63546751b",
+            "status": "passed",
+            "foundUnits": 1,
+            "life": 7,
+            "bridge": "73cbabd4-6098-4ef6-9269-3021801b1711",
+            "session": "a45a52fe8db9e7035809addf8c53c032"
+          },
+          {
+            "id": "exactlyOneCallback",
+            "file": ".sc2mcp-output/project-tests/099dfebd-60ce-4b5e-b2cc-9c01c178f118/scenario_exactlyOneCallback.json",
+            "sha256": "d6be64256c396314dcd0c2d58ae7e3a70403dd97bd25088a7381123f22b1ce92",
+            "status": "passed",
+            "foundUnits": 1,
+            "life": 1,
+            "bridge": "73cbabd4-6098-4ef6-9269-3021801b1711",
+            "session": "a45a52fe8db9e7035809addf8c53c032"
+          },
+          {
+            "id": "wrongTimerAlreadyCompleted",
+            "file": ".sc2mcp-output/project-tests/099dfebd-60ce-4b5e-b2cc-9c01c178f118/scenario_wrongTimerAlreadyCompleted.json",
+            "sha256": "df6d470f64015a40f462ffad15a685871e1807d2e7247bf44e88b9de4a48a717",
+            "status": "passed",
+            "foundUnits": 1,
+            "life": 33,
+            "bridge": "73cbabd4-6098-4ef6-9269-3021801b1711",
+            "session": "a45a52fe8db9e7035809addf8c53c032"
+          }
+        ],
+        "actions": [],
+        "frame": {
+          "file": ".sc2mcp-output/project-tests/099dfebd-60ce-4b5e-b2cc-9c01c178f118/Game.png",
+          "sha256": "99e8adf299696b831a015cf74bebc3a291a2a6ddd76b37d08c22b85856c13a8c",
+          "review": "not_checked"
+        },
+        "diagnostics": {
+          "status": "inconclusive",
+          "allSourcesClear": null
+        }
+      }
+    ]
+  },
+  "retainedFailure": {
+    "reason": "Pinned SDK scenario expectation paths do not support units.length; all six found lists actually contained one correct marker. Each scenario stopped on that failed assertion. The failure remains failed.",
+    "failedRuns": [
+      {
+        "jobId": "789f3761-13a9-4bad-8521-f7db471ac84d",
+        "file": ".sc2mcp-output/project-tests/789f3761-13a9-4bad-8521-f7db471ac84d/result.json",
+        "sha256": "a6c61c507f9581b78839fdfa1ed91b359a54325ee5106aa103d6924c1245ceb1",
+        "outcome": "failed",
+        "checks": [
+          {
+            "id": "library",
+            "failedAssertion": {
+              "field": "units.length",
+              "expected": 1,
+              "actual": null
+            },
+            "observedCount": 1,
+            "observedLife": 42
+          },
+          {
+            "id": "wrongReceiver",
+            "failedAssertion": {
+              "field": "units.length",
+              "expected": 1,
+              "actual": null
+            },
+            "observedCount": 1,
+            "observedLife": 9
+          },
+          {
+            "id": "selectedReceiver",
+            "failedAssertion": {
+              "field": "units.length",
+              "expected": 1,
+              "actual": null
+            },
+            "observedCount": 1,
+            "observedLife": 22
+          },
+          {
+            "id": "registrationPhase",
+            "failedAssertion": {
+              "field": "units.length",
+              "expected": 1,
+              "actual": null
+            },
+            "observedCount": 1,
+            "observedLife": 7
+          },
+          {
+            "id": "exactlyOneCallback",
+            "failedAssertion": {
+              "field": "units.length",
+              "expected": 1,
+              "actual": null
+            },
+            "observedCount": 1,
+            "observedLife": 1
+          },
+          {
+            "id": "wrongTimerAlreadyCompleted",
+            "failedAssertion": {
+              "field": "units.length",
+              "expected": 1,
+              "actual": null
+            },
+            "observedCount": 1,
+            "observedLife": 33
+          }
+        ]
+      },
+      {
+        "jobId": "b848da41-0304-4f02-9203-08f20539e31f",
+        "file": ".sc2mcp-output/project-tests/b848da41-0304-4f02-9203-08f20539e31f/result.json",
+        "sha256": "6154a9f6ccb772b70422b06764a4395a8e89094d77bd6e34e5b85481373c3370",
+        "outcome": "failed",
+        "checks": [
+          {
+            "id": "library",
+            "failedAssertion": {
+              "field": "units.length",
+              "expected": 1,
+              "actual": null
+            },
+            "observedCount": 1,
+            "observedLife": 42
+          },
+          {
+            "id": "wrongReceiver",
+            "failedAssertion": {
+              "field": "units.length",
+              "expected": 1,
+              "actual": null
+            },
+            "observedCount": 1,
+            "observedLife": 9
+          },
+          {
+            "id": "selectedReceiver",
+            "failedAssertion": {
+              "field": "units.length",
+              "expected": 1,
+              "actual": null
+            },
+            "observedCount": 1,
+            "observedLife": 22
+          },
+          {
+            "id": "registrationPhase",
+            "failedAssertion": {
+              "field": "units.length",
+              "expected": 1,
+              "actual": null
+            },
+            "observedCount": 1,
+            "observedLife": 7
+          },
+          {
+            "id": "exactlyOneCallback",
+            "failedAssertion": {
+              "field": "units.length",
+              "expected": 1,
+              "actual": null
+            },
+            "observedCount": 1,
+            "observedLife": 1
+          },
+          {
+            "id": "wrongTimerAlreadyCompleted",
+            "failedAssertion": {
+              "field": "units.length",
+              "expected": 1,
+              "actual": null
+            },
+            "observedCount": 1,
+            "observedLife": 33
+          }
+        ]
+      }
+    ],
+    "correction": "A new manifest retains limit2 and checks units.0.valid/alive plus units.1=null; final evidence additionally verifies the raw list length is exactly1 before accepting each result.",
+    "originalManifest": {
+      "file": "work/launch-diagnostics-20261022/library-runtime-registration.json",
+      "sha256": "0ef17fe39a50a319e4d55ff17ced540fc0adcfca4ab1c8bfb4d219e3f8b66f8f"
+    },
+    "correctedManifest": {
+      "file": "work/launch-diagnostics-20261022/library-runtime-registration-fixed.json",
+      "sha256": "0d5a5549a8e6b11774164ecab89dbbc9fa7ce89fbba026ca9252b78a5ead4c79"
+    },
+    "sdkUnmodified": true
+  },
+  "privacy": {
+    "passed": true,
+    "checkedFiles": 9976,
+    "privateSourceFiles": 1113,
+    "privateCorpusCompared": true,
+    "violations": [],
+    "scope": "Explicit private paths/debug/test artifacts and exact external C++/Python/Galaxy source copies, including renamed files. Not proof against transformed snippets or binary reverse engineering."
+  },
+  "privateSdkModified": false,
+  "instrumentationDistributed": false,
+  "published": false,
+  "regressions": {
+    "tests": 1447,
+    "pass": 1446,
+    "skip": 1,
+    "fail": 0,
+    "full": {
+      "file": "work/launch-diagnostics-20261022/library-runtime-full.tap",
+      "sha256": "3ca5a546abb7a3235cf45025911aca49cc116a67317828403619d76a21914491"
+    },
+    "focused": 37,
+    "focusedReport": {
+      "file": "work/launch-diagnostics-20261022/library-runtime-focused.tap",
+      "sha256": "5fdb970681e828067983101985ff929c12be7bb8fe4135e04a647ad8490463be"
+    },
+    "build": true,
+    "releaseBuild": true,
+    "lint": true,
+    "englishDocumentationFiles": 117
+  },
+  "openCoverage": [
+    "Owned original Registration save/reopen job457436bb-0dcc-48e1-abc7-907e91a7511d remains live and is not accepted by these local-emitter runs",
+    "External implementations, cyclic inline initialization and local unit-reference parameters remain explicit unsupported profiles",
+    "Structref behavior has static/VM evidence here; dedicated actual-game reference/array/callback variants remain required",
+    "Map-owned library initialization and localized types need broader differential original-Editor profiles; three diagnostic graphs do not prove every import",
+    "General startup/build matrix, authoritative navigation/buildability, whole-location composition and final gameplay/UI/art review remain roadmap requirements",
+    "Diagnostics remain partial and no absence-of-error certificate is inferred"
+  ]
+}

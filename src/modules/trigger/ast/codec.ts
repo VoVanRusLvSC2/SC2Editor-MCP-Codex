@@ -37,7 +37,8 @@ const attribute = (value:unknown) => text(value).replaceAll('"', '&quot;').repla
 // the document itself carry no Library attribute, and the enclosing library is
 // implicit. `serializeTriggerLibrary` sets this to the owning id for the length
 // of one synchronous serialization so that every reference tag, at whatever
-// depth, drops the attribute the editor would not have written.
+// depth, drops the attribute the editor would not have written. A reference
+// from a named library into the map root must retain an explicit Library="".
 let implicitLibraryScope:string|undefined
 
 function refAttributes(ref:any, fallbackLibrary:string) {
@@ -50,7 +51,7 @@ function refAttributes(ref:any, fallbackLibrary:string) {
   const library = implicitLibrary !== undefined && named === implicitLibrary ? '' : named
   return [
     ...(typeName ? [`Type="${attribute(typeName)}"`] : []),
-    ...(library ? [`Library="${attribute(library)}"`] : []),
+    ...(library ? [`Library="${attribute(library)}"`] : named===''&&(implicitLibrary??fallbackLibrary)!==''?['Library=""']:[]),
     `Id="${attribute(id)}"`,
   ].join(' ')
 }
@@ -279,6 +280,6 @@ function commonElementLines(element:any, libraryId:string) {
 
 
 export function serializeAstElement(element:ElementJson,library=''){
- implicitLibraryScope=library||'Map';
- try{return `<Element Type="${attribute(element.type)}" Id="${attribute(element.id)}">\n`+commonElementLines(element,library||'Map').join('\n')+'\n</Element>';}finally{implicitLibraryScope=undefined;}
+ implicitLibraryScope=library;
+ try{return `<Element Type="${attribute(element.type)}" Id="${attribute(element.id)}">\n`+commonElementLines(element,library).join('\n')+'\n</Element>';}finally{implicitLibraryScope=undefined;}
 }

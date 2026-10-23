@@ -1,0 +1,1343 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-22T23:55:22.742Z",
+  "status": "scoped_native_mechanics_passed",
+  "scope": "Reusable manifest action checks on two unchanged diagnostic archives, exact native UI clock profile and one multi-page history; not universal UI/event attribution, navigation or art acceptance",
+  "sourceFingerprints": [
+    {
+      "file": "src/modules/testing/actionChecks.ts",
+      "sha256LfUtf8": "f5fe0a3cfb9caf9618f823fde5b295312639ec4b76022555b991ccf352aa800e"
+    },
+    {
+      "file": "src/modules/testing/schemas.ts",
+      "sha256LfUtf8": "047c8d85077a1bfb5763948b479c1ed4576de821c643bb9dc45537f207ef76e4"
+    },
+    {
+      "file": "src/modules/testing/workspace.ts",
+      "sha256LfUtf8": "ae5ee5c63d88143a27fb023da8b97b1981b863c083077ccc9169fccecb37731e"
+    },
+    {
+      "file": "src/modules/testing/tools.ts",
+      "sha256LfUtf8": "f14446504d40f0fdbf9e0b4be93425a793bff37d16c63ce1c5c3ad7a5f21c3cd"
+    },
+    {
+      "file": "src/integrations/game/actionEvents.ts",
+      "sha256LfUtf8": "ead392dca2ff7498aa5915e7291bb651cbfb494570e3921722bbadeebcec227b"
+    },
+    {
+      "file": "src/integrations/game/bridge.ts",
+      "sha256LfUtf8": "65057d196bd5e7d07332ada1fc66c65d76360448fb99f3f9923370bfd1d28108"
+    },
+    {
+      "file": "src/app/mcpBatch.ts",
+      "sha256LfUtf8": "3065b1cfa125d2c63e4e58aa6c8b37c81539cbbb7ecb8745769d6f3044f4cb0c"
+    },
+    {
+      "file": "scripts/run-map-tests.mjs",
+      "sha256LfUtf8": "9471de409f9762360cf66c2de08a154dfcf584b8b0458e61f467bc0a6a1742b9"
+    },
+    {
+      "file": "package.json",
+      "sha256LfUtf8": "95655122435658570fdcc498cacf96ef94492a6bada5572af372179fceae82d7"
+    },
+    {
+      "file": "game-toolkit-release.json",
+      "sha256LfUtf8": "7c8e2329dd4af5513e8fbc4f0a98cd4442fedc5460129fbc7291c3be4a5c96cf"
+    }
+  ],
+  "implementation": {
+    "entry": "project.test.* / game.actions",
+    "legacyScenarios": "Unchanged one-batch upstream game.test.run forwarding, including legacy $ref",
+    "localReferences": "Bounded $from queries and readback reuse the existing MCP batch resolver",
+    "submission": "Exactly one retained-bridge game.action per submitted entry; ambiguous replies are never retried",
+    "blockedSuccessors": "Later actions remain explicitly inconclusive without submission after an unconfirmed predecessor",
+    "uiClock": "Confirmed native_ui_click exact TimerGetElapsed counter; matching session plus subsequent full event-page epoch/map identity; no invented response metadata",
+    "preBaselineClocks": "Rejected as inconclusive"
+  },
+  "candidate": {
+    "file": "work/launch-diagnostics-20261022/action-checks-candidate.json",
+    "sha256": "b6430e6ae16a0afb1713a43b7f40e4b72b1f987e3b00d3a8fbad3a7645ca2165",
+    "directory": "C:\\Users\\Vladimir\\AppData\\Local\\SC2EditorToolkit\\Candidates\\ActionChecks-20261023-b2acb27a-7a13-4a77-9451-dfe283fc8dce",
+    "compiledFiles": 357,
+    "productionSnapshotFiles": 363,
+    "sourceSnapshotSha256": "cd02c5c2c8e54d2297d5dc14066161a857674d3100bef295757988abda07a492",
+    "sourceStableDuringBuild": true,
+    "allFrozenOutputsVerifiedNow": true,
+    "scope": "The inherited map field in the candidate receipt is not used as test-map identity. Actual tested archives are independently hashed in each run."
+  },
+  "native": {
+    "launches": 5,
+    "baseRunsShareOneRetainedBridge": true,
+    "stressUsesSeparateBridge": true,
+    "uniqueHistoryFixtures": 128,
+    "positiveUiClicks": 6,
+    "abilityCasts": 6,
+    "damagePerCast": 40,
+    "nativeCompletionEvents": 6,
+    "callbackLifePerUiRun": [
+      14,
+      15
+    ],
+    "targetLifePerAbilityRun": [
+      460,
+      420,
+      380
+    ],
+    "casterEnergyPerAbilityRun": [
+      99,
+      98,
+      97
+    ],
+    "runs": [
+      {
+        "jobId": "3f329985-9f07-496f-9d4e-f0b0bd0a7649",
+        "file": ".sc2mcp-output/project-tests/3f329985-9f07-496f-9d4e-f0b0bd0a7649/result.json",
+        "sha256": "e6bc9dff683b080d9e5bf14f944679e6be005e96baeba5726a12ad890e05835c",
+        "outcome": "passed",
+        "map": "work/gui-acceptance-20261022/EventsMap/.sc2mcp-output/GuiEvents.SC2Map",
+        "sourceSha256": "b7ed5bc7e4a79e64182930531910731698bd806233e051414f36fd67bda58cf4",
+        "sourceUnchanged": true,
+        "build": "5.0.17.98310",
+        "runtimeRelease": "v0.1.0-dev.11",
+        "legacyScenarios": [
+          "scenario:legacy_refs"
+        ],
+        "actions": [
+          {
+            "id": "click_1",
+            "file": ".sc2mcp-output/project-tests/3f329985-9f07-496f-9d4e-f0b0bd0a7649/action_click_1_result.json",
+            "sha256": "663f5972b6bc25a8eaa3ded3cdf1034466a226808698e49f15d4b4d924bf304d",
+            "clock": "native_ui_click.gameTime",
+            "identity": "ui_session_then_event_pages",
+            "actionSubmitted": true,
+            "baselinePages": 1,
+            "observationPages": 1,
+            "eventsRead": 43,
+            "dropped": false,
+            "baseline": [
+              {
+                "number": 1,
+                "sha256": "1d04c14a05297cd07272d1f01475f4846f8ccc4bcfc59cfea7e2d4af79ab721e",
+                "events": 37,
+                "gameTime": 5.375,
+                "hasMore": false,
+                "dropped": false,
+                "cursorSha256": "2809d91526a86c447298ef90e7c46a55a0e350043393a88a32b88f834171b929"
+              }
+            ],
+            "matches": [
+              {
+                "id": "click",
+                "expected": {
+                  "kind": "ui",
+                  "source": "galaxy",
+                  "controlId": 1,
+                  "eventType": 0,
+                  "player": 1
+                },
+                "observed": {
+                  "sequence": 2,
+                  "gameTime": 5.625,
+                  "kind": "ui",
+                  "unit": null,
+                  "controlId": 1,
+                  "eventType": 0,
+                  "player": 1,
+                  "source": "galaxy"
+                }
+              }
+            ],
+            "after": [
+              {
+                "id": "callback",
+                "method": "game.units.inspect",
+                "expected": {
+                  "unit.life": 14
+                },
+                "observed": {
+                  "life": 14,
+                  "energy": 0
+                }
+              }
+            ],
+            "bridgeDirectory": "C:\\Users\\Vladimir\\AppData\\Local\\SC2EditorToolkit\\NativeGameEvidence\\94d63531-9c20-4da5-a616-9dfec19b8b82",
+            "stream": {
+              "session": "010fc9efd32d329f02f248bb321f4e61",
+              "runtimeEpoch": "f630ca0ab77e5b74bfa9a0a35c2294a0",
+              "mapLoadSerial": 1
+            }
+          },
+          {
+            "id": "click_2",
+            "file": ".sc2mcp-output/project-tests/3f329985-9f07-496f-9d4e-f0b0bd0a7649/action_click_2_result.json",
+            "sha256": "1c9094b09b3f17b78d8cbed78ccde9b60c28bbd5286869ce45b99f58d93eae6e",
+            "clock": "native_ui_click.gameTime",
+            "identity": "ui_session_then_event_pages",
+            "actionSubmitted": true,
+            "baselinePages": 1,
+            "observationPages": 1,
+            "eventsRead": 9,
+            "dropped": false,
+            "baseline": [
+              {
+                "number": 1,
+                "sha256": "10cf76cbc4a4b37f98fa19846e11bbad9748dc37d96413d50d2d49500f73b83d",
+                "events": 3,
+                "gameTime": 6.25,
+                "hasMore": false,
+                "dropped": false,
+                "cursorSha256": "079caf5f9d2988c6c8fcbe005529a1252077aa556ba37524d6c328c1b622714a"
+              }
+            ],
+            "matches": [
+              {
+                "id": "click",
+                "expected": {
+                  "kind": "ui",
+                  "source": "galaxy",
+                  "controlId": 1,
+                  "eventType": 0,
+                  "player": 1
+                },
+                "observed": {
+                  "sequence": 3,
+                  "gameTime": 6.5625,
+                  "kind": "ui",
+                  "unit": null,
+                  "controlId": 1,
+                  "eventType": 0,
+                  "player": 1,
+                  "source": "galaxy"
+                }
+              }
+            ],
+            "after": [
+              {
+                "id": "callback",
+                "method": "game.units.inspect",
+                "expected": {
+                  "unit.life": 15
+                },
+                "observed": {
+                  "life": 15,
+                  "energy": 0
+                }
+              }
+            ],
+            "bridgeDirectory": "C:\\Users\\Vladimir\\AppData\\Local\\SC2EditorToolkit\\NativeGameEvidence\\94d63531-9c20-4da5-a616-9dfec19b8b82",
+            "stream": {
+              "session": "010fc9efd32d329f02f248bb321f4e61",
+              "runtimeEpoch": "f630ca0ab77e5b74bfa9a0a35c2294a0",
+              "mapLoadSerial": 1
+            }
+          }
+        ],
+        "image": {
+          "file": ".sc2mcp-output/project-tests/3f329985-9f07-496f-9d4e-f0b0bd0a7649/Game.png",
+          "sha256": "e3810a410ca15ecfdb067b3bfd0c023a685f4f9448a46d68f02e4a4708f78b11",
+          "review": "Inspected original game frame: readable native button and marker units, sparse diagnostic terrain; no finished mission/art acceptance."
+        },
+        "diagnostics": {
+          "status": "inconclusive",
+          "allSourcesClear": null
+        },
+        "cleanup": {
+          "stopped": true,
+          "sourceUnchanged": true
+        }
+      },
+      {
+        "jobId": "164b692e-ce27-4527-b782-558ce10c9d44",
+        "file": ".sc2mcp-output/project-tests/164b692e-ce27-4527-b782-558ce10c9d44/result.json",
+        "sha256": "432f92b0d82d3de2687162e888b652770d367b0e8983a027e6c94203ed1cac82",
+        "outcome": "passed",
+        "map": "work/gui-acceptance-20261022/EventsMap/.sc2mcp-output/GuiEvents.SC2Map",
+        "sourceSha256": "b7ed5bc7e4a79e64182930531910731698bd806233e051414f36fd67bda58cf4",
+        "sourceUnchanged": true,
+        "build": "5.0.17.98310",
+        "runtimeRelease": "v0.1.0-dev.11",
+        "legacyScenarios": [
+          "scenario:legacy_refs"
+        ],
+        "actions": [
+          {
+            "id": "click_1",
+            "file": ".sc2mcp-output/project-tests/164b692e-ce27-4527-b782-558ce10c9d44/action_click_1_result.json",
+            "sha256": "1c134aa3b1db5c7858cd45f347ca7fd2af2a6e66bdcda8fd41ee6d6fc65f4b3b",
+            "clock": "native_ui_click.gameTime",
+            "identity": "ui_session_then_event_pages",
+            "actionSubmitted": true,
+            "baselinePages": 1,
+            "observationPages": 1,
+            "eventsRead": 33,
+            "dropped": false,
+            "baseline": [
+              {
+                "number": 1,
+                "sha256": "929e9805f99a3f12d969670482620b005327065c4cf566c36d7572b71262a13d",
+                "events": 28,
+                "gameTime": 5.5,
+                "hasMore": false,
+                "dropped": false,
+                "cursorSha256": "ecc6eb73a857c8b7521d8a6d2bc45b8eacb8cbb2583c09b04f8ac8dc0aa3789c"
+              }
+            ],
+            "matches": [
+              {
+                "id": "click",
+                "expected": {
+                  "kind": "ui",
+                  "source": "galaxy",
+                  "controlId": 1,
+                  "eventType": 0,
+                  "player": 1
+                },
+                "observed": {
+                  "sequence": 2,
+                  "gameTime": 5.75,
+                  "kind": "ui",
+                  "unit": null,
+                  "controlId": 1,
+                  "eventType": 0,
+                  "player": 1,
+                  "source": "galaxy"
+                }
+              }
+            ],
+            "after": [
+              {
+                "id": "callback",
+                "method": "game.units.inspect",
+                "expected": {
+                  "unit.life": 14
+                },
+                "observed": {
+                  "life": 14,
+                  "energy": 0
+                }
+              }
+            ],
+            "bridgeDirectory": "C:\\Users\\Vladimir\\AppData\\Local\\SC2EditorToolkit\\NativeGameEvidence\\94d63531-9c20-4da5-a616-9dfec19b8b82",
+            "stream": {
+              "session": "49e081a1ab67048548c37c76c86ecf00",
+              "runtimeEpoch": "333cecd4ff61cd5b26ee63d170a31674",
+              "mapLoadSerial": 1
+            }
+          },
+          {
+            "id": "click_2",
+            "file": ".sc2mcp-output/project-tests/164b692e-ce27-4527-b782-558ce10c9d44/action_click_2_result.json",
+            "sha256": "823c0c42b29b74f09bc49fd2e01b375856044834c61222f5cb00c1052d6a11e9",
+            "clock": "native_ui_click.gameTime",
+            "identity": "ui_session_then_event_pages",
+            "actionSubmitted": true,
+            "baselinePages": 1,
+            "observationPages": 1,
+            "eventsRead": 10,
+            "dropped": false,
+            "baseline": [
+              {
+                "number": 1,
+                "sha256": "696ee997f2b54404e594bdefd3ffc4d18d395dfbf893e66d71871ce19352463b",
+                "events": 2,
+                "gameTime": 6.375,
+                "hasMore": false,
+                "dropped": false,
+                "cursorSha256": "06ab3657d0e96b768c91528a0f24aca19ad67ccd27f7b9a9560ec7c7b9be33fa"
+              }
+            ],
+            "matches": [
+              {
+                "id": "click",
+                "expected": {
+                  "kind": "ui",
+                  "source": "galaxy",
+                  "controlId": 1,
+                  "eventType": 0,
+                  "player": 1
+                },
+                "observed": {
+                  "sequence": 3,
+                  "gameTime": 6.6875,
+                  "kind": "ui",
+                  "unit": null,
+                  "controlId": 1,
+                  "eventType": 0,
+                  "player": 1,
+                  "source": "galaxy"
+                }
+              }
+            ],
+            "after": [
+              {
+                "id": "callback",
+                "method": "game.units.inspect",
+                "expected": {
+                  "unit.life": 15
+                },
+                "observed": {
+                  "life": 15,
+                  "energy": 0
+                }
+              }
+            ],
+            "bridgeDirectory": "C:\\Users\\Vladimir\\AppData\\Local\\SC2EditorToolkit\\NativeGameEvidence\\94d63531-9c20-4da5-a616-9dfec19b8b82",
+            "stream": {
+              "session": "49e081a1ab67048548c37c76c86ecf00",
+              "runtimeEpoch": "333cecd4ff61cd5b26ee63d170a31674",
+              "mapLoadSerial": 1
+            }
+          }
+        ],
+        "image": {
+          "file": ".sc2mcp-output/project-tests/164b692e-ce27-4527-b782-558ce10c9d44/Game.png",
+          "sha256": "4758a4a35c0a6ce1abf5961c2031ecb03999183f4d247ea77c35baafe8f64c9e",
+          "review": "Inspected original game frame: readable native button and marker units, sparse diagnostic terrain; no finished mission/art acceptance."
+        },
+        "diagnostics": {
+          "status": "inconclusive",
+          "allSourcesClear": null
+        },
+        "cleanup": {
+          "stopped": true,
+          "sourceUnchanged": true
+        }
+      },
+      {
+        "jobId": "86db446f-9d41-41a9-bee4-413cfebcb58e",
+        "file": ".sc2mcp-output/project-tests/86db446f-9d41-41a9-bee4-413cfebcb58e/result.json",
+        "sha256": "c05ba6a9a7669a8bddd18d25903fb5916dfcd58f467f3b677c07d5c55145cd85",
+        "outcome": "passed",
+        "map": "work/data-acceptance-20261022/ChargesRecipe/.sc2mcp-output/ChargesRecipe_R6.SC2Map",
+        "sourceSha256": "eadad9c8063c2c559722c10b9ad26e1238750bd3758e2c94a254e8a51ff074c5",
+        "sourceUnchanged": true,
+        "build": "5.0.17.98310",
+        "runtimeRelease": "v0.1.0-dev.11",
+        "legacyScenarios": [
+          "scenario:legacy_refs",
+          "scenario:retained_history_setup"
+        ],
+        "actions": [
+          {
+            "id": "pulse_1",
+            "file": ".sc2mcp-output/project-tests/86db446f-9d41-41a9-bee4-413cfebcb58e/action_pulse_1_result.json",
+            "sha256": "83300158d5fcc8fe95a7470ce813bf48a1dffb3e53d38e5791a3b4336aa2c606",
+            "clock": "response.gameTime",
+            "identity": "full_response",
+            "actionSubmitted": true,
+            "baselinePages": 1,
+            "observationPages": 14,
+            "eventsRead": 65,
+            "dropped": false,
+            "baseline": [
+              {
+                "number": 1,
+                "sha256": "a541f9f9ce27c3cc042e8f017291041e7b9f2652d7b6bbe09cfb6e80c79ca119",
+                "events": 27,
+                "gameTime": 5.5,
+                "hasMore": false,
+                "dropped": false,
+                "cursorSha256": "d20eb07e4bec8f843293b02c50a6093dcbc2f78e0627514aae05376dbba36a98"
+              }
+            ],
+            "matches": [
+              {
+                "id": "hit",
+                "expected": {
+                  "kind": "damage",
+                  "source": "galaxy",
+                  "unit": "b6e518d977053f74caea5368da8e5e31:u:8",
+                  "amount": 40,
+                  "sourceUnit": "b6e518d977053f74caea5368da8e5e31:u:1"
+                },
+                "observed": {
+                  "sequence": 15,
+                  "gameTime": 6.0625,
+                  "kind": "damage",
+                  "unit": "b6e518d977053f74caea5368da8e5e31:u:8",
+                  "unitType": "ChargeUnlimitedDummy",
+                  "unitMetadataCurrent": true,
+                  "owner": 0,
+                  "position": {
+                    "x": 50,
+                    "y": 26
+                  },
+                  "unitMetadataGameTime": 6.0625,
+                  "amount": 40,
+                  "sourceUnit": "b6e518d977053f74caea5368da8e5e31:u:1",
+                  "source": "galaxy"
+                }
+              },
+              {
+                "id": "$complete",
+                "expected": {
+                  "kind": "ability",
+                  "source": "galaxy",
+                  "unit": "b6e518d977053f74caea5368da8e5e31:u:1",
+                  "ability": "ChargeUnlimited",
+                  "stageName": "complete"
+                },
+                "observed": {
+                  "sequence": 16,
+                  "gameTime": 8.3125,
+                  "kind": "ability",
+                  "unit": "b6e518d977053f74caea5368da8e5e31:u:1",
+                  "unitType": "ChargeUnlimitedCaster",
+                  "unitMetadataCurrent": true,
+                  "owner": 1,
+                  "position": {
+                    "x": 44,
+                    "y": 26
+                  },
+                  "unitMetadataGameTime": 8.3125,
+                  "ability": "ChargeUnlimited",
+                  "stage": -6,
+                  "stageName": "complete",
+                  "source": "galaxy"
+                }
+              }
+            ],
+            "after": [
+              {
+                "id": "health",
+                "method": "game.units.inspect",
+                "expected": {
+                  "unit.life": 460
+                },
+                "observed": {
+                  "life": 460,
+                  "energy": 100
+                }
+              },
+              {
+                "id": "energy",
+                "method": "game.units.inspect",
+                "expected": {
+                  "unit.energy": 99
+                },
+                "observed": {
+                  "life": 1000,
+                  "energy": 99
+                }
+              }
+            ],
+            "bridgeDirectory": "C:\\Users\\Vladimir\\AppData\\Local\\SC2EditorToolkit\\NativeGameEvidence\\94d63531-9c20-4da5-a616-9dfec19b8b82",
+            "stream": {
+              "session": "b6e518d977053f74caea5368da8e5e31",
+              "runtimeEpoch": "ef8b628318b1a09813bd7109e3e5e8a8",
+              "mapLoadSerial": 1
+            }
+          },
+          {
+            "id": "pulse_2",
+            "file": ".sc2mcp-output/project-tests/86db446f-9d41-41a9-bee4-413cfebcb58e/action_pulse_2_result.json",
+            "sha256": "601275c538bee07f113a5b89ef168bbc6a076876007fc01c8944924cad1e7d1c",
+            "clock": "response.gameTime",
+            "identity": "full_response",
+            "actionSubmitted": true,
+            "baselinePages": 1,
+            "observationPages": 13,
+            "eventsRead": 41,
+            "dropped": false,
+            "baseline": [
+              {
+                "number": 1,
+                "sha256": "a539a29392c62eefd96264914a0996f2752c723d72e6ee0104cb98ed2e91bd3c",
+                "events": 2,
+                "gameTime": 9,
+                "hasMore": false,
+                "dropped": false,
+                "cursorSha256": "ae7743418db3678b1afd6e03a96c1025cc4154f9f5cfdda93046a0ddfa726312"
+              }
+            ],
+            "matches": [
+              {
+                "id": "hit",
+                "expected": {
+                  "kind": "damage",
+                  "source": "galaxy",
+                  "unit": "b6e518d977053f74caea5368da8e5e31:u:8",
+                  "amount": 40,
+                  "sourceUnit": "b6e518d977053f74caea5368da8e5e31:u:1"
+                },
+                "observed": {
+                  "sequence": 25,
+                  "gameTime": 9.4375,
+                  "kind": "damage",
+                  "unit": "b6e518d977053f74caea5368da8e5e31:u:8",
+                  "unitType": "ChargeUnlimitedDummy",
+                  "unitMetadataCurrent": true,
+                  "owner": 0,
+                  "position": {
+                    "x": 50,
+                    "y": 26
+                  },
+                  "unitMetadataGameTime": 9.4375,
+                  "amount": 40,
+                  "sourceUnit": "b6e518d977053f74caea5368da8e5e31:u:1",
+                  "source": "galaxy"
+                }
+              },
+              {
+                "id": "$complete",
+                "expected": {
+                  "kind": "ability",
+                  "source": "galaxy",
+                  "unit": "b6e518d977053f74caea5368da8e5e31:u:1",
+                  "ability": "ChargeUnlimited",
+                  "stageName": "complete"
+                },
+                "observed": {
+                  "sequence": 27,
+                  "gameTime": 11.6875,
+                  "kind": "ability",
+                  "unit": "b6e518d977053f74caea5368da8e5e31:u:1",
+                  "unitType": "ChargeUnlimitedCaster",
+                  "unitMetadataCurrent": true,
+                  "owner": 1,
+                  "position": {
+                    "x": 44,
+                    "y": 26
+                  },
+                  "unitMetadataGameTime": 11.6875,
+                  "ability": "ChargeUnlimited",
+                  "stage": -6,
+                  "stageName": "complete",
+                  "source": "galaxy"
+                }
+              }
+            ],
+            "after": [
+              {
+                "id": "health",
+                "method": "game.units.inspect",
+                "expected": {
+                  "unit.life": 420
+                },
+                "observed": {
+                  "life": 420,
+                  "energy": 100
+                }
+              },
+              {
+                "id": "energy",
+                "method": "game.units.inspect",
+                "expected": {
+                  "unit.energy": 98
+                },
+                "observed": {
+                  "life": 1000,
+                  "energy": 98
+                }
+              }
+            ],
+            "bridgeDirectory": "C:\\Users\\Vladimir\\AppData\\Local\\SC2EditorToolkit\\NativeGameEvidence\\94d63531-9c20-4da5-a616-9dfec19b8b82",
+            "stream": {
+              "session": "b6e518d977053f74caea5368da8e5e31",
+              "runtimeEpoch": "ef8b628318b1a09813bd7109e3e5e8a8",
+              "mapLoadSerial": 1
+            }
+          },
+          {
+            "id": "pulse_3",
+            "file": ".sc2mcp-output/project-tests/86db446f-9d41-41a9-bee4-413cfebcb58e/action_pulse_3_result.json",
+            "sha256": "77cbb78853633030c3ec3a685cc5c5bc52eee0e9e3cb3a4a5050e8e5cbd30232",
+            "clock": "response.gameTime",
+            "identity": "full_response",
+            "actionSubmitted": true,
+            "baselinePages": 1,
+            "observationPages": 13,
+            "eventsRead": 49,
+            "dropped": false,
+            "baseline": [
+              {
+                "number": 1,
+                "sha256": "a7ea636722a4c057da7f3b65c03cfd15d20c71bf58b5b45b8e48e51b5fdcb4f6",
+                "events": 8,
+                "gameTime": 12.375,
+                "hasMore": false,
+                "dropped": false,
+                "cursorSha256": "16029e443ce87ba6a7d71c34655c7c42f080f14d39e3f9175ad8e6e32e89816e"
+              }
+            ],
+            "matches": [
+              {
+                "id": "hit",
+                "expected": {
+                  "kind": "damage",
+                  "source": "galaxy",
+                  "unit": "b6e518d977053f74caea5368da8e5e31:u:8",
+                  "amount": 40,
+                  "sourceUnit": "b6e518d977053f74caea5368da8e5e31:u:1"
+                },
+                "observed": {
+                  "sequence": 37,
+                  "gameTime": 12.8125,
+                  "kind": "damage",
+                  "unit": "b6e518d977053f74caea5368da8e5e31:u:8",
+                  "unitType": "ChargeUnlimitedDummy",
+                  "unitMetadataCurrent": true,
+                  "owner": 0,
+                  "position": {
+                    "x": 50,
+                    "y": 26
+                  },
+                  "unitMetadataGameTime": 12.8125,
+                  "amount": 40,
+                  "sourceUnit": "b6e518d977053f74caea5368da8e5e31:u:1",
+                  "source": "galaxy"
+                }
+              },
+              {
+                "id": "$complete",
+                "expected": {
+                  "kind": "ability",
+                  "source": "galaxy",
+                  "unit": "b6e518d977053f74caea5368da8e5e31:u:1",
+                  "ability": "ChargeUnlimited",
+                  "stageName": "complete"
+                },
+                "observed": {
+                  "sequence": 38,
+                  "gameTime": 15.0625,
+                  "kind": "ability",
+                  "unit": "b6e518d977053f74caea5368da8e5e31:u:1",
+                  "unitType": "ChargeUnlimitedCaster",
+                  "unitMetadataCurrent": true,
+                  "owner": 1,
+                  "position": {
+                    "x": 44,
+                    "y": 26
+                  },
+                  "unitMetadataGameTime": 15.0625,
+                  "ability": "ChargeUnlimited",
+                  "stage": -6,
+                  "stageName": "complete",
+                  "source": "galaxy"
+                }
+              }
+            ],
+            "after": [
+              {
+                "id": "health",
+                "method": "game.units.inspect",
+                "expected": {
+                  "unit.life": 380
+                },
+                "observed": {
+                  "life": 380,
+                  "energy": 100
+                }
+              },
+              {
+                "id": "energy",
+                "method": "game.units.inspect",
+                "expected": {
+                  "unit.energy": 97
+                },
+                "observed": {
+                  "life": 1000,
+                  "energy": 97
+                }
+              }
+            ],
+            "bridgeDirectory": "C:\\Users\\Vladimir\\AppData\\Local\\SC2EditorToolkit\\NativeGameEvidence\\94d63531-9c20-4da5-a616-9dfec19b8b82",
+            "stream": {
+              "session": "b6e518d977053f74caea5368da8e5e31",
+              "runtimeEpoch": "ef8b628318b1a09813bd7109e3e5e8a8",
+              "mapLoadSerial": 1
+            }
+          }
+        ],
+        "diagnostics": {
+          "status": "inconclusive",
+          "allSourcesClear": null
+        },
+        "cleanup": {
+          "stopped": true,
+          "sourceUnchanged": true
+        }
+      },
+      {
+        "jobId": "c24ceaa4-755d-45e9-9dd0-ad792c432e78",
+        "file": ".sc2mcp-output/project-tests/c24ceaa4-755d-45e9-9dd0-ad792c432e78/result.json",
+        "sha256": "680618cec8aa2ad5a6391d61638fe731fa9abc1a2d44f7d42d8cbc9cef82a7ef",
+        "outcome": "passed",
+        "map": "work/data-acceptance-20261022/ChargesRecipe/.sc2mcp-output/ChargesRecipe_R6.SC2Map",
+        "sourceSha256": "eadad9c8063c2c559722c10b9ad26e1238750bd3758e2c94a254e8a51ff074c5",
+        "sourceUnchanged": true,
+        "build": "5.0.17.98310",
+        "runtimeRelease": "v0.1.0-dev.11",
+        "legacyScenarios": [
+          "scenario:legacy_refs",
+          "scenario:retained_history_setup"
+        ],
+        "actions": [
+          {
+            "id": "pulse_1",
+            "file": ".sc2mcp-output/project-tests/c24ceaa4-755d-45e9-9dd0-ad792c432e78/action_pulse_1_result.json",
+            "sha256": "f59825463bbcd693466031a6e031d608ae313cd3fc8d39c45a05fed23e0889c4",
+            "clock": "response.gameTime",
+            "identity": "full_response",
+            "actionSubmitted": true,
+            "baselinePages": 1,
+            "observationPages": 12,
+            "eventsRead": 68,
+            "dropped": false,
+            "baseline": [
+              {
+                "number": 1,
+                "sha256": "c14be35edfcd0483be1262fdea15a2ec72fa0a03b0cb4a7724d95c6847706117",
+                "events": 27,
+                "gameTime": 5.5,
+                "hasMore": false,
+                "dropped": false,
+                "cursorSha256": "7bf91a780ed15b3cfe53d9ce2aa0b716b6c1bf0c0525b99afa38ffb7a88d790e"
+              }
+            ],
+            "matches": [
+              {
+                "id": "hit",
+                "expected": {
+                  "kind": "damage",
+                  "source": "galaxy",
+                  "unit": "86f4dafcc363907ff99a8f0754bc34c2:u:8",
+                  "amount": 40,
+                  "sourceUnit": "86f4dafcc363907ff99a8f0754bc34c2:u:1"
+                },
+                "observed": {
+                  "sequence": 15,
+                  "gameTime": 6.0625,
+                  "kind": "damage",
+                  "unit": "86f4dafcc363907ff99a8f0754bc34c2:u:8",
+                  "unitType": "ChargeUnlimitedDummy",
+                  "unitMetadataCurrent": true,
+                  "owner": 0,
+                  "position": {
+                    "x": 50,
+                    "y": 26
+                  },
+                  "unitMetadataGameTime": 6.0625,
+                  "amount": 40,
+                  "sourceUnit": "86f4dafcc363907ff99a8f0754bc34c2:u:1",
+                  "source": "galaxy"
+                }
+              },
+              {
+                "id": "$complete",
+                "expected": {
+                  "kind": "ability",
+                  "source": "galaxy",
+                  "unit": "86f4dafcc363907ff99a8f0754bc34c2:u:1",
+                  "ability": "ChargeUnlimited",
+                  "stageName": "complete"
+                },
+                "observed": {
+                  "sequence": 16,
+                  "gameTime": 8.3125,
+                  "kind": "ability",
+                  "unit": "86f4dafcc363907ff99a8f0754bc34c2:u:1",
+                  "unitType": "ChargeUnlimitedCaster",
+                  "unitMetadataCurrent": true,
+                  "owner": 1,
+                  "position": {
+                    "x": 44,
+                    "y": 26
+                  },
+                  "unitMetadataGameTime": 8.3125,
+                  "ability": "ChargeUnlimited",
+                  "stage": -6,
+                  "stageName": "complete",
+                  "source": "galaxy"
+                }
+              }
+            ],
+            "after": [
+              {
+                "id": "health",
+                "method": "game.units.inspect",
+                "expected": {
+                  "unit.life": 460
+                },
+                "observed": {
+                  "life": 460,
+                  "energy": 100
+                }
+              },
+              {
+                "id": "energy",
+                "method": "game.units.inspect",
+                "expected": {
+                  "unit.energy": 99
+                },
+                "observed": {
+                  "life": 1000,
+                  "energy": 99
+                }
+              }
+            ],
+            "bridgeDirectory": "C:\\Users\\Vladimir\\AppData\\Local\\SC2EditorToolkit\\NativeGameEvidence\\94d63531-9c20-4da5-a616-9dfec19b8b82",
+            "stream": {
+              "session": "86f4dafcc363907ff99a8f0754bc34c2",
+              "runtimeEpoch": "c2109868a83ac2566d9171c68c108223",
+              "mapLoadSerial": 1
+            }
+          },
+          {
+            "id": "pulse_2",
+            "file": ".sc2mcp-output/project-tests/c24ceaa4-755d-45e9-9dd0-ad792c432e78/action_pulse_2_result.json",
+            "sha256": "acbbfd38e0ab3dde3d5070a3db132feb54b95a40fde9fdda42748d7405608aa6",
+            "clock": "response.gameTime",
+            "identity": "full_response",
+            "actionSubmitted": true,
+            "baselinePages": 1,
+            "observationPages": 13,
+            "eventsRead": 40,
+            "dropped": false,
+            "baseline": [
+              {
+                "number": 1,
+                "sha256": "f32351868d59d6e0d3e2e185a4762b677dc9bd0ff7aeff472209f355de1a85c1",
+                "events": 1,
+                "gameTime": 9,
+                "hasMore": false,
+                "dropped": false,
+                "cursorSha256": "f73670ff2fe5d0a6777082ba9d8d115d538d436af55332de73060035075eeada"
+              }
+            ],
+            "matches": [
+              {
+                "id": "hit",
+                "expected": {
+                  "kind": "damage",
+                  "source": "galaxy",
+                  "unit": "86f4dafcc363907ff99a8f0754bc34c2:u:8",
+                  "amount": 40,
+                  "sourceUnit": "86f4dafcc363907ff99a8f0754bc34c2:u:1"
+                },
+                "observed": {
+                  "sequence": 25,
+                  "gameTime": 9.4375,
+                  "kind": "damage",
+                  "unit": "86f4dafcc363907ff99a8f0754bc34c2:u:8",
+                  "unitType": "ChargeUnlimitedDummy",
+                  "unitMetadataCurrent": true,
+                  "owner": 0,
+                  "position": {
+                    "x": 50,
+                    "y": 26
+                  },
+                  "unitMetadataGameTime": 9.4375,
+                  "amount": 40,
+                  "sourceUnit": "86f4dafcc363907ff99a8f0754bc34c2:u:1",
+                  "source": "galaxy"
+                }
+              },
+              {
+                "id": "$complete",
+                "expected": {
+                  "kind": "ability",
+                  "source": "galaxy",
+                  "unit": "86f4dafcc363907ff99a8f0754bc34c2:u:1",
+                  "ability": "ChargeUnlimited",
+                  "stageName": "complete"
+                },
+                "observed": {
+                  "sequence": 27,
+                  "gameTime": 11.6875,
+                  "kind": "ability",
+                  "unit": "86f4dafcc363907ff99a8f0754bc34c2:u:1",
+                  "unitType": "ChargeUnlimitedCaster",
+                  "unitMetadataCurrent": true,
+                  "owner": 1,
+                  "position": {
+                    "x": 44,
+                    "y": 26
+                  },
+                  "unitMetadataGameTime": 11.6875,
+                  "ability": "ChargeUnlimited",
+                  "stage": -6,
+                  "stageName": "complete",
+                  "source": "galaxy"
+                }
+              }
+            ],
+            "after": [
+              {
+                "id": "health",
+                "method": "game.units.inspect",
+                "expected": {
+                  "unit.life": 420
+                },
+                "observed": {
+                  "life": 420,
+                  "energy": 100
+                }
+              },
+              {
+                "id": "energy",
+                "method": "game.units.inspect",
+                "expected": {
+                  "unit.energy": 98
+                },
+                "observed": {
+                  "life": 1000,
+                  "energy": 98
+                }
+              }
+            ],
+            "bridgeDirectory": "C:\\Users\\Vladimir\\AppData\\Local\\SC2EditorToolkit\\NativeGameEvidence\\94d63531-9c20-4da5-a616-9dfec19b8b82",
+            "stream": {
+              "session": "86f4dafcc363907ff99a8f0754bc34c2",
+              "runtimeEpoch": "c2109868a83ac2566d9171c68c108223",
+              "mapLoadSerial": 1
+            }
+          },
+          {
+            "id": "pulse_3",
+            "file": ".sc2mcp-output/project-tests/c24ceaa4-755d-45e9-9dd0-ad792c432e78/action_pulse_3_result.json",
+            "sha256": "89fd5900c832c0b809a14f402c84435d9e6a3f73915d16895c7185a94313b3b5",
+            "clock": "response.gameTime",
+            "identity": "full_response",
+            "actionSubmitted": true,
+            "baselinePages": 1,
+            "observationPages": 14,
+            "eventsRead": 49,
+            "dropped": false,
+            "baseline": [
+              {
+                "number": 1,
+                "sha256": "fe50286240fb154e237f7dc0e135eb8a6d4ce406ac8cc084311ff188bcd30c3c",
+                "events": 9,
+                "gameTime": 12.5,
+                "hasMore": false,
+                "dropped": false,
+                "cursorSha256": "a75d2004c7584b553d7bd739c0144ea2db54cd848e2c903b589f06934491cfe0"
+              }
+            ],
+            "matches": [
+              {
+                "id": "hit",
+                "expected": {
+                  "kind": "damage",
+                  "source": "galaxy",
+                  "unit": "86f4dafcc363907ff99a8f0754bc34c2:u:8",
+                  "amount": 40,
+                  "sourceUnit": "86f4dafcc363907ff99a8f0754bc34c2:u:1"
+                },
+                "observed": {
+                  "sequence": 37,
+                  "gameTime": 12.9375,
+                  "kind": "damage",
+                  "unit": "86f4dafcc363907ff99a8f0754bc34c2:u:8",
+                  "unitType": "ChargeUnlimitedDummy",
+                  "unitMetadataCurrent": true,
+                  "owner": 0,
+                  "position": {
+                    "x": 50,
+                    "y": 26
+                  },
+                  "unitMetadataGameTime": 12.9375,
+                  "amount": 40,
+                  "sourceUnit": "86f4dafcc363907ff99a8f0754bc34c2:u:1",
+                  "source": "galaxy"
+                }
+              },
+              {
+                "id": "$complete",
+                "expected": {
+                  "kind": "ability",
+                  "source": "galaxy",
+                  "unit": "86f4dafcc363907ff99a8f0754bc34c2:u:1",
+                  "ability": "ChargeUnlimited",
+                  "stageName": "complete"
+                },
+                "observed": {
+                  "sequence": 42,
+                  "gameTime": 15.1875,
+                  "kind": "ability",
+                  "unit": "86f4dafcc363907ff99a8f0754bc34c2:u:1",
+                  "unitType": "ChargeUnlimitedCaster",
+                  "unitMetadataCurrent": true,
+                  "owner": 1,
+                  "position": {
+                    "x": 44,
+                    "y": 26
+                  },
+                  "unitMetadataGameTime": 15.1875,
+                  "ability": "ChargeUnlimited",
+                  "stage": -6,
+                  "stageName": "complete",
+                  "source": "galaxy"
+                }
+              }
+            ],
+            "after": [
+              {
+                "id": "health",
+                "method": "game.units.inspect",
+                "expected": {
+                  "unit.life": 380
+                },
+                "observed": {
+                  "life": 380,
+                  "energy": 100
+                }
+              },
+              {
+                "id": "energy",
+                "method": "game.units.inspect",
+                "expected": {
+                  "unit.energy": 97
+                },
+                "observed": {
+                  "life": 1000,
+                  "energy": 97
+                }
+              }
+            ],
+            "bridgeDirectory": "C:\\Users\\Vladimir\\AppData\\Local\\SC2EditorToolkit\\NativeGameEvidence\\94d63531-9c20-4da5-a616-9dfec19b8b82",
+            "stream": {
+              "session": "86f4dafcc363907ff99a8f0754bc34c2",
+              "runtimeEpoch": "c2109868a83ac2566d9171c68c108223",
+              "mapLoadSerial": 1
+            }
+          }
+        ],
+        "diagnostics": {
+          "status": "inconclusive",
+          "allSourcesClear": null
+        },
+        "cleanup": {
+          "stopped": true,
+          "sourceUnchanged": true
+        }
+      },
+      {
+        "jobId": "ac97ce05-f5f3-468e-9fc5-c7b1cc1538c6",
+        "file": ".sc2mcp-output/project-tests/ac97ce05-f5f3-468e-9fc5-c7b1cc1538c6/result.json",
+        "sha256": "3f4543d3f9f26d0e0f63b68314b966c0831fa82f61b1b014414900e76d71ed27",
+        "outcome": "passed",
+        "map": "work/gui-acceptance-20261022/EventsMap/.sc2mcp-output/GuiEvents.SC2Map",
+        "sourceSha256": "b7ed5bc7e4a79e64182930531910731698bd806233e051414f36fd67bda58cf4",
+        "sourceUnchanged": true,
+        "build": "5.0.17.98310",
+        "runtimeRelease": "v0.1.0-dev.11",
+        "legacyScenarios": [
+          "scenario:legacy_refs",
+          "scenario:history_0",
+          "scenario:history_1",
+          "scenario:history_2",
+          "scenario:history_3"
+        ],
+        "actions": [
+          {
+            "id": "click_1",
+            "file": ".sc2mcp-output/project-tests/ac97ce05-f5f3-468e-9fc5-c7b1cc1538c6/action_click_1_result.json",
+            "sha256": "99eef4c594eab9164dab1ae5ef208419cb220ee044657938edffad87f923bd8d",
+            "clock": "native_ui_click.gameTime",
+            "identity": "ui_session_then_event_pages",
+            "actionSubmitted": true,
+            "baselinePages": 3,
+            "observationPages": 1,
+            "eventsRead": 483,
+            "dropped": false,
+            "baseline": [
+              {
+                "number": 1,
+                "sha256": "2ec87250ffb020bbb57355f12ccd19a3f961efaacb00facd2cf15dd84dd56ff7",
+                "events": 266,
+                "gameTime": 24.75,
+                "hasMore": true,
+                "dropped": false,
+                "cursorSha256": "bfc9d3cf82466b5f63a5c168f850ee7a2e5116444f7ca49d2ad7dfe602811e86"
+              },
+              {
+                "number": 2,
+                "sha256": "b7778e647ac41af0b7cf7e8d9893a8310be487dd26b888d61f23925e634e78c0",
+                "events": 147,
+                "gameTime": 24.875,
+                "hasMore": true,
+                "dropped": false,
+                "cursorSha256": "df88dc4e4ebb818e444a7c9521900262585f613bcaffc9bd414f0ffaaec61a2a"
+              },
+              {
+                "number": 3,
+                "sha256": "cd91286654ba0f80c3a6964423abbe52e1124a39db7ad271a133b93dab49bec1",
+                "events": 60,
+                "gameTime": 25,
+                "hasMore": false,
+                "dropped": false,
+                "cursorSha256": "26aaaffeeb2280370eb552f29fc071d250d64cec8be605bdb7250a8c40db8ac3"
+              }
+            ],
+            "matches": [
+              {
+                "id": "click",
+                "expected": {
+                  "kind": "ui",
+                  "source": "galaxy",
+                  "controlId": 1,
+                  "eventType": 0,
+                  "player": 1
+                },
+                "observed": {
+                  "sequence": 150,
+                  "gameTime": 25.3125,
+                  "kind": "ui",
+                  "unit": null,
+                  "controlId": 1,
+                  "eventType": 0,
+                  "player": 1,
+                  "source": "galaxy"
+                }
+              }
+            ],
+            "after": [
+              {
+                "id": "callback",
+                "method": "game.units.inspect",
+                "expected": {
+                  "unit.life": 14
+                },
+                "observed": {
+                  "life": 14,
+                  "energy": 0
+                }
+              }
+            ],
+            "bridgeDirectory": "C:\\Users\\Vladimir\\AppData\\Local\\SC2EditorToolkit\\NativeGameEvidence\\473fc2cf-54e8-49b7-8411-394978151e4d",
+            "stream": {
+              "session": "50344322cc27b5bc8ed17fa9ddeb8a38",
+              "runtimeEpoch": "e26942d7a56115226b338354d2713e40",
+              "mapLoadSerial": 1
+            }
+          },
+          {
+            "id": "click_2",
+            "file": ".sc2mcp-output/project-tests/ac97ce05-f5f3-468e-9fc5-c7b1cc1538c6/action_click_2_result.json",
+            "sha256": "f47b736e680dcfeef224b4933d37b01902feceb265be7a8771e4c83bac76b7ea",
+            "clock": "native_ui_click.gameTime",
+            "identity": "ui_session_then_event_pages",
+            "actionSubmitted": true,
+            "baselinePages": 1,
+            "observationPages": 1,
+            "eventsRead": 13,
+            "dropped": false,
+            "baseline": [
+              {
+                "number": 1,
+                "sha256": "6b30c58ee690b40705f672703ce8549ace7f5f4f1430ae698986a49304ecdd29",
+                "events": 4,
+                "gameTime": 26,
+                "hasMore": false,
+                "dropped": false,
+                "cursorSha256": "9766705a07f3a66299c2e8b7d7cf95a951b0e8ca5ae0f90366033b183c4e27ee"
+              }
+            ],
+            "matches": [
+              {
+                "id": "click",
+                "expected": {
+                  "kind": "ui",
+                  "source": "galaxy",
+                  "controlId": 1,
+                  "eventType": 0,
+                  "player": 1
+                },
+                "observed": {
+                  "sequence": 155,
+                  "gameTime": 26.25,
+                  "kind": "ui",
+                  "unit": null,
+                  "controlId": 1,
+                  "eventType": 0,
+                  "player": 1,
+                  "source": "galaxy"
+                }
+              }
+            ],
+            "after": [
+              {
+                "id": "callback",
+                "method": "game.units.inspect",
+                "expected": {
+                  "unit.life": 15
+                },
+                "observed": {
+                  "life": 15,
+                  "energy": 0
+                }
+              }
+            ],
+            "bridgeDirectory": "C:\\Users\\Vladimir\\AppData\\Local\\SC2EditorToolkit\\NativeGameEvidence\\473fc2cf-54e8-49b7-8411-394978151e4d",
+            "stream": {
+              "session": "50344322cc27b5bc8ed17fa9ddeb8a38",
+              "runtimeEpoch": "e26942d7a56115226b338354d2713e40",
+              "mapLoadSerial": 1
+            }
+          }
+        ],
+        "image": {
+          "file": ".sc2mcp-output/project-tests/ac97ce05-f5f3-468e-9fc5-c7b1cc1538c6/Game.png",
+          "sha256": "8b036bb83e03b5a0455d910304ba8d357083c40e1488f30699f64dc3660d960e",
+          "review": "Inspected original game frame: readable native button and marker units, sparse diagnostic terrain; no finished mission/art acceptance."
+        },
+        "diagnostics": {
+          "status": "inconclusive",
+          "allSourcesClear": null
+        },
+        "cleanup": {
+          "stopped": true,
+          "sourceUnchanged": true
+        }
+      }
+    ]
+  },
+  "negative": {
+    "jobId": "b6cfdb66-b649-4d7f-bda0-e31725246fa9",
+    "file": ".sc2mcp-output/project-tests/b6cfdb66-b649-4d7f-bda0-e31725246fa9/result.json",
+    "sha256": "c2ceb9c99415aef940c504c9af3327c7fb46f0addbb9291d8799f10b52fe4824",
+    "state": "inconclusive",
+    "reason": "Action response lacks the unchanged stream identity and finite game time",
+    "actionSubmitted": true,
+    "successorActionSubmitted": false,
+    "description": "Real pre-fix native UI activation returned its clock only in clickEvent. The wrapper preserved an inconclusive result; the new confirmed native envelope is now supported."
+  },
+  "privacy": {
+    "passed": true,
+    "checkedFiles": 9972,
+    "privateSourceFiles": 1113,
+    "privateCorpusCompared": true,
+    "violations": [],
+    "scope": "Explicit private paths/debug/test artifacts and exact external C++/Python/Galaxy source copies, including renamed files. Not proof against transformed snippets or binary reverse engineering."
+  },
+  "privateSdkModified": false,
+  "ordinaryArchivesModified": false,
+  "regressions": {
+    "tests": 1439,
+    "pass": 1438,
+    "skip": 1,
+    "fail": 0,
+    "file": "work/publication/tests-20261023.tap",
+    "sha256": "37ece809fbc3fdd3059449850851fff8785ced340575d3db52cb71bfbf14a778",
+    "build": true,
+    "releaseBuild": true,
+    "publicationCandidateReleaseBuild": true,
+    "lint": true,
+    "englishDocumentationFiles": 117,
+    "catalogFiles": 1331,
+    "earlierFailure": {
+      "file": "work/launch-diagnostics-20261022/action-checks-full-tests.tap",
+      "sha256": "46f960997676d24016892a62f4288b1cd3d504cd9da19b617f6318554420ddb5",
+      "reason": "Bridge queue mock returned an action time before its drained baseline, including on the second run. Only fixture timestamps were corrected; the production temporal guard remains intact."
+    }
+  },
+  "remaining": [
+    "GUI registration save/reopen job remains owned/live and is not accepted by these game runs",
+    "No unique native cast-instance identity or arbitrary concurrency causality",
+    "No universal UI control/library coverage or absence-of-error certificate; diagnostics remain partial",
+    "Native navigation/buildability, broader Data/GUI variants, whole-location composition and final visual/UI/art review remain roadmap requirements"
+  ],
+  "published": false
+}

@@ -10,7 +10,7 @@ import {DataWorkspace} from "../data/workspace.js";
 import {promises as fs} from "node:fs";
 import {StringTableDocument} from "../text/stringTable.js";
 import {projectPath} from "../../app/paths.js";
-import {describeFunction, renderCalls, registry, registryDigest, registrySourceDigest, digest, encode, type GuiRequest, type GuiText, functionSupport, inspectGuiVariables, validateGuiRequestSize, collectGuiValues, inspectGuiFunctions, withGuiFunctions, resolveFunction} from './authoring.js';
+import {describeFunction, renderCalls, registry, registryDigest, registrySourceDigest, digest, encode, type GuiRequest, type GuiText, functionSupport, registrationSupport, inspectGuiVariables, validateGuiRequestSize, collectGuiValues, inspectGuiFunctions, withGuiFunctions, resolveFunction} from './authoring.js';
 import {triggerPlanSchema} from './schemas.js';
 import {declareVariables} from './variables.js';
 import {declareGuiTypes} from './declarations.js';
@@ -215,18 +215,18 @@ export class TriggerWorkspace {
   private readonly plans = new Map<string,{before:string;xml:string;schema:string;schemaFile:string;root:string;strings:Map<string,string>;stringRevisions:Map<string,string>;catalogRevision?:string;objectsRevision?:string;libraryRevision?:string;needsCatalogs?:boolean}>();
   searchFunctions(query='',offset=0,limit=50){
     const r=registry(this.registryFile),needle=query.toLowerCase(),all=(r.definitions??r.functions).filter(f=>f.name.toLowerCase().includes(needle));
-    return {total:all.length,offset,truncated:offset+limit<all.length,next:offset+limit<all.length?offset+limit:null,items:all.slice(offset,offset+limit).map(f=>({library:f.library,id:f.id,name:f.name,flags:f.flags,returnType:(f as typeof f & {returnType?:string}).returnType,parameters:f.parameters.map(p=>({id:p.id,name:p.name,type:p.type,gameType:p.gameType})),serializerSupported:functionSupport(f).supported,unsupportedReasons:functionSupport(f).reasons})),source:r.source,sha256:r.sha256,editor:'NOT_RUN'};
+    return {total:all.length,offset,truncated:offset+limit<all.length,next:offset+limit<all.length?offset+limit:null,items:all.slice(offset,offset+limit).map(f=>({library:f.library,id:f.id,name:f.name,flags:f.flags,returnType:(f as typeof f & {returnType?:string}).returnType,parameters:f.parameters.map(p=>({id:p.id,name:p.name,type:p.type,gameType:p.gameType})),serializerSupported:functionSupport(f).supported,unsupportedReasons:functionSupport(f).reasons,registration:registrationSupport(f)})),source:r.source,sha256:r.sha256,editor:'NOT_RUN'};
   }
   describeFunction(name:string) { return describeFunction(name,registry(this.registryFile)); }
-  async searchAvailableFunctions(query='',offset=0,limit=10,library='') {
+  async searchAvailableFunctions(query='',offset=0,limit=10,library='',registrationOnly=false) {
     const raw=await this.workspace.readRaw('Triggers'),context=await this.libraries.context(registry(this.registryFile)),r=withGuiFunctions(context.registry,raw.text,library),needle=query.toLowerCase();
-    const all=(r.definitions??r.functions).filter(f=>f.name.toLowerCase().includes(needle));
-    return {total:all.length,offset,next:offset+limit<all.length?offset+limit:null,items:all.slice(offset,offset+limit).map(f=>({id:f.id,name:f.name,library:f.library,source:f.origin==='map'?'map':f.library==='Ntve'?'NativeLib':'dependency',flags:f.flags,returnType:f.returnType,parameters:f.parameters.map(p=>({name:p.name,type:p.type,gameType:p.gameType})),supported:functionSupport(f).supported})),libraries:context.libraries,libraryCacheHit:context.cacheHit,compiler:'NOT_EXECUTED'};
+    const all=(r.definitions??r.functions).filter(f=>f.name.toLowerCase().includes(needle)&&(!registrationOnly||f.flags.includes('FlagEvent')));
+    return {total:all.length,offset,next:offset+limit<all.length?offset+limit:null,items:all.slice(offset,offset+limit).map(f=>({id:f.id,name:f.name,library:f.library,source:f.origin==='map'?'map':f.library==='Ntve'?'NativeLib':'dependency',flags:f.flags,returnType:f.returnType,parameters:f.parameters.map(p=>({name:p.name,type:p.type,gameType:p.gameType})),supported:functionSupport(f).supported,registration:registrationSupport(f)})),libraries:context.libraries,libraryCacheHit:context.cacheHit,compiler:'NOT_EXECUTED'};
   }
   async describeFunctions(names:string[],library='',presetLimit=12){
     if(!names.length||names.length>40)throw new Error('GUI_DESCRIBE_BATCH_LIMIT');
     const context=await this.libraries.context(registry(this.registryFile)),xml=(await this.workspace.readRaw('Triggers')).text,r=withGuiFunctions(context.registry,xml,library);
-    return {cacheHit:context.cacheHit,libraryRevision:context.revision,items:names.map(name=>{try{const f=resolveFunction(name,r);return {name:f.name,id:f.id,library:f.library,roles:f.flags.filter(v=>['FlagEvent','FlagAction','FlagCall','FlagCondition'].includes(v)),returnType:f.returnGuiType,parameters:f.parameters.map(p=>({name:p.name,id:p.id,type:p.type,gameType:p.gameType,typeElement:p.typeElement,flags:p.flags,hasDefault:!!p.defaultXml,presets:p.presets?.slice(0,presetLimit),presetCount:p.presets?.length??0,presetsTruncated:(p.presets?.length??0)>presetLimit})),support:functionSupport(f)};}catch(error){return {name,error:error instanceof Error?error.message:String(error)};}})};
+    return {cacheHit:context.cacheHit,libraryRevision:context.revision,items:names.map(name=>{try{const f=resolveFunction(name,r);return {name:f.name,id:f.id,library:f.library,roles:f.flags.filter(v=>['FlagEvent','FlagAction','FlagCall','FlagCondition'].includes(v)),returnType:f.returnGuiType,parameters:f.parameters.map(p=>({name:p.name,id:p.id,type:p.type,gameType:p.gameType,typeElement:p.typeElement,flags:p.flags,hasDefault:!!p.defaultXml,presets:p.presets?.slice(0,presetLimit),presetCount:p.presets?.length??0,presetsTruncated:(p.presets?.length??0)>presetLimit})),support:functionSupport(f),registration:registrationSupport(f)};}catch(error){return {name,error:error instanceof Error?error.message:String(error)};}})};
   }
   async runtimeSourceForPreview(file='Triggers'){
     const raw=await this.workspace.readRaw(file),context=await this.libraries.context(registry(this.registryFile));
@@ -243,7 +243,7 @@ export class TriggerWorkspace {
     if(!this.workspace.trackingReads)return this.workspace.withReadSet(()=>this.importRevised(args));
     const input=await this.workspace.readRaw(args.file),source=await this.workspace.readRaw('Triggers'),runtime=await this.workspace.readRaw('MapScript.galaxy');
     if(digest(source.text)!==args.expectedSourceSha256||digest(runtime.text)!==args.expectedRuntimeSha256)throw new Error('GUI_IMPORT_SOURCE_STALE');
-    const counts=inspectRevisedGui(input.text,{nativeLibraries:!!args.nativeJobId});
+    const counts=inspectRevisedGui(input.text,{nativeLibraries:!!args.nativeJobId,localLibraries:!args.nativeJobId});
     let generated:{source:string},validation:unknown,nativeContext:unknown;
     if(args.nativeJobId){
       if(!this.nativeGuiArtifact)throw Error('GUI_NATIVE_COMPILER_NOT_CONFIGURED: use a profile with editor and script');
@@ -285,8 +285,8 @@ export class TriggerWorkspace {
   }
   async describeAvailableFunction(name:string,library='') {
     const raw=await this.workspace.readRaw('Triggers'),context=await this.libraries.context(registry(this.registryFile)),r=withGuiFunctions(context.registry,raw.text,library);
-    if(!name.startsWith('custom:')&&!inspectGuiFunctions(raw.text,library).some(f=>f.id===name||f.name===name)){const f=resolveFunction(name,r);return {...f,xml:undefined,support:functionSupport(f),compiler:'NOT_EXECUTED'};}
-    const f=resolveFunction(name,r);return {...f,xml:undefined,support:functionSupport(f),arguments:'Parameter IDs or unique names',compiler:'NOT_EXECUTED'};
+    if(!name.startsWith('custom:')&&!inspectGuiFunctions(raw.text,library).some(f=>f.id===name||f.name===name)){const f=resolveFunction(name,r);return {...f,xml:undefined,support:functionSupport(f),registration:registrationSupport(f),compiler:'NOT_EXECUTED'};}
+    const f=resolveFunction(name,r);return {...f,xml:undefined,support:functionSupport(f),registration:registrationSupport(f),arguments:'Parameter IDs or unique names',compiler:'NOT_EXECUTED'};
   }
   async types(query='',offset=0,limit=30,library=''){
     const context=await this.libraries.context(registry(this.registryFile)),xml=(await this.workspace.readRaw('Triggers')).text,defs=definitionsFor(xml,library,context.registry),needle=query.toLowerCase();

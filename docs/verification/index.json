@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "recordedAt": "2026-10-22T22:58:56.228Z",
+  "recordedAt": "2026-10-23T00:51:55.774Z",
   "scope": "Inventory of retained records and explicit roadmap coverage. This does not supersede native observations or refresh historical source fingerprints.",
   "records": [
     {
@@ -164,6 +164,24 @@
       "file": "docs/verification/native-runtime-registration-2026-10-23.json",
       "role": "scoped",
       "sha256": "32da4a1ef8e8610d40383eb5773ac849de119a5913b0d706e7e939c2188b826b"
+    },
+    {
+      "id": "reusable_action_checks",
+      "file": "docs/verification/reusable-action-checks-2026-10-23.json",
+      "role": "scoped",
+      "sha256": "3f3b7d4bcac2cfc68a620b258bfde5e733155c2354c2792b1fa81d9769518659"
+    },
+    {
+      "id": "registration_discovery",
+      "file": "docs/verification/registration-discovery-2026-10-23.json",
+      "role": "scoped",
+      "sha256": "62dcd0b4f41f644e52cb0f6435b873026890c9cf80e94312fc2d4da3c956bec6"
+    },
+    {
+      "id": "inline_library_runtime",
+      "file": "docs/verification/inline-library-runtime-2026-10-23.json",
+      "role": "scoped",
+      "sha256": "394b15476976ffb5d396b2615fa9b8ae719f12be49134ed320bee09ea8da15fd"
     }
   ],
   "coverage": [
@@ -177,9 +195,10 @@
         "toolkit_1021",
         "gui_native_roundtrip",
         "startup_history",
-        "action_events"
+        "action_events",
+        "reusable_action_checks"
       ],
-      "reason": "Known Galaxy/GUI/Data/dependency fixtures, representative complex GUI native save/reopen and negative startup cases passed. Retained startup history and native callback-state readiness now pass twice on the unchanged events fixture. General startup stability remains incomplete; an earlier unexplained frontend exit and stalled native handler are retained."
+      "reason": "Known Galaxy/GUI/Data/dependency fixtures, representative complex GUI native save/reopen and negative startup cases passed. Retained startup history and native callback-state readiness now pass twice on the unchanged events fixture. General startup stability remains incomplete; an earlier unexplained frontend exit and stalled native handler are retained. Reusable manifest actions additionally pass two unchanged archives and a separate128-fixture/three-page history run; these do not complete the general startup matrix."
     },
     {
       "id": "regional_native_profile",
@@ -219,9 +238,11 @@
       "records": [
         "gui_context_roundtrip",
         "startup_history",
-        "runtime_registration"
+        "runtime_registration",
+        "registration_discovery",
+        "inline_library_runtime"
       ],
-      "reason": "Native explicit-target Registration now preserves the generated target/timer/local/array call and passes two game launches with exact one-callback/phase/wrong-target controls. Its own save/reopen handler is still live beyond observation deadline; exact saved-artifact equivalence/execution is not accepted. Earlier306-element roundtrips retain their original scope; broader imported semantics remain open."
+      "reason": "Native explicit-target Registration now preserves the generated target/timer/local/array call and passes two game launches with exact one-callback/phase/wrong-target controls. Its own save/reopen handler is still live beyond observation deadline; exact saved-artifact equivalence/execution is not accepted. Earlier306-element roundtrips retain their original scope; broader imported semantics remain open. Registration discovery now exposes verified versus rejected static signatures before mutation; this does not close native saved-artifact parity. Local generation now executes the same three library-bearing graphs twice each, with unchanged GUI/Data/Objects and explicit unsupported profiles; original-Editor saved-artifact parity remains separate."
     },
     {
       "id": "data_ability_corpus",

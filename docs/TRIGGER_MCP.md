@@ -10,8 +10,17 @@ The importer rejects ScriptCode and Custom Script fallbacks and validates scoped
 references and folder ownership. Save with `trigger.save`. It does not launch
 Trigger Revize or SC2 Editor; native conversion remains an explicit job.
 
-The default offline path checks its supported emitted runtime and rejects inline
-libraries. For libraries or other original-compiler semantics:
+The default offline path checks its supported emitted runtime, including
+self-contained inline libraries. References use Library/Type/Id identities;
+same IDs/names in separate libraries are independent. Map-owned declarations get
+native `lib<Id>_` namespaces, library triggers retain explicit Root order, and
+array initializers assign each cell. Supported record-reference parameters emit
+`structref<...>` rather than silently copying the record. Cyclic inline-library
+initialization dependencies, local unit-reference parameters and unavailable
+external implementations reject before staging. Compilation and equivalence
+still require their own evidence.
+
+For external implementation sources or other original-compiler semantics:
 
 1. Export the saved target context and call `editor.call` with method
    `sc2_convert_xml`, its `template`, the reviewed `triggers_file`,
@@ -69,6 +78,15 @@ types, defaults and reference flags. Registration executes at its Action/body
 position, including local parameter evaluation; it is not an initialization Event.
 Ordinary `Action` calls to event-only definitions still reject.
 
+Discover this role before planning: `trigger.search_functions` accepts
+`registration:true` to page Event definitions, including rejected cases. Each
+Event has `registration.supported`, `callKind`, `targetType` and bounded `reasons`.
+This is separate from ordinary `supported` / `serializerSupported`: valid Event
+XML alone does not verify the native registration signature. Single and batched
+descriptions return the same metadata. Names shared by multiple definitions need
+an exact ID; a rejected binding is not silently redirected to another definition.
+All discovery remains static (`compiler:NOT_EXECUTED`) and does not modify GUI.
+
 The serializer creates a hidden native Action signature with the verified
 first `trigger` argument and typed parameter bindings. The visible call and all
 arguments remain GUI elements; it adds no ScriptCode or Custom Script. Only
@@ -121,7 +139,16 @@ Variable: `name`, `type`, `scope` global/local, `initial`, `constant`, `arraySiz
 }
 ```
 
-The constant receives the native `VariableType/Constant`. It can not be written or used as a changeable iterator. Constant initializers allow the literal, preset and previously declared constant; arbitrary call is not allowed. Array size is a positive integer or a reference to a global int constant. Up to four dimensions are available in the API (observable form of GUI, not a statement of a universal limit of all internal arrays). For a literal index, type, sign and known boundary are checked; dynamic index requires int. Unindexed array is not given a scalar.
+The constant receives the native `VariableType/Constant`. It can not be written or used as a changeable iterator. Constant initializers allow the literal, preset and previously declared constant; arbitrary call is not allowed. `arraySizes` preserves SC2's serialized inclusive upper index, rather than a JavaScript length: `0` declares one cell at index0, and `2` declares indices0..2. A bound is a nonnegative integer or a reference to a global int constant with that meaning. Existing XML is not silently resized. Up to four dimensions are available in the API (observable form of GUI, not a statement of a universal limit of all internal arrays). For a literal index, type, sign and known inclusive boundary are checked; dynamic index requires int. Unindexed array is not given a scalar.
+
+Owned functions, records, presets and global variables are indexed across the
+map root and its inline libraries. Unqualified function names keep the current
+library's scope; use `LibraryId::Function` for another library and `::Function`
+for the map root. Value/type references use their explicit `library`, including
+`library:""` for the root. Foreign locals remain inaccessible. Serialized
+references and stored defaults retain their defining owner, including an explicit
+empty Library attribute when called from a named library. This does not provide
+an external library's implementation or certify every native reference variant.
 
 Read/write `States[2].history[1]`:
 

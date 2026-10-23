@@ -2,6 +2,39 @@
 
 ## Readiness
 
+The [inline-library runtime checkpoint](verification/inline-library-runtime-2026-10-23.json)
+removes the blanket map-root restriction for supported self-contained libraries.
+Three previously original-Editor-compiled GUI graphs now generate locally through
+MCP and pass two game launches each. Only MapScript changed;37 other payload
+components per map, including GUI, strings, Data and Objects, stayed byte-identical.
+Six successful launches passed typed-core and registration markers plus four
+real UI clicks. Two earlier runs retain a failed SDK `units.length` assertion;
+the corrected manifest and raw lists both establish one matching marker.
+Full regression:1446pass/1skip;37 focused checks. A358-file frozen candidate
+passed private-source comparison against1113 files. This does not renew original
+Editor save/reopen, prove all library/reference semantics or certify mission art.
+
+The [registration-discovery checkpoint](verification/registration-discovery-2026-10-23.json)
+adds static eligibility metadata to paged search and descriptions. Four actual
+MCP requests distinguish supported runtime binding from valid Event XML, including
+same-name definitions with different IDs. The112 native Event definitions have
+108 statically matched signatures and four explicit refusals; this is not108
+native runtime tests. Full regression:1440pass/1skip;32 focused checks. At that
+checkpoint both local emitters rejected the exact library-bearing fixture; the
+later inline-library checkpoint above supersedes that particular limitation.
+Original Editor and exact saved-artifact checks remain separate requirements.
+
+The [reusable-action checkpoint](verification/reusable-action-checks-2026-10-23.json)
+confirms five frozen-runtime launches through manifest `game.actions`: six real
+Dialog clicks with independent callback readback, six40-damage native casts with
+completion and energy readback, and128 explicit fixtures followed by a three-page
+baseline. The first four launches share one retained frontend; the stress launch
+uses a separate one. Full regression:1438pass/1skip. The real pre-fix native UI
+clock failure is retained; accepting its exact handler clock does not fabricate
+epoch/map metadata or provide a unique cast ID. Diagnostics remain partial.
+Reviewed frames show a readable diagnostic button, not a finished mission UI.
+The GUI save/reopen job and the complete quality roadmap remain open.
+
 The [runtime-registration checkpoint](verification/native-runtime-registration-2026-10-23.json)
 adds typed explicit-target `Registration` calls without ScriptCode/Custom Script.
 Original Editor generation/compile retained the target parameter and local timer;

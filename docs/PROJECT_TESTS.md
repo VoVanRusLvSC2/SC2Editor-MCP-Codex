@@ -33,6 +33,14 @@ Existing `game.scenarios` are still forwarded unchanged to the SDK as one batch,
 including their upstream `$ref` semantics. Action checks have their own local
 `$from` scope, shared with `modkit.batch`; they do not split those SDK batches.
 
+Scenario `expect` paths follow the SDK, rather than JavaScript property access.
+The pinned dev.11 SDK returns a missing value for a list's `units.length` path.
+Use numeric paths such as `units.0.valid`; with a two-result query, an explicit
+`units.1:null` check can assert the second result is absent. Inspect the retained
+list as well when accepting cardinality. Local action-check query expectations
+use the MCP resolver and do support array `length`. Do not rewrite upstream
+scenarios or silently drop an unsupported expectation to obtain a pass.
+
 ```json
 {
   "id": "pulse",
@@ -81,6 +89,13 @@ verdicts and no submissions. Ambiguous submission stays `unknown`; it is never
 retried. Legacy scenarios and their earlier committed effects remain intact.
 Complete replies, action requests/observations and each result are private JSON
 receipts. Missing bridge support is unsupported, not a simulated success.
+
+The [scoped native action record](verification/reusable-action-checks-2026-10-23.json)
+retains five actual launches, real Dialog callback readback, ordinary ability
+damage/completion/energy and a three-page baseline after128 explicit fixtures.
+The earlier UI clock-envelope failure remains recorded. This confirms the stated
+fixtures and event profiles; it does not certify every UI control or overlapping
+cast attribution, visual effects or complete diagnostic coverage.
 
 Launch checks retain a bounded upstream reason, native status, runtime error flag
 and map-confirmation state. For `map_compile_failed`, evidence also retains up to

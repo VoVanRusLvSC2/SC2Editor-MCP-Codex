@@ -31,7 +31,7 @@ export interface GuiStructure {name:string;translations?:Record<string,string>;f
 export interface GuiRequest {presets?:GuiPreset[];structures?:GuiStructure[];functions?:GuiFunction[];targetTrigger?:string;create?:{library?:string;identifier:string;category?:string;folder?:string;genre?:import('./organization.js').OrganizationArgs['genre'];translations?:Record<string,string>};calls:GuiCall[];variables?:GuiVariable[];stringFiles?:string[]}
 export interface Parameter extends GuiType {variableType?:string;selectorPresetId?:string;presetLibrary?:string;id:string;name:string;type:string;library?:string;defaultValue?:GuiValue;defaultXml?:string;defaultLibrary?:string;gameType?:string;flags:string[];limits?:string;presetId?:string;presets?:Array<{id:string;name:string}>}
 export interface FunctionDef {name:string;id:string;library:string;flags:string[];origin?:'map'|'dependency';returnType?:string;returnGuiType?:GuiType;returnGameType?:string;parameters:Parameter[];subFunctions?:Array<{id:string;name:string;kind:string}>;xml?:string}
-export interface Registry {typeDefinitions?:GuiDefinitions;externalVariables?:ReturnType<typeof inspectGuiVariables>;schemaVersion:number;build:number;source:string;sha256:string;functions:FunctionDef[];nativeExpressions?:Array<{name:string;id:string;type:string;library:string;xml?:string}>;definitions?:FunctionDef[];labels?:Array<{library:string;type:'Label';id:string;names:{enUS:string|null;ruRU:string|null};icon:string|null;color:string|null}>;localeSources?:Record<string,{path:string;sha256:string}>}
+export interface Registry {mapScope?:string;typeDefinitions?:GuiDefinitions;externalVariables?:ReturnType<typeof inspectGuiVariables>;schemaVersion:number;build:number;source:string;sha256:string;functions:FunctionDef[];nativeExpressions?:Array<{name:string;id:string;type:string;library:string;xml?:string}>;definitions?:FunctionDef[];labels?:Array<{library:string;type:'Label';id:string;names:{enUS:string|null;ruRU:string|null};icon:string|null;color:string|null}>;localeSources?:Record<string,{path:string;sha256:string}>}
 export interface GuiType {type:string;gameType?:string;presetId?:string;structureId?:string;typeLibrary?:string;typeElement?:GuiTypeRef;arrayRank?:number;constant?:boolean}
 export interface GuiText {key:string;value:string;translations?:Record<string,string>}
 export interface RenderContext {functionId?:string;returnType?:GuiType;triggerId?:string;initializing?:string;globalOnly?:boolean;inLoop?:boolean;onText?:(text:GuiText)=>void}
@@ -42,7 +42,7 @@ export const digest=(s:string)=>createHash('sha256').update(s).digest('hex');
 const registryHashes=new WeakMap<Registry,string>();
 export function registryDigest(r:Registry){let value=registryHashes.get(r);if(!value){value=digest(JSON.stringify(r));registryHashes.set(r,value);}return value;}
 export const encode=(s:string)=>s.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&apos;');
-export const localRef=(library:string)=>library?` Library="${encode(library)}"`:'';
+export const localRef=(library:string,currentLibrary='')=>library?` Library="${encode(library)}"`:currentLibrary?' Library=""':'';
 const allowedTypes=new Set<string>([...GUI_VARIABLE_TYPES,'preset','anynumber','anycompare','anyvariable','sameas','sameasparent','anytype','anygamelink','anypreset','return']);
 const allowedFlags=new Set(['FlagNative','FlagAction','FlagEvent','FlagCall','FlagCondition','FlagSubFunctions','FlagAllowBreak','FlagOperator','FlagNoScriptPrefix','FlagCreateThread','FlagHidden']);
 const allowedParamFlags=new Set(['ParamFlagPreload','ParamFlagReference','ParamFlagMatchConst','ParamFlagVariableOnly','ParamFlagAltDisplay','ParamFlagMultiple']);
@@ -66,6 +66,14 @@ export function functionSupport(f:FunctionDef) {
  if(f.subFunctions?.some(s=>!['Condition','Action'].includes(s.kind)))reasons.push('Unsupported child role');
  return {supported:reasons.length===0,reasons:[...new Set(reasons)]};
 }
+/** Runtime registration is a distinct role. Ordinary Event serialization does
+ * not establish the compiler-supplied trigger argument or native API binding. */
+export function registrationSupport(f:FunctionDef) {
+ if(!f.flags.includes('FlagEvent'))return undefined;
+ const reasons=[...functionSupport(f).reasons];
+ try{checkRegistrationSignature(f);}catch(error){reasons.push(error instanceof Error?error.message:String(error));}
+ return {supported:reasons.length===0,callKind:'Registration' as const,targetType:'trigger' as const,reasons:[...new Set(reasons)]};
+}
 function definitions(r:Registry){return r.definitions??r.functions;}
 const functionIndexes=new WeakMap<Registry,{ids:Map<string,FunctionDef[]>;names:Map<string,FunctionDef[]>}>();
 function functionIndex(r:Registry){
@@ -86,6 +94,7 @@ export function resolveFunction(name:string,r:Registry,role?:GuiCall['kind']|'Ex
  const prefix=name.startsWith('custom:')?'map':name.startsWith('native:')?'native':undefined,lookup=prefix?name.slice(name.indexOf(':')+1):name;
  const index=functionIndex(r);
  let found=(index.ids.get(lookup)??index.names.get(lookup)??[]).filter(f=>(explicitLibrary===undefined||f.library===explicitLibrary)&&(!prefix||(prefix==='map'?f.origin==='map':f.origin!=='map')));
+ if(explicitLibrary===undefined&&r.mapScope!==undefined){const exactId=index.ids.has(lookup),local=found.filter(f=>f.origin!=='map'||f.library===r.mapScope);if(!exactId||local.length)found=local;}
  if(!found.length)throw new Error('GUI_FUNCTION_UNSUPPORTED: '+name);
  if(role)found=found.filter(f=>role==='Expression'?!!f.returnType&&(f.flags.includes('FlagCall')||f.flags.includes('FlagCondition')):f.flags.includes('Flag'+role)||(role==='Condition'&&f.returnType==='bool'&&f.flags.includes('FlagCall')));
  if(expected)found=found.filter(f=>!!f.returnType&&compatible(expected,f.returnGuiType??{type:f.returnType,gameType:f.returnGameType}));
@@ -102,7 +111,7 @@ export function describeFunction(name:string,r=registry()){
  const found=definitions(r).filter(f=>f.id===name||f.name===name);
  let selected=found;if(selected.length>1){const legacy=r.functions.find(f=>f.name===name);if(legacy)selected=[legacy];}
  if(selected.length!==1)throw new Error(selected.length?'GUI_FUNCTION_AMBIGUOUS: '+name:'GUI_FUNCTION_UNSUPPORTED: '+name);
- const f=selected[0];return {...f,build:r.build,provenance:{source:r.source,sha256:r.sha256},serializerSupported:functionSupport(f).supported,support:functionSupport(f),supportedValues:['literal','variable:id-or-name','parameter:id-or-name','preset:id-or-name','gamelink','unit:placed-object','text:localized','nativeCall:zeroArgReturn','call:typed-recursive'],arguments:'Parameter IDs or unique definition names; duplicate aliases rejected',unsupportedValues:['block','customScript','array references','multiple-value parameters'],compiler:'NOT_EXECUTED'};
+ const f=selected[0];return {...f,build:r.build,provenance:{source:r.source,sha256:r.sha256},serializerSupported:functionSupport(f).supported,support:functionSupport(f),registration:registrationSupport(f),supportedValues:['literal','variable:id-or-name:indices-and-members','parameter:id-or-name:indices-and-members','preset:id-or-name','presetBits','gamelink','unit:placed-object','trigger:id-or-name','text:localized','nativeCall:zeroArgReturn','call:typed-recursive','multiple-values:declared-parameters'],arguments:'Parameter IDs or unique definition names; duplicate aliases rejected',unsupportedValues:['block','customScript'],compiler:'NOT_EXECUTED'};
 }
 export function inspectGuiVariables(xml:string,library=''){
  const p=scanXml(xml);const libOf=(node:typeof p.nodes[number])=>{let current=node;while(current.parentId!==null){current=p.nodes[current.parentId];if(current.tag==='Library')return current.attrs.Id??'';}return p.nodes.find(n=>n.tag==='Standard')?.attrs.Id??'';};
@@ -122,7 +131,7 @@ function variable(value:Extract<GuiValue,{kind:'variable'}>,xml:string,library:s
  const visible=candidates.filter(v=>v.scope==='global'||v.library===library&&!context.globalOnly&&!!(context.functionId??context.triggerId)&&v.ownerIds.length===1&&v.ownerIds[0]===(context.functionId??context.triggerId));
  const locals=visible.filter(v=>v.scope==='local');if(!value.id&&locals.length)candidates=locals;else candidates=visible;
  if(candidates.length!==1)throw new Error(candidates.length?'GUI_VARIABLE_AMBIGUOUS':'GUI_VARIABLE_UNRESOLVED_OR_SCOPE');
- const v=candidates[0];if(v.id===context.initializing)throw new Error('GUI_VARIABLE_SELF_INITIALIZER');
+ const v=candidates[0];if(v.id===context.initializing&&v.library===library)throw new Error('GUI_VARIABLE_SELF_INITIALIZER');
  if(!allowedTypes.has(v.type))throw new Error('GUI_VARIABLE_TYPE_UNSUPPORTED');return v;
 }
 export function validateGuiRequestSize(request:GuiRequest){
@@ -206,7 +215,7 @@ class Renderer {
   const root=v.kind==='variable'?variable(v,this.xml,this.library,context,this.variables):this.parameter(v,context);
   let type:GuiType={type:root.type,gameType:root.gameType,typeElement:root.typeElement,presetId:root.presetId,typeLibrary:root.library??this.library},constant='constant' in root&&root.constant;
   const sizes='arraySizes' in root?root.arraySizes:[];
-  const consume=(indices:GuiValue[]|undefined,dimensions:any[])=>{if((indices?.length??0)>dimensions.length)throw new Error('GUI_ARRAY_INDEX_COUNT');for(const [i,index] of (indices??[]).entries()){if(this.infer(index,context).type!=='int')throw new Error('GUI_ARRAY_INDEX_TYPE');if(index.kind==='literal'){const n=Number(index.value),dimension=dimensions[i],boundId=dimension?.variableId??dimension?.variable?.id,boundLibrary=dimension?.library??dimension?.variable?.library??this.library,bound=Number(dimension?.value??this.variables.find(v=>v.id===boundId&&v.library===boundLibrary)?.initialScalar);if(!Number.isInteger(n)||n<0||Number.isFinite(bound)&&n>=bound)throw new Error('GUI_ARRAY_INDEX_BOUNDS');}}return dimensions.length-(indices?.length??0);};
+  const consume=(indices:GuiValue[]|undefined,dimensions:any[])=>{if((indices?.length??0)>dimensions.length)throw new Error('GUI_ARRAY_INDEX_COUNT');for(const [i,index] of (indices??[]).entries()){if(this.infer(index,context).type!=='int')throw new Error('GUI_ARRAY_INDEX_TYPE');if(index.kind==='literal'){const n=Number(index.value),dimension=dimensions[i],boundId=dimension?.variableId??dimension?.variable?.id,boundLibrary=dimension?.library??dimension?.variable?.library??this.library,bound=Number(dimension?.value??this.variables.find(v=>v.id===boundId&&v.library===boundLibrary)?.initialScalar);if(!Number.isInteger(n)||n<0||Number.isFinite(bound)&&n>bound)throw new Error('GUI_ARRAY_INDEX_BOUNDS');}}return dimensions.length-(indices?.length??0);};
   type={...type,arrayRank:consume(v.indices,sizes as any[])};
   const fields:Array<{id:string;library:string;indices?:GuiValue[]}>=[];
   for(const member of v.members??[]){if(type.arrayRank)throw new Error('GUI_ARRAY_INDEX_COUNT');if(type.type!=='struct'||!type.typeElement)throw new Error('GUI_MEMBER_NOT_STRUCTURE');
@@ -218,8 +227,8 @@ class Renderer {
  }
  private accessBody(v:Extract<GuiValue,{kind:'variable'|'parameter'}>,context:RenderContext,depth:number){
   const access=this.access(v,context),indices=(values:GuiValue[]|undefined)=>{return (values??[]).map(value=>{const id=this.allocate();this.elements.push(`<Element Type="Param" Id="${id}">${this.value(value,{type:'int'},id,context,depth+1)}</Element>`);return `<Array Type="Param"${localRef(this.library)} Id="${id}"/>`;}).join('');};
-  const field=(i:number):string=>{const f=access.fields[i];if(!f)return '';const id=this.allocate();const body=`<Variable Type="Variable"${localRef(f.library)} Id="${f.id}"/>`+indices(f.indices)+field(i+1);this.elements.push(`<Element Type="Param" Id="${id}">${body}</Element>`);return `<StructMember Type="Param"${localRef(this.library)} Id="${id}"/>`;};
-  return `<${v.kind==='variable'?'Variable':'Parameter'} Type="${v.kind==='variable'?'Variable':'ParamDef'}"${localRef(access.root.library??this.library)} Id="${access.root.id}"/>`+indices(v.indices)+field(0);
+  const field=(i:number):string=>{const f=access.fields[i];if(!f)return '';const id=this.allocate();const body=`<Variable Type="Variable"${localRef(f.library,this.library)} Id="${f.id}"/>`+indices(f.indices)+field(i+1);this.elements.push(`<Element Type="Param" Id="${id}">${body}</Element>`);return `<StructMember Type="Param"${localRef(this.library)} Id="${id}"/>`;};
+  return `<${v.kind==='variable'?'Variable':'Parameter'} Type="${v.kind==='variable'?'Variable':'ParamDef'}"${localRef(access.root.library??this.library,this.library)} Id="${access.root.id}"/>`+indices(v.indices)+field(0);
  }
  private normalize(f:FunctionDef,args:Record<string,GuiValue|GuiValue[]>){
   const normalized=new Map<string,GuiValue|GuiValue[]>();
@@ -249,12 +258,12 @@ class Renderer {
    if(Array.isArray(raw)&&!p.flags.includes('ParamFlagMultiple'))throw new Error('GUI_MULTIPLE_ARGUMENT_NOT_ALLOWED');
    const list=Array.isArray(raw)?raw:raw?[raw]:[];
    if(!list.length&&p.flags.includes('ParamFlagMultiple')&&f.flags.includes('FlagOperator'))throw new Error('GUI_MULTIPLE_ARGUMENT_EMPTY');
-   if(!list.length&&p.defaultXml){const id=this.allocate();this.elements.push(`<Element Type="Param" Id="${id}"><ParameterDef Type="ParamDef"${localRef(p.library??f.library)} Id="${p.id}"/>${p.defaultXml}</Element>`);refs.push(`<Parameter Type="Param"${localRef(this.library)} Id="${id}"/>`);continue;}
+   if(!list.length&&p.defaultXml){const id=this.allocate();this.elements.push(`<Element Type="Param" Id="${id}"><ParameterDef Type="ParamDef"${localRef(p.library??f.library,this.library)} Id="${p.id}"/>${p.defaultXml}</Element>`);refs.push(`<Parameter Type="Param"${localRef(this.library)} Id="${id}"/>`);continue;}
    for(const v of list){const id=this.allocate(),body=this.value(v,want,id,{...context,globalOnly:context.globalOnly||f.flags.includes('FlagEvent')},depth+1,p);
     const actual=v.kind==='preset'||v.kind==='presetBits'?this.selectedPreset(v,want,p).type:this.infer(v,context,want.type==='anyvariable'?undefined:want);types.set(p.id,actual);
     if(p.type==='anyvariable'&&p.variableType&&actual.type!==p.variableType)throw new Error('GUI_VARIABLE_TYPE_CONSTRAINT');
     if(p.type==='anyvariable'&&f.name==='ForEachInteger'&&actual.type!=='int')throw new Error('GUI_LOOP_VARIABLE_MUST_BE_INT');
-    this.elements.push(`<Element Type="Param" Id="${id}"><ParameterDef Type="ParamDef"${localRef(p.library??f.library)} Id="${p.id}"/>${body}</Element>`);refs.push(`<Parameter Type="Param"${localRef(this.library)} Id="${id}"/>`);
+    this.elements.push(`<Element Type="Param" Id="${id}"><ParameterDef Type="ParamDef"${localRef(p.library??f.library,this.library)} Id="${p.id}"/>${body}</Element>`);refs.push(`<Parameter Type="Param"${localRef(this.library)} Id="${id}"/>`);
    }
   }
   if(f.library==='Ntve'&&f.origin!=='map'&&f.name==='Comparison'){
@@ -278,7 +287,7 @@ class Renderer {
    // owner must instead declare the exact GUI base type of the owned variable.
    const initializerPreset=depth===0&&!p&&!!context.initializing&&selected.baseType===want.type&&this.variables.some(variable=>variable.id===context.initializing&&variable.library===this.library&&sameGuiType(variable,want));
    if(want.type==='preset'&&!sameGuiType(want,selected.type)||!['preset','anypreset','anycompare','anytype'].includes(want.type)&&!p?.selectorPresetId&&!initializerPreset)throw new Error('GUI_PRESET_MISMATCH');
-   return selected.members.map(member=>`<${v.kind==='presetBits'?'ValuePreset':'Preset'} Type="PresetValue"${localRef(member.library??'Ntve')} Id="${member.id}"/>`).join('');
+   return selected.members.map(member=>`<${v.kind==='presetBits'?'ValuePreset':'Preset'} Type="PresetValue"${localRef(member.library??'Ntve',this.library)} Id="${member.id}"/>`).join('');
   }
   const actual=this.infer(v,context,want.type==='anyvariable'?undefined:want);
   if(!compatible(want,actual))throw new Error('GUI_TYPE_MISMATCH: '+(p?.id??paramId)+' expected '+want.type+', received '+actual.type);
@@ -296,7 +305,7 @@ class Renderer {
   }
   if(v.kind==='gamelink')return `<ValueType Type="gamelink" GameType="${encode(v.domain)}"/><Value>${encode(v.id)}</Value>`;
   if(v.kind==='unit')return `<ValueType Type="unit"/><ValueId Id="${v.objectId}"/>`;
-  if(v.kind==='trigger'){const target=this.trigger(v);return `<ValueType Type="trigger"/><ValueElement Type="Trigger"${localRef(target.library)} Id="${encode(target.id)}"/>`;}
+  if(v.kind==='trigger'){const target=this.trigger(v);return `<ValueType Type="trigger"/><ValueElement Type="Trigger"${localRef(target.library,this.library)} Id="${encode(target.id)}"/>`;}
   if(v.kind==='text'){
    if(!context.onText)throw new Error('GUI_TEXT_CONTEXT_REQUIRED');context.onText({key:'Param/Value/'+(this.library?'lib_'+this.library+'_':'')+paramId,value:v.value,translations:v.translations});return '<ValueType Type="text"/>';
   }
@@ -319,10 +328,10 @@ class Renderer {
    const role=f.subFunctions?.find(s=>s.id===child.role||s.name===child.role);if(!role||role.kind!==(child.call.kind==='Registration'?'Action':child.call.kind))throw new Error('GUI_SUBFUNCTION_ROLE_MISMATCH: '+child.role);
    const childId=this.call(child.call,{...context,inLoop:context.inLoop||f.flags.includes('FlagAllowBreak')},depth+1);
    const i=this.elements.findIndex(e=>e.startsWith(`<Element Type="FunctionCall" Id="${childId}">`));
-   this.elements[i]=this.elements[i].replace(/(<FunctionDef\b[^>]*\/>)/,`$1<SubFunctionType Type="SubFuncType"${localRef(f.library)} Id="${role.id}"/>`);
+   this.elements[i]=this.elements[i].replace(/(<FunctionDef\b[^>]*\/>)/,`$1<SubFunctionType Type="SubFuncType"${localRef(f.library,this.library)} Id="${role.id}"/>`);
    childRefs.push(`<FunctionCall Type="FunctionCall"${localRef(this.library)} Id="${childId}"/>`);
   }
-  this.elements.push(`<Element Type="FunctionCall" Id="${id}"><FunctionDef Type="FunctionDef"${localRef(f.library)} Id="${f.id}"/>${refs}${childRefs.join('')}</Element>`);return id;
+  this.elements.push(`<Element Type="FunctionCall" Id="${id}"><FunctionDef Type="FunctionDef"${localRef(f.library,this.library)} Id="${f.id}"/>${refs}${childRefs.join('')}</Element>`);return id;
  }
  call(call:GuiCall,context=this.context,depth=0){
   if(call.kind!=='Registration'){const f=resolveFunction(call.function,this.r,call.kind);return this.function(f,call.args,call.children,context,depth);}
@@ -368,11 +377,12 @@ export function inspectGuiFunctions(xml:string,library=''):FunctionDef[]{
    const definition=elements.find(e=>e.attrs.Type==='ParamDef'&&e.attrs.Id===ref.attrs.Id&&(ref.attrs.Library??library)===library);
    if(!definition)return {id:ref.attrs.Id,name:ref.attrs.Id,type:'unresolved',flags:[]};
    const ds=children(definition),t=type(ds.find(c=>c.tag==='ParameterType'));
-   return {id:definition.attrs.Id,name:identifier(definition),type:t.type??'unresolved',gameType:t.gameType,typeElement:t.typeElement,library,limits:ds.find(c=>c.tag==='Limits')?.attrs.Value,defaultXml:(()=>{const ref=ds.find(c=>c.tag==='Default');const p=ref?elements.find(e=>e.attrs.Type==='Param'&&e.attrs.Id===ref.attrs.Id):undefined;return p?xml.slice(p.startTagEnd,p.endTagStart):undefined;})(),flags:ds.filter(c=>c.tag.startsWith('ParamFlag')).map(c=>c.tag)};
+   return {id:definition.attrs.Id,name:identifier(definition),type:t.type??'unresolved',gameType:t.gameType,typeElement:t.typeElement,library,limits:ds.find(c=>c.tag==='Limits')?.attrs.Value,defaultXml:(()=>{const ref=ds.find(c=>c.tag==='Default');const p=ref?elements.find(e=>e.attrs.Type==='Param'&&e.attrs.Id===ref.attrs.Id):undefined;if(!p)return undefined;let body=xml.slice(p.startTagEnd,p.endTagStart);const references=scanXml(body).nodes.filter(n=>n.attrs.Type&&n.attrs.Id&&n.attrs.Library===undefined);for(const node of references.sort((a,b)=>b.start-a.start)){const pos=node.startTagEnd-(node.selfClosing?2:1);body=body.slice(0,pos)+` Library="${encode(library)}"`+body.slice(pos);}return body;})(),flags:ds.filter(c=>c.tag.startsWith('ParamFlag')).map(c=>c.tag)};
   });
   return {id:n.attrs.Id,name:identifier(n),library,origin:'map' as const,flags:cs.filter(c=>c.tag.startsWith('Flag')).map(c=>c.tag),returnType:ret.type==='void'?undefined:ret.type,returnGameType:ret.gameType,returnGuiType:ret.type?{type:ret.type,gameType:ret.gameType,typeElement:ret.typeElement}:undefined,parameters,xml:xml.slice(n.start,n.end)};
  });
 }
 export function withGuiFunctions(r:Registry,xml:string,library=''):Registry{
- return {...r,definitions:[...definitions(r),...inspectGuiFunctions(xml,library)]};
+ const scopes=[...new Set(['',...scanXml(xml).nodes.filter(n=>n.tag==='Library').map(n=>n.attrs.Id)])],owned=new Set(scopes);
+ return {...r,mapScope:library,definitions:[...definitions(r).filter(f=>f.origin!=='map'),...scopes.flatMap(scope=>inspectGuiFunctions(xml,scope))],externalVariables:[...(r.externalVariables??[]).filter(v=>!owned.has(v.library??'')),...scopes.flatMap(scope=>inspectGuiVariables(xml,scope).filter(v=>v.scope==='global'))]};
 }

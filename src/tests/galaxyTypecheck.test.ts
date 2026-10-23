@@ -27,6 +27,17 @@ test('Galaxy bounded typecheck verifies simple parameters and local return',asyn
  assert.equal(result.typecheck.files[0].status,'VERIFIED_SUBSET');
 });
 
+test('Galaxy structref call binding accepts an owned record lvalue without accepting a different record type',async t=>{
+ const root=await fs.mkdtemp(path.join(os.tmpdir(),'sc2-galaxy-record-ref-'));t.after(()=>fs.rm(root,{recursive:true,force:true}));const script=new ScriptWorkspace(new Workspace(root)),prefix='struct Row { int value; }; struct Other { int value; }; Row state; Other wrong; void Mutate(structref<Row> row) { row.value = 23; } ';
+ const good=await script.validateSource(prefix+'void Use() { Mutate(state); }');assert.equal(good.valid,true);assert.ok(!good.diagnostics.some(d=>d.code==='GALAXY_CALL_TYPE'));assert.equal(good.compiler,'NOT_EXECUTED');
+ const bad=await script.validateSource(prefix+'void Use() { Mutate(wrong); }');assert.equal(bad.valid,false);assert.ok(bad.diagnostics.some(d=>d.code==='GALAXY_CALL_TYPE'&&d.message.includes('got Other')));
+});
+
+test('record temporaries are not falsely certified as verified reference binding',async t=>{
+ const root=await fs.mkdtemp(path.join(os.tmpdir(),'sc2-galaxy-ref-temporary-'));t.after(()=>fs.rm(root,{recursive:true,force:true}));const result=await new ScriptWorkspace(new Workspace(root)).validateSource('struct Row { int value; }; Row state; Row Read() { return state; } void Consume(structref<Row> row) {} void Use() { Consume(Read()); }');
+ assert.equal(result.valid,true);assert.equal(result.typecheck.status,'INCOMPLETE');assert.equal(result.compiler,'NOT_EXECUTED');
+});
+
 test('Galaxy typecheck binds while arithmetic and compound assignments in scenario C',async t=>{
  const root=await fs.mkdtemp(path.join(os.tmpdir(),'sc2-galaxy-loop-'));t.after(()=>fs.rm(root,{recursive:true,force:true}));
  await fs.writeFile(path.join(root,'custom.galaxy'),'int ScenarioCSum(int limit) { int total = 0; int i = 0; while (i < limit) { total += i; i += 1; } if (total > 0) { return total; } else { return 0; } }');

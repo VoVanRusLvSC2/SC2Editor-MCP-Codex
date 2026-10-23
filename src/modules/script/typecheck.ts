@@ -56,6 +56,13 @@ export function checkGalaxyTypes(doc:GalaxyDocument,natives:ReadonlyMap<string,G
       for(let level=scopes.length-1;level>=0;level--){const type=scopes[level].get(name);if(type)return type;}
       return globals.get(name);
     };
+    const addressable=(begin:number,end:number)=>{
+      while(tokens[begin]?.value==='('&&doc.pairs.get(begin)===end-1){begin++;end--;}
+      if(tokens[begin]?.kind!=='identifier'||!variable(tokens[begin].value))return false;
+      let at=begin+1;
+      while(at<end){if(tokens[at].value==='['){const close=doc.pairs.get(at);if(close===undefined||close>=end)return false;at=close+1;}else if(tokens[at].value==='.'&&tokens[at+1]?.kind==='identifier')at+=2;else return false;}
+      return true;
+    };
     const operator=(index:number,end:number):{value:string;length:number}|undefined=>{
       const token=tokens[index];if(!token||index>=end)return undefined;
       const next=tokens[index+1];
@@ -108,7 +115,13 @@ export function checkGalaxyTypes(doc:GalaxyDocument,natives:ReadonlyMap<string,G
                 if(args.length!==expected.length)fail('GALAXY_CALL_ARITY',first.start,`${name}: expected ${expected.length}, got ${args.length}`);
                 for(let arg=0;arg<args.length;arg++){
                   const actual=infer(...args[arg]);
-                  if(actual&&expected[arg]&&!compatible(expected[arg],actual))fail('GALAXY_CALL_TYPE',tokens[args[arg][0]].start,`${name} argument ${arg+1}: expected ${expected[arg]}, got ${actual}`);
+                  const reference=/^structref<([A-Za-z_][A-Za-z_0-9]*)>$/.exec(expected[arg]??'');
+                  if(actual&&reference&&actual===reference[1]){
+                    // Galaxy binds a record variable directly to structref<T>.
+                    // Temporaries/external record declarations remain unverified;
+                    // do not reject a valid lvalue or certify unknown binding.
+                    if(!structTypes.has(reference[1])||!addressable(...args[arg]))unknown++;
+                  }else if(actual&&expected[arg]&&!compatible(expected[arg],actual))fail('GALAXY_CALL_TYPE',tokens[args[arg][0]].start,`${name} argument ${arg+1}: expected ${expected[arg]}, got ${actual}`);
                 }
                 checked++;
               }

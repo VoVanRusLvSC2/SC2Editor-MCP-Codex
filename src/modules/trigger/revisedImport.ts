@@ -1,11 +1,11 @@
 import {scanXml} from '../../core/xmlScanner.js';
 import {organizeTriggerXml} from './organization.js';
 /** Explicit full-GUI import boundary; semantic equivalence still needs verification. */
-export function inspectRevisedGui(xml:string,options:{nativeLibraries?:boolean}={}){
+export function inspectRevisedGui(xml:string,options:{nativeLibraries?:boolean;localLibraries?:boolean}={}){
  if(Buffer.byteLength(xml)>4*1024*1024)throw new Error('GUI_IMPORT_BYTE_LIMIT');
  const p=scanXml(xml);if(p.diagnostics.some(d=>d.severity==='error'))throw new Error('GUI_IMPORT_XML');
  const libraries=p.nodes.filter(n=>n.tag==='Library');
- if(libraries.length&&!options.nativeLibraries)throw new Error('GUI_IMPORT_NATIVE_LIBRARY_COMPILER_REQUIRED');
+ if(libraries.length&&!options.nativeLibraries&&!options.localLibraries)throw new Error('GUI_IMPORT_NATIVE_LIBRARY_COMPILER_REQUIRED');
  if(p.nodes.some(n=>['ScriptCode','ExpressionText','CustomScript'].includes(n.tag)||n.attrs.Type==='CustomScript'))throw new Error('GUI_IMPORT_SCRIPT_FALLBACK');
  const container=p.nodes.find(n=>n.tag==='TriggerData'&&n.parentId===null),root=p.nodes.find(n=>n.tag==='Root'&&n.parentId===container?.id),elements=p.nodes.filter(n=>n.tag==='Element');
  if(!root)throw new Error('GUI_IMPORT_ROOT');

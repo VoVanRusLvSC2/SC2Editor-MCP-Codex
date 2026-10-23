@@ -1,0 +1,257 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-23T00:06:16.117Z",
+  "status": "static_discovery_and_real_mcp_transport_passed",
+  "scope": "Separate Event serialization and explicit-target runtime registration eligibility, bounded paged discovery and descriptions. No new native event, compile or save/reopen acceptance.",
+  "sourceFingerprints": [
+    {
+      "file": "src/modules/trigger/authoring.ts",
+      "sha256LfUtf8": "0a560696f1613c0b6e65f6acfc0e1b95ff6fac681d33bfbd6d45163a5a41e277"
+    },
+    {
+      "file": "src/modules/trigger/workspace.ts",
+      "sha256LfUtf8": "c9c0eee5056de71ae3e0271364909b189cfdadb73717edfdf0db2851d0157c2b"
+    },
+    {
+      "file": "src/modules/trigger/tools.ts",
+      "sha256LfUtf8": "4f4b12180547eab015dbea40e6dd6f9b6ba8e0865b11390a85c4074ac8d79826"
+    },
+    {
+      "file": "src/modules/trigger/registration.ts",
+      "sha256LfUtf8": "6112b5337ae6ac8b46c5f603398be2a2b6420055cb313f100e4e0c6d8d07fcbf"
+    },
+    {
+      "file": "generated/trigger-authoring-registry.json",
+      "sha256LfUtf8": "3b34c821a11644d9f4c1282de03bcf26df889a107a2aff3dc11a717a0a3104ee"
+    },
+    {
+      "file": "generated/galaxy-native-api.json",
+      "sha256LfUtf8": "93cb079b55e6037443a8465421741a956adf49a38e210e3684cd64e3fb740bc2"
+    },
+    {
+      "file": "scripts/mcp-session.mjs",
+      "sha256LfUtf8": "34f8888d8d778ac5c1a43429eb9bd3f58cd742c5382ab9059ec949ffc2a28834"
+    },
+    {
+      "file": "package.json",
+      "sha256LfUtf8": "95655122435658570fdcc498cacf96ef94492a6bada5572af372179fceae82d7"
+    }
+  ],
+  "discovery": {
+    "filter": "trigger.search_functions registration=true retains Event definitions and rejected cases",
+    "metadata": "registration.supported/callKind/targetType/reasons, independent of ordinary serializer eligibility",
+    "ambiguousNames": "Exact definition IDs retained; no automatic remapping",
+    "nativeEventDefinitions": 112,
+    "supportedStaticSignatures": 108,
+    "rejectedStaticSignatures": [
+      {
+        "name": "TriggerAddEventGameTimeEvent",
+        "id": "548F27E8",
+        "library": "Ntve",
+        "reasons": [
+          "GUI_REGISTRATION_NATIVE_SIGNATURE"
+        ]
+      },
+      {
+        "name": "TriggerAddEventSelectedPurchaseItemChanged",
+        "id": "E9556756",
+        "library": "Ntve",
+        "reasons": [
+          "GUI_REGISTRATION_NATIVE_GUI_BINDING"
+        ]
+      },
+      {
+        "name": "TriggerAddEventSelectedPurchaseCategoryChanged",
+        "id": "4555A6F2",
+        "library": "Ntve",
+        "reasons": [
+          "GUI_REGISTRATION_NATIVE_GUI_BINDING"
+        ]
+      },
+      {
+        "name": "TriggerAddEventUnitSpendVital",
+        "id": "2CA8C1EF",
+        "library": "Ntve",
+        "reasons": [
+          "GUI_REGISTRATION_NATIVE_SIGNATURE"
+        ]
+      }
+    ],
+    "compiler": "NOT_EXECUTED",
+    "nativeGeneralization": false
+  },
+  "mcp": {
+    "file": "work/launch-diagnostics-20261022/registration-discovery-mcp.log",
+    "sha256": "e946c1249aa21f94876eb365006667fdd6eca353840fce38ac0d52866e49727b",
+    "input": {
+      "file": "work/launch-diagnostics-20261022/registration-discovery-mcp.jsonl",
+      "sha256": "9dfff4469a823e6fc01944c974fdf02f5379e4b46f685a593726c5b426a2752a"
+    },
+    "requests": 4,
+    "onePersistentWorkflowProcess": true,
+    "allRepliesConfirmed": true,
+    "clientJsonPayloadBytes": 3906,
+    "byteScope": "Four emitted client response JSON objects, excluding ready banner/newlines; not model token usage or billing and no before/after speedup claim",
+    "queries": [
+      {
+        "id": "timer",
+        "ok": true,
+        "total": 1,
+        "items": [
+          {
+            "id": "00000049",
+            "name": "TriggerAddEventTimer",
+            "serializerSupported": true,
+            "registration": {
+              "supported": true,
+              "callKind": "Registration",
+              "targetType": "trigger",
+              "reasons": []
+            }
+          }
+        ]
+      },
+      {
+        "id": "bindings",
+        "ok": true,
+        "total": 2,
+        "items": [
+          {
+            "id": "E9556756",
+            "name": "TriggerAddEventSelectedPurchaseItemChanged",
+            "serializerSupported": true,
+            "registration": {
+              "supported": false,
+              "callKind": "Registration",
+              "targetType": "trigger",
+              "reasons": [
+                "GUI_REGISTRATION_NATIVE_GUI_BINDING"
+              ]
+            }
+          },
+          {
+            "id": "278A6B81",
+            "name": "TriggerAddEventSelectedPurchaseItemChanged",
+            "serializerSupported": true,
+            "registration": {
+              "supported": true,
+              "callKind": "Registration",
+              "targetType": "trigger",
+              "reasons": []
+            }
+          }
+        ]
+      },
+      {
+        "id": "rejections",
+        "ok": true,
+        "items": [
+          {
+            "id": "278A6B81",
+            "name": "TriggerAddEventSelectedPurchaseItemChanged",
+            "serializerSupported": true,
+            "registration": {
+              "supported": true,
+              "callKind": "Registration",
+              "targetType": "trigger",
+              "reasons": []
+            }
+          },
+          {
+            "id": "E9556756",
+            "name": "TriggerAddEventSelectedPurchaseItemChanged",
+            "serializerSupported": true,
+            "registration": {
+              "supported": false,
+              "callKind": "Registration",
+              "targetType": "trigger",
+              "reasons": [
+                "GUI_REGISTRATION_NATIVE_GUI_BINDING"
+              ]
+            }
+          },
+          {
+            "id": "548F27E8",
+            "name": "TriggerAddEventGameTimeEvent",
+            "serializerSupported": true,
+            "registration": {
+              "supported": false,
+              "callKind": "Registration",
+              "targetType": "trigger",
+              "reasons": [
+                "GUI_REGISTRATION_NATIVE_SIGNATURE"
+              ]
+            }
+          },
+          {
+            "id": "2CA8C1EF",
+            "name": "TriggerAddEventUnitSpendVital",
+            "serializerSupported": true,
+            "registration": {
+              "supported": false,
+              "callKind": "Registration",
+              "targetType": "trigger",
+              "reasons": [
+                "GUI_REGISTRATION_NATIVE_SIGNATURE"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "id": "actions",
+        "ok": true,
+        "total": 0,
+        "items": []
+      }
+    ]
+  },
+  "offlineEmitterProbe": {
+    "component": "work/gui-acceptance-20261023/RuntimeRegistration/Triggers",
+    "xmlSha256": "d954b3660d3351ebf415b4aabec6d1e719a9e791aedd05eba5ca9fa3cee74072",
+    "previousCandidate": "C:\\Users\\Vladimir\\AppData\\Local\\SC2EditorToolkit\\Candidates\\ActionChecks-20261023-b2acb27a-7a13-4a77-9451-dfe283fc8dce",
+    "previous": {
+      "status": "unsupported",
+      "reason": "GUI_RUNTIME_MAP_ROOT_ONLY"
+    },
+    "current": {
+      "status": "unsupported",
+      "reason": "GUI_RUNTIME_MAP_ROOT_ONLY"
+    },
+    "outputParity": "not_established",
+    "scope": "This exact library-bearing fixture rejects with GUI_RUNTIME_MAP_ROOT_ONLY in both local emitters. No replacement fixture, native compile or saved-artifact equivalence claim is substituted."
+  },
+  "regressions": {
+    "tests": 1441,
+    "pass": 1440,
+    "skip": 1,
+    "fail": 0,
+    "full": {
+      "file": "work/launch-diagnostics-20261022/registration-discovery-full.tap",
+      "sha256": "f70da6466e442470bb1097c7d92329bbe448c513f8d1073cc7582af0628750c6"
+    },
+    "focused": 32,
+    "focusedReport": {
+      "file": "work/launch-diagnostics-20261022/registration-discovery-focused-fixed.tap",
+      "sha256": "abf814897ef761525266cad2600c39921662c79ae08742b1cb7dea0b5e85952f"
+    },
+    "build": true,
+    "releaseBuild": true,
+    "lint": true,
+    "englishDocumentationFiles": 117,
+    "initialFocusedFailure": {
+      "file": "work/launch-diagnostics-20261022/registration-discovery-focused.tap",
+      "sha256": "3c4a388446b497126f56112ae3bb575021ff3899c31f428ac05ac45f7b8e15ce",
+      "reason": "New read-only assertions initially expected an empty draft, but fixture setup already staged its receiver and labels. Corrected assertions preserve the exact initial draft list and Trigger bytes; production code was unchanged."
+    }
+  },
+  "privateSdkModified": false,
+  "mapContentAuthored": false,
+  "published": false,
+  "remaining": [
+    "Four native bindings remain unsupported instead of guessed",
+    "Original Registration save/reopen worker remains live and unaccepted",
+    "Additional event profiles and reference/callback semantics need native generation and runtime evidence",
+    "Broader roadmap navigation, location composition, final UI/art and current acceptance gates remain open"
+  ]
+}

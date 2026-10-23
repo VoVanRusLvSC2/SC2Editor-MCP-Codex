@@ -8,6 +8,47 @@ acceptance corpus and remaining phases below are still open. See
 
 Execution ledger:
 
+- Local GUI generation now handles self-contained inline libraries with
+  Library/Type/Id resolution, qualified formal binding, native namespaces,
+  explicit Root library order, guarded initialization and per-cell arrays.
+  Static/VM checks also cover record-reference mutation and duplicate IDs across
+  scopes. Three previously original-Editor-compiled GUI graphs were imported,
+  regenerated, saved and exported through MCP. Each retained37 unchanged payload
+  components; only MapScript changed. Six successful game launches (two per map)
+  passed typed-core markers, explicit-target timer controls and four actual UI
+  clicks. Two initial registration runs remain failed because the SDK scenario
+  resolver does not implement `units.length`; a new numeric-index assertion and
+  independent raw list-length checks preserved the intended uniqueness check.
+  Full regression:1446pass/1skip; focused:37pass. The358-file frozen candidate
+  passed9976-entry privacy review against1113 private sources. Original Editor
+  save/reopen, other reference/control variants and broader library semantics
+  remain open. See [inline-library evidence](verification/inline-library-runtime-2026-10-23.json).
+
+- Reusable `game.actions` manifests now compose bounded setup/readback queries,
+  local `$from` references and one retained-bridge action observation. Legacy SDK
+  scenarios keep their original one-batch `$ref` semantics. Four runs in one
+  retained frontend passed two real Dialog clicks or three native40-damage casts
+  per map; a fifth independent stress run passed two clicks after128 individually
+  confirmed fixtures and a three-page baseline (483 events, no dropped page).
+  Native UI clocks come from the confirmed handler's exact counter; no epoch or
+  map serial is invented. The pre-fix inconclusive result and blocked successor
+  are retained. Full regression:1438pass/1skip. Three UI frames were reviewed as
+  sparse diagnostic fixtures, not finished mission art. See
+  [reusable-action evidence](verification/reusable-action-checks-2026-10-23.json).
+
+- Event discovery now separates ordinary serialization from runtime Registration
+  eligibility. Paged `registration:true` search and single/batched descriptions
+  report verified target type and bounded rejection reasons before planning.
+  Same-name definitions retain exact IDs; unverified bindings are not redirected.
+  This reduces failed authoring attempts without extending native support or
+  claiming compilation/save/reopen. Four real MCP requests and32 focused checks
+  passed; full regression:1440pass/1skip. At that checkpoint the exact
+  library-bearing registration fixture was outside both local emitters
+  (`GUI_RUNTIME_MAP_ROOT_ONLY`); the later inline-library entry above addresses
+  this case without changing the retained earlier record. Wider event profiles
+  remain open. See
+  [discovery evidence](verification/registration-discovery-2026-10-23.json).
+
 - Explicit-target runtime GUI registration now uses a separate `Registration`
   call and typed trigger-element/variable/parameter expressions. The native
   Action signature keeps original argument binding and Action/body position;
