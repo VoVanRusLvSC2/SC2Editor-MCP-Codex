@@ -7,17 +7,19 @@ import type {PlacementDocument} from '../placement/document.js';
 import {measuredGroupSchema} from '../placement/measuredGroups.js';
 import {nativeTopologyPatchSchema,captureTopologyPatch} from './nativeTopologyOwnership.js';
 import type {NativeGeometryCoverage} from './nativeGeometry.js';
+import {landscapeRouteSourceSchema,landscapeRouteBindingSchema} from './landscapeRouteSource.js';
+import {landscapePadSourceSchema,landscapePadBindingSchema} from './landscapePadSource.js';
 
 const name=z.string().regex(/^[A-Za-z][A-Za-z0-9_-]{0,63}$/);
-const config=createLocationSchema.extend({terrain:terrainLocationSchema,includeUnits:z.literal(false).default(false),objectCount:z.number().int().min(0).max(5000).optional(),groups:z.array(measuredGroupSchema).max(16).default([])}).strict();
-export const landscapeZoneSchema=z.object({id:name,dependsOn:z.array(name).max(31).default([]),purpose:z.string().max(160).default(''),condition:z.enum(['operational','abandoned','damaged','destroyed']).default('operational'),config}).strict();
-export const landscapeIntentSchema=z.object({zones:z.array(landscapeZoneSchema).min(1).max(32)}).strict();
+export const landscapeConfigSchema=createLocationSchema.extend({terrain:terrainLocationSchema,includeUnits:z.literal(false).default(false),objectCount:z.number().int().min(0).max(5000).optional(),groups:z.array(measuredGroupSchema).max(16).default([])}).strict();
+export const landscapeZoneSchema=z.object({id:name,dependsOn:z.array(name).max(31).default([]),purpose:z.string().max(160).default(''),condition:z.enum(['operational','abandoned','damaged','destroyed']).default('operational'),config:landscapeConfigSchema}).strict();
+export const landscapeIntentSchema=z.object({zones:z.array(landscapeZoneSchema).min(1).max(32),routeSource:landscapeRouteSourceSchema.nullable().optional(),padSource:landscapePadSourceSchema.nullable().optional()}).strict();
 export const landscapePlanSchema=z.union([terrainLandscapeSchema,z.object({intent:landscapeIntentSchema}).strict()]);
-export const LANDSCAPE_RECIPE_REVISION=3;
+export const LANDSCAPE_RECIPE_REVISION=4;
 const hash=z.string().regex(/^[a-f0-9]{64}$/),encoded=z.string().max(2**24);
 const run=z.object({offset:z.number().int().nonnegative(),before:encoded,after:encoded,mask:encoded}).strict();
 const patch=z.object({file:z.enum(['t3HeightMap','t3SyncHeightMap','t3TextureMasks','t3SyncTextureInfo','t3SyncCliffLevel','t3CellFlags']),length:z.number().int().positive().max(2**27),header:encoded.optional(),runs:z.array(run).max(200000)}).strict();
-export const landscapeStateSchema=z.object({version:z.literal(1),context:hash,zones:z.array(landscapeZoneSchema.extend({requestHash:hash,browseFingerprint:hash,generatorRevision:z.number().int().positive(),patches:z.array(patch).max(6),topology:nativeTopologyPatchSchema.optional(),objects:z.array(z.object({id:z.number().int().positive(),fingerprint:hash,slot:z.string().regex(/^(?:scatter:\d+|group:[A-Za-z][A-Za-z0-9_-]{0,63}:\d+)$/).optional()}).strict()).max(5000)}).strict()).max(32)}).strict();
+export const landscapeStateSchema=z.object({version:z.literal(1),context:hash,routeSource:landscapeRouteBindingSchema.optional(),padSource:landscapePadBindingSchema.optional(),zones:z.array(landscapeZoneSchema.extend({requestHash:hash,browseFingerprint:hash,generatorRevision:z.number().int().positive(),patches:z.array(patch).max(6),topology:nativeTopologyPatchSchema.optional(),objects:z.array(z.object({id:z.number().int().positive(),fingerprint:hash,slot:z.string().regex(/^(?:scatter:\d+|group:[A-Za-z][A-Za-z0-9_-]{0,63}:\d+)$/).optional()}).strict()).max(5000)}).strict()).max(32)}).strict();
 export type LandscapeZone=z.infer<typeof landscapeZoneSchema>;
 export type LandscapeState=z.infer<typeof landscapeStateSchema>;
 type Patch=z.infer<typeof patch>;
@@ -65,7 +67,7 @@ export class LandscapeTouches implements TerrainTouches {
  texture(x:number,y:number){const masks=this.state.masks!,sync=this.state.syncTextures!;for(let layer=0;layer<8;layer++)this.mark('t3TextureMasks',masks.byteIndex(x,y,layer),1,x%2?15:240);this.mark('t3SyncTextureInfo',sync.dataOffset+(Math.floor(y/8)*sync.width+Math.floor(x/8))*8,1);}
  nativeGeometry(coverage:NativeGeometryCoverage){
   this.nativeTouched=true;
-  for(const i of coverage.vertices){this.mark('t3HeightMap',32+i*6,5);this.mark('t3SyncHeightMap',64+i*4,2);}
+  for(const i of coverage.vertices){this.mark('t3HeightMap',32+i*6,5);this.mark('t3SyncHeightMap',64+i*4,3);}
   const width=this.state.heights.width-1,coarseWidth=width/2;
   for(const i of coverage.cells){this.nativeCells.add(i);const x=i%coarseWidth*2,y=Math.floor(i/coarseWidth)*2;
    for(let dy=0;dy<2;dy++)for(let dx=0;dx<2;dx++){const cell=(y+dy)*width+x+dx;this.mark('t3SyncCliffLevel',32+cell*2,2);this.mark('t3CellFlags',32+cell,1,1);}

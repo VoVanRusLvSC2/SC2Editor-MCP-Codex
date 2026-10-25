@@ -5,9 +5,11 @@ import { promises as fs } from "node:fs";
 import path from "node:path";
 import { Workspace } from "../../core/workspace.js";
 import { internalWorkspaceDirectory } from "../../core/discoveryPaths.js";
+import {projectPath} from '../../app/paths.js';
 import { scanXml } from "../../core/xmlScanner.js";
 import { DataWorkspace } from "../data/workspace.js";
 import { DataDocument,referenceSchema } from "../data/document.js";
+import {mergeAssetEntries} from './assetIndex.js';
 import type { DataField, DataObject } from "../data/types.js";
 import { StringTableDocument } from "../text/stringTable.js";
 import type {
@@ -230,7 +232,11 @@ export class BrowseWorkspace {
   }
   private async buildIndex(force=false):Promise<BrowseIndexSnapshot>{
     const captured=await this.workspace.memoizeReads(()=>this.buildCapturedIndex(force));
-    captured.value.fingerprint=createHash('sha256').update(this.workspace.readMemoFingerprint(captured.memo)+JSON.stringify(this.roots)+JSON.stringify([...this.data.nativeCatalogFiles].sort())).digest('hex');
+    // Bundled schema content keeps the same semantic role after a package move.
+    // Actual source paths remain in the read memo and transaction stale guards.
+    const bundled=projectPath('generated/data-xsd-index'),identities=new Map<string,string>();
+    for(const {file}of referenceSchema.sources()){const relative=path.relative(bundled,file);if(relative&&!path.isAbsolute(relative)&&relative!=='..'&&!relative.startsWith('..'+path.sep))identities.set(file,'@sc2mcp/bundled-data-xsd/'+normalized(relative));}
+    captured.value.fingerprint=createHash('sha256').update(this.workspace.readMemoFingerprint(captured.memo,identities)+JSON.stringify(this.roots)+JSON.stringify([...this.data.nativeCatalogFiles].sort())).digest('hex');
     this.snapshotReads=captured.memo;return captured.value;
   }
   private async buildCapturedIndex(force=false):Promise<BrowseIndexSnapshot>{
@@ -329,17 +335,12 @@ export class BrowseWorkspace {
       referencedBy: [{ catalogType: entry.catalogType, id: entry.id, field: flatten(entry.definition.fields).find((field) => [field.value, field.link].includes(assetPath))?.path ?? "resolved-field" }],
       evidence: ["OBSERVED_CATALOG_XML", "OBSERVED_ASSET_PATH"],
     })));
-    const assets = new Map<string, PhysicalAssetEntry>();
-    for (const asset of [...physical, ...referenced]) {
-      const key = `${asset.sourceLayer}:${asset.dependency}:${asset.path}`.toLowerCase();
-      const prior = assets.get(key);
-      assets.set(key, prior ? { ...prior, referencedBy: unique([...prior.referencedBy, ...asset.referencedBy].map((entry) => JSON.stringify(entry))).map((entry) => JSON.parse(entry) as PhysicalAssetEntry["referencedBy"][number]), evidence: unique([...prior.evidence, ...asset.evidence]) } : asset);
-    }
+    const assets = mergeAssetEntries([...physical, ...referenced]);
     // Absence is also a dependency: installing the optional schema must invalidate
     // an index built without it, even when no catalog files changed.
     await this.workspace.readBinaryDependency(referenceSchema.manifestFile,true);
     for(const source of referenceSchema.sources()){const bytes=await this.workspace.readBinaryDependency(source.file);if(createHash('sha256').update(bytes).digest('hex')!==source.sha256)throw Error('BROWSE_SCHEMA_CHANGED_RESTART_REQUIRED');}
-    this.snapshot = { fingerprint, builtAt: new Date().toISOString(), entries, assets: [...assets.values()].sort((a, b) => a.path.localeCompare(b.path)), files, warnings };
+    this.snapshot = { fingerprint, builtAt: new Date().toISOString(), entries, assets, files, warnings };
     this.snapshotCacheKey=fingerprint;
     return this.snapshot;
   }
@@ -350,6 +351,7 @@ export class BrowseWorkspace {
     const index = snapshot ?? await this.index();
     return {
       fingerprint: index.fingerprint,
+      fingerprintProfile:'content-inputs-bundled-schema-v2',
       builtAt: index.builtAt,
       roots: this.roots,
       files: index.files.length,

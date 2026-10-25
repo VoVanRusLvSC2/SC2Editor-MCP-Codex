@@ -369,6 +369,26 @@ export class PlacementDocument {
     this.setAttribute(id, "Scale", scaleText(scale));
   }
 
+  /** Validate all assignments before applying source-span edits with one reparse. */
+  setVariations(assignments:Array<{objectId:number;variation:number}>):void {
+    if(!assignments.length)return;
+    if(new Set(assignments.map(a=>a.objectId)).size!==assignments.length)throw Error('DUPLICATE_VARIATION_OBJECT');
+    const nodes=new Map<number,XmlNode>();
+    for(const node of this.children(this.root()))if(['ObjectUnit','ObjectDoodad'].includes(node.tag)&&/^\d+$/.test(node.attrs.Id??'')){
+      const id=Number(node.attrs.Id);if(nodes.has(id))throw Error('DUPLICATE_PLACEMENT_ID: '+id);nodes.set(id,node);
+    }
+    const edits:Array<{start:number;end:number;text:string}>=[];
+    for(const {objectId,variation}of assignments){
+      if(!Number.isSafeInteger(objectId)||objectId<1)throw Error('INVALID_VARIATION_OBJECT_ID');
+      if(!Number.isSafeInteger(variation)||variation<0)throw Error('VARIATION_REQUIRES_NONNEGATIVE_INTEGER');
+      const node=nodes.get(objectId);if(!node)throw Error('Placement object '+objectId+' not found');
+      const value=numberText(variation),span=node.attrSpans.find(a=>a.name==='Variation');
+      if(span){if(this.source.slice(span.valueStart,span.valueEnd)!==value)edits.push({start:span.valueStart,end:span.valueEnd,text:value});}
+      else{const offset=node.startTagEnd-(node.selfClosing?2:1);edits.push({start:offset,end:offset,text:' Variation="'+value+'"'});}
+    }
+    if(edits.length){const parts:string[]=[];let cursor=0;for(const edit of edits.sort((a,b)=>a.start-b.start)){parts.push(this.source.slice(cursor,edit.start),edit.text);cursor=edit.end;}parts.push(this.source.slice(cursor));this.source=parts.join('');this.reparse();}
+  }
+
   remove(id: number): void {
     const node = this.objectNode(id);
     const newline = newlineOf(this.source);
@@ -417,6 +437,9 @@ export class PlacementDocument {
       }
       if(operation.op==='move'){
         const start=index,moves:Array<Extract<PlacementMutation,{op:'move'}>>=[];while(index<operations.length&&operations[index].op==='move')moves.push(operations[index++] as Extract<PlacementMutation,{op:'move'}>);this.moveMany(moves);for(const [offset,m]of moves.entries())result.push({index:start+offset,op:'move',objectId:m.objectId});continue;
+      }
+      if(operation.op==='variation'){
+        const start=index,assignments:Array<Extract<PlacementMutation,{op:'variation'}>>=[];while(index<operations.length&&operations[index].op==='variation')assignments.push(operations[index++] as Extract<PlacementMutation,{op:'variation'}>);this.setVariations(assignments);for(const [offset,a]of assignments.entries())result.push({index:start+offset,op:'variation',objectId:a.objectId});continue;
       }
       switch (operation.op) {
         case "rotate":

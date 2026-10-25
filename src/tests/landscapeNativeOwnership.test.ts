@@ -42,11 +42,21 @@ test('moving an owned ramp preserves independent manual rows, objects, heights a
  await fs.writeFile(xmlFile,xml.replace(eastCell.after,eastCell.after.replace('<cc ','<cc note="manual-east" ')));
  const hFile=path.join(f.root,'t3HeightMap'),height=await fs.readFile(hFile),far=32+(62*65+62)*6;height.writeUInt16LE(height.readUInt16LE(far)+2,far);await fs.writeFile(hFile,height);
  const flagsFile=path.join(f.root,'t3CellFlags'),flags=await fs.readFile(flagsFile),hidden=32+16*64+18;flags[hidden]|=4;await fs.writeFile(flagsFile,flags);
+ const syncFile=path.join(f.root,'t3SyncHeightMap'),sync=await fs.readFile(syncFile),syncMask=64+(17*65+22)*4+2;sync.writeUInt16LE(sync.readUInt16LE(syncMask)|0x8000,syncMask);await fs.writeFile(syncFile,sync);
  const objectsFile=path.join(f.root,'Objects');await fs.appendFile(objectsFile,'\n<!-- manual unrelated object annotation -->');const objects=await fs.readFile(objectsFile);
  const changed={...west,config:{...west.config,terrain:{...west.config.terrain,topology:{...west.config.terrain.topology,ramps:[{...west.config.terrain.topology.ramps[0],center:{x:22,y:19}}]}}}};
  const plan=await f.apply({zones:[changed]});assert.deepEqual(plan.ownership.rebuilt.map(z=>z.id),['west']);
  const after=await f.terrain.state(),ramps=parseTerrainXml(after.descriptor.source).ramps!;assert.ok(ramps.some(r=>r.frames.mid?.center[0]===22&&r.frames.mid.center[1]===19));assert.ok(ramps.some(r=>r.frames.mid?.center[0]===54));
  assert.match(after.descriptor.source,/note="manual-east"/);assert.equal(after.heights.bytes.readUInt16LE(far),height.readUInt16LE(far));assert.equal(after.sources.get('t3CellFlags')![hidden]&4,4);assert.deepEqual(await fs.readFile(objectsFile),objects);assert.deepEqual((await f.ledger()).zones[1],eastRecord);
+ assert.equal(after.sources.get('t3SyncHeightMap')!.readUInt16LE(syncMask)&0x8000,0x8000,'independent SMAP upper bit survives owned ramp movement');
+});
+
+test('owned SMAP level labels reject manual changes without claiming independent upper bits',async t=>{
+ const f=await fixture(t),input={zones:[zone()]};await f.apply(input);
+ const file=path.join(f.root,'t3SyncHeightMap'),original=await fs.readFile(file),offset=64+(8*65+8)*4+2,changed=Buffer.from(original);changed[offset]^=1;await fs.writeFile(file,changed);
+ await assert.rejects(f.terrain.ownedLandscape(input),/OWNED_TERRAIN_CHANGED/);assert.deepEqual(f.workspace.binary.draftFiles(),[]);
+ const upper=Buffer.from(original);upper[offset+1]^=0x80;await fs.writeFile(file,upper);
+ const repeat=await f.terrain.ownedLandscape(input);assert.equal(repeat.ownership.rebuilt.length,0);assert.ok(repeat.files.every(f=>f.changedBytes===0));assert.deepEqual(await fs.readFile(file),upper);
 });
 
 test('manual owned native row, ramp and binary changes block even an equal request without staging',async t=>{

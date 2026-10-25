@@ -83,3 +83,58 @@ test('MCP class operation repairs an existing Actor without deleting its catalog
  assert.equal(result.validation?.valid,true);
  assert.match(await fs.readFile(path.join(f.root,file),'utf8'),/<CActorMissile id="ArenaHero04Actor" parent="Reaper"\/>/);
 });
+
+const weaponFile='Base.SC2Data/GameData/WeaponData.xml';
+test('batch class repair matches single-file writes and preserves comments, fields and IDs',async t=>{
+ const single=await fixture(t),batch=await fixture(t);
+ const source='<Catalog>\r\n  <!-- manual weapon -->\r\n  <CWeapon id="CustomWeapon"><!-- preserve --><Range value="6.0000"/><Period value="1.25"/></CWeapon>\r\n  <CWeaponLegacy id="Neighbor"><Range value="3"/></CWeaponLegacy>\r\n</Catalog>';
+ for(const f of [single,batch])await fs.writeFile(path.join(f.root,weaponFile),source);
+ const operation={op:'object.setType' as const,object:{id:'CustomWeapon',ctype:'CWeapon'},ctype:'CWeaponLegacy'};
+ const one=await single.data.apply({file:weaponFile,operations:[operation],dryRun:false,stage:false,backup:false});
+ const many=await batch.data.batch({changes:[{file:weaponFile,operations:[operation]}],dryRun:false,stage:false,backup:false});
+ assert.equal(one.validation?.valid,true);assert.equal(many.validation?.valid,true);
+ const expected=source.replace('<CWeapon id=','<CWeaponLegacy id=').replace('</CWeapon>','</CWeaponLegacy>');
+ assert.equal(await fs.readFile(path.join(single.root,weaponFile),'utf8'),expected);
+ assert.equal(await fs.readFile(path.join(batch.root,weaponFile),'utf8'),expected);
+ assert.equal(many.applied[0].target,'CWeaponLegacy:CustomWeapon');
+ assert.ok((await batch.data.context({ids:['CustomWeapon'],fields:['Range'],includeReferences:false})).operations.includes('object.setType'));
+});
+
+test('batch class changes preserve aliases for following field edits and cross-file links',async t=>{
+ const f=await fixture(t),unitFile='Base.SC2Data/GameData/UnitData.xml';
+ const result=await f.data.batch({changes:[
+  {file:unitFile,operations:[{op:'object.create',ctype:'CUnit',id:'Consumer',fields:[{name:'WeaponArray',index:0,link:'@weapon'}]}]},
+  {file:weaponFile,operations:[
+   {op:'object.create',as:'weapon',ctype:'CWeapon',id:'BatchWeapon',fields:[{name:'Range',value:6}]},
+   {op:'object.clone',as:'twin',object:'@weapon',id:'TwinWeapon'},
+   {op:'object.setType',object:'@weapon',ctype:'CWeaponLegacy'},
+   {op:'object.setType',object:'@twin',ctype:'CWeaponLegacy'},
+   {op:'field.set',object:'@weapon',path:'Range',value:9},
+   {op:'field.set',object:'@twin',path:'Range',value:4},
+  ]},
+ ],dryRun:false,stage:false,backup:false});
+ assert.equal(result.validation?.valid,true);
+ assert.equal(result.authoring.every(row=>row.authoring.accepted),true);
+ assert.equal(result.aliases['@weapon'].key,'CWeaponLegacy:BatchWeapon');
+ assert.equal(result.aliases['@twin'].key,'CWeaponLegacy:TwinWeapon');
+ const weapons=new DataDocument(await fs.readFile(path.join(f.root,weaponFile),'utf8'));
+ assert.equal(weapons.resolve('BatchWeapon').tag,'CWeaponLegacy');
+ assert.equal(weapons.resolve('TwinWeapon').tag,'CWeaponLegacy');
+ assert.match(weapons.source,/<Range value="9"/);assert.match(weapons.source,/<Range value="4"/);
+ const units=await fs.readFile(path.join(f.root,unitFile),'utf8');assert.match(units,/Link="BatchWeapon"/);assert.ok(!units.includes('@weapon'));
+});
+
+for(const stage of [false,true])test(`batch cross-domain class change rolls back every file and draft (stage=${stage})`,async t=>{
+ const f=await fixture(t),unitFile='Base.SC2Data/GameData/UnitData.xml';
+ const source='<Catalog><CWeapon id="CustomWeapon"><Range value="6"/></CWeapon></Catalog>';
+ await fs.writeFile(path.join(f.root,weaponFile),source);
+ const files=[file,weaponFile,'Base.SC2Data/GameData.xml','ComponentList.SC2Components'];
+ const before=await Promise.all(files.map(name=>fs.readFile(path.join(f.root,name))));
+ await assert.rejects(f.data.batch({changes:[
+  {file:weaponFile,operations:[{op:'object.setType',object:'CustomWeapon',ctype:'CWeaponLegacy'}]},
+  {file:unitFile,operations:[{op:'object.create',as:'unit',ctype:'CUnit',id:'MustNotPersist'},{op:'object.setType',object:'@unit',ctype:'CActorUnit'}]},
+ ],dryRun:false,stage,backup:false}),/DATA_CLASS_CHANGE_DOMAIN_MISMATCH/);
+ for(let i=0;i<files.length;i++)assert.deepEqual(await fs.readFile(path.join(f.root,files[i])),before[i]);
+ assert.equal(await fs.stat(path.join(f.root,unitFile)).then(()=>true,()=>false),false);
+ assert.deepEqual(f.workspace.draftFiles(),[]);
+});

@@ -67,6 +67,7 @@ export type PlacementMutation =
   | { op: "move"; objectId: number; position: Position3 }
   | { op: "rotate"; objectId: number; rotation: number }
   | { op: "scale"; objectId: number; scale: Scale3 }
+  | { op: "variation"; objectId: number; variation: number }
   | { op: "setHeightAbsolute"; objectId: number; value: boolean }
   | { op: "remove"; objectId: number };
 

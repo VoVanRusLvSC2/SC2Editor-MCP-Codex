@@ -6,6 +6,8 @@ import * as z from 'zod/v4';
 
 export const catalogQuerySchema=z.object({tileset:z.string().max(128).optional(),profile:z.string().max(64).optional(),section:z.enum(['decor','vegetation','terrain_object_actors','terrain_objects','auto_vegetation','locations']).default('decor'),query:z.string().max(128).default(''),offset:z.number().int().min(0).default(0),limit:z.number().int().min(1).max(40).default(12)}).strict();
 export interface CatalogRow {id:string;name?:string;catalog?:string;roles?:string[];placement?:string;[key:string]:unknown}
+/** Positive source naming/category hints only; deadwood is not structural damage. */
+export function structuralDamageHint(row:CatalogRow){return /wreck|destroyed|ruins?|broken|damaged|burnt|burned/i.test([row.id,row.name,...row.roles??[]].join(' '));}
 interface Pack {id:string;name:string;texture_ids:string[];sample_maps:number;sections:Record<string,CatalogRow[]>}
 export interface Profile {id:string;name:string;geometry:string[];surface:string[];decor:string[];vegetation:string[];avoid:string[]}
 /** Reference data is read lazily, cached with a bounded LRU, and never executed. */

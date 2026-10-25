@@ -1,0 +1,352 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-25T18:37:54.359Z",
+  "status": "batch_class_repair_and_native_observed_weapon_guard_verified",
+  "scope": "Actual public batch dispatch, narrow native-observed CWeapon policy, preserved defaults/imports, static final-graph safeguards and complete current compiled regression. Original native load controls used the prior immutable BatchType package, before the new authoring guard. No universal XSD abstract ban, current whole-package native acceptance or finished-art approval.",
+  "sourceFingerprints": {
+    "docs/DATA_MCP.md": "15a196131d4099f45719a33dc1bbfe19b6cc5a081f5ea3250002a50cf0918eb6",
+    "generated/data-xsd-index/manifest.json": "a16aa9ce6b28dce76a212618a3756cd46043746305cf1fa1efa543b6250077d6",
+    "src/app/mcpBatch.ts": "55314b2ecda3f4f684285b04a917b2edc66fd4a2196535b2cbd17b5a1778e516",
+    "src/app/project.ts": "36698ab0aed70a4dc1db79cbca59ff91402ac726e892fae6db6d5b4b0e60c847",
+    "src/app/server.ts": "e0141051b60e07cc9d085ec10c87fa70fbcd9df7d3ac0d72d466b046cbe8bc5a",
+    "src/archive/archiveAdapter.ts": "aad39fc288e043a6451c4e6e2428ea455f22573563e0ba36cabfba1cc46d3d55",
+    "src/archive/terrainLoadContract.ts": "75268a7b8bb6045f0ada82c409c4c4ef6479d4dbe77b2172929ce6153a3e3c43",
+    "src/core/binaryTransactions.ts": "8a35e8291f554231331cbccfcd9a092552b964b5c9bb54acae5acd9e9057bfa6",
+    "src/core/capabilities.ts": "885eb8a00f0ad8d2d072efa943ecf0cbb3f379d95ebd46d203cfcb3bf71bff63",
+    "src/core/discoveryPaths.ts": "b2380a23a69b269f92af1697d11cf66b86f769c5b4ceb2aefc1912855a47728d",
+    "src/core/fileTransactions.ts": "88cb8909ea93fdfcf110f10318481eda2c23bb8b0cb1a115363062161154921b",
+    "src/core/jsonPlanFile.ts": "83848fc4977881f75975d115fec0a3379e50fb336159ea8792db4bfd72d30224",
+    "src/core/layoutDocument.ts": "095995c46fec36c01f7c5501e819cf78bbc91b129cd7e18fa93d8b3234a41b51",
+    "src/core/layoutOperations.ts": "8210c59b92bc4d3203fa0802aaf288aa34aabe1f935822e65f8a4ff6011d85d4",
+    "src/core/recoveryJournal.ts": "a9fd25b31d24c9b8e24fd033cd5643b9bae02831afaaf551878af169382ac9b0",
+    "src/core/resolver.ts": "2f912760bef9f2da9d24d8024d2858e325bac1aed09a351622edb7a59127d2e3",
+    "src/core/sc2BuiltinDependencies.ts": "d69a5497cb4206efe72f21a62cc39233f1f5d1dcae3454f3fcc97d34089a62f1",
+    "src/core/styleDocument.ts": "f179b3d0cb276fdc49f49fb69be1df6002ab02a74020a830df7e631a49cf00eb",
+    "src/core/types.ts": "a8f84e8e7c33989918cc0d41e8a74952e2a860fc45d35454ef36bf47196f403f",
+    "src/core/uiXmlFormat.ts": "dd072d50236513d1fcef8ca324789ac1af4c2a4938fc4e332140cd29b17599c4",
+    "src/core/validator.ts": "a4fc91118f554d6f301f1de7381d18d09220a01a208526c5b1939550ac5f378a",
+    "src/core/workspace.ts": "20255378f8c009683afc7cfc084f6bf365b655fe68b0015d42ed9258a456fcd7",
+    "src/core/workspaceLock.ts": "bce9f1a76d2d94a449f41ff371fdae9b420b9a8a0ce9e9f6cab9a8e86574e0e4",
+    "src/core/xmlScanner.ts": "bc0837736a4559e167c436d00555ec2060fdbbe5632005a9fa44a048b57c334c",
+    "src/modules/data/abilityCharges.ts": "93bd5c28d5fc73f146b9f60a2e5c37d18e48c63aadd72173de2cc86ffb5d5518",
+    "src/modules/data/abilityRecipes.ts": "2b9dc3fb21c1c43f1543ad39966c3abb331e1917eb89da8b86fccc6e6c6e3c6e",
+    "src/modules/data/activation.ts": "de80e993efc6af8092f1a11499e978c1765cf5015d9b64de0bfce9b1c29f54c7",
+    "src/modules/data/actorConstruction.ts": "1007dd87032b01f46f00f928d7d4373c72ad7b936b325fcd56f3fd0080193986",
+    "src/modules/data/actorEvents.ts": "c1f433959626a7e8d3db681741774ecd54a7839bea0cf46e3818910a69d91b3a",
+    "src/modules/data/actorRecipes.ts": "122fc97a62a278ebc02515c5cdd43d1b0cebc8cb19b0a3f759f47443043072b7",
+    "src/modules/data/authoringValidation.ts": "499e9f5e804be9c161086890ad620a4a3740846e38d1cfbf4af568add51a4d62",
+    "src/modules/data/cardBindings.ts": "b7a0f7ecee312e21cbbe289ba61a0a0322d147978f2106eee222b48920f6bc5f",
+    "src/modules/data/crossReferences.ts": "eb1e445f7e535c4d4de066d5891e6107d9425affbbf926201870bab5bbd468f7",
+    "src/modules/data/document.ts": "c2748df07da1133d614f990f7d812cd60728299daedcb1163609f5c4afd41c73",
+    "src/modules/data/domains.ts": "149bb67e49411d14980478f3ccb2ccb4ea402b8a6e68fa41cb3105b69cb5aebf",
+    "src/modules/data/fieldPath.ts": "b6f20ac3672b1a66ade4ef6a177b819aa75ad9688a9d4fed4453c6dcd02ed4e1",
+    "src/modules/data/learnRecipe.ts": "de5726b7425220cbcf22b900b2d7b1eb65525496e5fb381d6b0036a07f047a61",
+    "src/modules/data/nativeClasses.ts": "d6242ea283eb6cb4c4d7fa83d970b1f4b870727555ecfaa33269d2415497c58b",
+    "src/modules/data/parentClasses.ts": "feca5aca6dba75fd79f805ba3aa1d8b06782bbdfcaab62905c2a43c61545d90f",
+    "src/modules/data/peek.ts": "39f351dc041f097c91363a3f8c6a4a55cfcae2c832d7950f851c31db82771613",
+    "src/modules/data/presentation.ts": "f158f018ac0291c7221ad875c69319fcdcae1a50cb39861319b1b74d5ad7dc21",
+    "src/modules/data/projectileRecipe.ts": "6f7aa2a64324b6be56750ece5225ba6e818fcf0774cc18e40f511ea774274bc4",
+    "src/modules/data/responseStore.ts": "31f3596b07973a00cf33263774d8e8de2a415582d95824165a8a79089afd6a0b",
+    "src/modules/data/schemaRegistry.ts": "fc9e7c70e336b28a9a4b9c016e91e70c036feccdd4b720175ec253f4f3f8c0b0",
+    "src/modules/data/tools.ts": "689cc13ba2d55572f6fd46cb5e36a10564422cf2f2a8046eacfa3d3beee74c27",
+    "src/modules/data/types.ts": "6f90261f04a318aa7ca580f458e767e2e236d2d4fe04b74d81a30e1d8c2d72c7",
+    "src/modules/data/unitAnimations.ts": "be570fde8b624087f60ce5536194e35b445cced037fc099033bf147baed06583",
+    "src/modules/data/validator.ts": "025438f1aa6c78ece171a0a857ee2c02918b5566020976792826a3ac05a6172c",
+    "src/modules/data/veterancyRecipe.ts": "e5de60371621eaffe763df6ac06243565127e06cd08ff2ccb83e42970b44ea07",
+    "src/modules/data/workspace.ts": "6ac8532b33e805d3731e7984df4e31ace855274618be16ed6ddf4e4bea97d59e",
+    "src/modules/data/xpSearchRecipe.ts": "bfe41abcb46c6f0dedba959e09e4606a89aa00e9220a7cd3ba597a41b6c1c029",
+    "src/modules/data/xsdRegistry.ts": "73bbe0843a4338c285a922471fc768540b30795af582358db6c1b3ec4379da78",
+    "src/modules/map/editorLoad.ts": "084648f81db6ec548239d4d02245d58de01757a236fc49ba0164415f07400c7f",
+    "src/modules/map/mapInfo.ts": "baf18081f4fa2ab274c4cd41c84035fa6006eb1a481a0f90f12def0d4392827c",
+    "src/modules/map/modExport.ts": "877f3fd1069d6250a95d0440e58d7ea53fd5ea617ce56efa83fa1dbaddbb87df",
+    "src/modules/map/preview.ts": "efa43a773828a34e5987b83031f71a41f053aaadaa21ea7edce82687e0a52103",
+    "src/modules/map/tools.ts": "3fb7b063608af69e2f4d5833f3ad409a9dd2ef9528c1649a32fc5dac133626a7",
+    "src/modules/map/workspace.ts": "123b1e2c6c3f347a8f9c54427df943df942649433a46ba4f845784e7c5aa38b1",
+    "src/tests/dataNativeClasses.test.ts": "c04e7982068370335ad2a71254bc6a3868a1bd1731cfee17b1e755f743cf0c74",
+    "src/tests/dataParentClasses.test.ts": "3e55f826fc102e3cc45a73db2eb422dbc8a27a2a58bd6ae2d489856bc460562a",
+    "src/tests/fixtures/native-class-load-controls.json": "bff7ae795922c3fc8ebd8cabf7f97d680ac1f2e33159d9e9c9e0970f02c679ae"
+  },
+  "sourceFingerprintScope": {
+    "paths": [
+      "src/modules/data/abilityCharges.ts",
+      "src/modules/data/abilityRecipes.ts",
+      "src/modules/data/activation.ts",
+      "src/modules/data/actorConstruction.ts",
+      "src/modules/data/actorEvents.ts",
+      "src/modules/data/actorRecipes.ts",
+      "src/modules/data/authoringValidation.ts",
+      "src/modules/data/cardBindings.ts",
+      "src/modules/data/crossReferences.ts",
+      "src/modules/data/document.ts",
+      "src/modules/data/domains.ts",
+      "src/modules/data/fieldPath.ts",
+      "src/modules/data/learnRecipe.ts",
+      "src/modules/data/nativeClasses.ts",
+      "src/modules/data/parentClasses.ts",
+      "src/modules/data/peek.ts",
+      "src/modules/data/presentation.ts",
+      "src/modules/data/projectileRecipe.ts",
+      "src/modules/data/responseStore.ts",
+      "src/modules/data/schemaRegistry.ts",
+      "src/modules/data/tools.ts",
+      "src/modules/data/types.ts",
+      "src/modules/data/unitAnimations.ts",
+      "src/modules/data/validator.ts",
+      "src/modules/data/veterancyRecipe.ts",
+      "src/modules/data/workspace.ts",
+      "src/modules/data/xpSearchRecipe.ts",
+      "src/modules/data/xsdRegistry.ts",
+      "src/core/binaryTransactions.ts",
+      "src/core/capabilities.ts",
+      "src/core/discoveryPaths.ts",
+      "src/core/fileTransactions.ts",
+      "src/core/jsonPlanFile.ts",
+      "src/core/layoutDocument.ts",
+      "src/core/layoutOperations.ts",
+      "src/core/recoveryJournal.ts",
+      "src/core/resolver.ts",
+      "src/core/sc2BuiltinDependencies.ts",
+      "src/core/styleDocument.ts",
+      "src/core/types.ts",
+      "src/core/uiXmlFormat.ts",
+      "src/core/validator.ts",
+      "src/core/workspace.ts",
+      "src/core/workspaceLock.ts",
+      "src/core/xmlScanner.ts",
+      "src/archive/archiveAdapter.ts",
+      "src/archive/terrainLoadContract.ts",
+      "src/modules/map/editorLoad.ts",
+      "src/modules/map/mapInfo.ts",
+      "src/modules/map/modExport.ts",
+      "src/modules/map/preview.ts",
+      "src/modules/map/tools.ts",
+      "src/modules/map/workspace.ts",
+      "src/app/mcpBatch.ts",
+      "src/app/project.ts",
+      "src/app/server.ts",
+      "src/tests/dataNativeClasses.test.ts",
+      "src/tests/dataParentClasses.test.ts",
+      "src/tests/fixtures/native-class-load-controls.json",
+      "generated/data-xsd-index/manifest.json",
+      "docs/DATA_MCP.md"
+    ],
+    "encoding": "Exact current source bytes",
+    "note": "Current static/public authoring source; native load matrix has its separate immutable earlier candidate below."
+  },
+  "singleAgent": true,
+  "changes": {
+    "batch": "Existing object.setType dispatch, typed aliases and context discovery; same-domain exact XML preservation and cross-domain atomic rollback.",
+    "nativeRule": "Only proven ordinary named CWeapon entries rejected. Named/idless default templates and explicit/dynamic template markers preserved. CEffect XSD abstract metadata is not treated as a native rejection rule.",
+    "discovery": "data.describe_type exposes dated build/report hashes under nativeClassObservations."
+  },
+  "native": {
+    "candidate": "L:\\SC2EditorToolkit_Candidates\\BatchType-20261025-e09ce9b1-2f55-405e-9eea-0e1c6df5b6df",
+    "candidateFiles": 9834,
+    "receipt": {
+      "file": "work/launch-diagnostics-20261022/abstract-class-native-audit.json",
+      "sha256": "00a2f5bbb1533bfb56b8d9fe39400e0d5ad9e72ecb0281fab29c3db9417798da"
+    },
+    "editor": {
+      "build": "5.0.17.98310",
+      "file": "C:/Program Files (x86)/StarCraft II/Support64/SC2Editor_x64.exe",
+      "sha256": "e561d76903221bdcd4585b9496bba1d2b9c5ae13b8fbe8c8469d213f22823d91",
+      "pid": 7504,
+      "closed": true
+    },
+    "toolkit": {
+      "version": "1.0.0",
+      "protocol": 15
+    },
+    "physicalEditors": 1,
+    "cases": [
+      {
+        "name": "weapon_ordinary",
+        "ctype": "CWeapon",
+        "id": "TypeProbeWeapon",
+        "sourceSha256": "df87c63d94cf81dd7289f32cb45c2ca45d621234d72ae6da029eb9cce9ba375b",
+        "report": {
+          "file": "L:\\NE100SOL\\jobs\\f8ead7ce-09c7-4f80-9ca8-d4c4864c54ca\\result.json",
+          "sha256": "3515401112ffe539fb5858983031307c3d99a07a8704e73f543191a27e032b35"
+        },
+        "outcome": "failed",
+        "nativeValidationPassed": false,
+        "nativeLoadVerified": true,
+        "newErrors": [
+          {
+            "phase": "00-startup",
+            "message": "[10/25/2026 7:58:01 PM] Warning: XML: GameData\\WeaponData.xml(3,5) : Unable to create entry with abstract scope CWeapon  Source: L:/NE100SOL/w/8eda6bdc87c94a5f8229f892a1ee56a4/workers/6c2bf29a68fd4047aa66e3aa7285ea41/Seed.SC2Mod  Scope: CWeapon",
+            "severity": "error",
+            "severitySource": "native text interpretation",
+            "type": "dataValidation",
+            "relatedIds": [],
+            "relatedIdsSource": null,
+            "channel": "Messages - StarCraft II Editor|RichEdit20W|13",
+            "origin": "nativeOutput",
+            "sequence": 0
+          }
+        ],
+        "nativeSaveVerified": false,
+        "nativeReopenVerified": false,
+        "componentComparisonVerified": false
+      },
+      {
+        "name": "weapon_default",
+        "ctype": "CWeapon",
+        "id": "TypeProbeWeapon",
+        "attrs": {
+          "default": "1"
+        },
+        "sourceSha256": "4083e0ef5dc7a7c43f6df20781e6f28ed012c56c37bdc5c22d2dd3b9b6b45673",
+        "report": {
+          "file": "L:\\NE100SOL\\jobs\\077ac683-3635-4854-a12a-72df8e6c4368\\result.json",
+          "sha256": "e5e91f325a8b53131fb54cc1cc22c9b65fe55c20e07170e14197f7f81e87dbd2"
+        },
+        "outcome": "completed",
+        "nativeValidationPassed": true,
+        "nativeLoadVerified": true,
+        "newErrors": [],
+        "nativeSaveVerified": false,
+        "nativeReopenVerified": false,
+        "componentComparisonVerified": false
+      },
+      {
+        "name": "weapon_concrete",
+        "ctype": "CWeaponLegacy",
+        "id": "TypeProbeWeapon",
+        "sourceSha256": "8e44c0f61d37cd24819adce20df308e65d89eedf5879d9ec6993d3e30c985514",
+        "report": {
+          "file": "L:\\NE100SOL\\jobs\\d75720bf-4821-49f1-8900-506c8433537a\\result.json",
+          "sha256": "cf568110c47e1f21f537a700e9317c265ad0903e1c382669b27a467bc428f382"
+        },
+        "outcome": "completed",
+        "nativeValidationPassed": true,
+        "nativeLoadVerified": true,
+        "newErrors": [],
+        "nativeSaveVerified": false,
+        "nativeReopenVerified": false,
+        "componentComparisonVerified": false
+      },
+      {
+        "name": "effect_ordinary",
+        "ctype": "CEffect",
+        "id": "TypeProbeEffect",
+        "sourceSha256": "b67b405fecc19ec982c54878b07546c17cf598b3de3bfb0bfbb3bdab418a4812",
+        "report": {
+          "file": "L:\\NE100SOL\\jobs\\ec697937-ae17-45d7-924e-5878777efbe3\\result.json",
+          "sha256": "5b7886349dedd5d7acde153ef233c47183816356942f11df9355a797da2eea76"
+        },
+        "outcome": "completed",
+        "nativeValidationPassed": true,
+        "nativeLoadVerified": true,
+        "newErrors": [],
+        "nativeSaveVerified": false,
+        "nativeReopenVerified": false,
+        "componentComparisonVerified": false
+      },
+      {
+        "name": "effect_default",
+        "ctype": "CEffect",
+        "id": "TypeProbeEffect",
+        "attrs": {
+          "default": "1"
+        },
+        "sourceSha256": "56cebc9cef003cff0a401f71054bdb0a1479cf550d989301d69c3279a1fc7a22",
+        "report": {
+          "file": "L:\\NE100SOL\\jobs\\8ff58007-b397-4c5c-a4c5-7bf274b19d77\\result.json",
+          "sha256": "a271bf5b9e77e2d3dd05a5e54b4c208a148dc079c6ce35f0b888526718f4cbbb"
+        },
+        "outcome": "completed",
+        "nativeValidationPassed": true,
+        "nativeLoadVerified": true,
+        "newErrors": [],
+        "nativeSaveVerified": false,
+        "nativeReopenVerified": false,
+        "componentComparisonVerified": false
+      },
+      {
+        "name": "effect_concrete",
+        "ctype": "CEffectDamage",
+        "id": "TypeProbeEffect",
+        "sourceSha256": "edfee8c9691e8dda18c9188b4b76d5678da3576ff385e824aed6f84b8eb4f182",
+        "report": {
+          "file": "L:\\NE100SOL\\jobs\\256d1f83-1b55-4a5a-8d9c-834cf30df727\\result.json",
+          "sha256": "b4b172a11e5884141f4bdc1b9a92348c8c453a07678b784f261e0393fc978645"
+        },
+        "outcome": "completed",
+        "nativeValidationPassed": true,
+        "nativeLoadVerified": true,
+        "newErrors": [],
+        "nativeSaveVerified": false,
+        "nativeReopenVerified": false,
+        "componentComparisonVerified": false
+      }
+    ],
+    "conclusion": {
+      "weapon": "Named ordinary CWeapon refused; named default=1 and concrete CWeaponLegacy pass native load/Data diagnostics.",
+      "effect": "Ordinary CEffect, named default=1 and CEffectDamage pass load/Data diagnostics. XSD abstract=true alone is not a proven engine rejection rule.",
+      "scope": "Native load/Data diagnostics only. No effect execution, object serializer presence, save/reopen, models/gameplay, complete resources or full current-release acceptance."
+    },
+    "ownedProcessesAfter": [],
+    "ordinarySourceCopiesAndOriginalsUnchanged": true
+  },
+  "staticAndPublic": {
+    "verification": {
+      "file": "work/launch-diagnostics-20261022/class-guard-verification.json",
+      "sha256": "2e608beaff76784cf0b6f41ec1e67e3d0ddbb178f1e8c9b596ccfe35e05c0e32"
+    },
+    "fullRegression": {
+      "file": "work/launch-diagnostics-20261022/class-guard-full-regression.json",
+      "sha256": "d5bbdbec72a7290dbac1cda2f6ebb2fab0ab8bf9ec7602994e4c9eb74c8c378b"
+    },
+    "counts": {
+      "tests": 1745,
+      "suites": 0,
+      "pass": 1744,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 1,
+      "todo": 0
+    },
+    "sourceStableDuringFullRun": true,
+    "fullSourceAndCompiledSnapshots": {
+      "before": {
+        "file": "L:/SC2Tests/c9b2b08151764ab0b71826c2edfb3ba9/source-and-compiled-before.json",
+        "bytes": 1582965,
+        "sha256": "3e8c41e45677c8078f90ced12befa1ec0c5301e394fa771c0e397eebc74b9009"
+      },
+      "after": {
+        "file": "L:/SC2Tests/c9b2b08151764ab0b71826c2edfb3ba9/source-and-compiled-after.json",
+        "bytes": 1582965,
+        "sha256": "d0100700d9df9233d5916cbb547577ba18bd559d00bb1e681783ca7b3e5dd60c"
+      }
+    },
+    "publicCompleted": {
+      "file": "work/launch-diagnostics-20261022/class-guard-public-completed.json",
+      "sha256": "abc40a8b919ac6e2ba760fa2d5e9a9ccb027abe03ef72d5d8d40d7cc7dab4c6e"
+    },
+    "priorPublicClientError": {
+      "file": "work/launch-diagnostics-20261022/class-guard-public.json",
+      "sha256": "412e05d2bba57db6f66cb3ae9066b77086a744cdf63645b39ad64f9932270803"
+    },
+    "publicScope": "All public guard/repair/default steps in the bound prior receipt plus actual bounded describe_type discovery and exact reopened export here. No native rerun, guessed type policy or new package/readiness claim.",
+    "golden": {
+      "file": "src/tests/fixtures/native-class-load-controls.json",
+      "sha256": "bff7ae795922c3fc8ebd8cabf7f97d680ac1f2e33159d9e9c9e0970f02c679ae"
+    },
+    "documentationOnlyAfterFullRegression": {
+      "file": "docs/DATA_MCP.md",
+      "beforeSha256": "61b23d682ca4a052011c4f4ed145a10f02cfbce6b4b419f63df473803a50555c",
+      "afterSha256": "15a196131d4099f45719a33dc1bbfe19b6cc5a081f5ea3250002a50cf0918eb6",
+      "change": "One tool-name correction data.types to the actual public data.describe_type; no runtime code changed."
+    }
+  },
+  "notAccepted": [
+    "Full-map audit timeout/source-return repair",
+    "Effect execution, models or main Actor lifecycle from load controls",
+    "Native UI Learn activation or exact point counter",
+    "Three final composition archive game runs",
+    "General template/value/abstract instantiation policy outside the observed class",
+    "Human art approval or whole-release readiness"
+  ],
+  "releaseAcceptanceNotDeclared": true
+}

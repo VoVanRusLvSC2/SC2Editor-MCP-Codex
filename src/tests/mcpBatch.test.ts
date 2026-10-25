@@ -18,3 +18,11 @@ test('batch preview summaries retain bounded per-state artifact paths',async()=>
 test('batch selective reads return only requested fields and rejected authoring stops execution',async()=>{let mutated=false;const tools=new Map([['read',{schema:z.object({}),invoke:async()=>({content:[{type:'text',text:'{"objects":[{"id":"A"}],"raw":"skip"}'}]})}],['reject',{schema:z.object({}),invoke:async()=>({content:[{type:'text',text:'{"accepted":false,"error":"invalid"}'}]})}],['save',{schema:z.object({}),invoke:async()=>{mutated=true;return {};}}]]);const r=await runMcpBatch([{id:'read',tool:'read',args:{},select:['objects']},{id:'reject',tool:'reject',args:{},select:['objects']},{id:'save',tool:'save',args:{}}],tools,{});assert.equal(r.ok,false);assert.equal(mutated,false);assert.deepEqual(r.steps[0].result,{objects:[{id:'A'}]});assert.deepEqual(r.steps[1].result,{accepted:false,error:'invalid'});});
 
 test("compact pagination keeps a continuation for rows trimmed from the response",()=>{const r=compactResult({offset:12,total:24,nextOffset:null,items:Array.from({length:12},(_,id)=>({id:id+12}))}) as {items:unknown[];nextOffset:number;responseTruncated:boolean};assert.equal(r.items.length,8);assert.equal(r.nextOffset,20);assert.equal(r.responseTruncated,true);});
+
+test('default batch map preview returns usable artifact paths without inline or unrelated file payloads',async()=>{
+ const files={png:'C:/Map/.sc2mcp-output/Map.png',html:'C:/Map/.sc2mcp-output/Map.html',raw:'x'.repeat(50000),nested:{png:'ignored.png'}};
+ const tools=new Map([['map.preview',{schema:z.object({}).strict(),invoke:async()=>({content:[{type:'text',text:JSON.stringify({backend:'modkit',files,largeSource:'excluded'})}]})}]]);
+ const response=JSON.parse(JSON.stringify(await runMcpBatch([{id:'preview',tool:'map.preview',args:{}}],tools,{})));
+ assert.equal(response.ok,true);assert.deepEqual(response.steps[0].result.files,{png:files.png,html:files.html});assert.ok(JSON.stringify(response).length<1000);
+ const malformed=compactResult({files:{png:'data:image/png;base64,abc.png',html:'x'.repeat(5000)+'.html',raw:'ignored'}}) as {files?:unknown};assert.equal(malformed.files,undefined);
+});

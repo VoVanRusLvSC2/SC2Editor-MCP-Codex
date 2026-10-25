@@ -1,0 +1,100 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-23T21:54:05.415Z",
+  "status": "measured_supply_groups_and_condition_defaults_passed",
+  "scope": "Reusable MCP supply_cluster recipe, condition-aware automatic decoration and current314-object forest authoring. Visual refinement and new-revision live traversal remain separate.",
+  "sourceFingerprints": [
+    {
+      "file": "src/modules/placement/decorPrefabs.ts",
+      "sha256LfUtf8": "f12986b18b04eae6942585f39390f465589f2de95d977784037a10fd8db6e436"
+    },
+    {
+      "file": "src/modules/placement/compositions.ts",
+      "sha256LfUtf8": "3044816571b4908171e7c5319cf407f3bdb0ddec34b39596a14aeec414f415d5"
+    },
+    {
+      "file": "src/modules/placement/styleCatalog.ts",
+      "sha256LfUtf8": "9e028ff676d0d946cace9a5876cafbf22ec8ef3295849058ac52d1ce62ab7eef"
+    },
+    {
+      "file": "src/app/authoringTools.ts",
+      "sha256LfUtf8": "5f6c74daab13e3c41c2462c913ea634dec38ceec3849673b5d43bb1cee9b2820"
+    },
+    {
+      "file": "src/tests/decorMeasurements.test.ts",
+      "sha256LfUtf8": "e8cdf1003dbdaf810197cd546e3856ae5fc7b1d1dec92bec03eb309560471209"
+    },
+    {
+      "file": "src/tests/terrainCompositions.test.ts",
+      "sha256LfUtf8": "59c597d37724bde777962d15444c38012ec62a318043cc81985c9d24caaf7cf1"
+    },
+    {
+      "file": "docs/DECOR_VISUAL_WORKFLOW.md",
+      "sha256LfUtf8": "253222ed9fa97dc0d11163c6bbb5d3081b91eee1393657cbfdd54a75b7670c10"
+    },
+    {
+      "file": "docs/AUTHORING_PROTOCOL.md",
+      "sha256LfUtf8": "e6442708eb9de87f1e6f33612d904d60e403374a70f221ccb9494caa0a5c165b"
+    }
+  ],
+  "implementation": {
+    "recipe": "supply_cluster",
+    "members": 6,
+    "roles": [
+      "primary storage/utility",
+      "three secondary props",
+      "two lights"
+    ],
+    "geometry": "Measured pivots/bounds, asymmetric arrangement, rotated reserved service apron, no internal horizontal bounds overlap; missing/zero measurements reject.",
+    "condition": "Operational and abandoned auto-selection exclude positively hinted structural damage; absent produces no objects. Explicit object choices remain author-owned. Deadwood is not structural damage.",
+    "legacy": "Existing four recipes retain their layout; secondaryProp and condition are optional."
+  },
+  "mcp": {
+    "selectedPlans": {
+      "file": "work/launch-diagnostics-20261022/supply-condition-mcp-selected.json",
+      "sha256": "601d0e7609ddf4b569ab76c88794016fb717b2a77838f3d4b4a7d3a1891c5c3a"
+    },
+    "frozenAuthoring": {
+      "file": "work/launch-diagnostics-20261022/forest-art-v3-overlay1-receipt.json",
+      "sha256": "032290d552d70253e6bd1266fa68a4d04195fb2481d2b920d16d97b59946b85f"
+    },
+    "freshProcess": {
+      "file": "work/launch-diagnostics-20261022/forest-art-v3-fresh-native12.json",
+      "sha256": "1eb040cde6031901adbe2f31fe1743e030ac6903156b06b8c8f6a7c28f3b3fad"
+    },
+    "archiveSha256": "c953a880688f18ede6aef1aa29d0c0c4f7cf722565105ac1eba6bc6403b43f3b",
+    "objects": 314,
+    "geometryAndGuiUnchanged": true,
+    "sameSessionNoOp": true,
+    "freshProcessNoOp": true,
+    "rebuilds": 0,
+    "changedBytes": 0,
+    "overlapRejection": "Initial cargo/fuel pad adjacency rejected before mutation until actual command_pad overlay dependencies were declared; original failed log retained."
+  },
+  "nativeReview": {
+    "record": "native-editor-012-filters-2026-10-24.json",
+    "editorVisibility": true,
+    "artState": "needs_refinement",
+    "nativeMovementOnNewRevision": "pending"
+  },
+  "regression": {
+    "full": {
+      "file": "work/launch-diagnostics-20261022/supply-condition-full.tap",
+      "sha256": "e3f0c8077965a3ca6a3a0cd08975db3608dc4dbbff0590d664d05a6fd143bc04"
+    },
+    "pass": 1498,
+    "skipped": 1,
+    "fail": 0,
+    "focused": {
+      "file": "work/launch-diagnostics-20261022/supply-condition-focused-final.tap",
+      "sha256": "dfff5cb81cc5beffbe43681f9e33277cfff5eaf1466f11564822df01da81a24c"
+    },
+    "focusedPass": 65
+  },
+  "privacy": {
+    "passed": true,
+    "entries": 9994,
+    "privateSources": 1113,
+    "privateRuntimeBundled": false
+  }
+}

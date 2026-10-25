@@ -152,7 +152,9 @@ export async function extractArchive(archive: string, componentDirectory: string
   if(!(await fs.lstat(source)).isFile()) throw new Error("Archive source must be a packed file");
   const original = await readSnapshot(source);
   await assertMissing(destination); await fs.mkdir(path.dirname(destination), { recursive: true });
-  const temporary = await fs.mkdtemp(`${destination}.sc2uimcp.`);
+  // A long destination basename must not inflate every native output path.
+  // Keep staging on the same volume so publication remains an atomic rename.
+  const temporary = await fs.mkdtemp(path.join(path.dirname(destination), ".sc2mcp-extract-"));
   try {
     const { files } = await extractTo(adapter, source, temporary, options.timeoutMs);
     await assertSnapshots(file => file, new Map([[source, original]]));

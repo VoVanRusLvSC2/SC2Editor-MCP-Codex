@@ -3,7 +3,18 @@ import type {McpServer} from '@modelcontextprotocol/server';
 export interface BatchTool {schema:{parse:(value:unknown)=>unknown};invoke:(args:unknown,context:unknown)=>Promise<unknown>}
 export interface BatchStep {id:string;tool:string;args:Record<string,unknown>;select?:string[]}
 function jsonResult(result:unknown){const r=result as {content?:Array<{type:string;text?:string}>};const text=r.content?.find(c=>c.type==='text')?.text;if(!text)return result;try{return JSON.parse(text);}catch{return {message:text.slice(0,1000)}}}
-const keys=['organization','modules','zone','profile','recipe','seed','replaced','saveFile','entryFile','activation','logicDefault','systems','folders','created','moved','issues','checks','manifest','textures','style','offset','nextOffset','countsAreQuotas','evidence','section','ok','completed','failed','steps','scope','mode','language','format','modes','examples','logicDefault','sections','limits','total','nextOffset','version','pagination','coverage','coverageIssueCount','backend','cacheHit','elapsedMilliseconds','complete','models','modelFacets','cliffPieces','rampPieces','terrainTextures','counts','catalogFootprints','engineValidated','inputRevision','status','accepted','valid','planId','transactionId','reportId','reportFile','reportBytes','diagnosticsTotal','errors','warnings','filesTotal','appliedTotal','id','file','directory','archive','pngFile','htmlFile','imageFile','comparisonFile','manifestFile','topPngFile','images','dimensions','pivot','bottom','scales','connectors','reservedLocal','reservedWorld','clearance','prefab','variantCount','frameCount','issueCount','dialogs','dialogItems','error','sourceSha256','sourceBytes','dryRun','staged','saved','unchanged'];
+const keys=['nativeProfile','organization','modules','zone','profile','recipe','seed','replaced','saveFile','entryFile','activation','logicDefault','systems','folders','created','moved','issues','checks','manifest','textures','style','offset','nextOffset','countsAreQuotas','evidence','section','ok','completed','failed','steps','scope','mode','language','format','modes','examples','logicDefault','sections','limits','total','nextOffset','version','pagination','coverage','coverageIssueCount','backend','cacheHit','elapsedMilliseconds','complete','models','modelFacets','cliffPieces','rampPieces','terrainTextures','counts','catalogFootprints','engineValidated','inputRevision','status','accepted','valid','planId','transactionId','reportId','reportFile','reportBytes','diagnosticsTotal','errors','warnings','filesTotal','appliedTotal','id','file','directory','archive','pngFile','htmlFile','imageFile','comparisonFile','manifestFile','topPngFile','images','dimensions','pivot','bottom','scales','connectors','reservedLocal','reservedWorld','clearance','prefab','variantCount','frameCount','issueCount','dialogs','dialogItems','error','sourceSha256','sourceBytes','dryRun','staged','saved','unchanged'];
+function compactArtifactPaths(value:unknown){
+ if(!value||typeof value!=='object'||Array.isArray(value))return;
+ const files=(value as Record<string,unknown>).files;
+ if(!files||typeof files!=='object'||Array.isArray(files))return;
+ const paths:Record<string,string>={};
+ for(const key of ['html','png']){
+  const file=Object.hasOwn(files,key)?(files as Record<string,unknown>)[key]:undefined;
+  if(typeof file==='string'&&file.length<=4096&&!/^(?:data|blob):/i.test(file.trim())&&(key==='png'?/\.png$/i:/\.html?$/i).test(file))paths[key]=file;
+ }
+ return Object.keys(paths).length?paths:undefined;
+}
 export function compactResult(value:unknown){
  if(value&&typeof value==='object'&&!Array.isArray(value)){
   const v=value as Record<string,unknown>;
@@ -17,12 +28,22 @@ export function compactResult(value:unknown){
    const issues=Array.isArray(v.issues)?v.issues:[];
    return {id:v.id,directory:v.directory,valid:v.valid,changedVertices:v.changedVertices,changedTexturePixels:v.changedTexturePixels,changedFiles:changed.length,filesTotal:v.files.length,files:changed.slice(0,8).map(f=>({file:f.file,changedBytes:f.changedBytes,afterBytes:f.afterBytes})),issueCount:issues.length,issues:issues.slice(0,8),...(v.ownership?{ownership:v.ownership}:{}),...(v.atomicComponents?{atomicComponents:v.atomicComponents}:{}),sourceIdentity:'Retained by the guarded plan; full hashes available from the detailed tool'};
   }
+  if(typeof v.planId==='string'&&v.planId.startsWith('modkit_terrain_')&&Array.isArray(v.operations)){
+   const operations=v.operations.slice(0,8).map(o=>{
+    if(!o||typeof o!=='object')return o;
+    const report=Object.fromEntries(['op','changed','changedVertices','changedCells','updatedSyncVertices','extraHalfWidth','engineValidated'].filter(k=>o[k]!==undefined).map(k=>[k,o[k]]));
+    if(o.adjoining&&typeof o.adjoining==='object')report.adjoining=Object.fromEntries(['mode','highCells','checkedFlatCells','preparedStrokes','envelope','scope'].filter(k=>o.adjoining[k]!==undefined).map(k=>[k,o.adjoining[k]]));
+    return report;
+   });
+   return {...compactGeneralResult(v) as Record<string,unknown>,operationsTotal:v.operations.length,operations,operationsTruncated:v.operations.length>8};
+  }
   if(v.stopped===true)return {stopped:true};
   if(typeof v.state==='string'&&['check','capture','cameras','diagnostics'].includes(String(v.operation)))
    return Object.fromEntries(['id','state','operation','phase','createdAt','startedAt','finishedAt','deadlineExceeded','report','error','result'].filter(k=>v[k]!==undefined).map(k=>[k,v[k]]));
   if(v.transport==='retained stdio MCP')return v;
  }
- return compactGeneralResult(value);
+ const summary=compactGeneralResult(value),files=compactArtifactPaths(value);
+ return files&&summary&&typeof summary==='object'&&!Array.isArray(summary)?{...summary,files}:summary;
 }
 function compactGeneralResult(value:unknown){if(!value||typeof value!=='object')return value;if(Array.isArray(value))return {total:value.length,items:value.slice(0,8).map(item=>{const raw=JSON.stringify(item);return raw.length<=2000?item:{truncated:true,preview:raw.slice(0,1000)}})};const v=value as Record<string,unknown>,out:Record<string,unknown>={};for(const key of keys)if(v[key]!==undefined)out[key]=v[key];for(const key of ['plan','transaction'])if(v[key]&&typeof v[key]==='object')out[key]=compactResult(v[key]);if(Array.isArray(v.diagnostics))out.diagnostics=v.diagnostics.slice(0,8).map(item=>{const text=JSON.stringify(item);return text.length<=4000?item:{truncated:true,preview:text.slice(0,1000)};});if(Array.isArray(v.files)){out.filesTotal=v.files.length;out.files=v.files.slice(0,8).map(item=>typeof item==='string'?item:item&&typeof item==='object'?Object.fromEntries(Object.entries(item).filter(([key,val])=>['file','path','name','sha256','bytes','changed'].includes(key)&&typeof val!=='object')):item);}if(Array.isArray(v.variants))out.variants=v.variants.slice(0,8).map(compactResult);if(Array.isArray(v.items))out.items=v.items.slice(0,8).map(item=>{const raw=JSON.stringify(item);return raw.length<=2000?item:{truncated:true,preview:raw.slice(0,1000)}});if(Array.isArray(v.players))out.players=v.players.slice(0,16);if(Array.isArray(v.objects))out.objects=v.objects.slice(0,8).map(item=>{const raw=JSON.stringify(item);return raw.length<=3000?item:{truncated:true,preview:raw.slice(0,1000)}});if(Array.isArray(v.items)&&v.items.length>8&&typeof v.offset==='number'){out.nextOffset=v.offset+8;out.responseTruncated=true;}if(typeof v.objects==='number')out.objects=v.objects;if(!Object.keys(out).length)out.resultAvailable=true;return out;}
 export function resolveBatchReferences(value:unknown,results:Map<string,unknown>,depth=0):unknown{if(depth>30)throw new Error('MCP_BATCH_DEPTH');if(Array.isArray(value))return value.map(v=>resolveBatchReferences(v,results,depth+1));if(value&&typeof value==='object'){const v=value as Record<string,unknown>;if(Object.keys(v).length===1&&typeof v.$from==='string'){const parts=v.$from.split('.');if(parts.length>12||parts.some(p=>!/^\w+$/.test(p)||['__proto__','prototype','constructor'].includes(p)))throw new Error('MCP_BATCH_REFERENCE_UNSAFE');let found=results.get(parts.shift()!);for(const key of parts){if(!found||typeof found!=='object'||!Object.hasOwn(found,key))throw new Error('MCP_BATCH_REFERENCE_MISSING: '+v.$from);found=(found as Record<string,unknown>)[key];}if(found===undefined)throw new Error('MCP_BATCH_REFERENCE_MISSING: '+v.$from);return structuredClone(found);}const out:Record<string,unknown>={};for(const [key,item]of Object.entries(v)){if(['__proto__','prototype','constructor'].includes(key))throw new Error('MCP_BATCH_KEY_UNSAFE');out[key]=resolveBatchReferences(item,results,depth+1);}return out;}return value;}

@@ -37,9 +37,26 @@ export const terrainAreaSchema = z.discriminatedUnion("type", [
     })
     .strict(),
 ]);
+const patternSeed=z.number().int().min(-2147483648).max(2147483647);
+export const terrainTexturePatternSchema=z.object({
+  seed:patternSeed.default(1),
+  wavelength:number.min(.25).max(512).default(8),
+  threshold:number.min(-.99).max(.99).default(0),
+  transition:number.positive().max(2).default(.35),
+}).strict();
+export const terrainMaterialPatchSchema=z.object({
+  texture:z.string().min(1),
+  ...terrainTexturePatternSchema.shape,
+  seed:patternSeed.optional(),
+  strength:number.min(0).max(1).default(.65),
+  minHeight:number.optional(),maxHeight:number.optional(),
+  minSlope:number.nonnegative().optional(),maxSlope:number.nonnegative().optional(),
+}).strict().refine(p=>p.minHeight===undefined||p.maxHeight===undefined||p.minHeight<=p.maxHeight,'Material patch height range is reversed')
+  .refine(p=>p.minSlope===undefined||p.maxSlope===undefined||p.minSlope<=p.maxSlope,'Material patch slope range is reversed');
 export const terrainTextureBrushSchema = z.object({
   directory: z.string().default(""), area: terrainAreaSchema, texture: z.string().min(1),
   strength: number.min(0).max(1).optional(), edgeBlend: number.nonnegative().optional(),
+  pattern:terrainTexturePatternSchema.optional(),
   protectedAreas: z.array(terrainAreaSchema).max(50).optional(),
 }).strict();
 export const terrainVisibilityTarget = {
@@ -107,6 +124,7 @@ export const terrainOperationSchema = z.discriminatedUnion("op", [
       op: z.enum(["texture.paint", "texture.blend"]),
       ...brush,
       texture: z.string().min(1),
+      pattern:terrainTexturePatternSchema.optional(),
     })
     .strict(),
   z
@@ -128,6 +146,7 @@ export const terrainOperationSchema = z.discriminatedUnion("op", [
     .object({
       op: z.literal("texture.paint_rules"),
       ...brush,
+      pattern:terrainTexturePatternSchema.optional(),
       rules: z
         .array(
           z
@@ -239,6 +258,7 @@ export const terrainGenerateOptions = {
   directory: z.string().default(""),
   style: terrainStyleSchema,
   heightMode: z.enum(['generate','preserve']).default('generate'),
+  baseHeight: number.optional(),
   textureMode: z.enum(['generate','preserve']).default('generate'),
   seed: z.number().int().default(1),
   relief: number.nonnegative().max(128).optional(),
@@ -248,6 +268,7 @@ export const terrainGenerateOptions = {
     .object({
       base: z.string().min(1).optional(),
       rock: z.string().min(1).optional(),
+      patches:z.array(terrainMaterialPatchSchema).min(1).max(6).optional(),
     })
     .strict()
     .optional(),

@@ -1,0 +1,382 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-23T23:50:31.057Z",
+  "status": "native_zero_based_ramp_enum_and_fresh_cardinal_transfer_passed",
+  "scope": "Pinned ModKit native ramp writer guards, source serialization0..7 and actual MCP-generated v115 donor transfer directions0..3. Original Editor0.12 save/reopen/compile and exact saved-artifact game checks, not universal ramp-width/diagonal/version or complete roadmap acceptance.",
+  "sourceFingerprints": {
+    "scripts/modkit/platform-patches.mjs": "105c51c9dc1b8652b2924d6e08e784e91920b2cf39190d8b8bd827a8b3124df5",
+    "scripts/setup-modkit-runtime.mjs": "b4150f56063969438f2805e7791583930becdfbbdf4df34bbf0d8403b39905fb",
+    "scripts/modkit/terrain-ramp-api.mjs": "5b55e645edc8a8d34e0b097b4ed39086f62c9973e11d7103d7529dd039a0662d",
+    "src/integrations/modkit/runtime.ts": "ad791c8774e1acd7aa909048d9bf94460b3ac362e4b007dd791b8a156852919f",
+    "src/modules/terrain/modkitSchemas.ts": "97a46bd26f6b3d03de7fec244f3fa3540d924bcc1c55983ee60b37e77dc326c6",
+    "src/modules/terrain/modkitWorkspace.ts": "3c5306107607c9a0393fc9bbca0e5a1f0460538a03e4c33b9cd66cbe33a7e0d3",
+    "src/modules/terrain/nativeGeometry.ts": "7095ad7ca644fa1b01ef3a5f2dc3b355a60f4b2b141c59e133e917de76d25213",
+    "src/modules/terrain/cliffProfile.ts": "78e9e5a4afb0202f46b7c95222a557d2be7b3f4196e910623562953a4f77e707",
+    "src/modules/terrain/workspace.ts": "051b221796b52ffe8ffa3b072e7fd3c82a9bc4cb07fa1b559d63b118bc9c2c70",
+    "src/modules/testing/workspace.ts": "1948ff1373b97d6a1b9afa1541373902b604130762c2ed4983e06926df5fde9a",
+    "src/modules/testing/schemas.ts": "2f294b82f9d93b925dbee2411c5803582337a569991b84fc682f160ab43ef1bf",
+    "src/tests/modkitTerrain.test.ts": "91f224779e3b73b6e00ba3aadcc5195bf1e442c4e4fa07e22b1daea4aebacafb",
+    "src/tests/modkitIntegration.test.ts": "cce945f0e634a21fb2ee8b4b1a7e012707b6079a25ff769c89ac667be370eddf",
+    "native-toolkit-release.json": "11d3050acbc2fde6190d1ec054b01b2b017775617716179db79ac8fdc0665dfb",
+    "game-toolkit-release.json": "7c8e2329dd4af5513e8fbc4f0a98cd4442fedc5460129fbc7291c3be4a5c96cf",
+    "scripts/build-windows-portable.mjs": "d8caf695bc542099958455800e27d612665dd085ad614e54a90766090fb632e0",
+    "docs/MODKIT_INTEGRATION.md": "5c1b05612a8328c8790c6002200381d855593c2b1cbc5335daa12e70122a408f",
+    "docs/TERRAIN_MCP.md": "f6d5d2b5ed55e74da9c99c509e3b1f7c94c0193488ccc9665e16d5fa29d1f98b"
+  },
+  "implementation": {
+    "fix": "Two pinned ModKit guard predicates change1..8 to the observed native0..7 enum; zero remains south and8 is rejected.",
+    "installation": "Exact-context idempotent patch, including finalization-only emission of the affected module, with source/output digests in runtime provenance.",
+    "lowLevelScope": "The unchanged user-provided native City v114 record set covers all eight enum values. Its low-level south transfer test stays separate from the MCP adapter, which still rejects that unqualified version.",
+    "runtimeIdempotence": {
+      "file": "work/launch-diagnostics-20261022/ramp-enum-runtime-idempotence.json",
+      "sha256": "23319548c3695436fd506b952fb9589264dcb9a07f2124f27ee9bc9ec4d23a76"
+    },
+    "runtimePinsUnchanged": true,
+    "postLiveCommentCorrection": {
+      "file": "work/launch-diagnostics-20261022/ramp-enum-post-live-comment.json",
+      "sha256": "41c5062a11cb230feebd9ea6a97d57f33b70da71cf52ec7ff6d8e5ff71abc1ee"
+    },
+    "commentCorrectionScope": "Only an inaccurate diagonal direction name in one non-executable comment changed after live completion. The complete source snapshot matched when both native runs ended. The exact patch function is identical to the frozen candidate and repeated finalization emits the identical runtime receipt and JavaScript."
+  },
+  "live": {
+    "fixture": {
+      "file": "work/launch-diagnostics-20261022/ramp-enum-fixture.json",
+      "sha256": "905cfd616d1a2fdf35b715d86bf0f77d486c4abd005b18846a82f54e948149db"
+    },
+    "audit": {
+      "file": "work/launch-diagnostics-20261022/ramp-enum-audit.json",
+      "sha256": "371c672113f77fa47b8107e5f21c82756cb51e9eb3822ede753d6c5132b5d26b"
+    },
+    "renderReview": {
+      "file": "work/launch-diagnostics-20261022/ramp-enum-render-review.json",
+      "sha256": "aba0d5769968f6662da0dbad2a9a34657c0e60c135f576cd9bc36eaa9f549999"
+    },
+    "sourceStableDuringLive": {
+      "file": "work/launch-diagnostics-20261022/ramp-enum-source-after-live.json",
+      "sha256": "b4316b807890dfe4171717d5a91f555d62f04d8711a44bc7e4b09ec0d8821470"
+    },
+    "sourceArchiveSha256": "3374a4e1fd832180cefefc66d02c2116a0e00cfcd39a301769cbbb801f80b4fa",
+    "freshDocuments": 2,
+    "allMapWritesThroughMcp": true,
+    "sourceAndDonorUnchanged": true,
+    "duplicateRampRejectedBeforeMutation": true,
+    "editorToolkit": "0.12.0-rc.1",
+    "nativeProtocol": 13,
+    "gameToolkit": "v0.1.0-dev.11",
+    "gameBuild": "5.0.17.98310",
+    "sameRetainedEditorAndGameBridges": true,
+    "exactNativeSavedArtifacts": true,
+    "sourceTerrainGuiAndScriptPayloadsPreservedByNativeSave": true,
+    "counts": {
+      "runs": 2,
+      "traversals": 32,
+      "views": 16,
+      "uniqueDecodedFrames": 8
+    },
+    "groundTypes": [
+      "Marine",
+      "Marauder"
+    ],
+    "cardinalEnum": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "bothDirections": true,
+    "corridor": 1.75,
+    "tolerance": 0.75,
+    "maximumSampledDeviation": 0,
+    "imagesInspected": 8,
+    "repeatedFramesPixelMatched": 8,
+    "extraGenericImagesNotInspected": 2,
+    "ownedGameCleanupPassed": true,
+    "optionalDiagnostics": [
+      {
+        "jobId": "868a841d-5bee-45e8-bc72-12440270b51c",
+        "id": "game.diagnostics",
+        "status": "inconclusive",
+        "required": false,
+        "reason": "No unexpected errors observed in available sources; diagnostic coverage is partial",
+        "evidence": {
+          "unexpected": [],
+          "sources": [
+            {
+              "source": "OutputDebugString",
+              "access": "partial",
+              "clear": null,
+              "dropped": false,
+              "coverage": "OutputDebugString only; engine diagnostics require logs"
+            },
+            {
+              "source": "EngineLog",
+              "access": "partial",
+              "scope": "process",
+              "clear": null,
+              "cursor": 0,
+              "hasMore": false,
+              "dropped": false,
+              "reset": false,
+              "retainedEntries": 0,
+              "coverage": "original native engine log strings; UI-thread snapshot, independent of file flush and visibility filters; not every engine subsystem emits here",
+              "reason": null
+            },
+            {
+              "source": "TriggerDebugger",
+              "access": "partial",
+              "characterCursor": 32890,
+              "hasMore": false,
+              "clear": null
+            },
+            {
+              "source": "2026-10-24 02.40.53 SystemInfo.txt",
+              "access": "partial",
+              "bytes": 5547,
+              "clear": null
+            },
+            {
+              "source": "2026-10-24 02.40.56 Graphics.txt",
+              "access": "partial",
+              "bytes": 2973,
+              "clear": null
+            },
+            {
+              "source": "Galaxy",
+              "access": "partial",
+              "clear": null,
+              "reason": "Engine log coverage is not guaranteed; absence of messages is not proof of absence of errors"
+            },
+            {
+              "source": "Data",
+              "access": "partial",
+              "clear": null,
+              "reason": "Engine log coverage is not guaranteed; absence of messages is not proof of absence of errors"
+            },
+            {
+              "source": "actors",
+              "access": "partial",
+              "clear": null,
+              "reason": "Engine log coverage is not guaranteed; absence of messages is not proof of absence of errors"
+            },
+            {
+              "source": "models",
+              "access": "partial",
+              "clear": null,
+              "reason": "Engine log coverage is not guaranteed; absence of messages is not proof of absence of errors"
+            },
+            {
+              "source": "textures",
+              "access": "partial",
+              "clear": null,
+              "reason": "Engine log coverage is not guaranteed; absence of messages is not proof of absence of errors"
+            },
+            {
+              "source": "sounds",
+              "access": "partial",
+              "clear": null,
+              "reason": "Engine log coverage is not guaranteed; absence of messages is not proof of absence of errors"
+            },
+            {
+              "source": "SoundDecoder",
+              "access": "partial",
+              "clear": null,
+              "scope": "process",
+              "cursor": 0,
+              "hasMore": false,
+              "dropped": false,
+              "versionHex": 279632,
+              "binaryVersionHex": 279632,
+              "objectObservationArmed": true,
+              "openStateCalls": 982,
+              "preexistingSoundsCovered": false,
+              "coverage": "Actual SoundI.getOpenState return results through observed live FMOD 4 objects; sounds loaded before observation are not covered; numeric failures have no original diagnostic text.",
+              "reason": null
+            }
+          ]
+        }
+      },
+      {
+        "jobId": "55867e7b-bfa6-44e8-b292-dc0ca7587da1",
+        "id": "game.diagnostics",
+        "status": "inconclusive",
+        "required": false,
+        "reason": "No unexpected errors observed in available sources; diagnostic coverage is partial",
+        "evidence": {
+          "unexpected": [],
+          "sources": [
+            {
+              "source": "OutputDebugString",
+              "access": "partial",
+              "clear": null,
+              "dropped": false,
+              "coverage": "OutputDebugString only; engine diagnostics require logs"
+            },
+            {
+              "source": "EngineLog",
+              "access": "partial",
+              "scope": "process",
+              "clear": null,
+              "cursor": 0,
+              "hasMore": false,
+              "dropped": false,
+              "reset": false,
+              "retainedEntries": 0,
+              "coverage": "original native engine log strings; UI-thread snapshot, independent of file flush and visibility filters; not every engine subsystem emits here",
+              "reason": null
+            },
+            {
+              "source": "TriggerDebugger",
+              "access": "partial",
+              "characterCursor": 32909,
+              "hasMore": false,
+              "clear": null
+            },
+            {
+              "source": "2026-10-24 02.44.59 SystemInfo.txt",
+              "access": "partial",
+              "bytes": 5547,
+              "clear": null
+            },
+            {
+              "source": "2026-10-24 02.45.02 Graphics.txt",
+              "access": "partial",
+              "bytes": 2973,
+              "clear": null
+            },
+            {
+              "source": "Galaxy",
+              "access": "partial",
+              "clear": null,
+              "reason": "Engine log coverage is not guaranteed; absence of messages is not proof of absence of errors"
+            },
+            {
+              "source": "Data",
+              "access": "partial",
+              "clear": null,
+              "reason": "Engine log coverage is not guaranteed; absence of messages is not proof of absence of errors"
+            },
+            {
+              "source": "actors",
+              "access": "partial",
+              "clear": null,
+              "reason": "Engine log coverage is not guaranteed; absence of messages is not proof of absence of errors"
+            },
+            {
+              "source": "models",
+              "access": "partial",
+              "clear": null,
+              "reason": "Engine log coverage is not guaranteed; absence of messages is not proof of absence of errors"
+            },
+            {
+              "source": "textures",
+              "access": "partial",
+              "clear": null,
+              "reason": "Engine log coverage is not guaranteed; absence of messages is not proof of absence of errors"
+            },
+            {
+              "source": "sounds",
+              "access": "partial",
+              "clear": null,
+              "reason": "Engine log coverage is not guaranteed; absence of messages is not proof of absence of errors"
+            },
+            {
+              "source": "SoundDecoder",
+              "access": "partial",
+              "clear": null,
+              "scope": "process",
+              "cursor": 0,
+              "hasMore": false,
+              "dropped": false,
+              "versionHex": 279632,
+              "binaryVersionHex": 279632,
+              "objectObservationArmed": true,
+              "openStateCalls": 1330,
+              "preexistingSoundsCovered": false,
+              "coverage": "Actual SoundI.getOpenState return results through observed live FMOD 4 objects; sounds loaded before observation are not covered; numeric failures have no original diagnostic text.",
+              "reason": null
+            }
+          ]
+        }
+      }
+    ],
+    "diagnosticsScope": "Game diagnostics remain optional/inconclusive. A passing movement suite does not establish an error-free console."
+  },
+  "regression": {
+    "developmentBuild": {
+      "file": "work/launch-diagnostics-20261022/native-direction-build.log",
+      "sha256": "10a6f793ca5b371f50d30275f91bca10764ad37efaa83fe46600fc03690a7777"
+    },
+    "releaseBuild": {
+      "file": "work/launch-diagnostics-20261022/ramp-enum-release.log",
+      "sha256": "ce885c9cd0c665e4687c64af3fac25fa25c371256a5119e5f8e25c7b3c516545"
+    },
+    "lint": {
+      "file": "work/launch-diagnostics-20261022/ramp-enum-lint.log",
+      "sha256": "510475fdd23df5ab732ff12a7efe6eeeef1714f16cb3e683de0964513c9152a2"
+    },
+    "focused": {
+      "report": {
+        "file": "work/launch-diagnostics-20261022/native-direction-focused.tap",
+        "sha256": "812c2ead2ac43f1350e6ae0e0b234f53f4ebc79abce9cc3e0d3750f21b5b3468"
+      },
+      "tests": 29,
+      "pass": 29,
+      "fail": 0
+    },
+    "full": {
+      "rootReport": {
+        "file": "work/launch-diagnostics-20261022/ramp-enum-full.tap",
+        "sha256": "e637bc600cd2cd969530c766d1185ff08d2c0d67113a194175efc723a3c8572e"
+      },
+      "rootCommand": "node --test --test-concurrency=1 dist/tests/*.test.js",
+      "rootTests": 1355,
+      "rootPass": 1354,
+      "surfaceReport": {
+        "file": "work/launch-diagnostics-20261022/ramp-enum-surface.tap",
+        "sha256": "86ad544f24996b39fb7da0e8667f553ab7a2a0f502bd830b6b78fb7b63595b03"
+      },
+      "surfaceCommand": "node --test --test-concurrency=1 tests/terrain-surface/*.test.mjs",
+      "surfaceTests": 166,
+      "surfacePass": 166,
+      "totalTests": 1521,
+      "pass": 1520,
+      "skip": 1,
+      "fail": 0,
+      "cancelled": 0
+    },
+    "english": {
+      "files": 117,
+      "violations": 0
+    }
+  },
+  "retainedFailures": [
+    {
+      "report": {
+        "file": "work/launch-diagnostics-20261022/native-direction-before.tap",
+        "sha256": "86546ff30cdcfdff78e0a0b8a61f8acf8c461f00fcd0424fd2f865ba664f34b3"
+      },
+      "reason": "Original writer rejects observed south=0. The first transfer fixture also correctly rejected unqualified v114 at the MCP boundary. The final low-level test isolates the enum while preserving that version guard; live MCP acceptance uses newly authored v115 maps."
+    }
+  ],
+  "portable": {
+    "receipt": {
+      "file": "work/launch-diagnostics-20261022/ramp-enum-candidate.json",
+      "sha256": "6f36d5496fbcad0fc7653426193434cf0f84d70a8b8c3bc5d7437799d238ed8a"
+    },
+    "compiledModules": 363,
+    "installerAndAdapterHashesVerified": true,
+    "privacy": {
+      "passed": true,
+      "entries": 10002,
+      "privateSources": 1113,
+      "privateSdkSourcesBinariesOrInstrumentedMapsBundled": false
+    },
+    "published": false
+  },
+  "openCoverage": [
+    "Additional native ramp widths, donor-based diagonals, cliff sets and edge/void/join profiles",
+    "Authoritative engine path/collision/buildability queries; unsupported operations are not inferred from successful movement",
+    "Current three-style owned-landscape renewal and finished art remain incomplete; this is a sparse diagnostic map",
+    "Wider GUI/Data Learn/talent/UI/sound and main-unit animation coverage, broader comparable performance and the final current evidence gate"
+  ]
+}

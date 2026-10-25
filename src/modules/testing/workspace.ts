@@ -1,4 +1,5 @@
 import {promises as fs} from 'node:fs';
+import type * as z from 'zod/v4';
 import path from 'node:path';
 import {createHash,randomUUID} from 'node:crypto';
 import {Workspace} from '../../core/workspace.js';
@@ -10,16 +11,21 @@ import {readArchiveTerrainLoadContract} from '../../archive/terrainLoadContract.
 import {testManifestSchema,testVerdict,type TestManifest,type TestCheck,type CheckState} from './schemas.js';
 import {NativeWorkflowGate} from './gate.js';
 import {readArchiveMapInfo,routeBoundsCheck} from './playableBounds.js';
-import {routeDeviation} from './routeGeometry.js';
 import {observeStartupEvents} from './startupEvents.js';
 import {runActionCheck} from './actionChecks.js';
+import {testStorageChecks,type StorageProbe} from './storagePreflight.js';
+import {runFormationCheck} from './formationChecks.js';
+import {runRouteCheck} from './routeChecks.js';
+import {preparePadProbe} from './padPreparation.js';
+import {observePadQueries} from './padChecks.js';
+import {planQuality,qualityPlanSchema} from './qualityPlan.js';
 
 type Game=Pick<NativeGameBridge,'configuration'|'status'|'attach'|'call'|'detach'> & Partial<Pick<NativeGameBridge,'action'>>;
-type Editor=Pick<NativeEditorBridge,'status'|'check'|'job'>;
+type Editor=Pick<NativeEditorBridge,'status'|'check'|'job'|'readWorkerArtifact'>;
 interface Runtime {game:Game;editor:Editor}
 interface Identity {file:string;sha256:string;id?:string}
 interface Plan {id:string;manifest:TestManifest;manifestSha256:string;manifestFile?:Identity;source:Identity;dependencies:Identity[];issues:TestCheck[];capabilities:Record<string,unknown>}
-interface Job {id:string;plan:Plan;state:'queued'|'running'|'completed'|'cancelled';phase:string;cancelRequested:boolean;createdAt:string;finishedAt?:string;checks:TestCheck[];directory:string;error?:string;gameRuntime?:ReturnType<NativeGameBridge['configuration']>['runtimeIdentity'];testedArtifact?:Identity&{origin:'source'|'native_saved'};nativeProgress?:{jobId:string;state:string;phase:string;startedAt?:string;deadlineExceeded:boolean}}
+interface Job {id:string;plan:Plan;state:'queued'|'running'|'completed'|'cancelled';phase:string;cancelRequested:boolean;createdAt:string;finishedAt?:string;checks:TestCheck[];directory:string;reportPersistence?:'memory_only'|'workspace_file';error?:string;gameRuntime?:ReturnType<NativeGameBridge['configuration']>['runtimeIdentity'];testedArtifact?:Identity&{origin:'source'|'native_saved'};nativeProgress?:{jobId:string;state:string;phase:string;startedAt?:string;deadlineExceeded:boolean}}
 export const testBody=(r:GameResult):Record<string,any>=>{
  if(r.structuredContent)return r.structuredContent;
  for(const c of r.content)if(c.type==='text'){try{return JSON.parse(c.text);}catch{/* Preserve unreadable status as inconclusive. */}}
@@ -44,14 +50,19 @@ export function gameLaunchCheck(r:GameResult,required:boolean):TestCheck {
 
 /** Reusable map suites lease the project's retained bridges and use private archives. */
 export class ProjectTestWorkspace {
+ qualityPlan(args:z.input<typeof qualityPlanSchema>){return planQuality(this.workspace,args);}
  private plans=new Map<string,Plan>();private jobs=new Map<string,Job>();private tail:Promise<void>=Promise.resolve();private closing=false;
  private mapInfoCache=new Map<string,Buffer>();
  private terrainLoadCache=new Map<string,TestCheck|undefined>();
  readonly work:string;
- constructor(readonly workspace:Workspace,private options:{runtime:Runtime;gate:NativeWorkflowGate;inspect?:(file:string)=>Promise<unknown>;mapInfo?:(file:string)=>Promise<Buffer>;terrainLoad?:(file:string)=>Promise<Awaited<ReturnType<typeof readArchiveTerrainLoadContract>>>;pollMs?:number}){this.work=workspace.resolveUserPath('.sc2mcp-output/project-tests');}
+ constructor(readonly workspace:Workspace,private options:{runtime:Runtime;gate:NativeWorkflowGate;inspect?:(file:string)=>Promise<unknown>;mapInfo?:(file:string)=>Promise<Buffer>;terrainLoad?:(file:string)=>Promise<Awaited<ReturnType<typeof readArchiveTerrainLoadContract>>>;storageProbe?:StorageProbe;pollMs?:number}){this.work=workspace.resolveUserPath('.sc2mcp-output/project-tests');}
  private pending(){if(this.workspace.draftFiles().length||this.workspace.binary.draftFiles().length)throw Error('TEST_PENDING_DRAFTS: save or discard complete groups first');}
  private async identity(file:string,id?:string):Promise<Identity>{const real=await fs.realpath(this.workspace.resolveUserPath(file));this.workspace.resolveUserPath(real);if(!(await fs.stat(real)).isFile())throw Error('TEST_FILE_REQUIRED: '+file);return {file:real,sha256:digest(await fs.readFile(real)),...(id?{id}:{})};}
  private async unchanged(p:Plan){for(const f of [p.source,...p.dependencies,...(p.manifestFile?[p.manifestFile]:[])])if((await this.identity(f.file,f.id)).sha256!==f.sha256)throw Error('TEST_INPUT_STALE: '+f.file);}
+ private async storageChecks(manifest:TestManifest,source:Identity){
+  const config=this.options.runtime.game.configuration();
+  return testStorageChecks({directory:this.work,...typeof config.work==='string'?{gameDirectory:config.work}:{},sourceBytes:(await fs.stat(source.file)).size,manifest},this.options.storageProbe);
+ }
  private async terrainLoadCheck(source:Identity):Promise<TestCheck|undefined>{
   if(this.terrainLoadCache.has(source.sha256))return this.terrainLoadCache.get(source.sha256);
   let check:TestCheck|undefined;
@@ -70,29 +81,42 @@ export class ProjectTestWorkspace {
   this.pending();const manifest=testManifestSchema.parse(input),source=await this.identity(manifest.map);
   if(!/\.sc2map$/i.test(source.file))throw Error('TEST_SAVED_SC2MAP_REQUIRED');
   const dependencies:Identity[]=[],issues:TestCheck[]=[];
+  if(manifest.editor&&(manifest.editor.checks.includes('compile')||manifest.editor.gameArtifact==='native_saved')&&!manifest.editor.contextLabel?.trim())issues.push({id:'editor.compile_context',status:'unsupported',required:true,reason:'TEST_COMPILE_CONTEXT_REQUIRED: the pinned GUI compiler needs the actual authored root/library contextLabel, including native-saved artifact recompilation. Empty GUI trees with separate Galaxy startup require source-artifact game execution and separate native load/save checks; do not invent a label.'});
   for(const d of manifest.dependencies){try{const value=await this.identity(d.file,d.id);if(d.sha256&&value.sha256!==d.sha256)throw Error('Dependency digest mismatch');dependencies.push(value);}catch(e){issues.push({id:'dependency:'+d.id,status:'failed',required:true,reason:String(e)});}}
+  const storage=await this.storageChecks(manifest,source);issues.push(...storage.filter(c=>c.status!=='passed'));
   const load=await this.terrainLoadCheck(source);if(load&&load.status!=='passed')issues.push(load);
   const game=this.options.runtime.game.configuration();
   if(manifest.game&&(!game.configured||!game.launchEnabled))issues.push({id:'game.configuration',status:'unsupported',required:manifest.game.required,reason:'Configure SC2_GAME_TOOLKIT_HOME and explicitly enable SC2_GAME_ALLOW_LAUNCH=1'});
-  if(manifest.game?.routes.some(r=>r.expected==='blocked'))issues.push({id:'navigation.authoritative_query',status:'unsupported',required:false,reason:'No direct engine path query; a move timeout cannot prove an obstruction'});
+  if(manifest.game?.routes.some(r=>r.expected==='blocked'))issues.push({id:'navigation.authoritative_query',status:'unsupported',required:false,reason:'Movement non-arrival cannot prove an obstruction. Explicit game.pathing checks report separate native point predicates; they do not certify this unit footprint or the later movement Game state'});
   const p:Plan={id:randomUUID(),manifest,manifestSha256:digest(JSON.stringify(manifest)),source,dependencies,issues,capabilities:{game,groundMobility:'Declared by the test author; runtime inspection does not expose the movement plane',dependencyScope:'Explicit file digests plus native load and observed runtime build; installed transitive dependencies are not fully pinned'}};
   if(this.plans.size>=32)this.plans.delete(this.plans.keys().next().value!);this.plans.set(p.id,p);
-  return {planId:p.id,map:manifest.map,sourceSha256:source.sha256,manifestSha256:p.manifestSha256,dependencies:dependencies.map(d=>({id:d.id,sha256:d.sha256})),issues,capabilities:p.capabilities,suites:{editor:manifest.editor?.checks??[],routes:manifest.game?.routes.length??0,scenarios:manifest.game?.scenarios.length??0,actions:manifest.game?.actions.length??0,views:manifest.game?.views.length??0},ready:!issues.some(c=>c.required&&c.status!=='passed')};
+  return {planId:p.id,map:manifest.map,sourceSha256:source.sha256,manifestSha256:p.manifestSha256,dependencies:dependencies.map(d=>({id:d.id,sha256:d.sha256})),issues,storage,capabilities:p.capabilities,suites:{editor:manifest.editor?.checks??[],routes:manifest.game?.routes.length??0,formations:manifest.game?.formations.length??0,...(manifest.game?.pads.length?{pads:manifest.game.pads.length}:{}),...(manifest.game?.pathing.length?{pathing:manifest.game.pathing.length}:{}),scenarios:manifest.game?.scenarios.length??0,actions:manifest.game?.actions.length??0,views:manifest.game?.views.length??0},ready:!issues.some(c=>c.required&&c.status!=='passed')};
  }
  async planFile(file:string){const source=await this.identity(file),bytes=await fs.readFile(source.file);if(bytes.length>256*1024)throw Error('TEST_MANIFEST_SIZE_LIMIT');if(digest(bytes)!==source.sha256)throw Error('TEST_MANIFEST_STALE');const result=await this.plan(JSON.parse(bytes.toString('utf8')));this.plans.get(result.planId)!.manifestFile=source;return {...result,manifestFileSha256:source.sha256};}
  async run(planId:string){
   if(this.closing)throw Error('TEST_RUNNER_CLOSING');this.pending();const plan=this.plans.get(planId);if(!plan)throw Error('TEST_PLAN_UNKNOWN');await this.unchanged(plan);
   if(plan.issues.some(c=>c.required&&c.status!=='passed'))throw Error('TEST_PLAN_BLOCKED: resolve required plan issues');
+  const storage=await this.storageChecks(plan.manifest,plan.source);if(storage.some(c=>c.status!=='passed'))throw Error('TEST_STORAGE_BLOCKED: '+storage.filter(c=>c.status!=='passed').map(c=>c.reason).join('; ').slice(0,900));
   if([...this.jobs.values()].filter(j=>j.state==='queued'||j.state==='running').length>=4)throw Error('TEST_QUEUE_FULL');
   for(const [id,j]of this.jobs)if(this.jobs.size>=32&&j.state!=='queued'&&j.state!=='running')this.jobs.delete(id);
   const id=randomUUID(),job:Job={id,plan,state:'queued',phase:'queued',cancelRequested:false,createdAt:new Date().toISOString(),checks:[],directory:path.join(this.work,id)};this.jobs.set(id,job);
   this.tail=this.tail.then(()=>this.execute(job)).catch(e=>{job.error=String(e);job.state='completed';job.checks.push({id:'runner',status:'failed',required:true,reason:String(e)});});
   return this.status(id);
  }
- status(id:string){const j=this.jobs.get(id);if(!j)throw Error('TEST_JOB_UNKNOWN');return {jobId:id,state:j.state,phase:j.phase,nativeProgress:j.nativeProgress?{...j.nativeProgress,elapsedSeconds:j.nativeProgress.startedAt?Math.max(0,Math.floor((Date.now()-Date.parse(j.nativeProgress.startedAt))/1000)):undefined}:undefined,cancelRequested:j.cancelRequested,createdAt:j.createdAt,finishedAt:j.finishedAt,outcome:j.state==='completed'?testVerdict(j.checks):null,checks:j.checks.map(({id,status,required,reason})=>({id,status,required,reason})),sourceSha256:j.plan.source.sha256,testedArtifact:j.testedArtifact,gameRuntime:j.gameRuntime,report:path.join(j.directory,'result.json'),error:j.error};}
+ status(id:string){const j=this.jobs.get(id);if(!j)throw Error('TEST_JOB_UNKNOWN');return {jobId:id,state:j.state,phase:j.phase,nativeProgress:j.nativeProgress?{...j.nativeProgress,elapsedSeconds:j.nativeProgress.startedAt?Math.max(0,Math.floor((Date.now()-Date.parse(j.nativeProgress.startedAt))/1000)):undefined}:undefined,cancelRequested:j.cancelRequested,createdAt:j.createdAt,finishedAt:j.finishedAt,outcome:j.state==='completed'?testVerdict(j.checks):null,checks:j.checks.map(({id,status,required,reason})=>({id,status,required,reason})),sourceSha256:j.plan.source.sha256,testedArtifact:j.testedArtifact,gameRuntime:j.gameRuntime,report:j.reportPersistence==='memory_only'?undefined:path.join(j.directory,'result.json'),reportPersistence:j.reportPersistence??'pending',error:j.error};}
  async report(id:string,offset=0,limit=10){const j=this.jobs.get(id);if(!j)throw Error('TEST_JOB_UNKNOWN');let current=true;try{await this.unchanged(j.plan);if(j.testedArtifact&&(await this.identity(j.testedArtifact.file)).sha256!==j.testedArtifact.sha256)current=false;}catch{current=false;}return {...this.status(id),current,evidenceValidForCurrentInputs:current&&j.state==='completed',checks:j.checks.slice(offset,offset+limit),offset,nextOffset:offset+limit<j.checks.length?offset+limit:null,total:j.checks.length,manifestSha256:j.plan.manifestSha256,capabilities:j.plan.capabilities};}
  cancel(id:string){const j=this.jobs.get(id);if(!j)throw Error('TEST_JOB_UNKNOWN');if(j.state==='queued'||j.state==='running')j.cancelRequested=true;return this.status(id);}
- async image(id:string,viewId?:string){const j=this.jobs.get(id);if(!j)throw Error('TEST_JOB_UNKNOWN');if(viewId&&!j.plan.manifest.game?.views.some(v=>v.id===viewId))throw Error('TEST_VIEW_UNKNOWN');const check=j.checks.find(c=>c.id===(viewId?'view:'+viewId:'game.capture'));if(check?.status!=='passed'||typeof check.evidence?.sha256!=='string')throw Error('TEST_IMAGE_UNCONFIRMED');const file=path.join(j.directory,viewId?'View_'+viewId+'.png':'Game.png'),b=await fs.readFile(file);if(b.length>6*1024*1024||!b.subarray(0,8).equals(Buffer.from([137,80,78,71,13,10,26,10]))||digest(b)!==check.evidence.sha256)throw Error('TEST_IMAGE_INVALID');return {type:'image' as const,mimeType:'image/png',data:b.toString('base64')};}
+ async image(id:string,viewId?:string,formation?:{id:string;direction:'forward'|'reverse'}){
+  const j=this.jobs.get(id);if(!j)throw Error('TEST_JOB_UNKNOWN');
+  if(viewId&&formation)throw Error('TEST_IMAGE_SELECTOR_CONFLICT');
+  if(viewId&&!j.plan.manifest.game?.views.some(v=>v.id===viewId))throw Error('TEST_VIEW_UNKNOWN');
+  if(formation){const spec=j.plan.manifest.game?.formations.find(v=>v.id===formation.id);if(!spec||!spec.viewId||formation.direction==='reverse'&&!spec.bidirectional)throw Error('TEST_FORMATION_IMAGE_UNKNOWN');}
+  const checkId=formation?'formation:'+formation.id+':'+formation.direction+':frame':viewId?'view:'+viewId:'game.capture';
+  const check=j.checks.find(c=>c.id===checkId);if(check?.status!=='passed'||typeof check.evidence?.sha256!=='string')throw Error('TEST_IMAGE_UNCONFIRMED');
+  const file=path.join(j.directory,formation?'Formation_'+formation.id+'_'+formation.direction+'.png':viewId?'View_'+viewId+'.png':'Game.png'),b=await fs.readFile(file);
+  if(b.length>6*1024*1024||!b.subarray(0,8).equals(Buffer.from([137,80,78,71,13,10,26,10]))||digest(b)!==check.evidence.sha256)throw Error('TEST_IMAGE_INVALID');
+  return {type:'image' as const,mimeType:'image/png',data:b.toString('base64')};
+ }
  private checkCancel(j:Job){if(j.cancelRequested)throw Error('TEST_CANCEL_REQUESTED');}
  private async record(j:Job,id:string,value:unknown){await fs.writeFile(path.join(j.directory,id.replace(/[^a-z0-9_-]/gi,'_')+'.json'),JSON.stringify(value,null,2)+'\n');}
  private async waitNative(j:Job,editor:Editor,id:string){
@@ -105,10 +129,11 @@ export class ProjectTestWorkspace {
   }
  }
  private async execute(j:Job){
-  let runtime:Runtime|undefined,attemptedAttach=false,release:(()=>void)|undefined;const m=j.plan.manifest;
+  let runtime:Runtime|undefined,attemptedAttach=false,release:(()=>void)|undefined,outputPrepared=false;const m=j.plan.manifest;
   j.state='running';
   try{
-   await fs.mkdir(j.directory,{recursive:true});this.checkCancel(j);await this.unchanged(j.plan);j.phase='static';
+   this.checkCancel(j);j.phase='storage';const storage=await this.storageChecks(m,j.plan.source);j.checks.push(...storage);if(storage.some(c=>c.status!=='passed')){j.reportPersistence='memory_only';return;}
+   await fs.mkdir(j.directory,{recursive:true});outputPrepared=true;this.checkCancel(j);await this.unchanged(j.plan);j.phase='static';
    await (this.options.inspect??inspectArchive)(j.plan.source.file);j.checks.push({id:'archive',status:'passed',required:true});
    const copy=path.join(j.directory,'Input.SC2Map');await fs.copyFile(j.plan.source.file,copy);if(digest(await fs.readFile(copy))!==j.plan.source.sha256)throw Error('TEST_SNAPSHOT_CHANGED');
    this.checkCancel(j);release=this.options.gate.acquire(j.id);
@@ -137,11 +162,8 @@ export class ProjectTestWorkspace {
      const saved=r?.checks?.save_reopen,a=saved?.savedArchive;
      if(status!=='passed'||saved?.nativeSaveVerified!==true||saved?.nativeReopenVerified!==true||saved?.componentComparison?.savedToReopenedEqual!==true||typeof a?.path!=='string'||!/^[a-f0-9]{64}$/.test(a.sha256??''))throw Error('TEST_NATIVE_ARTIFACT_UNCONFIRMED');
      if(typeof editorStatus.workerDirectory!=='string'||!path.isAbsolute(editorStatus.workerDirectory))throw Error('TEST_NATIVE_WORKER_IDENTITY_UNAVAILABLE');
-     const nativeRoot=await fs.realpath(this.workspace.resolveUserPath(editorStatus.workerDirectory));
-     this.workspace.resolveUserPath(nativeRoot);
-     const real=await fs.realpath(a.path),rel=path.relative(nativeRoot,real);
-     if(path.isAbsolute(rel)||rel==='..'||rel.startsWith('..'+path.sep)||!/\.sc2map$/i.test(real))throw Error('TEST_NATIVE_ARTIFACT_OUTSIDE_WORKER');
-     const bytes=await fs.readFile(real);if(digest(bytes)!==a.sha256||bytes.length!==a.bytes)throw Error('TEST_NATIVE_ARTIFACT_DIGEST_MISMATCH');
+     if(!/\.sc2map$/i.test(a.path))throw Error('TEST_NATIVE_ARTIFACT_OUTSIDE_WORKER');
+     const bytes=await runtime.editor.readWorkerArtifact(a.path);if(digest(bytes)!==a.sha256||bytes.length!==a.bytes)throw Error('TEST_NATIVE_ARTIFACT_DIGEST_MISMATCH');
      const final=path.join(j.directory,'Final.SC2Map');await fs.writeFile(final,bytes);
      await (this.options.inspect??inspectArchive)(final);
      j.testedArtifact={file:final,sha256:a.sha256,origin:'native_saved'};
@@ -157,7 +179,7 @@ export class ProjectTestWorkspace {
     }
    }
    if(j.testedArtifact){const load=await this.terrainLoadCheck(j.testedArtifact);if(load){j.checks.push(load);if(load.status==='failed')return;}}
-   if(m.game?.routes.length){
+   if(m.game&&(m.game.routes.length||m.game.formations.length||m.game.pads.length||m.game.pathing.length)){
     this.checkCancel(j);j.phase='map.playable_bounds';let check:TestCheck;
     try{
      const artifact=j.testedArtifact!;
@@ -168,7 +190,9 @@ export class ProjectTestWorkspace {
     }catch(e){check={id:'map.playable_bounds',status:'unsupported',required:true,reason:'TEST_ROUTE_BOUNDS_UNAVAILABLE: '+String(e)};}
     j.checks.push(check);if(check.status!=='passed')return;
    }
-   if(m.game){this.checkCancel(j);j.phase='launch';const config=runtime.game.configuration();if(!config.configured||!config.launchEnabled){j.checks.push({id:'game.launch',status:'unsupported',required:m.game.required,reason:'Game runtime or explicit launch configuration unavailable'});return;}attemptedAttach=true;const attached=await runtime.game.attach(privateArchive,m.game.timeout,m.game.renderBackend);j.gameRuntime=runtime.game.configuration().runtimeIdentity;await this.record(j,'launch',attached);
+   if(m.game&&(m.game.pads.length||m.game.pathing.length)&&!await this.pads(j,runtime))return;
+   const mainGame=m.game&&(!(m.game.pads.length||m.game.pathing.length)||m.game.ready||m.game.startupEvents.length||m.game.routes.length||m.game.formations.length||m.game.scenarios.length||m.game.actions.length||m.game.views.length||m.game.capture||m.game.diagnostics.required);
+   if(m.game&&mainGame){this.checkCancel(j);j.phase='launch';const config=runtime.game.configuration();if(!config.configured||!config.launchEnabled){j.checks.push({id:'game.launch',status:'unsupported',required:m.game.required,reason:'Game runtime or explicit launch configuration unavailable'});return;}attemptedAttach=true;const attached=await runtime.game.attach(privateArchive,m.game.timeout,m.game.renderBackend);j.gameRuntime=runtime.game.configuration().runtimeIdentity;await this.record(j,'launch',attached);
     j.checks.push(gameLaunchCheck(attached,m.game.required));
     if(j.checks.at(-1)!.status!=='passed'){
      if(m.game.launchDiagnostics&&!j.cancelRequested){
@@ -213,7 +237,17 @@ export class ProjectTestWorkspace {
      j.phase='startup_events';
      j.checks.push(...await observeStartupEvents(m.game.startupEvents,{call:(method,args)=>runtime!.game.call(method,args),body:testBody,checkCancel:()=>this.checkCancel(j),pollMs:this.options.pollMs,record:async(page,result)=>{const id='startup_events_'+page;await this.record(j,id,result);return path.join(j.directory,id+'.json');}}));
     }
-    for(const route of m.game.routes){for(const reverse of route.bidirectional?[false,true]:[false]){this.checkCancel(j);j.phase='route:'+route.id;await this.route(j,runtime.game,route,reverse);}}
+    for(const route of m.game.routes){for(const reverse of route.bidirectional?[false,true]:[false]){this.checkCancel(j);j.phase='route:'+route.id;if(!await this.route(j,runtime.game,route,reverse))return;}}
+    for(const formation of m.game.formations)for(const reverse of formation.bidirectional?[false,true]:[false]){
+     this.checkCancel(j);j.phase='formation:'+formation.id;const direction=reverse?'reverse':'forward',prefix='formation_'+formation.id+'_'+direction;
+     const selected=formation.viewId?m.game.views.find(v=>v.id===formation.viewId):undefined;
+     const result=await runFormationCheck(formation,m.game.points[reverse?formation.to:formation.from],m.game.points[reverse?formation.from:formation.to],reverse,{
+      call:(method,args)=>runtime!.game.call(method,args),body:testBody,state:responseState,checkCancel:()=>this.checkCancel(j),pollMs:this.options.pollMs,
+      record:async(name,value)=>{const stem=prefix+'_'+name;await this.record(j,stem,value);return path.join(j.directory,stem+'.json');},
+      ...(selected?{captureRequired:formation.required&&selected.required,capture:()=>this.view(j,runtime!.game,{...selected,required:formation.required&&selected.required},{id:'formation:'+formation.id+':'+direction+':frame',file:'Formation_'+formation.id+'_'+direction+'.png'})}:{})
+     });
+     j.checks.push(...result.checks);if(!result.continueSuite)return;
+    }
     for(const s of m.game.scenarios){this.checkCancel(j);j.phase='scenario:'+s.id;const r=await runtime.game.call('game.test.run',{steps:s.steps});await this.record(j,'scenario_'+s.id,r);j.checks.push({id:'scenario:'+s.id,status:responseState(r),required:s.required,evidence:{report:path.join(j.directory,'scenario_'+s.id+'.json')}});}
     let actionBlocked=false;
     for(const action of m.game.actions){
@@ -223,7 +257,7 @@ export class ProjectTestWorkspace {
      j.checks.push({id:'action:'+action.id,status:observed.status,required:action.required,reason:observed.reason,evidence:{report:path.join(j.directory,'action_'+action.id+'_result.json'),actionSubmitted:observed.actionSubmitted,matchedEvents:observed.observation?.events.filter(e=>e.matched).length??0,scope:observed.scope}});
      actionBlocked=observed.status!=='passed';
     }
-    for(const view of m.game.views){this.checkCancel(j);j.phase='view:'+view.id;await this.view(j,runtime.game,view);}
+    for(const view of m.game.views){this.checkCancel(j);j.phase='view:'+view.id;j.checks.push(await this.view(j,runtime.game,view));}
     j.phase='diagnostics';const after=await runtime.game.call('game.diagnostics',{...(testBody(before).cursor?{cursor:testBody(before).cursor}:{}),limit:128});await this.record(j,'diagnostics_after',after);
     const diagnostics=[...testBody(before).messages??[],...testBody(after).messages??[]];const unexpected=diagnostics.filter((d:any)=>d.severity==='error'&&!m.game!.diagnostics.expected.some(e=>e.source===d.source&&e.text===(d.text??d.message)&&e.build===build));
     j.checks.push({id:'game.diagnostics',status:unexpected.length?'failed':'inconclusive',required:m.game.diagnostics.required,reason:unexpected.length?'Observed unexpected runtime errors':'No unexpected errors observed in available sources; diagnostic coverage is partial',evidence:{unexpected:unexpected.slice(0,16),sources:testBody(after).sources??null}});
@@ -236,39 +270,50 @@ export class ProjectTestWorkspace {
    release?.();
    if(j.testedArtifact)try{const valid=(await this.identity(j.testedArtifact.file)).sha256===j.testedArtifact.sha256;j.checks.push({id:'artifact.unchanged',status:valid?'passed':'failed',required:true,reason:valid?undefined:'TEST_EXECUTED_ARTIFACT_CHANGED',evidence:{sha256:j.testedArtifact.sha256,origin:j.testedArtifact.origin}});}catch(e){j.checks.push({id:'artifact.unchanged',status:'failed',required:true,reason:String(e)});}
    try{await this.unchanged(j.plan);j.checks.push({id:'source.unchanged',status:'passed',required:true});}catch(e){j.checks.push({id:'source.unchanged',status:'failed',required:true,reason:String(e)});}
-   j.state=j.cancelRequested?'cancelled':'completed';j.phase='finished';j.finishedAt=new Date().toISOString();await this.record(j,'result',{...this.status(j.id),manifest:j.plan.manifest,capabilities:j.plan.capabilities,dependencies:j.plan.dependencies,checks:j.checks});
+   j.state=j.cancelRequested?'cancelled':'completed';j.phase='finished';j.finishedAt=new Date().toISOString();if(!outputPrepared)j.reportPersistence='memory_only';if(j.reportPersistence!=='memory_only'){await this.record(j,'result',{...this.status(j.id),reportPersistence:'workspace_file',manifest:j.plan.manifest,capabilities:j.plan.capabilities,dependencies:j.plan.dependencies,checks:j.checks});j.reportPersistence='workspace_file';}
   }
  }
- private async view(j:Job,game:Game,view:NonNullable<TestManifest['game']>['views'][number]){
-  const id='view:'+view.id,camera=await game.call('game.camera.set',view.camera);await this.record(j,id+'_camera',camera);
+ private async pads(j:Job,runtime:Runtime):Promise<boolean>{
+  const game=j.plan.manifest.game!,artifact=j.testedArtifact!,namespace=game.pathing.length?'game.native_query':'game.pad',phase=game.pathing.length?'native_query':'pad';this.checkCancel(j);j.phase=phase+'_preparation';
+  const prepared=await preparePadProbe({source:artifact.file,sourceSha256:artifact.sha256,directory:j.directory,pads:game.pads,pathing:game.pathing,points:game.points,probe:(game.nativeProbe??game.padProbe)!,storageProbe:this.options.storageProbe});
+  j.checks.push({id:namespace+'_preparation',status:'passed',required:true,evidence:{archive:prepared.archive,sha256:prepared.sha256,sourceSha256:prepared.sourceSha256,channelVersion:prepared.channel.version,unitType:prepared.channel.unitType,queryScriptSha256:prepared.queryScriptSha256,preservedComponentCount:prepared.preservedComponentCount,changedFiles:prepared.changedFiles,report:path.join(j.directory,'PadProbe.json'),scope:prepared.scope}});
+  let attempted=false;let proceed:boolean;
+  try{
+   this.checkCancel(j);j.phase=phase+'_launch';if(digest(await fs.readFile(prepared.archive))!==prepared.sha256)throw Error('PAD_EXECUTED_ARTIFACT_STALE');
+   attempted=true;const attached=await runtime.game.attach(path.relative(this.workspace.root,prepared.archive).replaceAll('\\','/'),game.timeout,game.renderBackend);j.gameRuntime=runtime.game.configuration().runtimeIdentity;await this.record(j,'pad_launch',attached);
+   const launch=gameLaunchCheck(attached,game.required||game.pads.some(p=>p.required)||game.pathing.some(p=>p.required));j.checks.push({...launch,id:namespace+'_launch'});if(launch.status!=='passed')return false;
+   const state=await runtime.game.call('game.status',{});await this.record(j,'pad_runtime',state);const body=testBody(state),build=String(body.versionSupport?.observedVersion??body.native?.game?.version??body.gameVersion??'unknown');
+   j.checks.push({id:namespace+'_build',status:j.plan.manifest.expectedGameBuild?(build===j.plan.manifest.expectedGameBuild?'passed':'failed'):'not_checked',required:!!j.plan.manifest.expectedGameBuild,evidence:{observed:build}});if(j.plan.manifest.expectedGameBuild&&build!==j.plan.manifest.expectedGameBuild)return false;
+   j.phase=phase+'_queries';const observed=await observePadQueries(prepared.channel,{call:(method,args)=>runtime.game.call(method,args),body:testBody,state:responseState,checkCancel:()=>this.checkCancel(j),pollMs:this.options.pollMs,record:async(name,value)=>{const id='pad_'+name;await this.record(j,id,value);return path.join(j.directory,id+'.json');}});j.checks.push(...observed.checks);proceed=observed.complete;
+  }finally{
+   if(attempted){j.phase=phase+'_cleanup';try{const closed=await runtime.game.detach();await this.record(j,'pad_detach',closed);const passed=closed.stopped&&closed.sourceUnchanged===true;j.checks.push({id:namespace+'_cleanup',status:passed?'passed':'failed',required:true,evidence:{stopped:closed.stopped,sourceUnchanged:closed.sourceUnchanged}});if(!passed)proceed=false;}catch(error){proceed=false;j.checks.push({id:namespace+'_cleanup',status:'failed',required:true,reason:String(error)});}}
+   const unchanged=digest(await fs.readFile(prepared.archive))===prepared.sha256&&digest(await fs.readFile(artifact.file))===artifact.sha256;j.checks.push({id:namespace+'_artifact',status:unchanged?'passed':'failed',required:true,evidence:{sha256:prepared.sha256,sourceSha256:artifact.sha256}});if(!unchanged)proceed=false;
+  }
+  return proceed;
+ }
+ private async view(j:Job,game:Game,view:NonNullable<TestManifest['game']>['views'][number],context?:{id:string;file:string}):Promise<TestCheck>{
+  const id=context?.id??'view:'+view.id,camera=await game.call('game.camera.set',view.camera);await this.record(j,id+'_camera',camera);
   const observed=testBody(camera).camera,request=view.camera;
   const evidence:Record<string,unknown>={requested:request,observed:observed??null,includeUI:view.includeUI,visualReview:'not_checked',scope:'Camera readback and native PNG capture; framing and art quality require image review'};
   const values=[observed?.target?.x,observed?.target?.y,observed?.distance,observed?.pitch,observed?.yaw];
-  if(responseState(camera)!=='passed'||!values.every(v=>typeof v==='number'&&Number.isFinite(v))){j.checks.push({id,status:responseState(camera)==='passed'?'inconclusive':responseState(camera),required:view.required,reason:'Native camera readback unavailable',evidence});return;}
+  if(responseState(camera)!=='passed'||!values.every(v=>typeof v==='number'&&Number.isFinite(v)))return {id,status:responseState(camera)==='passed'?'inconclusive':responseState(camera),required:view.required,reason:'Native camera readback unavailable',evidence};
   const yawError=Math.abs(((observed.yaw-request.yaw)%360+540)%360-180);
-  if(Math.max(Math.abs(observed.target.x-request.x),Math.abs(observed.target.y-request.y),Math.abs(observed.distance-request.distance),Math.abs(observed.pitch-request.pitch),yawError)>0.5){j.checks.push({id,status:'failed',required:view.required,reason:'Native camera did not reach the requested viewpoint within 0.5 world units/degrees',evidence});return;}
+  if(Math.max(Math.abs(observed.target.x-request.x),Math.abs(observed.target.y-request.y),Math.abs(observed.distance-request.distance),Math.abs(observed.pitch-request.pitch),yawError)>0.5)return {id,status:'failed',required:view.required,reason:'Native camera did not reach the requested viewpoint within 0.5 world units/degrees',evidence};
   this.checkCancel(j);const captured=await game.call('game.capture',{include_ui:view.includeUI}),png=captured.content.find(c=>c.type==='image');
   const bytes=png?.type==='image'&&png.mimeType==='image/png'?Buffer.from(png.data,'base64'):undefined;
-  if(responseState(captured)!=='passed'||!bytes||bytes.length>6*1024*1024||!bytes.subarray(0,8).equals(Buffer.from([137,80,78,71,13,10,26,10]))){await this.record(j,id+'_capture',testBody(captured));j.checks.push({id,status:responseState(captured)==='passed'?'inconclusive':responseState(captured),required:view.required,reason:'Valid bounded native PNG unavailable',evidence});return;}
-  const file=path.join(j.directory,'View_'+view.id+'.png');await fs.writeFile(file,bytes);j.checks.push({id,status:'passed',required:view.required,evidence:{...evidence,file,sha256:digest(bytes)}});
+  if(responseState(captured)!=='passed'||!bytes||bytes.length>6*1024*1024||!bytes.subarray(0,8).equals(Buffer.from([137,80,78,71,13,10,26,10]))){await this.record(j,id+'_capture',testBody(captured));return {id,status:responseState(captured)==='passed'?'inconclusive':responseState(captured),required:view.required,reason:'Valid bounded native PNG unavailable',evidence};}
+  const file=path.join(j.directory,context?.file??'View_'+view.id+'.png');await fs.writeFile(file,bytes);return {id,status:'passed',required:view.required,evidence:{...evidence,file,sha256:digest(bytes)}};
  }
  private async route(j:Job,game:Game,r:NonNullable<TestManifest['game']>['routes'][number],reverse:boolean){
   const points=j.plan.manifest.game!.points,from=points[reverse?r.to:r.from],to=points[reverse?r.from:r.to],id='route:'+r.id+(reverse?':reverse':':forward');
-  const created=await game.call('game.fixture',{type:r.type,owner:r.owner,...from});await this.record(j,id+'_fixture',created);const unit=testBody(created).unit?.id;
-  if(responseState(created)!=='passed'||unit===undefined){j.checks.push({id,status:'failed',required:r.required,reason:'Ground fixture could not be created'});return;}
-  const trajectory:unknown[]=[];let arrived=false,interference=false,maxObservedDeviation:number;
-  try{
-   const initial=await game.call('game.units.inspect',{unit:String(unit)}),u=testBody(initial).unit;await this.record(j,id+'_initial',initial);
-   if(!u?.valid||!u?.alive||u.type!==r.type||Math.hypot(u.position.x-from.x,u.position.y-from.y)>r.tolerance)throw Error('Fixture invalid, wrong type or displaced at spawn: requested '+JSON.stringify(from)+', observed '+JSON.stringify(u?.position));
-   maxObservedDeviation=routeDeviation(u.position,from,to);trajectory.push({at:new Date().toISOString(),...u});
-   if(j.plan.manifest.game?.capture)await game.call('game.camera.set',{unit:String(unit),player:r.owner||1,distance:24});
-   const issued=await game.call('game.order',{unit:String(unit),action:'move',...to});if(testBody(issued).accepted!==true||issued.isError)throw Error('Move order rejected');
-   const end=Date.now()+r.timeout*1000;do{this.checkCancel(j);const snap=await game.call('game.units.inspect',{unit:String(unit)}),v=testBody(snap).unit;trajectory.push({at:new Date().toISOString(),...v});if(responseState(snap)!=='passed'||!v?.valid||!v?.alive||!Number.isFinite(v.position?.x)||!Number.isFinite(v.position?.y)){interference=true;break;}maxObservedDeviation=Math.max(maxObservedDeviation,routeDeviation(v.position,from,to));if(Math.hypot(v.position.x-to.x,v.position.y-to.y)<=r.tolerance){arrived=true;break;}await delay(this.options.pollMs??250);}while(Date.now()<end);
-   const outsideCorridor=r.maxDeviation!==undefined&&maxObservedDeviation>r.maxDeviation;
-   const status:CheckState=outsideCorridor?'failed':r.expected==='blocked'?(arrived?'failed':'inconclusive'):arrived?'passed':'inconclusive';
-   j.checks.push({id,status,required:r.required,reason:outsideCorridor?'Observed trajectory left the declared route corridor':arrived?undefined:interference?'Unit invalid/dead or inspection unavailable':'Arrival not observed; timeout does not prove an obstruction',evidence:{type:r.type,mobility:r.mobility,mobilitySource:'manifest_declaration',expected:r.expected,arrived,trajectorySamples:trajectory.length,maxObservedDeviation,...(r.maxDeviation!==undefined?{maxDeviation:r.maxDeviation,corridorScope:'sampled_unit_centers'}:{}),trajectoryFile:path.join(j.directory,id.replaceAll(':','_')+'_trajectory.json')}});await this.record(j,id+'_trajectory',trajectory);
-   if(j.plan.manifest.game?.capture){const frame=await game.call('game.capture',{include_ui:true}),png=frame.content.find(c=>c.type==='image');if(png?.type==='image')await fs.writeFile(path.join(j.directory,id.replaceAll(':','_')+'.png'),Buffer.from(png.data,'base64'));}
-  }finally{const cleanup=await game.call('game.fixture',{action:'cleanup'});await this.record(j,id+'_cleanup',cleanup);const readback=await game.call('game.units.inspect',{unit:String(unit)});if(responseState(cleanup)!=='passed'||testBody(readback).unit?.valid!==false)j.checks.push({id:id+':cleanup',status:'failed',required:true,reason:'Fixture removal was not confirmed'});}
+  const prefix=id.replaceAll(':','_'),result=await runRouteCheck(r,from,to,reverse,{
+   call:(method,args)=>game.call(method,args),body:testBody,state:responseState,checkCancel:()=>this.checkCancel(j),pollMs:this.options.pollMs,
+   record:async(name,value)=>{const stem=prefix+'_'+name;await this.record(j,stem,value);return path.join(j.directory,stem+'.json');},
+   ...(j.plan.manifest.game?.capture?{
+    focus:async(unit:string)=>{await game.call('game.camera.set',{unit,player:r.owner||1,distance:24});},
+    capture:async()=>{const frame=await game.call('game.capture',{include_ui:true}),png=frame.content.find(c=>c.type==='image');if(png?.type==='image')await fs.writeFile(path.join(j.directory,prefix+'.png'),Buffer.from(png.data,'base64'));}
+   }:{})
+  });j.checks.push(...result.checks);return result.continueSuite;
  }
  async close(){this.closing=true;for(const j of this.jobs.values())if(j.state==='queued'||j.state==='running')j.cancelRequested=true;await this.tail;}
 }

@@ -1,5 +1,39 @@
 # Changelog
 
+## Guarded authoring and scoped native acceptance — 2026-10-26
+
+- Pin Editor Toolkit 1.0.0/protocol15 with verified release assets, bounded owned
+  jobs, storage preflight and explicit native outcome handling.
+- Add guarded landscape edits, material patches, decor variations and joined
+  cardinal ramps while preserving manual content and stale-input protection.
+- Validate authored mod exports and Data class changes; reject the specifically
+  observed ordinary CWeapon load failure without inferring a general abstract ban.
+- Preserve qualified GUI type metadata and expose native compatibility findings;
+  retain explicit zero-bound helpers instead of silently changing array sizes.
+- Add route, formation and placement observations with game-clock checks, plus
+  digest-bound evidence inventory and current-release acceptance selection.
+- Publish scoped native records and English operating guidance. Historical
+  evidence, unfinished stress cases and human visual acceptance remain distinct;
+  this update does not declare universal compatibility or complete readiness.
+
+## Stable mounted dependency identity — 2026-10-23
+
+- Persist CASC root registration order across first mount, remount and reconnect;
+  migrate legacy cache metadata without changing DocumentInfo precedence or
+  dependency/content guards. Installed MCP repeats keep the native map payload
+  unchanged and avoid unnecessary owned-zone rebuilds.
+- Record original-Editor save/reopen and saved-artifact execution for explicit
+  runtime registration, alongside the retained native structure/zero-bound GUI
+  compilation failure. Local emitter execution and native GUI validity stay
+  separate acceptance scopes.
+
+## Shared asset-index performance — 2026-10-23
+
+- Accumulate ordered asset provenance once per reference, preserving existing
+  identity, first-source metadata and response ordering. Retain dependency and
+  stale-transaction guards. Exact real-MCP page/plan comparisons and focused
+  regressions cover the change; measured cold-query improvements are scoped.
+
 ## Optional private game runtime integration
 
 - Add a compact `game` MCP profile and five tools forwarding the external

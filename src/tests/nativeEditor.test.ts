@@ -5,7 +5,7 @@ import os from 'node:os';
 import path from 'node:path';
 import {createHash} from 'node:crypto';
 import {Workspace} from '../core/workspace.js';
-import {NativeEditorBridge,nativeOperations} from '../integrations/native/bridge.js';
+import {NativeEditorBridge,nativeHome,nativeOperations} from '../integrations/native/bridge.js';
 import {NativeStdioClient,type NativeClient} from '../integrations/native/transport.js';
 import {registerNativeEditorTools} from '../integrations/native/tools.js';
 import type {McpServer} from '@modelcontextprotocol/server';
@@ -22,7 +22,7 @@ async function fixture(t:test.TestContext,call?:NativeClient['call']){
     try{return call?await call(name,args):{structuredContent:{status:'OK',nativeCompilePassed:true,diagnostics:{newErrorsClear:null,newErrors:[],newWarnings:[],inspectionComplete:false}},isError:false};}
     finally{active--;}
   }};
-  const workspace=new Workspace(root),bridge=new NativeEditorBridge(workspace,{client});t.after(()=>bridge.close());
+  const workspace=new Workspace(root),bridge=new NativeEditorBridge(workspace,{client,env:{}});t.after(()=>bridge.close());
   return {root,calls,bridge,workspace,counts:()=>({maxActive,closed})};
 }
 async function finished(bridge:NativeEditorBridge,id:string){
@@ -45,8 +45,7 @@ test('native GUI adoption requires original compile proof and unchanged template
  const localized=await finished(f.bridge,(await f.bridge.call('sc2_convert_xml',{template:'Test.SC2Map',triggers_xml:xml,trigger_strings:'Strings.txt'})).id);
  assert.equal(localized.result?.nativeGuiImportEligible,false);assert.notEqual(f.calls.at(-1)?.args.trigger_strings,path.join(f.root,'Strings.txt'));
  await fs.writeFile(path.join(f.root,'Other.xml'),'<TriggerData><Root/></TriggerData>\n');
- const inline=await finished(f.bridge,(await f.bridge.call('sc2_convert_xml',{template:'Test.SC2Map',triggers_xml:xml,triggers_file:'Other.xml'})).id);
- assert.equal((await f.bridge.guiArtifact(inline.id)).xmlSha256,hash(xml));
+ await assert.rejects(f.bridge.call('sc2_convert_xml',{template:'Test.SC2Map',triggers_xml:xml,triggers_file:'Other.xml'}),/ARGUMENT_CONFLICT/);
  await fs.appendFile(output,'\n');await assert.rejects(f.bridge.guiArtifact(job.id),/ARTIFACT_STALE/);
  await fs.writeFile(output,galaxy);await fs.appendFile(path.join(f.root,'Test.SC2Map'),'changed');await assert.rejects(f.bridge.guiArtifact(job.id),/ARTIFACT_STALE/);
 });
@@ -79,7 +78,7 @@ test('compact native storage leaves room for upstream Windows extraction paths',
 });
 test('all native operations are discoverable and generic calls use guarded private inputs and owned outputs',async t=>{
  const f=await fixture(t);await fs.writeFile(path.join(f.root,'Triggers'),'<TriggerData><Root/></TriggerData>');
- const tools=await f.bridge.tools();assert.ok(Array.isArray(tools));assert.equal(tools.length,18);
+ const tools=await f.bridge.tools();assert.ok(Array.isArray(tools));assert.equal(tools.length,31);
  assert.deepEqual((await f.bridge.tools('sc2_export_video') as any).inputSchema,{type:'object'});
  const job=await finished(f.bridge,(await f.bridge.call('sc2_convert_xml',{template:'Test.SC2Map',triggers_file:'Triggers'})).id);
  assert.equal(job.state,'completed');assert.equal(job.result?.sourceUnchanged,true);
@@ -152,12 +151,15 @@ test('queued source changes and workspace escapes fail before native access; act
   assert.equal(next.state,'failed');assert.match(next.error??'',/SOURCE_CHANGED_WHILE_QUEUED/);assert.equal(calls.length,1);
   assert.match(await fs.readFile(next.report,'utf8'),/SOURCE_CHANGED_WHILE_QUEUED/);
 });
-test('native tool schemas expose nine tools and reject invalid regions and camera modes',async t=>{
+test('native tool schemas expose ten tools and reject invalid regions and camera modes',async t=>{
   const {bridge}=await fixture(t),tools=new Map<string,any>();
   registerNativeEditorTools({registerTool:(name:string,config:unknown,callback:unknown)=>tools.set(name,{config,callback})} as unknown as McpServer,bridge);
-  assert.equal(tools.size,9);
+  assert.equal(tools.size,10);
   assert.throws(()=>tools.get('editor.capture').config.inputSchema.parse({archive:'Test.SC2Map',mode:'region',bounds:{left:5,right:1,bottom:0,top:1}}));
   assert.throws(()=>tools.get('editor.capture').config.inputSchema.parse({archive:'Test.SC2Map',mode:'map',cameraId:'1'}));
+  assert.throws(()=>tools.get('editor.capture').config.inputSchema.parse({archive:'Test.SC2Map',mode:'viewport',includeUnits:false}));
+  assert.throws(()=>tools.get('editor.capture').config.inputSchema.parse({archive:'Test.SC2Map',includeDoodads:true}));
+  assert.equal(tools.get('editor.capture').config.inputSchema.parse({archive:'Test.SC2Map',mode:'map',includeUnits:false}).includeUnits,false);
   assert.throws(()=>tools.get('editor.cameras').config.inputSchema.parse({archive:'Test.SC2Map',limit:101}));
   const missing=await tools.get('editor.job').callback({jobId:'00000000-0000-4000-8000-000000000000',includeImage:false});
   assert.equal(missing.isError,true);
@@ -228,7 +230,7 @@ test('compile-only startup failure remains in the compact check result and canno
 
 test('old or unrelated native frontends are rejected before using incompatible DLL protocols',async t=>{
   const root=await fs.mkdtemp(path.join(os.tmpdir(),'sc2-native-version-'));t.after(()=>fs.rm(root,{recursive:true,force:true}));
-  for(const version of ['0.8.0-rc.1','0.9.0-rc.1','0.9.1-rc.1','1.0.0']){
+  for(const version of ['0.8.0-rc.1','0.9.0-rc.1','0.9.1-rc.1','0.14.0-rc.1','2.0.0']){
     const source=`require('node:readline').createInterface({input:process.stdin}).on('line',line=>{const r=JSON.parse(line);if('id' in r)process.stdout.write(JSON.stringify({jsonrpc:'2.0',id:r.id,result:{serverInfo:{name:'sc2-native-toolkit',version:${JSON.stringify(version)}}}})+'\\n');});`;
     const client=new NativeStdioClient(process.execPath,['-e',source],root);t.after(()=>client.close());
     await assert.rejects(client.start(),/VERSION_MISMATCH/);assert.equal((client.info() as any).connected,false);
@@ -284,4 +286,66 @@ test('saved camera requests reject mods and detect queued archive changes before
   await fs.writeFile(path.join(root,'Test.SC2Map'),'changed');release();await finished(bridge,active.id);
   const job=await finished(bridge,queued.id);assert.match(job.error??'',/SOURCE_CHANGED_WHILE_QUEUED/);
   assert.equal(calls.length,1);
+});
+
+test('external native runtime home is absolute and captured independently of later environment changes',async t=>{
+ const f=await fixture(t),home=path.join(f.root,'SDK'),env={SC2_NATIVE_TOOLKIT_HOME:home};
+ const other=new NativeEditorBridge(f.workspace,{env});t.after(()=>other.close());
+ env.SC2_NATIVE_TOOLKIT_HOME=path.join(f.root,'AnotherSDK');
+ assert.equal(other.configuration().runtimeHome,home);
+ assert.equal(nativeHome({SC2_NATIVE_TOOLKIT_HOME:home}),home);
+ for(const value of ['', '   ', 'relative/sdk'])assert.throws(()=>nativeHome({SC2_NATIVE_TOOLKIT_HOME:value}),/HOME_ABSOLUTE_REQUIRED/);
+ await fs.mkdir(home,{recursive:true});await fs.writeFile(path.join(home,'sc2-mcp-runtime.json'),JSON.stringify({version:nativeRelease.version,nativeProtocol:nativeRelease.nativeProtocol,archiveSha256:'0'.repeat(64)}));
+ await assert.rejects(other.status(true),/RUNTIME_PACKAGE_MISMATCH/);
+});
+
+test('map captures independently verify all object filters, reuse the same loaded source, and invalidate after other native calls',async t=>{
+ const f=await fixture(t,async(name,args)=>({structuredContent:name==='sc2_export_map_image'?{status:'MAP_IMAGE_EXPORTED',wholeMapVerified:true,objectFiltersVerified:true,native:{terrainExport:{filtersConfirmed:1,customOptions:1,actualUnits:Number(args.include_units),actualDoodads:Number(args.include_doodads)}}}:{status:'OK'}}));
+ let count=0;
+ for(const units of [true,false])for(const doodads of [true,false]){
+  const job=await finished(f.bridge,(await f.bridge.capture({archive:'Test.SC2Map',mode:'map',size:1024,deadlineSeconds:1200,includeUnits:units,includeDoodads:doodads})).id);
+  assert.equal(job.state,'completed');assert.equal(job.result?.outcome,'completed');assert.equal(job.result?.capture.objectFiltersVerified,true);
+  assert.deepEqual(job.result?.objectFilters,{requested:{units,doodads},actual:{units,doodads},verified:true});
+  assert.equal(job.result?.reusedLoadedMap,count>0);
+  assert.equal(f.calls[count].args.include_units,units);assert.equal(f.calls[count].args.include_doodads,doodads);
+  if(count)assert.equal(f.calls[count].args.map,undefined);else assert.notEqual(f.calls[count].args.map,path.join(f.root,'Test.SC2Map'));
+  count++;
+ }
+ await finished(f.bridge,(await f.bridge.call('sc2_diagnostics',{})).id);
+ const after=await finished(f.bridge,(await f.bridge.capture({archive:'Test.SC2Map',mode:'map',size:512,deadlineSeconds:1200})).id);
+ assert.equal(after.result?.reusedLoadedMap,false);assert.deepEqual(after.result?.objectFilters.requested,{units:true,doodads:true});
+ assert.ok(f.calls.at(-1)?.args.map);
+ await assert.rejects(f.bridge.capture({archive:'Test.SC2Map',mode:'viewport',size:512,deadlineSeconds:1200,includeDoodads:false}),/FILTERS_REQUIRE_MAP_EXPORT/);
+});
+
+test('native map-export refusal after compilation stays failed without automatic replay or stale visibility proof',async t=>{
+ let refuse=false,exports=0;
+ const f=await fixture(t,async(name,args)=>{
+  if(name==='sc2_compile_all'){refuse=true;return {structuredContent:{status:'OK',nativeCompilePassed:true}};}
+  if(name==='sc2_export_map_image'){exports++;return {structuredContent:refuse?{status:'FAILED',error:'Original map image export settings unavailable or readback mismatched'}:{status:'MAP_IMAGE_EXPORTED',wholeMapVerified:true,objectFiltersVerified:true,native:{terrainExport:{filtersConfirmed:1,customOptions:1,actualUnits:Number(args.include_units),actualDoodads:Number(args.include_doodads)}}}};}
+  return {structuredContent:{status:'OK'}};
+ });
+ const request={archive:'Test.SC2Map',mode:'map' as const,size:1024,deadlineSeconds:1200};
+ const first=await finished(f.bridge,(await f.bridge.capture(request)).id);assert.equal(first.state,'completed');
+ await finished(f.bridge,(await f.bridge.check({archive:'Test.SC2Map',checks:['compile'],includeDiffs:false,deadlineSeconds:1200})).id);
+ const failed=await finished(f.bridge,(await f.bridge.capture(request)).id);assert.equal(failed.state,'failed');assert.equal(failed.result?.outcome,'failed');assert.equal(failed.result?.objectFilters.verified,false);assert.equal(failed.result?.sourceUnchanged,true);assert.equal(exports,2);assert.equal((await f.bridge.status()).ownedDocument,null);assert.equal(await fs.readFile(path.join(f.root,'Test.SC2Map'),'utf8'),'saved archive');
+ refuse=false;const recovered=await finished(f.bridge,(await f.bridge.capture(request)).id);assert.equal(recovered.state,'completed');assert.equal(recovered.result?.reusedLoadedMap,false);assert.ok(f.calls.at(-1)?.args.map);assert.equal(exports,3);
+});
+
+test('native checkbox claims and mismatching model filters stay unconfirmed with the original evidence retained',async t=>{
+ let native:Record<string,unknown>={terrainExport:{filtersConfirmed:true,customOptions:true,actualUnits:true,actualDoodads:true}};
+ const f=await fixture(t,async()=>({structuredContent:{status:'MAP_IMAGE_EXPORTED',wholeMapVerified:true,objectFiltersVerified:true,native}}));
+ const request={archive:'Test.SC2Map',mode:'map' as const,size:512,deadlineSeconds:1200,includeUnits:false};
+ const mismatch=await finished(f.bridge,(await f.bridge.capture(request)).id);
+ assert.equal(mismatch.result?.capture.objectFiltersVerified,false);assert.equal(mismatch.result?.outcome,'incomplete');
+ assert.equal(mismatch.result?.objectFilters.actual.units,true);
+ assert.equal(JSON.parse(await fs.readFile(mismatch.report,'utf8')).result.objectFiltersVerified,true);
+ native={terrainExport:{filtersConfirmed:true,checkboxes:{units:false,doodads:true}}};
+ const unknown=await finished(f.bridge,(await f.bridge.capture({...request,mode:'region',bounds:{left:0,bottom:0,right:4,top:4}})).id);
+ assert.equal(unknown.result?.capture.objectFiltersVerified,false);assert.equal(unknown.result?.objectFilters.actual.units,null);
+ assert.equal(unknown.result?.outcome,'incomplete');assert.equal(f.calls.at(-1)?.name,'sc2_capture_map_region');
+ assert.ok(unknown.result?.limitations.some((s:string)=>s.includes('not confirmed')));
+ native={terrainExport:{filtersConfirmed:'1',customOptions:1,actualUnits:'0',actualDoodads:'1'}};
+ const invalid=await finished(f.bridge,(await f.bridge.capture(request)).id);
+ assert.equal(invalid.result?.objectFilters.verified,false);assert.equal(invalid.result?.objectFilters.actual.units,null);
 });

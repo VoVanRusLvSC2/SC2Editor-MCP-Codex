@@ -1,0 +1,161 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-23T17:36:42.441Z",
+  "status": "native_storage_path_guard_passed_scoped_unit_and_installed_mcp_checks",
+  "scope": "Known pinned SDK save-path budget and explicit private native-work storage. This record does not establish successful native save, launch or navigation.",
+  "sourceFingerprints": [
+    {
+      "file": "src/integrations/native/storage.ts",
+      "sha256LfUtf8": "2a3f9e01d38e904e9657e740b565ebadb1d952bb3faa6bcc6e637f3b8351a572"
+    },
+    {
+      "file": "src/integrations/native/bridge.ts",
+      "sha256LfUtf8": "6ecf30a6358c9b5266fa001516bacd0d476c12b5b08e3bd5ea83e6832887552d"
+    },
+    {
+      "file": "src/modules/testing/workspace.ts",
+      "sha256LfUtf8": "fe7a309fbc95b7029a5df5ad3d933e982c81c19ba4aa28f5be5bffc42e60d54c"
+    },
+    {
+      "file": "src/tests/nativeStorage.test.ts",
+      "sha256LfUtf8": "17e5b7cbb52e52bef14243a0ff160fe6a0bd7280f56ba8af5ebe0e0b6be3c907"
+    },
+    {
+      "file": "src/tests/nativeEditor.test.ts",
+      "sha256LfUtf8": "9f64e4814869400f6000ef7ba032b44c112e2175b24b9010bed4b06d549f00b2"
+    },
+    {
+      "file": "src/tests/projectTesting.test.ts",
+      "sha256LfUtf8": "1a7328b3507d048548343880a3b0d3f0e7c907d300a4caa713f8581f33e49b55"
+    },
+    {
+      "file": "scripts/check-distribution-privacy.mjs",
+      "sha256LfUtf8": "747bb50d8e7c0ed8ec034f7759ec6bfca4424b8a348f872b68c1ce9095ed03da"
+    },
+    {
+      "file": "docs/NATIVE_EDITOR.md",
+      "sha256LfUtf8": "175b7d73f684b8a0b26cbe08d68408d11dabe3c6117ee6f4a418ae08737a8dcc"
+    },
+    {
+      "file": "docs/PROJECT_TESTS.md",
+      "sha256LfUtf8": "cfd4f01d2fd3553e781a076ce109675bf71d75572acd0add45141eb5847f4e5d"
+    }
+  ],
+  "implementation": {
+    "pathBudget": "Known document-check UUID and NativeSaved archive expansion into .SC2Map.temp/enUS.SC2Data/LocalizedData/TriggerStrings.txt. On Windows reject known file lengths>=260 or directory lengths>=248 before native frontend start. Arbitrary archive members remain outside this bound.",
+    "externalRoot": "SC2_NATIVE_WORK_ROOT captured for one retained bridge; ordinary absolute local directory disjoint from the map workspace and Toolkit installation. Relative, volume/share, overlapping and reparse-point roots are refused.",
+    "ownership": "Full-entropy worker identity remains stable per bridge and distinct across bridges. Source maps remain workspace-contained. Saved output reads are bounded to this exact canonical worker; foreign/sibling output and digest mismatch reject before launch.",
+    "artifactPipeline": "Copy native saved bytes into the suite, inspect, independently load/compile the exact digest and then launch. External output storage does not authorize arbitrary local inputs.",
+    "pathRejection": "In-memory failed native job with reportPersistence memory_only; no report file or worker startup. Existing native handlers are not reset or redirected."
+  },
+  "installed": {
+    "receipt": {
+      "file": "work/launch-diagnostics-20261022/native-storage-configured-installed.json",
+      "sha256": "3a51722fcfc7ec2f1f06dfe77407fceb920911e46801f9d6fe951245b22a08c3"
+    },
+    "transcript": {
+      "file": "work/launch-diagnostics-20261022/native-storage-configured-installed-transcript.json",
+      "sha256": "f877aa77952021423b308a25ce3f8a6c7a660ea008a654f6b0c2cc9a21840d3b"
+    },
+    "candidate": {
+      "file": "work/launch-diagnostics-20261022/native-storage-candidate.json",
+      "sha256": "1d6a014d92bfe7550eddeaf184ce3719628013f48352a1eed710b56a012237de"
+    },
+    "toolkitConfigured": true,
+    "longSavePathLength": 280,
+    "longRejectedBeforeFrontend": true,
+    "shortSavePathLength": 214,
+    "shortBudgetPassed": true,
+    "workerDirectoriesCreated": false,
+    "sourceSha256": "10c3b9de3d97c40a1b40bfb3e8560b24a8db946ae57db2801ab075b10a2ea15c",
+    "sourceUnchanged": true,
+    "nativeSaveSuccess": "not_checked"
+  },
+  "regressions": {
+    "focused": {
+      "tests": 78,
+      "pass": 78,
+      "fail": 0,
+      "log": {
+        "file": "work/launch-diagnostics-20261022/native-storage-focused-final.tap",
+        "sha256": "b8aaa29400f874912e283553be00520c5fb2f0bac7ec7c294096b3e3fd38b908"
+      }
+    },
+    "fullSerial": {
+      "tests": 1488,
+      "pass": 1487,
+      "skipped": 1,
+      "fail": 0,
+      "cancelled": 0,
+      "log": {
+        "file": "work/launch-diagnostics-20261022/native-storage-full-serial.tap",
+        "sha256": "cbbea57da848ebfd9196e70d96ddd23341ff3de915eb8b025cf4ac92ecca66da"
+      }
+    },
+    "retainedParallel": {
+      "tests": 1488,
+      "pass": 1483,
+      "fail": 2,
+      "cancelled": 2,
+      "skipped": 1,
+      "log": {
+        "file": "work/launch-diagnostics-20261022/native-storage-full.tap",
+        "sha256": "5e522aa77426b53b0d9dab8bb017af6c5bc37c092614d7329ee08c3d9efbb9a3"
+      },
+      "scope": "Four affected checks: directory cleanup ENOTEMPTY, two transport timeouts, journal rename EPERM. Do not attribute their cause solely to concurrency from a successful later run."
+    },
+    "isolatedAffected": {
+      "tests": 7,
+      "pass": 7,
+      "fail": 0,
+      "log": {
+        "file": "work/launch-diagnostics-20261022/native-storage-failed-tests-isolated.tap",
+        "sha256": "33416249b50a930eb6c95c35c1fd2c310f3b2507591c2dc6a49a88a8bd694755"
+      }
+    },
+    "unitFixtureCleanup": {
+      "file": "work/launch-diagnostics-20261022/native-storage-full-unit-cleanup.json",
+      "sha256": "3d2b142c50ac0f6c3ba8527f7d1d29904c2a9a151c7d68e111de7e687f8b858e"
+    },
+    "build": {
+      "file": "work/launch-diagnostics-20261022/native-storage-build.log",
+      "sha256": "10a6f793ca5b371f50d30275f91bca10764ad37efaa83fe46600fc03690a7777"
+    },
+    "releaseBuild": {
+      "file": "work/launch-diagnostics-20261022/native-storage-release.log",
+      "sha256": "ce885c9cd0c665e4687c64af3fac25fa25c371256a5119e5f8e25c7b3c516545"
+    },
+    "lint": {
+      "file": "work/launch-diagnostics-20261022/native-storage-lint.log",
+      "sha256": "510475fdd23df5ab732ff12a7efe6eeeef1714f16cb3e683de0964513c9152a2"
+    },
+    "englishDocs": {
+      "file": "work/launch-diagnostics-20261022/native-storage-docs.log",
+      "sha256": "c64dba5fff84af47cacac9b3140a0bc7a4a766d8e4e68a7d8165c5d8d6847328"
+    }
+  },
+  "privacy": {
+    "passed": true,
+    "checkedFiles": 9989,
+    "privateSourceFiles": 1113,
+    "privateCorpusCompared": true,
+    "violations": [],
+    "scope": "Explicit private paths/debug/test artifacts and exact external C++/Python/Galaxy source copies, including renamed files. Not proof against transformed snippets or binary reverse engineering.",
+    "compiledFiles": 362,
+    "privateRuntimeBundled": false,
+    "privateSdkModified": false
+  },
+  "motivation": {
+    "observation": {
+      "file": "work/launch-diagnostics-20261022/native-save-path-observation.json",
+      "sha256": "976b3abdbaf95e589482c925e10612aad9fd9a57cef4f3916bbd63734ce1109d"
+    },
+    "scope": "The old handler remains live with one temporary component and no saved archive. Its expected localized paths exceed legacy Windows limits; this remains a path hypothesis, not a terminal diagnosis. A new controlled short-root native/game comparison is tracked separately."
+  },
+  "openCoverage": [
+    "Successful native save/reopen and exact saved-artifact game execution require their own finished result, independent of path-budget checks.",
+    "Arbitrary asset/member paths, broader topology/navigation/buildability, GUI/Data presentation and finished location art/gameplay remain separate.",
+    "Private-source exclusion does not guarantee protection against binary reverse engineering or transformed snippets."
+  ],
+  "published": false
+}

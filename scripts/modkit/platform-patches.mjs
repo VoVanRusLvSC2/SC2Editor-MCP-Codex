@@ -12,6 +12,18 @@ export function patchUvmArtifactUri(text){
   if(text.split(before).length!==2)throw Error('MODKIT_HOST_UVM_PATCH_CONTEXT_MISMATCH');
   return text.replace(before,after);
 }
+// Native TerrainRamp records use directions0..7, including south=0. The pinned
+// reader preserves this enum; its two writer guards incorrectly use 1..8.
+export function patchRampDirectionEnum(text){
+  for(const subject of ['ramp','template.ramp']){
+    const before=`${subject}.dir < 1 || ${subject}.dir > 8`,after=`${subject}.dir < 0 || ${subject}.dir > 7`;
+    const oldCount=text.split(before).length-1,newCount=text.split(after).length-1;
+    if(oldCount===0&&newCount===1)continue;
+    if(oldCount!==1||newCount!==0)throw Error('MODKIT_RAMP_ENUM_PATCH_CONTEXT_MISMATCH');
+    text=text.replace(before,after);
+  }
+  return text;
+}
 export async function patchHostArtifacts(runtimeRoot){
   const records=[];
   for(const entry of ['node','maps']){

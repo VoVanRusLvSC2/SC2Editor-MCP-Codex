@@ -1,0 +1,14 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {promises as fs} from 'node:fs';import path from 'node:path';import os from 'node:os';import {Workspace} from '../core/workspace.js';
+async function fixture(t:test.TestContext){const root=await fs.mkdtemp(path.join(os.tmpdir(),'sc2-memo-identity-'));t.after(()=>fs.rm(root,{recursive:true,force:true}));const workspace=new Workspace(root),a=path.join(root,'a-schema.json'),b=path.join(root,'z-schema.json'),catalog=path.join(root,'m-catalog.xml');await fs.writeFile(a,'{"version":1}');await fs.writeFile(b,'{"version":1}');await fs.writeFile(catalog,'<Catalog/>');return {root,workspace,a,b,catalog};}
+test('explicit bundled roles ignore package relocation while retaining input content and ordering',async t=>{
+ const f=await fixture(t),capture=async(file:string)=>f.workspace.memoizeReads(async()=>{await f.workspace.readDependency(f.catalog);await f.workspace.readDependency(file);}),a=await capture(f.a),b=await capture(f.b),roles=new Map([[f.a,'@bundle/schema'],[f.b,'@bundle/schema']]);
+ assert.notEqual(f.workspace.readMemoFingerprint(a.memo),f.workspace.readMemoFingerprint(b.memo));assert.equal(f.workspace.readMemoFingerprint(a.memo,roles),f.workspace.readMemoFingerprint(b.memo,roles));assert.equal(await f.workspace.reuseReads(a.memo),true);assert.equal(await f.workspace.reuseReads(b.memo),true);
+});
+test('role-based fingerprints still invalidate same-size schema changes with restored timestamps',async t=>{
+ const f=await fixture(t),a=await f.workspace.memoizeReads(()=>f.workspace.readDependency(f.a)),roles=new Map([[f.a,'@bundle/schema']]),before=f.workspace.readMemoFingerprint(a.memo,roles),stat=await fs.stat(f.a);await fs.writeFile(f.a,'{"version":2}');await fs.utimes(f.a,stat.atime,stat.mtime);
+ assert.equal(await f.workspace.reuseReads(a.memo),false);const changed=await f.workspace.memoizeReads(()=>f.workspace.readDependency(f.a));assert.notEqual(f.workspace.readMemoFingerprint(changed.memo,roles),before);
+});
+test('identity aliases cannot merge different inputs or suppress existence changes',async t=>{
+ const f=await fixture(t),both=await f.workspace.memoizeReads(async()=>{await f.workspace.readDependency(f.a);await f.workspace.readDependency(f.b);});assert.throws(()=>f.workspace.readMemoFingerprint(both.memo,new Map([[f.a,'same'],[f.b,'same']])),/IDENTITY_COLLISION/);
+ const missing=path.join(f.root,'missing.json'),absent=await f.workspace.memoizeReads(()=>f.workspace.readDependency(missing,true)),roles=new Map([[missing,'@bundle/schema']]),before=f.workspace.readMemoFingerprint(absent.memo,roles);await fs.writeFile(missing,'');assert.equal(await f.workspace.reuseReads(absent.memo),false);const present=await f.workspace.memoizeReads(()=>f.workspace.readDependency(missing,true));assert.notEqual(f.workspace.readMemoFingerprint(present.memo,roles),before);
+});

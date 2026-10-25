@@ -13,6 +13,22 @@ import {CompositionWorkspace} from '../modules/placement/compositions.js';
 import type {TerrainWorkspace} from '../modules/terrain/workspace.js';
 import {createHash} from 'node:crypto';
 import {measuredMemberGeometry} from '../modules/placement/compositionGeometry.js';
+import {StyleCatalog,structuralDamageHint} from '../modules/placement/styleCatalog.js';
+
+test('automatic operational decoration rejects named wreckage, honors utility overrides and preserves explicit choices',async t=>{
+ const root=await fs.mkdtemp(path.join(os.tmpdir(),'sc2-compose-condition-'));t.after(()=>fs.rm(root,{recursive:true,force:true}));await fs.cp(path.resolve('src/tests/fixtures/browse-placement-map'),root,{recursive:true});
+ const file=path.join(root,'Base.SC2Data/GameData/ActorData.xml');await fs.writeFile(file,(await fs.readFile(file,'utf8')).replace('</Catalog>',['CargoTruck','WreckedCargoTruck','WaterTank'].map(id=>'<CActorDoodad id="'+id+'" parent="Doodad"><Model value="AgriaTreeModel"/></CActorDoodad>').join('')+'</Catalog>'));
+ const ws=new Workspace(root),browse=new BrowseWorkspace(ws,new DataWorkspace(ws,new DataSchemaRegistry())),placement=new PlacementWorkspace(ws,browse),terrain={surface:async()=>({waterCoverageKnown:true,texturesKnown:true,bounds:{minX:0,minY:0,maxX:64,maxY:64},sourceSha256:{},diskSha256:{},sampleGround:()=>({height:0,slope:0,mask:1,water:[],hidden:false,protected:false})})} as unknown as TerrainWorkspace;placement.terrain=terrain;
+ const catalog=new StyleCatalog();catalog.pack=async()=>({id:'Agria',name:'Controlled condition references',texture_ids:[],sample_maps:1,sections:{decor:[{id:'CargoTruck',roles:['props/storage']},{id:'WreckedCargoTruck',roles:['props/storage','buildings/ruins']},{id:'WaterTank',roles:['nature/water_ice']}]}});
+ const composition=new CompositionWorkspace(ws,placement,browse,terrain,catalog),input={tileset:'Agria',profile:'terran_field_camp'};
+ const operational=await composition.style({...input,condition:'operational'});assert.deepEqual(operational.items.map(r=>r.id),['CargoTruck','WaterTank']);assert.equal(operational.conditionReview.excludedByCondition,1);
+ assert.equal((await composition.style({...input,condition:'abandoned'})).total,2);assert.equal((await composition.style({...input,condition:'destroyed'})).total,3);assert.equal((await composition.style(input)).total,3);assert.equal((await composition.style({...input,condition:'absent'})).total,0);assert.equal(structuralDamageHint({id:'Deadwood',roles:['nature/deadwood']}),false);
+ const args={...input,zone:'auto_supply',recipe:'natural_cluster' as const,area:{type:'rectangle' as const,minX:20,minY:20,maxX:40,maxY:40,z:0},count:6,minimumDistance:1,seed:42};
+ const beforeImpossible=await fs.readFile(path.join(root,'Objects'));await assert.rejects(composition.compose({...args,zone:'impossible_canopy',clusterCount:3,clusterSeparation:100}),/Could place only/);assert.deepEqual(await fs.readFile(path.join(root,'Objects')),beforeImpossible);
+ await composition.compose({...args,dryRun:false});await ws.save('.sc2mcp/compositions/auto_supply.json');let state=JSON.parse(await fs.readFile(path.join(root,'.sc2mcp/compositions/auto_supply.json'),'utf8')),ids=new Set(state.objects.map((v:{id:number})=>v.id)),objects=new PlacementDocument(await fs.readFile(path.join(root,'Objects'),'utf8')).list().filter(o=>ids.has(o.id));
+ assert.equal(objects.length,6);assert.ok(objects.every(o=>['CargoTruck','WaterTank'].includes(o.catalogId!)));
+ await composition.compose({...args,objects:['WreckedCargoTruck'],count:1,dryRun:false});await ws.save('.sc2mcp/compositions/auto_supply.json');state=JSON.parse(await fs.readFile(path.join(root,'.sc2mcp/compositions/auto_supply.json'),'utf8'));ids=new Set(state.objects.map((v:{id:number})=>v.id));objects=new PlacementDocument(await fs.readFile(path.join(root,'Objects'),'utf8')).list().filter(o=>ids.has(o.id));assert.equal(objects.length,1);assert.equal(objects[0].catalogId,'WreckedCargoTruck');
+});
 
 test('measured member support corners include member scale/rotation after the group transform',()=>{
  const result=measuredMemberGeometry({x:10,y:20},Math.PI/2,{offset:{x:2,y:3},rotation:Math.PI/2,scale:2,boundsFrame:'member',horizontalBounds:{minX:0,minY:0,maxX:4,maxY:.25}});

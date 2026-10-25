@@ -1,0 +1,202 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-23T23:16:36.617Z",
+  "status": "concurrent_ground_formation_workflow_passed",
+  "scope": "Reusable game.formations in public project.test.* and CLI, independently tested as concurrent traffic rather than repeated single movers. Two private Game launches on the previously qualified native-saved forest, three known ground members per group, gate and north-road, Marine/Marauder, both directions. No universal topology, movement-plane, rigid-formation or engine collision/buildability claim.",
+  "sourceFingerprints": [
+    {
+      "file": "src/modules/testing/formationChecks.ts",
+      "sha256LfUtf8": "f0c3f12d78f234ca2c7b7c4c6423608681e2fb685a386d10e5e77f3a61663cd8"
+    },
+    {
+      "file": "src/modules/testing/schemas.ts",
+      "sha256LfUtf8": "2f294b82f9d93b925dbee2411c5803582337a569991b84fc682f160ab43ef1bf"
+    },
+    {
+      "file": "src/modules/testing/workspace.ts",
+      "sha256LfUtf8": "070d26eac0f551003083fd0743c54b8a28890b7ec64f66bf3c690143404cdb23"
+    },
+    {
+      "file": "src/modules/testing/playableBounds.ts",
+      "sha256LfUtf8": "2ff6b801c7b87d5046de8154e1a3acbd3bf639c05088d1fb9cf112be562a3066"
+    },
+    {
+      "file": "src/modules/testing/storagePreflight.ts",
+      "sha256LfUtf8": "cbff1d4037056e85b00fec34f084c014c7eac095892b7c68d9443e493ad85d8d"
+    },
+    {
+      "file": "src/modules/testing/tools.ts",
+      "sha256LfUtf8": "7aceb90a1dc29ce56260169efe9fcf7002be4748731e5912665934f049dffd7f"
+    },
+    {
+      "file": "src/tests/formationChecks.test.ts",
+      "sha256LfUtf8": "e069a7dae5140bf25c1aaab073caa70491a4a5908aa07fc42e6633eb4810de46"
+    },
+    {
+      "file": "src/tests/projectTesting.test.ts",
+      "sha256LfUtf8": "661b91c64ebd56faa5dd70678bb841053b4a92a7f2ae93e36f222e22d6297da5"
+    },
+    {
+      "file": "src/tests/testStoragePreflight.test.ts",
+      "sha256LfUtf8": "703e834c33bdf136bd4e3b5ac22e2dfb9957c10735bc665b4448ab3b1ad7ab61"
+    },
+    {
+      "file": "src/tests/mapTestCli.test.ts",
+      "sha256LfUtf8": "134ae25c8574c34e512b49df5895a3d7e2092cc170a6f5e870cf70d7403e673b"
+    },
+    {
+      "file": "scripts/run-map-tests.mjs",
+      "sha256LfUtf8": "3161b5cfe6fa507d5f4d5c7ae0c3ae3dde3e2b561f170d9291a0a7e139dbc60d"
+    },
+    {
+      "file": "scripts/build-windows-portable.mjs",
+      "sha256LfUtf8": "6b0b18bb9a5d324779c832218f337d085ae93f4581f7450a3d5ec8c0e52e03f9"
+    },
+    {
+      "file": "scripts/check-distribution-privacy.mjs",
+      "sha256LfUtf8": "747bb50d8e7c0ed8ec034f7759ec6bfca4424b8a348f872b68c1ce9095ed03da"
+    },
+    {
+      "file": "docs/PROJECT_TESTS.md",
+      "sha256LfUtf8": "5920dc649bd9c301e89bbefd72be01f872ea22b3cf39cb24af116f0a8c475143"
+    }
+  ],
+  "implementation": {
+    "manifest": "2..8 distinct same-type/owner members with declared ground mobility, world-XY offsets and named endpoints; default bidirectional. All shifted endpoints are contained in exact selected-archive MapInfo before launch.",
+    "movement": "Submit all member orders before waiting. A pass needs at least two centers advancing between observation batches while still in transit and all members arriving within individual tolerances/corridors. Exact identity/type/owner/life/shields/spawn guards; loss/unknown observations cannot pass.",
+    "uncertainty": "Sequential/end-only observations, timeout, death/control uncertainty or missing vitals remain inconclusive. Ambiguous creation/order is never retried and adds a required uncertainty marker even for an optional group. Cleanup and final private-session detach remain required.",
+    "frames": "Optional viewId captures before cleanup with native camera/readback/hash checks and independent frame verdict. Group and final named-view files are distinct. MCP report supports exclusive formationId/direction or viewId image selectors.",
+    "cli": "--formation ID --direction forward|reverse selects a digest-checked MCP image. Failed/uncertain/stale terminal reports are printed and stop before the next repeat; clean repeat2 retains the same bridge."
+  },
+  "live": {
+    "fixture": {
+      "file": "work/launch-diagnostics-20261022/formations-fixture.json",
+      "sha256": "aa8464969d7f4179f4246fb74b37f8959fca3444b14ab0eb45b4a7ac866406b2"
+    },
+    "audit": {
+      "file": "work/launch-diagnostics-20261022/formations-audit.json",
+      "sha256": "e495432498d24ca156d4a922d4f645c8757d366f86db449bbd8a7692feb58b99"
+    },
+    "renderReview": {
+      "file": "work/launch-diagnostics-20261022/formations-render-review.json",
+      "sha256": "81fbb5c34d6a3baac1162ddd13c3913db143d9537424f117702ff8195ba1e287"
+    },
+    "sourceArchiveSha256": "3f233ba32a2a3fc2b224e8f00fc5ae4fd05bea4d41b5ab4d6703ea3aa94f6344",
+    "provenance": "Byte-identical previously native-saved/recompiled ordinary archive; current formation manifests are Game-only and correctly report artifact origin source.",
+    "priorEditorEvidence": "native-012-forest-gui-game-2026-10-24.json",
+    "gameBuild": "5.0.17.98310",
+    "gameToolkit": "v0.1.0-dev.11",
+    "verifiedRuntimeFiles": 113,
+    "sameRetainedGameBridge": true,
+    "counts": {
+      "runs": 2,
+      "groups": 16,
+      "members": 48,
+      "uniqueUnitIds": 48,
+      "groupFrames": 16,
+      "distinctDecodedFrames": 16
+    },
+    "memberPassages": 48,
+    "maximumSampledDeviation": 0.009531650063930659,
+    "corridor": 2,
+    "tolerance": 0.75,
+    "minimumSampledCenterSeparation": 1.8437678866928877,
+    "centerSeparationScope": "Observed centers only, not a measured collision radius or footprint-clearance certificate.",
+    "imagesInspected": 16,
+    "additionalFinalViewsNotInspected": 4,
+    "knownFixturesRemoved": true,
+    "sourceAndStagedCopyUnchanged": true,
+    "mcpImageDelivery": [
+      {
+        "id": "formation:gateMarine:reverse",
+        "sha256": "842685bf854325434467af62d409133f133c65ee033009b4884e1c427127e08d",
+        "matchesArtifact": true
+      },
+      {
+        "id": "formation:gateMarine:reverse",
+        "sha256": "f48ce502ae7911fb4998f587b4663d72e84f6f6f1c63cccf69dbc5ffff9fea94",
+        "matchesArtifact": true
+      }
+    ]
+  },
+  "regression": {
+    "focused": {
+      "report": {
+        "file": "work/launch-diagnostics-20261022/formations-focused-cli.tap",
+        "sha256": "25e997dd8895ed77ff20e3ab660f79854bda7f14f8d8e44208c74ada81114faa"
+      },
+      "pass": 67,
+      "fail": 0
+    },
+    "full": {
+      "report": {
+        "file": "work/launch-diagnostics-20261022/formations-full.tap",
+        "sha256": "89eb373a9c050721a30771355c3385a81528291e91dc4aad72272cce04f58034"
+      },
+      "tests": 1518,
+      "pass": 1517,
+      "skip": 1,
+      "fail": 0,
+      "cancelled": 0
+    },
+    "build": true,
+    "releaseBuild": true,
+    "lint": {
+      "report": {
+        "file": "work/launch-diagnostics-20261022/formations-final-lint.log",
+        "sha256": "510475fdd23df5ab732ff12a7efe6eeeef1714f16cb3e683de0964513c9152a2"
+      },
+      "passed": true
+    },
+    "english": {
+      "files": 117,
+      "violations": 0
+    },
+    "cliActualStdioTests": 3
+  },
+  "retainedFailures": [
+    {
+      "report": {
+        "file": "work/launch-diagnostics-20261022/formations-focused-final.tap",
+        "sha256": "5ccd7933cda69d4d2e3afb62b5b87d1c0aade3be4bb08831904fb6a150471d50"
+      },
+      "reason": "A synthetic runtime omitted shields. The strict native-vitals prerequisite stayed active; the fixture was corrected to actual observed SDK fields."
+    },
+    {
+      "report": {
+        "file": "work/launch-diagnostics-20261022/formations-focused-acceptance.tap",
+        "sha256": "56bb1b71848dd0d998477e1ac83112642f67400b71272916536b3318dd68889f"
+      },
+      "reason": "The bounded observation loop initially excluded a sample exactly at the deadline. Inclusive boundary corrected without widening the timeout; final checks passed."
+    },
+    {
+      "report": {
+        "file": "work/launch-diagnostics-20261022/formations-lint.log",
+        "sha256": "2ea1a2621ea07d0f1df830b4c1445726903495498570b209e02a8d23089f882d"
+      },
+      "reason": "Constant-loop condition and useless initialization corrected without disabling rules."
+    }
+  ],
+  "portable": {
+    "receipt": {
+      "file": "work/launch-diagnostics-20261022/formations-candidate.json",
+      "sha256": "0a3c504410ca03fae6c01e07f3bfae15174b1e264ca1084bbc34694ccc28e2e9"
+    },
+    "compiledModules": 363,
+    "runtimePinsAndHelpersVerified": true,
+    "sourceStableDuringLiveCheck": true,
+    "privacy": {
+      "passed": true,
+      "entries": 10001,
+      "privateSources": 1113,
+      "privateRuntimeBundled": false
+    },
+    "published": false
+  },
+  "openCoverage": [
+    "Other terrain profiles, widths, crowd sizes, mixed unit types and combat/control conditions",
+    "Authoritative movement-plane/path/collision/buildability queries; current unsupported operations remain explicit",
+    "Main actor animations, ability visuals/sound/UI and other GUI/Data corpus coverage remain separate",
+    "Art refinement on forest/industrial/settlement layouts and gameplay quality remain incomplete"
+  ]
+}

@@ -74,5 +74,19 @@ test('Galaxy catches native type names used as record fields before packing',asy
  const result=await new ScriptWorkspace(new Workspace(root)).validate();assert.equal(result.valid,false);assert.ok(result.diagnostics.filter(x=>x.code==='GALAXY_RESERVED_IDENTIFIER').length>=2);
  await fs.writeFile(path.join(root,'custom.galaxy'),'struct State { int mf_wave; int mf_timer; }; void InitMap() {}');assert.equal((await new ScriptWorkspace(new Workspace(root)).validate()).valid,true);
 });
+test('native handle local declarations reject reserved names before staging',async t=>{
+ const root=await fs.mkdtemp(path.join(os.tmpdir(),'sc2-galaxy-local-handles-'));t.after(()=>fs.rm(root,{recursive:true,force:true}));
+ const workspace=new Workspace(root),script=new ScriptWorkspace(workspace),source='void Probe(){ unit marker; point timer; trigger wave; }';
+ const checked=await script.validateSource(source);assert.equal(checked.valid,false);assert.equal(checked.diagnostics.filter(d=>d.code==='GALAXY_RESERVED_IDENTIFIER').length,3);
+ await assert.rejects(script.plan({operations:[{op:'file.create',file:'Probe.galaxy',source}]}),/GALAXY_RESERVED_IDENTIFIER/);
+ assert.deepEqual(workspace.draftFiles(),[]);await assert.rejects(fs.access(path.join(root,'Probe.galaxy')));
+});
+test('native handle locals retain types through assignments, calls and returns',async t=>{
+ const root=await fs.mkdtemp(path.join(os.tmpdir(),'sc2-galaxy-handle-types-'));t.after(()=>fs.rm(root,{recursive:true,force:true}));const script=new ScriptWorkspace(new Workspace(root));
+ const good=await script.validateSource('unit Pick(){ unit result = UnitLastCreated(); return result; } point At(){ point position = Point(4.0, 4.0); return position; } bool Empty(){ marker handle = null; return handle == null; }');
+ assert.equal(good.valid,true,JSON.stringify(good.diagnostics));
+ const wrongReturn=await script.validateSource('unit Wrong(){ point position = Point(4.0, 4.0); return position; }');assert.equal(wrongReturn.valid,false);assert.ok(wrongReturn.diagnostics.some(d=>d.code==='GALAXY_RETURN_TYPE'));
+ const wrongArgument=await script.validateSource('void Wrong(){ point position = Point(4.0, 4.0); UnitSetPosition(position, position, true); }');assert.equal(wrongArgument.valid,false);assert.ok(wrongArgument.diagnostics.some(d=>d.code==='GALAXY_CALL_TYPE'));
+});
 
 test('native GUI CombineText/CombineStrings additions preserve their type, mixed additions remain invalid',async t=>{const root=await fs.mkdtemp(path.join(os.tmpdir(),'sc2-galaxy-concat-'));t.after(()=>fs.rm(root,{recursive:true,force:true}));const file=path.join(root,'custom.galaxy');await fs.writeFile(file,'text Caption(){ return (StringExternal("Prefix") + (IntToText(30) + StringExternal("Suffix"))); } string Name(){ return ("A" + "B"); }');assert.equal((await new ScriptWorkspace(new Workspace(root)).validate()).valid,true);await fs.writeFile(file,'text Bad(){ return StringExternal("Prefix") + 30; }');assert.equal((await new ScriptWorkspace(new Workspace(root)).validate()).valid,false);});

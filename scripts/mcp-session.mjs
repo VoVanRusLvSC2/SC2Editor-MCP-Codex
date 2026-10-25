@@ -46,4 +46,7 @@ try{
    if(metricsFile){await fs.mkdir(path.dirname(metricsFile),{recursive:true});await fs.appendFile(metricsFile,JSON.stringify({at:new Date().toISOString(),tool:name,ms:Math.round(performance.now()-started),requestBytes:Buffer.byteLength(line),clientEmittedBytes:Buffer.byteLength(response),clientEmittedTextTokens:tokenCounter(response),scope:'Client-emitted response text only; actual model context/billing is unknown.'})+'\n');}
   }catch(error){process.stdout.write(JSON.stringify({id:request?.id??null,ok:false,error:error instanceof Error?error.message:String(error)})+'\n');}
  }
-}finally{child.stdin.end();/* The server drains native jobs before closing its owned Editor; no forced kill. */}
+}finally{
+ child.stdin.end();/* The server drains native jobs before closing its owned Editor; no forced kill. */
+ process.stdin.pause();process.stdin.unref?.();/* Interactive stdin must not retain an otherwise drained CLI. */
+}

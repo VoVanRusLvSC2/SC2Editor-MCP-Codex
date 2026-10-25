@@ -1,0 +1,227 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-24T02:22:32.116Z",
+  "status": "native_013_installed_discovered_capture_handoff_refusal_reproduced",
+  "scope": "Complete pinned external SDK0.13 installation/discovery plus a retained-worker native capture refusal, with partial industrial/settlement authoring evidence. This is an incomplete integration checkpoint, not26method execution or a resolved DLL bug.",
+  "sourceFingerprints": {
+    "native-toolkit-release.json": "5c827845753e79f383727671110c8ddfabb1f439ada699a4afe470fdf506c3ee",
+    "src/integrations/native/release.ts": "2efaaef7371ad6fa2b8e67eefdc281fc3d47b1a05dc935cb35ce4e06ab80dca0",
+    "src/integrations/native/bridge.ts": "f92eef743d37afb6dd7b66ffc9f9d839be16432aba3f75dd5b6210e2368a9050",
+    "src/integrations/native/tools.ts": "4b723d301185ad06d0cd7e9647d850e032a436397ad15933c3d9a3812c250b03",
+    "src/integrations/native/transport.ts": "df9de411e71ad8cbfc7b6cee153817d435517cea7c226b9bb0a8e83913f3622e",
+    "scripts/setup-native-toolkit.mjs": "a13f251aecdc8234442be88aa1810365aa2350f9cc53c0f9a7d904ef8a9c016a",
+    "src/tests/nativeEditor.test.ts": "21e9e7b65837daced3ae8537f7f13beee34b0b353d2059bc7c12adf27e802493",
+    "docs/NATIVE_EDITOR.md": "db20bfc6d551235942270e026038416a8d253558ab72339a4ef60e7ba93e3cee"
+  },
+  "release": {
+    "version": "0.13.0-rc.1",
+    "nativeProtocol": 14,
+    "archiveSha256": "d898d59f1901193b70482fbddeaa7b99e3c83f569db0e5efa006e9669dd101df",
+    "executableSha256": "77e5de46f97df28a05232a07b0d7a20cdfcbf01ca3238cc4340d76436a87c586",
+    "sourceCommit": "7ed1fd5e97a58172e94bc78a29ceaf7dfee88cd8",
+    "release": "https://github.com/VoVanRusLvSC2/SC2EditorToolkit/releases/tag/v0.13.0-rc.1",
+    "setup": {
+      "file": "work/launch-diagnostics-20261022/native013-setup.json",
+      "sha256": "285204023cda26410f90c973c447d27cbfac673cccf7fcbced5654308836b93e"
+    },
+    "repeatSetup": {
+      "file": "work/launch-diagnostics-20261022/native013-setup-repeat.json",
+      "sha256": "1dfcf29308fb94e0d00c789507bca445f28f6182abe6e09a64739cd85583e952"
+    },
+    "completeBundle": true,
+    "externalRuntime": true,
+    "olderRuntimesPreserved": true
+  },
+  "discovery": {
+    "receipt": {
+      "file": "work/launch-diagnostics-20261022/native013-tool-schemas.json",
+      "sha256": "6450bf5ca18604b4df0b6544ff1ae0ec1671b12ce48289caca9ccf598955fcf8"
+    },
+    "advertised": 26,
+    "currentlyAllowlisted": 18,
+    "pending": [
+      "sc2_submit_job",
+      "sc2_job_status",
+      "sc2_job_wait",
+      "sc2_job_cancel",
+      "sc2_check_map",
+      "sc2_read_data",
+      "sc2_data_links",
+      "sc2_check_resources"
+    ],
+    "editorStartedByDiscovery": false,
+    "pendingGuards": [
+      "Nested background-job arguments must use private workspace snapshots and owned output paths.",
+      "Status/wait/cancel must observe admitted jobs without blocking behind their operation or assuming queued work completed.",
+      "Preserve source revision, terminal/native semantic state and job ownership; no automatic replay after uncertainty.",
+      "Bound original Data/association/resource summaries while retaining complete private reports and explicit unknowns."
+    ]
+  },
+  "captureRefusal": {
+    "nativeError": 91,
+    "reason": "Original map image export settings unavailable or readback mismatched",
+    "control12": {
+      "record": "work/launch-diagnostics-20261022/location-export-handoff.json",
+      "status": "failed",
+      "worker": "L:\\NE12\\w\\a62f724f9d9c4b1dae212a3750ae95d6",
+      "overviews": [
+        {
+          "label": "fresh-settlement",
+          "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\LocationStyles-a080eea2-dbe8-49ec-986d-ffe729a14b84\\Handoff-fresh-settlement.png",
+          "sha256": "dc9b39d8bf1a997bb9709d1e98761e3a994547d595cb9badbfb1be2b9ce886d7",
+          "jobId": "0dc01c3c-4dd2-4cc5-9560-8cb788f1c054",
+          "report": "L:\\NE12\\jobs\\0dc01c3c-4dd2-4cc5-9560-8cb788f1c054\\result.json"
+        },
+        {
+          "label": "switch-industrial",
+          "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\LocationStyles-a080eea2-dbe8-49ec-986d-ffe729a14b84\\Handoff-switch-industrial.png",
+          "sha256": "fe3521315cb1990946bc5a2111f83e93603d226daa9a9dde26f87709a611eef4",
+          "jobId": "3d0d26f9-c3ec-4d32-a81d-6bff2a973d11",
+          "report": "L:\\NE12\\jobs\\3d0d26f9-c3ec-4d32-a81d-6bff2a973d11\\result.json"
+        },
+        {
+          "label": "switch-settlement",
+          "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\LocationStyles-a080eea2-dbe8-49ec-986d-ffe729a14b84\\Handoff-switch-settlement.png",
+          "sha256": "9afc9659ab70de2fff8e7b79ce578a878d98774258b9675e79be1ba2ce7d138c",
+          "jobId": "00f4ca47-23dc-4fb6-b5e7-7f44caeca25d",
+          "report": "L:\\NE12\\jobs\\00f4ca47-23dc-4fb6-b5e7-7f44caeca25d\\result.json"
+        }
+      ],
+      "failedJob": "0374358a-d46a-4be8-8f72-2ea2abd60dab",
+      "stopped": true
+    },
+    "control13": {
+      "record": "work/launch-diagnostics-20261022/location-export-handoff-native013.json",
+      "status": "failed",
+      "worker": "L:\\NE13\\w\\76f3032e87624eafac4c6b59fa6fc6e3",
+      "overviews": [
+        {
+          "label": "fresh-settlement",
+          "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\LocationStyles-a080eea2-dbe8-49ec-986d-ffe729a14b84\\Handoff-native013-fresh-settlement.png",
+          "sha256": "18390a0d19f600e432443ab089b103d2f1f804edc0dd5946ab6b7ccdf65b6934",
+          "jobId": "6258e47a-98fc-45ce-bc3d-15c5fccd30a3",
+          "report": "L:\\NE13\\jobs\\6258e47a-98fc-45ce-bc3d-15c5fccd30a3\\result.json"
+        },
+        {
+          "label": "switch-industrial",
+          "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\LocationStyles-a080eea2-dbe8-49ec-986d-ffe729a14b84\\Handoff-native013-switch-industrial.png",
+          "sha256": "e467ba3c629edad9b1e90508328743893af30b004a94c8c32a368e9039d99aa6",
+          "jobId": "a6aa18b8-a6bb-44e1-b927-1cd2caa69459",
+          "report": "L:\\NE13\\jobs\\a6aa18b8-a6bb-44e1-b927-1cd2caa69459\\result.json"
+        },
+        {
+          "label": "switch-settlement",
+          "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\LocationStyles-a080eea2-dbe8-49ec-986d-ffe729a14b84\\Handoff-native013-switch-settlement.png",
+          "sha256": "5779745d58aa86c2c0c908a610ed4a07a65d5d2b463349a94bb3f957fea930e7",
+          "jobId": "96ad7195-80b9-464c-baad-3aa7120eefaf",
+          "report": "L:\\NE13\\jobs\\96ad7195-80b9-464c-baad-3aa7120eefaf\\result.json"
+        }
+      ],
+      "failedJob": "212e92c6-baaa-43d4-b2bb-d567ba83ff34",
+      "stopped": true
+    },
+    "explicitTerrain": {
+      "record": "work/launch-diagnostics-20261022/location-export-handoff-native013-explicit.json",
+      "status": "failed",
+      "worker": "L:\\NE13\\w\\a33cb56b8c2048e390702860ab3e5143",
+      "overviews": [
+        {
+          "label": "explicit-terrain-1",
+          "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\LocationStyles-a080eea2-dbe8-49ec-986d-ffe729a14b84\\Handoff-native013-explicit-1.png",
+          "sha256": "9fff96a108e701b39069bffe5397ca43454975347fd0da9e763a890e83248072",
+          "jobId": "3064288e-64d6-4116-b9c0-b59325848da8",
+          "report": "L:\\NE13\\jobs\\3064288e-64d6-4116-b9c0-b59325848da8\\result.json"
+        }
+      ],
+      "failedJob": "6bb60344-d1d0-4560-ac0f-95eab04eabde",
+      "stopped": true
+    },
+    "observed": "Each SDK exports fresh settlement and the settlement→industrial→settlement sequence, then refuses export after GUI compilation. Explicit Terrain reopen/current-map export passes once and fails on the second identical cycle.",
+    "diagnosisScope": "The target archive identity and completed load are confirmed. Neither a map-content defect nor the exact DLL/control-state cause is established. Explicit Terrain opening is not accepted as a fix.",
+    "retryPolicy": "The MCP retains FAILED/unconfirmed filters and source hashes. It does not automatically replay the request, replace the failure with a fresh-worker success or publish an apparently verified PNG."
+  },
+  "authoring": {
+    "stage": {
+      "file": "work/launch-diagnostics-20261022/location-styles-stage.json",
+      "sha256": "00f44cc730a66e9b406d7b9fc3000116615c5ab7a23c78b56de2aad64d826c15"
+    },
+    "sourceAudit": {
+      "file": "work/launch-diagnostics-20261022/location-styles-source-audit.json",
+      "sha256": "67aa95f07753de6a0684d6a064f727e71b8f61bbf64ed98b9622fda0a1c3ed19"
+    },
+    "allMapWritesThroughMcp": true,
+    "warmAndFreshNoOp": true,
+    "ordinarySourcesAndOriginalsPreserved": true,
+    "fixtures": [
+      {
+        "id": "industrial",
+        "objects": 86,
+        "preservedFixedObjects": 86,
+        "uniqueTexturePixels": 130193,
+        "normalizedTexturePixels": 262144
+      },
+      {
+        "id": "settlement",
+        "objects": 266,
+        "preservedFixedObjects": 36,
+        "uniqueTexturePixels": 232708,
+        "normalizedTexturePixels": 409600
+      }
+    ],
+    "industrialNative13Historical": {
+      "audit": {
+        "file": "work/launch-diagnostics-20261022/location-styles-industrial-partial-audit.json",
+        "sha256": "0b3771021cd29dc0126da77128bd609bbab50092a551ceaf4d2df32ceea23ba2"
+      },
+      "sdk": "0.12.0-rc.1",
+      "protocol": 13,
+      "runs": 2,
+      "traversals": 12,
+      "maximumDeviation": 8.881784197001252e-15,
+      "inspectedFirstRunGameFrames": 3,
+      "uninspectedSecondRunGameFrames": 3
+    },
+    "settlementCurrentGameAcceptance": "not_checked; matrix stopped at the required export refusal before settlement Game runs",
+    "artScope": "Industrial grating/readability and settlement ground/grove transitions inspected on bounded native frames. Repeated machinery/buildings and rectangular layouts remain findings; no finished aesthetic approval."
+  },
+  "checks": {
+    "developmentBuild": {
+      "file": "work/launch-diagnostics-20261022/native013-refusal-build.log",
+      "sha256": "10a6f793ca5b371f50d30275f91bca10764ad37efaa83fe46600fc03690a7777"
+    },
+    "focused": {
+      "report": {
+        "file": "work/launch-diagnostics-20261022/native013-refusal-focused.tap",
+        "sha256": "fbf6a68c370fe088528c1f10067183520d6198f2f9fbf1816e9a39127bf2123a"
+      },
+      "tests": 36,
+      "pass": 36,
+      "fail": 0
+    },
+    "english": {
+      "files": 117,
+      "violations": 0,
+      "report": {
+        "file": "work/launch-diagnostics-20261022/native013-doc-language.json",
+        "sha256": "9f6b4a3ee56b5ad69b9b6c71cecc5bd8d523a2b783c43c87a7b345e74a74f9fd"
+      }
+    },
+    "fullRegression": "Not rerun for this SDK upgrade; previous1526-pass full suite remains version-scoped.",
+    "portable": "No new protocol14 frozen portable candidate qualified yet."
+  },
+  "configuration": {
+    "nextStartVersion": "0.13.0-rc.1",
+    "nextStartProtocol": 14,
+    "typedTomlParsed": true,
+    "onlyRuntimeHomeAndWorkRootChanged": true,
+    "existingMcpProcessesNotRestarted": true,
+    "gameToolkit": "v0.1.0-dev.11",
+    "gameLatestReleaseChecked": true
+  },
+  "unfinished": [
+    "Implement/test all eight new guarded methods and Native job/source ownership.",
+    "Native export after GUI compilation remains a reproducible failure on both protocols; keep it visible.",
+    "Complete current0.13 native/game/style/GUI/Data qualification and frozen-package privacy checks.",
+    "Renew NativeRegions Initial/Lowered/Final generation separately from the three art styles, then continue the full roadmap."
+  ]
+}

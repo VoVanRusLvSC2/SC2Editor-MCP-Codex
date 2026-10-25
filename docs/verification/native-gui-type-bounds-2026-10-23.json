@@ -1,0 +1,575 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-23T12:42:31.110Z",
+  "status": "qualified_native_gui_types_and_automatic_one_cell_arrays_passed_with_explicit_remaining_import_risks",
+  "scope": "General native GUI serialization and new-declaration lowering, with exact saved-artifact original compilation and bounded game semantics. No silent conversion of imported state ownership; no universal GUI compatibility or completed mission claim.",
+  "sourceFingerprints": [
+    {
+      "file": "src/modules/trigger/ast/codec.ts",
+      "sha256LfUtf8": "d6f01f26253682c03d63533fa03b3edc20deb3fb8cfede6dab0247b30967f3c8"
+    },
+    {
+      "file": "src/modules/trigger/variables.ts",
+      "sha256LfUtf8": "d3bb1afad8a22031ede2a89bae53443d2f44eb20a97d6415c23d898a868a7738"
+    },
+    {
+      "file": "src/modules/trigger/nativeProfile.ts",
+      "sha256LfUtf8": "5ca3605ada028b799c82058f314b1e1ebfc0e23d3e004231736c82902bab13ed"
+    },
+    {
+      "file": "src/modules/trigger/workspace.ts",
+      "sha256LfUtf8": "375e284f2c6e59f422ca5a16a52bd1ba6c1c6621754af4574952581eb3dd8cd5"
+    },
+    {
+      "file": "src/modules/trigger/typeSystem.ts",
+      "sha256LfUtf8": "76cd4302be838b643744424a4b0289d20b61703a59e7d57bd316bfd77140bfad"
+    },
+    {
+      "file": "src/modules/trigger/functions.ts",
+      "sha256LfUtf8": "a8d2d9fe4474899bad6a70be5a96d69eb130b8f95ab811e8dbbc49154347d704"
+    },
+    {
+      "file": "src/modules/trigger/authoring.ts",
+      "sha256LfUtf8": "58c17cd6491084827137a581588f01a2dac7e2c20b8db75bbc9d91ff829fd1c8"
+    },
+    {
+      "file": "src/modules/trigger/runtime.ts",
+      "sha256LfUtf8": "8a4ccb5e1412c908dbbf0f6a7777b72e23a02102c483ffe029cfc9a63d8d3cab"
+    },
+    {
+      "file": "src/modules/trigger/runtimeGraph.ts",
+      "sha256LfUtf8": "331dcc11390820f64da4f21739a5eb7c2e81cbe76af095d24e68819ff0bae496"
+    },
+    {
+      "file": "src/modules/trigger/tools.ts",
+      "sha256LfUtf8": "1ed17d597a9438d16655335f356a415739037739cf1cf18a49658bc52cd5a192"
+    },
+    {
+      "file": "src/app/mcpBatch.ts",
+      "sha256LfUtf8": "c47fff51306063befa67517507ebbc24aa988cd1fd618a8d6b7896f97a9479e7"
+    },
+    {
+      "file": "src/modules/testing/workspace.ts",
+      "sha256LfUtf8": "ae5ee5c63d88143a27fb023da8b97b1981b863c083077ccc9169fccecb37731e"
+    },
+    {
+      "file": "src/integrations/native/bridge.ts",
+      "sha256LfUtf8": "c969ea841c1c7b785fdeacbf2c81fa29a68aa10177a5d0804b19cd6331067880"
+    },
+    {
+      "file": "src/integrations/game/bridge.ts",
+      "sha256LfUtf8": "65057d196bd5e7d07332ada1fc66c65d76360448fb99f3f9923370bfd1d28108"
+    },
+    {
+      "file": "src/integrations/game/runtime.ts",
+      "sha256LfUtf8": "cdbf80b0d4ff188a38427907d5adc00adc6326e5a40c49f6582761a42211c014"
+    },
+    {
+      "file": "src/tests/triggerNativeTypeEncoding.test.ts",
+      "sha256LfUtf8": "db3b000e0a3e27f40af45c30b5ed9d13294ba52a0a2cdea352425e85c788b7a0"
+    },
+    {
+      "file": "scripts/run-map-tests.mjs",
+      "sha256LfUtf8": "9471de409f9762360cf66c2de08a154dfcf584b8b0458e61f467bc0a6a1742b9"
+    },
+    {
+      "file": "scripts/mcp-session.mjs",
+      "sha256LfUtf8": "34f8888d8d778ac5c1a43429eb9bd3f58cd742c5382ab9059ec949ffc2a28834"
+    },
+    {
+      "file": "scripts/check-distribution-privacy.mjs",
+      "sha256LfUtf8": "747bb50d8e7c0ed8ec034f7759ec6bfca4424b8a348f872b68c1ce9095ed03da"
+    },
+    {
+      "file": "publication-policy.json",
+      "sha256LfUtf8": "5526488d2229807ddc1353ce8b22af2f19fbdead1b2e227c8d8c936986d0e7f1"
+    },
+    {
+      "file": "native-toolkit-release.json",
+      "sha256LfUtf8": "3603dfc4b0bd20b83a4e44042c63a668596b4068b6bda8c84f814a10dde24831"
+    },
+    {
+      "file": "game-toolkit-release.json",
+      "sha256LfUtf8": "7c8e2329dd4af5513e8fbc4f0a98cd4442fedc5460129fbc7291c3be4a5c96cf"
+    },
+    {
+      "file": "AGENTS.md",
+      "sha256LfUtf8": "e70dc5bb57620cad8f3ac58aff12f4e71157315a7e1d84832712c9ab89e97293"
+    },
+    {
+      "file": "docs/AUTHORING_PROTOCOL.md",
+      "sha256LfUtf8": "42411b06e461e7e157fdeead706da4375afe34c67d044113c56cc0f55436afd8"
+    },
+    {
+      "file": "docs/TRIGGER_MCP.md",
+      "sha256LfUtf8": "dff67c68a91d940d5a05e5e579619b279fc99bcc10f0c58045b6a7171a9ffbef"
+    },
+    {
+      "file": "docs/MCP_EFFICIENT_WORKFLOW.md",
+      "sha256LfUtf8": "6228edb14abbfee0a00418dc0541e79041a78e5d81e96d46aa5fda5ded2c7371"
+    },
+    {
+      "file": ".agents/skills/README.md",
+      "sha256LfUtf8": "8c5e6e81a39a3732a8ebd78bfb2b3b4efc8092e43dcc93bd4e9541676dadb55f"
+    },
+    {
+      "file": ".agents/skills/sc2-data-trigger-systems/SKILL.md",
+      "sha256LfUtf8": "ce1fcb29e1557b11c89aceb4971f65fb8ccc20ded9bfe609cb72ff59d5f82f28"
+    },
+    {
+      "file": ".agents/skills/sc2-mission-authoring/SKILL.md",
+      "sha256LfUtf8": "c37f2807bd8a6d91353bc5fc245de87353c3c38ddd56b2dea7029dcc8d15ae4a"
+    },
+    {
+      "file": ".agents/skills/sc2-terrain-composition/SKILL.md",
+      "sha256LfUtf8": "71e15cc03e87522a4e4c0d8f4f3e4ce5b4128a339cc6d12bb1e464a5a52a4ca7"
+    }
+  ],
+  "changes": {
+    "qualifiedTypeMetadata": "TypeElement and variable-bound ArraySize retain their resolved explicit Library even inside that same named library. Ordinary expression/item references keep their implicit-library contract.",
+    "automaticZeroBounds": "Every newly authored numeric-zero array dimension gets a dedicated visible global integer constant0 in its own library. Global variables, record fields and function locals preserve the inclusive0-only range. Names avoid existing declarations; no user constant is adopted or changed.",
+    "manualChanges": "Modified generated helpers are preserved and surfaced as review findings. Existing imported XML is not rewritten.",
+    "riskReview": "Plans and validation return bounded nativeProfile findings and loweredZeroBounds. Compiler remains NOT_EXECUTED; no_known_issues is not a compile result."
+  },
+  "candidate": {
+    "receipt": {
+      "file": "work/launch-diagnostics-20261022/gui-type-automatic-candidate.json",
+      "sha256": "f5316c696813e3e814322dae00abfec420289831910dcd6e7c7a0ca247829e4a"
+    },
+    "sourceSnapshot": {
+      "file": "work/launch-diagnostics-20261022/gui-type-automatic-source-before.json",
+      "sha256": "0104791a7835e22abb5fa2baabfec062addaac3d8bbc042926fee76c2fc5f108"
+    },
+    "compiledFiles": 360,
+    "compiledStillMatched": true,
+    "privacy": {
+      "passed": true,
+      "checkedFiles": 9984,
+      "privateSourceFiles": 1113,
+      "privateCorpusCompared": true,
+      "violations": [],
+      "scope": "Explicit private paths/debug/test artifacts and exact external C++/Python/Galaxy source copies, including renamed files. Not proof against transformed snippets or binary reverse engineering."
+    },
+    "instructionParity": [
+      {
+        "file": "AGENTS.md",
+        "sha256": "e70dc5bb57620cad8f3ac58aff12f4e71157315a7e1d84832712c9ab89e97293"
+      },
+      {
+        "file": "docs/AUTHORING_PROTOCOL.md",
+        "sha256": "40b53efd14f7817e80a48494caeda3315abad20599e758ebb7720a6d14026633"
+      },
+      {
+        "file": "docs/TRIGGER_MCP.md",
+        "sha256": "4edfd75c24f47130deba8270e022ff033fb48a0d1ff7d2a1883921baf315fce7"
+      },
+      {
+        "file": "docs/MCP_EFFICIENT_WORKFLOW.md",
+        "sha256": "345bf2734ce9584e4cf02b0f501171052d1a24d11eb3ad2dfc2040dae529fce6"
+      },
+      {
+        "file": ".agents/skills/README.md",
+        "sha256": "8c5e6e81a39a3732a8ebd78bfb2b3b4efc8092e43dcc93bd4e9541676dadb55f"
+      },
+      {
+        "file": ".agents/skills/sc2-data-trigger-systems/SKILL.md",
+        "sha256": "ce1fcb29e1557b11c89aceb4971f65fb8ccc20ded9bfe609cb72ff59d5f82f28"
+      },
+      {
+        "file": ".agents/skills/sc2-mission-authoring/SKILL.md",
+        "sha256": "c37f2807bd8a6d91353bc5fc245de87353c3c38ddd56b2dea7029dcc8d15ae4a"
+      },
+      {
+        "file": ".agents/skills/sc2-terrain-composition/SKILL.md",
+        "sha256": "71e15cc03e87522a4e4c0d8f4f3e4ce5b4128a339cc6d12bb1e464a5a52a4ca7"
+      }
+    ],
+    "published": false
+  },
+  "authoring": {
+    "transport": "Actual installed MCP stdio plan/apply/organize/generate_runtime/save/Data/export; shell only prepares declarative JSON and reads test evidence.",
+    "automaticFixture": {
+      "file": "work/launch-diagnostics-20261022/gui-native-automatic-fixture.json",
+      "sha256": "9bbcbf8c554c8beec488295fc51ac76ef46345d4ae0f3e93f61ca9f3b160446b"
+    },
+    "qualifiedFixture": {
+      "file": "work/launch-diagnostics-20261022/gui-native-qualified-fixture.json",
+      "sha256": "792e7725838535e35ff231f83636bb5aaf1830435eb42475781bc0b4d8496488"
+    },
+    "packageReview": {
+      "file": "work/launch-diagnostics-20261022/gui-native-automatic-package-review.json",
+      "sha256": "234d35de8e88965bc138b35a18ff2c69ec0160830ef6a86f101883cf220d25ed"
+    },
+    "noCustomScriptFallback": true,
+    "diagnosticOwnership": "Both successful reference variants deliberately own the shared counter in the library and deferred callback at map root with a qualified call. This is different input from the retained original failed graph and does not prove its equivalence.",
+    "automaticAdditionalPath": "A one-cell function-local array and one-cell record field carry the existing cell argument into Matrix. All14 numeric, uniqueness and control expectations are byte-identical in both manifests."
+  },
+  "nativeRuns": [
+    {
+      "kind": "qualified",
+      "jobId": "d5e01a96-4c9b-4997-b27d-7d03ab88a60c",
+      "result": {
+        "file": ".sc2mcp-output/project-tests/d5e01a96-4c9b-4997-b27d-7d03ab88a60c/result.json",
+        "sha256": "424035b6afb82725eb384dab287c67394a15bc3c7cc28b01b42b27cad4c184e8"
+      },
+      "sourceSha256": "6309a09c09d60667acfed78d80e3072679ef6cbbb5f4728ba5bc5cc4603ab1a0",
+      "nativeJobs": [
+        "3d01d858-56f5-41b4-bd43-8f98a81a11d2",
+        "fcf4bfba-c2d1-4ee6-b37e-17d32604a3d6"
+      ],
+      "nativeReports": [
+        {
+          "file": ".sc2mcp-output/ne/jobs/3d01d858-56f5-41b4-bd43-8f98a81a11d2/result.json",
+          "sha256": "6ff90381ff846f66d0094a09e1a13ede616ad1d3c96a6c88b9f813896c306769"
+        },
+        {
+          "file": ".sc2mcp-output/ne/jobs/fcf4bfba-c2d1-4ee6-b37e-17d32604a3d6/result.json",
+          "sha256": "838376a50e8b32b0f2939618ba8624eb67414a23c9e06a78581cd39b52928c74"
+        }
+      ],
+      "originalGeneration": true,
+      "replacementEmitterUsed": false,
+      "compilerErrors": 0,
+      "savedArtifactSha256": "7e935c131c2d496b0700c5605d47fd42359207ef01605ea317dfde01703c605c",
+      "savedReopenedComponents": 42,
+      "saveChanges": [
+        "(attributes)",
+        "DocumentHeader"
+      ],
+      "nativeGalaxy": {
+        "file": ".sc2mcp-output/ne/jobs/3d01d858-56f5-41b4-bd43-8f98a81a11d2/Native.galaxy",
+        "sha256": "6669b02a410b5d1249823ab7405bc81373829bc3d6f10adb27dfe7f03ce9525c"
+      },
+      "savedArtifactGalaxyEqual": true,
+      "scenarios": [
+        "scenario:library",
+        "scenario:nested",
+        "scenario:record",
+        "scenario:preset",
+        "scenario:localArray",
+        "scenario:scalarReference",
+        "scenario:arrayElementReference",
+        "scenario:untouchedRecord",
+        "scenario:matrixLastIndex",
+        "scenario:matrixControl",
+        "scenario:deferredRootReference",
+        "scenario:unqualifiedRootFunction",
+        "scenario:exactlyFourMutations",
+        "scenario:nestedRecordArray"
+      ],
+      "cleanup": "passed",
+      "sourceUnchanged": true,
+      "artifactUnchanged": true,
+      "diagnostics": "inconclusive",
+      "capture": {
+        "file": ".sc2mcp-output/project-tests/d5e01a96-4c9b-4997-b27d-7d03ab88a60c/Game.png",
+        "sha256": "8981184328def58e83bbb5b70c08766b39aa5766c3a9aca7a6ccb8db78631e63",
+        "pixelsReviewed": false,
+        "assessment": "not separately reviewed"
+      }
+    },
+    {
+      "kind": "automatic",
+      "jobId": "3055ce00-878c-4b5f-84f1-952cc2040c3b",
+      "result": {
+        "file": ".sc2mcp-output/project-tests/3055ce00-878c-4b5f-84f1-952cc2040c3b/result.json",
+        "sha256": "93d1c9d220328d5379a239fb2b80bcd2184672dbb01f862689f561fcca38ff24"
+      },
+      "sourceSha256": "851fe751fa3644b74aaaaa460183c72d3ce81e721579c37d9c9b01c044bc7147",
+      "nativeJobs": [
+        "a2a1ca47-d9eb-47a6-8387-0f1ca7c9e7f2",
+        "d667b29c-967a-4808-b33a-88bfdec30f4c"
+      ],
+      "nativeReports": [
+        {
+          "file": ".sc2mcp-output/ne/jobs/a2a1ca47-d9eb-47a6-8387-0f1ca7c9e7f2/result.json",
+          "sha256": "6e1bf2d5fff96c5345101a54a9c7268cf775f94ed484474c7c7e6fe22c3b87c9"
+        },
+        {
+          "file": ".sc2mcp-output/ne/jobs/d667b29c-967a-4808-b33a-88bfdec30f4c/result.json",
+          "sha256": "3d4acc01ffc97408adadbd0c67124315c2e4600191c3c44ee30e229b4676ae8c"
+        }
+      ],
+      "originalGeneration": true,
+      "replacementEmitterUsed": false,
+      "compilerErrors": 0,
+      "savedArtifactSha256": "0863687a55645f95bada881f3af0d28af6492fd3356afe13c510a2e35f8abf82",
+      "savedReopenedComponents": 42,
+      "saveChanges": [
+        "(attributes)",
+        "DocumentHeader"
+      ],
+      "nativeGalaxy": {
+        "file": ".sc2mcp-output/ne/jobs/a2a1ca47-d9eb-47a6-8387-0f1ca7c9e7f2/Native.galaxy",
+        "sha256": "633412e9e7699e18f613f8bc2e4643a04e6965ff890527c8eecf93433de40a49"
+      },
+      "savedArtifactGalaxyEqual": true,
+      "shapes": {
+        "dedicatedZeroConstants": [
+          "libA1B2C3D4_gv_MCPZeroBound_949E1764_0",
+          "libA1B2C3D4_gv_MCPZeroBound_1767CFE2_0",
+          "libA1B2C3D4_gv_MCPZeroBound_9AD055C0_0"
+        ],
+        "global": true,
+        "recordField": true,
+        "functionLocal": true,
+        "allowedIndices": [
+          0
+        ],
+        "unchangedNumericExpectations": true
+      },
+      "scenarios": [
+        "scenario:library",
+        "scenario:nested",
+        "scenario:record",
+        "scenario:preset",
+        "scenario:localArray",
+        "scenario:scalarReference",
+        "scenario:arrayElementReference",
+        "scenario:untouchedRecord",
+        "scenario:matrixLastIndex",
+        "scenario:matrixControl",
+        "scenario:deferredRootReference",
+        "scenario:unqualifiedRootFunction",
+        "scenario:exactlyFourMutations",
+        "scenario:nestedRecordArray"
+      ],
+      "cleanup": "passed",
+      "sourceUnchanged": true,
+      "artifactUnchanged": true,
+      "diagnostics": "inconclusive",
+      "capture": {
+        "file": ".sc2mcp-output/project-tests/3055ce00-878c-4b5f-84f1-952cc2040c3b/Game.png",
+        "sha256": "f11153d76b33428a0827bebb245237e10221a69f773fc33160ad33ac0ef79c03",
+        "pixelsReviewed": true,
+        "assessment": "Sparse marker-unit diagnostic fixture; visible Marines and clipped right-edge markers, fog, no selected command card. No finished mission composition/UI acceptance."
+      }
+    },
+    {
+      "kind": "automatic",
+      "jobId": "48a8285d-c156-4e9b-b2a9-65bff90a2697",
+      "result": {
+        "file": ".sc2mcp-output/project-tests/48a8285d-c156-4e9b-b2a9-65bff90a2697/result.json",
+        "sha256": "06357330aa8cbb66b5d8c4619c33265186b6e5d1ec4ecba7d076396faf7f5422"
+      },
+      "sourceSha256": "851fe751fa3644b74aaaaa460183c72d3ce81e721579c37d9c9b01c044bc7147",
+      "nativeJobs": [
+        "2ccc9119-0178-45f9-b5a6-a99212f510dd",
+        "c78d8f14-2f88-4880-9d69-8d5a7dfa2d78"
+      ],
+      "nativeReports": [
+        {
+          "file": ".sc2mcp-output/ne/jobs/2ccc9119-0178-45f9-b5a6-a99212f510dd/result.json",
+          "sha256": "ce21442cf28e6213eb182382185bdeba3b5de602339000caf0012e37037d991d"
+        },
+        {
+          "file": ".sc2mcp-output/ne/jobs/c78d8f14-2f88-4880-9d69-8d5a7dfa2d78/result.json",
+          "sha256": "568d31bc4a0524feebc045157d00fcb9d7b3840f5e484ab276e3a808445f854c"
+        }
+      ],
+      "originalGeneration": true,
+      "replacementEmitterUsed": false,
+      "compilerErrors": 0,
+      "savedArtifactSha256": "0863687a55645f95bada881f3af0d28af6492fd3356afe13c510a2e35f8abf82",
+      "savedReopenedComponents": 42,
+      "saveChanges": [
+        "(attributes)",
+        "DocumentHeader"
+      ],
+      "nativeGalaxy": {
+        "file": ".sc2mcp-output/ne/jobs/2ccc9119-0178-45f9-b5a6-a99212f510dd/Native.galaxy",
+        "sha256": "633412e9e7699e18f613f8bc2e4643a04e6965ff890527c8eecf93433de40a49"
+      },
+      "savedArtifactGalaxyEqual": true,
+      "shapes": {
+        "dedicatedZeroConstants": [
+          "libA1B2C3D4_gv_MCPZeroBound_949E1764_0",
+          "libA1B2C3D4_gv_MCPZeroBound_1767CFE2_0",
+          "libA1B2C3D4_gv_MCPZeroBound_9AD055C0_0"
+        ],
+        "global": true,
+        "recordField": true,
+        "functionLocal": true,
+        "allowedIndices": [
+          0
+        ],
+        "unchangedNumericExpectations": true
+      },
+      "scenarios": [
+        "scenario:library",
+        "scenario:nested",
+        "scenario:record",
+        "scenario:preset",
+        "scenario:localArray",
+        "scenario:scalarReference",
+        "scenario:arrayElementReference",
+        "scenario:untouchedRecord",
+        "scenario:matrixLastIndex",
+        "scenario:matrixControl",
+        "scenario:deferredRootReference",
+        "scenario:unqualifiedRootFunction",
+        "scenario:exactlyFourMutations",
+        "scenario:nestedRecordArray"
+      ],
+      "cleanup": "passed",
+      "sourceUnchanged": true,
+      "artifactUnchanged": true,
+      "diagnostics": "inconclusive",
+      "capture": {
+        "file": ".sc2mcp-output/project-tests/48a8285d-c156-4e9b-b2a9-65bff90a2697/Game.png",
+        "sha256": "72842760f59d03c3ca295521d8893948a780aca4b57d7d6d691f3379182cd411",
+        "pixelsReviewed": true,
+        "assessment": "Sparse marker-unit diagnostic fixture; visible Marines and clipped right-edge markers, fog, no selected command card. No finished mission composition/UI acceptance."
+      }
+    }
+  ],
+  "repeat": {
+    "automaticLaunches": 2,
+    "passedScenarios": 28,
+    "retainedBridge": true,
+    "runner": {
+      "file": "work/launch-diagnostics-20261022/gui-native-automatic-game.log",
+      "sha256": "33508e7c4c4e88114f149ca2dd812499779b02616611c42e7bec2c32921c88f6"
+    },
+    "manifests": [
+      {
+        "file": "work/launch-diagnostics-20261022/gui-native-qualified-game.json",
+        "sha256": "3961757c7f95957cd216923d051206c364c1e2bb8bf7d46dec10854383c64a34"
+      },
+      {
+        "file": "work/launch-diagnostics-20261022/gui-native-automatic-game.json",
+        "sha256": "a18311c1378b15d4f83921384e03a7dd748cbd62fe754174fc16736fc0c84b9a"
+      }
+    ]
+  },
+  "tests": {
+    "focused": {
+      "file": "work/launch-diagnostics-20261022/gui-native-zero-focused.tap",
+      "sha256": "420e6485751bfb215eb9639e12cb66409bb0fccec5244b70dad3a4e632cb89f7",
+      "tests": 44,
+      "pass": 44,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0
+    },
+    "fullInitial": {
+      "file": "work/launch-diagnostics-20261022/gui-native-zero-full.tap",
+      "sha256": "986a08e2cd281dcbed48035e0c428966c84f7a7c6275a11dc6116e928956d0f2",
+      "tests": 1465,
+      "pass": 1463,
+      "fail": 0,
+      "cancelled": 1,
+      "skipped": 1
+    },
+    "transportRetry": {
+      "file": "work/launch-diagnostics-20261022/gui-native-zero-transport-retry.tap",
+      "sha256": "92658a044ce8e6eee8fa362f4e7bcb24f425f1ffa92eba037ef410084f3269f7",
+      "tests": 1,
+      "pass": 1,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0
+    },
+    "fullSerial": {
+      "file": "work/launch-diagnostics-20261022/gui-native-zero-full-serial.tap",
+      "sha256": "b924bd8fa62dbe9b8316c4e2df7549e0c0aee8a67a03026f5155b29690fa2970",
+      "tests": 1465,
+      "pass": 1464,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 1
+    }
+  },
+  "buildRelease": "passed; exact modified development/release JS parity and source-stable frozen candidate",
+  "lint": {
+    "file": "work/launch-diagnostics-20261022/gui-native-zero-lint.log",
+    "sha256": "510475fdd23df5ab732ff12a7efe6eeeef1714f16cb3e683de0964513c9152a2"
+  },
+  "englishInstructions": {
+    "file": "work/launch-diagnostics-20261022/gui-native-zero-docs.log",
+    "sha256": "c64dba5fff84af47cacac9b3140a0bc7a4a766d8e4e68a7d8165c5d8d6847328"
+  },
+  "retainedFailures": {
+    "originalReferenceArchive": {
+      "file": "work/gui-reference-native-20261023/ReferenceBoundedMap/.sc2mcp-output/ReferenceBounded.SC2Map",
+      "sha256": "6cfe7af4d2eab7f6003532c2bab93963ff22cdae9efaf6f25311e134a18ecab4",
+      "unchanged": true,
+      "nativeCompilationAccepted": false,
+      "knownRisks": [
+        {
+          "code": "NATIVE_LITERAL_ZERO_ARRAY_BOUND",
+          "library": "A1B2C3D4",
+          "elementId": "5B7EFE72",
+          "offset": 6472,
+          "message": "The original generator collapses the observed single literal-zero array to a scalar. Preserve its zero bound; consider an explicit zero-valued constant and verify the native result. A standalone Array tag did not repair the observed profile."
+        },
+        {
+          "code": "NATIVE_TYPE_ELEMENT_LIBRARY_REQUIRED",
+          "library": "A1B2C3D4",
+          "elementId": "58296B1C",
+          "offset": 6815,
+          "message": "A named-library variable type needs an explicit TypeElement Library binding. The original generator produced an empty structure type when this qualifier was omitted."
+        },
+        {
+          "code": "NATIVE_TYPE_ELEMENT_LIBRARY_REQUIRED",
+          "library": "A1B2C3D4",
+          "elementId": "90EBAE70",
+          "offset": 7035,
+          "message": "A named-library variable type needs an explicit TypeElement Library binding. The original generator produced an empty structure type when this qualifier was omitted."
+        },
+        {
+          "code": "NATIVE_LIBRARY_ROOT_GLOBAL_REFERENCE",
+          "library": "A1B2C3D4",
+          "elementId": "79A9EE45",
+          "offset": 10450,
+          "message": "A named library references a map-root global. The observed original output declares map globals after library functions, causing a forward-reference compile error. Prefer library-owned shared state or explicit arguments; native validation is required for this graph."
+        },
+        {
+          "code": "NATIVE_LIBRARY_ROOT_GLOBAL_REFERENCE",
+          "library": "A1B2C3D4",
+          "elementId": "7A866B8D",
+          "offset": 10609,
+          "message": "A named library references a map-root global. The observed original output declares map globals after library functions, causing a forward-reference compile error. Prefer library-owned shared state or explicit arguments; native validation is required for this graph."
+        },
+        {
+          "code": "NATIVE_LIBRARY_ROOT_GLOBAL_REFERENCE",
+          "library": "A1B2C3D4",
+          "elementId": "DB779422",
+          "offset": 29904,
+          "message": "A named library references a map-root global. The observed original output declares map globals after library functions, causing a forward-reference compile error. Prefer library-owned shared state or explicit arguments; native validation is required for this graph."
+        },
+        {
+          "code": "NATIVE_LIBRARY_ROOT_GLOBAL_REFERENCE",
+          "library": "A1B2C3D4",
+          "elementId": "CC0754E8",
+          "offset": 31080,
+          "message": "A named library references a map-root global. The observed original output declares map globals after library functions, causing a forward-reference compile error. Prefer library-owned shared state or explicit arguments; native validation is required for this graph."
+        },
+        {
+          "code": "NATIVE_LIBRARY_ROOT_GLOBAL_REFERENCE",
+          "library": "A1B2C3D4",
+          "elementId": "F9915A75",
+          "offset": 33948,
+          "message": "A named library references a map-root global. The observed original output declares map globals after library functions, causing a forward-reference compile error. Prefer library-owned shared state or explicit arguments; native validation is required for this graph."
+        }
+      ]
+    },
+    "trialArrayFlag": "An extra Array tag did not repair the observed native literal-zero collapse; experimental production/test change was reverted.",
+    "typeFixOnly": "Native structure type was repaired but library root-global reads failed at generated line83.",
+    "unqualifiedBound": "A constant-bound diagnostic attempt with omitted ArraySize Library ended in a10-minute save timeout; another fresh attempt failed STARTING. The later qualified case passes; a single pair does not establish the cause of the startup/save failures.",
+    "saveTimeoutJob": "6028420b-3761-4f87-a1a4-da99f89820b5",
+    "startingFailureJob": "3fd82ffb-412c-46c0-bef9-65c2839c9753",
+    "authoringHarness": "Two supported-fixture drafts used an unqualified callback call after changing scope; both failures are retained. The later diagnostic explicitly qualifies the same library call.",
+    "profileHarness": "First readback asserted a top-level compiler field omitted by intentional MCP compaction. The preserved nativeProfile.compiler is the correct field; no map/source change was made.",
+    "fullRegression": "Initial concurrency4 run timed out one transport test at60000ms with no assertion failures. Exact isolated test passed in19.6s; complete serial rerun1464pass/1skip. Timeout not erased and time limit unchanged."
+  },
+  "privateSdkModified": false,
+  "privateRuntimeBundled": false,
+  "published": false,
+  "openCoverage": [
+    "Original imported library-to-map-global graph remains unaccepted; do not silently relocate its state/callbacks.",
+    "Wider GUI/imported library/control/reference profiles remain outside these exact cases.",
+    "Game diagnostics remain partial; no universal absence-of-errors assertion.",
+    "Native cliff/navigation/buildability, broader Data presentation and final mission art/UI/gameplay review remain open."
+  ]
+}

@@ -1,0 +1,943 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-25T16:40:36.947Z",
+  "status": "scoped_sdk100_forest_verified_data_acceptance_partial",
+  "scope": "Actual original frozen SDK1.0 qualification. Frontend contracts, two exact saved forest suites and two separate Game-only framing checks are positive. Both full Data audits timed out without usable indices, and source return failed exact native XML identity. This does not accept the current whole package, indexed query APIs, native warm Data reuse, art or all required roadmap gates.",
+  "sourceFingerprints": {
+    "src/integrations/native/background.ts": "b1b1f96ec261acd017fdd373b86f161a3b695888b753a0d0f997cb2812d7c734",
+    "src/integrations/native/bridge.ts": "8d7e1a16ebe164c9b62eb8cd70542b7151691012ce69a6ec9a12c692535e854e",
+    "src/integrations/native/contracts.ts": "14c9d5f419a14da8493a93edabd5d25c09f4d6f5e57e9c8d3ffb1534effcec26",
+    "src/integrations/native/details.ts": "6149278f97606e0c56148c4bfd13227621c0b68510868df5251c2ae7f3ac1f9b",
+    "src/integrations/native/frameAssessment.ts": "600ab2096d4eb3180080c927f9d0a8431a489719f25691c591683474e6e05701",
+    "src/integrations/native/guiEvidence.ts": "8c962e18bb7814d8a8db74550bba1c9788a35d810235490845a67165d15bbdd5",
+    "src/integrations/native/outcome.ts": "d99b06b52efc3c6626d6709eaecba5f7bedb41f357eb31641805d5e7ce643cec",
+    "src/integrations/native/release.ts": "2efaaef7371ad6fa2b8e67eefdc281fc3d47b1a05dc935cb35ce4e06ab80dca0",
+    "src/integrations/native/storage.ts": "8e31ab22ad135840d8f58665f6e6e1441853dea76eef8ab16c2254ff35061470",
+    "src/integrations/native/tools.ts": "f8ddf8fffe368c1a2ad8543d7a8bfa0a688ed74fc1d19f16e7599b8311c25b3c",
+    "src/integrations/native/transport.ts": "ad4c1d2afae962abafb30c6157d406207a19590beba65a952599a4b66637cfcb",
+    "src/modules/testing/actionChecks.ts": "f5fe0a3cfb9caf9618f823fde5b295312639ec4b76022555b991ccf352aa800e",
+    "src/modules/testing/evidenceInventory.ts": "f8eb41bb67bbe6bfd4692e5b279c3239b745279686fcfe337351dd6ba90f01b1",
+    "src/modules/testing/formationChecks.ts": "1040012f517d384fef4630ec415c2b7f65349bf2aab3440ef1f31cece0c57a11",
+    "src/modules/testing/gate.ts": "2ae9a1a356335ca1c7785d0654dca589a55a2a2f0d86efd330b6aa61252bb5fe",
+    "src/modules/testing/movementClock.ts": "e45b4b132df4bd7946f73fdaa5873a37bf11c8102974d89b9b070a87c670f1bb",
+    "src/modules/testing/padChecks.ts": "8ed3b5b959cd88f1fd60b30680b187283c9fb9c2c688a700fbc643b456ece9cf",
+    "src/modules/testing/padPreparation.ts": "18b267e6ffd1d57a9e706bb599c9e560ca1964a1d9b0a5587a832779b9944bcc",
+    "src/modules/testing/padQueries.ts": "14d94f7a1c88974883a133cf94a5063702ca4619feef798dc0d2c9731a57b72f",
+    "src/modules/testing/playableBounds.ts": "79e5a987140d021596b89c9c06a0ce28dd0d707be500df7a35c81ba36daafa03",
+    "src/modules/testing/qualityPlan.ts": "0ca01fb173a11b1b2502892e53f365495c8e39bd9abf0bc42889f9ad41cec527",
+    "src/modules/testing/releaseAcceptance.ts": "e2951ee03a9406e10d5d259745735c5d62ea8963f64c0b56f7c46f8cc84c8992",
+    "src/modules/testing/routeChecks.ts": "9c075d19004b617b3bfc605c5e8b4581c1f64802869a1e4c30cde6a94db58e27",
+    "src/modules/testing/routeGeometry.ts": "84b68527e02659420fbfb100f4679d3346c62318f398717f651571276ac1677b",
+    "src/modules/testing/schemas.ts": "055c86bcdf1e6e26a11a28790ca20d5a33b941846c69ae73dd00eda493693a77",
+    "src/modules/testing/startupEvents.ts": "436ecc8537030cb2cb43e46ad73edc194e34b27ff7b305f655c81739b40eda3b",
+    "src/modules/testing/storagePreflight.ts": "ee55976aa81c47f0b3f67cab1034b39099f86085ff1defc7f43f110272814d4c",
+    "src/modules/testing/tools.ts": "c39f1348c178e2016118eda61f536368d54c4e7db6c41b57f5cae5059e30bc55",
+    "src/modules/testing/workspace.ts": "de20fee4c1906b42fa1b979fdbf1e728ecb04680b7ba0f5a924356e48f38fd55"
+  },
+  "sourceFingerprintScope": {
+    "paths": [
+      "src/integrations/native/",
+      "src/modules/testing/"
+    ],
+    "files": 29,
+    "encoding": "Exact original frozen source bytes",
+    "currentComparisonAt": "2026-10-25T16:40:36.947Z",
+    "currentMatched": true,
+    "comparisons": [
+      {
+        "file": "src/integrations/native/background.ts",
+        "originalSha256": "b1b1f96ec261acd017fdd373b86f161a3b695888b753a0d0f997cb2812d7c734",
+        "currentSha256": "b1b1f96ec261acd017fdd373b86f161a3b695888b753a0d0f997cb2812d7c734",
+        "matched": true
+      },
+      {
+        "file": "src/integrations/native/bridge.ts",
+        "originalSha256": "8d7e1a16ebe164c9b62eb8cd70542b7151691012ce69a6ec9a12c692535e854e",
+        "currentSha256": "8d7e1a16ebe164c9b62eb8cd70542b7151691012ce69a6ec9a12c692535e854e",
+        "matched": true
+      },
+      {
+        "file": "src/integrations/native/contracts.ts",
+        "originalSha256": "14c9d5f419a14da8493a93edabd5d25c09f4d6f5e57e9c8d3ffb1534effcec26",
+        "currentSha256": "14c9d5f419a14da8493a93edabd5d25c09f4d6f5e57e9c8d3ffb1534effcec26",
+        "matched": true
+      },
+      {
+        "file": "src/integrations/native/details.ts",
+        "originalSha256": "6149278f97606e0c56148c4bfd13227621c0b68510868df5251c2ae7f3ac1f9b",
+        "currentSha256": "6149278f97606e0c56148c4bfd13227621c0b68510868df5251c2ae7f3ac1f9b",
+        "matched": true
+      },
+      {
+        "file": "src/integrations/native/frameAssessment.ts",
+        "originalSha256": "600ab2096d4eb3180080c927f9d0a8431a489719f25691c591683474e6e05701",
+        "currentSha256": "600ab2096d4eb3180080c927f9d0a8431a489719f25691c591683474e6e05701",
+        "matched": true
+      },
+      {
+        "file": "src/integrations/native/guiEvidence.ts",
+        "originalSha256": "8c962e18bb7814d8a8db74550bba1c9788a35d810235490845a67165d15bbdd5",
+        "currentSha256": "8c962e18bb7814d8a8db74550bba1c9788a35d810235490845a67165d15bbdd5",
+        "matched": true
+      },
+      {
+        "file": "src/integrations/native/outcome.ts",
+        "originalSha256": "d99b06b52efc3c6626d6709eaecba5f7bedb41f357eb31641805d5e7ce643cec",
+        "currentSha256": "d99b06b52efc3c6626d6709eaecba5f7bedb41f357eb31641805d5e7ce643cec",
+        "matched": true
+      },
+      {
+        "file": "src/integrations/native/release.ts",
+        "originalSha256": "2efaaef7371ad6fa2b8e67eefdc281fc3d47b1a05dc935cb35ce4e06ab80dca0",
+        "currentSha256": "2efaaef7371ad6fa2b8e67eefdc281fc3d47b1a05dc935cb35ce4e06ab80dca0",
+        "matched": true
+      },
+      {
+        "file": "src/integrations/native/storage.ts",
+        "originalSha256": "8e31ab22ad135840d8f58665f6e6e1441853dea76eef8ab16c2254ff35061470",
+        "currentSha256": "8e31ab22ad135840d8f58665f6e6e1441853dea76eef8ab16c2254ff35061470",
+        "matched": true
+      },
+      {
+        "file": "src/integrations/native/tools.ts",
+        "originalSha256": "f8ddf8fffe368c1a2ad8543d7a8bfa0a688ed74fc1d19f16e7599b8311c25b3c",
+        "currentSha256": "f8ddf8fffe368c1a2ad8543d7a8bfa0a688ed74fc1d19f16e7599b8311c25b3c",
+        "matched": true
+      },
+      {
+        "file": "src/integrations/native/transport.ts",
+        "originalSha256": "ad4c1d2afae962abafb30c6157d406207a19590beba65a952599a4b66637cfcb",
+        "currentSha256": "ad4c1d2afae962abafb30c6157d406207a19590beba65a952599a4b66637cfcb",
+        "matched": true
+      },
+      {
+        "file": "src/modules/testing/actionChecks.ts",
+        "originalSha256": "f5fe0a3cfb9caf9618f823fde5b295312639ec4b76022555b991ccf352aa800e",
+        "currentSha256": "f5fe0a3cfb9caf9618f823fde5b295312639ec4b76022555b991ccf352aa800e",
+        "matched": true
+      },
+      {
+        "file": "src/modules/testing/evidenceInventory.ts",
+        "originalSha256": "f8eb41bb67bbe6bfd4692e5b279c3239b745279686fcfe337351dd6ba90f01b1",
+        "currentSha256": "f8eb41bb67bbe6bfd4692e5b279c3239b745279686fcfe337351dd6ba90f01b1",
+        "matched": true
+      },
+      {
+        "file": "src/modules/testing/formationChecks.ts",
+        "originalSha256": "1040012f517d384fef4630ec415c2b7f65349bf2aab3440ef1f31cece0c57a11",
+        "currentSha256": "1040012f517d384fef4630ec415c2b7f65349bf2aab3440ef1f31cece0c57a11",
+        "matched": true
+      },
+      {
+        "file": "src/modules/testing/gate.ts",
+        "originalSha256": "2ae9a1a356335ca1c7785d0654dca589a55a2a2f0d86efd330b6aa61252bb5fe",
+        "currentSha256": "2ae9a1a356335ca1c7785d0654dca589a55a2a2f0d86efd330b6aa61252bb5fe",
+        "matched": true
+      },
+      {
+        "file": "src/modules/testing/movementClock.ts",
+        "originalSha256": "e45b4b132df4bd7946f73fdaa5873a37bf11c8102974d89b9b070a87c670f1bb",
+        "currentSha256": "e45b4b132df4bd7946f73fdaa5873a37bf11c8102974d89b9b070a87c670f1bb",
+        "matched": true
+      },
+      {
+        "file": "src/modules/testing/padChecks.ts",
+        "originalSha256": "8ed3b5b959cd88f1fd60b30680b187283c9fb9c2c688a700fbc643b456ece9cf",
+        "currentSha256": "8ed3b5b959cd88f1fd60b30680b187283c9fb9c2c688a700fbc643b456ece9cf",
+        "matched": true
+      },
+      {
+        "file": "src/modules/testing/padPreparation.ts",
+        "originalSha256": "18b267e6ffd1d57a9e706bb599c9e560ca1964a1d9b0a5587a832779b9944bcc",
+        "currentSha256": "18b267e6ffd1d57a9e706bb599c9e560ca1964a1d9b0a5587a832779b9944bcc",
+        "matched": true
+      },
+      {
+        "file": "src/modules/testing/padQueries.ts",
+        "originalSha256": "14d94f7a1c88974883a133cf94a5063702ca4619feef798dc0d2c9731a57b72f",
+        "currentSha256": "14d94f7a1c88974883a133cf94a5063702ca4619feef798dc0d2c9731a57b72f",
+        "matched": true
+      },
+      {
+        "file": "src/modules/testing/playableBounds.ts",
+        "originalSha256": "79e5a987140d021596b89c9c06a0ce28dd0d707be500df7a35c81ba36daafa03",
+        "currentSha256": "79e5a987140d021596b89c9c06a0ce28dd0d707be500df7a35c81ba36daafa03",
+        "matched": true
+      },
+      {
+        "file": "src/modules/testing/qualityPlan.ts",
+        "originalSha256": "0ca01fb173a11b1b2502892e53f365495c8e39bd9abf0bc42889f9ad41cec527",
+        "currentSha256": "0ca01fb173a11b1b2502892e53f365495c8e39bd9abf0bc42889f9ad41cec527",
+        "matched": true
+      },
+      {
+        "file": "src/modules/testing/releaseAcceptance.ts",
+        "originalSha256": "e2951ee03a9406e10d5d259745735c5d62ea8963f64c0b56f7c46f8cc84c8992",
+        "currentSha256": "e2951ee03a9406e10d5d259745735c5d62ea8963f64c0b56f7c46f8cc84c8992",
+        "matched": true
+      },
+      {
+        "file": "src/modules/testing/routeChecks.ts",
+        "originalSha256": "9c075d19004b617b3bfc605c5e8b4581c1f64802869a1e4c30cde6a94db58e27",
+        "currentSha256": "9c075d19004b617b3bfc605c5e8b4581c1f64802869a1e4c30cde6a94db58e27",
+        "matched": true
+      },
+      {
+        "file": "src/modules/testing/routeGeometry.ts",
+        "originalSha256": "84b68527e02659420fbfb100f4679d3346c62318f398717f651571276ac1677b",
+        "currentSha256": "84b68527e02659420fbfb100f4679d3346c62318f398717f651571276ac1677b",
+        "matched": true
+      },
+      {
+        "file": "src/modules/testing/schemas.ts",
+        "originalSha256": "055c86bcdf1e6e26a11a28790ca20d5a33b941846c69ae73dd00eda493693a77",
+        "currentSha256": "055c86bcdf1e6e26a11a28790ca20d5a33b941846c69ae73dd00eda493693a77",
+        "matched": true
+      },
+      {
+        "file": "src/modules/testing/startupEvents.ts",
+        "originalSha256": "436ecc8537030cb2cb43e46ad73edc194e34b27ff7b305f655c81739b40eda3b",
+        "currentSha256": "436ecc8537030cb2cb43e46ad73edc194e34b27ff7b305f655c81739b40eda3b",
+        "matched": true
+      },
+      {
+        "file": "src/modules/testing/storagePreflight.ts",
+        "originalSha256": "ee55976aa81c47f0b3f67cab1034b39099f86085ff1defc7f43f110272814d4c",
+        "currentSha256": "ee55976aa81c47f0b3f67cab1034b39099f86085ff1defc7f43f110272814d4c",
+        "matched": true
+      },
+      {
+        "file": "src/modules/testing/tools.ts",
+        "originalSha256": "c39f1348c178e2016118eda61f536368d54c4e7db6c41b57f5cae5059e30bc55",
+        "currentSha256": "c39f1348c178e2016118eda61f536368d54c4e7db6c41b57f5cae5059e30bc55",
+        "matched": true
+      },
+      {
+        "file": "src/modules/testing/workspace.ts",
+        "originalSha256": "de20fee4c1906b42fa1b979fdbf1e728ecb04680b7ba0f5a924356e48f38fd55",
+        "currentSha256": "de20fee4c1906b42fa1b979fdbf1e728ecb04680b7ba0f5a924356e48f38fd55",
+        "matched": true
+      }
+    ],
+    "limit": "These narrow adapter and test-runner files still match. The complete original target is identified separately; unchanged narrow files do not renew every dependency, later map export code, unrelated modules or current package acceptance."
+  },
+  "originalFrozenTarget": {
+    "sourceSnapshot": {
+      "file": "work/launch-diagnostics-20261022/editor100-source-before.json",
+      "sha256": "543f31cac360e7e1443638d59d1892aca90b9534f9b29365b81e1429ab620e49"
+    },
+    "candidate": "L:\\SC2EditorToolkit_Candidates\\Editor100-20261025-310628bf-42e0-47e1-a3f5-206e546ea7ed",
+    "candidateReceipt": {
+      "file": "work/launch-diagnostics-20261022/editor100-candidate.json",
+      "sha256": "1427488743d755c9168c539fce1cea41aa97e275d24416cd2c0485163cd7d5da"
+    },
+    "sourceFiles": 611,
+    "compiledFiles": 378,
+    "runtimeInputs": 17,
+    "independentlyVerifiedAt": "2026-10-25T16:18:32.218Z",
+    "allMatchedBeforeSourceFreezeRelease": true,
+    "driverFinishedAt": "2026-10-25T16:14:18.400Z",
+    "frontendExitCode": 0
+  },
+  "runtime": {
+    "version": "1.0.0",
+    "nativeProtocol": 15,
+    "gameRelease": "v0.1.0-dev.11",
+    "authenticatedArtifacts": {
+      "receipt": {
+        "file": "L:/SC2EditorToolkit_PrivateRuntimes/Editor/1.0.0/sc2-mcp-runtime.json",
+        "sha256": "9ecde4ce145617db77d496a63d36966e11723f039d5d6f4b9bade69a4ff54608"
+      },
+      "executable": {
+        "file": "L:/SC2EditorToolkit_PrivateRuntimes/Editor/1.0.0/SC2NativeMCP.exe",
+        "sha256": "787e67359a297cd8c89161bcfa56256830267d0b6b8c1c4fc691e329eac15676"
+      },
+      "build": {
+        "file": "L:/SC2EditorToolkit_PrivateRuntimes/Editor/1.0.0/BUILD.json",
+        "sha256": "e65846ad523c356e85a00bdd9255f9f3a3a0995451ec344124a956edb7c94e05"
+      },
+      "archive": {
+        "file": "L:/SC2EditorToolkit_PrivateRuntimes/Editor/1.0.0/SC2EditorToolkit-v1.0.0-win64.zip",
+        "sha256": "dbf9e727aa8d96ec7e53a499d5adb73fe8127ad8896ea69182c6e86a20e5be92"
+      },
+      "embeddedNativeHashes": {
+        "SC2NativeBridge.dll": "f5bc4f660546c562a34af0195a745240f9943568de0ab083c1acefb268e7d592",
+        "SC2NativeBridge.exe": "5a1367bdba33a0828a9086696d59b1f388b7165257891a86a0897ee1330646d5",
+        "RenderCapture.exe": "02b80a0a32a0a0312a811b0d89d7da26ca68d1aff4fb66986d85428aee4c79e4",
+        "HiddenEditorHost.exe": "7e102167cf8fa24457c94b7705a5045a497cc9282ae9e82b354729009985b14f",
+        "SC2StartupBootstrap.dll": "596e193337e9f1482d2e84ae91ab774605c9250c7283cfcb2d37462250aec259"
+      },
+      "scope": "Authenticates official frozen archive, front-end executable and BUILD identity. Embedded native helper hashes are published claims until executable doctor/extraction evidence."
+    }
+  },
+  "readiness": {
+    "state": "partial",
+    "nativeAdapter": "scoped_verified",
+    "fullDataAudit": "failed",
+    "sourceReturn": "failed",
+    "positiveIndexedQueryApis": "unverified",
+    "nativeWarmDataSourceReuse": "unverified",
+    "resource171Fixed": "unverified",
+    "artAccepted": false,
+    "humanApproval": false,
+    "currentWholePackageAccepted": false,
+    "requiredCoverageVerdictsChanged": false,
+    "currentReleaseBindingAdded": false
+  },
+  "offline": {
+    "build": "passed",
+    "releaseBuild": "passed",
+    "lint": "passed",
+    "englishFiles": 117,
+    "focusedPassed": 95,
+    "full": {
+      "tests": 1690,
+      "passed": 1689,
+      "skipped": 1,
+      "failed": 0,
+      "cancelled": 0,
+      "runs": 1,
+      "durationMs": 164605.0926
+    },
+    "isolatedGate": {
+      "passed": 21,
+      "durationMs": 4519.8042
+    },
+    "scope": "The full run covers the SDK1.0 adapter and independent ownership/cache regressions before the isolated evidence gate. Later isolated gate checks and builds are separate; no full rerun solely for that gate."
+  },
+  "frontend": {
+    "actualAdvertisedSchemas": 31,
+    "exactSchemaIdentityVerified": true,
+    "directAndQueuedDoctor": {
+      "outcome": "completed",
+      "editorLaunched": false,
+      "workerRunning": false,
+      "graphicsReady": null
+    },
+    "unknownStoredReport": {
+      "direct": "failed",
+      "queued": "FAILED",
+      "queueSucceeded": false,
+      "operationSucceeded": false,
+      "automaticRetry": false
+    },
+    "foreignNativeJob": "Rejected before SDK admission",
+    "positiveStoredQueries": "Not run: two complete indexed reports were unavailable",
+    "warmDocumentProof": "Offline regressions passed; actual warm stored-query Data-document reuse was not run"
+  },
+  "fullDataAudits": [
+    {
+      "id": "healthy",
+      "state": "TIMED_OUT",
+      "outcome": "failed",
+      "configuredSeconds": 3600,
+      "actualSeconds": 3600.842649459839,
+      "automaticRetry": false,
+      "sourceSnapshotsUnchanged": true,
+      "lastResourceSample": {
+        "at": "2026-10-25T15:02:02.960Z",
+        "resourcePathsChecked": 25600,
+        "uniquePaths": 36947,
+        "resourceBatch": 50,
+        "resourceBatchSize": 512,
+        "phase": "data-audit-files",
+        "evidenceDirectory": "L:\\NE100SOL\\w\\59c94e39363e4a75b1561977fe89e892\\data-audits\\248d3e4f497d438eac9579e2bd30fde6\\resources-0050"
+      },
+      "partialObjects": {
+        "file": "L:/NE100SOL/w/59c94e39363e4a75b1561977fe89e892/data-audits/248d3e4f497d438eac9579e2bd30fde6/objects.jsonl",
+        "bytes": 273340547,
+        "sha256": "8693254b5b780c0da773e2133c9ea234d00fde3658a29e9bc05551dcb9acab44",
+        "rows": 87052,
+        "references": 224758,
+        "kinds": {},
+        "statuses": {}
+      },
+      "partialFindings": {
+        "file": "L:/NE100SOL/w/59c94e39363e4a75b1561977fe89e892/data-audits/248d3e4f497d438eac9579e2bd30fde6/findings.jsonl",
+        "bytes": 243136250,
+        "sha256": "7de192275ef43269f7e3b29fb76e136e8758ab759bd0d12eef5fdb04670692b3",
+        "rows": 152175,
+        "references": 0,
+        "kinds": {
+          "catalog-reference": 69079,
+          "coverage-gap": 79168,
+          "unclassified-resource": 1322,
+          "missing-resource": 2606
+        },
+        "statuses": {
+          "unknown": 3963,
+          "unspecified": 80490,
+          "missing": 67722
+        }
+      },
+      "indexPublished": false,
+      "completeAuditAccepted": false
+    },
+    {
+      "id": "missing_model",
+      "state": "TIMED_OUT",
+      "outcome": "failed",
+      "configuredSeconds": 3600,
+      "actualSeconds": 3600.8831181526184,
+      "automaticRetry": false,
+      "sourceSnapshotsUnchanged": true,
+      "lastResourceSample": {
+        "at": "2026-10-25T16:02:07.951Z",
+        "resourcePathsChecked": 25088,
+        "uniquePaths": 36948,
+        "resourceBatch": 49,
+        "resourceBatchSize": 512,
+        "phase": "data-audit-files",
+        "evidenceDirectory": "L:\\NE100SOL\\w\\59c94e39363e4a75b1561977fe89e892\\data-audits\\929a99acc80e4179b171656d4f62bfa8\\resources-0049"
+      },
+      "partialObjects": {
+        "file": "L:/NE100SOL/w/59c94e39363e4a75b1561977fe89e892/data-audits/929a99acc80e4179b171656d4f62bfa8/objects.jsonl",
+        "bytes": 273342943,
+        "sha256": "d2f94f8824c1f94184cd4ca8adf467b08783886d44fab80bc6b6b1a3d798764c",
+        "rows": 87053,
+        "references": 224759,
+        "kinds": {},
+        "statuses": {}
+      },
+      "partialFindings": {
+        "file": "L:/NE100SOL/w/59c94e39363e4a75b1561977fe89e892/data-audits/929a99acc80e4179b171656d4f62bfa8/findings.jsonl",
+        "bytes": 243115930,
+        "sha256": "14ffa2f068b2e04c7a001ef507de42016204fbbec05346884d706b2fff947f30",
+        "rows": 152104,
+        "references": 0,
+        "kinds": {
+          "catalog-reference": 69080,
+          "coverage-gap": 79169,
+          "unclassified-resource": 1322,
+          "missing-resource": 2533
+        },
+        "statuses": {
+          "unknown": 3963,
+          "unspecified": 80491,
+          "missing": 67650
+        }
+      },
+      "indexPublished": false,
+      "completeAuditAccepted": false
+    }
+  ],
+  "dataAuditLimits": {
+    "resource171Observed": false,
+    "resource171FixAccepted": false,
+    "explanation": "These runs ended at their unchanged deadlines with native handler output not confirmed. They neither reproduce nor repair the historical controller error171. Partial rows and file presence do not establish complete reference/resource validation or binary Model/playback validity."
+  },
+  "terminalCatalogComparison": {
+    "beforeRows": 87052,
+    "afterRows": 87053,
+    "differences": [
+      {
+        "key": "Model/MCPAbsentMainModel",
+        "change": "added",
+        "beforeSha256": null,
+        "afterSha256": "3dcc8e257c107ab66e79c6adc72d82d0156166dcea33028e363eab980f488bd4"
+      }
+    ],
+    "commonCanonicalRowsIdentical": true,
+    "interimObservation": "An active-job snapshot showed13 fewer rows; those rows appeared by terminal. Read-time size/mtime stability did not make the active artifact immutable. The interim omission is not retained as a final SDK coverage defect."
+  },
+  "sourceReturn": {
+    "state": "failed",
+    "sequence": [
+      {
+        "id": "healthy",
+        "expected": "45",
+        "outcome": "completed",
+        "complete": true,
+        "identityVerified": true,
+        "sourceSha256": "c0eb9df810fd1b512e4dd8c7d1171054a28d51eba3776356075cac8ff28de0d8",
+        "mapRevision": "c0eb9df810fd1b512e4dd8c7d1171054a28d51eba3776356075cac8ff28de0d8",
+        "life": [
+          "45"
+        ],
+        "originalXml": {
+          "bytes": 947854,
+          "sha256": "449c8ada0ecb9b2fb8fcb85b2a804d8660b331f6f70581ee8a3d9d3df9636269",
+          "root": "Catalog",
+          "unitNodes": 878,
+          "marineNodes": 1,
+          "marineLifeMax": [],
+          "smallExactXml": null
+        },
+        "error": null,
+        "report": {
+          "file": "L:\\NE100SOL\\jobs\\b4e0f8a0-0ca3-4acc-95af-4410652e1b54\\result.json",
+          "bytes": 2204837,
+          "sha256": "877aedeb88fac076c7b62805dfc10b7894a1f933e8fe57ed8cd9b295487713f2"
+        }
+      },
+      {
+        "id": "override",
+        "expected": "73",
+        "outcome": "completed",
+        "complete": true,
+        "identityVerified": true,
+        "sourceSha256": "8bb68f76c55ecdf18e5e6ad2c9174ffc6250e369cdd9a7781a9196fe7b089505",
+        "mapRevision": "8bb68f76c55ecdf18e5e6ad2c9174ffc6250e369cdd9a7781a9196fe7b089505",
+        "life": [
+          "73"
+        ],
+        "originalXml": {
+          "bytes": 133,
+          "sha256": "87bf0ffa924802ade7bf55b4c86a92270a10c3a35a0bd08f4b0e2254d53c2eab",
+          "root": "Catalog",
+          "unitNodes": 1,
+          "marineNodes": 1,
+          "marineLifeMax": [
+            "73"
+          ],
+          "smallExactXml": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<Catalog>\r\n    <CUnit id=\"Marine\">\r\n        <LifeMax value=\"73\"/>\r\n    </CUnit>\r\n</Catalog>\r\n"
+        },
+        "error": null,
+        "report": {
+          "file": "L:\\NE100SOL\\jobs\\253787d8-d73a-42c5-8971-68b866df060f\\result.json",
+          "bytes": 119159,
+          "sha256": "517a03b60a31875bcbaae380cfe4b134e3635ee04af3d765c290c8e682a12193"
+        }
+      },
+      {
+        "id": "healthy",
+        "expected": "45",
+        "outcome": "failed",
+        "complete": null,
+        "identityVerified": null,
+        "sourceSha256": null,
+        "mapRevision": null,
+        "life": null,
+        "originalXml": null,
+        "error": "Original Data XML did not confirm the exact selected catalog/ID",
+        "report": {
+          "file": "L:\\NE100SOL\\jobs\\1272117e-f153-4495-b455-ec5a3ec00892\\result.json",
+          "bytes": 2507,
+          "sha256": "ae0620b39bf6a0fea8282894ce7a4ce8cc334c9c1530b6197674284fc6dc8c1f"
+        }
+      }
+    ],
+    "failedRawNativeXml": [
+      {
+        "index": 2,
+        "stage": "xml-view",
+        "file": {
+          "file": "L:\\NE100SOL\\w\\59c94e39363e4a75b1561977fe89e892\\data\\71371af2fb0d4f1885690373a87a4be9\\xml-view\\01-data-read\\Native.data.json",
+          "bytes": 8043,
+          "sha256": "58ba2687983d3f69254e642684285cb8a271912fda625e59e7cd48601bdd90c4"
+        },
+        "selection": {
+          "catalog": "Unit",
+          "requestedId": "Marine",
+          "nativeRow": "Marine (Marine)",
+          "source": "Void.SC2Campaign",
+          "row": 5
+        },
+        "dataSpace": "(Default Space)",
+        "dataSource": "All Data",
+        "copyTextBytes": 0,
+        "xml": [
+          {
+            "id": 2029,
+            "bytes": 52,
+            "sha256": "213cab0d713f7e153aa5c053f4747995be35727b105b4c92dde5c6a474e50efc",
+            "root": "Catalog",
+            "unitNodes": 0,
+            "marineNodes": 0,
+            "marineLifeMax": [],
+            "smallExactXml": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<Catalog/>\r\n"
+          }
+        ],
+        "lifeRows": []
+      },
+      {
+        "index": 2,
+        "stage": "identity",
+        "file": {
+          "file": "L:\\NE100SOL\\w\\59c94e39363e4a75b1561977fe89e892\\data\\71371af2fb0d4f1885690373a87a4be9\\identity\\01-data-read\\Native.data.json",
+          "bytes": 8043,
+          "sha256": "58ba2687983d3f69254e642684285cb8a271912fda625e59e7cd48601bdd90c4"
+        },
+        "selection": {
+          "catalog": "Unit",
+          "requestedId": "Marine",
+          "nativeRow": "Marine (Marine)",
+          "source": "Void.SC2Campaign",
+          "row": 5
+        },
+        "dataSpace": "(Default Space)",
+        "dataSource": "All Data",
+        "copyTextBytes": 0,
+        "xml": [
+          {
+            "id": 2029,
+            "bytes": 52,
+            "sha256": "213cab0d713f7e153aa5c053f4747995be35727b105b4c92dde5c6a474e50efc",
+            "root": "Catalog",
+            "unitNodes": 0,
+            "marineNodes": 0,
+            "marineLifeMax": [],
+            "smallExactXml": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<Catalog/>\r\n"
+          }
+        ],
+        "lifeRows": []
+      }
+    ],
+    "observedBoundary": "Healthy45 and override73 reads confirmed selected Unit/Marine and source hashes. Return-to-healthy raw native select/identity controls still name requested Marine, but Scintilla XML is an empty Catalog. SDK queue failed with RuntimeError before the public adapter could expose a completed Data result. This supports a native/provider XML acquisition failure on this transition; it does not identify the internal root cause or prove stale field values.",
+    "rootCause": "Unknown. Existing raw native controls and SDK RuntimeError precede the public adapter result; this does not prove stale scalar values or an adapter parsing defect.",
+    "noResetOrRetry": true
+  },
+  "forestCompatibility": {
+    "runs": [
+      {
+        "iteration": 1,
+        "outcome": "passed",
+        "report": {
+          "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\Editor100-840e45e3-6f17-4a12-b683-1ee979f5a1e4\\.sc2mcp-output\\project-tests\\0d3aa4c0-03a6-46d2-ab31-fd38ae4f690d\\result.json",
+          "sha256": "dc72a78dd9924053fcafd42a19a28bc33d7704d5e91dbe6fd5d73b242d4d1d59"
+        },
+        "testedArtifact": {
+          "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\Editor100-840e45e3-6f17-4a12-b683-1ee979f5a1e4\\.sc2mcp-output\\project-tests\\0d3aa4c0-03a6-46d2-ab31-fd38ae4f690d\\Final.SC2Map",
+          "sha256": "772f41c45a3e6cafe7af77f551af0b81bc8acaedff271ebccaf6c1676351a330",
+          "origin": "native_saved"
+        },
+        "nativeSourceCheck": {
+          "file": "L:\\NE100SOL\\jobs\\aac59421-e2d1-4c45-9113-a6aaf151615a\\result.json",
+          "sha256": "775326522dd2a28c8c1acf3dec8b1cbc0ad473dfcb624ff88556953c384950a8"
+        },
+        "nativeExactArtifactCheck": {
+          "file": "L:\\NE100SOL\\jobs\\ad021a29-3cc9-4dc7-ab33-27f3f19d8cf8\\result.json",
+          "sha256": "79683a37fe19dc927b10926479bf9864e60c301272429c1519e37f97066e14b5"
+        },
+        "sourceAndSavedTerrainObjectsGuiScriptPayloadsEqual": true,
+        "routes": 16,
+        "captures": 8
+      },
+      {
+        "iteration": 2,
+        "outcome": "passed",
+        "report": {
+          "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\Editor100-840e45e3-6f17-4a12-b683-1ee979f5a1e4\\.sc2mcp-output\\project-tests\\8168e17d-960b-4c9c-a17a-9df689434e89\\result.json",
+          "sha256": "70040c38379f2b82f7af9c081a9d2922fe9941b99cb4d79a23bb90f145bdc134"
+        },
+        "testedArtifact": {
+          "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\Editor100-840e45e3-6f17-4a12-b683-1ee979f5a1e4\\.sc2mcp-output\\project-tests\\8168e17d-960b-4c9c-a17a-9df689434e89\\Final.SC2Map",
+          "sha256": "772f41c45a3e6cafe7af77f551af0b81bc8acaedff271ebccaf6c1676351a330",
+          "origin": "native_saved"
+        },
+        "nativeSourceCheck": {
+          "file": "L:\\NE100SOL\\jobs\\6e8c065c-82d9-4d74-a03c-54fd10ae261a\\result.json",
+          "sha256": "afb057627c9af9b4d8838caa41453c80c9ab4b0ff557aa3f82b490debf42cf44"
+        },
+        "nativeExactArtifactCheck": {
+          "file": "L:\\NE100SOL\\jobs\\a21e9066-a2a1-42bf-8918-151560d794ff\\result.json",
+          "sha256": "e7c29ea6126c456d3b8863ef9807b83b874a3ee4a3538b523489d86705bb9cbd"
+        },
+        "sourceAndSavedTerrainObjectsGuiScriptPayloadsEqual": true,
+        "routes": 16,
+        "captures": 8
+      }
+    ],
+    "passedSuites": 2,
+    "passedRoutes": 32,
+    "captures": 16,
+    "scope": "Exact frozen Editor1.0 current forest MAIN GUI/custom Data archive/saved-recompile and sampled ground trajectory/identity/clock/corridor/cleanup acceptance. Visual art needs separate image review; tiny refinements do not close the full owned-landscape, broader topology, GUI/Data or finished art gates. No point-pathing/placement predicates were added to these existing style manifests.",
+    "sourceSha256": "3c06b21195d1c6654cfbdede286e64694d90d81c3759fe79936dfe5d00293dad",
+    "sameRetainedEditorBridge": true,
+    "sameRetainedGameRoot": true,
+    "physicalEditorContinuous": false,
+    "physicalEditorLimit": "The SDK discarded its own private Editors at both audit deadlines. The bridge/worker directory was retained; physical Editor continuity is not claimed."
+  },
+  "framing": {
+    "runs": [
+      {
+        "style": "industrial",
+        "report": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\Editor100-840e45e3-6f17-4a12-b683-1ee979f5a1e4\\.sc2mcp-output\\project-tests\\8f20f002-1692-4c61-974b-320423125147\\result.json",
+        "source": {
+          "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\ZoneRenewal-dadcb46d-5066-4335-8f39-06acf95a6bec\\.sc2mcp-output\\project-tests\\bd5ddc0b-d334-4b9d-bc46-1096faafa9e7\\Final.SC2Map",
+          "sha256": "1f7493f96df995c82f17b29ed93e9c7692d212882e64c072d366ab484320da48",
+          "origin": "native_saved"
+        },
+        "scope": "Game-only corrected overview camera on byte-identical historical native_saved map; no Editor1.0 acceptance or route/pad/pathing renewal."
+      },
+      {
+        "style": "settlement",
+        "report": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\Editor100-840e45e3-6f17-4a12-b683-1ee979f5a1e4\\.sc2mcp-output\\project-tests\\79a31d35-dd92-46da-9dca-8c3da0ea99dd\\result.json",
+        "source": {
+          "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\ZoneRenewal-dadcb46d-5066-4335-8f39-06acf95a6bec\\.sc2mcp-output\\project-tests\\c6655224-0058-42d3-aa82-9d9eddf075df\\Final.SC2Map",
+          "sha256": "40d4cfdfe20f4559b01fe7c69dd32f6743d09cd88d2085e856ac9687bcb528b0",
+          "origin": "native_saved"
+        },
+        "scope": "Game-only corrected overview camera on byte-identical historical native_saved map; no Editor1.0 acceptance or route/pad/pathing renewal."
+      }
+    ],
+    "scope": "Two Game-only overview checks on byte-identical historical native_saved industrial and settlement archives. No Editor1.0 acceptance or movement/formation/pad/pathing renewal for those two maps.",
+    "images": [
+      {
+        "id": "industrial:view:overview",
+        "report": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\Editor100-840e45e3-6f17-4a12-b683-1ee979f5a1e4\\.sc2mcp-output\\project-tests\\8f20f002-1692-4c61-974b-320423125147\\result.json",
+        "evidence": {
+          "requested": {
+            "x": 32,
+            "y": 32,
+            "distance": 145,
+            "pitch": 75,
+            "yaw": 90
+          },
+          "observed": {
+            "target": {
+              "x": 32,
+              "y": 32
+            },
+            "pitch": 74.8828,
+            "yaw": 90,
+            "distance": 145
+          },
+          "includeUI": false,
+          "visualReview": "not_checked",
+          "scope": "Camera readback and native PNG capture; framing and art quality require image review",
+          "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\Editor100-840e45e3-6f17-4a12-b683-1ee979f5a1e4\\.sc2mcp-output\\project-tests\\8f20f002-1692-4c61-974b-320423125147\\View_overview.png",
+          "sha256": "7509bd17b03acdda629db3a14300068c8f14f45dccbb96f7e3cc0d94c50a1bef"
+        },
+        "kind": "framing_only_review",
+        "dimensions": {
+          "width": 1280,
+          "height": 720
+        },
+        "denseForegroundBounds": {
+          "left": 315,
+          "right": 965,
+          "top": 77,
+          "bottom": 676
+        },
+        "denseForegroundMargins": {
+          "left": 315,
+          "right": 314,
+          "top": 77,
+          "bottom": 43
+        },
+        "reviewer": "SOL",
+        "imageViewed": true,
+        "assessment": "Whole square profile and outer anchors fit with black margins. Broad uniform metal field, straight fence rectangle and sparse service islands remain.",
+        "artAccepted": false,
+        "humanApproval": false
+      },
+      {
+        "id": "settlement:view:overview",
+        "report": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\Editor100-840e45e3-6f17-4a12-b683-1ee979f5a1e4\\.sc2mcp-output\\project-tests\\79a31d35-dd92-46da-9dca-8c3da0ea99dd\\result.json",
+        "evidence": {
+          "requested": {
+            "x": 40,
+            "y": 40,
+            "distance": 180,
+            "pitch": 75,
+            "yaw": 90
+          },
+          "observed": {
+            "target": {
+              "x": 40,
+              "y": 40
+            },
+            "pitch": 74.8828,
+            "yaw": 90,
+            "distance": 180
+          },
+          "includeUI": false,
+          "visualReview": "not_checked",
+          "scope": "Camera readback and native PNG capture; framing and art quality require image review",
+          "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\Editor100-840e45e3-6f17-4a12-b683-1ee979f5a1e4\\.sc2mcp-output\\project-tests\\79a31d35-dd92-46da-9dca-8c3da0ea99dd\\View_overview.png",
+          "sha256": "dc05745fff5992a59cb1edd9ccc44a9aab1859e95b47d29e847dc6c463558bd6"
+        },
+        "kind": "framing_only_review",
+        "dimensions": {
+          "width": 1280,
+          "height": 720
+        },
+        "denseForegroundBounds": {
+          "left": 310,
+          "right": 970,
+          "top": 73,
+          "bottom": 681
+        },
+        "denseForegroundMargins": {
+          "left": 310,
+          "right": 309,
+          "top": 73,
+          "bottom": 38
+        },
+        "reviewer": "SOL",
+        "imageViewed": true,
+        "assessment": "Whole profile and plateau edges fit with black margins. Repeated rectangular yards/pads and sparse settlements remain.",
+        "artAccepted": false,
+        "humanApproval": false
+      }
+    ]
+  },
+  "visualReview": {
+    "imagesViewed": 4,
+    "forestImagesViewed": [
+      "Overview",
+      "WestClearing"
+    ],
+    "forestCapturesHashChecked": 16,
+    "framingImagesViewed": 2,
+    "artAccepted": false,
+    "humanApproval": false,
+    "cameraLimit": "Forest Turnaround requested y84.5 was observed y84 under the existing manifest tolerance; no claim all native targets are exact.",
+    "findings": [
+      {
+        "id": "forest:view:Overview",
+        "assessment": "Whole map fits with black margins. Main route and camp readable; repeated rounded tree groups and sparse fenced pads remain."
+      },
+      {
+        "id": "forest:view:WestClearing",
+        "assessment": "Relay and road readable at detail scale. Broad bare transition/clearing and separated tree groups remain; outside-map black corner is visible."
+      },
+      {
+        "id": "industrial:view:overview",
+        "assessment": "Whole square profile and outer anchors fit with black margins. Broad uniform metal field, straight fence rectangle and sparse service islands remain."
+      },
+      {
+        "id": "settlement:view:overview",
+        "assessment": "Whole profile and plateau edges fit with black margins. Repeated rectangular yards/pads and sparse settlements remain."
+      }
+    ],
+    "scope": "Selected image and corrected framing review only. Repeated tree groups, sparse camp/service islands and regular settlement yards remain findings; no finished-art or hidden-face approval."
+  },
+  "ownership": {
+    "at": "2026-10-25T16:18:32.213Z",
+    "ownedRoots": [
+      "l:/ne100sol",
+      "l:/sc2editortoolkit_privateevidence/verification/editor100-840e45e3-6f17-4a12-b683-1ee979f5a1e4",
+      "l:/sc2editortoolkit_privateevidence/gameruns/f5dffe12-70a1-4c1a-9005-ed091927c785"
+    ],
+    "knownOwnedPids": [
+      22644,
+      5388,
+      28324,
+      23352
+    ],
+    "ownedExactWorkProcesses": [],
+    "observedNativeProcesses": [],
+    "protectedPid9552Present": false,
+    "editorStopAcknowledged": true,
+    "frontendExitCode": 0,
+    "scope": "Read-only command-line inventory plus known owned PID absence and original owned frontend terminal. Any reused known PID requires manual ownership review before acceptance. PID9552 was absent before this run; no inference about its unrelated lifetime and no attachment, kill or restart. Other workspace processes are observations only."
+  },
+  "postTargetModExport": {
+    "appliedAfterOriginalTarget": true,
+    "scope": "Seven reviewed files changed after original native target closure. The later build/focused checks are separate offline evidence and do not inherit native acceptance.",
+    "sourceFiles": [
+      "src/modules/map/workspace.ts",
+      "src/modules/map/tools.ts",
+      "src/modules/map/modExport.ts",
+      "src/tests/modExport.test.ts",
+      "docs/MAP_MCP.md",
+      "docs/DOCUMENT_CREATION.md",
+      "generated/map-tools.json"
+    ],
+    "buildExitCode": 0,
+    "focused": {
+      "files": [
+        "dist/tests/modExport.test.js",
+        "dist/tests/mapModule.test.js",
+        "dist/tests/mapEditorLoad.test.js",
+        "dist/tests/nativeEditorV1.test.js",
+        "dist/tests/nativeEditorV1Acceptance.test.js",
+        "dist/tests/releaseAcceptance.test.js"
+      ],
+      "concurrency": 2,
+      "total": 75,
+      "passed": 74,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 1,
+      "durationMs": 10851.9332,
+      "skipReason": "failed archive reopening cannot replace a pre-existing map — existing shell fixture",
+      "exitCode": 0,
+      "log": {
+        "file": "L:/SC2Tests/Editor100ModExportSOL-cdfd32ec-59c2-475e-a547-955f1b28bb21/focused.log",
+        "bytes": 7742,
+        "sha256": "8a6c0d6b1d3d35e13ae550b09554b926787430f2dd2b2df6257f0b9a5e9ff4ef"
+      }
+    },
+    "lintExitCode": 0,
+    "englishFiles": 117,
+    "coreCorpusExportAccepted": false
+  },
+  "limitations": [
+    "No positive native indexed query_audit, find_object_uses or compare_audits acceptance; no native warm stored-query Data reuse proof.",
+    "Both original3600-second Data audits failed by timeout. Complete resource, dependency-byte and project-revision coverage remains unverified.",
+    "The healthy45 to override73 transition was confirmed, but exact source return failed with empty native XML. No invented reset, automatic retry or manual worker restart was used.",
+    "Current matching narrow native/testing hashes are not whole-package, broader GUI/Data, full topology, Actor playback or art acceptance.",
+    "Historical SDK0.14 observations remain historical; this record qualifies only its explicitly tested SDK1.0 forest target and separate framing cases.",
+    "Later Core-only mod corpus and refined forest/industrial composition fixtures were not added to this original driver.",
+    "All required inventory coverage verdicts remain unchanged. Effective partial/stale readiness is reported separately by the release gate."
+  ],
+  "evidence": [
+    {
+      "file": "work/launch-diagnostics-20261022/editor100-verification-final.json",
+      "sha256": "05e85430aab38eec45cc002b89829856dc95b477d80433dd7061200ad2eec6a7"
+    },
+    {
+      "file": "work/launch-diagnostics-20261022/editor100-verification-summary.json",
+      "sha256": "65c12c8f00f30556bf8b124c289b9af563cd5ac0ad1982187e0642665335fce1"
+    },
+    {
+      "file": "work/launch-diagnostics-20261022/editor100-source-before.json",
+      "sha256": "543f31cac360e7e1443638d59d1892aca90b9534f9b29365b81e1429ab620e49"
+    },
+    {
+      "file": "work/launch-diagnostics-20261022/editor100-candidate.json",
+      "sha256": "1427488743d755c9168c539fce1cea41aa97e275d24416cd2c0485163cd7d5da"
+    },
+    {
+      "file": "work/launch-diagnostics-20261022/editor100-terminal-identity-closure.json",
+      "sha256": "0472016fcc12be712d6aa92677fd5ce20f6195b4b52ff37bf665f89426c53a5c"
+    },
+    {
+      "file": "work/launch-diagnostics-20261022/editor100-process-after-native.json",
+      "sha256": "778b3621f11512f9180fbedba938b6d734381551eb3f8eba65ebc53ce9461074"
+    },
+    {
+      "file": "work/launch-diagnostics-20261022/editor100-frontend-only-audit.json",
+      "sha256": "75d20ee698b8fbc795d1219f2f2f59e30690f8b24048561b0bee8d91ff91743c"
+    },
+    {
+      "file": "work/launch-diagnostics-20261022/editor100-healthy-timeout-audit.json",
+      "sha256": "5fc0e2f4282b684566e983849fa24b4c47022f14961394db3bad18f066e6cce5"
+    },
+    {
+      "file": "work/launch-diagnostics-20261022/editor100-missing-terminal-audit.json",
+      "sha256": "d6054bd4207a79c5290e376da70fb5f1bdd4a46238a809be9b1e1d3372c506a9"
+    },
+    {
+      "file": "work/launch-diagnostics-20261022/editor100-terminal-catalog-comparison.json",
+      "sha256": "7f2038ade07a88a2f41fe71e78dbca7884a544ab9619306e4a8f859f6acd1916"
+    },
+    {
+      "file": "work/launch-diagnostics-20261022/editor100-partial-catalog-comparison.json",
+      "sha256": "710d48309fd0e1b8b5de6086b4614ff2263ba99fee2ff1aead006a86d5ac8bc7"
+    },
+    {
+      "file": "work/launch-diagnostics-20261022/editor100-source-return-audit.json",
+      "sha256": "5ad99edd66895da251bbc21c04bf9b1a5d7b7876f5267bb9081dfb1a0c1d7e65"
+    },
+    {
+      "file": "work/launch-diagnostics-20261022/editor100-forest-native-audit.json",
+      "sha256": "dbbf71721ff1b4e4829b632e4d749588bd31f37b130761732e7f39d379d1dbac"
+    },
+    {
+      "file": "work/launch-diagnostics-20261022/editor100-game-visual-review.json",
+      "sha256": "003f1926741bc831d444904f09404e0ce15cefdfe87750a1b42576f2da859239"
+    },
+    {
+      "file": "work/launch-diagnostics-20261022/editor100-mod-export-applied.json",
+      "sha256": "141546d3a6c56a8f119fb4830096a0abff01dfcfeb87f68a69725f8c9507441d"
+    },
+    {
+      "file": "work/launch-diagnostics-20261022/editor100-mod-export-sol-verification.json",
+      "sha256": "70011354e0c0eac199b2c3a87aa3877fbece5875a131225f208028302a2de01b"
+    }
+  ]
+}

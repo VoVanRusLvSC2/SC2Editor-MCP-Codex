@@ -1,0 +1,219 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-23T16:32:14.564Z",
+  "status": "output_storage_preflight_passed_unit_and_installed_mcp_checks",
+  "scope": "Measured output-volume free-space budgets before native test copies or bridge leases. This is a bounded preventive guard, not native launch/serialization/navigation acceptance or a universal disk-use prediction.",
+  "sourceFingerprints": [
+    {
+      "file": "src/modules/testing/storagePreflight.ts",
+      "sha256LfUtf8": "4eed935e78988cbb71d9a02fa7dd53393c3a5fb664330b842b72d1760f3356f2"
+    },
+    {
+      "file": "src/modules/testing/workspace.ts",
+      "sha256LfUtf8": "79dfe9a06bc0c87cb4dcd84a20525d63cdc83bf1e3d78862b4eac9d95927a332"
+    },
+    {
+      "file": "src/modules/testing/tools.ts",
+      "sha256LfUtf8": "c8339a5139d018cc8d84fb814f2c32a8ff578c3a68b402db2f9d36d6ea9c4cb6"
+    },
+    {
+      "file": "src/tests/testStoragePreflight.test.ts",
+      "sha256LfUtf8": "cf17460ce6d9e5665f8e28ed692dc56218bb36f1c6c34ddbb8294f5b646db499"
+    },
+    {
+      "file": "src/tests/projectTesting.test.ts",
+      "sha256LfUtf8": "5ae41315c5917c14ef469dd19ef4499c01bf529eff299634150f2cd4a17a8185"
+    },
+    {
+      "file": "scripts/check-distribution-privacy.mjs",
+      "sha256LfUtf8": "747bb50d8e7c0ed8ec034f7759ec6bfca4424b8a348f872b68c1ce9095ed03da"
+    },
+    {
+      "file": "docs/PROJECT_TESTS.md",
+      "sha256LfUtf8": "62778be1502246660a03ea525e5a1e2c4b8c318397beabff9b5572b770d5b3e3"
+    }
+  ],
+  "implementation": {
+    "measure": "Nearest existing real directory with fs.statfs; no output directory creation or client connection",
+    "volumes": "Group by filesystem device identity, use the lower observed free-space value and one256MiB reserve per volume",
+    "budget": "Known private archive copies, explicit capture allowances and reports. Other native storage growth can exceed this budget.",
+    "checks": [
+      "plan",
+      "before_queue",
+      "before_queued_execution"
+    ],
+    "unknownMeasurement": "Required inconclusive check prevents readiness",
+    "queuedFailure": "Return failed checks through project.test.report with reportPersistence memory_only, no file path and no snapshot/native launch",
+    "normalResult": "reportPersistence workspace_file after persistence"
+  },
+  "installed": {
+    "receipt": {
+      "file": "work/launch-diagnostics-20261022/test-storage-preflight-installed.json",
+      "sha256": "4181e42bc4559500006f1cfdf7bfda2567568c0159d5b53a939f77f97d9eaf75"
+    },
+    "transcript": {
+      "file": "work/launch-diagnostics-20261022/test-storage-preflight-installed.log",
+      "sha256": "df7c2d99eaea3095596af39043e42ec5244a375e92c6c814122a35b3b352953e"
+    },
+    "candidate": {
+      "file": "work/launch-diagnostics-20261022/test-storage-preflight-candidate.json",
+      "sha256": "ed403456eecafa9ecc523f2053205fd057f4f73185e114d02426532e8da643ce"
+    },
+    "heavy": {
+      "explicitCaptureSteps": 512,
+      "ready": false,
+      "storage": [
+        {
+          "id": "storage:0",
+          "status": "failed",
+          "required": true,
+          "reason": "TEST_STORAGE_INSUFFICIENT: 885047296 bytes available; 4638932086 bytes required by the planned free-space budget",
+          "evidence": {
+            "measuredAt": "2026-10-23T16:20:41.944Z",
+            "directories": [
+              "K:\\SC2_MAP_Workspace\\SC2Editor-MCP-Codex\\.sc2mcp-output\\project-tests"
+            ],
+            "roles": [
+              "suite"
+            ],
+            "availableBytes": 885047296,
+            "minimumFreeBytes": 4638932086,
+            "reserveBytes": 268435456,
+            "plannedCaptureSlots": 513,
+            "scope": "Free-space budget for private archive copies, bounded capture allowances and reports plus a 256 MiB reserve per volume. Not a universal prediction of native Editor/Game disk use."
+          }
+        },
+        {
+          "id": "storage:1",
+          "status": "passed",
+          "required": true,
+          "evidence": {
+            "measuredAt": "2026-10-23T16:20:41.944Z",
+            "directories": [
+              "L:\\SC2EditorToolkit_PrivateEvidence\\GameRuns\\ae0eeeb3-c147-4583-b47e-a57c4ed102df"
+            ],
+            "roles": [
+              "game"
+            ],
+            "availableBytes": 121489231872,
+            "minimumFreeBytes": 3495984246,
+            "reserveBytes": 268435456,
+            "plannedCaptureSlots": 513,
+            "scope": "Free-space budget for private archive copies, bounded capture allowances and reports plus a 256 MiB reserve per volume. Not a universal prediction of native Editor/Game disk use."
+          }
+        }
+      ],
+      "runRejectedBeforeQueue": true
+    },
+    "small": {
+      "ready": true,
+      "storage": [
+        {
+          "id": "storage:0",
+          "status": "passed",
+          "required": true,
+          "evidence": {
+            "measuredAt": "2026-10-23T16:20:42.435Z",
+            "directories": [
+              "K:\\SC2_MAP_Workspace\\SC2Editor-MCP-Codex\\.sc2mcp-output\\project-tests"
+            ],
+            "roles": [
+              "suite"
+            ],
+            "availableBytes": 885047296,
+            "minimumFreeBytes": 343964790,
+            "reserveBytes": 268435456,
+            "plannedCaptureSlots": 1,
+            "scope": "Free-space budget for private archive copies, bounded capture allowances and reports plus a 256 MiB reserve per volume. Not a universal prediction of native Editor/Game disk use."
+          }
+        },
+        {
+          "id": "storage:1",
+          "status": "passed",
+          "required": true,
+          "evidence": {
+            "measuredAt": "2026-10-23T16:20:42.435Z",
+            "directories": [
+              "L:\\SC2EditorToolkit_PrivateEvidence\\GameRuns\\ae0eeeb3-c147-4583-b47e-a57c4ed102df"
+            ],
+            "roles": [
+              "game"
+            ],
+            "availableBytes": 121489231872,
+            "minimumFreeBytes": 274758774,
+            "reserveBytes": 268435456,
+            "plannedCaptureSlots": 1,
+            "scope": "Free-space budget for private archive copies, bounded capture allowances and reports plus a 256 MiB reserve per volume. Not a universal prediction of native Editor/Game disk use."
+          }
+        }
+      ]
+    },
+    "sourceSha256": "10c3b9de3d97c40a1b40bfb3e8560b24a8db946ae57db2801ab075b10a2ea15c",
+    "sourceUnchanged": true,
+    "privateGameDirectoryCreated": false,
+    "scope": "Real K/L volume observations through one frozen installed MCP session. No game or Editor was launched by these planning/rejection checks."
+  },
+  "regressions": {
+    "focused": {
+      "tests": 48,
+      "pass": 48,
+      "fail": 0,
+      "log": {
+        "file": "work/launch-diagnostics-20261022/test-storage-preflight-queue-focused.tap",
+        "sha256": "e16d98b89077b394751c9e209338aec0b36e8f957b06161926fbab9b3fd2edb0"
+      }
+    },
+    "full": {
+      "tests": 1480,
+      "pass": 1479,
+      "skipped": 1,
+      "fail": 0,
+      "log": {
+        "file": "work/launch-diagnostics-20261022/test-storage-preflight-full.tap",
+        "sha256": "b410932328a4295b9c31caa59f08ef9b910b43c3931613ebcc3d04df22f29e65"
+      }
+    },
+    "build": {
+      "file": "work/launch-diagnostics-20261022/test-storage-preflight-final-build.log",
+      "sha256": "10a6f793ca5b371f50d30275f91bca10764ad37efaa83fe46600fc03690a7777"
+    },
+    "releaseBuild": {
+      "file": "work/launch-diagnostics-20261022/test-storage-preflight-release.log",
+      "sha256": "ce885c9cd0c665e4687c64af3fac25fa25c371256a5119e5f8e25c7b3c516545"
+    },
+    "lint": {
+      "file": "work/launch-diagnostics-20261022/test-storage-preflight-lint.log",
+      "sha256": "510475fdd23df5ab732ff12a7efe6eeeef1714f16cb3e683de0964513c9152a2"
+    },
+    "englishDocs": {
+      "file": "work/launch-diagnostics-20261022/test-storage-preflight-docs.log",
+      "sha256": "c64dba5fff84af47cacac9b3140a0bc7a4a766d8e4e68a7d8165c5d8d6847328"
+    },
+    "retainedRed": {
+      "file": "work/launch-diagnostics-20261022/test-storage-preflight-red.tap",
+      "sha256": "b24d41fb50925e7460d5b77c4bcf75539399366b45e769cd5a786d397fab372a"
+    },
+    "queueContract": "Simulated free-space loss while an earlier job holds the same runtime. Only the first attaches/detaches; the queued successor fails without a directory, source change or bridge lease."
+  },
+  "privacy": {
+    "passed": true,
+    "checkedFiles": 9987,
+    "privateSourceFiles": 1113,
+    "privateCorpusCompared": true,
+    "violations": [],
+    "scope": "Explicit private paths/debug/test artifacts and exact external C++/Python/Galaxy source copies, including renamed files. Not proof against transformed snippets or binary reverse engineering.",
+    "compiledFiles": 361,
+    "privateRuntimeBundled": false,
+    "privateSdkModified": false
+  },
+  "motivation": {
+    "failedNativeJob": "28614ae2-6dbb-4c48-ae93-6af5e1992df1",
+    "reason": "An earlier exact-source direct-center suite failed ENOSPC writing evidence, despite individual observed arrivals. Preserve that failed job; this guard does not turn it into a pass."
+  },
+  "openCoverage": [
+    "A current native save/reopen request remains live past its advisory deadline; no current save or gameplay acceptance follows from this storage record.",
+    "Existing incomplete launch, native topology/navigation/buildability, GUI/Data presentation and final location art/gameplay coverage remains separate.",
+    "The256MiB reserve and capture/copy allowances are not a guarantee against all native disk growth."
+  ],
+  "published": false
+}

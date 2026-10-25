@@ -1,0 +1,240 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-23T19:10:09.846Z",
+  "status": "optional_owned_location_clusters_and_relocated_bundled_schema_identity_passed",
+  "scope": "Actual frozen installed MCP; optional clustered object centers, guarded metadata upgrade and unchanged-package relocation. No new native render, footprint, collision, pathfinding or final art acceptance.",
+  "sourceFingerprints": [
+    {
+      "file": "src/core/workspace.ts",
+      "sha256LfUtf8": "0b98f7edfc205e8ef95d19cddc0c696d41c158967afcdb65970bef1f889ebfa8"
+    },
+    {
+      "file": "src/modules/browse/workspace.ts",
+      "sha256LfUtf8": "d6eaa5c3c3c62a13094c5092ac7ec9ae6c7f94b5b3259b29412f0ecb0c1862a5"
+    },
+    {
+      "file": "src/modules/placement/planner.ts",
+      "sha256LfUtf8": "9632f3a210d99df9c2ebf8aa5763a287e37b051da9e837505a67b8a3eab84bda"
+    },
+    {
+      "file": "src/modules/placement/locationSchemas.ts",
+      "sha256LfUtf8": "b028e5dc1d1fcc925c65c1fe62b6293e92ca8d5b5fbd5f15485bdeada924f961"
+    },
+    {
+      "file": "src/modules/placement/workspace.ts",
+      "sha256LfUtf8": "29f3667428cdf596a3ace4c7fbfc296a3358fc72b0ec78a0c524155fbf1cd515"
+    },
+    {
+      "file": "src/tests/readMemoIdentity.test.ts",
+      "sha256LfUtf8": "d957408305a2bc6f3e6f9215a67cd89321825f223a22f115eb551f1e97db2c6b"
+    },
+    {
+      "file": "src/tests/locationClusters.test.ts",
+      "sha256LfUtf8": "03222cdb3d5aac34d616e4f808d8bc10bcc328932a2a374ea38749f8a4685630"
+    },
+    {
+      "file": "src/tests/landscapeOwnership.test.ts",
+      "sha256LfUtf8": "0b6ba890a5e1dec8dcc8af52a470b5a6364cc485645d33dab2de474be4855ffa"
+    },
+    {
+      "file": "scripts/check-distribution-privacy.mjs",
+      "sha256LfUtf8": "747bb50d8e7c0ed8ec034f7759ec6bfca4424b8a348f872b68c1ce9095ed03da"
+    },
+    {
+      "file": "docs/AUTHORING_PROTOCOL.md",
+      "sha256LfUtf8": "fa21c45d9e892b1429be880a7d279e616ab92b37f9e333b2f1e0ab12f44f407f"
+    },
+    {
+      "file": "docs/LANDSCAPE_OWNERSHIP.md",
+      "sha256LfUtf8": "5a93de19f4b41739e0ce110ecf6bc4b063aa16cf01eff18dca4017e89fc8ab41"
+    }
+  ],
+  "implementation": {
+    "clusters": "Owned locations and standalone scatter reuse one seeded helper. Optional clusterCount/clusterRadius do not insert new defaults or change old uniform definitions. Centers and objects honor declared areas, exclusions and routes; spacing/count constraints remain explicit.",
+    "fingerprint": "Only exact bundled XSD inputs below the current package generated/data-xsd-index receive stable logical roles. Input existence/content, external/map paths, directory inventories and effective dependency precedence remain significant. Logical-role collisions reject; stale guards retain actual paths."
+  },
+  "installed": {
+    "receipt": {
+      "file": "work/launch-diagnostics-20261022/location-clusters-stable-installed.json",
+      "sha256": "50f1af1b2d34f852db8f607d8eeeeb80bb016823cdb1efe7ea59e12bf204ef40"
+    },
+    "candidateReceipt": {
+      "file": "work/launch-diagnostics-20261022/catalog-schema-identity-candidate.json",
+      "sha256": "a24d327c8cff21dc004485f3565af538637fc228282cfe7989315b826120d5d3"
+    },
+    "candidate": "L:\\SC2EditorToolkit_Candidates\\CatalogSchemaIdentity-20261023-0ebff27d-8f0a-4e4c-8107-361c3582a2b9",
+    "compiledFilesCompared": 362,
+    "currentDevelopmentReleaseParity": true,
+    "baseline": [
+      {
+        "id": "forest",
+        "metadataOnlyUpgrade": true,
+        "warmAndFreshNoOp": true,
+        "catalog": {
+          "fingerprint": "1381750ee11a8e3162bf1fccab37abb3c65a001c7fadf400f743e38a720c3016",
+          "fingerprintProfile": "content-inputs-bundled-schema-v2"
+        },
+        "proof": {
+          "file": "work/launch-diagnostics-20261022/location-clusters-stable-forest-baseline.log",
+          "sha256": "9ef6b15f3ce02cdae522139b061dd929082a56ee962aee51b6057f282f5e7ef5"
+        },
+        "fresh": {
+          "file": "work/launch-diagnostics-20261022/location-clusters-stable-forest-fresh.log",
+          "sha256": "6c40492828d02a51bf5cb9ad1a17e90e46a8b59168aa0aa32da72af3322244f1"
+        }
+      },
+      {
+        "id": "industrial",
+        "metadataOnlyUpgrade": true,
+        "warmAndFreshNoOp": true,
+        "catalog": {
+          "fingerprint": "7e2e445f28efa08c407f9f3435cb25f390f79b023bad630a9d22c3134bd29caf",
+          "fingerprintProfile": "content-inputs-bundled-schema-v2"
+        },
+        "proof": {
+          "file": "work/launch-diagnostics-20261022/location-clusters-stable-industrial-baseline.log",
+          "sha256": "65355f111320754246358172a8f0d020d38bb7900a00ab0dcdf229e34b956488"
+        },
+        "fresh": {
+          "file": "work/launch-diagnostics-20261022/location-clusters-stable-industrial-fresh.log",
+          "sha256": "6a293ce6e659a424556a302703a0da611eef3eeb4119d78f53e2e9d97c8c3365"
+        }
+      },
+      {
+        "id": "settlement",
+        "metadataOnlyUpgrade": true,
+        "warmAndFreshNoOp": true,
+        "catalog": {
+          "fingerprint": "d8db7485b451bab0d468ce1b737526ca22e7f811b8f003a70fe7159f8ea1065b",
+          "fingerprintProfile": "content-inputs-bundled-schema-v2"
+        },
+        "proof": {
+          "file": "work/launch-diagnostics-20261022/location-clusters-stable-settlement-baseline.log",
+          "sha256": "59c6b4c0540b9af29819b7062db20f5d06883cd37707e7eca63617fc97ea7d4d"
+        },
+        "fresh": {
+          "file": "work/launch-diagnostics-20261022/location-clusters-stable-settlement-fresh.log",
+          "sha256": "955e36c71a25a6494a8f35002ec9836c65b20b9d452091314369f9fbb0ad2494"
+        }
+      }
+    ],
+    "relocation": {
+      "candidate": "L:\\SC2EditorToolkit_Candidates\\CatalogSchemaMoved-20261023-0bcac5f9-6c79-4675-ad21-4aee0e3c4c44",
+      "compiledFilesCompared": 362,
+      "sameFingerprint": true,
+      "zeroRebuilds": true,
+      "proof": {
+        "file": "work/launch-diagnostics-20261022/location-clusters-stable-relocated.log",
+        "sha256": "47b311c1ff1b97251a70ddea8cf15f760caf110d23ceabecd8a13e449db3b647"
+      }
+    },
+    "forest": {
+      "root": "work/landscape-art-corpus/ForestOutpost_v2",
+      "parameters": {
+        "clusterCount": 4,
+        "clusterRadius": 12,
+        "treeCounts": [
+          45,
+          48
+        ],
+        "minimumDistance": 2.7
+      },
+      "changedZones": [
+        "east_trees",
+        "east_understory",
+        "relay_pad",
+        "west_trees",
+        "west_understory"
+      ],
+      "changedFiles": [
+        ".sc2mcp/locations.json",
+        "Objects"
+      ],
+      "stableObjectIds": true,
+      "objects": 304,
+      "movedOwnedObjects": 231,
+      "unrelatedObjectsAndLedgerPreserved": true,
+      "terrainAndGuiBytesUnchanged": true,
+      "warmAndFreshNoOp": true,
+      "proof": {
+        "file": "work/launch-diagnostics-20261022/location-clusters-resume-forest-apply.log",
+        "sha256": "a4dca58e74a13afaf0272f3a55871b5335aaf8881dc6e44e6b0c60ff7a34e693"
+      },
+      "fresh": {
+        "file": "work/launch-diagnostics-20261022/location-clusters-resume-forest-repeat.log",
+        "sha256": "de1413539ef5b8392c23708a729a798f57b0d8eed3fcc0686c5987bad14a197e"
+      },
+      "archive": "work/landscape-art-corpus/ForestOutpost_v2/.sc2mcp-output/ForestClusters.SC2Map",
+      "archiveSha256": "950b7ff63a604da44387442a4b584c842b8ef13b428cece7e482d590f60f9544"
+    },
+    "mapWrites": "All map/ownership changes used MCP plan/apply/save/export. Shell wrote only declarative request JSON and readback evidence. The first metadata upgrade accepted only a ledger-only diff after checking unchanged normalized requests and generator4."
+  },
+  "retainedNegatives": {
+    "initialPackagePathDrift": {
+      "diagnostic": {
+        "file": "work/launch-diagnostics-20261022/location-clusters-catalog-diff.json",
+        "sha256": "0d739a65d05ef847a680336d9c329b42ba69f536da8016ddeeb58c91812c0ce8"
+      },
+      "transcript": {
+        "file": "work/launch-diagnostics-20261022/location-clusters-forest-baseline.log",
+        "sha256": "ef8615bc558813865de1ec1ab37d09eab16690b141dfdb27eb23bcb5173c3e89"
+      },
+      "outcome": "Rejected twelve unexpected zone rebuilds before apply. Raw memo inputs matched except the identical-content bundled schema manifest installation path; later stable identity corrected that cause."
+    },
+    "density": {
+      "file": "work/launch-diagnostics-20261022/location-clusters-stable-forest-apply.log",
+      "parameters": {
+        "clusterCount": 3,
+        "clusterRadius": 10
+      },
+      "failure": "40/48 fit at minimumDistance2.7. Plan rejected before apply; all payload digests unchanged.",
+      "transcript": {
+        "file": "work/launch-diagnostics-20261022/location-clusters-stable-forest-apply.log",
+        "sha256": "2fba7f329a9780e41730435fd09aed8590bca99b24ffdfe298cb3eef2fa331b7"
+      },
+      "sourceUnchangedConfirmedBeforeExplicitNewRequest": true,
+      "adjustment": "Explicit next request uses four groups of radius12 rather than three of radius10. Original45/48 tree counts and2.7 spacing are unchanged; no silent density or layout fallback."
+    }
+  },
+  "regressions": {
+    "focused": {
+      "file": "work/launch-diagnostics-20261022/catalog-schema-identity-focused.tap",
+      "sha256": "8edaa3fa1eb78d0ffc46bcfd4bd269d5e81feeef3629412a46dabf908fbcf7af",
+      "tests": 36,
+      "pass": 36,
+      "fail": 0
+    },
+    "full": {
+      "file": "work/launch-diagnostics-20261022/catalog-schema-identity-full.tap",
+      "sha256": "90a99e2b677958a9cd70d8c47c835187a9a5ecf8ddb40021a35515621c18b674",
+      "tests": 1495,
+      "pass": 1494,
+      "skipped": 1,
+      "fail": 0,
+      "cancelled": 0
+    },
+    "originalPlacementChecks": {
+      "file": "work/launch-diagnostics-20261022/location-clusters-focused-final.tap",
+      "sha256": "638497bfe544836b9eed7f931e1648db2fd57b5e840bf8badaaaf2eae71af079",
+      "tests": 26,
+      "pass": 26,
+      "fail": 0
+    },
+    "scope": "Source, unit and installed workflow checks; native current-saddle112-traversal evidence remains in its separate frozen package scope."
+  },
+  "privacy": {
+    "passed": true,
+    "checkedFiles": 9991,
+    "privateSourceFiles": 1113,
+    "privateCorpusCompared": true,
+    "violations": [],
+    "scope": "Frozen candidate static distribution scan and exact comparison against external private source corpus. Not proof against transformed source or binary reverse engineering.",
+    "privateRuntimeBundled": false
+  },
+  "openCoverage": [
+    "The clustered forest still requires overview/gameplay-scale native review and engine footprint/path checks. No numeric art score is certified.",
+    "Broader cache/performance profiles, whole-location fixture refinement, GUI/Data systems and startup/topology coverage remain open.",
+    "Older evidence fingerprints remain historical; this scoped pass does not renew the strict published acceptance gate."
+  ],
+  "published": false
+}

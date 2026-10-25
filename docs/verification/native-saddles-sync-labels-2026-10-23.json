@@ -1,0 +1,3935 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-23T18:45:43.444Z",
+  "status": "current_sync_label_saddle_matrix_passed_source_and_saved_artifact_checks",
+  "scope": "Fresh generated positive adjacent-level saddle matrix with both diagonal orientations at levels1/2 and2/3, ten cardinal ramp entrances and declared stock Marine/Marauder profiles. Not universal topology/path/collision/buildability acceptance.",
+  "sourceFingerprints": [
+    {
+      "file": "src/modules/terrain/nativeGeometry.ts",
+      "sha256LfUtf8": "c10cd6f821287913dc8f116ec4e840dcf86c950c4cdb5fc5f5393fbcf2d74622"
+    },
+    {
+      "file": "src/modules/terrain/cliffProfile.ts",
+      "sha256LfUtf8": "78e9e5a4afb0202f46b7c95222a557d2be7b3f4196e910623562953a4f77e707"
+    },
+    {
+      "file": "src/modules/terrain/workspace.ts",
+      "sha256LfUtf8": "78ab8799617d9cc164b3d8f0c8f06b9bb7b6f3d5667d0f21c1abfcc77b3053cd"
+    },
+    {
+      "file": "src/modules/terrain/tools.ts",
+      "sha256LfUtf8": "3eb2ff6e7e153bd5039d1178718075746be3545d309b61c5d9841d7cf1b0dd97"
+    },
+    {
+      "file": "src/tests/cliffProfile.test.ts",
+      "sha256LfUtf8": "92c7349c7424606aee2c6e2e73c738f54b39644ca09e5bc151cb501af9c58973"
+    },
+    {
+      "file": "src/tests/terrainNativeGeometry.test.ts",
+      "sha256LfUtf8": "2290eb72a566e84781c15d32144b737bd07ce804f093e7a17de2657675208799"
+    },
+    {
+      "file": "src/tests/fixtures/terrain-native/cliff-saddle-reference.json",
+      "sha256LfUtf8": "074878ec3f350b61b529cdb265d91b350607c9c18901011467ec6bd961cb27cb"
+    },
+    {
+      "file": "src/tests/fixtures/terrain-native/cliff-sync-mask-reference.json",
+      "sha256LfUtf8": "8406c1e8d0e3fa3078c1a3d6cf215482b92953057f63b88f6e1398350ce35906"
+    }
+  ],
+  "fixture": {
+    "receipt": {
+      "file": "work/launch-diagnostics-20261022/saddle-sync-fixture.json",
+      "sha256": "efb9465071a1f9d94c1bfe72948d01b105400594c3d880c6715dedec307974ab"
+    },
+    "sourceSha256": "ab33b84667186aa8ccfa5d17691279e719b0f4da001b5d39937cfd3928e9e3cc",
+    "guiSha256": "ce75880d4d7b18ca1a89e906348ca7ad0877647ab44250c330efffb1e0a53426",
+    "newDocumentThroughInstalledMcp": true,
+    "allTerrainGuiRuntimeArchiveWritesThroughMcp": true,
+    "terrainOperations": 20,
+    "saddles": [
+      {
+        "id": "lowerNW",
+        "x": 37,
+        "y": 37,
+        "lowerLevel": 1,
+        "coarse": [
+          2,
+          1,
+          2,
+          1
+        ]
+      },
+      {
+        "id": "lowerNE",
+        "x": 89,
+        "y": 37,
+        "lowerLevel": 1,
+        "coarse": [
+          1,
+          2,
+          1,
+          2
+        ]
+      },
+      {
+        "id": "upperNW",
+        "x": 41,
+        "y": 93,
+        "lowerLevel": 2,
+        "coarse": [
+          3,
+          2,
+          3,
+          2
+        ]
+      },
+      {
+        "id": "upperNE",
+        "x": 103,
+        "y": 93,
+        "lowerLevel": 2,
+        "coarse": [
+          2,
+          3,
+          2,
+          3
+        ]
+      }
+    ],
+    "ramps": [
+      [
+        "aWest",
+        6,
+        17,
+        "east",
+        1
+      ],
+      [
+        "aEast",
+        44,
+        35,
+        "west",
+        1
+      ],
+      [
+        "bEast",
+        96,
+        17,
+        "west",
+        1
+      ],
+      [
+        "bWest",
+        58,
+        35,
+        "east",
+        1
+      ],
+      [
+        "cBase",
+        4,
+        101,
+        "east",
+        1
+      ],
+      [
+        "cWest",
+        10,
+        73,
+        "east",
+        2
+      ],
+      [
+        "cEast",
+        48,
+        89,
+        "west",
+        2
+      ],
+      [
+        "dBase",
+        64,
+        103,
+        "east",
+        1
+      ],
+      [
+        "dEast",
+        110,
+        73,
+        "west",
+        2
+      ],
+      [
+        "dWest",
+        72,
+        89,
+        "east",
+        2
+      ]
+    ],
+    "maskPairs": {
+      "pairs": {
+        "1": 18689,
+        "2": 5816,
+        "3": 1416
+      },
+      "matchingVertices": 25921
+    },
+    "organization": "Native MAIN folder with stock map-init and reveal calls, generated GUI runtime and no Custom Script fallback."
+  },
+  "runtime": {
+    "nativeEditor": "0.10.0-rc.1",
+    "nativeProtocol": 11,
+    "gameToolkit": "0.1.0-dev.11",
+    "gameBuild": "5.0.17.98310",
+    "privateRuntimeBundled": false,
+    "privateSdkModified": false,
+    "candidate": {
+      "file": "work/launch-diagnostics-20261022/native-storage-candidate.json",
+      "sha256": "1d6a014d92bfe7550eddeaf184ce3719628013f48352a1eed710b56a012237de"
+    },
+    "laterCandidate": {
+      "file": "work/launch-diagnostics-20261022/location-clusters-candidate.json",
+      "sha256": "ba38a6d35135ce9cbacf2e3373877f79ab7220b266efa1faa328873b5a5f19dd"
+    },
+    "unchangedNativeCompiledModules": [
+      "modules/terrain/nativeGeometry.js",
+      "modules/terrain/cliffProfile.js",
+      "modules/terrain/workspace.js",
+      "modules/testing/workspace.js",
+      "integrations/native/bridge.js",
+      "integrations/game/bridge.js"
+    ],
+    "scope": "The native runs use the frozen NativeStorage candidate. A later clustered-location package has these exact native geometry/runner/bridge modules unchanged. Separate later cache/placement changes do not gain universal native acceptance from this record."
+  },
+  "traversal": {
+    "audit": {
+      "file": "work/launch-diagnostics-20261022/saddle-sync-audit.json",
+      "sha256": "fdd7fc34fb4ebb3db1f3e85cd38f22185032625c5db5e50e63397edd5da0cfa5"
+    },
+    "transcript": {
+      "file": "work/launch-diagnostics-20261022/saddle-sync-retry1.log",
+      "sha256": "2acd941f04dfcca11bdc98f827e7a6cf85c4d8fbcd2daa41dc4a46dd1aded5c4"
+    },
+    "counts": {
+      "runs": 6,
+      "sourceTraversals": 32,
+      "savedArtifactTraversals": 80,
+      "traversals": 112,
+      "views": 32,
+      "uniqueDecodedImages": 16,
+      "namedSourceViewsInspected": 8
+    },
+    "maximumSampledDeviation": 7.105427357601002e-15,
+    "sourceCenterCorridor": 1.25,
+    "cardinalRampCorridor": 1.75,
+    "arrivalTolerance": 0.75,
+    "originalEndpointsAndCorridorsPreserved": true,
+    "sourceUnchanged": true,
+    "guiUnchanged": true,
+    "sameRetainedEditorWorker": true,
+    "sameRetainedGameBridge": true,
+    "checks": "Independent raw trajectory audit binds one live/valid unit identity, type/owner, actual displacement, start/end tolerance and the original corridor in both directions.32 traversals launch the original ordinary archive;80 launch exact native-saved artifacts after separate load/compile.",
+    "runs": [
+      {
+        "jobId": "9d4a8621-a1bf-4492-93d7-f3c538dfb50f",
+        "report": {
+          "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\9d4a8621-a1bf-4492-93d7-f3c538dfb50f\\result.json",
+          "sha256": "f552ccbecf597652fed3dade3d4a1a032ec4ad6e5ac4b8f5d6bd2607092cbcfe"
+        },
+        "artifact": {
+          "origin": "source",
+          "sha256": "ab33b84667186aa8ccfa5d17691279e719b0f4da001b5d39937cfd3928e9e3cc"
+        },
+        "sourceSha256": "ab33b84667186aa8ccfa5d17691279e719b0f4da001b5d39937cfd3928e9e3cc",
+        "editorInitial": {
+          "file": "L:\\NE\\jobs\\e03ca1f5-e062-4897-947b-c106f822ca1a\\result.json",
+          "sha256": "57438bf746d795ef2e7b5d3a030580934a48c297d123fb2cbcb590e9865fa429"
+        },
+        "gameRuntime": {
+          "provenance": "pinned_release",
+          "releaseTag": "v0.1.0-dev.11",
+          "archiveSha256": "514096c72332f4d6629dee4a33a092957d3ee02a9c45281bb3a7ad59031c30f3",
+          "verifiedFiles": 113,
+          "binaryOverride": false
+        },
+        "routes": [
+          {
+            "id": "route:lowerNWMarine:forward",
+            "type": "Marine",
+            "owner": 1,
+            "samples": 11,
+            "unitId": "2620d46e72d2f0334632948ae21d9393:u:1",
+            "maximumDeviation": 0,
+            "corridor": 1.25,
+            "from": {
+              "x": 34,
+              "y": 34
+            },
+            "to": {
+              "x": 40,
+              "y": 40
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\9d4a8621-a1bf-4492-93d7-f3c538dfb50f\\route_lowerNWMarine_forward_trajectory.json",
+              "sha256": "a0084815cb5e90a83c64d429f303a1eeae2e98b94d6cc6b3b1176cea7cd8670c"
+            }
+          },
+          {
+            "id": "route:lowerNWMarine:reverse",
+            "type": "Marine",
+            "owner": 1,
+            "samples": 12,
+            "unitId": "2620d46e72d2f0334632948ae21d9393:u:2",
+            "maximumDeviation": 0,
+            "corridor": 1.25,
+            "from": {
+              "x": 40,
+              "y": 40
+            },
+            "to": {
+              "x": 34,
+              "y": 34
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\9d4a8621-a1bf-4492-93d7-f3c538dfb50f\\route_lowerNWMarine_reverse_trajectory.json",
+              "sha256": "127e261f1161822b9d405db80c5d65e1df80dc63b7aa87ba94e94629da524f14"
+            }
+          },
+          {
+            "id": "route:lowerNWMarauder:forward",
+            "type": "Marauder",
+            "owner": 1,
+            "samples": 12,
+            "unitId": "2620d46e72d2f0334632948ae21d9393:u:3",
+            "maximumDeviation": 0,
+            "corridor": 1.25,
+            "from": {
+              "x": 34,
+              "y": 34
+            },
+            "to": {
+              "x": 40,
+              "y": 40
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\9d4a8621-a1bf-4492-93d7-f3c538dfb50f\\route_lowerNWMarauder_forward_trajectory.json",
+              "sha256": "70f11d1026b0c187f6c9d4b18e60426cd88ca48118af2b4c3a322f632d05a63c"
+            }
+          },
+          {
+            "id": "route:lowerNWMarauder:reverse",
+            "type": "Marauder",
+            "owner": 1,
+            "samples": 12,
+            "unitId": "2620d46e72d2f0334632948ae21d9393:u:4",
+            "maximumDeviation": 0,
+            "corridor": 1.25,
+            "from": {
+              "x": 40,
+              "y": 40
+            },
+            "to": {
+              "x": 34,
+              "y": 34
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\9d4a8621-a1bf-4492-93d7-f3c538dfb50f\\route_lowerNWMarauder_reverse_trajectory.json",
+              "sha256": "93fef2c1074dcc493e9489b20c5d5fb9052e9959912182e8cd925e236f10a2a9"
+            }
+          },
+          {
+            "id": "route:lowerNEMarine:forward",
+            "type": "Marine",
+            "owner": 1,
+            "samples": 11,
+            "unitId": "2620d46e72d2f0334632948ae21d9393:u:5",
+            "maximumDeviation": 7.105427357601002e-15,
+            "corridor": 1.25,
+            "from": {
+              "x": 86,
+              "y": 40
+            },
+            "to": {
+              "x": 92,
+              "y": 34
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\9d4a8621-a1bf-4492-93d7-f3c538dfb50f\\route_lowerNEMarine_forward_trajectory.json",
+              "sha256": "3d487d5f936a678a09a44ee6ec6d5834d4745525fe696caa4ec2996b638dbf5d"
+            }
+          },
+          {
+            "id": "route:lowerNEMarine:reverse",
+            "type": "Marine",
+            "owner": 1,
+            "samples": 12,
+            "unitId": "2620d46e72d2f0334632948ae21d9393:u:6",
+            "maximumDeviation": 7.105427357601002e-15,
+            "corridor": 1.25,
+            "from": {
+              "x": 92,
+              "y": 34
+            },
+            "to": {
+              "x": 86,
+              "y": 40
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\9d4a8621-a1bf-4492-93d7-f3c538dfb50f\\route_lowerNEMarine_reverse_trajectory.json",
+              "sha256": "dacf17e7e448935256a16855614dc48e7d9ee3883f82e70b6bedda31ba7e727d"
+            }
+          },
+          {
+            "id": "route:lowerNEMarauder:forward",
+            "type": "Marauder",
+            "owner": 1,
+            "samples": 11,
+            "unitId": "2620d46e72d2f0334632948ae21d9393:u:7",
+            "maximumDeviation": 7.105427357601002e-15,
+            "corridor": 1.25,
+            "from": {
+              "x": 86,
+              "y": 40
+            },
+            "to": {
+              "x": 92,
+              "y": 34
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\9d4a8621-a1bf-4492-93d7-f3c538dfb50f\\route_lowerNEMarauder_forward_trajectory.json",
+              "sha256": "3c17496c36e7b6eae3a14aba7209559dc8303891a9cc4eeba24e2ae48273b716"
+            }
+          },
+          {
+            "id": "route:lowerNEMarauder:reverse",
+            "type": "Marauder",
+            "owner": 1,
+            "samples": 11,
+            "unitId": "2620d46e72d2f0334632948ae21d9393:u:8",
+            "maximumDeviation": 7.105427357601002e-15,
+            "corridor": 1.25,
+            "from": {
+              "x": 92,
+              "y": 34
+            },
+            "to": {
+              "x": 86,
+              "y": 40
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\9d4a8621-a1bf-4492-93d7-f3c538dfb50f\\route_lowerNEMarauder_reverse_trajectory.json",
+              "sha256": "1d64e2a883487878268ad0823284594c7a2af0ec64754d52000c543cb3625b83"
+            }
+          },
+          {
+            "id": "route:upperNWMarine:forward",
+            "type": "Marine",
+            "owner": 1,
+            "samples": 12,
+            "unitId": "2620d46e72d2f0334632948ae21d9393:u:9",
+            "maximumDeviation": 7.105427357601002e-15,
+            "corridor": 1.25,
+            "from": {
+              "x": 38,
+              "y": 90
+            },
+            "to": {
+              "x": 44,
+              "y": 96
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\9d4a8621-a1bf-4492-93d7-f3c538dfb50f\\route_upperNWMarine_forward_trajectory.json",
+              "sha256": "086674f07014a882a8a0f395a2c2e336c9ff0354621866320bc8156bef8d16e3"
+            }
+          },
+          {
+            "id": "route:upperNWMarine:reverse",
+            "type": "Marine",
+            "owner": 1,
+            "samples": 12,
+            "unitId": "2620d46e72d2f0334632948ae21d9393:u:10",
+            "maximumDeviation": 7.105427357601002e-15,
+            "corridor": 1.25,
+            "from": {
+              "x": 44,
+              "y": 96
+            },
+            "to": {
+              "x": 38,
+              "y": 90
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\9d4a8621-a1bf-4492-93d7-f3c538dfb50f\\route_upperNWMarine_reverse_trajectory.json",
+              "sha256": "3dcac3bedc134fcdfe6c8bf8ad54b3bd3c9f360378865c1b4a44f024c96ea44d"
+            }
+          },
+          {
+            "id": "route:upperNWMarauder:forward",
+            "type": "Marauder",
+            "owner": 1,
+            "samples": 11,
+            "unitId": "2620d46e72d2f0334632948ae21d9393:u:11",
+            "maximumDeviation": 7.105427357601002e-15,
+            "corridor": 1.25,
+            "from": {
+              "x": 38,
+              "y": 90
+            },
+            "to": {
+              "x": 44,
+              "y": 96
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\9d4a8621-a1bf-4492-93d7-f3c538dfb50f\\route_upperNWMarauder_forward_trajectory.json",
+              "sha256": "612bca506bd23cf90afc5a3e1368506e941bbc6528b195c4efec8ff45e5ac35c"
+            }
+          },
+          {
+            "id": "route:upperNWMarauder:reverse",
+            "type": "Marauder",
+            "owner": 1,
+            "samples": 12,
+            "unitId": "2620d46e72d2f0334632948ae21d9393:u:12",
+            "maximumDeviation": 7.105427357601002e-15,
+            "corridor": 1.25,
+            "from": {
+              "x": 44,
+              "y": 96
+            },
+            "to": {
+              "x": 38,
+              "y": 90
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\9d4a8621-a1bf-4492-93d7-f3c538dfb50f\\route_upperNWMarauder_reverse_trajectory.json",
+              "sha256": "3e62fcbe7adbfb2f9754ef43865ccee5d1965cc5cfa8513cb40e7973f5b5874f"
+            }
+          },
+          {
+            "id": "route:upperNEMarine:forward",
+            "type": "Marine",
+            "owner": 1,
+            "samples": 12,
+            "unitId": "2620d46e72d2f0334632948ae21d9393:u:13",
+            "maximumDeviation": 0,
+            "corridor": 1.25,
+            "from": {
+              "x": 100,
+              "y": 96
+            },
+            "to": {
+              "x": 106,
+              "y": 90
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\9d4a8621-a1bf-4492-93d7-f3c538dfb50f\\route_upperNEMarine_forward_trajectory.json",
+              "sha256": "5bbc1c68f4c2733da97930af23214fa075d07a18cd00b23cf4ee192e0f994d9a"
+            }
+          },
+          {
+            "id": "route:upperNEMarine:reverse",
+            "type": "Marine",
+            "owner": 1,
+            "samples": 11,
+            "unitId": "2620d46e72d2f0334632948ae21d9393:u:14",
+            "maximumDeviation": 0,
+            "corridor": 1.25,
+            "from": {
+              "x": 106,
+              "y": 90
+            },
+            "to": {
+              "x": 100,
+              "y": 96
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\9d4a8621-a1bf-4492-93d7-f3c538dfb50f\\route_upperNEMarine_reverse_trajectory.json",
+              "sha256": "c552379624b0ed8ba9de27794ff778981a97b4d687de6ae146a2129c2f002449"
+            }
+          },
+          {
+            "id": "route:upperNEMarauder:forward",
+            "type": "Marauder",
+            "owner": 1,
+            "samples": 11,
+            "unitId": "2620d46e72d2f0334632948ae21d9393:u:15",
+            "maximumDeviation": 0,
+            "corridor": 1.25,
+            "from": {
+              "x": 100,
+              "y": 96
+            },
+            "to": {
+              "x": 106,
+              "y": 90
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\9d4a8621-a1bf-4492-93d7-f3c538dfb50f\\route_upperNEMarauder_forward_trajectory.json",
+              "sha256": "b0119b75ca253bb9dc071012a9a51ff7279ecacbdb882093bafa760721c9bca3"
+            }
+          },
+          {
+            "id": "route:upperNEMarauder:reverse",
+            "type": "Marauder",
+            "owner": 1,
+            "samples": 11,
+            "unitId": "2620d46e72d2f0334632948ae21d9393:u:16",
+            "maximumDeviation": 0,
+            "corridor": 1.25,
+            "from": {
+              "x": 106,
+              "y": 90
+            },
+            "to": {
+              "x": 100,
+              "y": 96
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\9d4a8621-a1bf-4492-93d7-f3c538dfb50f\\route_upperNEMarauder_reverse_trajectory.json",
+              "sha256": "0085f5e7f3ed73092f188d180ddc1e346e49223dad4d36dc2247ffa10fb554a5"
+            }
+          }
+        ],
+        "captures": [
+          {
+            "id": "view:lowerNWDetail",
+            "sha256": "84d31d7497d290f0f153e6b298e8e1055b4b2fe94e79cbe1c001d23423b86238",
+            "pixelSha256": "66b058bd94ac6e33c874dbb9c90810332ae2635730f347dd39c95731a6deffb0",
+            "requested": {
+              "x": 37,
+              "y": 37,
+              "distance": 24,
+              "pitch": 60,
+              "yaw": 240
+            },
+            "observed": {
+              "target": {
+                "x": 37,
+                "y": 37
+              },
+              "pitch": 59.9414,
+              "yaw": -120.0586,
+              "distance": 24
+            }
+          },
+          {
+            "id": "view:lowerNWReverse",
+            "sha256": "ba3456025e84d96ac8a354e2b65e44c6b383ca59b820a31c7762790956265576",
+            "pixelSha256": "72aa4f28a98dfe54f91e1d90436557f981d7c3a8865837951f3df46349468763",
+            "requested": {
+              "x": 37,
+              "y": 37,
+              "distance": 24,
+              "pitch": 60,
+              "yaw": 60
+            },
+            "observed": {
+              "target": {
+                "x": 37,
+                "y": 37
+              },
+              "pitch": 59.9414,
+              "yaw": 59.9414,
+              "distance": 24
+            }
+          },
+          {
+            "id": "view:lowerNEDetail",
+            "sha256": "6ca42221b71396e4a01dd93f7cac1cf01eb1604ed08aac9b05e81d9a01d36535",
+            "pixelSha256": "2bc1de18acfcc39fb0721ad84eb5c60806ffbde94b344678c2c56db39bce5455",
+            "requested": {
+              "x": 89,
+              "y": 37,
+              "distance": 24,
+              "pitch": 60,
+              "yaw": 240
+            },
+            "observed": {
+              "target": {
+                "x": 89,
+                "y": 37
+              },
+              "pitch": 59.9414,
+              "yaw": -120.0586,
+              "distance": 24
+            }
+          },
+          {
+            "id": "view:lowerNEReverse",
+            "sha256": "76d5cf200007912abab74e38b65e0a337b8cde2f7b7d51733444f42c141eaa18",
+            "pixelSha256": "8297acb37020200ca61e6560dc9c40c07d8b94c3af5c928278e64b3efad753da",
+            "requested": {
+              "x": 89,
+              "y": 37,
+              "distance": 24,
+              "pitch": 60,
+              "yaw": 60
+            },
+            "observed": {
+              "target": {
+                "x": 89,
+                "y": 37
+              },
+              "pitch": 59.9414,
+              "yaw": 59.9414,
+              "distance": 24
+            }
+          },
+          {
+            "id": "view:upperNWDetail",
+            "sha256": "34bbc53239e04a733301f425580764bc863cc9cdca09cdcd7086100fa8aea07f",
+            "pixelSha256": "7e9528df5f5575511f6925e037a4dd6c0277981ea830fed457c16c258fc8902c",
+            "requested": {
+              "x": 41,
+              "y": 93,
+              "distance": 24,
+              "pitch": 60,
+              "yaw": 240
+            },
+            "observed": {
+              "target": {
+                "x": 41,
+                "y": 93
+              },
+              "pitch": 59.9414,
+              "yaw": -120.0586,
+              "distance": 24
+            }
+          },
+          {
+            "id": "view:upperNWReverse",
+            "sha256": "ff401d9bcfee67366a454c47598a4f97508384671ab025b53ae61da61a4169dd",
+            "pixelSha256": "f80014d85443b6ca24970c38653f85fea4372c2e9e24e9b37e418ecd9ab1ed53",
+            "requested": {
+              "x": 41,
+              "y": 93,
+              "distance": 24,
+              "pitch": 60,
+              "yaw": 60
+            },
+            "observed": {
+              "target": {
+                "x": 41,
+                "y": 93
+              },
+              "pitch": 59.9414,
+              "yaw": 59.9414,
+              "distance": 24
+            }
+          },
+          {
+            "id": "view:upperNEDetail",
+            "sha256": "5fedd08251da7d6c6e990f85cc8b3c0a9e4e0e839e8cafbb4e284cb4e06957e6",
+            "pixelSha256": "176d30913ea71295516eb4e9c5e6fd7d205ad03feb75ae67a08927637d3279ca",
+            "requested": {
+              "x": 103,
+              "y": 93,
+              "distance": 24,
+              "pitch": 60,
+              "yaw": 240
+            },
+            "observed": {
+              "target": {
+                "x": 103,
+                "y": 93
+              },
+              "pitch": 59.9414,
+              "yaw": -120.0586,
+              "distance": 24
+            }
+          },
+          {
+            "id": "view:upperNEReverse",
+            "sha256": "70dfe885ff4e572420fa02b7dd40346702e1e44b8392c3c115686fc82e71483c",
+            "pixelSha256": "76c5664b1d036e87acf713e3c3598def1c13847904324a5cc4659b6062500101",
+            "requested": {
+              "x": 103,
+              "y": 93,
+              "distance": 24,
+              "pitch": 60,
+              "yaw": 60
+            },
+            "observed": {
+              "target": {
+                "x": 103,
+                "y": 93
+              },
+              "pitch": 59.9414,
+              "yaw": 59.9414,
+              "distance": 24
+            }
+          }
+        ]
+      },
+      {
+        "jobId": "83777aac-e4dd-4f5a-9b98-bf55801680ac",
+        "report": {
+          "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\83777aac-e4dd-4f5a-9b98-bf55801680ac\\result.json",
+          "sha256": "31a1025d37adc1e9b6cb4f25b7cc36f0a4c5275b0346de54e64d922dbf3d696e"
+        },
+        "artifact": {
+          "origin": "source",
+          "sha256": "ab33b84667186aa8ccfa5d17691279e719b0f4da001b5d39937cfd3928e9e3cc"
+        },
+        "sourceSha256": "ab33b84667186aa8ccfa5d17691279e719b0f4da001b5d39937cfd3928e9e3cc",
+        "editorInitial": {
+          "file": "L:\\NE\\jobs\\8e354c2d-ebf9-4e7f-adff-f660ee8547d9\\result.json",
+          "sha256": "386e71ca73fb8667ac6dda0d486a527d0369e34802f1a1011d00ca864a9ee654"
+        },
+        "gameRuntime": {
+          "provenance": "pinned_release",
+          "releaseTag": "v0.1.0-dev.11",
+          "archiveSha256": "514096c72332f4d6629dee4a33a092957d3ee02a9c45281bb3a7ad59031c30f3",
+          "verifiedFiles": 113,
+          "binaryOverride": false
+        },
+        "routes": [
+          {
+            "id": "route:lowerNWMarine:forward",
+            "type": "Marine",
+            "owner": 1,
+            "samples": 11,
+            "unitId": "a6bf4c9d27be89f5730f17963c1a3cc1:u:1",
+            "maximumDeviation": 0,
+            "corridor": 1.25,
+            "from": {
+              "x": 34,
+              "y": 34
+            },
+            "to": {
+              "x": 40,
+              "y": 40
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\83777aac-e4dd-4f5a-9b98-bf55801680ac\\route_lowerNWMarine_forward_trajectory.json",
+              "sha256": "6496a4827eba5e180b702924a87764e713323a29adcafb69947b138ff2d2daac"
+            }
+          },
+          {
+            "id": "route:lowerNWMarine:reverse",
+            "type": "Marine",
+            "owner": 1,
+            "samples": 12,
+            "unitId": "a6bf4c9d27be89f5730f17963c1a3cc1:u:2",
+            "maximumDeviation": 0,
+            "corridor": 1.25,
+            "from": {
+              "x": 40,
+              "y": 40
+            },
+            "to": {
+              "x": 34,
+              "y": 34
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\83777aac-e4dd-4f5a-9b98-bf55801680ac\\route_lowerNWMarine_reverse_trajectory.json",
+              "sha256": "568d884d3b4157f40ce3be13d84a0d610a5ed5d458dd0719ff670b607ab3f51f"
+            }
+          },
+          {
+            "id": "route:lowerNWMarauder:forward",
+            "type": "Marauder",
+            "owner": 1,
+            "samples": 13,
+            "unitId": "a6bf4c9d27be89f5730f17963c1a3cc1:u:3",
+            "maximumDeviation": 0,
+            "corridor": 1.25,
+            "from": {
+              "x": 34,
+              "y": 34
+            },
+            "to": {
+              "x": 40,
+              "y": 40
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\83777aac-e4dd-4f5a-9b98-bf55801680ac\\route_lowerNWMarauder_forward_trajectory.json",
+              "sha256": "707b03346f8dd30fa77a24376b31f8ede4ac0daaa527c4e50751bcd892ff34fc"
+            }
+          },
+          {
+            "id": "route:lowerNWMarauder:reverse",
+            "type": "Marauder",
+            "owner": 1,
+            "samples": 12,
+            "unitId": "a6bf4c9d27be89f5730f17963c1a3cc1:u:4",
+            "maximumDeviation": 0,
+            "corridor": 1.25,
+            "from": {
+              "x": 40,
+              "y": 40
+            },
+            "to": {
+              "x": 34,
+              "y": 34
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\83777aac-e4dd-4f5a-9b98-bf55801680ac\\route_lowerNWMarauder_reverse_trajectory.json",
+              "sha256": "486c0ece0c5ad7c3d19a50de1a9bc24de6fbc31204a0521da46e240acd1e33bd"
+            }
+          },
+          {
+            "id": "route:lowerNEMarine:forward",
+            "type": "Marine",
+            "owner": 1,
+            "samples": 11,
+            "unitId": "a6bf4c9d27be89f5730f17963c1a3cc1:u:5",
+            "maximumDeviation": 7.105427357601002e-15,
+            "corridor": 1.25,
+            "from": {
+              "x": 86,
+              "y": 40
+            },
+            "to": {
+              "x": 92,
+              "y": 34
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\83777aac-e4dd-4f5a-9b98-bf55801680ac\\route_lowerNEMarine_forward_trajectory.json",
+              "sha256": "00c2720d701d2243188a52118d978535fab2520a80ab10f7b7acf7c5215fec01"
+            }
+          },
+          {
+            "id": "route:lowerNEMarine:reverse",
+            "type": "Marine",
+            "owner": 1,
+            "samples": 12,
+            "unitId": "a6bf4c9d27be89f5730f17963c1a3cc1:u:6",
+            "maximumDeviation": 7.105427357601002e-15,
+            "corridor": 1.25,
+            "from": {
+              "x": 92,
+              "y": 34
+            },
+            "to": {
+              "x": 86,
+              "y": 40
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\83777aac-e4dd-4f5a-9b98-bf55801680ac\\route_lowerNEMarine_reverse_trajectory.json",
+              "sha256": "607f2e1e9644456276dd9012053211a7c248f4d0bd32e60358f9220d03f2eb47"
+            }
+          },
+          {
+            "id": "route:lowerNEMarauder:forward",
+            "type": "Marauder",
+            "owner": 1,
+            "samples": 12,
+            "unitId": "a6bf4c9d27be89f5730f17963c1a3cc1:u:7",
+            "maximumDeviation": 7.105427357601002e-15,
+            "corridor": 1.25,
+            "from": {
+              "x": 86,
+              "y": 40
+            },
+            "to": {
+              "x": 92,
+              "y": 34
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\83777aac-e4dd-4f5a-9b98-bf55801680ac\\route_lowerNEMarauder_forward_trajectory.json",
+              "sha256": "95eaa43c478c743420a7fdc29fe213cc7ebd7c9abda673f5106cda9bf1cea067"
+            }
+          },
+          {
+            "id": "route:lowerNEMarauder:reverse",
+            "type": "Marauder",
+            "owner": 1,
+            "samples": 11,
+            "unitId": "a6bf4c9d27be89f5730f17963c1a3cc1:u:8",
+            "maximumDeviation": 7.105427357601002e-15,
+            "corridor": 1.25,
+            "from": {
+              "x": 92,
+              "y": 34
+            },
+            "to": {
+              "x": 86,
+              "y": 40
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\83777aac-e4dd-4f5a-9b98-bf55801680ac\\route_lowerNEMarauder_reverse_trajectory.json",
+              "sha256": "5b0595df11a812a8f7c3c8c4364bfb805762a5ffc4ace55a197dd93d8defa8d0"
+            }
+          },
+          {
+            "id": "route:upperNWMarine:forward",
+            "type": "Marine",
+            "owner": 1,
+            "samples": 11,
+            "unitId": "a6bf4c9d27be89f5730f17963c1a3cc1:u:9",
+            "maximumDeviation": 7.105427357601002e-15,
+            "corridor": 1.25,
+            "from": {
+              "x": 38,
+              "y": 90
+            },
+            "to": {
+              "x": 44,
+              "y": 96
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\83777aac-e4dd-4f5a-9b98-bf55801680ac\\route_upperNWMarine_forward_trajectory.json",
+              "sha256": "c0464f687f0cf01888be6472799ad0fe397054de40a321084a53fc51bd1a7fa2"
+            }
+          },
+          {
+            "id": "route:upperNWMarine:reverse",
+            "type": "Marine",
+            "owner": 1,
+            "samples": 13,
+            "unitId": "a6bf4c9d27be89f5730f17963c1a3cc1:u:10",
+            "maximumDeviation": 7.105427357601002e-15,
+            "corridor": 1.25,
+            "from": {
+              "x": 44,
+              "y": 96
+            },
+            "to": {
+              "x": 38,
+              "y": 90
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\83777aac-e4dd-4f5a-9b98-bf55801680ac\\route_upperNWMarine_reverse_trajectory.json",
+              "sha256": "ab5367bcaa042e2adfc799180a5f7d9ab2e2d341c8f4baaf011a7d702982add9"
+            }
+          },
+          {
+            "id": "route:upperNWMarauder:forward",
+            "type": "Marauder",
+            "owner": 1,
+            "samples": 12,
+            "unitId": "a6bf4c9d27be89f5730f17963c1a3cc1:u:11",
+            "maximumDeviation": 7.105427357601002e-15,
+            "corridor": 1.25,
+            "from": {
+              "x": 38,
+              "y": 90
+            },
+            "to": {
+              "x": 44,
+              "y": 96
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\83777aac-e4dd-4f5a-9b98-bf55801680ac\\route_upperNWMarauder_forward_trajectory.json",
+              "sha256": "d9cc41f7267c8bb6d63f2b94fe1d904e052de2dcc1c1c1a90cbb1fab1e66f17e"
+            }
+          },
+          {
+            "id": "route:upperNWMarauder:reverse",
+            "type": "Marauder",
+            "owner": 1,
+            "samples": 12,
+            "unitId": "a6bf4c9d27be89f5730f17963c1a3cc1:u:12",
+            "maximumDeviation": 7.105427357601002e-15,
+            "corridor": 1.25,
+            "from": {
+              "x": 44,
+              "y": 96
+            },
+            "to": {
+              "x": 38,
+              "y": 90
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\83777aac-e4dd-4f5a-9b98-bf55801680ac\\route_upperNWMarauder_reverse_trajectory.json",
+              "sha256": "e4c22826a818005038affd3c2bd73d1b120d73e1ef838c0118c3880e8dd90d0e"
+            }
+          },
+          {
+            "id": "route:upperNEMarine:forward",
+            "type": "Marine",
+            "owner": 1,
+            "samples": 12,
+            "unitId": "a6bf4c9d27be89f5730f17963c1a3cc1:u:13",
+            "maximumDeviation": 0,
+            "corridor": 1.25,
+            "from": {
+              "x": 100,
+              "y": 96
+            },
+            "to": {
+              "x": 106,
+              "y": 90
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\83777aac-e4dd-4f5a-9b98-bf55801680ac\\route_upperNEMarine_forward_trajectory.json",
+              "sha256": "aa5dff9d938038eac8adde1e1579453144f51a7f76a642408bad2fd0da99efa4"
+            }
+          },
+          {
+            "id": "route:upperNEMarine:reverse",
+            "type": "Marine",
+            "owner": 1,
+            "samples": 12,
+            "unitId": "a6bf4c9d27be89f5730f17963c1a3cc1:u:14",
+            "maximumDeviation": 0,
+            "corridor": 1.25,
+            "from": {
+              "x": 106,
+              "y": 90
+            },
+            "to": {
+              "x": 100,
+              "y": 96
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\83777aac-e4dd-4f5a-9b98-bf55801680ac\\route_upperNEMarine_reverse_trajectory.json",
+              "sha256": "3797a8a0f996ee27e225b0f6bfd192c76609c4c9c02e42283c90a7b789ca76fb"
+            }
+          },
+          {
+            "id": "route:upperNEMarauder:forward",
+            "type": "Marauder",
+            "owner": 1,
+            "samples": 12,
+            "unitId": "a6bf4c9d27be89f5730f17963c1a3cc1:u:15",
+            "maximumDeviation": 0,
+            "corridor": 1.25,
+            "from": {
+              "x": 100,
+              "y": 96
+            },
+            "to": {
+              "x": 106,
+              "y": 90
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\83777aac-e4dd-4f5a-9b98-bf55801680ac\\route_upperNEMarauder_forward_trajectory.json",
+              "sha256": "b56b416333f0e74090a97d19741849529cd5af70a157d7f480f51f11b121e6b2"
+            }
+          },
+          {
+            "id": "route:upperNEMarauder:reverse",
+            "type": "Marauder",
+            "owner": 1,
+            "samples": 13,
+            "unitId": "a6bf4c9d27be89f5730f17963c1a3cc1:u:16",
+            "maximumDeviation": 0,
+            "corridor": 1.25,
+            "from": {
+              "x": 106,
+              "y": 90
+            },
+            "to": {
+              "x": 100,
+              "y": 96
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\83777aac-e4dd-4f5a-9b98-bf55801680ac\\route_upperNEMarauder_reverse_trajectory.json",
+              "sha256": "edcc0ba82ae525f2b4dc543a2ddd1c737f90e97f642de815002bac85f464a766"
+            }
+          }
+        ],
+        "captures": [
+          {
+            "id": "view:lowerNWDetail",
+            "sha256": "84d31d7497d290f0f153e6b298e8e1055b4b2fe94e79cbe1c001d23423b86238",
+            "pixelSha256": "66b058bd94ac6e33c874dbb9c90810332ae2635730f347dd39c95731a6deffb0",
+            "requested": {
+              "x": 37,
+              "y": 37,
+              "distance": 24,
+              "pitch": 60,
+              "yaw": 240
+            },
+            "observed": {
+              "target": {
+                "x": 37,
+                "y": 37
+              },
+              "pitch": 59.9414,
+              "yaw": -120.0586,
+              "distance": 24
+            }
+          },
+          {
+            "id": "view:lowerNWReverse",
+            "sha256": "ba3456025e84d96ac8a354e2b65e44c6b383ca59b820a31c7762790956265576",
+            "pixelSha256": "72aa4f28a98dfe54f91e1d90436557f981d7c3a8865837951f3df46349468763",
+            "requested": {
+              "x": 37,
+              "y": 37,
+              "distance": 24,
+              "pitch": 60,
+              "yaw": 60
+            },
+            "observed": {
+              "target": {
+                "x": 37,
+                "y": 37
+              },
+              "pitch": 59.9414,
+              "yaw": 59.9414,
+              "distance": 24
+            }
+          },
+          {
+            "id": "view:lowerNEDetail",
+            "sha256": "6ca42221b71396e4a01dd93f7cac1cf01eb1604ed08aac9b05e81d9a01d36535",
+            "pixelSha256": "2bc1de18acfcc39fb0721ad84eb5c60806ffbde94b344678c2c56db39bce5455",
+            "requested": {
+              "x": 89,
+              "y": 37,
+              "distance": 24,
+              "pitch": 60,
+              "yaw": 240
+            },
+            "observed": {
+              "target": {
+                "x": 89,
+                "y": 37
+              },
+              "pitch": 59.9414,
+              "yaw": -120.0586,
+              "distance": 24
+            }
+          },
+          {
+            "id": "view:lowerNEReverse",
+            "sha256": "76d5cf200007912abab74e38b65e0a337b8cde2f7b7d51733444f42c141eaa18",
+            "pixelSha256": "8297acb37020200ca61e6560dc9c40c07d8b94c3af5c928278e64b3efad753da",
+            "requested": {
+              "x": 89,
+              "y": 37,
+              "distance": 24,
+              "pitch": 60,
+              "yaw": 60
+            },
+            "observed": {
+              "target": {
+                "x": 89,
+                "y": 37
+              },
+              "pitch": 59.9414,
+              "yaw": 59.9414,
+              "distance": 24
+            }
+          },
+          {
+            "id": "view:upperNWDetail",
+            "sha256": "34bbc53239e04a733301f425580764bc863cc9cdca09cdcd7086100fa8aea07f",
+            "pixelSha256": "7e9528df5f5575511f6925e037a4dd6c0277981ea830fed457c16c258fc8902c",
+            "requested": {
+              "x": 41,
+              "y": 93,
+              "distance": 24,
+              "pitch": 60,
+              "yaw": 240
+            },
+            "observed": {
+              "target": {
+                "x": 41,
+                "y": 93
+              },
+              "pitch": 59.9414,
+              "yaw": -120.0586,
+              "distance": 24
+            }
+          },
+          {
+            "id": "view:upperNWReverse",
+            "sha256": "ff401d9bcfee67366a454c47598a4f97508384671ab025b53ae61da61a4169dd",
+            "pixelSha256": "f80014d85443b6ca24970c38653f85fea4372c2e9e24e9b37e418ecd9ab1ed53",
+            "requested": {
+              "x": 41,
+              "y": 93,
+              "distance": 24,
+              "pitch": 60,
+              "yaw": 60
+            },
+            "observed": {
+              "target": {
+                "x": 41,
+                "y": 93
+              },
+              "pitch": 59.9414,
+              "yaw": 59.9414,
+              "distance": 24
+            }
+          },
+          {
+            "id": "view:upperNEDetail",
+            "sha256": "5fedd08251da7d6c6e990f85cc8b3c0a9e4e0e839e8cafbb4e284cb4e06957e6",
+            "pixelSha256": "176d30913ea71295516eb4e9c5e6fd7d205ad03feb75ae67a08927637d3279ca",
+            "requested": {
+              "x": 103,
+              "y": 93,
+              "distance": 24,
+              "pitch": 60,
+              "yaw": 240
+            },
+            "observed": {
+              "target": {
+                "x": 103,
+                "y": 93
+              },
+              "pitch": 59.9414,
+              "yaw": -120.0586,
+              "distance": 24
+            }
+          },
+          {
+            "id": "view:upperNEReverse",
+            "sha256": "70dfe885ff4e572420fa02b7dd40346702e1e44b8392c3c115686fc82e71483c",
+            "pixelSha256": "76c5664b1d036e87acf713e3c3598def1c13847904324a5cc4659b6062500101",
+            "requested": {
+              "x": 103,
+              "y": 93,
+              "distance": 24,
+              "pitch": 60,
+              "yaw": 60
+            },
+            "observed": {
+              "target": {
+                "x": 103,
+                "y": 93
+              },
+              "pitch": 59.9414,
+              "yaw": 59.9414,
+              "distance": 24
+            }
+          }
+        ]
+      },
+      {
+        "jobId": "605d903b-c015-4a06-b7ab-7beb95eceda8",
+        "report": {
+          "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\605d903b-c015-4a06-b7ab-7beb95eceda8\\result.json",
+          "sha256": "d33352e0b6a501bf97c81e0d18eb245eef935985114899c6bd3619cdc3da75af"
+        },
+        "artifact": {
+          "origin": "native_saved",
+          "sha256": "bc0947c5c5450cdec11c957d6f0e958f85b373a0d0e69b0245d5fc94e2622281"
+        },
+        "sourceSha256": "ab33b84667186aa8ccfa5d17691279e719b0f4da001b5d39937cfd3928e9e3cc",
+        "editorInitial": {
+          "file": "L:\\NE\\jobs\\e94904a0-50f0-4ff5-9f25-7ecf634b66a8\\result.json",
+          "sha256": "131c9006e89c9c8a581f5f2e0d763d9205f7168835f35436768583dc8634d0a0"
+        },
+        "savedComparison": {
+          "beforeCount": 33,
+          "savedCount": 32,
+          "reopenedCount": 32,
+          "changedByNativeSave": 5,
+          "added": 0,
+          "removed": 1,
+          "modified": 4,
+          "savedToReopenedEqual": true,
+          "changes": [
+            {
+              "name": "(attributes)",
+              "locale": "enUS",
+              "change": "modified",
+              "before": {
+                "key": "enUS:(attributes)",
+                "name": "(attributes)",
+                "archiveName": "(attributes)",
+                "locale": "enUS",
+                "bytes": 932,
+                "sha256": "4f3a672fb98531c234f6d76c724a0498bf80c0ce2952328088d37edd31cca746"
+              },
+              "after": {
+                "key": "enUS:(attributes)",
+                "name": "(attributes)",
+                "archiveName": "(attributes)",
+                "locale": "enUS",
+                "bytes": 648,
+                "sha256": "c84067e57a67686e9c3f503c16ff3f08028a55fa53af45c15f75af0a44587b12"
+              },
+              "archiveMetadata": true
+            },
+            {
+              "name": "(listfile)",
+              "locale": "enUS",
+              "change": "modified",
+              "before": {
+                "key": "enUS:(listfile)",
+                "name": "(listfile)",
+                "archiveName": "(listfile)",
+                "locale": "enUS",
+                "bytes": 562,
+                "sha256": "285c77b0fc4f4c88f4802454d6a20c28d3c6432677ae9240a4e0d5663f7db56d"
+              },
+              "after": {
+                "key": "enUS:(listfile)",
+                "name": "(listfile)",
+                "archiveName": "(listfile)",
+                "locale": "enUS",
+                "bytes": 535,
+                "sha256": "3ef51f1ef9fd0d0935d425ac833b477ae1a94fe15097cbfeb329930371171202"
+              },
+              "archiveMetadata": true
+            },
+            {
+              "name": "Base.SC2Data/GameData.xml",
+              "locale": "enUS",
+              "change": "removed",
+              "before": {
+                "key": "enUS:base.sc2data/gamedata.xml",
+                "name": "Base.SC2Data/GameData.xml",
+                "archiveName": "Base.SC2Data\\GameData.xml",
+                "locale": "enUS",
+                "bytes": 53,
+                "sha256": "bbe5d28d75810657c6e365fa217a8847569097401b2c978782eab8cbb8e633e0"
+              },
+              "after": null,
+              "archiveMetadata": false
+            },
+            {
+              "name": "ComponentList.SC2Components",
+              "locale": "enUS",
+              "change": "modified",
+              "before": {
+                "key": "enUS:componentlist.sc2components",
+                "name": "ComponentList.SC2Components",
+                "archiveName": "ComponentList.SC2Components",
+                "locale": "enUS",
+                "bytes": 492,
+                "sha256": "e19eb3a5c779ee8fb3f932758c9ea0b92241336e9b232793954a5cde7d14cf5c"
+              },
+              "after": {
+                "key": "enUS:componentlist.sc2components",
+                "name": "ComponentList.SC2Components",
+                "archiveName": "ComponentList.SC2Components",
+                "locale": "enUS",
+                "bytes": 508,
+                "sha256": "9ea7c9e7667d365b8eee877f4027736dc4b0d8c7727e7d4438397b671d0545b4"
+              },
+              "archiveMetadata": false
+            },
+            {
+              "name": "DocumentHeader",
+              "locale": "enUS",
+              "change": "modified",
+              "before": {
+                "key": "enUS:documentheader",
+                "name": "DocumentHeader",
+                "archiveName": "DocumentHeader",
+                "locale": "enUS",
+                "bytes": 369,
+                "sha256": "52167ab8afbe533b139c90c618a083fc2598bcae1842331cb3e1662fe93a96eb"
+              },
+              "after": {
+                "key": "enUS:documentheader",
+                "name": "DocumentHeader",
+                "archiveName": "DocumentHeader",
+                "locale": "enUS",
+                "bytes": 369,
+                "sha256": "b2c9811c5e29d8ef091f941cbb6a8a122332944f6edb7fb38e2f98619fff47a9"
+              },
+              "archiveMetadata": false
+            }
+          ],
+          "changesTruncated": false
+        },
+        "gameRuntime": {
+          "provenance": "pinned_release",
+          "releaseTag": "v0.1.0-dev.11",
+          "archiveSha256": "514096c72332f4d6629dee4a33a092957d3ee02a9c45281bb3a7ad59031c30f3",
+          "verifiedFiles": 113,
+          "binaryOverride": false
+        },
+        "routes": [
+          {
+            "id": "route:aWestMarine:forward",
+            "type": "Marine",
+            "owner": 1,
+            "samples": 13,
+            "unitId": "4e4a5b3af34927f7f23d0b9e735ef673:u:1",
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "from": {
+              "x": 13,
+              "y": 29
+            },
+            "to": {
+              "x": 23,
+              "y": 29
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\605d903b-c015-4a06-b7ab-7beb95eceda8\\route_aWestMarine_forward_trajectory.json",
+              "sha256": "1c29709ab5c64f9612c3e772f9f22e8c495b6c0c437ea7809246476448e5d38d"
+            }
+          },
+          {
+            "id": "route:aWestMarine:reverse",
+            "type": "Marine",
+            "owner": 1,
+            "samples": 13,
+            "unitId": "4e4a5b3af34927f7f23d0b9e735ef673:u:2",
+            "maximumDeviation": 1.7763568394002505e-15,
+            "corridor": 1.75,
+            "from": {
+              "x": 23,
+              "y": 29
+            },
+            "to": {
+              "x": 13,
+              "y": 29
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\605d903b-c015-4a06-b7ab-7beb95eceda8\\route_aWestMarine_reverse_trajectory.json",
+              "sha256": "69b2b857c9a97ee4b93af22643d9e5223efafe67fb657092ab02dc1b24252ac1"
+            }
+          },
+          {
+            "id": "route:aWestMarauder:forward",
+            "type": "Marauder",
+            "owner": 1,
+            "samples": 14,
+            "unitId": "4e4a5b3af34927f7f23d0b9e735ef673:u:3",
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "from": {
+              "x": 13,
+              "y": 29
+            },
+            "to": {
+              "x": 23,
+              "y": 29
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\605d903b-c015-4a06-b7ab-7beb95eceda8\\route_aWestMarauder_forward_trajectory.json",
+              "sha256": "0b46f4acf16da9f7532a44dba454f299e7f43c3469e580b1072866e1faa35411"
+            }
+          },
+          {
+            "id": "route:aWestMarauder:reverse",
+            "type": "Marauder",
+            "owner": 1,
+            "samples": 13,
+            "unitId": "4e4a5b3af34927f7f23d0b9e735ef673:u:4",
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "from": {
+              "x": 23,
+              "y": 29
+            },
+            "to": {
+              "x": 13,
+              "y": 29
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\605d903b-c015-4a06-b7ab-7beb95eceda8\\route_aWestMarauder_reverse_trajectory.json",
+              "sha256": "21999773f0ba4ccd70180a86ce225bdc4ab4c5f36ca4c0c5091cae537f74dcc2"
+            }
+          },
+          {
+            "id": "route:aEastMarine:forward",
+            "type": "Marine",
+            "owner": 1,
+            "samples": 13,
+            "unitId": "4e4a5b3af34927f7f23d0b9e735ef673:u:5",
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "from": {
+              "x": 51,
+              "y": 47
+            },
+            "to": {
+              "x": 61,
+              "y": 47
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\605d903b-c015-4a06-b7ab-7beb95eceda8\\route_aEastMarine_forward_trajectory.json",
+              "sha256": "b11f7e8ee5017503c2a5fb91292bc2b5b5e2ccc667db6537fef6eb0835e290fe"
+            }
+          },
+          {
+            "id": "route:aEastMarine:reverse",
+            "type": "Marine",
+            "owner": 1,
+            "samples": 14,
+            "unitId": "4e4a5b3af34927f7f23d0b9e735ef673:u:6",
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "from": {
+              "x": 61,
+              "y": 47
+            },
+            "to": {
+              "x": 51,
+              "y": 47
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\605d903b-c015-4a06-b7ab-7beb95eceda8\\route_aEastMarine_reverse_trajectory.json",
+              "sha256": "cc3deb4048e0a9a0338cf611f24211ce006892e127e5d7358e8f6aecabb97fb5"
+            }
+          },
+          {
+            "id": "route:aEastMarauder:forward",
+            "type": "Marauder",
+            "owner": 1,
+            "samples": 13,
+            "unitId": "4e4a5b3af34927f7f23d0b9e735ef673:u:7",
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "from": {
+              "x": 51,
+              "y": 47
+            },
+            "to": {
+              "x": 61,
+              "y": 47
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\605d903b-c015-4a06-b7ab-7beb95eceda8\\route_aEastMarauder_forward_trajectory.json",
+              "sha256": "e4664020b27a1658b57c5427365da859ecb3c09cee9e1af21e36ad5b3d371754"
+            }
+          },
+          {
+            "id": "route:aEastMarauder:reverse",
+            "type": "Marauder",
+            "owner": 1,
+            "samples": 13,
+            "unitId": "4e4a5b3af34927f7f23d0b9e735ef673:u:8",
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "from": {
+              "x": 61,
+              "y": 47
+            },
+            "to": {
+              "x": 51,
+              "y": 47
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\605d903b-c015-4a06-b7ab-7beb95eceda8\\route_aEastMarauder_reverse_trajectory.json",
+              "sha256": "976dd74343810d4f2ca94acdd43f81eaf48c3ccaa2ce8685045e0c354be45fd6"
+            }
+          },
+          {
+            "id": "route:bEastMarine:forward",
+            "type": "Marine",
+            "owner": 1,
+            "samples": 13,
+            "unitId": "4e4a5b3af34927f7f23d0b9e735ef673:u:9",
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "from": {
+              "x": 103,
+              "y": 29
+            },
+            "to": {
+              "x": 113,
+              "y": 29
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\605d903b-c015-4a06-b7ab-7beb95eceda8\\route_bEastMarine_forward_trajectory.json",
+              "sha256": "f51339aca343230eaa34d835160d64e2b60472014f851ce2e2177ed9db915a82"
+            }
+          },
+          {
+            "id": "route:bEastMarine:reverse",
+            "type": "Marine",
+            "owner": 1,
+            "samples": 14,
+            "unitId": "4e4a5b3af34927f7f23d0b9e735ef673:u:10",
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "from": {
+              "x": 113,
+              "y": 29
+            },
+            "to": {
+              "x": 103,
+              "y": 29
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\605d903b-c015-4a06-b7ab-7beb95eceda8\\route_bEastMarine_reverse_trajectory.json",
+              "sha256": "df94dab2f82fa4c80ac12523f790154734080e866fc2c95e7df60c3027fafc98"
+            }
+          },
+          {
+            "id": "route:bEastMarauder:forward",
+            "type": "Marauder",
+            "owner": 1,
+            "samples": 13,
+            "unitId": "4e4a5b3af34927f7f23d0b9e735ef673:u:11",
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "from": {
+              "x": 103,
+              "y": 29
+            },
+            "to": {
+              "x": 113,
+              "y": 29
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\605d903b-c015-4a06-b7ab-7beb95eceda8\\route_bEastMarauder_forward_trajectory.json",
+              "sha256": "9f59b29833d3cfb62d54b3e3014bcd07b615ff9a0dd9b728cf4028fd373dedc9"
+            }
+          },
+          {
+            "id": "route:bEastMarauder:reverse",
+            "type": "Marauder",
+            "owner": 1,
+            "samples": 13,
+            "unitId": "4e4a5b3af34927f7f23d0b9e735ef673:u:12",
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "from": {
+              "x": 113,
+              "y": 29
+            },
+            "to": {
+              "x": 103,
+              "y": 29
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\605d903b-c015-4a06-b7ab-7beb95eceda8\\route_bEastMarauder_reverse_trajectory.json",
+              "sha256": "581d08aa70dfecf1c3c4a77b5741a9faea3fc13fec20b21a3f467ae06906524e"
+            }
+          },
+          {
+            "id": "route:bWestMarine:forward",
+            "type": "Marine",
+            "owner": 1,
+            "samples": 13,
+            "unitId": "4e4a5b3af34927f7f23d0b9e735ef673:u:13",
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "from": {
+              "x": 65,
+              "y": 47
+            },
+            "to": {
+              "x": 75,
+              "y": 47
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\605d903b-c015-4a06-b7ab-7beb95eceda8\\route_bWestMarine_forward_trajectory.json",
+              "sha256": "af94becdf389cbc27cdd2407878102035d91f27a5fb965b87776b1f768198ba4"
+            }
+          },
+          {
+            "id": "route:bWestMarine:reverse",
+            "type": "Marine",
+            "owner": 1,
+            "samples": 13,
+            "unitId": "4e4a5b3af34927f7f23d0b9e735ef673:u:14",
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "from": {
+              "x": 75,
+              "y": 47
+            },
+            "to": {
+              "x": 65,
+              "y": 47
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\605d903b-c015-4a06-b7ab-7beb95eceda8\\route_bWestMarine_reverse_trajectory.json",
+              "sha256": "b37d605cd83856a1e053a79166699c9302030819e4acecd465878726f5bb25f8"
+            }
+          },
+          {
+            "id": "route:bWestMarauder:forward",
+            "type": "Marauder",
+            "owner": 1,
+            "samples": 13,
+            "unitId": "4e4a5b3af34927f7f23d0b9e735ef673:u:15",
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "from": {
+              "x": 65,
+              "y": 47
+            },
+            "to": {
+              "x": 75,
+              "y": 47
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\605d903b-c015-4a06-b7ab-7beb95eceda8\\route_bWestMarauder_forward_trajectory.json",
+              "sha256": "1ac08c7e3ef243c452ee77ffa651dba8a4f87281793e2db7e99c1eb91df8935f"
+            }
+          },
+          {
+            "id": "route:bWestMarauder:reverse",
+            "type": "Marauder",
+            "owner": 1,
+            "samples": 14,
+            "unitId": "4e4a5b3af34927f7f23d0b9e735ef673:u:16",
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "from": {
+              "x": 75,
+              "y": 47
+            },
+            "to": {
+              "x": 65,
+              "y": 47
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\605d903b-c015-4a06-b7ab-7beb95eceda8\\route_bWestMarauder_reverse_trajectory.json",
+              "sha256": "d0b0204b626a5ebf572fe48aa93af323d7951faf1f27f525090a10a3c5740558"
+            }
+          }
+        ],
+        "captures": [
+          {
+            "id": "view:lowerNWDetail",
+            "sha256": "a17f522ee193b8929046c8d1ef8d6cdf30e95704932ff51ed659590eb6b3921a",
+            "pixelSha256": "47f330e65aa8fc86d3320c811f8aac70284cef7023cd54630e3d13a18c69f6fa",
+            "requested": {
+              "x": 37,
+              "y": 37,
+              "distance": 24,
+              "pitch": 60,
+              "yaw": 240
+            },
+            "observed": {
+              "target": {
+                "x": 37,
+                "y": 37
+              },
+              "pitch": 59.9414,
+              "yaw": -120.0586,
+              "distance": 24
+            }
+          },
+          {
+            "id": "view:lowerNWReverse",
+            "sha256": "be876150107b6a6147fa205464b88e8fbf9253e2600b8661bb02e752f2dc0e7d",
+            "pixelSha256": "b330a197b166d6f611d43a4cb7287f333f18e6bfda3dd09b332daf71eb6b8366",
+            "requested": {
+              "x": 37,
+              "y": 37,
+              "distance": 24,
+              "pitch": 60,
+              "yaw": 60
+            },
+            "observed": {
+              "target": {
+                "x": 37,
+                "y": 37
+              },
+              "pitch": 59.9414,
+              "yaw": 59.9414,
+              "distance": 24
+            }
+          },
+          {
+            "id": "view:lowerNEDetail",
+            "sha256": "e052a10f5a3842d8524772a5e01170fdeb30b9226076e8e79b032f170f58ea0a",
+            "pixelSha256": "392dcfcb6230ba02d67e7b04ffd5ce2f413faaee2ca20ccbe56f55cc15b53ff0",
+            "requested": {
+              "x": 89,
+              "y": 37,
+              "distance": 24,
+              "pitch": 60,
+              "yaw": 240
+            },
+            "observed": {
+              "target": {
+                "x": 89,
+                "y": 37
+              },
+              "pitch": 59.9414,
+              "yaw": -120.0586,
+              "distance": 24
+            }
+          },
+          {
+            "id": "view:lowerNEReverse",
+            "sha256": "ad42947db775406936cd539b01c2109d76e8b175785e15b694950718606602cc",
+            "pixelSha256": "0c82d78dac96e517a30083786caeb9056b061fcb2bc77fca9824b68723ba33e9",
+            "requested": {
+              "x": 89,
+              "y": 37,
+              "distance": 24,
+              "pitch": 60,
+              "yaw": 60
+            },
+            "observed": {
+              "target": {
+                "x": 89,
+                "y": 37
+              },
+              "pitch": 59.9414,
+              "yaw": 59.9414,
+              "distance": 24
+            }
+          }
+        ]
+      },
+      {
+        "jobId": "a00a1491-8f28-4918-8467-a9ee923de33b",
+        "report": {
+          "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\a00a1491-8f28-4918-8467-a9ee923de33b\\result.json",
+          "sha256": "a1c6255d3f097a506926a30364a99b0f28c68a236aa53d002c30a3dcaff30199"
+        },
+        "artifact": {
+          "origin": "native_saved",
+          "sha256": "bc0947c5c5450cdec11c957d6f0e958f85b373a0d0e69b0245d5fc94e2622281"
+        },
+        "sourceSha256": "ab33b84667186aa8ccfa5d17691279e719b0f4da001b5d39937cfd3928e9e3cc",
+        "editorInitial": {
+          "file": "L:\\NE\\jobs\\3c60f610-48ca-4200-8991-ebbb2fc95aea\\result.json",
+          "sha256": "8cbf1fa747752ff0d20ead81eccbc2dde9399c1205481a3262051f40c1a6076e"
+        },
+        "savedComparison": {
+          "beforeCount": 33,
+          "savedCount": 32,
+          "reopenedCount": 32,
+          "changedByNativeSave": 5,
+          "added": 0,
+          "removed": 1,
+          "modified": 4,
+          "savedToReopenedEqual": true,
+          "changes": [
+            {
+              "name": "(attributes)",
+              "locale": "enUS",
+              "change": "modified",
+              "before": {
+                "key": "enUS:(attributes)",
+                "name": "(attributes)",
+                "archiveName": "(attributes)",
+                "locale": "enUS",
+                "bytes": 932,
+                "sha256": "4f3a672fb98531c234f6d76c724a0498bf80c0ce2952328088d37edd31cca746"
+              },
+              "after": {
+                "key": "enUS:(attributes)",
+                "name": "(attributes)",
+                "archiveName": "(attributes)",
+                "locale": "enUS",
+                "bytes": 648,
+                "sha256": "c84067e57a67686e9c3f503c16ff3f08028a55fa53af45c15f75af0a44587b12"
+              },
+              "archiveMetadata": true
+            },
+            {
+              "name": "(listfile)",
+              "locale": "enUS",
+              "change": "modified",
+              "before": {
+                "key": "enUS:(listfile)",
+                "name": "(listfile)",
+                "archiveName": "(listfile)",
+                "locale": "enUS",
+                "bytes": 562,
+                "sha256": "285c77b0fc4f4c88f4802454d6a20c28d3c6432677ae9240a4e0d5663f7db56d"
+              },
+              "after": {
+                "key": "enUS:(listfile)",
+                "name": "(listfile)",
+                "archiveName": "(listfile)",
+                "locale": "enUS",
+                "bytes": 535,
+                "sha256": "3ef51f1ef9fd0d0935d425ac833b477ae1a94fe15097cbfeb329930371171202"
+              },
+              "archiveMetadata": true
+            },
+            {
+              "name": "Base.SC2Data/GameData.xml",
+              "locale": "enUS",
+              "change": "removed",
+              "before": {
+                "key": "enUS:base.sc2data/gamedata.xml",
+                "name": "Base.SC2Data/GameData.xml",
+                "archiveName": "Base.SC2Data\\GameData.xml",
+                "locale": "enUS",
+                "bytes": 53,
+                "sha256": "bbe5d28d75810657c6e365fa217a8847569097401b2c978782eab8cbb8e633e0"
+              },
+              "after": null,
+              "archiveMetadata": false
+            },
+            {
+              "name": "ComponentList.SC2Components",
+              "locale": "enUS",
+              "change": "modified",
+              "before": {
+                "key": "enUS:componentlist.sc2components",
+                "name": "ComponentList.SC2Components",
+                "archiveName": "ComponentList.SC2Components",
+                "locale": "enUS",
+                "bytes": 492,
+                "sha256": "e19eb3a5c779ee8fb3f932758c9ea0b92241336e9b232793954a5cde7d14cf5c"
+              },
+              "after": {
+                "key": "enUS:componentlist.sc2components",
+                "name": "ComponentList.SC2Components",
+                "archiveName": "ComponentList.SC2Components",
+                "locale": "enUS",
+                "bytes": 508,
+                "sha256": "9ea7c9e7667d365b8eee877f4027736dc4b0d8c7727e7d4438397b671d0545b4"
+              },
+              "archiveMetadata": false
+            },
+            {
+              "name": "DocumentHeader",
+              "locale": "enUS",
+              "change": "modified",
+              "before": {
+                "key": "enUS:documentheader",
+                "name": "DocumentHeader",
+                "archiveName": "DocumentHeader",
+                "locale": "enUS",
+                "bytes": 369,
+                "sha256": "52167ab8afbe533b139c90c618a083fc2598bcae1842331cb3e1662fe93a96eb"
+              },
+              "after": {
+                "key": "enUS:documentheader",
+                "name": "DocumentHeader",
+                "archiveName": "DocumentHeader",
+                "locale": "enUS",
+                "bytes": 369,
+                "sha256": "b2c9811c5e29d8ef091f941cbb6a8a122332944f6edb7fb38e2f98619fff47a9"
+              },
+              "archiveMetadata": false
+            }
+          ],
+          "changesTruncated": false
+        },
+        "gameRuntime": {
+          "provenance": "pinned_release",
+          "releaseTag": "v0.1.0-dev.11",
+          "archiveSha256": "514096c72332f4d6629dee4a33a092957d3ee02a9c45281bb3a7ad59031c30f3",
+          "verifiedFiles": 113,
+          "binaryOverride": false
+        },
+        "routes": [
+          {
+            "id": "route:aWestMarine:forward",
+            "type": "Marine",
+            "owner": 1,
+            "samples": 13,
+            "unitId": "1da247c77b501ced6b938e53a7ca5acf:u:1",
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "from": {
+              "x": 13,
+              "y": 29
+            },
+            "to": {
+              "x": 23,
+              "y": 29
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\a00a1491-8f28-4918-8467-a9ee923de33b\\route_aWestMarine_forward_trajectory.json",
+              "sha256": "0d3ac64cd03f92f0d61cbe0ce17b032fdc85b3fb1fd40418148d17b2cc881511"
+            }
+          },
+          {
+            "id": "route:aWestMarine:reverse",
+            "type": "Marine",
+            "owner": 1,
+            "samples": 13,
+            "unitId": "1da247c77b501ced6b938e53a7ca5acf:u:2",
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "from": {
+              "x": 23,
+              "y": 29
+            },
+            "to": {
+              "x": 13,
+              "y": 29
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\a00a1491-8f28-4918-8467-a9ee923de33b\\route_aWestMarine_reverse_trajectory.json",
+              "sha256": "068c95b50bc1aabdda18f45a5bc8422822ad84aea352d015d32eba41aef6d2ab"
+            }
+          },
+          {
+            "id": "route:aWestMarauder:forward",
+            "type": "Marauder",
+            "owner": 1,
+            "samples": 13,
+            "unitId": "1da247c77b501ced6b938e53a7ca5acf:u:3",
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "from": {
+              "x": 13,
+              "y": 29
+            },
+            "to": {
+              "x": 23,
+              "y": 29
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\a00a1491-8f28-4918-8467-a9ee923de33b\\route_aWestMarauder_forward_trajectory.json",
+              "sha256": "e8837b8f7efcd4c518267d9b08c4f051989279a0c938c32221d59527ca6aea9b"
+            }
+          },
+          {
+            "id": "route:aWestMarauder:reverse",
+            "type": "Marauder",
+            "owner": 1,
+            "samples": 13,
+            "unitId": "1da247c77b501ced6b938e53a7ca5acf:u:4",
+            "maximumDeviation": 1.7763568394002505e-15,
+            "corridor": 1.75,
+            "from": {
+              "x": 23,
+              "y": 29
+            },
+            "to": {
+              "x": 13,
+              "y": 29
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\a00a1491-8f28-4918-8467-a9ee923de33b\\route_aWestMarauder_reverse_trajectory.json",
+              "sha256": "0a4473777ef84636b6106f10c589ff5c66d4fc7f96dc57aedbb682165de4a790"
+            }
+          },
+          {
+            "id": "route:aEastMarine:forward",
+            "type": "Marine",
+            "owner": 1,
+            "samples": 13,
+            "unitId": "1da247c77b501ced6b938e53a7ca5acf:u:5",
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "from": {
+              "x": 51,
+              "y": 47
+            },
+            "to": {
+              "x": 61,
+              "y": 47
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\a00a1491-8f28-4918-8467-a9ee923de33b\\route_aEastMarine_forward_trajectory.json",
+              "sha256": "e626ef964b4688fb7e8ffe017b9208fe2dbbd3c20dec67ec327034621f8689eb"
+            }
+          },
+          {
+            "id": "route:aEastMarine:reverse",
+            "type": "Marine",
+            "owner": 1,
+            "samples": 13,
+            "unitId": "1da247c77b501ced6b938e53a7ca5acf:u:6",
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "from": {
+              "x": 61,
+              "y": 47
+            },
+            "to": {
+              "x": 51,
+              "y": 47
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\a00a1491-8f28-4918-8467-a9ee923de33b\\route_aEastMarine_reverse_trajectory.json",
+              "sha256": "4bb23c2ae122bc3f17f8b717e58ad41092c331ac4d1ecb8503caea7490155c9c"
+            }
+          },
+          {
+            "id": "route:aEastMarauder:forward",
+            "type": "Marauder",
+            "owner": 1,
+            "samples": 13,
+            "unitId": "1da247c77b501ced6b938e53a7ca5acf:u:7",
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "from": {
+              "x": 51,
+              "y": 47
+            },
+            "to": {
+              "x": 61,
+              "y": 47
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\a00a1491-8f28-4918-8467-a9ee923de33b\\route_aEastMarauder_forward_trajectory.json",
+              "sha256": "84b90faa4fa6a3dec39f1021f52d83d0cfa2e47b9bde4193d94a1dc7edbd85c5"
+            }
+          },
+          {
+            "id": "route:aEastMarauder:reverse",
+            "type": "Marauder",
+            "owner": 1,
+            "samples": 13,
+            "unitId": "1da247c77b501ced6b938e53a7ca5acf:u:8",
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "from": {
+              "x": 61,
+              "y": 47
+            },
+            "to": {
+              "x": 51,
+              "y": 47
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\a00a1491-8f28-4918-8467-a9ee923de33b\\route_aEastMarauder_reverse_trajectory.json",
+              "sha256": "bc8a2e40405260810c4376f8a650dc97dc2915564fbe03b95f0bd8d52953040a"
+            }
+          },
+          {
+            "id": "route:bEastMarine:forward",
+            "type": "Marine",
+            "owner": 1,
+            "samples": 13,
+            "unitId": "1da247c77b501ced6b938e53a7ca5acf:u:9",
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "from": {
+              "x": 103,
+              "y": 29
+            },
+            "to": {
+              "x": 113,
+              "y": 29
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\a00a1491-8f28-4918-8467-a9ee923de33b\\route_bEastMarine_forward_trajectory.json",
+              "sha256": "cddc6474fded749ed69f8b1f62aba48c860981081dee24f4a1e9f3341148577f"
+            }
+          },
+          {
+            "id": "route:bEastMarine:reverse",
+            "type": "Marine",
+            "owner": 1,
+            "samples": 13,
+            "unitId": "1da247c77b501ced6b938e53a7ca5acf:u:10",
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "from": {
+              "x": 113,
+              "y": 29
+            },
+            "to": {
+              "x": 103,
+              "y": 29
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\a00a1491-8f28-4918-8467-a9ee923de33b\\route_bEastMarine_reverse_trajectory.json",
+              "sha256": "68f43ac953eaf583aad18a268be0cc726a68fa5eb272f4a1ddb7a244bb1f728d"
+            }
+          },
+          {
+            "id": "route:bEastMarauder:forward",
+            "type": "Marauder",
+            "owner": 1,
+            "samples": 14,
+            "unitId": "1da247c77b501ced6b938e53a7ca5acf:u:11",
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "from": {
+              "x": 103,
+              "y": 29
+            },
+            "to": {
+              "x": 113,
+              "y": 29
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\a00a1491-8f28-4918-8467-a9ee923de33b\\route_bEastMarauder_forward_trajectory.json",
+              "sha256": "bdd4776cdcba558b8f519fc3888798cf01b6df32a6d1363085b952e38df5d5e6"
+            }
+          },
+          {
+            "id": "route:bEastMarauder:reverse",
+            "type": "Marauder",
+            "owner": 1,
+            "samples": 15,
+            "unitId": "1da247c77b501ced6b938e53a7ca5acf:u:12",
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "from": {
+              "x": 113,
+              "y": 29
+            },
+            "to": {
+              "x": 103,
+              "y": 29
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\a00a1491-8f28-4918-8467-a9ee923de33b\\route_bEastMarauder_reverse_trajectory.json",
+              "sha256": "b463c174af791c643980d1f6c8f0754817bd8e272f588ee8b9685010d9791807"
+            }
+          },
+          {
+            "id": "route:bWestMarine:forward",
+            "type": "Marine",
+            "owner": 1,
+            "samples": 13,
+            "unitId": "1da247c77b501ced6b938e53a7ca5acf:u:13",
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "from": {
+              "x": 65,
+              "y": 47
+            },
+            "to": {
+              "x": 75,
+              "y": 47
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\a00a1491-8f28-4918-8467-a9ee923de33b\\route_bWestMarine_forward_trajectory.json",
+              "sha256": "bfc054002f34d15ec7475f5e5026bdb63fa27020c30768121d7cacf2af59b1e6"
+            }
+          },
+          {
+            "id": "route:bWestMarine:reverse",
+            "type": "Marine",
+            "owner": 1,
+            "samples": 13,
+            "unitId": "1da247c77b501ced6b938e53a7ca5acf:u:14",
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "from": {
+              "x": 75,
+              "y": 47
+            },
+            "to": {
+              "x": 65,
+              "y": 47
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\a00a1491-8f28-4918-8467-a9ee923de33b\\route_bWestMarine_reverse_trajectory.json",
+              "sha256": "82b73c062c94eb9a22630137c0715b9a230405948172738aa6e62edd6267a5f5"
+            }
+          },
+          {
+            "id": "route:bWestMarauder:forward",
+            "type": "Marauder",
+            "owner": 1,
+            "samples": 13,
+            "unitId": "1da247c77b501ced6b938e53a7ca5acf:u:15",
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "from": {
+              "x": 65,
+              "y": 47
+            },
+            "to": {
+              "x": 75,
+              "y": 47
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\a00a1491-8f28-4918-8467-a9ee923de33b\\route_bWestMarauder_forward_trajectory.json",
+              "sha256": "d1a4daee8c865ca74eebb35a56733afceb2ec22fd510181649cd2b3d18db14a7"
+            }
+          },
+          {
+            "id": "route:bWestMarauder:reverse",
+            "type": "Marauder",
+            "owner": 1,
+            "samples": 13,
+            "unitId": "1da247c77b501ced6b938e53a7ca5acf:u:16",
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "from": {
+              "x": 75,
+              "y": 47
+            },
+            "to": {
+              "x": 65,
+              "y": 47
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\a00a1491-8f28-4918-8467-a9ee923de33b\\route_bWestMarauder_reverse_trajectory.json",
+              "sha256": "acc891cab8489044689908cc7455d8bdeb2d9bafd825b9188da954f2c8728d70"
+            }
+          }
+        ],
+        "captures": [
+          {
+            "id": "view:lowerNWDetail",
+            "sha256": "a17f522ee193b8929046c8d1ef8d6cdf30e95704932ff51ed659590eb6b3921a",
+            "pixelSha256": "47f330e65aa8fc86d3320c811f8aac70284cef7023cd54630e3d13a18c69f6fa",
+            "requested": {
+              "x": 37,
+              "y": 37,
+              "distance": 24,
+              "pitch": 60,
+              "yaw": 240
+            },
+            "observed": {
+              "target": {
+                "x": 37,
+                "y": 37
+              },
+              "pitch": 59.9414,
+              "yaw": -120.0586,
+              "distance": 24
+            }
+          },
+          {
+            "id": "view:lowerNWReverse",
+            "sha256": "be876150107b6a6147fa205464b88e8fbf9253e2600b8661bb02e752f2dc0e7d",
+            "pixelSha256": "b330a197b166d6f611d43a4cb7287f333f18e6bfda3dd09b332daf71eb6b8366",
+            "requested": {
+              "x": 37,
+              "y": 37,
+              "distance": 24,
+              "pitch": 60,
+              "yaw": 60
+            },
+            "observed": {
+              "target": {
+                "x": 37,
+                "y": 37
+              },
+              "pitch": 59.9414,
+              "yaw": 59.9414,
+              "distance": 24
+            }
+          },
+          {
+            "id": "view:lowerNEDetail",
+            "sha256": "e052a10f5a3842d8524772a5e01170fdeb30b9226076e8e79b032f170f58ea0a",
+            "pixelSha256": "392dcfcb6230ba02d67e7b04ffd5ce2f413faaee2ca20ccbe56f55cc15b53ff0",
+            "requested": {
+              "x": 89,
+              "y": 37,
+              "distance": 24,
+              "pitch": 60,
+              "yaw": 240
+            },
+            "observed": {
+              "target": {
+                "x": 89,
+                "y": 37
+              },
+              "pitch": 59.9414,
+              "yaw": -120.0586,
+              "distance": 24
+            }
+          },
+          {
+            "id": "view:lowerNEReverse",
+            "sha256": "ad42947db775406936cd539b01c2109d76e8b175785e15b694950718606602cc",
+            "pixelSha256": "0c82d78dac96e517a30083786caeb9056b061fcb2bc77fca9824b68723ba33e9",
+            "requested": {
+              "x": 89,
+              "y": 37,
+              "distance": 24,
+              "pitch": 60,
+              "yaw": 60
+            },
+            "observed": {
+              "target": {
+                "x": 89,
+                "y": 37
+              },
+              "pitch": 59.9414,
+              "yaw": 59.9414,
+              "distance": 24
+            }
+          }
+        ]
+      },
+      {
+        "jobId": "cce920c2-3431-430f-89bb-8030dbf82759",
+        "report": {
+          "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\cce920c2-3431-430f-89bb-8030dbf82759\\result.json",
+          "sha256": "87d5ceb836ff89da06c08cc658e1f1b8516aeeaec08c8a637d31694c40438899"
+        },
+        "artifact": {
+          "origin": "native_saved",
+          "sha256": "bc0947c5c5450cdec11c957d6f0e958f85b373a0d0e69b0245d5fc94e2622281"
+        },
+        "sourceSha256": "ab33b84667186aa8ccfa5d17691279e719b0f4da001b5d39937cfd3928e9e3cc",
+        "editorInitial": {
+          "file": "L:\\NE\\jobs\\444dc306-5a15-486d-a74c-33f3594baffb\\result.json",
+          "sha256": "81cc087866fb890efbd5b174ea12f07413daed200de231ff14ee8af83bbf3354"
+        },
+        "savedComparison": {
+          "beforeCount": 33,
+          "savedCount": 32,
+          "reopenedCount": 32,
+          "changedByNativeSave": 5,
+          "added": 0,
+          "removed": 1,
+          "modified": 4,
+          "savedToReopenedEqual": true,
+          "changes": [
+            {
+              "name": "(attributes)",
+              "locale": "enUS",
+              "change": "modified",
+              "before": {
+                "key": "enUS:(attributes)",
+                "name": "(attributes)",
+                "archiveName": "(attributes)",
+                "locale": "enUS",
+                "bytes": 932,
+                "sha256": "4f3a672fb98531c234f6d76c724a0498bf80c0ce2952328088d37edd31cca746"
+              },
+              "after": {
+                "key": "enUS:(attributes)",
+                "name": "(attributes)",
+                "archiveName": "(attributes)",
+                "locale": "enUS",
+                "bytes": 648,
+                "sha256": "c84067e57a67686e9c3f503c16ff3f08028a55fa53af45c15f75af0a44587b12"
+              },
+              "archiveMetadata": true
+            },
+            {
+              "name": "(listfile)",
+              "locale": "enUS",
+              "change": "modified",
+              "before": {
+                "key": "enUS:(listfile)",
+                "name": "(listfile)",
+                "archiveName": "(listfile)",
+                "locale": "enUS",
+                "bytes": 562,
+                "sha256": "285c77b0fc4f4c88f4802454d6a20c28d3c6432677ae9240a4e0d5663f7db56d"
+              },
+              "after": {
+                "key": "enUS:(listfile)",
+                "name": "(listfile)",
+                "archiveName": "(listfile)",
+                "locale": "enUS",
+                "bytes": 535,
+                "sha256": "3ef51f1ef9fd0d0935d425ac833b477ae1a94fe15097cbfeb329930371171202"
+              },
+              "archiveMetadata": true
+            },
+            {
+              "name": "Base.SC2Data/GameData.xml",
+              "locale": "enUS",
+              "change": "removed",
+              "before": {
+                "key": "enUS:base.sc2data/gamedata.xml",
+                "name": "Base.SC2Data/GameData.xml",
+                "archiveName": "Base.SC2Data\\GameData.xml",
+                "locale": "enUS",
+                "bytes": 53,
+                "sha256": "bbe5d28d75810657c6e365fa217a8847569097401b2c978782eab8cbb8e633e0"
+              },
+              "after": null,
+              "archiveMetadata": false
+            },
+            {
+              "name": "ComponentList.SC2Components",
+              "locale": "enUS",
+              "change": "modified",
+              "before": {
+                "key": "enUS:componentlist.sc2components",
+                "name": "ComponentList.SC2Components",
+                "archiveName": "ComponentList.SC2Components",
+                "locale": "enUS",
+                "bytes": 492,
+                "sha256": "e19eb3a5c779ee8fb3f932758c9ea0b92241336e9b232793954a5cde7d14cf5c"
+              },
+              "after": {
+                "key": "enUS:componentlist.sc2components",
+                "name": "ComponentList.SC2Components",
+                "archiveName": "ComponentList.SC2Components",
+                "locale": "enUS",
+                "bytes": 508,
+                "sha256": "9ea7c9e7667d365b8eee877f4027736dc4b0d8c7727e7d4438397b671d0545b4"
+              },
+              "archiveMetadata": false
+            },
+            {
+              "name": "DocumentHeader",
+              "locale": "enUS",
+              "change": "modified",
+              "before": {
+                "key": "enUS:documentheader",
+                "name": "DocumentHeader",
+                "archiveName": "DocumentHeader",
+                "locale": "enUS",
+                "bytes": 369,
+                "sha256": "52167ab8afbe533b139c90c618a083fc2598bcae1842331cb3e1662fe93a96eb"
+              },
+              "after": {
+                "key": "enUS:documentheader",
+                "name": "DocumentHeader",
+                "archiveName": "DocumentHeader",
+                "locale": "enUS",
+                "bytes": 369,
+                "sha256": "b2c9811c5e29d8ef091f941cbb6a8a122332944f6edb7fb38e2f98619fff47a9"
+              },
+              "archiveMetadata": false
+            }
+          ],
+          "changesTruncated": false
+        },
+        "gameRuntime": {
+          "provenance": "pinned_release",
+          "releaseTag": "v0.1.0-dev.11",
+          "archiveSha256": "514096c72332f4d6629dee4a33a092957d3ee02a9c45281bb3a7ad59031c30f3",
+          "verifiedFiles": 113,
+          "binaryOverride": false
+        },
+        "routes": [
+          {
+            "id": "route:cBaseMarine:forward",
+            "type": "Marine",
+            "owner": 1,
+            "samples": 13,
+            "unitId": "cc04f014e7a5ba78e03bd0eeb9dbf4cd:u:1",
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "from": {
+              "x": 11,
+              "y": 113
+            },
+            "to": {
+              "x": 21,
+              "y": 113
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\cce920c2-3431-430f-89bb-8030dbf82759\\route_cBaseMarine_forward_trajectory.json",
+              "sha256": "2f9c5ac3c5ebc1dfe6b081ef72f21fc80d612ff1fefcf3acec61a6f7563df5b6"
+            }
+          },
+          {
+            "id": "route:cBaseMarine:reverse",
+            "type": "Marine",
+            "owner": 1,
+            "samples": 13,
+            "unitId": "cc04f014e7a5ba78e03bd0eeb9dbf4cd:u:2",
+            "maximumDeviation": 1.7763568394002505e-15,
+            "corridor": 1.75,
+            "from": {
+              "x": 21,
+              "y": 113
+            },
+            "to": {
+              "x": 11,
+              "y": 113
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\cce920c2-3431-430f-89bb-8030dbf82759\\route_cBaseMarine_reverse_trajectory.json",
+              "sha256": "0864f4889eb529f65f1d433a32e362612d16691cc8ecdeaef983dd5271111f4c"
+            }
+          },
+          {
+            "id": "route:cBaseMarauder:forward",
+            "type": "Marauder",
+            "owner": 1,
+            "samples": 14,
+            "unitId": "cc04f014e7a5ba78e03bd0eeb9dbf4cd:u:3",
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "from": {
+              "x": 11,
+              "y": 113
+            },
+            "to": {
+              "x": 21,
+              "y": 113
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\cce920c2-3431-430f-89bb-8030dbf82759\\route_cBaseMarauder_forward_trajectory.json",
+              "sha256": "d380a6b2fff1ae551a24fec1fef11976de745b976e386cbb5f5ccd938f76e394"
+            }
+          },
+          {
+            "id": "route:cBaseMarauder:reverse",
+            "type": "Marauder",
+            "owner": 1,
+            "samples": 14,
+            "unitId": "cc04f014e7a5ba78e03bd0eeb9dbf4cd:u:4",
+            "maximumDeviation": 1.7763568394002505e-15,
+            "corridor": 1.75,
+            "from": {
+              "x": 21,
+              "y": 113
+            },
+            "to": {
+              "x": 11,
+              "y": 113
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\cce920c2-3431-430f-89bb-8030dbf82759\\route_cBaseMarauder_reverse_trajectory.json",
+              "sha256": "8504032f713e1f52ebd76ef74e328ae1fba3fbca44ee38dbd2653d561f4c2df9"
+            }
+          },
+          {
+            "id": "route:cWestMarine:forward",
+            "type": "Marine",
+            "owner": 1,
+            "samples": 14,
+            "unitId": "cc04f014e7a5ba78e03bd0eeb9dbf4cd:u:5",
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "from": {
+              "x": 17,
+              "y": 85
+            },
+            "to": {
+              "x": 27,
+              "y": 85
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\cce920c2-3431-430f-89bb-8030dbf82759\\route_cWestMarine_forward_trajectory.json",
+              "sha256": "70f6be43b2571fb1cb35315a8d8f12446d84623a9511b23084ff7a237f26feb6"
+            }
+          },
+          {
+            "id": "route:cWestMarine:reverse",
+            "type": "Marine",
+            "owner": 1,
+            "samples": 13,
+            "unitId": "cc04f014e7a5ba78e03bd0eeb9dbf4cd:u:6",
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "from": {
+              "x": 27,
+              "y": 85
+            },
+            "to": {
+              "x": 17,
+              "y": 85
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\cce920c2-3431-430f-89bb-8030dbf82759\\route_cWestMarine_reverse_trajectory.json",
+              "sha256": "211541a60982520263523370eac7e8f19d505eaeb07b43c568e0948065219823"
+            }
+          },
+          {
+            "id": "route:cWestMarauder:forward",
+            "type": "Marauder",
+            "owner": 1,
+            "samples": 13,
+            "unitId": "cc04f014e7a5ba78e03bd0eeb9dbf4cd:u:7",
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "from": {
+              "x": 17,
+              "y": 85
+            },
+            "to": {
+              "x": 27,
+              "y": 85
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\cce920c2-3431-430f-89bb-8030dbf82759\\route_cWestMarauder_forward_trajectory.json",
+              "sha256": "e8270ba7174f2ed8e5a4dc02968ee26ac59f5e82503d73ca7628d3dff6dbc696"
+            }
+          },
+          {
+            "id": "route:cWestMarauder:reverse",
+            "type": "Marauder",
+            "owner": 1,
+            "samples": 13,
+            "unitId": "cc04f014e7a5ba78e03bd0eeb9dbf4cd:u:8",
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "from": {
+              "x": 27,
+              "y": 85
+            },
+            "to": {
+              "x": 17,
+              "y": 85
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\cce920c2-3431-430f-89bb-8030dbf82759\\route_cWestMarauder_reverse_trajectory.json",
+              "sha256": "efa7cff5608d475893218f243b7ad4c82315ee9c7cc8db6d4469d683d64d5d36"
+            }
+          },
+          {
+            "id": "route:cEastMarine:forward",
+            "type": "Marine",
+            "owner": 1,
+            "samples": 14,
+            "unitId": "cc04f014e7a5ba78e03bd0eeb9dbf4cd:u:9",
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "from": {
+              "x": 55,
+              "y": 101
+            },
+            "to": {
+              "x": 65,
+              "y": 101
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\cce920c2-3431-430f-89bb-8030dbf82759\\route_cEastMarine_forward_trajectory.json",
+              "sha256": "6236532274cda48363f03485704257fbcdace01dc68d28a8280b0c158070f8de"
+            }
+          },
+          {
+            "id": "route:cEastMarine:reverse",
+            "type": "Marine",
+            "owner": 1,
+            "samples": 13,
+            "unitId": "cc04f014e7a5ba78e03bd0eeb9dbf4cd:u:10",
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "from": {
+              "x": 65,
+              "y": 101
+            },
+            "to": {
+              "x": 55,
+              "y": 101
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\cce920c2-3431-430f-89bb-8030dbf82759\\route_cEastMarine_reverse_trajectory.json",
+              "sha256": "78a956d598aa58d9afff81da9de50d45193a2914b5e266bc8cae880a88ea0524"
+            }
+          },
+          {
+            "id": "route:cEastMarauder:forward",
+            "type": "Marauder",
+            "owner": 1,
+            "samples": 13,
+            "unitId": "cc04f014e7a5ba78e03bd0eeb9dbf4cd:u:11",
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "from": {
+              "x": 55,
+              "y": 101
+            },
+            "to": {
+              "x": 65,
+              "y": 101
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\cce920c2-3431-430f-89bb-8030dbf82759\\route_cEastMarauder_forward_trajectory.json",
+              "sha256": "45800f87a3e8132e0dac23bf53b1c57fa6f53a0828377ea551875eaf996de2e7"
+            }
+          },
+          {
+            "id": "route:cEastMarauder:reverse",
+            "type": "Marauder",
+            "owner": 1,
+            "samples": 13,
+            "unitId": "cc04f014e7a5ba78e03bd0eeb9dbf4cd:u:12",
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "from": {
+              "x": 65,
+              "y": 101
+            },
+            "to": {
+              "x": 55,
+              "y": 101
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\cce920c2-3431-430f-89bb-8030dbf82759\\route_cEastMarauder_reverse_trajectory.json",
+              "sha256": "58e659eb0781103a4b92cf7da2bf478034e082d815449c168d1b4511d06b580c"
+            }
+          },
+          {
+            "id": "route:dBaseMarine:forward",
+            "type": "Marine",
+            "owner": 1,
+            "samples": 13,
+            "unitId": "cc04f014e7a5ba78e03bd0eeb9dbf4cd:u:13",
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "from": {
+              "x": 71,
+              "y": 115
+            },
+            "to": {
+              "x": 81,
+              "y": 115
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\cce920c2-3431-430f-89bb-8030dbf82759\\route_dBaseMarine_forward_trajectory.json",
+              "sha256": "dd582c11f751b98fcf1128e0b50b3070d4f5898963d9ec6e0b729ff58c067251"
+            }
+          },
+          {
+            "id": "route:dBaseMarine:reverse",
+            "type": "Marine",
+            "owner": 1,
+            "samples": 13,
+            "unitId": "cc04f014e7a5ba78e03bd0eeb9dbf4cd:u:14",
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "from": {
+              "x": 81,
+              "y": 115
+            },
+            "to": {
+              "x": 71,
+              "y": 115
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\cce920c2-3431-430f-89bb-8030dbf82759\\route_dBaseMarine_reverse_trajectory.json",
+              "sha256": "ba18d0e3965c3b2995665b025c20c21602b85501b798c9665bb063b96b4dba6a"
+            }
+          },
+          {
+            "id": "route:dBaseMarauder:forward",
+            "type": "Marauder",
+            "owner": 1,
+            "samples": 14,
+            "unitId": "cc04f014e7a5ba78e03bd0eeb9dbf4cd:u:15",
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "from": {
+              "x": 71,
+              "y": 115
+            },
+            "to": {
+              "x": 81,
+              "y": 115
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\cce920c2-3431-430f-89bb-8030dbf82759\\route_dBaseMarauder_forward_trajectory.json",
+              "sha256": "55beda557bf4c5ad416ef9bb530212b61ba3c628e2ed5a78dc998d95e270fa11"
+            }
+          },
+          {
+            "id": "route:dBaseMarauder:reverse",
+            "type": "Marauder",
+            "owner": 1,
+            "samples": 13,
+            "unitId": "cc04f014e7a5ba78e03bd0eeb9dbf4cd:u:16",
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "from": {
+              "x": 81,
+              "y": 115
+            },
+            "to": {
+              "x": 71,
+              "y": 115
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\cce920c2-3431-430f-89bb-8030dbf82759\\route_dBaseMarauder_reverse_trajectory.json",
+              "sha256": "d6d5c740426ebc0c74b5d43f275de2adcad55fd8dd807a5d891d1bcea5e54878"
+            }
+          },
+          {
+            "id": "route:dEastMarine:forward",
+            "type": "Marine",
+            "owner": 1,
+            "samples": 13,
+            "unitId": "cc04f014e7a5ba78e03bd0eeb9dbf4cd:u:17",
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "from": {
+              "x": 117,
+              "y": 85
+            },
+            "to": {
+              "x": 127,
+              "y": 85
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\cce920c2-3431-430f-89bb-8030dbf82759\\route_dEastMarine_forward_trajectory.json",
+              "sha256": "14645d59d2ce91eb385d454f6fcc18076737860965c80c28ea5225af6a2f5620"
+            }
+          },
+          {
+            "id": "route:dEastMarine:reverse",
+            "type": "Marine",
+            "owner": 1,
+            "samples": 13,
+            "unitId": "cc04f014e7a5ba78e03bd0eeb9dbf4cd:u:18",
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "from": {
+              "x": 127,
+              "y": 85
+            },
+            "to": {
+              "x": 117,
+              "y": 85
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\cce920c2-3431-430f-89bb-8030dbf82759\\route_dEastMarine_reverse_trajectory.json",
+              "sha256": "399ad903cdd07ea6de24189315ad92d69e99389dd47dc096a604b1972cc34b88"
+            }
+          },
+          {
+            "id": "route:dEastMarauder:forward",
+            "type": "Marauder",
+            "owner": 1,
+            "samples": 13,
+            "unitId": "cc04f014e7a5ba78e03bd0eeb9dbf4cd:u:19",
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "from": {
+              "x": 117,
+              "y": 85
+            },
+            "to": {
+              "x": 127,
+              "y": 85
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\cce920c2-3431-430f-89bb-8030dbf82759\\route_dEastMarauder_forward_trajectory.json",
+              "sha256": "1e898e1a3f6d1dc93b0a852b22ea7a72ff3e262f01dc14b6430e213111280dda"
+            }
+          },
+          {
+            "id": "route:dEastMarauder:reverse",
+            "type": "Marauder",
+            "owner": 1,
+            "samples": 13,
+            "unitId": "cc04f014e7a5ba78e03bd0eeb9dbf4cd:u:20",
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "from": {
+              "x": 127,
+              "y": 85
+            },
+            "to": {
+              "x": 117,
+              "y": 85
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\cce920c2-3431-430f-89bb-8030dbf82759\\route_dEastMarauder_reverse_trajectory.json",
+              "sha256": "38dda5a1eab9af3afdfa0cbc30c7c0d7517b2d82be2987b46bb2181fbf827dfb"
+            }
+          },
+          {
+            "id": "route:dWestMarine:forward",
+            "type": "Marine",
+            "owner": 1,
+            "samples": 13,
+            "unitId": "cc04f014e7a5ba78e03bd0eeb9dbf4cd:u:21",
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "from": {
+              "x": 79,
+              "y": 101
+            },
+            "to": {
+              "x": 89,
+              "y": 101
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\cce920c2-3431-430f-89bb-8030dbf82759\\route_dWestMarine_forward_trajectory.json",
+              "sha256": "b5c2cfe95130e30d4e0076f7e8ecb78530c2739ec96390477251c32acb0e6f13"
+            }
+          },
+          {
+            "id": "route:dWestMarine:reverse",
+            "type": "Marine",
+            "owner": 1,
+            "samples": 14,
+            "unitId": "cc04f014e7a5ba78e03bd0eeb9dbf4cd:u:22",
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "from": {
+              "x": 89,
+              "y": 101
+            },
+            "to": {
+              "x": 79,
+              "y": 101
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\cce920c2-3431-430f-89bb-8030dbf82759\\route_dWestMarine_reverse_trajectory.json",
+              "sha256": "4d97110fee2c29bdcc9ead6834b3fe3886537d5acd2c5542be02fd30b238651c"
+            }
+          },
+          {
+            "id": "route:dWestMarauder:forward",
+            "type": "Marauder",
+            "owner": 1,
+            "samples": 13,
+            "unitId": "cc04f014e7a5ba78e03bd0eeb9dbf4cd:u:23",
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "from": {
+              "x": 79,
+              "y": 101
+            },
+            "to": {
+              "x": 89,
+              "y": 101
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\cce920c2-3431-430f-89bb-8030dbf82759\\route_dWestMarauder_forward_trajectory.json",
+              "sha256": "8efed0494aefcbfe0c86d1a22824cb4d1b8cacfa99231a2e7a5bc537155bbb15"
+            }
+          },
+          {
+            "id": "route:dWestMarauder:reverse",
+            "type": "Marauder",
+            "owner": 1,
+            "samples": 13,
+            "unitId": "cc04f014e7a5ba78e03bd0eeb9dbf4cd:u:24",
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "from": {
+              "x": 89,
+              "y": 101
+            },
+            "to": {
+              "x": 79,
+              "y": 101
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\cce920c2-3431-430f-89bb-8030dbf82759\\route_dWestMarauder_reverse_trajectory.json",
+              "sha256": "eaab6b006a2a1f28871b9e6d6dac7ffce2f7ec6a42d3c643f83ecef38d9d6b19"
+            }
+          }
+        ],
+        "captures": [
+          {
+            "id": "view:upperNWDetail",
+            "sha256": "76a32b9ae5c8260c76fc684c9bfde5945602a3e0b82633402e3c3a6c1d74f398",
+            "pixelSha256": "f407ca8a66394ba6aa814e65c24e4ab0bf449449982f792088dbefaad3a771c6",
+            "requested": {
+              "x": 41,
+              "y": 93,
+              "distance": 24,
+              "pitch": 60,
+              "yaw": 240
+            },
+            "observed": {
+              "target": {
+                "x": 41,
+                "y": 93
+              },
+              "pitch": 59.9414,
+              "yaw": -120.0586,
+              "distance": 24
+            }
+          },
+          {
+            "id": "view:upperNWReverse",
+            "sha256": "7341410e9cd705dbcf015ff42117f7ac2e094f54c51f846509eefac62c82c8c2",
+            "pixelSha256": "9a51a8b2354b16019544036b9312b6bed78eade1f6719147ef9e99a1c4aaf861",
+            "requested": {
+              "x": 41,
+              "y": 93,
+              "distance": 24,
+              "pitch": 60,
+              "yaw": 60
+            },
+            "observed": {
+              "target": {
+                "x": 41,
+                "y": 93
+              },
+              "pitch": 59.9414,
+              "yaw": 59.9414,
+              "distance": 24
+            }
+          },
+          {
+            "id": "view:upperNEDetail",
+            "sha256": "6e36b1518b8833decdd1c5faa6b84693316cff83b284b7f8090f02b825c7a02a",
+            "pixelSha256": "ce98cda162e281b33df49ffd9fc379bd30b82c97a5d92cdc6601102f1ff55e39",
+            "requested": {
+              "x": 103,
+              "y": 93,
+              "distance": 24,
+              "pitch": 60,
+              "yaw": 240
+            },
+            "observed": {
+              "target": {
+                "x": 103,
+                "y": 93
+              },
+              "pitch": 59.9414,
+              "yaw": -120.0586,
+              "distance": 24
+            }
+          },
+          {
+            "id": "view:upperNEReverse",
+            "sha256": "323a0814d8ed91c41504af1482715b700f7f711c43ebbb27f08b5b366e327b9e",
+            "pixelSha256": "14655d26e4764ea6dd5591e1837b60012ed20b4962ee13e22b938694fc9f9c87",
+            "requested": {
+              "x": 103,
+              "y": 93,
+              "distance": 24,
+              "pitch": 60,
+              "yaw": 60
+            },
+            "observed": {
+              "target": {
+                "x": 103,
+                "y": 93
+              },
+              "pitch": 59.9414,
+              "yaw": 59.9414,
+              "distance": 24
+            }
+          }
+        ]
+      },
+      {
+        "jobId": "56d7a987-c994-4ed1-9aef-e9444b19320c",
+        "report": {
+          "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\56d7a987-c994-4ed1-9aef-e9444b19320c\\result.json",
+          "sha256": "c17ceb8306cf1c19e673faef77c3febb4c20485637ff766f0f2d1b28ca6c450d"
+        },
+        "artifact": {
+          "origin": "native_saved",
+          "sha256": "bc0947c5c5450cdec11c957d6f0e958f85b373a0d0e69b0245d5fc94e2622281"
+        },
+        "sourceSha256": "ab33b84667186aa8ccfa5d17691279e719b0f4da001b5d39937cfd3928e9e3cc",
+        "editorInitial": {
+          "file": "L:\\NE\\jobs\\0da66547-bd18-4125-807e-b9e77b8c494d\\result.json",
+          "sha256": "c30b42735f07b45fbb5224580218cda800bb62995a818f8fbf43b7fcdf6265d7"
+        },
+        "savedComparison": {
+          "beforeCount": 33,
+          "savedCount": 32,
+          "reopenedCount": 32,
+          "changedByNativeSave": 5,
+          "added": 0,
+          "removed": 1,
+          "modified": 4,
+          "savedToReopenedEqual": true,
+          "changes": [
+            {
+              "name": "(attributes)",
+              "locale": "enUS",
+              "change": "modified",
+              "before": {
+                "key": "enUS:(attributes)",
+                "name": "(attributes)",
+                "archiveName": "(attributes)",
+                "locale": "enUS",
+                "bytes": 932,
+                "sha256": "4f3a672fb98531c234f6d76c724a0498bf80c0ce2952328088d37edd31cca746"
+              },
+              "after": {
+                "key": "enUS:(attributes)",
+                "name": "(attributes)",
+                "archiveName": "(attributes)",
+                "locale": "enUS",
+                "bytes": 648,
+                "sha256": "c84067e57a67686e9c3f503c16ff3f08028a55fa53af45c15f75af0a44587b12"
+              },
+              "archiveMetadata": true
+            },
+            {
+              "name": "(listfile)",
+              "locale": "enUS",
+              "change": "modified",
+              "before": {
+                "key": "enUS:(listfile)",
+                "name": "(listfile)",
+                "archiveName": "(listfile)",
+                "locale": "enUS",
+                "bytes": 562,
+                "sha256": "285c77b0fc4f4c88f4802454d6a20c28d3c6432677ae9240a4e0d5663f7db56d"
+              },
+              "after": {
+                "key": "enUS:(listfile)",
+                "name": "(listfile)",
+                "archiveName": "(listfile)",
+                "locale": "enUS",
+                "bytes": 535,
+                "sha256": "3ef51f1ef9fd0d0935d425ac833b477ae1a94fe15097cbfeb329930371171202"
+              },
+              "archiveMetadata": true
+            },
+            {
+              "name": "Base.SC2Data/GameData.xml",
+              "locale": "enUS",
+              "change": "removed",
+              "before": {
+                "key": "enUS:base.sc2data/gamedata.xml",
+                "name": "Base.SC2Data/GameData.xml",
+                "archiveName": "Base.SC2Data\\GameData.xml",
+                "locale": "enUS",
+                "bytes": 53,
+                "sha256": "bbe5d28d75810657c6e365fa217a8847569097401b2c978782eab8cbb8e633e0"
+              },
+              "after": null,
+              "archiveMetadata": false
+            },
+            {
+              "name": "ComponentList.SC2Components",
+              "locale": "enUS",
+              "change": "modified",
+              "before": {
+                "key": "enUS:componentlist.sc2components",
+                "name": "ComponentList.SC2Components",
+                "archiveName": "ComponentList.SC2Components",
+                "locale": "enUS",
+                "bytes": 492,
+                "sha256": "e19eb3a5c779ee8fb3f932758c9ea0b92241336e9b232793954a5cde7d14cf5c"
+              },
+              "after": {
+                "key": "enUS:componentlist.sc2components",
+                "name": "ComponentList.SC2Components",
+                "archiveName": "ComponentList.SC2Components",
+                "locale": "enUS",
+                "bytes": 508,
+                "sha256": "9ea7c9e7667d365b8eee877f4027736dc4b0d8c7727e7d4438397b671d0545b4"
+              },
+              "archiveMetadata": false
+            },
+            {
+              "name": "DocumentHeader",
+              "locale": "enUS",
+              "change": "modified",
+              "before": {
+                "key": "enUS:documentheader",
+                "name": "DocumentHeader",
+                "archiveName": "DocumentHeader",
+                "locale": "enUS",
+                "bytes": 369,
+                "sha256": "52167ab8afbe533b139c90c618a083fc2598bcae1842331cb3e1662fe93a96eb"
+              },
+              "after": {
+                "key": "enUS:documentheader",
+                "name": "DocumentHeader",
+                "archiveName": "DocumentHeader",
+                "locale": "enUS",
+                "bytes": 369,
+                "sha256": "b2c9811c5e29d8ef091f941cbb6a8a122332944f6edb7fb38e2f98619fff47a9"
+              },
+              "archiveMetadata": false
+            }
+          ],
+          "changesTruncated": false
+        },
+        "gameRuntime": {
+          "provenance": "pinned_release",
+          "releaseTag": "v0.1.0-dev.11",
+          "archiveSha256": "514096c72332f4d6629dee4a33a092957d3ee02a9c45281bb3a7ad59031c30f3",
+          "verifiedFiles": 113,
+          "binaryOverride": false
+        },
+        "routes": [
+          {
+            "id": "route:cBaseMarine:forward",
+            "type": "Marine",
+            "owner": 1,
+            "samples": 13,
+            "unitId": "1cfeb9f962910503c204065c78d2c4b3:u:1",
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "from": {
+              "x": 11,
+              "y": 113
+            },
+            "to": {
+              "x": 21,
+              "y": 113
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\56d7a987-c994-4ed1-9aef-e9444b19320c\\route_cBaseMarine_forward_trajectory.json",
+              "sha256": "c8697363ac488fe31b77e7c379ef2b4d9d8638653d719be282f9fd86a95f9bf4"
+            }
+          },
+          {
+            "id": "route:cBaseMarine:reverse",
+            "type": "Marine",
+            "owner": 1,
+            "samples": 13,
+            "unitId": "1cfeb9f962910503c204065c78d2c4b3:u:2",
+            "maximumDeviation": 1.7763568394002505e-15,
+            "corridor": 1.75,
+            "from": {
+              "x": 21,
+              "y": 113
+            },
+            "to": {
+              "x": 11,
+              "y": 113
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\56d7a987-c994-4ed1-9aef-e9444b19320c\\route_cBaseMarine_reverse_trajectory.json",
+              "sha256": "437ba0b7a4a6a842f304ad73b2f914cd8d6c91c06a4d55cb6133d4fb2fb65e33"
+            }
+          },
+          {
+            "id": "route:cBaseMarauder:forward",
+            "type": "Marauder",
+            "owner": 1,
+            "samples": 13,
+            "unitId": "1cfeb9f962910503c204065c78d2c4b3:u:3",
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "from": {
+              "x": 11,
+              "y": 113
+            },
+            "to": {
+              "x": 21,
+              "y": 113
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\56d7a987-c994-4ed1-9aef-e9444b19320c\\route_cBaseMarauder_forward_trajectory.json",
+              "sha256": "d6247aa92f9f4c6217e73a0dfe653e87461cdc1e0f67f1454d159469d677d3b5"
+            }
+          },
+          {
+            "id": "route:cBaseMarauder:reverse",
+            "type": "Marauder",
+            "owner": 1,
+            "samples": 13,
+            "unitId": "1cfeb9f962910503c204065c78d2c4b3:u:4",
+            "maximumDeviation": 1.7763568394002505e-15,
+            "corridor": 1.75,
+            "from": {
+              "x": 21,
+              "y": 113
+            },
+            "to": {
+              "x": 11,
+              "y": 113
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\56d7a987-c994-4ed1-9aef-e9444b19320c\\route_cBaseMarauder_reverse_trajectory.json",
+              "sha256": "77a5ca230381382436e9da023a358f340ddbc33a09fd10db2fb9d6cfb20a3231"
+            }
+          },
+          {
+            "id": "route:cWestMarine:forward",
+            "type": "Marine",
+            "owner": 1,
+            "samples": 13,
+            "unitId": "1cfeb9f962910503c204065c78d2c4b3:u:5",
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "from": {
+              "x": 17,
+              "y": 85
+            },
+            "to": {
+              "x": 27,
+              "y": 85
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\56d7a987-c994-4ed1-9aef-e9444b19320c\\route_cWestMarine_forward_trajectory.json",
+              "sha256": "2e9b7cf501396882f10a979dd18314cad00a8a6f39cba9789bedabb284bd5bc9"
+            }
+          },
+          {
+            "id": "route:cWestMarine:reverse",
+            "type": "Marine",
+            "owner": 1,
+            "samples": 14,
+            "unitId": "1cfeb9f962910503c204065c78d2c4b3:u:6",
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "from": {
+              "x": 27,
+              "y": 85
+            },
+            "to": {
+              "x": 17,
+              "y": 85
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\56d7a987-c994-4ed1-9aef-e9444b19320c\\route_cWestMarine_reverse_trajectory.json",
+              "sha256": "775c60e838a4e31825b58830c29621ddc87ab96a13b0f50c86d8b4351f6d3b80"
+            }
+          },
+          {
+            "id": "route:cWestMarauder:forward",
+            "type": "Marauder",
+            "owner": 1,
+            "samples": 13,
+            "unitId": "1cfeb9f962910503c204065c78d2c4b3:u:7",
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "from": {
+              "x": 17,
+              "y": 85
+            },
+            "to": {
+              "x": 27,
+              "y": 85
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\56d7a987-c994-4ed1-9aef-e9444b19320c\\route_cWestMarauder_forward_trajectory.json",
+              "sha256": "7515de4435771cec6152f61b468c86840f58af2ecf6f12093450c601b6652811"
+            }
+          },
+          {
+            "id": "route:cWestMarauder:reverse",
+            "type": "Marauder",
+            "owner": 1,
+            "samples": 14,
+            "unitId": "1cfeb9f962910503c204065c78d2c4b3:u:8",
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "from": {
+              "x": 27,
+              "y": 85
+            },
+            "to": {
+              "x": 17,
+              "y": 85
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\56d7a987-c994-4ed1-9aef-e9444b19320c\\route_cWestMarauder_reverse_trajectory.json",
+              "sha256": "d8c4f80b0c7d2033eee87cb38b83cab2c5ff8d4c6b4d7fd7520aaa44c32b5590"
+            }
+          },
+          {
+            "id": "route:cEastMarine:forward",
+            "type": "Marine",
+            "owner": 1,
+            "samples": 13,
+            "unitId": "1cfeb9f962910503c204065c78d2c4b3:u:9",
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "from": {
+              "x": 55,
+              "y": 101
+            },
+            "to": {
+              "x": 65,
+              "y": 101
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\56d7a987-c994-4ed1-9aef-e9444b19320c\\route_cEastMarine_forward_trajectory.json",
+              "sha256": "05ead1e3ddea00e3f1463f280d3c3a027ba3cd7ef8585ce579d83a0b439c6c19"
+            }
+          },
+          {
+            "id": "route:cEastMarine:reverse",
+            "type": "Marine",
+            "owner": 1,
+            "samples": 13,
+            "unitId": "1cfeb9f962910503c204065c78d2c4b3:u:10",
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "from": {
+              "x": 65,
+              "y": 101
+            },
+            "to": {
+              "x": 55,
+              "y": 101
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\56d7a987-c994-4ed1-9aef-e9444b19320c\\route_cEastMarine_reverse_trajectory.json",
+              "sha256": "e311c710821d46df8af298f12c305a037d1d262c31d9cc8d9f242ed911c4dc55"
+            }
+          },
+          {
+            "id": "route:cEastMarauder:forward",
+            "type": "Marauder",
+            "owner": 1,
+            "samples": 14,
+            "unitId": "1cfeb9f962910503c204065c78d2c4b3:u:11",
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "from": {
+              "x": 55,
+              "y": 101
+            },
+            "to": {
+              "x": 65,
+              "y": 101
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\56d7a987-c994-4ed1-9aef-e9444b19320c\\route_cEastMarauder_forward_trajectory.json",
+              "sha256": "74e5995bd1c550d58f396ecf72bdf7ed3c94e2e89005c60b15ceeecb243bd830"
+            }
+          },
+          {
+            "id": "route:cEastMarauder:reverse",
+            "type": "Marauder",
+            "owner": 1,
+            "samples": 13,
+            "unitId": "1cfeb9f962910503c204065c78d2c4b3:u:12",
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "from": {
+              "x": 65,
+              "y": 101
+            },
+            "to": {
+              "x": 55,
+              "y": 101
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\56d7a987-c994-4ed1-9aef-e9444b19320c\\route_cEastMarauder_reverse_trajectory.json",
+              "sha256": "0460221c651223b2bb79fdd7f7253a8b993f1e6dc5aecbb1f8a5df0361d727e5"
+            }
+          },
+          {
+            "id": "route:dBaseMarine:forward",
+            "type": "Marine",
+            "owner": 1,
+            "samples": 13,
+            "unitId": "1cfeb9f962910503c204065c78d2c4b3:u:13",
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "from": {
+              "x": 71,
+              "y": 115
+            },
+            "to": {
+              "x": 81,
+              "y": 115
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\56d7a987-c994-4ed1-9aef-e9444b19320c\\route_dBaseMarine_forward_trajectory.json",
+              "sha256": "c52441fb365d58e5d93e0fc389b6e31c9dc067ab6631727eec384dc796adbdee"
+            }
+          },
+          {
+            "id": "route:dBaseMarine:reverse",
+            "type": "Marine",
+            "owner": 1,
+            "samples": 13,
+            "unitId": "1cfeb9f962910503c204065c78d2c4b3:u:14",
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "from": {
+              "x": 81,
+              "y": 115
+            },
+            "to": {
+              "x": 71,
+              "y": 115
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\56d7a987-c994-4ed1-9aef-e9444b19320c\\route_dBaseMarine_reverse_trajectory.json",
+              "sha256": "948f0f7146c614373f012fc3e2175d4461e087a253b4da6f3b6ce7015d44c7a4"
+            }
+          },
+          {
+            "id": "route:dBaseMarauder:forward",
+            "type": "Marauder",
+            "owner": 1,
+            "samples": 14,
+            "unitId": "1cfeb9f962910503c204065c78d2c4b3:u:15",
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "from": {
+              "x": 71,
+              "y": 115
+            },
+            "to": {
+              "x": 81,
+              "y": 115
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\56d7a987-c994-4ed1-9aef-e9444b19320c\\route_dBaseMarauder_forward_trajectory.json",
+              "sha256": "8ccf4e9a30afd32ff9ae8c09f269dfecee7b14612609faa74cdf4796c094bb24"
+            }
+          },
+          {
+            "id": "route:dBaseMarauder:reverse",
+            "type": "Marauder",
+            "owner": 1,
+            "samples": 14,
+            "unitId": "1cfeb9f962910503c204065c78d2c4b3:u:16",
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "from": {
+              "x": 81,
+              "y": 115
+            },
+            "to": {
+              "x": 71,
+              "y": 115
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\56d7a987-c994-4ed1-9aef-e9444b19320c\\route_dBaseMarauder_reverse_trajectory.json",
+              "sha256": "903933b820ba944201bcdc055f8c55e05b1e306d5c81f46bef1019c8e446ac70"
+            }
+          },
+          {
+            "id": "route:dEastMarine:forward",
+            "type": "Marine",
+            "owner": 1,
+            "samples": 13,
+            "unitId": "1cfeb9f962910503c204065c78d2c4b3:u:17",
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "from": {
+              "x": 117,
+              "y": 85
+            },
+            "to": {
+              "x": 127,
+              "y": 85
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\56d7a987-c994-4ed1-9aef-e9444b19320c\\route_dEastMarine_forward_trajectory.json",
+              "sha256": "62ffcd66db596757af07846bd893adbac4340f1694528a2d6d9782e455428903"
+            }
+          },
+          {
+            "id": "route:dEastMarine:reverse",
+            "type": "Marine",
+            "owner": 1,
+            "samples": 14,
+            "unitId": "1cfeb9f962910503c204065c78d2c4b3:u:18",
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "from": {
+              "x": 127,
+              "y": 85
+            },
+            "to": {
+              "x": 117,
+              "y": 85
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\56d7a987-c994-4ed1-9aef-e9444b19320c\\route_dEastMarine_reverse_trajectory.json",
+              "sha256": "c3b43987202aedcba6dd24d684084a7d562d16d24fbea181f88c61451a15c379"
+            }
+          },
+          {
+            "id": "route:dEastMarauder:forward",
+            "type": "Marauder",
+            "owner": 1,
+            "samples": 13,
+            "unitId": "1cfeb9f962910503c204065c78d2c4b3:u:19",
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "from": {
+              "x": 117,
+              "y": 85
+            },
+            "to": {
+              "x": 127,
+              "y": 85
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\56d7a987-c994-4ed1-9aef-e9444b19320c\\route_dEastMarauder_forward_trajectory.json",
+              "sha256": "109a6b790cbdf6fa931e5771d26b6f5aaad4c1b63bd0e727c7ecbdd33369e5f9"
+            }
+          },
+          {
+            "id": "route:dEastMarauder:reverse",
+            "type": "Marauder",
+            "owner": 1,
+            "samples": 13,
+            "unitId": "1cfeb9f962910503c204065c78d2c4b3:u:20",
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "from": {
+              "x": 127,
+              "y": 85
+            },
+            "to": {
+              "x": 117,
+              "y": 85
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\56d7a987-c994-4ed1-9aef-e9444b19320c\\route_dEastMarauder_reverse_trajectory.json",
+              "sha256": "52f3423b551d667437ac50734693508bdcda944e801116b11e18eef94b10e561"
+            }
+          },
+          {
+            "id": "route:dWestMarine:forward",
+            "type": "Marine",
+            "owner": 1,
+            "samples": 14,
+            "unitId": "1cfeb9f962910503c204065c78d2c4b3:u:21",
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "from": {
+              "x": 79,
+              "y": 101
+            },
+            "to": {
+              "x": 89,
+              "y": 101
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\56d7a987-c994-4ed1-9aef-e9444b19320c\\route_dWestMarine_forward_trajectory.json",
+              "sha256": "47fe2c69c9b685e6131bb90c660b7353827648bc0d628246dedcd1707b350836"
+            }
+          },
+          {
+            "id": "route:dWestMarine:reverse",
+            "type": "Marine",
+            "owner": 1,
+            "samples": 14,
+            "unitId": "1cfeb9f962910503c204065c78d2c4b3:u:22",
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "from": {
+              "x": 89,
+              "y": 101
+            },
+            "to": {
+              "x": 79,
+              "y": 101
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\56d7a987-c994-4ed1-9aef-e9444b19320c\\route_dWestMarine_reverse_trajectory.json",
+              "sha256": "53cb2cd0c69445f80c882b4b2debe8a3fae33fc03873ff9f655f52472e676a26"
+            }
+          },
+          {
+            "id": "route:dWestMarauder:forward",
+            "type": "Marauder",
+            "owner": 1,
+            "samples": 14,
+            "unitId": "1cfeb9f962910503c204065c78d2c4b3:u:23",
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "from": {
+              "x": 79,
+              "y": 101
+            },
+            "to": {
+              "x": 89,
+              "y": 101
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\56d7a987-c994-4ed1-9aef-e9444b19320c\\route_dWestMarauder_forward_trajectory.json",
+              "sha256": "41a13600bbdc8180abb54fadad4455e7f5559480b419bfac5985243fdcb8abb6"
+            }
+          },
+          {
+            "id": "route:dWestMarauder:reverse",
+            "type": "Marauder",
+            "owner": 1,
+            "samples": 13,
+            "unitId": "1cfeb9f962910503c204065c78d2c4b3:u:24",
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "from": {
+              "x": 89,
+              "y": 101
+            },
+            "to": {
+              "x": 79,
+              "y": 101
+            },
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SaddleMasks-f7e6888b-6ff9-4f05-92e1-56d279905d68\\.sc2mcp-output\\project-tests\\56d7a987-c994-4ed1-9aef-e9444b19320c\\route_dWestMarauder_reverse_trajectory.json",
+              "sha256": "8367ff1c120803985da6d35a9244800e319c63e3d6ac7c7f6eca60c500132364"
+            }
+          }
+        ],
+        "captures": [
+          {
+            "id": "view:upperNWDetail",
+            "sha256": "76a32b9ae5c8260c76fc684c9bfde5945602a3e0b82633402e3c3a6c1d74f398",
+            "pixelSha256": "f407ca8a66394ba6aa814e65c24e4ab0bf449449982f792088dbefaad3a771c6",
+            "requested": {
+              "x": 41,
+              "y": 93,
+              "distance": 24,
+              "pitch": 60,
+              "yaw": 240
+            },
+            "observed": {
+              "target": {
+                "x": 41,
+                "y": 93
+              },
+              "pitch": 59.9414,
+              "yaw": -120.0586,
+              "distance": 24
+            }
+          },
+          {
+            "id": "view:upperNWReverse",
+            "sha256": "7341410e9cd705dbcf015ff42117f7ac2e094f54c51f846509eefac62c82c8c2",
+            "pixelSha256": "9a51a8b2354b16019544036b9312b6bed78eade1f6719147ef9e99a1c4aaf861",
+            "requested": {
+              "x": 41,
+              "y": 93,
+              "distance": 24,
+              "pitch": 60,
+              "yaw": 60
+            },
+            "observed": {
+              "target": {
+                "x": 41,
+                "y": 93
+              },
+              "pitch": 59.9414,
+              "yaw": 59.9414,
+              "distance": 24
+            }
+          },
+          {
+            "id": "view:upperNEDetail",
+            "sha256": "6e36b1518b8833decdd1c5faa6b84693316cff83b284b7f8090f02b825c7a02a",
+            "pixelSha256": "ce98cda162e281b33df49ffd9fc379bd30b82c97a5d92cdc6601102f1ff55e39",
+            "requested": {
+              "x": 103,
+              "y": 93,
+              "distance": 24,
+              "pitch": 60,
+              "yaw": 240
+            },
+            "observed": {
+              "target": {
+                "x": 103,
+                "y": 93
+              },
+              "pitch": 59.9414,
+              "yaw": -120.0586,
+              "distance": 24
+            }
+          },
+          {
+            "id": "view:upperNEReverse",
+            "sha256": "323a0814d8ed91c41504af1482715b700f7f711c43ebbb27f08b5b366e327b9e",
+            "pixelSha256": "14655d26e4764ea6dd5591e1837b60012ed20b4962ee13e22b938694fc9f9c87",
+            "requested": {
+              "x": 103,
+              "y": 93,
+              "distance": 24,
+              "pitch": 60,
+              "yaw": 60
+            },
+            "observed": {
+              "target": {
+                "x": 103,
+                "y": 93
+              },
+              "pitch": 59.9414,
+              "yaw": 59.9414,
+              "distance": 24
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "serialization": "All four roundtrips preserve the terrain/GUI/MapScript payload bytes; only archive/header/ComponentList metadata and an empty Includes file may differ. Exact saved/reopened components match, and the selected archive is independently loaded/compiled before game launch. This does not establish a native navigation rebuild operation.",
+  "render": {
+    "receipt": {
+      "file": "work/launch-diagnostics-20261022/saddle-sync-render-review.json",
+      "sha256": "36f03d706f263b35ad7d68748379887d8b064d8307579b79ad943ec613f4d320"
+    },
+    "captures": 32,
+    "distinctDecodedFrames": 16,
+    "sourceAndSavedFramesInspected": 16,
+    "repeatedViewPixelsEqual": true,
+    "assessment": "Inspected both diagonal orientations at levels1/2 and2/3 on source and exact native-saved archives, including reverse faces. Narrow textured caps close with no visible black voids in these views. Fine boundary lines remain visible. Sparse uniform diagnostic terrain does not establish finished art or all-topology coverage."
+  },
+  "retainedFailures": {
+    "startup": {
+      "jobId": "7c1994f3-a7c1-4194-8f82-122558e7059c",
+      "nativeJobId": "6f760cd0-5556-489b-86e4-5bb2bb5a819a",
+      "log": {
+        "file": "work/launch-diagnostics-20261022/saddle-sync-game.log",
+        "sha256": "f59db8c8154fb8e417610f1f09d35f8b9dcc073e02336057e95df5722823021e"
+      },
+      "scope": "Hidden Editor readiness failed before map load/compile/any game launch. The failed worker PID13200 was confirmed absent before the explicit next attempt; no active handler was stopped. This failure is not accepted by later passes."
+    },
+    "legacy": "The earlier112 audited legacy traversals use all1 SMAP labels and remain scoped to their old archives; they are not counted in this current112-traversal matrix. The first current attempt failed Editor readiness before map load; its worker was confirmed absent before the explicit next attempt. Neither failure is overwritten or treated as a pass."
+  },
+  "regressions": {
+    "geometryCheckpoint": {
+      "file": "docs/verification/native-ramp-sync-labels-2026-10-23.json",
+      "sha256": "9a4c58994b3210142d0c1ca6246139d33822e7567b3f8af981a9773cafffceeb"
+    },
+    "currentPlacementCheckpoint": {
+      "log": {
+        "file": "work/launch-diagnostics-20261022/location-clusters-full.tap",
+        "sha256": "2428018257276ce3f92bf9fc13973329a1ac6d6c5f7a00fe0043f1d4279e9e76"
+      },
+      "tests": 1492,
+      "pass": 1491,
+      "skip": 1,
+      "fail": 0,
+      "scope": "Later optional placement clustering; not the frozen native fixture authoring candidate."
+    }
+  },
+  "openCoverage": [
+    "Native void, additional width/diagonal-ramp/edge profiles, formations and authoritative path/collision/buildability queries remain outside this measured positive matrix.",
+    "Initial hidden startup failures and the separate old overlong live save handler remain explicit reliability findings.",
+    "Final forest/industrial/settlement art, native object/footprint review, wider GUI/Data/talent/UI/sound and the complete current acceptance gate remain open."
+  ],
+  "published": false
+}

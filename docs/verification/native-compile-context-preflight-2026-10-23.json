@@ -1,0 +1,148 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-23T19:44:27.664Z",
+  "status": "native_gui_compile_context_preflight_passed",
+  "scope": "Known pinned native GUI context prerequisite in project.test planning. Explicit compilation and implicit exact native-saved artifact recompilation require a nonblank declared actual context label before queueing. This does not validate arbitrary supplied labels or certify general GUI semantics.",
+  "sourceFingerprints": [
+    {
+      "file": "src/modules/testing/workspace.ts",
+      "sha256LfUtf8": "11f323231f2b1aee9f83b4d09dd4a35bf61a546ea4c67bfad33d117381084d62"
+    },
+    {
+      "file": "src/modules/testing/schemas.ts",
+      "sha256LfUtf8": "047c8d85077a1bfb5763948b479c1ed4576de821c643bb9dc45537f207ef76e4"
+    },
+    {
+      "file": "src/tests/projectTesting.test.ts",
+      "sha256LfUtf8": "4bd317f7783fe1ba72e5b93ac9a2c928b750fed26f71e6d50b0d73bf32e2f180"
+    },
+    {
+      "file": "docs/NATIVE_EDITOR.md",
+      "sha256LfUtf8": "a796293d0fc7b2fe5eb116269caf567f42dd3e41fcda75fcd8a9a187bd8a0867"
+    },
+    {
+      "file": "docs/PROJECT_TESTS.md",
+      "sha256LfUtf8": "4dccbfac2fc313817c5ae101302db13b58f4485206f31b14ddc7cfa7d9385ba5"
+    },
+    {
+      "file": "scripts/check-distribution-privacy.mjs",
+      "sha256LfUtf8": "747bb50d8e7c0ed8ec034f7759ec6bfca4424b8a348f872b68c1ce9095ed03da"
+    }
+  ],
+  "implementation": {
+    "error": "TEST_COMPILE_CONTEXT_REQUIRED",
+    "planning": "Required unsupported input is returned in plan.issues with ready:false; run rejects the blocked plan. Load/save plus source-artifact gameplay remains a separate supported workflow for saved Galaxy scripts without an authored GUI context.",
+    "preservation": "The MCP does not invent a MAIN label, convert existing scripts or silently replace the original map to satisfy this prerequisite. Native compilation must still verify that a supplied label exists."
+  },
+  "reproduction": {
+    "before": {
+      "projectReport": {
+        "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\ForestClusters-13e58383-1b7e-4105-874f-23ef80753867\\.sc2mcp-output\\project-tests\\4d83a7c4-5e70-4497-a7b1-4bd5c37c6ddf\\result.json",
+        "sha256": "a90fde0df898615d1bd95d61b8199dffc622ccb113614ff566f21b517497ae84"
+      },
+      "nativeReport": {
+        "file": "L:/NE/jobs/62d17495-f274-4de4-81cc-58980c451b1d/result.json",
+        "sha256": "c722310eef391d75a6677f86e32b3b016897ce3bf3fdf9506d939a4acddc66f9"
+      },
+      "transcript": {
+        "file": "work/launch-diagnostics-20261022/forest-clusters-native.log",
+        "sha256": "1725e3711a1b5acd330f351b776e4bee1f66a90ce67ac486b8df50c9062222e4"
+      },
+      "projectJobId": "4d83a7c4-5e70-4497-a7b1-4bd5c37c6ddf",
+      "sourceSha256": "950b7ff63a604da44387442a4b584c842b8ef13b428cece7e482d590f60f9544",
+      "sourceUnchanged": true,
+      "elapsedMs": 187244,
+      "result": "Native load/save/reopen passed with no new errors; missing actual GUI context then failed compilation before any game launch. This is not a native GUI or game pass."
+    },
+    "after": {
+      "at": "2026-10-23T19:28:32.957Z",
+      "candidate": "L:\\SC2EditorToolkit_Candidates\\CompileContext-20261023-f35bc481-7404-48c0-95ef-63345b0aec90",
+      "manifestArchiveUnchanged": true,
+      "sourceSha256": "950b7ff63a604da44387442a4b584c842b8ef13b428cece7e482d590f60f9544",
+      "nativeRoot": "L:/NECtx/2f0a352d-b882-489c-bfb0-03d06ef87282",
+      "privateNativeRootNeverCreated": true,
+      "noProjectJobQueued": true,
+      "ready": false,
+      "issues": [
+        {
+          "id": "editor.compile_context",
+          "status": "unsupported",
+          "required": true,
+          "reason": "TEST_COMPILE_CONTEXT_REQUIRED: the pinned GUI compiler needs the actual authored root/library contextLabel, including native-saved artifact recompilation. Empty GUI trees with separate Galaxy startup require source-artifact game execution and separate native load/save checks; do not invent a label."
+        }
+      ],
+      "transcript": {
+        "file": "work/launch-diagnostics-20261022/compile-context-installed-negative.log",
+        "sha256": "870674948b0e16fb3425dad3ebaf75f9561f6912b1a0dd198833f10b82dbea14"
+      },
+      "scope": "The exact previously failing empty-GUI manifest now blocks in a real frozen installed MCP plan before any native job or Editor/Game launch. Nonexistent unique native work root remains absent.",
+      "receipt": {
+        "file": "work/launch-diagnostics-20261022/compile-context-installed-negative.json",
+        "sha256": "395dad79235847fc6729e972fbc8d828683c5d80f9ba048d07652351f17cd55e"
+      }
+    },
+    "scope": "The exact former empty-GUI manifest and archive now reject through actual frozen installed MCP without a project job or private native work root. Original failure is retained; elapsed time is a single failed-run observation, not a performance guarantee."
+  },
+  "regressions": {
+    "focused": {
+      "file": "work/launch-diagnostics-20261022/compile-context-focused.tap",
+      "sha256": "fd456c883bef383c9f9124960bb2d97a9dd1ca9280efc8fe1c90916bd0a1c21f",
+      "tests": 57,
+      "pass": 57,
+      "fail": 0
+    },
+    "firstFull": {
+      "file": "work/launch-diagnostics-20261022/compile-context-full.tap",
+      "sha256": "22f86df73495d25afe8119842a3bd48f96764196bb202350212e677dc5443eea",
+      "tests": 1496,
+      "pass": 1494,
+      "fail": 0,
+      "cancelled": 1,
+      "skipped": 1,
+      "reason": "Real stdio seven-profile test reached unchanged60-second timeout. Retained as a nonclean run."
+    },
+    "isolated": {
+      "file": "work/launch-diagnostics-20261022/compile-context-transport-isolated.tap",
+      "sha256": "06debb206d107849bf39399cf1f4baec715e5ee076280a7de11d4b39b3d5ac21",
+      "tests": 1,
+      "pass": 1,
+      "fail": 0,
+      "unchangedTimeoutMs": 60000,
+      "elapsedMs": 39451.6364
+    },
+    "fullSerialRecheck": {
+      "file": "work/launch-diagnostics-20261022/compile-context-full-serial-recheck.tap",
+      "sha256": "2b138c37d062304ce08cc63215e4f5edb20667859bbe1406f4cf03efefaf6f2f",
+      "tests": 1496,
+      "pass": 1495,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 1
+    },
+    "buildReleaseLintEnglishPassed": true
+  },
+  "distribution": {
+    "receipt": {
+      "file": "work/launch-diagnostics-20261022/compile-context-candidate.json",
+      "sha256": "3c17a5470699e83b6884166a9a4bbfffcbf24c3e1bb904806cc3fd7f381ffc29"
+    },
+    "candidate": "L:\\SC2EditorToolkit_Candidates\\CompileContext-20261023-f35bc481-7404-48c0-95ef-63345b0aec90",
+    "compiledModules": 362,
+    "sourceStableDuringBuild": true,
+    "privacy": {
+      "passed": true,
+      "checkedFiles": 9993,
+      "privateSourceFiles": 1113,
+      "privateCorpusCompared": true,
+      "violations": [],
+      "scope": "Explicit private paths/debug/test artifacts and exact external C++/Python/Galaxy source copies, including renamed files. Not proof against transformed snippets or binary reverse engineering.",
+      "privateRuntimeBundled": false
+    }
+  },
+  "openCoverage": [
+    "An actual nonblank label can still be missing or ambiguous in the GUI tree; this remains an explicit native failure rather than preflight certification.",
+    "A separate forest GUI variant is being checked against exact native-saved artifacts. Its geometry, placement, render and gameplay acceptance are not inferred from this preflight record.",
+    "The full current acceptance gate, startup reliability, broader topology/GUI/Data and final three-style art review remain open."
+  ],
+  "published": false
+}

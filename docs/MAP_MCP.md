@@ -12,7 +12,7 @@
 | map.inspect / map.validate | Complete eligible file manifest, known document roots, MapInfo integrity, Terrain dimension agreement |
 | map.archive.inspect | Native archive enumeration: names, locales/platforms, flags, sizes and times |
 | map.import | Extract into a new directory, preserve entry metadata |
-| map.export | Export committed snapshot, reopen, compare every user entry name/locale/hash before publishing |
+| map.export | Export a committed map or authored local mod with the matching archive extension; reopen and compare every user entry name/locale/hash before publishing |
 | map.clone | Full native scenario copy into a new sibling directory; not a clean-map generator |
 | map.metadata.plan | Plan playable bounds, fog mask or minimap resolution |
 | map.metadata.apply | Shared byte transaction, default dry-run and grouped staging |
@@ -59,6 +59,23 @@ If SC2_UI_ROOT is itself the component directory, export into the reserved outpu
 ```
 
 That tree is excluded from components. Ordinary files are never silently allowlisted away: unknown map content is preserved. Known MCP drafts/backups/journals/output metadata and MPQ internals are excluded or rebuilt.
+
+Authored dependent and extension mods use the same guarded export path:
+
+```json
+{"tool":"map.export","arguments":{"directory":"mods/MyMod","archive":"output/MyMod.SC2Mod","dryRun":false}}
+```
+
+Mod export validates the local H2CS v8 Header with mod kind 2, DocumentInfo's
+matching ordered dependencies and registered v2 component markers. It rejects
+map metadata/terrain registrations and extension/type mismatches. It accepts
+authored Data, GUI, script and unknown entries without comparing them to the
+original empty foundation. Mod entries retain their committed bytes; map-only
+placement/preload preparation is skipped. Registered GameData and GameText roots
+are logical roots; other registered roots must resolve to component files.
+Pending text/byte drafts, stale snapshots, unsafe paths and malformed archive
+metadata still block publication. Existing outputs retain the usual backup
+behavior. These checks do not establish native Editor or game acceptance.
 
 The CLI uses the same backend and verification:
 

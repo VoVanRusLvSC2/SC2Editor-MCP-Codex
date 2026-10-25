@@ -51,10 +51,46 @@ Catalog queries use bounded pages; respect the returned offset when requesting
 more candidates. A compact response may trim a page and adjusts nextOffset so
 that rows are not skipped.
 
+Asset provenance is accumulated once per reference instead of repeatedly
+serializing an asset's growing consumer list. In a sequential local MCP
+comparison, the first catalog query fell from 43.4 to 17.1 seconds and a cold
+unchanged landscape plan from 52.0 to 21.9 seconds. Four explicitly selected
+asset pages retained identical JSON, including 5804 consumer references.
+These are scoped observations under ordinary cache/load conditions, not a
+universal timing guarantee or a billed-token measurement. Warm plans still
+benefit from retaining one session. See the
+[asset-index checkpoint](verification/asset-index-2026-10-23.json).
+
+Configure the same external runtime when comparing a checkout and an installed
+package. `modkit.runtime` reports its availability, receipt digest and restart
+requirement. An installation without ModKit must not inherit a checkout's
+implicit runtime path. Set `SC2_MODKIT_HOME` or run the documented setup; retain
+dependency/engine-activation refusals rather than bypassing placement checks.
+
+CASC mount manifests persist `registrationOrder`. Reconnecting immediately after
+the first mount must not reorder the same catalog roots or rebuild unchanged
+locations. Old manifests acquire their existing filename order once; fresh mounts
+retain first registration order even when later calls remount in another order.
+The native DocumentInfo resolver still controls Data dependency precedence.
+The installed-package check retains all 36 native payload files and gives zero
+changed bytes/rebuilt zones on warm and fresh repeats. See
+[CASC order evidence](verification/casc-order-2026-10-23.json).
+
 Data validation stores a report under `.sc2mcp-output/data-reports`; request
 `data.report.page` for selected diagnostics instead of validating again. Full
 responses cost more transfer, processing and context. The exact tool schema
 explains whether `response=full` is available in the selected profile.
+
+For GUI, inspect `nativeProfile` from the initial plan before launching the
+original Editor. The review exposes retained generator risks without changing
+the graph, catches known qualifier/array/declaration-order issues and limits
+samples while retaining the total count. Static validity remains separate from
+compilation. Preserve an imported graph and its failure rather than silently
+reorganizing it to make a different fixture pass.
+New literal-zero array declarations use dedicated visible zero constants;
+`nativeProfile.loweredZeroBounds` reports them without expanding every GUI node.
+This keeps the one-cell range. Existing imports and manual helper edits remain
+intact; native compilation and execution still need independent evidence.
 
 Prepare placements in batches. Reserve paths before decoration; query exact IDs
 and dependencies once, then reuse the warm catalog index. Validate and render a

@@ -7,7 +7,7 @@ import path from 'node:path';
 import {createHash} from 'node:crypto';
 import process from 'node:process';
 import console from 'node:console';
-import {patchHostArtifacts} from './modkit/platform-patches.mjs';
+import {patchHostArtifacts,patchRampDirectionEnum} from './modkit/platform-patches.mjs';
 const project=fileURLToPath(new URL('../',import.meta.url));
 const home=path.join(project,'.modkit-runtime'),blizzard=path.join(home,'ModKit-Blizzard'),core=path.join(home,'ModKit');
 const pins={blizzard:'78104889bed092d901516044bd90734df8d5caac',core:'7e3c856ba290b8abde55b1f7e4d93383179e8b9f'};
@@ -51,6 +51,13 @@ for(const name of ['images','models'])await fs.cp(path.join(core,'extensions',na
 const hostPatches=await patchHostArtifacts(blizzard);
 const require=createRequire(path.join(blizzard,'package.json'));
 const {build}=await import(pathToFileURL(require.resolve('esbuild')).href);
+// Emit this owner after patching even for --finalize-only: patching TypeScript
+// alone would leave the previously built writer with the rejected south enum.
+const rampRelative='starcraft2/modules/map/shared/format/ramp-authoring.ts',rampSource=path.join(blizzard,rampRelative),rampOriginal=await fs.readFile(rampSource,'utf8'),rampPatched=patchRampDirectionEnum(rampOriginal);
+if(rampPatched!==rampOriginal)await fs.writeFile(rampSource,rampPatched);
+const rampOutputRelative='starcraft2/dist/modules/map/shared/format/ramp-authoring.js',rampOutput=path.join(blizzard,rampOutputRelative);
+await build({entryPoints:[rampSource],outfile:rampOutput,bundle:false,format:'esm',platform:'neutral',target:'es2022',tsconfigRaw:{}});
+const nativeRampPatch={source:rampRelative,sourceSha256:createHash('sha256').update(rampPatched).digest('hex'),output:rampOutputRelative,sha256:createHash('sha256').update(await fs.readFile(rampOutput)).digest('hex'),directionEnum:[0,1,2,3,4,5,6,7]};
 // New image encoders are source TypeScript with type-only Host/SDK references.
 // Emit their extension-owned JS while retaining Blizzard's declared vendor ABI.
 const imageRoot=path.join(blizzard,'.modkit-core-extensions','images');
@@ -64,7 +71,7 @@ const vendor=[];
 for(const file of (await fs.readdir(path.join(blizzard,'vendor'))).filter(n=>n.endsWith('.tgz')).sort()){
   vendor.push({file,sha256:createHash('sha256').update(await fs.readFile(path.join(blizzard,'vendor',file))).digest('hex')});
 }
-const receipt={schemaVersion:1,pins,coreRevisionScope:'Images/models extension sources; Blizzard vendor Host/SDK packages retain their declared snapshot ABI',vendor,hostPatches,terrainApiExports:['@modkit/blizzard-starcraft2/map/format','@modkit/blizzard-starcraft2/map/navigation','@modkit/blizzard-starcraft2/map/overview'],compatibilityPatchSha256:createHash('sha256').update(await fs.readFile(patch)).digest('hex'),
+const receipt={schemaVersion:1,pins,coreRevisionScope:'Images/models extension sources; Blizzard vendor Host/SDK packages retain their declared snapshot ABI',vendor,hostPatches,nativeRampPatch,terrainApiExports:['@modkit/blizzard-starcraft2/map/format','@modkit/blizzard-starcraft2/map/navigation','@modkit/blizzard-starcraft2/map/overview'],compatibilityPatchSha256:createHash('sha256').update(await fs.readFile(patch)).digest('hex'),
   limitations:['Optional semantic RLE lattice overview disabled: public Core lacks its API',
     'Older public VFS hidden-path API uses recursive listing'],editorUsed:false,gameWrites:false};
 await fs.writeFile(path.join(blizzard,'sc2-mcp-runtime.json'),JSON.stringify(receipt,null,2)+'\n');

@@ -1,11 +1,17 @@
 import * as z from 'zod/v4';
 import {actionCheckSchema} from './actionChecks.js';
+import {padSchema,padProbeSchema,pathingSchema,pathingPointNames} from './padQueries.js';
 
 const name=z.string().regex(/^[A-Za-z][A-Za-z0-9_-]{0,63}$/);
 const point=z.object({x:z.number().finite(),y:z.number().finite()}).strict();
 const area=z.object({xmin:z.number().finite(),ymin:z.number().finite(),xmax:z.number().finite(),ymax:z.number().finite()}).strict().refine(a=>a.xmin<=a.xmax&&a.ymin<=a.ymax,'Area minima must not exceed maxima');
 const view=z.object({id:name,required:z.boolean().default(true),camera:z.object({x:z.number().finite(),y:z.number().finite(),distance:z.number().positive().max(4096),pitch:z.number().min(0.1).max(89.9),yaw:z.number().finite()}).strict(),includeUI:z.boolean().default(false)}).strict();
 const step=z.object({method:z.enum(['game.status','game.units.find','game.units.inspect','game.selection.set','game.camera.set','game.capture','game.order','game.wait','game.events','game.fixture','game.ui.inspect','game.ui.activate']),arguments:z.record(z.string(),z.unknown()).default({}),expect:z.record(z.string(),z.unknown()).optional(),id:name.optional()}).strict();
+export const formationSchema=z.object({id:name,from:name,to:name,type:z.string().min(1),owner:z.number().int().min(0).max(15).default(1),mobility:z.literal('ground'),
+ offsets:z.array(point).min(2).max(8).refine(v=>new Set(v.map(p=>p.x+','+p.y)).size===v.length,'Formation offsets must be distinct'),
+ timeout:z.number().int().min(1).max(120).default(20),tolerance:z.number().min(.1).max(3).default(.75),maxDeviation:z.number().finite().min(.1).max(4096).optional(),
+ bidirectional:z.boolean().default(true),required:z.boolean().default(true),viewId:name.optional()}).strict();
+export type FormationSpec=z.infer<typeof formationSchema>;
 export const startupEventSchema=z.object({id:name,required:z.boolean().default(true),timeout:z.number().int().min(1).max(120).default(20),match:z.record(z.string().regex(/^[A-Za-z][A-Za-z0-9_]{0,63}$/),z.union([z.string().max(512),z.number().finite(),z.boolean(),z.null()])).refine(m=>typeof m.kind==='string'&&m.kind.length>0&&typeof m.source==='string'&&m.source.length>0&&Object.keys(m).length<=16,'Match requires explicit nonempty kind/source and at most 16 exact scalar fields')}).strict();
 export const testManifestSchema=z.object({
  version:z.literal(1),map:z.string().min(1),label:z.string().max(160).default('Map acceptance'),
@@ -17,7 +23,10 @@ export const testManifestSchema=z.object({
   ready:z.object({type:z.string().min(1),owner:z.number().int().min(0).max(15).optional(),area:area.optional(),state:z.object({life:z.number().finite().min(0).optional(),shields:z.number().finite().min(0).optional(),energy:z.number().finite().min(0).optional()}).strict().refine(s=>Object.keys(s).length>0,'Readiness state requires a vital').optional(),timeout:z.number().int().min(1).max(120).default(20)}).strict().optional(),
   startupEvents:z.array(startupEventSchema).max(16).default([]),
   points:z.record(name,point).default({}),
+  pads:z.array(padSchema).max(32).default([]),padProbe:padProbeSchema.optional(),
+  pathing:z.array(pathingSchema).max(32).default([]),nativeProbe:padProbeSchema.optional(),
   routes:z.array(z.object({id:name,from:name,to:name,type:z.string().min(1),owner:z.number().int().min(0).max(15).default(1),mobility:z.literal('ground'),expected:z.enum(['arrive','blocked']).default('arrive'),timeout:z.number().int().min(1).max(120).default(20),tolerance:z.number().min(0.1).max(3).default(0.75),maxDeviation:z.number().finite().min(0.1).max(4096).optional(),bidirectional:z.boolean().default(true),required:z.boolean().default(true)}).strict()).max(16).default([]),
+  formations:z.array(formationSchema).max(8).default([]),
   scenarios:z.array(z.object({id:name,required:z.boolean().default(true),steps:z.array(step).min(1).max(32)}).strict()).max(16).default([]),
   actions:z.array(actionCheckSchema).max(16).default([]),
   views:z.array(view).max(8).default([]),
@@ -32,8 +41,25 @@ export const testManifestSchema=z.object({
  const ids=new Set<string>();
  for(const d of m.dependencies){if(ids.has(d.id))c.addIssue({code:'custom',message:'Duplicate dependency: '+d.id});ids.add(d.id);}
  ids.clear();
+ const game=m.game;
+ if(game&&(game.pads.length||game.pathing.length)&&!game.padProbe&&!game.nativeProbe)c.addIssue({code:'custom',message:'Native query checks require an explicit nativeProbe origin and bounded observation settings; pad-only suites also accept padProbe'});
+ if(game?.padProbe&&!game.pads.length)c.addIssue({code:'custom',message:'padProbe requires at least one native pad check'});
+ if(game?.nativeProbe&&!game.pads.length&&!game.pathing.length)c.addIssue({code:'custom',message:'nativeProbe requires native placement or pathing checks'});
+ if(game?.nativeProbe&&game.padProbe)c.addIssue({code:'custom',message:'Use nativeProbe or the legacy padProbe alias, not both'});
+ for(const p of game?.pads??[]){if(!game!.points[p.at])c.addIssue({code:'custom',message:'Pad point missing: '+p.id});if(ids.has(p.id))c.addIssue({code:'custom',message:'Duplicate check ID: '+p.id});ids.add(p.id);}
+ const padPoints=[...(game?.pads??[]).map(p=>p.at),...pathingPointNames(game?.pathing??[]),...(game?.padProbe?[game.padProbe.origin]:[]),...(game?.nativeProbe?[game.nativeProbe.origin]:[])];
+ for(const id of new Set(padPoints)){const p=game!.points[id];if(!Object.hasOwn(game!.points,id)||!p)c.addIssue({code:'custom',message:'Native query point missing: '+id});else if(![p.x,p.y].every(n=>Number.isInteger(n*4096)&&n>=0&&n<1000))c.addIssue({code:'custom',message:'Native query points must fit the exact nonnegative1/4096 channel below1000: '+id});}
+ for(const q of game?.pathing??[]){if(ids.has(q.id))c.addIssue({code:'custom',message:'Duplicate check ID: '+q.id});ids.add(q.id);}
  for(const e of m.game?.startupEvents??[]){if(ids.has(e.id))c.addIssue({code:'custom',message:'Duplicate check ID: '+e.id});ids.add(e.id);}
  for(const r of m.game?.routes??[]){if(!m.game?.points[r.from]||!m.game?.points[r.to])c.addIssue({code:'custom',message:'Route endpoint missing: '+r.id});if(r.from===r.to)c.addIssue({code:'custom',message:'Route endpoints must differ: '+r.id});if(ids.has(r.id))c.addIssue({code:'custom',message:'Duplicate check ID: '+r.id});ids.add(r.id);}
+ for(const f of m.game?.formations??[]){
+  const a=m.game!.points[f.from],b=m.game!.points[f.to];
+  if(!a||!b)c.addIssue({code:'custom',message:'Formation endpoint missing: '+f.id});
+  else if(Math.hypot(a.x-b.x,a.y-b.y)<=2*f.tolerance)c.addIssue({code:'custom',message:'Formation endpoints must be separated by more than two arrival tolerances: '+f.id});
+  if(f.offsets.some(p=>Math.abs(p.x)>64||Math.abs(p.y)>64))c.addIssue({code:'custom',message:'Formation offsets must remain within64 world units: '+f.id});
+  if(f.viewId&&!m.game!.views.some(v=>v.id===f.viewId))c.addIssue({code:'custom',message:'Formation view missing: '+f.id});
+  if(ids.has(f.id))c.addIssue({code:'custom',message:'Duplicate check ID: '+f.id});ids.add(f.id);
+ }
  for(const s of m.game?.scenarios??[]){if(ids.has(s.id))c.addIssue({code:'custom',message:'Duplicate check ID: '+s.id});ids.add(s.id);}
  for(const a of m.game?.actions??[]){if(ids.has(a.id))c.addIssue({code:'custom',message:'Duplicate check ID: '+a.id});ids.add(a.id);}
  for(const v of m.game?.views??[]){if(ids.has(v.id))c.addIssue({code:'custom',message:'Duplicate check ID: '+v.id});ids.add(v.id);}

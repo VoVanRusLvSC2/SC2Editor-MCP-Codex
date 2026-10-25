@@ -32,7 +32,8 @@ export function checkGalaxyTypes(doc:GalaxyDocument,natives:ReadonlyMap<string,G
   const fail=(code:string,offset:number,message:string)=>diagnostics.push({severity:'error',code,offset,message});
   // Native handle types (including `wave`) are lexical keywords in Galaxy.
   const reserved=new Set(['include','if','else','while','for','do','switch','case','default','break','continue','return','struct','typedef','const','static','native','true','false','null',...primitiveTypes]);
-  for(const signature of natives.values())for(const raw of [signature.returnType,...signature.parameters]){const t=typeOf(raw);if(t)reserved.add(t);}
+  const declarationTypes=new Set([...primitiveTypes,...structTypes]);
+  for(const signature of natives.values())for(const raw of [signature.returnType,...signature.parameters]){const t=typeOf(raw);if(t){reserved.add(t);declarationTypes.add(t);}}
   const checkName=(name:string,offset:number)=>{if(reserved.has(name))fail('GALAXY_RESERVED_IDENTIFIER',offset,`${name} is a Galaxy keyword/type, not a legal declaration name`);};
   for(const symbol of doc.symbols){checkName(symbol.name,symbol.start);if(symbol.kind==='struct'){
     const open=tokens.findIndex(t=>t.start>=symbol.start&&t.value==='{'),end=doc.pairs.get(open)??open;
@@ -191,7 +192,7 @@ export function checkGalaxyTypes(doc:GalaxyDocument,natives:ReadonlyMap<string,G
       }
       const declStart=value==='const'?i+1:i;
       const typeToken=tokens[declStart],nameToken=tokens[declStart+1];
-      if(typeToken&&nameToken?.kind==='identifier'&&(primitiveTypes.has(typeToken.value)||structTypes.has(typeToken.value))){
+      if(typeToken&&nameToken?.kind==='identifier'&&declarationTypes.has(typeToken.value)){
         if(tokens[declStart+2]?.value==='='||tokens[declStart+2]?.value===';'||tokens[declStart+2]?.value==='['){
           checkName(nameToken.value,nameToken.start);
           if(scopes.at(-1)!.has(nameToken.value))fail('GALAXY_SCOPE_DUPLICATE',nameToken.start,`${nameToken.value} is already declared in this scope`);

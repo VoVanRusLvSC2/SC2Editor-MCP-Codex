@@ -23,7 +23,7 @@ export function safeCascPath(value: string, allowEmpty = false): string {
   return normalized;
 }
 interface CacheMetadata extends CascBuild { schemaVersion: 1; path: string; sha256: string; contentKey: string; encodingKey: string; size: number }
-interface MountRecord { kinds?:CascKind[];locales?:string[];package: string; root: string; build: CascBuild; files: Array<{ logicalPath: string; file: string; sha256: string }> }
+interface MountRecord { registrationOrder?:number;kinds?:CascKind[];locales?:string[];package: string; root: string; build: CascBuild; files: Array<{ logicalPath: string; file: string; sha256: string }> }
 export type CascKind = "catalogs" | "triggers" | "strings" | "schemas" | "layouts";
 export interface CascOptions { install?: string; cacheRoot?: string; backendName?:string;backendFactory?: (install: string) => CascBackend; onMount?: (root: string) => void; onUnmount?: (root: string) => void }
 
@@ -35,6 +35,7 @@ export class CascWorkspace {
   private backendRevision?: string;
   private mountBuild?: string;
   private registeredViews = new Set<string>();
+  private mountQueue:Promise<unknown>=Promise.resolve();
   private inFlight = new Map<string, Promise<{ bytes: Buffer; metadata: CacheMetadata; cacheHit: boolean }>>();
   readonly stats = { hits: 0, misses: 0, invalidCacheEntries: 0, nativeBytesRead: 0 };
   constructor(readonly root: string, readonly options: CascOptions = {}) {
@@ -58,6 +59,9 @@ export class CascWorkspace {
   private registerView(root: string) {
     if (this.registeredViews.has(root)) return;
     this.options.onMount?.(root); this.registeredViews.add(root);
+  }
+  private serializeMounts<T>(work:()=>Promise<T>):Promise<T>{
+    const next=this.mountQueue.then(work,work);this.mountQueue=next.then(()=>undefined,()=>undefined);return next;
   }
   async refreshBuild() { const build = await this.source(); this.syncBuild(build); return { build, mountedCount: this.registeredViews.size }; }
   private async ready() {
@@ -149,8 +153,12 @@ export class CascWorkspace {
       return names[part] ?? part;
     }).join("/");
   }
-  async mount(packages: string[], kinds: CascKind[], locales: string[], maxFiles = 1000) {
+  mount(packages: string[], kinds: CascKind[], locales: string[], maxFiles = 1000) {
+    return this.serializeMounts(()=>this.mountPackages(packages,kinds,locales,maxFiles));
+  }
+  private async mountPackages(packages: string[], kinds: CascKind[], locales: string[], maxFiles: number) {
     if (!packages.length || packages.length > 16 || maxFiles < 1 || maxFiles > 2000) throw new Error("CASC_MOUNT_BUDGET");
+    await this.restoreRegisteredMounts();
     const build = await this.source(), reports: Array<Record<string, unknown>> = [];
     let selectedCount = 0, totalBytes = 0;
     for (let pkg of packages) {
@@ -188,9 +196,11 @@ export class CascWorkspace {
       }
       if ((await this.source()).buildInfoSha256 !== build.buildInfoSha256) throw new Error("CASC_BUILD_CHANGED_DURING_MOUNT");
       this.syncBuild(build);
-      const record: MountRecord = { kinds,locales,package: pkg, root: viewRoot, build, files };
+      const existingOrder=[...this.registeredViews].indexOf(viewRoot),registrationOrder=existingOrder<0?this.registeredViews.size:existingOrder;
+      const record: MountRecord = { registrationOrder,kinds,locales,package: pkg, root: viewRoot, build, files };
       // Failed partial mounts stay inspectable but are not registered as available dependency roots.
       if (!errors.length) {
+        if(registrationOrder>=16)throw Error('CASC_MOUNT_MANIFEST_BUDGET');
         await this.atomic(this.cachePath(`${build.buildKey}/mounts/${sha(pkg)}.json`), JSON.stringify(record, null, 2) + "\n");
         this.registerView(viewRoot);
       }
@@ -198,30 +208,50 @@ export class CascWorkspace {
     }
     return { build, selectedCount, totalBytes, reports, dependencyOrder: "Existing Data/Browse DocumentInfo resolver; unlisted implicit dependencies remain unknown" };
   }
-  async ensurePackage(pkg:string,kinds:CascKind[],locales:string[]){
+  ensurePackage(pkg:string,kinds:CascKind[],locales:string[]){
+    return this.serializeMounts(()=>this.ensureRegisteredPackage(pkg,kinds,locales));
+  }
+  private async ensureRegisteredPackage(pkg:string,kinds:CascKind[],locales:string[]){
+    await this.restoreRegisteredMounts();
     pkg=safeCascPath(pkg);const build=await this.source(),file=this.cachePath(`${build.buildKey}/mounts/${sha(pkg)}.json`);
     let record:MountRecord|undefined;try{record=JSON.parse(await fs.readFile(file,'utf8'));}catch(error){if((error as NodeJS.ErrnoException).code!=='ENOENT'&&!(error instanceof SyntaxError))throw error;}
     if(record&&record.build.buildKey===build.buildKey&&record.root===this.cachePath(`${build.buildKey}/views/${pkg}`)&&kinds.every(k=>record!.kinds?.includes(k))&&(!kinds.includes('strings')||locales.every(l=>record!.locales?.includes(l)))){
       if(record.files.length>2000)throw new Error('CASC_MOUNT_MANIFEST_INVALID');for(const item of record.files){safeCascPath(item.file);const bytes=await fs.readFile(this.cachePath(`${build.buildKey}/views/${pkg}/${item.file}`));if(sha(bytes)!==item.sha256)throw new Error('CASC_MOUNT_VIEW_CORRUPTED');}
       this.syncBuild(build);this.registerView(record.root);return {root:record.root,cacheHit:true,build};
     }
-    const requestedKinds=[...new Set([...(record?.kinds??[]),...kinds])],requestedLocales=[...new Set([...(record?.locales??[]),...locales])];const mounted=await this.mount([pkg],requestedKinds,requestedLocales,2000),report=mounted.reports[0];if(report?.status!=='MOUNTED')throw new Error('CASC_PACKAGE_NOT_MOUNTED: '+pkg);return {root:String(report.root),cacheHit:false,build};
+    const requestedKinds=[...new Set([...(record?.kinds??[]),...kinds])],requestedLocales=[...new Set([...(record?.locales??[]),...locales])];const mounted=await this.mountPackages([pkg],requestedKinds,requestedLocales,2000),report=mounted.reports[0];if(report?.status!=='MOUNTED')throw new Error('CASC_PACKAGE_NOT_MOUNTED: '+pkg);return {root:String(report.root),cacheHit:false,build};
   }
-  async restoreMounts() {
+  restoreMounts() {return this.serializeMounts(()=>this.restoreRegisteredMounts());}
+  private async restoreRegisteredMounts() {
     const build = await this.source(); this.syncBuild(build);
     const directory = this.cachePath(`${build.buildKey}/mounts`), mounted: string[] = [];
     const names = await fs.readdir(directory).catch(error => { if ((error as NodeJS.ErrnoException).code === "ENOENT") return []; throw error; });
     if (names.length > 16) throw new Error("CASC_MOUNT_MANIFEST_BUDGET");
-    for (const name of names.filter(name => /^[a-f0-9]{64}\.json$/.test(name))) {
-      const record = JSON.parse(await fs.readFile(this.cachePath(`${build.buildKey}/mounts/${name}`), "utf8")) as MountRecord;
+    const records:Array<{file:string;record:MountRecord}>=[],orders=new Set<number>();
+    for (const name of names.filter(name => /^[a-f0-9]{64}\.json$/.test(name)).sort()) {
+      const manifest=this.cachePath(`${build.buildKey}/mounts/${name}`),record = JSON.parse(await fs.readFile(manifest, "utf8")) as MountRecord;
       const pkg = safeCascPath(record.package), expectedRoot = this.cachePath(`${build.buildKey}/views/${pkg}`);
       if (record.build.buildKey !== build.buildKey || record.root !== expectedRoot || record.files.length > 2000) throw new Error("CASC_MOUNT_MANIFEST_INVALID");
+      if(record.registrationOrder!==undefined){
+        if(!Number.isSafeInteger(record.registrationOrder)||record.registrationOrder<0||record.registrationOrder>=16||orders.has(record.registrationOrder))throw Error('CASC_MOUNT_ORDER_INVALID');
+        orders.add(record.registrationOrder);
+      }
       for (const item of record.files) {
         safeCascPath(item.file);
         const file = this.cachePath(`${build.buildKey}/views/${pkg}/${item.file}`), bytes = await fs.readFile(file);
         if (sha(bytes) !== item.sha256) throw new Error("CASC_MOUNT_VIEW_CORRUPTED");
       }
-      this.registerView(expectedRoot); mounted.push(expectedRoot);
+      records.push({file:manifest,record});
+    }
+    if([...orders].some(order=>order>=records.length))throw Error('CASC_MOUNT_ORDER_INVALID');
+    // Legacy manifests keep their established filename order. Persist it once;
+    // new mounts retain caller order instead of changing identity after restart.
+    for(const entry of records)if(entry.record.registrationOrder===undefined){
+      let order=0;while(orders.has(order))order++;entry.record.registrationOrder=order;orders.add(order);
+      await this.atomic(entry.file,JSON.stringify(entry.record,null,2)+'\n');
+    }
+    for(const {record}of records.sort((a,b)=>a.record.registrationOrder!-b.record.registrationOrder!)){
+      this.registerView(record.root);mounted.push(record.root);
     }
     return mounted;
   }

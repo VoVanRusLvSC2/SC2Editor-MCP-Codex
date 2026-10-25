@@ -118,3 +118,13 @@ export function planPositions(
 
 export function insidePolygon(point:{x:number;y:number},points:Array<{x:number;y:number}>){let inside=false;for(let i=0,j=points.length-1;i<points.length;j=i++){const a=points[i],b=points[j];if((a.y>point.y)!==(b.y>point.y)&&point.x<(b.x-a.x)*(point.y-a.y)/(b.y-a.y)+a.x)inside=!inside;}return inside;}
 export function placementAreaBounds(area:PlacementArea){return area.type==='rectangle'?area:area.type==='circle'?{minX:area.center.x-area.radius,minY:area.center.y-area.radius,maxX:area.center.x+area.radius,maxY:area.center.y+area.radius}:{minX:Math.min(...area.points.map(p=>p.x)),minY:Math.min(...area.points.map(p=>p.y)),maxX:Math.max(...area.points.map(p=>p.x)),maxY:Math.max(...area.points.map(p=>p.y))};}
+
+/** Shared optional clusters for standalone scatter and owned location layouts. */
+export function scatterClusters(area:PlacementArea,seed:number,count=0,radius?:number,exclusionZones:ExclusionZone[]=[],acceptCenter?:(point:Position3)=>boolean,minimumCenterDistance=0){
+ if(!Number.isInteger(count)||count<0||count>32)throw Error('LOCATION_CLUSTER_COUNT_RANGE');
+ if(!Number.isFinite(minimumCenterDistance)||minimumCenterDistance<0)throw Error('LOCATION_CLUSTER_SEPARATION_RANGE');
+ const b=placementAreaBounds(area),effectiveRadius=radius??Math.min(b.maxX-b.minX,b.maxY-b.minY)/4;
+ if(count&&(!Number.isFinite(effectiveRadius)||effectiveRadius<=0))throw Error('LOCATION_CLUSTER_RADIUS_RANGE');
+ const centers=count?planPositions({x:b.minX,y:b.minY,z:0},count,{type:'scatter',area,seed:seed^0x7192,minimumDistance:minimumCenterDistance,exclusionZones},{acceptPoint:acceptCenter}):[];
+ return {centers,radius:effectiveRadius,accepts:(point:Position3)=>!centers.length||centers.some(center=>Math.hypot(center.x-point.x,center.y-point.y)<=effectiveRadius)};
+}

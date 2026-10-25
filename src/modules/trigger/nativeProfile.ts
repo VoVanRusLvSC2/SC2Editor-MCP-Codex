@@ -1,0 +1,24 @@
+import {scanXml} from '../../core/xmlScanner.js';
+
+/** Known original-generator risks, separate from XML validity and local emission. */
+export function nativeGuiProfile(xml:string,parsed=scanXml(xml)){
+ const scopes=new Map<number,string>(),scope=(id:number):string=>{const old=scopes.get(id);if(old!==undefined)return old;const n=parsed.nodes[id],value=n.tag==='Library'?n.attrs.Id??'':n.parentId===null?'':scope(n.parentId);scopes.set(id,value);return value;};
+ const owned=new Set<string>();for(const n of parsed.nodes){const parent=n.parentId===null?undefined:parsed.nodes[n.parentId];if(n.tag==='Variable'&&n.attrs.Type==='Variable'&&parent?.tag==='Element'&&['Trigger','FunctionDef','Structure'].includes(parent.attrs.Type))owned.add((n.attrs.Library??scope(n.id))+'\0'+n.attrs.Id);}
+ const globals=new Set(parsed.nodes.filter(n=>n.tag==='Element'&&n.attrs.Type==='Variable'&&scope(n.id)===''&&!owned.has('\0'+n.attrs.Id)).map(n=>n.attrs.Id));
+ const elements=new Map(parsed.nodes.filter(n=>n.tag==='Element').map(n=>[scope(n.id)+'\0'+n.attrs.Type+'\0'+n.attrs.Id,n]));
+ const lowered:Array<{library:string;variableId:string;dimension:string;constantId:string;constantName:string}>=[];
+ const findings:Array<{code:string;library:string;elementId?:string;offset:number;message:string}>=[];
+ const add=(id:number,code:string,message:string)=>{const n=parsed.nodes[id];let parent=n;while(parent.tag!=='Element'&&parent.parentId!==null)parent=parsed.nodes[parent.parentId];findings.push({code,library:scope(id),elementId:parent.attrs.Id,offset:n.start,message});};
+ for(const n of parsed.nodes){
+  const library=scope(n.id),parent=n.parentId===null?undefined:parsed.nodes[n.parentId];
+  if(n.tag==='ArraySize'&&parent?.tag==='VariableType'&&n.attrs.Id){
+   const variable=parent.parentId===null?undefined:parsed.nodes[parent.parentId],helper=elements.get((n.attrs.Library??library)+'\0Variable\0'+n.attrs.Id),children=helper?.childIds.map(id=>parsed.nodes[id])??[],identifier=children.find(c=>c.tag==='Identifier'),name=identifier?xml.slice(identifier.startTagEnd,identifier.endTagStart):'',stem=`MCPZeroBound_${variable?.attrs.Id}_${n.attrs.Dim}`;
+   if(name===stem||name.startsWith(stem+'_')&&/^\d+$/.test(name.slice(stem.length+1))){const type=children.find(c=>c.tag==='VariableType'),parts=type?.childIds.map(id=>parsed.nodes[id])??[],valueRef=children.find(c=>c.tag==='Value'&&c.attrs.Type==='Param'),value=valueRef?elements.get((valueRef.attrs.Library??scope(helper!.id))+'\0Param\0'+valueRef.attrs.Id):undefined,scalar=value?.childIds.map(id=>parsed.nodes[id]).find(c=>c.tag==='Value');if(parts.some(c=>c.tag==='Constant')&&parts.some(c=>c.tag==='Type'&&c.attrs.Value==='int')&&scalar&&xml.slice(scalar.startTagEnd,scalar.endTagStart).trim()==='0')lowered.push({library,variableId:variable!.attrs.Id,dimension:n.attrs.Dim,constantId:n.attrs.Id,constantName:name});else add(n.id,'NATIVE_ZERO_BOUND_HELPER_CHANGED','An authored one-cell bound helper was edited. Preserve the manual change; review the resulting array range rather than overwriting its constant.');}
+  }
+  if(n.tag==='TypeElement'&&parent?.tag==='VariableType'&&library&&n.attrs.Library===undefined)add(n.id,'NATIVE_TYPE_ELEMENT_LIBRARY_REQUIRED','A named-library variable type needs an explicit TypeElement Library binding. The original generator produced an empty structure type when this qualifier was omitted.');
+  if(n.tag==='ArraySize'&&parent?.tag==='VariableType'&&library&&n.attrs.Id&&n.attrs.Library===undefined)add(n.id,'NATIVE_ARRAY_BOUND_LIBRARY_REQUIRED','A named-library array bound references a variable without an explicit Library binding. Preserve its resolved owner, just as for other type metadata, and verify the original generator.');
+  if(n.tag==='ArraySize'&&parent?.tag==='VariableType'&&n.attrs.Value==='0'&&!n.attrs.Id)add(n.id,'NATIVE_LITERAL_ZERO_ARRAY_BOUND','The original generator collapses the observed single literal-zero array to a scalar. Preserve its zero bound; consider an explicit zero-valued constant and verify the native result. A standalone Array tag did not repair the observed profile.');
+  if(library&&n.tag==='Variable'&&n.attrs.Type==='Variable'&&n.attrs.Library===''&&globals.has(n.attrs.Id))add(n.id,'NATIVE_LIBRARY_ROOT_GLOBAL_REFERENCE','A named library references a map-root global. The observed original output declares map globals after library functions, causing a forward-reference compile error. Prefer library-owned shared state or explicit arguments; native validation is required for this graph.');
+ }
+ return {status:findings.length?'requires_native_check':'no_known_issues',compiler:'NOT_EXECUTED',issueCount:findings.length,issues:findings.slice(0,12),truncated:findings.length>12,loweredZeroBounds:{total:lowered.length,items:lowered.slice(0,12),truncated:lowered.length>12},scope:'Bounded static signatures from retained original-generator failures; no native compilation or universal GUI-validity claim'};
+}

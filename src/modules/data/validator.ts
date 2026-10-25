@@ -3,6 +3,7 @@ import type { DataSchemaRegistry } from "./schemaRegistry.js";
 import type { DataDiagnostic, DataReference, DataObject, DataValidationReport } from "./types.js";
 import { parentClassCompatibility } from "./parentClasses.js";
 import {concreteActorCreateConflict} from './actorConstruction.js';
+import {nativeClassInstanceFinding} from './nativeClasses.js';
 
 export interface IndexedDataObject extends DataObject { file: string; layer: "workspace" | "dependency" }
 
@@ -41,6 +42,8 @@ export function validateDataDocuments(primaryFile: string, documents: Array<{ fi
   }
 
   for (const object of objects.filter((entry) => entry.layer === "workspace")) {
+    const nativeClassIssue=nativeClassInstanceFinding(object,object.file);
+    if(nativeClassIssue)diagnostics.push(nativeClassIssue);
     if (object.parent) {
       const key = `${object.domain ?? object.ctype}\0${object.parent}`;
       if (!(byDomainId.get(key)?.length)) diagnostics.push({ level: "L3", severity: "warning", code: "DATA_PARENT_UNRESOLVED", message: `Parent '${object.parent}' was not found in domain ${object.domain ?? object.ctype}`, file: object.file, path: `${object.ctype}:${object.id ?? "<default>"}@parent`, reference: { kind: object.domain ?? object.ctype, value: object.parent } });

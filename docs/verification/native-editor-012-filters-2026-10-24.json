@@ -1,0 +1,165 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-23T21:54:05.415Z",
+  "status": "native_editor_012_capture_matrix_passed",
+  "scope": "Pinned complete Editor0.12/protocol13 integration, external installation, all18 method schemas, independent model filters, unchanged-source warm-map reuse and original Editor placement visibility. Full current-SDK compile/save/game and final art are separate acceptance work.",
+  "sourceFingerprints": [
+    {
+      "file": "native-toolkit-release.json",
+      "sha256LfUtf8": "11d3050acbc2fde6190d1ec054b01b2b017775617716179db79ac8fdc0665dfb"
+    },
+    {
+      "file": "src/integrations/native/bridge.ts",
+      "sha256LfUtf8": "f9861034c636eee09a9163dd336f49e91371e186f73fada6225bf218f68230f5"
+    },
+    {
+      "file": "src/integrations/native/tools.ts",
+      "sha256LfUtf8": "4b723d301185ad06d0cd7e9647d850e032a436397ad15933c3d9a3812c250b03"
+    },
+    {
+      "file": "src/integrations/native/release.ts",
+      "sha256LfUtf8": "2efaaef7371ad6fa2b8e67eefdc281fc3d47b1a05dc935cb35ce4e06ab80dca0"
+    },
+    {
+      "file": "src/tests/nativeEditor.test.ts",
+      "sha256LfUtf8": "f21b814efc99bfeaaa7640c30f41e60e6ab8fd5b7566c173a080394d0c4acad3"
+    },
+    {
+      "file": "scripts/setup-native-toolkit.mjs",
+      "sha256LfUtf8": "a13f251aecdc8234442be88aa1810365aa2350f9cc53c0f9a7d904ef8a9c016a"
+    },
+    {
+      "file": "scripts/verify-native-editor.mjs",
+      "sha256LfUtf8": "73e3ddfe454b318544bd62cc28d0c588f04a72089cca5281feaf8ab182526cac"
+    },
+    {
+      "file": "scripts/mcp-session.mjs",
+      "sha256LfUtf8": "c00b50ebee50bf5352f350c3889c7878febaad5ec24b1a50d64a2d9e8240d43a"
+    },
+    {
+      "file": "scripts/build-windows-portable.mjs",
+      "sha256LfUtf8": "6b0b18bb9a5d324779c832218f337d085ae93f4581f7450a3d5ec8c0e52e03f9"
+    },
+    {
+      "file": "scripts/check-distribution-privacy.mjs",
+      "sha256LfUtf8": "747bb50d8e7c0ed8ec034f7759ec6bfca4424b8a348f872b68c1ce9095ed03da"
+    },
+    {
+      "file": "docs/NATIVE_EDITOR.md",
+      "sha256LfUtf8": "822eaeae7743d8afe81cfbc0ab13e1a4123480b38ecd04769ae6981b9cbc4c43"
+    }
+  ],
+  "runtime": {
+    "version": "0.12.0-rc.1",
+    "nativeProtocol": 13,
+    "archiveSha256": "776b695a04c821b1a15db2a6d53e06a76489fa2ecac30dd889911dffefcef81a",
+    "setup": {
+      "file": "work/launch-diagnostics-20261022/native12-staged-runtime.json",
+      "sha256": "32dc2bdc24f544a43351223a18c16eb4cf7653b7fb5247b89660dcad0d13d5d2"
+    },
+    "upstream": {
+      "file": "work/launch-diagnostics-20261022/native12-upstream-identities.json",
+      "sha256": "44b753da1376cd94e90107ee82a4f6ba1e95eebe97085d7ffdadc471df15954c"
+    },
+    "externalDirectory": true,
+    "previousVersionsPreserved": true
+  },
+  "implementation": {
+    "runtimeHome": "SC2_NATIVE_TOOLKIT_HOME is absolute and captured per bridge; setup and discovery share it.",
+    "installer": "Offline revalidation of existing matching receipt/build/executable/archive; rejects unmanaged/mismatching directories; fresh complete installs use guarded staging/member validation.",
+    "capture": "includeUnits/includeDoodads apply independently to map/region only. Verification requires upstream flag, exact native customOptions/filtersConfirmed and matching actualUnits/actualDoodads. Booleans and exact DLL0/1 accepted; strings/unknowns rejected.",
+    "warmReuse": "Only a verified prior typed capture of the same unchanged source permits omitting map. Other native calls invalidate reuse; source/draft guards remain.",
+    "interactiveClose": "A real TTY workflow session exited0 after close; stdin is paused/unreferenced while the server still drains native jobs."
+  },
+  "evidence": {
+    "frontend": "work/native-verification/715340fc-587f-4d5d-b2cb-5bf7808661e5/result.json",
+    "capture": {
+      "file": "work/launch-diagnostics-20261022/native12-render-audit.json",
+      "sha256": "d88247e87b1e4c5d181b30eaf4e7543e18d46b32194f1da619566c1a0fff1821"
+    },
+    "sourceArchiveSha256": "c953a880688f18ede6aef1aa29d0c0c4f7cf722565105ac1eba6bc6403b43f3b",
+    "mapFilterCaptures": 5,
+    "terrainViewportCaptures": 1,
+    "sameEditorForMapMatrix": true,
+    "sourceUnchanged": true,
+    "gracefulStop": true,
+    "desktopObservation": {
+      "frames": 7413,
+      "visibleWindowsPeak": 0,
+      "foregroundSamples": 0,
+      "inputDesktopChanges": 0
+    },
+    "fullArtifactSize": "1024x1536",
+    "mcpPreviewSize": "853x1280",
+    "allSixImagesInspected": true,
+    "warmCaptureMs": [
+      12080,
+      20126,
+      22154,
+      20133
+    ],
+    "coldCaptureMs": 76567
+  },
+  "regression": {
+    "beforeLastReadbackCorrection": {
+      "report": {
+        "file": "work/launch-diagnostics-20261022/native12-full.tap",
+        "sha256": "2de74098a1169ebf1620207ee51029fe0182816fa00fc9d56fa09bfed31d28d6"
+      },
+      "pass": 1501,
+      "skipped": 1,
+      "fail": 0,
+      "cancelled": 0
+    },
+    "afterReadbackCorrection": {
+      "report": {
+        "file": "work/launch-diagnostics-20261022/native12-flags-focused.tap",
+        "sha256": "26672753dd88ebef344d74ea8bbf88d5075fcd66764702e9698fa5327a02d38d"
+      },
+      "pass": 35,
+      "fail": 0,
+      "cancelled": 0
+    },
+    "build": true,
+    "releaseBuild": true,
+    "lintBeforeFinalReadbackCorrection": true,
+    "englishFiles": 117
+  },
+  "retainedFailures": [
+    {
+      "receipt": {
+        "file": "work/launch-diagnostics-20261022/native12-live-frontend-assertion-failed.json",
+        "sha256": "93fcb9fb082d258b8ab5b3c2e6910871234a1d80a06494fd5f2c367aa2a978c0"
+      },
+      "reason": "Verifier counted all public tools instead of9 editor tools; no Editor started."
+    },
+    {
+      "receipt": {
+        "file": "work/launch-diagnostics-20261022/native12-live-integer-flags-incomplete.json",
+        "sha256": "e11049d166ab51900d3b1cf39e4e073d119aac6f7dfd2ba11da664044e0623c2"
+      },
+      "reason": "Actual DLL0/1 readback remained incomplete until the adapter added exact numeric flag normalization. Original raw successful export preserved; not counted as a passed MCP filter result."
+    }
+  ],
+  "portable": {
+    "candidateReceipt": {
+      "file": "work/launch-diagnostics-20261022/native12-readback-candidate.json",
+      "sha256": "f44bebdd6e6c5d6c5935fd6201c86378edc8502173839289bed95af4510dee1e"
+    },
+    "modules": 362,
+    "runtimePinsAndInstallerScriptsMatchSource": true,
+    "privacy": {
+      "passed": true,
+      "entries": 9997,
+      "privateSources": 1113,
+      "privateRuntimeBundled": false
+    },
+    "published": false
+  },
+  "openCoverage": [
+    "Current-SDK GUI compile/save/reopen and exact saved game runs are executing separately",
+    "One forest map and1024 horizontal pixels do not certify all assets/renderer resolutions",
+    "Water, general navigation/collision/buildability and arbitrary native terrain profiles remain outside this capture proof",
+    "Finished art, gameplay balance and human aesthetic approval remain open"
+  ]
+}

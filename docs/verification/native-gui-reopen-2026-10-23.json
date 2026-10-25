@@ -1,0 +1,189 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-23T10:50:34.738Z",
+  "status": "registration_roundtrip_and_saved_artifact_execution_passed_reference_profile_failed",
+  "scope": "One new owned hidden Editor validates/saves/closes/reopens and generates/compiles a registration GUI map; the exact saved artifact is independently recompiled and tested in the original game. A second, more complex reference GUI fixture saves/reopens but fails original generation/compile, so its native GUI acceptance remains open. Neither source map is changed.",
+  "sourceFingerprints": [
+    {
+      "file": "src/integrations/native/bridge.ts",
+      "sha256LfUtf8": "c969ea841c1c7b785fdeacbf2c81fa29a68aa10177a5d0804b19cd6331067880"
+    },
+    {
+      "file": "src/integrations/native/tools.ts",
+      "sha256LfUtf8": "99fc8c21f363f3465cca102d47d43745ef9c786f20fc251e35c7d4a143a629bf"
+    },
+    {
+      "file": "src/integrations/native/transport.ts",
+      "sha256LfUtf8": "df9de411e71ad8cbfc7b6cee153817d435517cea7c226b9bb0a8e83913f3622e"
+    },
+    {
+      "file": "src/modules/testing/workspace.ts",
+      "sha256LfUtf8": "ae5ee5c63d88143a27fb023da8b97b1981b863c083077ccc9169fccecb37731e"
+    },
+    {
+      "file": "src/modules/testing/schemas.ts",
+      "sha256LfUtf8": "047c8d85077a1bfb5763948b479c1ed4576de821c643bb9dc45537f207ef76e4"
+    },
+    {
+      "file": "src/modules/trigger/ast/codec.ts",
+      "sha256LfUtf8": "2af3ab304010ccc435ac8a7a306c73a47ac64624ba07e852b3d6df9e99098871"
+    },
+    {
+      "file": "src/modules/trigger/typeSystem.ts",
+      "sha256LfUtf8": "76cd4302be838b643744424a4b0289d20b61703a59e7d57bd316bfd77140bfad"
+    },
+    {
+      "file": "src/modules/trigger/runtime.ts",
+      "sha256LfUtf8": "8a4ccb5e1412c908dbbf0f6a7777b72e23a02102c483ffe029cfc9a63d8d3cab"
+    },
+    {
+      "file": "src/modules/trigger/runtimeGraph.ts",
+      "sha256LfUtf8": "331dcc11390820f64da4f21739a5eb7c2e81cbe76af095d24e68819ff0bae496"
+    },
+    {
+      "file": "src/modules/trigger/variables.ts",
+      "sha256LfUtf8": "2b3e5a161e3471843a10ef373a46e26cfcc83e45693eda7524fb127dca43fc2c"
+    }
+  ],
+  "registration": {
+    "source": {
+      "file": "work/gui-acceptance-20261023/RuntimeRegistration/.sc2mcp-output/RuntimeRegistration.SC2Map",
+      "sha256": "92ad6c70f8855b4938fc16012e4848f6a8ef930e8f9348bfb51b930f059b0dbe"
+    },
+    "testResult": {
+      "file": ".sc2mcp-output/project-tests/f60d3654-12ce-4ad9-824c-6b525c4d9bcc/result.json",
+      "sha256": "6e39741083d739a5ab4e9a442396640575faaf3f6b452bd2129a4085a9bd084f"
+    },
+    "manifest": {
+      "file": "work/launch-diagnostics-20261022/registration-roundtrip-retry-20261023.json",
+      "sha256": "e4e51da4009faa0010bda20574c6540fb9371fc39f621807d11b838393320c2e"
+    },
+    "nativeCheck": {
+      "file": ".sc2mcp-output/ne/jobs/e134a1b3-5135-4415-acd1-1a1ad434f29b/result.json",
+      "sha256": "c844eacb6bc081429970d571d3f7d3c32c5e6fff11a0a7ab5fe0eadaa71130af"
+    },
+    "savedArtifactRecheck": {
+      "file": ".sc2mcp-output/ne/jobs/8060af8a-8a54-47a5-a88b-da9d890c83d2/result.json",
+      "sha256": "71a86ecdc87b79ca45ddf6203cf5f9c3f69db253de155b99a54ba5ba4eba0d4a"
+    },
+    "sourceSha256": "92ad6c70f8855b4938fc16012e4848f6a8ef930e8f9348bfb51b930f059b0dbe",
+    "savedArtifactSha256": "e6f95c7d63479814a742797dd8e94ea7c778e4ef623ca5cf18782f589036689b",
+    "components": {
+      "before": 40,
+      "saved": 40,
+      "reopened": 40,
+      "savedToReopenedEqual": true,
+      "modified": [
+        "(attributes)",
+        "DocumentHeader"
+      ],
+      "added": 0,
+      "removed": 0
+    },
+    "nativeGenerator": true,
+    "replacementEmitter": false,
+    "compilerErrors": 0,
+    "exportedGalaxyBeforeAndAfterSaveSha256": "ae934dc23e9c26793a3423671f89759f6d46339e5609ca21aff3ee0626ad7345",
+    "nativeForegroundEvents": 0,
+    "scenarios": [
+      {
+        "id": "scenario:library",
+        "status": "passed"
+      },
+      {
+        "id": "scenario:wrongReceiver",
+        "status": "passed"
+      },
+      {
+        "id": "scenario:selectedReceiver",
+        "status": "passed"
+      },
+      {
+        "id": "scenario:registrationPhase",
+        "status": "passed"
+      },
+      {
+        "id": "scenario:exactlyOneCallback",
+        "status": "passed"
+      },
+      {
+        "id": "scenario:wrongTimerAlreadyCompleted",
+        "status": "passed"
+      }
+    ],
+    "markers": {
+      "library": 42,
+      "wrongReceiver": 9,
+      "selectedReceiver": 22,
+      "registrationPhase": 7,
+      "exactlyOneCallback": 1,
+      "wrongTimerAlreadyCompleted": 33
+    },
+    "cleanup": "passed",
+    "sourceAndTestCopyUnchanged": true,
+    "diagnostics": "partial/inconclusive",
+    "capture": {
+      "file": ".sc2mcp-output/project-tests/f60d3654-12ce-4ad9-824c-6b525c4d9bcc/Game.png",
+      "sha256": "e3be89721475cbd97c966ad08b70307fd6b640b0a616525c24eb2a6339e53e2c",
+      "pixelsReviewed": true,
+      "assessment": "Visible marker Marines; sparse diagnostic terrain, fog and edge-clipped units; no selected command card or finished mission UI/art acceptance"
+    }
+  },
+  "rejectedReferenceProfile": {
+    "testResult": {
+      "file": ".sc2mcp-output/project-tests/44b55b51-2bb1-40b3-8f33-92f487993dd2/result.json",
+      "sha256": "a5420e81d791e29227ba4b2a5af32ed6435b08addb92cfe8b4164d2e0a65158d"
+    },
+    "manifest": {
+      "file": "work/launch-diagnostics-20261022/reference-roundtrip-20261023.json",
+      "sha256": "a08f43ffa8d6c8850964eccbc03ae36179b436b932d48adfa14e970c4abae22f"
+    },
+    "sourceSha256": "6cfe7af4d2eab7f6003532c2bab93963ff22cdae9efaf6f25311e134a18ecab4",
+    "sourceUnchanged": true,
+    "saveReopenPassed": true,
+    "generatedByOriginalEditor": true,
+    "nativeCompilePassed": false,
+    "compilerErrors": [
+      {
+        "index": "1",
+        "message": "Syntax error",
+        "line": "24",
+        "file": "Generated"
+      }
+    ],
+    "generatedSourceSha256": "aa7445411e285deaa6249511764485981d195430bb4f7f7fc4651ab80aee29f0",
+    "observed": "Library structure variables have an empty generated type; a literal zero-bound array becomes a scalar. Local emitter execution remains separate evidence. No game launch was attempted after this native failure.",
+    "accepted": false
+  },
+  "priorInterruptedJob": {
+    "jobId": "457436bb-0dcc-48e1-abc7-907e91a7511d",
+    "sourceScopePreserved": true,
+    "restartedAfter": "Original execution handle and owned processes were authoritatively missing; timeout alone did not trigger a restart",
+    "causeOfEarlierInterruption": "unresolved",
+    "newWorkspace": "Short repository-root native workspace; no universal path-length diagnosis"
+  },
+  "runtimes": {
+    "nativeVersion": "0.10.0-rc.1",
+    "nativeProtocol": 11,
+    "nativeExeSha256": "063572b57abf62ef29d8aaba3a5f9b34a6a784361f09720212449342d9576133",
+    "renderBackend": "vulkan",
+    "scope": "mapRoot",
+    "contextLabel": "LIBRARY_TEST",
+    "locale": "enUS",
+    "gameBuild": "5.0.17.98310",
+    "gameRelease": "v0.1.0-dev.11",
+    "candidateReceipt": {
+      "file": "work/launch-diagnostics-20261022/asset-index-candidate.json",
+      "sha256": "0eef5b932496d1d0fd4ff412a402402b7fbd57e90c0c162ef95a6a9ec97c7a44"
+    },
+    "candidateIsPreCascOrderFix": true
+  },
+  "privateSdkModified": false,
+  "privateRuntimeBundled": false,
+  "published": false,
+  "openCoverage": [
+    "Correct native GUI type/array serialization for the failed reference fixture and verify its exact saved artifact",
+    "Wider library/reference/callback profiles and native navigation",
+    "Finished mission art, UI and gameplay review"
+  ]
+}

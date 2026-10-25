@@ -1,5 +1,29 @@
 # MCP GUI Triggers and the AST Model
 
+## Native generator risk review
+
+`trigger.plan` and `trigger.validate` return `nativeProfile`, also retained in
+compact workflow receipts. This bounded static review reports known missing
+library qualifiers, literal-zero array bounds and named-library references to
+map globals. Its compiler status stays `NOT_EXECUTED`; no-known-risks is not a
+native compile certificate. The original generator resolved structure variables
+after preserving their explicit TypeElement library. A standalone Array tag did
+not stop a literal zero bound from becoming a scalar. Preserve the intended
+range and verify an explicit constant bound in the original Editor. For newly
+declared literal-zero dimensions, authoring creates a separate visible global
+`MCPZeroBound_<variableId>_<dimension>` integer constant with value zero in the
+same library and keeps the original one-cell range. Fields and function locals
+use the same representation. Existing user constants are not reused or changed.
+`nativeProfile.loweredZeroBounds` identifies the emitted helpers; manual helper
+edits become review findings and are preserved. Imported XML is not rewritten.
+
+Library functions are emitted before map-global declarations in the observed
+output. Keep reusable shared state in its owning library or pass arguments.
+Do not silently move an imported variable or callback to hide this risk. A
+deliberately reorganized diagnostic fixture is separate evidence from the
+original graph's equivalence. Native compilation, save/reopen and execution of
+the exact saved artifact remain distinct checks.
+
 ## Reviewed Trigger Revize imports
 
 `trigger.import_revised` stages a reviewed XML file from the workspace with its
@@ -248,7 +272,18 @@ The previous graft, normalizeScriptLayout, get/inspect/apply/save/discard are sa
 
 `trigger.plan_file` accepts one GuiRequest or an array of requests from JSON inside workspace. The array is built on an isolated staged image: the source files and drafts of the calling project do not change. The result is applied by one `trigger.apply`, stored by one group. `trigger.describe_functions` returns up to 40 compact signatures with limited preset lists.
 
-`trigger.generate_runtime` generates MapScript from the XML graph itself and checks it to staging. No manual Galaxy duplication and no converter call. Supports an explicit subset: map-root structures, arrays, prime presets, functions/conditions/actions/events, if and integer cycles, standard calls. Unknown templates, threads and custom raw code stop generating; it's not a full Galaxy compiler. Fields are prefixed, so `wave` doesn't turn into a physical sized Varipe and readable.
+`trigger.generate_runtime` generates and stages MapScript from the GUI XML graph,
+without a separately maintained Galaxy implementation or converter call. Its
+explicit subset includes root and self-contained inline-library structures,
+arrays, presets, functions, conditions, actions, events, supported if/integer-loop
+forms and standard calls. Qualified references retain their owning library.
+Unavailable external implementations, unsupported control flow/threads and raw
+custom code stop emission; this is not a full Galaxy compiler. Field prefixes
+preserve valid native identifiers. The
+[native reference fixture](verification/native-gui-references-2026-10-23.json)
+checks specific record-reference, nested-array, default-argument and deferred
+timer profiles in two game launches. It does not establish universal library
+compatibility or original Editor save/reopen equivalence.
 
 Castomy Event receives implicit `trigger t`. For registration calls inside its body, a hidden native signature is created with the explicit first argument t; the resource Library is not created. The only internal ScriptCode parameter contains the expression t, not the user script. Verification by the real compiler remains separate.
 

@@ -6,6 +6,7 @@ import { componentListWithGameData, gameDataIndexWithCatalog } from "../data/wor
 import { LightingCatalog } from "./lighting.js";
 import { WaterCatalog } from "./waterCatalog.js";
 import { areaBounds, areaWeight, valueNoise } from "./geometry.js";
+import {materialPatternWeight} from './materialPattern.js';
 import {
   HeightMap,
   SyncHeightMap,
@@ -491,7 +492,8 @@ export function applyOperations(
             x: gx * state.descriptor.scale[0] + state.descriptor.offset[0],
             y: gy * state.descriptor.scale[1] + state.descriptor.offset[1],
           };
-          const weight = operationWeight(operation.op === "texture.blend" && operation.strength === undefined ? { ...operation, strength: 0.5 } : operation, p);
+          let weight = operationWeight(operation.op === "texture.blend" && operation.strength === undefined ? { ...operation, strength: 0.5 } : operation, p);
+          if('pattern' in operation&&operation.pattern)weight*=materialPatternWeight(p,operation.pattern);
           if (!weight) continue;
           const sample = state.heights.sample(p);
           if (sample.mask === 0 || state.visibility?.atGrid((p.x - state.descriptor.offset[0]) / state.descriptor.scale[0], (p.y - state.descriptor.offset[1]) / state.descriptor.scale[1])) continue;

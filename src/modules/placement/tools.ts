@@ -266,6 +266,7 @@ export function registerPlacementTools(
       textResult(await placement.mutate({ ...args, op: "remove" })),
   );
   server.registerTool('placement.removeBatch',{description:'Plan atomic removal of 1–5000 exact existing object IDs. No mutation until placement.apply; stale source guards retained. Does not rewrite Trigger/Galaxy references.',inputSchema:z.object({...commonFiles,objectIds:z.array(z.number().int().positive()).min(1).max(5000)}).strict()},async args=>textResult(compactPlacementPlan(await placement.removeBatch(args))));
+  server.registerTool('placement.setVariations',{description:'Plan 1–5000 explicit model-variation assignments on existing Unit/Doodad IDs without recreating objects. Changes only observed Variation attributes; duplicate/missing IDs and invalid integers reject the whole batch. Source-span edits retain position, owner, flags, custom XML and references; one guarded placement transaction applies/saves it. Measure actual available variants separately. XML serialization does not prove a different visible model, unchanged visual bounds or collision. For generated owned groups prefer their member variation in the original intent.',inputSchema:z.object({...commonFiles,assignments:z.array(z.object({objectId:z.number().int().positive(),variation:z.number().int().nonnegative()}).strict()).min(1).max(5000)}).strict()},async args=>textResult(compactPlacementPlan(await placement.setVariations(args))));
   server.registerTool(
     "placement.decorate",
     {

@@ -74,6 +74,7 @@ export const scatterDoodadsSchema = z
     minimumDistance: finite.nonnegative().default(1),
     clusterCount:z.number().int().min(0).max(32).default(0),
     clusterRadius:finite.positive().optional(),
+    clusterSeparation:finite.nonnegative().optional(),
     avoidExisting: z.boolean().default(true),
     replaceObjectIds:z.array(z.number().int().positive()).max(5000).default([]),
     avoidWater: z.boolean().default(true),

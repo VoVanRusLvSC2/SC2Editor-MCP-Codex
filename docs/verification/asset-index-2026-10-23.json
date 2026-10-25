@@ -1,0 +1,173 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-23T10:13:38.581Z",
+  "status": "scoped_asset_provenance_optimization_passed",
+  "scope": "Actual sequential MCP comparison with identical project/configuration. A developer-only hook loads the receipt-hash-checked legacy Browse module at its original checkout URL; all other runtime code/configuration stays current. No map payload, stale guard or dependency readiness bypass.",
+  "sourceFingerprints": [
+    {
+      "file": "src/modules/browse/assetIndex.ts",
+      "sha256LfUtf8": "aee7f3702dd26b319d17501a24e10fdc23f8c635e5110bca346aa4f87955dfdf"
+    },
+    {
+      "file": "src/modules/browse/workspace.ts",
+      "sha256LfUtf8": "f533e0ee196e2a1f2e1d06736d562134cd3d7f594aad35506930a462663efbe4"
+    },
+    {
+      "file": "src/core/workspace.ts",
+      "sha256LfUtf8": "0cf00f0de8109d47053b31770bbe19eace8c4a59837f91fc0c6561f737982379"
+    },
+    {
+      "file": "src/modules/data/workspace.ts",
+      "sha256LfUtf8": "1fcc39a89beb1116ce0346637db964fe039e866f093755d1d3c0d98655ac245d"
+    },
+    {
+      "file": "src/modules/terrain/workspace.ts",
+      "sha256LfUtf8": "7f7a6dc1d67edecb05b778bdafbfef624e7638f2e3e7e94b44e86e01d79e95dc"
+    },
+    {
+      "file": "src/tests/browseAssetIndex.test.ts",
+      "sha256LfUtf8": "dd4c327da2f3d41814271e93a98d48185ceca4be3a62e5b038ced0ca2e02649c"
+    }
+  ],
+  "implementation": {
+    "change": "Accumulate ordered reference/evidence sets per case-folded source-layer/dependency/asset identity instead of rescanning each growing consumer list",
+    "preserved": [
+      "First-source metadata",
+      "Ordered JSON reference deduplication",
+      "Unmerged duplicate references",
+      "Evidence insertion order",
+      "Stable path ordering",
+      "Layer/dependency separation",
+      "Input immutability",
+      "Content/draft/directory read guards"
+    ]
+  },
+  "differential": {
+    "selectedRows": 308,
+    "consumerReferences": 5804,
+    "pages": [
+      {
+        "id": "models",
+        "sha256": "cc69e51f02bd5a1afb3bd4e2cdee49b83fd3c2fd47ea84ad403c4ceb73f989b9",
+        "returned": 200,
+        "total": 15381,
+        "references": 5615
+      },
+      {
+        "id": "white",
+        "sha256": "3251a84851f1bfd4f65020bdd1334a55aed84a166b3ded6b731448a0c96c0a49",
+        "returned": 8,
+        "total": 8,
+        "references": 11
+      },
+      {
+        "id": "black",
+        "sha256": "f22f9db87f3a502ac93dff207db3e09bd6c0920ae0615642ac46ebae8d74d29d",
+        "returned": 50,
+        "total": 66,
+        "references": 71
+      },
+      {
+        "id": "marine",
+        "sha256": "061477e30e36b79414aeaf9c293268632cab4e843695c912958e65c9a80e0b6a",
+        "returned": 50,
+        "total": 259,
+        "references": 107
+      }
+    ],
+    "exactJsonParity": true,
+    "planOwnershipAndComponentParity": true,
+    "noChangedPlanBytes": true,
+    "scope": "Four complete explicitly selected pages; not an exhaustive installed asset corpus proof. Differential unit coverage adds mixed identities/ordering/frozen-input and linear-visitation cases."
+  },
+  "timing": {
+    "firstAssetQueryMs": {
+      "before": 43387,
+      "after": 17081
+    },
+    "coldLandscapePlanMs": {
+      "before": 51981,
+      "after": 21893
+    },
+    "warmLandscapePlanMs": {
+      "before": 1409,
+      "after": 1472
+    },
+    "scope": "Individual sequential observations with normal host/cache conditions. No universal ratio, billing-token, reasoning-token or end-to-end mission completion claim."
+  },
+  "developerProfile": {
+    "report": {
+      "file": "work/launch-diagnostics-20261022/landscape-cpu-report.json",
+      "sha256": "d4574f5070db3d664e2479d0225cd9345d3fb93d5a8e2d0ccacfd559e8e8fcc1"
+    },
+    "interpretation": "Main-thread samples identify repeated asset-provenance merges; the additional worker profile is mostly idle and token vocabulary setup is not the dominant cost."
+  },
+  "checks": {
+    "build": "passed",
+    "releaseBuild": "passed",
+    "lint": "passed",
+    "full": {
+      "tests": 1455,
+      "passed": 1454,
+      "skipped": 1,
+      "failed": 0,
+      "receipt": {
+        "file": "work/launch-diagnostics-20261022/asset-index-full.tap",
+        "sha256": "f125fdb5c3ac937d9a08e89c8b156e1d73d969b43b9c1ad76eb4f15efe5ebca3"
+      }
+    },
+    "focused": {
+      "passed": 41,
+      "failed": 0,
+      "receipt": {
+        "file": "work/launch-diagnostics-20261022/asset-index-focused.tap",
+        "sha256": "6e327193b0518dd39ec80fc158118a7cbf09f3e652f0671af8928ee820c08d38"
+      }
+    },
+    "englishProseFiles": 117
+  },
+  "packageConfiguration": {
+    "externalRuntimeReceiptSha256": "0342b398bb7a41b1bd1876325cc423833b7cbd1b374c445858b70032ee2b92d5",
+    "unconfiguredRefusal": "Retained package had no external ModKit configured and correctly refused an engine-inactive placement; no dependency bypass added",
+    "configuredDependencyReady": true,
+    "plannedPayloadChanges": 0,
+    "plannedOwnershipRevalidations": 7,
+    "reason": "Read-only instrumentation found only the schema manifest absolute path changes between checkout and package; its bytes match. The dependency-identity guard intentionally revalidates locations after relocation. No apply/save performed in this comparison.",
+    "readsetDiff": {
+      "file": "work/launch-diagnostics-20261022/asset-index-readset-diff.json",
+      "sha256": "31a35653d787709aee8eaa96fd7a914ce43987a481d884149b82d358302c1f40"
+    }
+  },
+  "receipts": [
+    {
+      "file": "work/launch-diagnostics-20261022/asset-index-comparison-paged.json",
+      "sha256": "1d41896d3cf997b93b9ad5db2b7be3cb85d1825f7271bf4e972a692f9ca55d1a"
+    },
+    {
+      "file": "work/launch-diagnostics-20261022/asset-index-frozen-diagnostic.log",
+      "sha256": "aa373db31cb5e9ada7d995a93d4fb4c9bea97c930dc2da74457e492149dd4987"
+    },
+    {
+      "file": "work/launch-diagnostics-20261022/asset-index-frozen-configured.json",
+      "sha256": "adf7d872ebd98ec740bea1b352e60c51c646793d17a721691f2b009e469b0303"
+    },
+    {
+      "file": "work/launch-diagnostics-20261022/asset-index-order.json",
+      "sha256": "7124abb235ed0eccbda487d192f8075fce316df439c8126255557f83e0d24d28"
+    }
+  ],
+  "retainedFailures": [
+    "CPU harness initially expected one profile, while Node also emitted a worker profile; both were inspected separately",
+    "First packaged comparison lacked the explicitly external ModKit configuration and retained its placement refusal",
+    "The first same-root collector omitted explicit asset-page selection and failed on compact summaries; new complete-page responses are the parity evidence",
+    "Configured package diagnostic expected no ownership revalidation across schema relocation; the failed assertion and exact changed ownership bytes remain retained",
+    "Initial developer readset hook used a Windows drive path as an ESM URL; file URL conversion corrected the harness without runtime/source changes"
+  ],
+  "nativeAcceptanceRenewed": false,
+  "openCoverage": [
+    "Frozen new package lifecycle and privacy are separate follow-up checks",
+    "Native Editor save/reopen and broader Data/GUI/navigation profiles",
+    "Finished mission composition, UI and gameplay review"
+  ],
+  "published": false
+}

@@ -15,6 +15,13 @@ localization, resource IDs and original catalog source annotations.
 - Galaxy is the default. When GUI is requested, create native GUI elements and
   actual trigger folders; filesystem script folders and Custom Script wrappers do
   not satisfy full GUI authoring. Use genre-appropriate ownership and organization.
+- Inspect `nativeProfile` from GUI plans/validation before original Editor checks.
+  XML validity and no-known-risks are not native compilation. Keep reusable library
+  state independent of map globals or pass explicit arguments. Do not widen zero
+  array bounds or silently relocate existing state to avoid a native failure.
+  New literal-zero array dimensions use dedicated visible zero constants;
+  inspect `nativeProfile.loweredZeroBounds`. Preserve manual helper edits and
+  imported graphs; neither is silently normalized.
 - About five main trigger folders is a recommendation, not a fixed count or limit.
   Use fewer or more meaningful systems as needed; preserve coherent existing trees.
 - For GUI conversion, read `docs/TRIGGER_MCP.md#conversion-preservation-requirements`.

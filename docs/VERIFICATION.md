@@ -1,6 +1,235 @@
 # SC2EditorToolkit: verified scope
 
+- Native handle local declarations now reject reserved type names and check
+  known handle uses before staging. Frozen public MCP reproduces the old
+  acceptance and new refusal, with real corrected probe sources unchanged.
+  Separate original-game probes distinguish exact/nearby placement and occupied
+  point passability/connectivity; a general pad adapter remains open. Regression
+  passes1589 with one skip. Package scopes and carrier shifts stay explicit. See
+  [native query and handle evidence](verification/native-placement-probe-and-handles-2026-10-24.json).
+
+- Movement samples now retain same-response game/session clocks and RPC timing,
+  without extra polls. Late endpoint reads cannot pass the unchanged wall
+  deadline. Frozen Game-only qualification on an exact prior native-saved copy
+  records16 passed routes and2 passed two-member groups
+  across2 runs; outcomes remain explicit in the record. Prior slow
+  repeat arrivals stay inconclusive; FPS/load/configured speed remain unverified.
+  Regression passes1587 with one skip. See
+  [movement-clock evidence](verification/native-movement-clocks-2026-10-24.json).
+
+- Existing acceptance-suite routes can now bind explicit-width reservations to
+  owned landscape intents. Frozen public MCP rejects measured conflicts and
+  stale source saves; accepted adoption changes metadata only, with warm/fresh
+  no-ops. Two original Editor cycles preserve92 objects and terrain. First Game
+  suite passes8 arrivals; its repeat on identical saved bytes leaves8 arrivals
+  inconclusive with slower wall-clock progress. Cause remains open; no retry or
+  larger timeout. Regression passes1578 with one skip. See
+  [route-source evidence](verification/native-landscape-route-source-2026-10-24.json).
+
+- Short sibling archive staging now fixes the reproduced Windows temporary-path
+  refusal, and compact map previews retain their PNG/HTML paths. Real frozen MCP
+  import/preview passes on unchanged map bytes. A separate earlier package adds
+  measured industrial control zones and passes16 audited native-saved traversals;
+  the new package adds four Game-only framing runs with complete overviews.
+  Regression passes1571 with one skip. Art and final integration remain open. See
+  [runtime and style review](verification/native-runtime-ergonomics-style-review-2026-10-24.json).
+
+- Guarded bulk Unit/Doodad variation edits now preserve IDs and authored XML.
+  Warm/fresh MCP saves are byte-identical; two exact native-saved/recompiled
+  SDK14 Game suites preserve18 house assignments and pass16 independently
+  audited traversals. Nine of12 frames were inspected and distinct house
+  silhouettes are visible. Sparse yards, regular composition and the east
+  close-up crop remain open. Regression passes1569 with one skip. See
+  [placement variation evidence](verification/native-placement-variations-2026-10-24.json).
+
 ## Readiness
+
+The [owned target-height checkpoint](verification/native-target-height-clearing-2026-10-24.json)
+qualifies optional `baseHeight` through native height-range/protection guards and
+MCP-owned generation. A forest clearing changes 843 continuous-height vertices,
+preserves 3945 outside vertices and keeps all original IDs and 46 infrastructure
+objects. Two original save/reopen cycles, separate exact saved-artifact recompiles
+and Game launches pass 32 independently audited Marine/Marauder traversals and
+504 samples, with maximum deviation below 0.01 inside the declared 2-unit corridor.
+Source, normal cleanup and warm/fresh no-ops pass. Full regression: 1564 passed,
+one skipped; 48 focused checks pass. Eight of sixteen final frames were inspected;
+finished art, broader cliff/path/collision/buildability and other style profiles
+remain open. The earlier camera-clamp failure and oversized-label preflight are
+retained. All 56 earlier record digests are preserved, without refreshing their
+historical source scopes after this recipe/schema change.
+
+The [SDK14 native GUI adoption checkpoint](verification/native-gui-adoption-013-2026-10-24.json)
+adds actual `trigger.import_revised` dry-run, staging, save and byte-identical
+repeat evidence on the unchanged frozen package. Three stale/foreign requests
+reject without source mutation. Original native save/reopen preserves all GUI,
+strings, terrain and Objects; only `DocumentHeader` and archive metadata change.
+Two exact saved-artifact recompiles/Game launches pass 28 independently audited
+scenarios and 112 exact assertions. The 441 GUI elements and original scenario
+manifest are unchanged. All 55 earlier record digests are preserved. The native
+compiler does not certify universal semantic equivalence; the old imported
+library-to-map-global failure, broader GUI corpus and inconclusive optional Game
+diagnostics remain explicit. Complete-page searches are bounded observations,
+not atomic search snapshots. Numeric assertions do not establish rendered art.
+
+The [native Data document checkpoint](verification/native-data-document-reuse-2026-10-24.json)
+qualifies repeated same-source inspections through fresh native calls without
+redundant opening. A complete digest-bound selection, unchanged input snapshot
+and native revision guard the loaded document; failure or another operation
+invalidates it. The exact earlier three-read case and the five-case resource
+sequence pass in the current frozen package. A different source reads 73 HP and
+retains inherited fields. Return to the original source still fails exact XML
+identity, with no stale-field fallback or automatic retry. Full regression:
+1562 passed, one skipped; 63 focused checks pass. All 53 earlier record digests remain.
+This bridge change leaves their whole-file freshness claims stale where relevant;
+previous regional Game runs are not relabelled as current-package execution.
+
+The [current regional lifecycle checkpoint](verification/native-regional-lifecycle-013-2026-10-24.json)
+renews the previously stale restricted regional profile under SDK14 using the
+unchanged frozen package. Six original save/reopen cycles and exact saved-artifact
+recompiles/Game launches pass 48 independently audited ground traversals with
+zero sampled deviation. IDs, east terrain/material weights and GUI/Galaxy are
+preserved; the west tree follows 10/8/10 ground height. Current fresh/warm plans
+are no-ops. All 18 frames were inspected: twelve detail frames pass, while the six
+original overviews retain framing findings. The subsequent
+[framing checkpoint](verification/native-regional-framing-2026-10-24.json)
+adds six Game-only launches on byte-identical copies of those exact saved
+archives. All six views show the whole map with margins and were inspected;
+native camera pitch quantization and partial optional diagnostics remain explicit.
+This closes diagnostic overview clipping. Broader topology, three-style composition
+and finished-art acceptance remain separate. All 52 earlier record digests are kept.
+
+The [terminal-error qualification](verification/native-editor-013-terminal-errors-2026-10-24.json)
+preserves identified FAILED jobs and their original exceptions even when the
+native MCP reply sets `isError:true`. The current frozen package verifies a
+following healthy read without manual restart, public terminal observation and
+four individual main-Model/unsupported-resource cases. Full regression passes
+1553 tests with one skip; 54 focused checks pass. The following Unit read remains
+failed: native selection/field text is populated while exact-ID XML is empty.
+A controlled repeat on the same logical source reproduces this on a later
+explicit opening. Neither a repaired native XML path nor complete Data coverage
+is claimed. All 50 earlier public record digests remain unchanged.
+
+The [Editor 0.13 handoff checkpoint](verification/native-editor-013-handoff-2026-10-24.json)
+verifies complete protocol-14 installation, repeat package verification and 26
+advertised methods/eight new schemas. The subsequent
+[guarded-job checkpoint](verification/native-editor-013-guarded-jobs-2026-10-24.json)
+implements all 26 methods, with actual development calls for the eight additions.
+The final frozen package verifies inherited Marine fields, file-only jobs and
+status during a legacy read: 503ms while work remains active, versus 47456ms after
+completion before the transport fix. Native PNG delivery and package privacy
+also pass. This is scoped integration evidence, not universal native acceptance.
+Fresh exports and ordinary map switches pass, but export after GUI compilation
+fails on both 0.12 and 0.13 with native error 91. Explicit Terrain reopening passes
+once and fails on repetition. No reliable fix or current full native acceptance
+is claimed. The industrial source separately has two protocol-13 saved-artifact
+game runs and twelve independently audited traversals; settlement Game renewal
+stopped before launch. Previous records retain their exact versions and sources.
+
+The [forest material-pattern checkpoint](verification/forest-material-patterns-2026-10-24.json)
+adds optional coherent ground patches, automatic owned-road protection and
+separated cluster centers. The ordinary 292-object forest preserves its geometry
+and 46 fixed objects, with warm and fresh MCP no-ops. A separate actual MAIN GUI
+diagnostic variant passes two Editor 0.12 save/reopen/recompile and exact saved-map
+game runs: 24 independently audited ground traversals and ten inspected frames.
+Full regression passes 1526 tests with one skip. Earlier placement, launch-flag,
+camera-clamp and temporary Windows rename failures remain recorded. Finished art,
+other styles, broader topology and optional diagnostic coverage remain open.
+
+The [native ramp enum checkpoint](verification/native-ramp-enum-2026-10-24.json)
+corrects two pinned ModKit writer guards from 1..8 to the observed 0..7 enum.
+The installer emits and fingerprints the correction even in finalization-only
+mode; repeating installation retains identical runtime bytes. Fresh MCP-authored
+v115 donor and target maps transfer all four cardinal directions, including
+south=0. Two Editor 0.12 save/reopen/recompile and exact saved-artifact game runs
+pass 32 independently audited Marine/Marauder traversals at zero sampled deviation.
+Eight distinct cap views were inspected; eight repeats match decoded pixels.
+The source and donor stay unchanged. Game diagnostics remain inconclusive, and
+wider widths, diagonal transfers and current owned-location acceptance remain open.
+The two complete regression file sets pass 1520 tests with one platform skip.
+
+The [Editor 0.12 capture checkpoint](verification/native-editor-012-filters-2026-10-24.json)
+pins the complete protocol-13 package and confirms all 18 method schemas through
+MCP. Five native whole-map captures verify independent Unit/Doodad filters and
+restoration in one retained Editor; a sixth original Terrain view shows placed
+models in 3D. Native artifacts are 1024x1536; bounded MCP previews are 853x1280.
+All six images were inspected. First capture took 76.6 seconds; unchanged-map
+captures took 12.1–22.2 seconds in this fixture. Water, broader assets and complete
+current-SDK GUI/game acceptance remain separate. The first numeric DLL flag
+mismatch is retained and corrected; no failed result was promoted to a pass.
+
+The [current-SDK forest GUI check](verification/native-012-forest-gui-game-2026-10-24.json)
+then passes two original save/reopen/compile cycles, exact saved-artifact
+recompilation and game launches on Editor 0.12. All 24 Marine/Marauder trajectories
+were independently audited inside the declared corridors; all eight game views
+were inspected. Both runs reuse retained bridges and preserve the original source.
+This is the explicit MAIN GUI diagnostic variant of the current 314-object forest.
+It does not certify formation movement, other GUI/Data variants or finished art.
+
+The separate [concurrent-group checkpoint](verification/concurrent-ground-groups-2026-10-24.json)
+uses that byte-identical saved archive in two Game-only launches. Sixteen
+three-member passages cover Marines and Marauders at the gate and north road in
+both directions. All 48 trajectories were independently audited; all 16 group
+frames were inspected. Passing requires concurrent progress between observations
+and arrival of every member, with confirmed fixture cleanup. Captures reach the
+public MCP report and CLI with matching digests. These timestamped, non-atomic
+center observations do not establish rigid formations, authoritative collision
+or buildability. Wider topology, animation, sound and art coverage remain open.
+The current full regression passes 1517 tests with one skip and no failures.
+
+The [supply-decoration checkpoint](verification/decor-supply-condition-2026-10-24.json)
+adds measured asymmetric supply groups, reserved service aprons and condition-aware
+automatic selection. The forest now has 314 objects, functional camp/relay groups
+and an unchanged fresh-process plan. Its current native images still show regular
+material bands and repeated forest outlines; finished art is not accepted.
+
+The [CASC order checkpoint](verification/casc-order-2026-10-23.json) fixes
+first-mount/reconnect registration drift without changing DocumentInfo precedence
+or content/stale guards. A frozen installed MCP preserves 36 native payload
+files and produces zero rebuilt zones/changed bytes after save and after a fresh
+MCP process. Full regression: 1457 passed, one skipped; 60 focused checks passed.
+The 359-file candidate passed privacy review of 9981 entries against 1113 private
+sources. Native navigation, finished composition and wider profiles remain open.
+
+The [GUI save/reopen checkpoint](verification/native-gui-reopen-2026-10-23.json)
+confirms one original-Editor registration graph through save/close/reopen,
+40-component equality, exact saved-artifact recompile and six native game
+scenarios. A separate reference graph fails original compilation after a
+successful save/reopen: library structure variables generate empty types, while
+a literal zero-bound array becomes a scalar. Its native GUI profile remains
+unaccepted despite earlier successful local-emitter gameplay. This distinction
+is a reproduced representation defect, not a passed universal GUI roundtrip.
+
+The [asset-index checkpoint](verification/asset-index-2026-10-23.json) removes
+repeated rescanning of accumulated shared-asset references. Full regression:
+1454 passed, one skipped; 41 focused checks passed. Four complete selected asset
+pages (308 rows, 5804 references) and the landscape plan's ownership/component
+receipts match the hash-checked baseline. Observed cold requests improved from
+43.4 to 17.1 seconds for assets and 52.0 to 21.9 seconds for landscape planning.
+This is a scoped sequential comparison, not a universal speed or token-billing
+claim. The source-level optimizer is separate from original Editor and game
+acceptance; the complete roadmap remains open.
+
+The [landscape migration checkpoint](verification/landscape-migration-2026-10-23.json)
+retains three generator-3 migrations, unchanged warm/fresh-session plans and
+two native launches of the exact migrated settlement archive. Sixteen ramp
+traversals and six captures passed; three frames were visually inspected.
+All 266 parsed object identities/attributes are unchanged, with raw XML changes
+retained. This uses the frozen runtime before the asset-index optimization.
+Closed ramp joins and visible houses do not certify finished composition:
+mirrored rows and rectangular material patches remain unresolved art findings.
+
+The [native GUI reference checkpoint](verification/native-gui-references-2026-10-23.json)
+adds two game launches with14 scenarios each for scalar/record-array references,
+nested inclusive bounds, a zero-bound one-cell array, default expressions,
+qualified root/library functions and deferred timer mutation. Both runs share a
+retained frontend. The exact GUI and generated Galaxy are unchanged across the
+test-only Data corrections for life regeneration and maximum life. Six failed
+native runs and a pre-launch label rejection remain recorded. Full regression:
+1451pass/1skip;45 focused checks. Privacy comparison checked9977 entries against
+1113 private sources, with no violations. Technical frames show visible marker
+units but sparse terrain, clipped objects and no selected command card; they do
+not establish mission art, ability animation or finished UI quality. Original
+Editor save/reopen and the wider roadmap are still unaccepted.
 
 The [inline-library runtime checkpoint](verification/inline-library-runtime-2026-10-23.json)
 removes the blanket map-root restriction for supported self-contained libraries.
@@ -40,8 +269,10 @@ adds typed explicit-target `Registration` calls without ScriptCode/Custom Script
 Original Editor generation/compile retained the target parameter and local timer;
 two game launches passed phase, receiver and exactly-one-callback controls.
 Full regression:1426pass/1skip;36 focused checks. The native save/reopen job is
-still running beyond its observation deadline: no saved/reopened artifact or
-roundtrip equivalence is accepted. Static support for108 matched native signatures
+was still running beyond its observation deadline at that checkpoint. A later
+process/handle audit found no owned handler and no final result; the attempt is
+interrupted and no saved/reopened artifact or roundtrip equivalence is accepted.
+Static support for108 matched native signatures
 is broader than the single live timer profile; four uncertain bindings reject.
 The complete quality roadmap remains open.
 
@@ -129,8 +360,9 @@ JSON bytes instead of 35,231 while keeping identical operations. These are
 scoped technical results, not a numeric art score or full roadmap readiness.
 
 **Supported authoring workflows have recorded evidence; the full roadmap remains
-open.** The current pin is SC2EditorToolkit **0.10.0-rc.1**, native protocol **11**,
-on Windows x64 / Editor **5.0.17.98310**. Renewed Vulkan runs passed core native
+open.** The current pin is SC2EditorToolkit **0.12.0-rc.1**, native protocol **13**,
+on Windows x64 / Editor **5.0.17.98310**; its current capture proof is linked above.
+Historical 0.10/protocol11 Vulkan runs passed core native
 load/Data, GUI compilation/export, save/reopen, original images and corrected
 camera A/B/A. The exact native-saved GUI/Data archive then passed game launch,
 bidirectional Marine movement, image delivery and cleanup. Partial runtime

@@ -4,7 +4,7 @@ import {promises as fs} from 'node:fs';
 import path from 'node:path';
 import os from 'node:os';
 import {createHash} from 'node:crypto';
-import {packArchive,readArchiveEntry,archiveBackendAvailable} from '../archive/archiveAdapter.js';
+import {packArchive,extractArchive,readArchiveEntry,archiveBackendAvailable} from '../archive/archiveAdapter.js';
 import {createMapInfo} from '../modules/document/codecs/mapInfoFactory.js';
 import {routeBoundsCheck} from '../modules/testing/playableBounds.js';
 import {testManifestSchema} from '../modules/testing/schemas.js';
@@ -30,4 +30,20 @@ test('route bounds use the real MapInfo interval and ignore unused named points'
  assert.equal(routeBoundsCheck(testManifestSchema.parse(input),bytes).status,'passed');
  const invalid={...input,game:{...input.game,points:{...input.game.points,b:{x:56,y:30}}}};
  const check=routeBoundsCheck(testManifestSchema.parse(invalid),bytes);assert.equal(check.status,'failed');assert.deepEqual(check.evidence?.outside,['b']);
+});
+
+test('native Windows extraction keeps sibling staging below the observed path boundary',{skip:process.platform!=='win32'||!archiveBackendAvailable()},async t=>{
+ const root=await fs.mkdtemp(path.join(os.tmpdir(),'sc2-extract-path-'));t.after(()=>fs.rm(root,{recursive:true,force:true}));
+ const entry='enUS.SC2Data/LocalizedData/TriggerStrings.txt',name='a'.repeat(36),components=path.join(root,'Components');
+ await fs.mkdir(path.dirname(path.join(components,entry)),{recursive:true});
+ const bytes=Buffer.from('Trigger/Name/Test=Preserved native strings\r\n');await fs.writeFile(path.join(components,entry),bytes);
+ const archive=path.join(root,'Map.SC2Map');await packArchive(components,archive,{backup:false});
+ const before=createHash('sha256').update(await fs.readFile(archive)).digest('hex');
+ const parentLength=260-(1+name.length+'.sc2uimcp.'.length+6+1+entry.length);
+ assert.ok(parentLength>root.length+1);const parent=path.join(root,'p'.repeat(parentLength-root.length-1));await fs.mkdir(parent);
+ const destination=path.join(parent,name);assert.equal((destination+'.sc2uimcp.123456'+path.sep+entry).length,260);
+ const result=await extractArchive(archive,destination);
+ assert.deepEqual(await fs.readFile(path.join(destination,entry)),bytes);assert.equal(result.verification.entryCount,1);
+ assert.equal(createHash('sha256').update(await fs.readFile(archive)).digest('hex'),before);
+ assert.deepEqual(await fs.readFile(path.join(components,entry)),bytes);assert.deepEqual(await fs.readdir(parent),[name]);
 });

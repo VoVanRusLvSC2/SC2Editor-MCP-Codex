@@ -1,0 +1,450 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-23T22:12:48.503Z",
+  "status": "native_012_exact_saved_forest_gui_game_passed",
+  "scope": "Explicit actual MAIN GUI startup diagnostic variant of current314-object ForestArtV3. Two pinned Editor0.12/protocol13 save/close/reopen/compile cycles, separate exact saved-artifact recompilation and Game dev11 executions. Original Galaxy-startup source is preserved; not universal GUI, topology, formation, Data ability or art certification.",
+  "sourceFingerprints": [
+    {
+      "file": "native-toolkit-release.json",
+      "sha256LfUtf8": "11d3050acbc2fde6190d1ec054b01b2b017775617716179db79ac8fdc0665dfb"
+    },
+    {
+      "file": "game-toolkit-release.json",
+      "sha256LfUtf8": "7c8e2329dd4af5513e8fbc4f0a98cd4442fedc5460129fbc7291c3be4a5c96cf"
+    },
+    {
+      "file": "src/integrations/native/bridge.ts",
+      "sha256LfUtf8": "f9861034c636eee09a9163dd336f49e91371e186f73fada6225bf218f68230f5"
+    },
+    {
+      "file": "src/integrations/native/transport.ts",
+      "sha256LfUtf8": "df9de411e71ad8cbfc7b6cee153817d435517cea7c226b9bb0a8e83913f3622e"
+    },
+    {
+      "file": "src/integrations/game/runtime.ts",
+      "sha256LfUtf8": "cdbf80b0d4ff188a38427907d5adc00adc6326e5a40c49f6582761a42211c014"
+    },
+    {
+      "file": "src/modules/testing/workspace.ts",
+      "sha256LfUtf8": "11f323231f2b1aee9f83b4d09dd4a35bf61a546ea4c67bfad33d117381084d62"
+    },
+    {
+      "file": "src/modules/testing/schemas.ts",
+      "sha256LfUtf8": "047c8d85077a1bfb5763948b479c1ed4576de821c643bb9dc45537f207ef76e4"
+    },
+    {
+      "file": "src/modules/testing/routeGeometry.ts",
+      "sha256LfUtf8": "84b68527e02659420fbfb100f4679d3346c62318f398717f651571276ac1677b"
+    },
+    {
+      "file": "src/modules/testing/playableBounds.ts",
+      "sha256LfUtf8": "8f186a39f8931aae0db14cd15868962840443f05f1cf8d93a431f32b78b1215f"
+    },
+    {
+      "file": "src/modules/trigger/runtime.ts",
+      "sha256LfUtf8": "8a4ccb5e1412c908dbbf0f6a7777b72e23a02102c483ffe029cfc9a63d8d3cab"
+    },
+    {
+      "file": "src/modules/trigger/authoring.ts",
+      "sha256LfUtf8": "58c17cd6491084827137a581588f01a2dac7e2c20b8db75bbc9d91ff829fd1c8"
+    },
+    {
+      "file": "src/modules/map/workspace.ts",
+      "sha256LfUtf8": "742e92c1a69d04293560e762be7dfe1d85847875ec0b9e25a56e5820fa6d2904"
+    }
+  ],
+  "runtime": {
+    "editorToolkit": "0.12.0-rc.1",
+    "nativeProtocol": 13,
+    "editorBuild": "5.0.17.98310",
+    "gameToolkit": "v0.1.0-dev.11",
+    "gameFilesVerified": 113
+  },
+  "fixture": {
+    "receipt": {
+      "file": "work/launch-diagnostics-20261022/forest-art-gui12-fixture.json",
+      "sha256": "fd43916a174a5e4b5e99652cf382a03876c9e72f9ed7b4af3f148c41a9c2c6ef"
+    },
+    "sourceSha256": "c953a880688f18ede6aef1aa29d0c0c4f7cf722565105ac1eba6bc6403b43f3b",
+    "guiVariantSha256": "fa7e132704347f5b92fbb00dec43dbbb2414d1b3c16a5277f2019094aadaae74",
+    "unchangedPayloads": {
+      "Objects": "7f215db31dcc185af6b7ce2201a6cf60d71addcd408fabbc9207e996fbde0dfb",
+      "MapInfo": "319195cea3ebfbbf99f8c6396326d9c547d17d53a0b46c6b293fa9e9470d8ad6",
+      "t3Terrain.xml": "7903588689eedbabdef392c133e85732c11cf712d49fe70c64b65038958c6310",
+      "t3HeightMap": "514f1f480fdcdbc2507fdf5bbc93369fde6c4a5a0d49b7b76a76fc0fe4b81d32",
+      "t3SyncHeightMap": "17669dba18e846749eb83bb9ec80c29b26ec087c63a989a941d3d471350c6920",
+      "t3SyncCliffLevel": "4652a5896ac928cb7bfdab217e490ec703a396921317aaa8be2a73a1a840e141",
+      "t3CellFlags": "8a48d9bc80ae83fb8bffe180a8a846669ce600f8680d21197d79adb2577aa7b1",
+      "t3TextureMasks": "44cfa773dc9f0dfbdb82da8054f76421a1d645c51733c4a01cd73428ee7df843",
+      "t3SyncTextureInfo": "c836149cff897d9cc35594327cc713cdf3cc6aaef307767f75945eca83747678"
+    },
+    "guiSha256": "923dbba8d74c452ff4c6a4665ceb8fe7e37dc0c44e02ccd907c5c38608366c4c",
+    "scriptSha256": "7a5cfdcdf93263baf064d84fd032bf8d2460c8dfd1df387d48e6cc5d56fa71ec",
+    "originalSourceUnchanged": true,
+    "authoring": "MCP map.import and typed trigger.plan_file/apply/generate_runtime/save/export; no CustomScript. Actual MAIN MapInitialization and VisRevealArea. Static preflight rejected an erroneous helper argument before actions; resumed same unchanged import with correct schema."
+  },
+  "native": {
+    "audit": {
+      "file": "work/launch-diagnostics-20261022/forest-art-gui12-audit.json",
+      "sha256": "21a014b2d47a0cf8788def67011b9e552979daf10bed989b1d28761411afac00"
+    },
+    "cleanRuns": 2,
+    "sameRetainedEditorWorker": true,
+    "sameRetainedGameBridge": true,
+    "sourceAndExactArtifactsUnchanged": true,
+    "sourceGeometryObjectsGuiAndScriptsPreservedBySave": true,
+    "runs": [
+      {
+        "jobId": "e734cfad-b097-44a2-b755-4aa6772641b9",
+        "report": {
+          "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\ForestArtGui12-b5d38ede-5301-4620-b25a-356e6d9903e2\\.sc2mcp-output\\project-tests\\e734cfad-b097-44a2-b755-4aa6772641b9\\result.json",
+          "sha256": "dc1a67696fd29a7cf0e371e0253bd3ddb3b233446edff21ccf9ff1094d916834"
+        },
+        "sourceSha256": "fa7e132704347f5b92fbb00dec43dbbb2414d1b3c16a5277f2019094aadaae74",
+        "testedArtifact": {
+          "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\ForestArtGui12-b5d38ede-5301-4620-b25a-356e6d9903e2\\.sc2mcp-output\\project-tests\\e734cfad-b097-44a2-b755-4aa6772641b9\\Final.SC2Map",
+          "sha256": "3f233ba32a2a3fc2b224e8f00fc5ae4fd05bea4d41b5ab4d6703ea3aa94f6344",
+          "origin": "native_saved"
+        },
+        "originalEditor": {
+          "file": "L:\\NE12\\jobs\\dc24e977-ea38-4b44-a5b2-ecb721e3ddfb\\result.json",
+          "sha256": "6e4e212e107b9b9856dbf93da727dd757d482e35b11d60f544394666fcb510f5"
+        },
+        "exactSavedRecompile": {
+          "file": "L:\\NE12\\jobs\\2f3cf185-5df1-4335-a07c-46dbd7f45af5\\result.json",
+          "sha256": "63f92e424ec317ee52583d6466125a5afc64e68019aff217eb81f6f76ac7b3b3"
+        },
+        "savedComparison": {
+          "beforeCount": 38,
+          "savedCount": 37,
+          "reopenedCount": 37,
+          "changedByNativeSave": 5,
+          "added": 0,
+          "removed": 1,
+          "modified": 4,
+          "savedToReopenedEqual": true,
+          "changes": [
+            {
+              "name": "(attributes)",
+              "locale": "enUS",
+              "change": "modified",
+              "before": {
+                "key": "enUS:(attributes)",
+                "name": "(attributes)",
+                "archiveName": "(attributes)",
+                "locale": "enUS",
+                "bytes": 1072,
+                "sha256": "797983c9646fad4df16c7ff565ec4be94575d3d12bd5033a9a9f0d9ccf64d997"
+              },
+              "after": {
+                "key": "enUS:(attributes)",
+                "name": "(attributes)",
+                "archiveName": "(attributes)",
+                "locale": "enUS",
+                "bytes": 748,
+                "sha256": "8458e36915f4652f1a502051e2bb1aceb3c73960d468cd4983e5f2fe8ee8f2d9"
+              },
+              "archiveMetadata": true
+            },
+            {
+              "name": "(listfile)",
+              "locale": "enUS",
+              "change": "modified",
+              "before": {
+                "key": "enUS:(listfile)",
+                "name": "(listfile)",
+                "archiveName": "(listfile)",
+                "locale": "enUS",
+                "bytes": 657,
+                "sha256": "af8c528e66ee555ccec133b5e10cfe0cc660953d9e3b29d99fcf8d170566e30f"
+              },
+              "after": {
+                "key": "enUS:(listfile)",
+                "name": "(listfile)",
+                "archiveName": "(listfile)",
+                "locale": "enUS",
+                "bytes": 630,
+                "sha256": "b792432c29ac0ee2b00e6d437f430fb98d4a9f4d0176630b8d81c32401f2cc36"
+              },
+              "archiveMetadata": true
+            },
+            {
+              "name": "Base.SC2Data/GameData.xml",
+              "locale": "enUS",
+              "change": "removed",
+              "before": {
+                "key": "enUS:base.sc2data/gamedata.xml",
+                "name": "Base.SC2Data/GameData.xml",
+                "archiveName": "Base.SC2Data\\GameData.xml",
+                "locale": "enUS",
+                "bytes": 53,
+                "sha256": "bbe5d28d75810657c6e365fa217a8847569097401b2c978782eab8cbb8e633e0"
+              },
+              "after": null,
+              "archiveMetadata": false
+            },
+            {
+              "name": "ComponentList.SC2Components",
+              "locale": "enUS",
+              "change": "modified",
+              "before": {
+                "key": "enUS:componentlist.sc2components",
+                "name": "ComponentList.SC2Components",
+                "archiveName": "ComponentList.SC2Components",
+                "locale": "enUS",
+                "bytes": 550,
+                "sha256": "2b05d4f4b7da61d5f51b8a39a24338467937f2909754d77586bd20a60e142940"
+              },
+              "after": {
+                "key": "enUS:componentlist.sc2components",
+                "name": "ComponentList.SC2Components",
+                "archiveName": "ComponentList.SC2Components",
+                "locale": "enUS",
+                "bytes": 564,
+                "sha256": "c6a5083d2be295652258251cda5d44a5b66113aa6203a863631e6f5e0e2dbd4e"
+              },
+              "archiveMetadata": false
+            },
+            {
+              "name": "DocumentHeader",
+              "locale": "enUS",
+              "change": "modified",
+              "before": {
+                "key": "enUS:documentheader",
+                "name": "DocumentHeader",
+                "archiveName": "DocumentHeader",
+                "locale": "enUS",
+                "bytes": 371,
+                "sha256": "4525b864149d266faf61fc69e3bc13db674fba56c0629eea8c6ff01db3606298"
+              },
+              "after": {
+                "key": "enUS:documentheader",
+                "name": "DocumentHeader",
+                "archiveName": "DocumentHeader",
+                "locale": "enUS",
+                "bytes": 371,
+                "sha256": "3fe422515b50db20634bf7dde8d4fe380864e09623e79a095a8780f0e1dc4948"
+              },
+              "archiveMetadata": false
+            }
+          ],
+          "changesTruncated": false
+        },
+        "gameRuntime": {
+          "provenance": "pinned_release",
+          "releaseTag": "v0.1.0-dev.11",
+          "archiveSha256": "514096c72332f4d6629dee4a33a092957d3ee02a9c45281bb3a7ad59031c30f3",
+          "verifiedFiles": 113,
+          "binaryOverride": false
+        }
+      },
+      {
+        "jobId": "7e88b8d4-d1aa-4728-9d58-ea6f66eb9030",
+        "report": {
+          "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\ForestArtGui12-b5d38ede-5301-4620-b25a-356e6d9903e2\\.sc2mcp-output\\project-tests\\7e88b8d4-d1aa-4728-9d58-ea6f66eb9030\\result.json",
+          "sha256": "b9db752760b11f7b1393ddbc4ac7af625b023c288778c7a02f7b3707829d5f8a"
+        },
+        "sourceSha256": "fa7e132704347f5b92fbb00dec43dbbb2414d1b3c16a5277f2019094aadaae74",
+        "testedArtifact": {
+          "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\ForestArtGui12-b5d38ede-5301-4620-b25a-356e6d9903e2\\.sc2mcp-output\\project-tests\\7e88b8d4-d1aa-4728-9d58-ea6f66eb9030\\Final.SC2Map",
+          "sha256": "3f233ba32a2a3fc2b224e8f00fc5ae4fd05bea4d41b5ab4d6703ea3aa94f6344",
+          "origin": "native_saved"
+        },
+        "originalEditor": {
+          "file": "L:\\NE12\\jobs\\f3fd2606-4f37-4eab-8775-d663d15385ea\\result.json",
+          "sha256": "04c2a8f2d366b7244aba4ac45195564b5090c5f32a5d723c492cc6cacbd1fd2a"
+        },
+        "exactSavedRecompile": {
+          "file": "L:\\NE12\\jobs\\33dddaa9-3759-44b9-9193-145adb434e7d\\result.json",
+          "sha256": "a5861a5928ba5a7d9f74aac66ec54d326e45538aa025ffda7efc366efcdd34ff"
+        },
+        "savedComparison": {
+          "beforeCount": 38,
+          "savedCount": 37,
+          "reopenedCount": 37,
+          "changedByNativeSave": 5,
+          "added": 0,
+          "removed": 1,
+          "modified": 4,
+          "savedToReopenedEqual": true,
+          "changes": [
+            {
+              "name": "(attributes)",
+              "locale": "enUS",
+              "change": "modified",
+              "before": {
+                "key": "enUS:(attributes)",
+                "name": "(attributes)",
+                "archiveName": "(attributes)",
+                "locale": "enUS",
+                "bytes": 1072,
+                "sha256": "797983c9646fad4df16c7ff565ec4be94575d3d12bd5033a9a9f0d9ccf64d997"
+              },
+              "after": {
+                "key": "enUS:(attributes)",
+                "name": "(attributes)",
+                "archiveName": "(attributes)",
+                "locale": "enUS",
+                "bytes": 748,
+                "sha256": "8458e36915f4652f1a502051e2bb1aceb3c73960d468cd4983e5f2fe8ee8f2d9"
+              },
+              "archiveMetadata": true
+            },
+            {
+              "name": "(listfile)",
+              "locale": "enUS",
+              "change": "modified",
+              "before": {
+                "key": "enUS:(listfile)",
+                "name": "(listfile)",
+                "archiveName": "(listfile)",
+                "locale": "enUS",
+                "bytes": 657,
+                "sha256": "af8c528e66ee555ccec133b5e10cfe0cc660953d9e3b29d99fcf8d170566e30f"
+              },
+              "after": {
+                "key": "enUS:(listfile)",
+                "name": "(listfile)",
+                "archiveName": "(listfile)",
+                "locale": "enUS",
+                "bytes": 630,
+                "sha256": "b792432c29ac0ee2b00e6d437f430fb98d4a9f4d0176630b8d81c32401f2cc36"
+              },
+              "archiveMetadata": true
+            },
+            {
+              "name": "Base.SC2Data/GameData.xml",
+              "locale": "enUS",
+              "change": "removed",
+              "before": {
+                "key": "enUS:base.sc2data/gamedata.xml",
+                "name": "Base.SC2Data/GameData.xml",
+                "archiveName": "Base.SC2Data\\GameData.xml",
+                "locale": "enUS",
+                "bytes": 53,
+                "sha256": "bbe5d28d75810657c6e365fa217a8847569097401b2c978782eab8cbb8e633e0"
+              },
+              "after": null,
+              "archiveMetadata": false
+            },
+            {
+              "name": "ComponentList.SC2Components",
+              "locale": "enUS",
+              "change": "modified",
+              "before": {
+                "key": "enUS:componentlist.sc2components",
+                "name": "ComponentList.SC2Components",
+                "archiveName": "ComponentList.SC2Components",
+                "locale": "enUS",
+                "bytes": 550,
+                "sha256": "2b05d4f4b7da61d5f51b8a39a24338467937f2909754d77586bd20a60e142940"
+              },
+              "after": {
+                "key": "enUS:componentlist.sc2components",
+                "name": "ComponentList.SC2Components",
+                "archiveName": "ComponentList.SC2Components",
+                "locale": "enUS",
+                "bytes": 564,
+                "sha256": "c6a5083d2be295652258251cda5d44a5b66113aa6203a863631e6f5e0e2dbd4e"
+              },
+              "archiveMetadata": false
+            },
+            {
+              "name": "DocumentHeader",
+              "locale": "enUS",
+              "change": "modified",
+              "before": {
+                "key": "enUS:documentheader",
+                "name": "DocumentHeader",
+                "archiveName": "DocumentHeader",
+                "locale": "enUS",
+                "bytes": 371,
+                "sha256": "4525b864149d266faf61fc69e3bc13db674fba56c0629eea8c6ff01db3606298"
+              },
+              "after": {
+                "key": "enUS:documentheader",
+                "name": "DocumentHeader",
+                "archiveName": "DocumentHeader",
+                "locale": "enUS",
+                "bytes": 371,
+                "sha256": "3fe422515b50db20634bf7dde8d4fe380864e09623e79a095a8780f0e1dc4948"
+              },
+              "archiveMetadata": false
+            }
+          ],
+          "changesTruncated": false
+        },
+        "gameRuntime": {
+          "provenance": "pinned_release",
+          "releaseTag": "v0.1.0-dev.11",
+          "archiveSha256": "514096c72332f4d6629dee4a33a092957d3ee02a9c45281bb3a7ad59031c30f3",
+          "verifiedFiles": 113,
+          "binaryOverride": false
+        }
+      }
+    ],
+    "routes": {
+      "traversals": 24,
+      "unitTypes": [
+        "Marine",
+        "Marauder"
+      ],
+      "bidirectional": true,
+      "corridor": 2,
+      "tolerance": 0.75,
+      "maximumSampledDeviation": 0.009507396501429668,
+      "scope": "Observed declared ground-unit centers along gate/south-road/north-road corridors. No movement-plane, whole-footprint, collision, path-query or rigid-formation claim."
+    },
+    "captures": {
+      "total": 8,
+      "distinctDecodedImages": 8,
+      "inspected": 8,
+      "review": {
+        "file": "work/launch-diagnostics-20261022/forest-art-gui12-render-review.json",
+        "sha256": "4c8d13fe8adc0e5033e04c9a29afb447e7f0e5efa54da56ad563d5787f866854"
+      },
+      "finalArt": "needs_refinement",
+      "overview": "Playable layout visible; near outer-terrain edge meets/crops frame. Full native overhead export is separately verified."
+    }
+  },
+  "regressions": {
+    "focusedAfterReadbackCorrection": {
+      "report": {
+        "file": "work/launch-diagnostics-20261022/native12-flags-focused.tap",
+        "sha256": "26672753dd88ebef344d74ea8bbf88d5075fcd66764702e9698fa5327a02d38d"
+      },
+      "pass": 35,
+      "fail": 0
+    },
+    "fullBeforeThatCorrection": {
+      "report": {
+        "file": "work/launch-diagnostics-20261022/native12-full.tap",
+        "sha256": "2de74098a1169ebf1620207ee51029fe0182816fa00fc9d56fa09bfed31d28d6"
+      },
+      "pass": 1501,
+      "skip": 1,
+      "fail": 0,
+      "cancelled": 0
+    },
+    "finalLint": {
+      "file": "work/launch-diagnostics-20261022/native12-final-lint.json",
+      "sha256": "deb631179e24869fd071436d42754e217c4f43554aff347dc4e0c708f705929c"
+    }
+  },
+  "retainedFailureLogs": [
+    {
+      "file": "work/launch-diagnostics-20261022/forest-art-gui12-author.log",
+      "sha256": "93a147ae874a53fdd5c75ee02750ce0619b69d78e007be6067d5b86605310f6a"
+    },
+    {
+      "file": "work/launch-diagnostics-20261022/forest-art-gui12-author-fixed.log",
+      "sha256": "b8276a3409bd5a283829c8ce9e5835e4c81b5ace806fedb21afe9df09d144714"
+    }
+  ],
+  "openCoverage": [
+    "Material bands and repeated elongated forest contours",
+    "Sparse camp/relay context and rigid pad transitions",
+    "Overview180does not establish full outer-terrain framing; separate native full-map export does",
+    "Formation movement, authoritative path/buildability, other scene styles, UI/ability presentation and final art approval remain separate"
+  ]
+}

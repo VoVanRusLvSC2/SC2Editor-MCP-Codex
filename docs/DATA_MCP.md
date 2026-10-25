@@ -10,6 +10,28 @@ animations work; model-sequence and native playback review remain separate.
 
 ## Public tools
 
+### Catalog class changes
+
+`object.setType` works in single-file Data operations and `data.batch`. It changes
+only the outer class tags within the same catalog domain, preserving the ID,
+fields, comments and incoming catalog links. Batch aliases follow the new typed
+key, so later operations can keep using the same alias. Cross-domain changes reject
+the complete transaction before files or drafts are published. The operation is
+listed by `data.context` as well as the tool schema. Static class/field validity
+does not prove that the original engine can instantiate a class.
+
+One native-observed class rule rejects ordinary named `CWeapon` entries before
+staging. Original Editor5.0.17.98310 rejected that form, while an explicit named
+`default="1"` template and a concrete `CWeaponLegacy` entry passed load/Data
+diagnostics. Validation reports `DATA_NATIVE_CLASS_INSTANCE_REFUSED`; `data.describe_type`
+exposes the dated build and report hashes in `nativeClassObservations`. Templates
+and imported bytes are preserved. Removing a default flag, cloning an ordinary
+entry, or changing a concrete entry to the refused form is checked against the
+final transaction graph. Explicit or dynamic template markers retain their
+separate schema/native uncertainty. This is not a general ban on XSD `abstract`
+types: a named `CEffect` passed the same native load controls. Load acceptance
+does not establish effect execution, models or gameplay.
+
 ### Native ability learning
 
 `data.hero.learn` / `recipe.learn` creates one `CAbilLearn` point pool on a local

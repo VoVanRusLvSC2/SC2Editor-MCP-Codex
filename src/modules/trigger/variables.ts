@@ -18,7 +18,22 @@ export function declareVariables(xml:string,declarations:GuiVariable[],library:s
   if(declaration.constant&&declaration.initial&&!['literal','preset','variable'].includes(declaration.initial.kind))throw new Error('GUI_CONSTANT_INITIALIZER');
   const available=[...new Map([...(r.externalVariables??[]),...inspectGuiVariables(xml,library)].map(v=>[JSON.stringify([v.library,v.id]),v])).values()];
   if(declaration.constant&&declaration.initial?.kind==='variable'&&!available.some(v=>(declaration.initial?.kind==='variable'&&(declaration.initial.id?v.id===declaration.initial.id:v.name===declaration.initial.name)&&v.library===(declaration.initial.library??library))&&v.constant))throw new Error('GUI_CONSTANT_INITIALIZER');
-  const sizes=(declaration.arraySizes??[]).map((size,dim)=>{if(typeof size==='number'){if(!Number.isInteger(size)||size<0||size>2147483647)throw new Error('GUI_ARRAY_SIZE');return {dim,value:String(size)};}const target=available.filter(v=>(v.id===size.variable||v.name===size.variable)&&v.library===(size.library??library)&&v.constant&&v.type==='int'&&!v.array&&v.scope==='global');if(target.length!==1||target[0].initialScalar!==undefined&&(!Number.isInteger(Number(target[0].initialScalar))||Number(target[0].initialScalar)<0))throw new Error('GUI_ARRAY_BOUND_CONSTANT');return {dim,variable:{id:target[0].id,type:'Variable',library:target[0].library}};});
+  const sizes=(declaration.arraySizes??[]).map((size,dim)=>{
+   if(typeof size==='number'){
+    if(!Number.isInteger(size)||size<0||size>2147483647)throw new Error('GUI_ARRAY_SIZE');
+    if(size!==0)return {dim,value:String(size)};
+    // Native TypeInfo collapses a literal zero to a scalar. Its qualified
+    // constant-bound form preserves a true one-cell array, including fields.
+    // Give each dimension its own editable declaration; never adopt or change
+    // an existing user constant just because it currently contains zero.
+    const stem=`MCPZeroBound_${id}_${dim}`,used=new Set(inspectGuiVariables(xml,library).map(v=>v.name));let name=stem,suffix=0;while(used.has(name))name=stem+'_'+(++suffix);
+    const helper=declareVariables(xml,[{name,type:'int',constant:true,initial:{kind:'literal',type:'int',value:0}}],library,undefined,nextId,r,onText);
+    xml=helper.xml;names.push(...helper.names);
+    return {dim,variable:{id:helper.variables[0].id,type:'Variable',library}};
+   }
+   const target=available.filter(v=>(v.id===size.variable||v.name===size.variable)&&v.library===(size.library??library)&&v.constant&&v.type==='int'&&!v.array&&v.scope==='global');
+   if(target.length!==1||target[0].initialScalar!==undefined&&(!Number.isInteger(Number(target[0].initialScalar))||Number(target[0].initialScalar)<0))throw new Error('GUI_ARRAY_BOUND_CONSTANT');return {dim,variable:{id:target[0].id,type:'Variable',library:target[0].library}};
+  });
   const fragment=serializeAstElement({id,type:'Variable',library,identifier:declaration.name,variableType:guiTypeXml(type),isConstant:declaration.constant,arraySizes:sizes},library);
   xml=appendGui(xml,guiContainer(xml,library),fragment);
   const ref=`<${scope==='global'?'Item':'Variable'} Type="Variable"${localRef(library)} Id="${id}"/>`;

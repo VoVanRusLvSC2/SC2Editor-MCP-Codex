@@ -4,7 +4,7 @@ import {promises as fs} from 'node:fs';
 import {gunzipSync} from 'node:zlib';
 import {TerrainDescriptor,HeightMap} from '../modules/terrain/document.js';
 import {parseTerrainXml} from '../modules/terrain/surface/format/terrain-params.js';
-import {nativeCliffSyncLevels,nativeCliffFineLevels} from '../modules/terrain/cliffProfile.js';
+import {nativeCliffSyncLevels,nativeCliffFineLevels,nativeCliffFineSyncLevels} from '../modules/terrain/cliffProfile.js';
 
 test('one-level cliff sync profile matches original native cells for all 12 non-saddle orientations',async()=>{
  const root='src/tests/fixtures/terrain-native/city/',read=async(name:string)=>gunzipSync(await fs.readFile(root+name+'.gz'));
@@ -25,8 +25,21 @@ test('one-level cliff sync profile matches original native cells for all 12 non-
  for(const [key,observed]of finePatterns){const corners=[...key].map(v=>Number(v)+1),selected=nativeCliffFineLevels(corners).map(v=>v-1).join('');assert.ok(observed.has(selected),'selected fine pattern was not observed natively: '+key);}
 });
 
-test('unmeasured void, multi-level and saddle joins fail instead of writing guessed cliff sync',()=>{
- for(const corners of [[1,2,1,2],[2,1,2,1],[1,3,3,1],[0,1,1,0]])assert.throws(()=>nativeCliffSyncLevels(corners),/UNSUPPORTED/);
+test('measured saddle corners retain low HMAP centers and high CLIF and SMAP centers',async()=>{
+ const fixture=JSON.parse(await fs.readFile('src/tests/fixtures/terrain-native/cliff-saddle-reference.json','utf8'));
+ assert.equal(fixture.cases.length,4);
+ for(const c of fixture.cases){
+  assert.deepEqual(nativeCliffSyncLevels(c.corners),c.syncCliff,c.id);
+  assert.deepEqual(nativeCliffFineLevels(c.corners),c.levels,c.id);
+  const levels=nativeCliffFineSyncLevels(c.corners),high=Math.max(...c.corners);
+  assert.equal(levels[4],high);assert.equal(c.levels[4],high-1);
+  assert.ok(Math.abs(c.syncHeight[4]/256-(c.bases[4]+(high-1)*2))<.04,'native center height '+c.id);
+  assert.ok(c.flags.every((v:number)=>(v&1)===1));
+ }
+});
+
+test('unmeasured void and multi-level joins fail instead of writing guessed cliff sync',()=>{
+ for(const corners of [[1,3,3,1],[0,1,1,0]])assert.throws(()=>nativeCliffSyncLevels(corners),/UNSUPPORTED/);
  assert.deepEqual(nativeCliffSyncLevels([1,1,1,1]),[64,64,64,64]);
  assert.deepEqual(nativeCliffSyncLevels([1,2,2,2]),[128,128,128,128]);
 });

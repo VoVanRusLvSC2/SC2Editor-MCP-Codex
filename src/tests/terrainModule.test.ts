@@ -14,6 +14,7 @@ import { BrowseWorkspace } from "../modules/browse/workspace.js";
 import { DataWorkspace } from "../modules/data/workspace.js";
 import { PlacementWorkspace } from "../modules/placement/workspace.js";
 import type { TerrainOperation } from "../modules/terrain/types.js";
+import { terrainGenerateSchema } from "../modules/terrain/schemas.js";
 const area = {
   type: "rectangle" as const,
   minX: 4,
@@ -37,6 +38,26 @@ async function fixture(id = "nydus") {
     cleanup: () => fs.rm(root, { recursive: true, force: true }),
   };
 }
+
+test('target-height generation shapes an irregular clearing while preserving protected and outside ground',async()=>{
+  const f=await fixture();
+  try{
+    const polygon={type:'polygon' as const,points:[{x:4,y:5},{x:22,y:4},{x:27,y:12},{x:22,y:24},{x:9,y:25},{x:4,y:17}]};
+    const points=[{x:12,y:12},{x:16,y:16},{x:1,y:1},{x:4.5,y:12}];
+    const before=await f.terrain.sample(points),textures=Buffer.from((await f.terrain.state()).masks!.bytes);
+    const p=await f.terrain.generate(terrainGenerateSchema.parse({area:polygon,style:'forest',baseHeight:5,relief:0,textureMode:'preserve',edgeBlend:3,protectedAreas:[{type:'circle',center:{x:16,y:16},radius:2}]}));
+    const planned=await f.terrain.sample(points,'',p.id);
+    assert.ok(Math.abs(planned.samples[0].height-5)<.001);
+    assert.equal(planned.samples[1].height,before.samples[1].height);
+    assert.equal(planned.samples[2].height,before.samples[2].height);
+    assert.notEqual(planned.samples[3].height,5,'A blended boundary must not become a hard flat edge');
+    assert.deepEqual((await f.terrain.state('',p.id)).masks!.bytes,textures);
+    assert.deepEqual((await f.terrain.sample(points)).samples,before.samples,'Planning must not write the source');
+    await assert.rejects(f.terrain.generate(terrainGenerateSchema.parse({area:polygon,style:'forest',heightMode:'preserve',textureMode:'preserve',baseHeight:0})),/PRESERVE_HEIGHT_BASE_CONFLICT/);
+    await assert.rejects(f.terrain.generate(terrainGenerateSchema.parse({area:polygon,style:'forest',textureMode:'preserve',baseHeight:100000,relief:0})),/HEIGHT_QUANTIZATION_RANGE/);
+    assert.deepEqual(f.workspace.binary.draftFiles(),[]);
+  }finally{await f.cleanup();}
+});
 
 test('shared lighting terrain preview samples border normals inside the native map bounds',async()=>{
   const f=await fixture();

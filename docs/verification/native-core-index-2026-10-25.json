@@ -1,0 +1,220 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-25T18:37:54.375Z",
+  "status": "scoped_core_immutable_indices_queries_and_native_warm_reads_verified",
+  "scope": "Two declared/native-observed Core-only local mods, exact immutable native index/JSONL artifacts, direct/queued stored queries, typed uses, independent comparisons and fresh native45-to45 reads around document-free operations. Both audits keep incomplete reference/resource coverage. This does not repair the separate full-map timeouts or45-to73-to-source XML failure.",
+  "sourceFingerprints": {
+    "game-toolkit-release.json": "7c8e2329dd4af5513e8fbc4f0a98cd4442fedc5460129fbc7291c3be4a5c96cf",
+    "native-toolkit-release.json": "d3fd6ef5056812cdb3a947b3bc9263bd664ae0df676f908e591b118e0c278f9c",
+    "src/app/moduleSelection.ts": "9313001853f6d0a3773f323c0eb5642b75ff0347b4f76804abd7125292ce386f",
+    "src/app/project.ts": "36698ab0aed70a4dc1db79cbca59ff91402ac726e892fae6db6d5b4b0e60c847",
+    "src/app/server.ts": "e0141051b60e07cc9d085ec10c87fa70fbcd9df7d3ac0d72d466b046cbe8bc5a",
+    "src/archive/archiveAdapter.ts": "aad39fc288e043a6451c4e6e2428ea455f22573563e0ba36cabfba1cc46d3d55",
+    "src/archive/terrainLoadContract.ts": "75268a7b8bb6045f0ada82c409c4c4ef6479d4dbe77b2172929ce6153a3e3c43",
+    "src/core/binaryTransactions.ts": "8a35e8291f554231331cbccfcd9a092552b964b5c9bb54acae5acd9e9057bfa6",
+    "src/core/capabilities.ts": "885eb8a00f0ad8d2d072efa943ecf0cbb3f379d95ebd46d203cfcb3bf71bff63",
+    "src/core/discoveryPaths.ts": "b2380a23a69b269f92af1697d11cf66b86f769c5b4ceb2aefc1912855a47728d",
+    "src/core/fileTransactions.ts": "88cb8909ea93fdfcf110f10318481eda2c23bb8b0cb1a115363062161154921b",
+    "src/core/jsonPlanFile.ts": "83848fc4977881f75975d115fec0a3379e50fb336159ea8792db4bfd72d30224",
+    "src/core/layoutDocument.ts": "095995c46fec36c01f7c5501e819cf78bbc91b129cd7e18fa93d8b3234a41b51",
+    "src/core/layoutOperations.ts": "8210c59b92bc4d3203fa0802aaf288aa34aabe1f935822e65f8a4ff6011d85d4",
+    "src/core/recoveryJournal.ts": "a9fd25b31d24c9b8e24fd033cd5643b9bae02831afaaf551878af169382ac9b0",
+    "src/core/resolver.ts": "2f912760bef9f2da9d24d8024d2858e325bac1aed09a351622edb7a59127d2e3",
+    "src/core/sc2BuiltinDependencies.ts": "d69a5497cb4206efe72f21a62cc39233f1f5d1dcae3454f3fcc97d34089a62f1",
+    "src/core/styleDocument.ts": "f179b3d0cb276fdc49f49fb69be1df6002ab02a74020a830df7e631a49cf00eb",
+    "src/core/types.ts": "a8f84e8e7c33989918cc0d41e8a74952e2a860fc45d35454ef36bf47196f403f",
+    "src/core/uiXmlFormat.ts": "dd072d50236513d1fcef8ca324789ac1af4c2a4938fc4e332140cd29b17599c4",
+    "src/core/validator.ts": "a4fc91118f554d6f301f1de7381d18d09220a01a208526c5b1939550ac5f378a",
+    "src/core/workspace.ts": "20255378f8c009683afc7cfc084f6bf365b655fe68b0015d42ed9258a456fcd7",
+    "src/core/workspaceLock.ts": "bce9f1a76d2d94a449f41ff371fdae9b420b9a8a0ce9e9f6cab9a8e86574e0e4",
+    "src/core/xmlScanner.ts": "bc0837736a4559e167c436d00555ec2060fdbbe5632005a9fa44a048b57c334c",
+    "src/integrations/native/background.ts": "b1b1f96ec261acd017fdd373b86f161a3b695888b753a0d0f997cb2812d7c734",
+    "src/integrations/native/bridge.ts": "8d7e1a16ebe164c9b62eb8cd70542b7151691012ce69a6ec9a12c692535e854e",
+    "src/integrations/native/contracts.ts": "14c9d5f419a14da8493a93edabd5d25c09f4d6f5e57e9c8d3ffb1534effcec26",
+    "src/integrations/native/details.ts": "6149278f97606e0c56148c4bfd13227621c0b68510868df5251c2ae7f3ac1f9b",
+    "src/integrations/native/frameAssessment.ts": "600ab2096d4eb3180080c927f9d0a8431a489719f25691c591683474e6e05701",
+    "src/integrations/native/guiEvidence.ts": "8c962e18bb7814d8a8db74550bba1c9788a35d810235490845a67165d15bbdd5",
+    "src/integrations/native/outcome.ts": "d99b06b52efc3c6626d6709eaecba5f7bedb41f357eb31641805d5e7ce643cec",
+    "src/integrations/native/release.ts": "2efaaef7371ad6fa2b8e67eefdc281fc3d47b1a05dc935cb35ce4e06ab80dca0",
+    "src/integrations/native/storage.ts": "8e31ab22ad135840d8f58665f6e6e1441853dea76eef8ab16c2254ff35061470",
+    "src/integrations/native/tools.ts": "f8ddf8fffe368c1a2ad8543d7a8bfa0a688ed74fc1d19f16e7599b8311c25b3c",
+    "src/integrations/native/transport.ts": "ad4c1d2afae962abafb30c6157d406207a19590beba65a952599a4b66637cfcb"
+  },
+  "sourceFingerprintScope": {
+    "paths": [
+      "src/integrations/native/background.ts",
+      "src/integrations/native/bridge.ts",
+      "src/integrations/native/contracts.ts",
+      "src/integrations/native/details.ts",
+      "src/integrations/native/frameAssessment.ts",
+      "src/integrations/native/guiEvidence.ts",
+      "src/integrations/native/outcome.ts",
+      "src/integrations/native/release.ts",
+      "src/integrations/native/storage.ts",
+      "src/integrations/native/tools.ts",
+      "src/integrations/native/transport.ts",
+      "src/core/binaryTransactions.ts",
+      "src/core/capabilities.ts",
+      "src/core/discoveryPaths.ts",
+      "src/core/fileTransactions.ts",
+      "src/core/jsonPlanFile.ts",
+      "src/core/layoutDocument.ts",
+      "src/core/layoutOperations.ts",
+      "src/core/recoveryJournal.ts",
+      "src/core/resolver.ts",
+      "src/core/sc2BuiltinDependencies.ts",
+      "src/core/styleDocument.ts",
+      "src/core/types.ts",
+      "src/core/uiXmlFormat.ts",
+      "src/core/validator.ts",
+      "src/core/workspace.ts",
+      "src/core/workspaceLock.ts",
+      "src/core/xmlScanner.ts",
+      "src/archive/archiveAdapter.ts",
+      "src/archive/terrainLoadContract.ts",
+      "src/app/project.ts",
+      "src/app/server.ts",
+      "src/app/moduleSelection.ts",
+      "native-toolkit-release.json",
+      "game-toolkit-release.json"
+    ],
+    "encoding": "Exact source bytes; independently matched to the immutable ModExport run target",
+    "note": "Read-only native adapter and archive/transaction dependencies. Later Data authoring changes are outside this scope."
+  },
+  "candidate": {
+    "directory": "L:\\SC2EditorToolkit_Candidates\\ModExport-20261025-454f9de1-f93e-4552-a3a9-3c2835b379da",
+    "files": 9834,
+    "receipt": {
+      "file": "work/launch-diagnostics-20261022/mod-export-candidate.json",
+      "sha256": "8d3f783a2f39a0e946f351ff8a8db0b6f9e750550c552f07fbbd4d89d5cfb865"
+    },
+    "manifest": {
+      "file": "work/launch-diagnostics-20261022/mod-export-candidate-manifest.json",
+      "sha256": "b343e56a5831d8dcaef9cf82feca2ee63f03e83bc34628c686da8a7f84e0784b"
+    },
+    "allFilesMatchedBeforeAndAfter": true
+  },
+  "runtime": {
+    "version": "1.0.0",
+    "nativeProtocol": 15,
+    "archiveSha256": "dbf9e727aa8d96ec7e53a499d5adb73fe8127ad8896ea69182c6e86a20e5be92"
+  },
+  "observations": {
+    "positiveCompletedCases": 14,
+    "audits": [
+      {
+        "id": "audit_Before",
+        "outcome": "incomplete",
+        "objects": 1924,
+        "findings": 3173,
+        "zeroGetterErrors": true,
+        "zeroNativeDiagnosticErrors": true,
+        "catalogTraversalComplete": true,
+        "referenceAndFileValidationComplete": false,
+        "validationPassed": null,
+        "loadedSources": [
+          "All Data",
+          "Core.SC2Mod",
+          "Seed.SC2Mod"
+        ],
+        "projectRevisionComplete": true,
+        "nativeResolvedPhysicalPathsVerified": false
+      },
+      {
+        "id": "audit_After",
+        "outcome": "incomplete",
+        "objects": 1926,
+        "findings": 3176,
+        "zeroGetterErrors": true,
+        "zeroNativeDiagnosticErrors": true,
+        "catalogTraversalComplete": true,
+        "referenceAndFileValidationComplete": false,
+        "validationPassed": null,
+        "loadedSources": [
+          "All Data",
+          "Core.SC2Mod",
+          "NativeOpen-08a51c2c5c0b.SC2Mod"
+        ],
+        "projectRevisionComplete": true,
+        "nativeResolvedPhysicalPathsVerified": false
+      }
+    ],
+    "differences": [
+      {
+        "change": "modified",
+        "catalog": "Unit",
+        "id": "SOLCoreUnit"
+      },
+      {
+        "change": "added",
+        "catalog": "Effect",
+        "id": "SOLCoreBonus"
+      },
+      {
+        "change": "added",
+        "catalog": "Weapon",
+        "id": "SOLCoreWeapon2"
+      }
+    ],
+    "verifiedPrivateDocumentAliases": [
+      {
+        "case": "audit_Before",
+        "alias": "Seed.SC2Mod",
+        "file": "L:\\NE100SOL\\w\\e3d50e4c299b450fb791351ace8c8fa8\\workers\\03d687e1633e44e8b40a95389317c4db\\Seed.SC2Mod",
+        "sha256": "9ae7df69e1e30703f21126c899340afb232256bdcf3e0df466c74d726f1fd551"
+      },
+      {
+        "case": "audit_After",
+        "alias": "NativeOpen-08a51c2c5c0b.SC2Mod",
+        "file": "L:\\NE100SOL\\w\\e3d50e4c299b450fb791351ace8c8fa8\\opens\\08a51c2c5c0b455184e757960055504f\\NativeOpen-08a51c2c5c0b.SC2Mod",
+        "sha256": "dfcb15f7fa9994195eb5f59511295253b5eae46d690607fa2c3303ff6c831d99"
+      }
+    ],
+    "lifeMaxReads": [
+      "45",
+      "45"
+    ],
+    "warmDocumentReusedWithFreshNativeFields": true,
+    "sourceOriginalsAndCopiesUnchanged": true,
+    "ownedProcessesAfter": []
+  },
+  "evidence": [
+    {
+      "file": "work/launch-diagnostics-20261022/core-indexed-native-r2.json",
+      "sha256": "21df3d24063c8f7ec6ae675bb557f3f6168dba1b43fd7ae60fcb8b695dbaf5b2"
+    },
+    {
+      "file": "work/launch-diagnostics-20261022/core-indexed-r2-audit.json",
+      "sha256": "e8a5bc568c5e85ba4000c303fc20a9af492fc3ff7077f5d6bf84dbb8aa5cbe87"
+    },
+    {
+      "file": "work/launch-diagnostics-20261022/mod-export-core-concrete-r2-public.json",
+      "sha256": "6afba724e2fa9e0d7c2e8d06082707b84970ba201e1ff83eda688565728d1684"
+    },
+    {
+      "file": "work/launch-diagnostics-20261022/mod-export-core-public.json",
+      "sha256": "620d65ef3f640cab7529973684947acb4fdcd0fd81bd6f0d78bf4e8761a09632"
+    },
+    {
+      "file": "work/launch-diagnostics-20261022/core-indexed-native.json",
+      "sha256": "89f2198027452153122fe617035c85b4d805ea5e0e5f9e61ec56d8dcfdd6dd35"
+    },
+    {
+      "file": "work/launch-diagnostics-20261022/mod-export-core-concrete-public.json",
+      "sha256": "551b1fed8d5a3bbd534ab5edf5603b9121587ef17b81a9418a68a48a359a6c53"
+    }
+  ],
+  "retainedControls": {
+    "abstractClass": "Initial ordinary CWeapon fixture refused by native load and was preserved. Fresh copies repaired only through public Data authoring before the successful index run.",
+    "clientDispatch": "First repair attempt used advertised batch setType before its later fix; refusal retained. Supported single-file repair used for the actual index corpus.",
+    "readOnlyAuditCorrection": "Second loaded document uses an exact NativeOpen alias, not Seed; independently bound to its source hash."
+  },
+  "notAccepted": [
+    "Complete native reference/resource validation",
+    "Broad87052-object audit completion or missing-model Resource171 recovery",
+    "45-to73-to-original source-return recovery",
+    "Private native cache/CASC byte identity beyond the reported scope",
+    "Gameplay, art or whole current release acceptance"
+  ],
+  "releaseAcceptanceNotDeclared": true
+}

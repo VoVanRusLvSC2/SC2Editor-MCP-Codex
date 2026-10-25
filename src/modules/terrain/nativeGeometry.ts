@@ -4,7 +4,7 @@ import {parseTerrainXml} from './surface/format/terrain-params.js';
 import type {TerrainState} from './operations.js';
 import type {TerrainOperation} from './types.js';
 import {CARDINAL_RAMP_VERTICES,CARDINAL_RAMP_CELLS} from './rampProfile.js';
-import {nativeCliffSyncLevels,nativeCliffFineLevels} from './cliffProfile.js';
+import {nativeCliffSyncLevels,nativeCliffFineLevels,nativeCliffFineSyncLevels} from './cliffProfile.js';
 
 export interface NativeGeometryReport {walls:number;ramps:number;changedVertices:number;changedCells:number;profile:string;engineValidated:false}
 export interface NativeGeometryCoverage {vertices:ReadonlySet<number>;cells:ReadonlySet<number>}
@@ -21,7 +21,7 @@ export function patchGeometrySection(source:string,tag:string,fragment:string){c
 const patchSection=patchGeometrySection;
 export const attributesXml=(attrs:Record<string,string|number>)=>Object.entries(attrs).map(([key,value])=>`${key}="${String(value).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;')}"`).join(' ');
 function geometryListAttributes(source:string,tag:string){const p=scanXml(source),hm=p.nodes.find(n=>n.tag==='heightMap');return p.nodes.find(n=>n.tag===tag&&n.parentId===hm?.id)?.attrs??{};}
-function requireGeometryListContents(source:string){
+export function requireGeometryListContents(source:string){
  const p=scanXml(source),hm=p.nodes.find(n=>n.tag==='heightMap');
  for(const [listTag,rowTag]of [['cliffCellList','cc'],['rampList','ramp']]){
   const list=p.nodes.find(n=>n.tag===listTag&&n.parentId===hm?.id);if(!list)continue;
@@ -74,7 +74,7 @@ export function prepareNativeGeometryFoundation(s:TerrainState,minimumBias=0){
 /** Writes native geometry components, not doodads or blocker units. Supported profile is explicit. */
 export function editNativeGeometry(s:TerrainState,operation:Extract<TerrainOperation,{op:'cliff.paint'|'cliff.repair'|'ramp.create'|'ramp.remove'|'ramp.repair'|'pathing.paint'}>,coverage?:(value:NativeGeometryCoverage)=>void):NativeGeometryReport{
  requireGeometryListContents(s.descriptor.source);
- const p=requireProfile(s),b=s.heights.bytes,initial=s.descriptor,dirty=new Set<number>(),dirtyCells=new Set<number>(),rampOwned=new Map<number,number>(),cells=new Map((p.parsed.cliffCells??[]).map(c=>[c.index,c])),ramps=[...(p.parsed.ramps??[])];const at=(x:number,y:number)=>32+(y*(p.w+1)+x)*6;
+ const p=requireProfile(s),b=s.heights.bytes,initial=s.descriptor,dirty=new Set<number>(),dirtyCells=new Set<number>(),cliffSyncOffsets=new Map<number,number>(),rampOwned=new Map<number,number>(),cells=new Map((p.parsed.cliffCells??[]).map(c=>[c.index,c])),ramps=[...(p.parsed.ramps??[])];const at=(x:number,y:number)=>32+(y*(p.w+1)+x)*6;
  const adjustment=(x:number,y:number)=>b.readUInt16LE(at(x,y)+2)*s.descriptor.quantizeScale-s.descriptor.quantizeBias;
  const level=(x:number,y:number)=>b.readUInt16LE(at(x,y)+4)&255;
  const setVertex=(x:number,y:number,base:number,adj:number,l:number)=>{if(x<0||y<0||x>p.w||y>p.h)throw new Error('NATIVE_GEOMETRY_OUTSIDE_MAP');const i=at(x,y),d=s.descriptor;const qb=Math.round((base+d.quantizeBias)/d.quantizeScale),qa=Math.round((adj+d.quantizeBias)/d.quantizeScale);if(Math.min(qb,qa)<0||Math.max(qb,qa)>65535)throw new Error('NATIVE_GEOMETRY_QUANTIZATION_RANGE');b.writeUInt16LE(qb,i);b.writeUInt16LE(qa,i+2);b.writeUInt16LE((b.readUInt16LE(i+4)&0xff00)|l,i+4);dirty.add(y*(p.w+1)+x);};
@@ -151,10 +151,11 @@ export function editNativeGeometry(s:TerrainState,operation:Extract<TerrainOpera
   if(cells.get(i)?.flags===2)continue;
   const x=i%(p.w/2)*2,y=Math.floor(i/(p.w/2))*2;
   if(ramps.some(r=>{const m=r.frames.mid;if(!m)return true;const rx=Math.abs(m.up[0])*2+Math.abs(m.right[0])*3,ry=Math.abs(m.up[1])*2+Math.abs(m.right[1])*3;return x+2>=m.center[0]-rx&&x<=m.center[0]+rx&&y+2>=m.center[1]-ry&&y<=m.center[1]+ry;}))continue;
-  const fine=nativeCliffFineLevels([[x,y],[x+2,y],[x+2,y+2],[x,y+2]].map(([a,b])=>level(a,b)));
+  const corners=[[x,y],[x+2,y],[x+2,y+2],[x,y+2]].map(([a,b])=>level(a,b)),fine=nativeCliffFineLevels(corners),syncFine=nativeCliffFineSyncLevels(corners);
   for(let dy=0;dy<3;dy++)for(let dx=0;dx<3;dx++)if(dx%2||dy%2){
    const xx=x+dx,yy=y+dy,l=fine[dy*3+dx],base=b.readUInt16LE(at(xx,yy))*s.descriptor.quantizeScale-s.descriptor.quantizeBias;
    setVertex(xx,yy,base,offsetFor(l),l);
+   if(syncFine[dy*3+dx]!==l)cliffSyncOffsets.set(yy*(p.w+1)+xx,offsetFor(syncFine[dy*3+dx])-offsetFor(l));
   }
  }
  // Native cliff records occupy 2x2 cells. Wall holes are the low LFCT bit;
@@ -165,10 +166,17 @@ export function editNativeGeometry(s:TerrainState,operation:Extract<TerrainOpera
  }
  // Preserve measured ramp SMAP correction; outside it sample the new authored vertex height.
  const rampVertex=new Set<number>();if(operation.op==='ramp.create'){const center=params.center as {x:number;y:number},q=rotations[String(params.direction)];for(let y=-3;y<=3;y++)for(let x=-2;x<=2;x++){const [dx,dy]=rotate(x,y,q);rampVertex.add((center.y+dy)*(p.w+1)+center.x+dx);}}
- for(const v of dirty){if(rampVertex.has(v))continue;const x=v%(p.w+1),y=Math.floor(v/(p.w+1)),z=s.heights.z(x,y),raw=Math.round(z*256);if(raw< -32768||raw>32767)throw new Error('NATIVE_SYNC_HEIGHT_RANGE');p.sync.writeInt16LE(raw,64+v*4);}
+ for(const v of dirty){if(rampVertex.has(v))continue;const x=v%(p.w+1),y=Math.floor(v/(p.w+1)),z=s.heights.z(x,y)+(cliffSyncOffsets.get(v)??0),raw=Math.round(z*256);if(raw< -32768||raw>32767)throw new Error('NATIVE_SYNC_HEIGHT_RANGE');p.sync.writeInt16LE(raw,64+v*4);}
+ // The native SMAP level label follows HMAP, including the low saddle center;
+ // its height can independently use the high-side correction above. Leaving
+ // newly raised terrain labelled as level1 disconnects a measured level2 ramp.
+ // Repair also covers coarse corners without rewriting their authored heights.
+ const syncMaskVertices=new Set(dirty);
+ for(const i of dirtyCells){const x=i%(p.w/2)*2,y=Math.floor(i/(p.w/2))*2;for(let dy=0;dy<=2;dy++)for(let dx=0;dx<=2;dx++)syncMaskVertices.add((y+dy)*(p.w+1)+x+dx);}
+ for(const v of syncMaskVertices){const x=v%(p.w+1),y=Math.floor(v/(p.w+1)),i=64+v*4+2,old=p.sync.readUInt16LE(i);p.sync.writeUInt16LE((old&0xff00)|level(x,y),i);}
  const cc=[...cells.values()].sort((a,b)=>a.index-b.index).map(c=>`<cc ${attributesXml({...c.attributes,i:c.index,f:c.flags,cid:c.cliffSetIndex,cvar:c.variation})}/>`).join('');
  let xml=patchSection(s.descriptor.source,'cliffCellList',`<cliffCellList ${attributesXml({...geometryListAttributes(s.descriptor.source,'cliffCellList'),num:p.w*p.h/4,numOccupied:cells.size})}>${cc}</cliffCellList>`);
  const rs=ramps.map(r=>`<ramp ${attributesXml(r.rawAttributes??{})}/>`).join('');xml=patchSection(xml,'rampList',`<rampList ${attributesXml({...geometryListAttributes(xml,'rampList'),num:ramps.length})}>${rs}</rampList>`);s.sources.set('t3Terrain.xml',Buffer.from(xml));s.descriptor=new TerrainDescriptor(xml);s.heights=new HeightMap(b,s.descriptor);s.sync=new SyncHeightMap(p.sync,s.heights);parseTerrainXml(xml);
- coverage?.({vertices:dirty,cells:dirtyCells});
+ coverage?.({vertices:syncMaskVertices,cells:dirtyCells});
  return {walls:[...cells.values()].filter(c=>c.flags===1).length,ramps:ramps.length,changedVertices:dirty.size,changedCells:dirtyCells.size,profile:'native-v115-cardinal-width4-p-98310',engineValidated:false};
 }

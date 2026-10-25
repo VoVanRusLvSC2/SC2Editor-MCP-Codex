@@ -1,6 +1,7 @@
 // ModKit owns every native reader/writer used here. This layer supplies bounded brush inputs.
 import {TextDecoder,TextEncoder} from 'node:util';
 import {placeNativeRamp,nativeRampTemplate} from './terrain-ramp-api.mjs';
+import {placeJoinedRamp} from './terrain-ramp-join.mjs';
 const decoder=new TextDecoder(),encoder=new TextEncoder();
 const xml=bytes=>decoder.decode(bytes);
 const required=(files,name)=>{const b=files.get(name);if(!b?.length)throw Error('MODKIT_TERRAIN_COMPONENT_REQUIRED: '+name);return b;};
@@ -10,15 +11,18 @@ const page=(items,offset,limit)=>({total:items.length,items:items.slice(offset,o
 export const TERRAIN_READERS={t3HeightMap:'HeightMap',t3SyncHeightMap:'SyncHeightMap',t3SyncCliffLevel:'SyncCliffLevel',t3SyncPathingInfo:'PathingInfo',t3CellFlags:'CellFlags',t3TextureMasks:'TextureMasks',t3SyncTextureInfo:'SyncTextureInfo',t3FluffDoodad:'FluffDoodad',t3Water:'Water',t3VertCol:'VertexColor',t3HardTile:'HardTile',PaintedPathingLayer:'PaintedPathing',PaintedCreepLayer:'PaintedPathing',Terrain:'TerrainBinary'};
 export function guardTerrainBytes(name,bytes){
   if(bytes.length>64*1024*1024)throw Error('MODKIT_TERRAIN_COMPONENT_BYTE_LIMIT');
-  if(bytes.length<12)return;
   const v=new DataView(bytes.buffer,bytes.byteOffset,bytes.byteLength);
-  if(/^t3(?:HeightMap|SyncHeightMap|SyncCliffLevel|SyncPathingInfo|CellFlags|TextureMasks)$/.test(name)){
-    if(v.getUint32(8,true)>4096||v.getUint32(12,true)>4096)throw Error('MODKIT_TERRAIN_GRID_LIMIT');
+  const dimensions={t3HeightMap:[8,12],t3SyncHeightMap:[8,12],t3SyncCliffLevel:[8,12],t3SyncPathingInfo:[8,12],t3CellFlags:[24,28],t3TextureMasks:[12,16]}[name];
+  if(dimensions){
+    if(bytes.length<dimensions[1]+4)throw Error('MODKIT_TERRAIN_DIMENSIONS_TRUNCATED: '+name);
+    const x=v.getUint32(dimensions[0],true),y=v.getUint32(dimensions[1],true);
+    if(x>4096||y>4096)throw Error('MODKIT_TERRAIN_GRID_LIMIT: '+name+' ('+x+','+y+')');
   }
   if(name==='t3FluffDoodad'&&bytes.length>=28&&v.getUint32(24,true)>100000)throw Error('MODKIT_TERRAIN_RECORD_LIMIT');
   if(name==='t3VertCol'&&v.getUint32(8,true)>16384)throw Error('MODKIT_TERRAIN_RECORD_LIMIT');
 }
 export function createTerrainApi(f,n,overview){
+  const guardRampInputs=files=>{for(const name of ['t3Terrain.xml','t3HeightMap','t3SyncHeightMap','t3SyncCliffLevel','t3CellFlags'])guardTerrainBytes(name,required(files,name));};
   function catalogQueries(files,catalog){
     const dims=dimensions(files);if(dims.width*dims.height>65536)throw Error('MODKIT_NAVIGATION_LIMIT_256_MAP');
     const map=f.parseMapEntries(files),refs=new Map(),add=(namespace,entityId)=>{if(entityId)refs.set(namespace+'/'+entityId,{namespace,entityId});};
@@ -111,9 +115,10 @@ export function createTerrainApi(f,n,overview){
           terrainTexDataXml:files.has('Base.SC2Data/GameData/TerrainTexData.xml')?xml(files.get('Base.SC2Data/GameData/TerrainTexData.xml')):undefined});
         for(const[name,text]of Object.entries({ 't3Terrain.xml':result.terrainXml,'Base.SC2Data/GameData/TerrainData.xml':result.terrainDataXml,'Base.SC2Data/GameData/TerrainTexData.xml':result.terrainTexDataXml}))files.set(name,encoder.encode(text));
         changed=op.textures.length;
-      }else if(op.op==='ramp.template'){
+      }else if(op.op==='ramp.template'||op.op==='ramp.place'){
         const prefix='@donor:'+op.donorDirectory+':',donor=new Map([...files].filter(([name])=>name.startsWith(prefix)).map(([name,bytes])=>[name.slice(prefix.length),bytes]));
-        const r=placeNativeRamp(f,files,donor,op);reports.push({op:op.op,...r});continue;
+        guardRampInputs(files);guardRampInputs(donor);
+        const r=op.op==='ramp.place'?placeJoinedRamp(f,files,donor,op):placeNativeRamp(f,files,donor,op);reports.push({op:op.op,...r});continue;
       }else throw Error('MODKIT_TERRAIN_OPERATION_REFUSED: '+op.op);
       reports.push({op:op.op,changed});
     }
@@ -132,6 +137,6 @@ export function createTerrainApi(f,n,overview){
     return {summary:{counts,width:spatial.width,height:spatial.height,route:route?compact??null:undefined,profile,parseErrors:errors,
       catalogFootprints:!!catalogSnapshot,catalog:catalogStatus,engineValidated:false,limitations:catalogSnapshot?['Static placed-object footprints; live unit state, exact movement radius and engine pathfinding are not simulated']:['Terrain and authored masks only; catalog=false omits effective footprints and live unit state']},png:n.navigationToPng(map,nav,{spatial,routes:found?[found]:[],overview:{catalog:catalogSnapshot,pixelsPerCell:Math.max(1,Math.min(32,Math.floor(maxSize/Math.max(spatial.width,spatial.height))))}})};
   }
-  const fit=(files,request)=>{const template=nativeRampTemplate(f,files,request),all=f.rankDiagonalCliffRampPlacements([template],request.crossings.map(p=>[p.x,p.y]),[request.uphill.x,request.uphill.y]);return {total:all.length,candidates:all.slice(0,16).map(c=>({...c,offsetX:c.center[0]-template.ramp.frames.mid.center[0],offsetY:c.center[1]-template.ramp.frames.mid.center[1]})),engineValidated:false};};
+  const fit=(files,request)=>{guardRampInputs(files);const template=nativeRampTemplate(f,files,request),all=f.rankDiagonalCliffRampPlacements([template],request.crossings.map(p=>[p.x,p.y]),[request.uphill.x,request.uphill.y]);return {total:all.length,candidates:all.slice(0,16).map(c=>({...c,offsetX:c.center[0]-template.ramp.frames.mid.center[0],offsetY:c.center[1]-template.ramp.frames.mid.center[1]})),engineValidated:false};};
   return {inspect,plan,navigation,read,dimensions,fit,catalogQueries};
 }

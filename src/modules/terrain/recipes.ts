@@ -3,6 +3,7 @@ import type {
   TerrainArea,
   TerrainOperation,
   TerrainStyle,
+  TerrainMaterialPatch,
 } from "./types.js";
 export const TERRAIN_STYLES: Record<
   TerrainStyle,
@@ -78,12 +79,13 @@ export interface GenerateArgs {
   area: TerrainArea;
   style: TerrainStyle;
   heightMode?: 'generate' | 'preserve';
+  baseHeight?: number;
   textureMode?: 'generate' | 'preserve';
   seed?: number;
   relief?: number;
   wavelength?: number;
   edgeBlend?: number;
-  materials?: { base?: string; rock?: string };
+  materials?: { base?: string; rock?: string;patches?:TerrainMaterialPatch[] };
   protectedAreas?: TerrainArea[];
 }
 export function generateRecipe(
@@ -97,9 +99,10 @@ export function generateRecipe(
       protectedAreas: args.protectedAreas,
     };
   const operations: TerrainOperation[] = [];
+  if(args.heightMode==='preserve'&&args.baseHeight!==undefined)throw Error('TERRAIN_PRESERVE_HEIGHT_BASE_CONFLICT: omit baseHeight when retaining existing heights');
   if(args.heightMode==='preserve'&&(args.relief??0)>0)throw Error('TERRAIN_PRESERVE_HEIGHT_RELIEF_CONFLICT: omit relief or set it to zero when retaining existing heights');
-  if(args.textureMode==='preserve'&&(args.materials?.base||args.materials?.rock))throw Error('TERRAIN_PRESERVE_TEXTURE_MATERIAL_CONFLICT: omit materials when retaining existing surface textures');
-  if(args.heightMode!=='preserve')operations.push({ op: "height.flatten", height: "currentMedian", ...common });
+  if(args.textureMode==='preserve'&&(args.materials?.base||args.materials?.rock||args.materials?.patches?.length))throw Error('TERRAIN_PRESERVE_TEXTURE_MATERIAL_CONFLICT: omit materials when retaining existing surface textures');
+  if(args.heightMode!=='preserve')operations.push({ op: "height.flatten", height: args.baseHeight ?? "currentMedian", ...common });
   if (args.heightMode!=='preserve'&&(args.relief ?? style.relief) > 0)
     operations.push(
       {
@@ -119,6 +122,11 @@ export function generateRecipe(
     );
   if (args.textureMode!=='preserve' && baseTexture)
     operations.push({ op: "texture.paint", texture: baseTexture, ...common });
+  if(args.textureMode!=='preserve')for(const [index,patch]of (args.materials?.patches??[]).entries()){
+    const {texture,wavelength,threshold,transition,strength,seed,minHeight,maxHeight,minSlope,maxSlope}=patch;
+    operations.push({op:'texture.paint_rules',...common,strength,pattern:{wavelength,threshold,transition,seed:seed??((args.seed??1)^Math.imul(index+1,7919))},
+      rules:[{texture,...minHeight===undefined?{}:{minHeight},...maxHeight===undefined?{}:{maxHeight},...minSlope===undefined?{}:{minSlope},...maxSlope===undefined?{}:{maxSlope}}]});
+  }
   if (args.textureMode!=='preserve' && args.materials?.rock)
     operations.push({
       op: "texture.paint_rules",

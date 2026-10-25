@@ -13,6 +13,7 @@ import { DataDocument,referenceSchema } from "./document.js";
 import { DataSchemaRegistry } from "./schemaRegistry.js";
 import { validateDataDocuments } from "./validator.js";
 import { parentClassCompatibility } from "./parentClasses.js";
+import {nativeClassObservations} from './nativeClasses.js';
 import {unitActorRecipe,effectModelRecipe,visualRecipePreloads} from './actorRecipes.js';
 import {instantAbilityRecipe,targetAbilityRecipe} from './abilityRecipes.js';
 import {abilityChargesRecipe} from './abilityCharges.js';
@@ -335,7 +336,7 @@ export class DataWorkspace {
       coverageIssues:[...records.issues,...cross?.issues??[]].slice(0,200),coveragePagination:{total:records.issues.length+(cross?.issues.length??0),truncated:records.issues.length+(cross?.issues.length??0)>200,details:"data.references issueOffset/issueLimit"},
       diagnostics: requested ? (await this.validate(requested)).diagnostics.slice(0, args.limit ?? 200) : [],
       schema: { mode: "observed-bundled-plus-dynamic", activeObjectTypes: new Set(all.filter(entry=>entry.engineActive===true).map((entry) => entry.ctype)).size, activeFieldPaths: new Set(all.filter(entry=>entry.engineActive===true).flatMap((entry) => this.flattened([entry]).map((field) => `${entry.ctype}.${field.path}`))).size, coverage: this.schema.coverage() },
-      operations: ["object.create", "object.clone", "object.rename", "object.delete", "object.setParent", "object.setAttribute", "object.removeAttribute", "field.set", "field.setLink", "field.setAttribute", "field.removeAttribute", "field.remove", "array.append", "native.add", "recipe.weaponBurn", "recipe.unitTextureByVital", "recipe.unitActor", "recipe.effectModel", "recipe.instantAbility", "recipe.targetAbility", "recipe.abilityCharges", "recipe.projectileEffect", "recipe.veterancy", "recipe.xpSearch", "recipe.learn", "recipe.unitAbilityAnimation"],
+      operations: ["object.create", "object.clone", "object.rename", "object.delete", "object.setParent", "object.setType", "object.setAttribute", "object.removeAttribute", "field.set", "field.setLink", "field.setAttribute", "field.removeAttribute", "field.remove", "array.append", "native.add", "recipe.weaponBurn", "recipe.unitTextureByVital", "recipe.unitActor", "recipe.effectModel", "recipe.instantAbility", "recipe.targetAbility", "recipe.abilityCharges", "recipe.projectileEffect", "recipe.veterancy", "recipe.xpSearch", "recipe.learn", "recipe.unitAbilityAnimation"],
       recipes: {
         'recipe.learn': {tool:'data.hero.learn',requires:'Bound explicit unparented CBehaviorVeterancy table, local instant/target abilities with explicit Levels, valid distinct learn cards',semantics:'Native CAbilLearn points and per-level gains, Learn1..Learn20 commands, minimum/skip rank gates; execution Data remains separate',limits:'No competing learn pool, unknown inherited veterancy or implicit rank count. Native point/rank/UI behavior needs gameplay testing'},
         "recipe.abilityCharges": {tool:'data.ability.charges',requires:'One unambiguous local CAbilEffectInstant/Target with direct indexed Cost[0]',semantics:'Own the native Charge subtree; preserve effects, energy, cooldown and command card. Explicit Abil/Unit/Player/Global scope, own/default link and optional natural recovery; max0 disables the charge gate',limits:'Direct level-zero execution abilities only; shared state and recovery require native gameplay checks; no Behavior/OffCost or unindexed local costs'},
@@ -462,7 +463,7 @@ export class DataWorkspace {
   async describeType(ctype?: string) {
     const records = await this.catalog();
     const objects = records.flatMap((record) => record.document.objects().map((object) => ({ ...object, layer: record.layer, provenance: record.provenance })));
-    return this.schema.describe(ctype, objects);
+    return {...this.schema.describe(ctype, objects),nativeClassObservations:nativeClassObservations(ctype)};
   }
 
   async unitMetrics(id: string): Promise<{ minerals?: number; vespene?: number; supply?: number; provenance: string[] } | undefined> {
@@ -517,6 +518,12 @@ export class DataWorkspace {
               case 'object.create': {const node=doc.createObject(operation.ctype,operation.id,{...operation,fields:operation.fields?resolveFields(operation.fields):undefined});target=doc.objectKey(node);break;}
               case 'object.clone': {const node=doc.cloneObject(selector!,operation.id,operation.parent);target=doc.objectKey(node);break;}
               case 'object.setParent': doc.setParent(selector!,operation.parent?resolveAlias(operation.parent):undefined);target=doc.objectKey(doc.resolve(selector!));break;
+              case 'object.setType': {
+                const previous=doc.objectKey(doc.resolve(selector!));
+                target=doc.objectKey(doc.setType(selector!,operation.ctype));
+                for(const [name,value]of aliases)if(value.file===file&&value.key===previous)aliases.set(name,{...value,key:target});
+                break;
+              }
               case 'object.setAttribute': doc.setObjectAttribute(selector!,operation.attribute,operation.value);target=doc.objectKey(doc.resolve(selector!));break;
               case 'object.removeAttribute': doc.removeObjectAttribute(selector!,operation.attribute);target=doc.objectKey(doc.resolve(selector!));break;
               case 'field.set': doc.setField(selector!,operation.path,'value',typeof operation.value==='string'?resolveAlias(operation.value):operation.value);target=doc.objectKey(doc.resolve(selector!));break;

@@ -62,6 +62,9 @@ export const location = {
   density: z.number().positive().optional(),
   seed: z.number().int().default(1),
   minimumDistance: z.number().nonnegative().default(0),
+  clusterCount: z.number().int().min(0).max(32).optional(),
+  clusterRadius: z.number().finite().positive().optional(),
+  clusterSeparation:z.number().finite().nonnegative().optional(),
   scaleRange: z
     .object({ min: z.number().positive(), max: z.number().positive() })
     .optional(),

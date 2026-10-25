@@ -1,0 +1,168 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-23T10:54:46.841Z",
+  "status": "persisted_dependency_registration_order_and_installed_lifecycle_passed",
+  "scope": "General CASC cache registration order, preserving native DocumentInfo dependency precedence, content verification and source/directory/draft guards. A new frozen installed MCP authors a copied existing location project through real plan/apply/save/backup tools and reopens the MCP session. Original/native payload remains unchanged; this does not renew original Editor/Game/art acceptance.",
+  "sourceFingerprints": [
+    {
+      "file": "src/modules/casc/workspace.ts",
+      "sha256LfUtf8": "61b1c845b9bda68925e43fcc3f41a99431450fad0809db1ba017f3449d9cbcea"
+    },
+    {
+      "file": "src/modules/browse/workspace.ts",
+      "sha256LfUtf8": "f533e0ee196e2a1f2e1d06736d562134cd3d7f594aad35506930a462663efbe4"
+    },
+    {
+      "file": "src/modules/browse/assetIndex.ts",
+      "sha256LfUtf8": "aee7f3702dd26b319d17501a24e10fdc23f8c635e5110bca346aa4f87955dfdf"
+    },
+    {
+      "file": "src/core/workspace.ts",
+      "sha256LfUtf8": "0cf00f0de8109d47053b31770bbe19eace8c4a59837f91fc0c6561f737982379"
+    },
+    {
+      "file": "src/modules/data/workspace.ts",
+      "sha256LfUtf8": "1fcc39a89beb1116ce0346637db964fe039e866f093755d1d3c0d98655ac245d"
+    },
+    {
+      "file": "src/tests/casc.test.ts",
+      "sha256LfUtf8": "7a3ca5c81ca1a3363aa7f085bf50aaeaafbbf2ac742cd792e07f2d582774bc5c"
+    },
+    {
+      "file": "scripts/build-windows-portable.mjs",
+      "sha256LfUtf8": "08cbe03842bcd1ebba59f1ab0d9d4bce4ea7955758264430839cb6af8bcc15d9"
+    },
+    {
+      "file": "scripts/check-distribution-privacy.mjs",
+      "sha256LfUtf8": "747bb50d8e7c0ed8ec034f7759ec6bfca4424b8a348f872b68c1ce9095ed03da"
+    },
+    {
+      "file": "publication-policy.json",
+      "sha256LfUtf8": "5526488d2229807ddc1353ce8b22af2f19fbdead1b2e227c8d8c936986d0e7f1"
+    },
+    {
+      "file": "src/integrations/game/runtime.ts",
+      "sha256LfUtf8": "cdbf80b0d4ff188a38427907d5adc00adc6326e5a40c49f6582761a42211c014"
+    },
+    {
+      "file": "src/integrations/game/bridge.ts",
+      "sha256LfUtf8": "65057d196bd5e7d07332ada1fc66c65d76360448fb99f3f9923370bfd1d28108"
+    },
+    {
+      "file": "src/integrations/game/transport.ts",
+      "sha256LfUtf8": "fb80efac59156e531fbd41f52e5aa951099a76461da224c2467ca223e0902360"
+    },
+    {
+      "file": "src/integrations/native/transport.ts",
+      "sha256LfUtf8": "df9de411e71ad8cbfc7b6cee153817d435517cea7c226b9bb0a8e83913f3622e"
+    },
+    {
+      "file": "native-toolkit-release.json",
+      "sha256LfUtf8": "3603dfc4b0bd20b83a4e44042c63a668596b4068b6bda8c84f814a10dde24831"
+    },
+    {
+      "file": "game-toolkit-release.json",
+      "sha256LfUtf8": "7c8e2329dd4af5513e8fbc4f0a98cd4442fedc5460129fbc7291c3be4a5c96cf"
+    }
+  ],
+  "cause": "The first mount registered roots in caller order, while a fresh process restored hash-named manifests in directory order. That changed the browse fingerprint and unnecessarily rebuilt owned zones.",
+  "change": {
+    "persistedField": "registrationOrder",
+    "lifecycle": "Serialize mount/ensure/restore per retained CASC instance; preserve existing registration on remount; restore persisted order",
+    "legacy": "Verify all view content first, then persist the existing filename order once for old manifests",
+    "validation": "Reject negative, noninteger, duplicate, out-of-range or sparse registration positions before root registration",
+    "unmodified": "DocumentInfo-driven Data load/override order, dependency readiness, view SHA verification, map ownership and stale guards"
+  },
+  "regression": {
+    "initialDefaultOrderAttempt": "First control used a caller order coincidentally matching hash order; its pass is retained but is not the reproducer",
+    "reproducer": {
+      "file": "work/launch-diagnostics-20261022/casc-order-red-2.tap",
+      "sha256": "5460b8660223190e0b80c85363ff1d1e76d95153cb59a094354aeb471119cee3"
+    },
+    "initialNativePackageFailure": {
+      "file": "work/launch-diagnostics-20261022/asset-index-package-failure.json",
+      "sha256": "b27db63d4d75f5c84a281de4eb3e77f5f86901dee3aefbb060d369312b2bf6a0"
+    },
+    "coverage": [
+      "Reversed first mount versus restored root order and exact browse identity",
+      "Declared dependency readiness after reconnect",
+      "Remount in a different caller order without reordering roots",
+      "Legacy manifest migration and invalid metadata refusal before callbacks",
+      "Concurrent mount/ensure/restore in one instance",
+      "Existing same-size restored-mtime, stale group, manual terrain/object and directory guards"
+    ]
+  },
+  "installedMcp": {
+    "acceptance": {
+      "file": "work/launch-diagnostics-20261022/casc-order-final-package-acceptance.json",
+      "sha256": "7f2ef6f04cdf8ae89e56d7a4f7f961db5cb18d1e7476fc38bfdef4e55476f706"
+    },
+    "candidateReceipt": {
+      "file": "work/launch-diagnostics-20261022/casc-order-final-candidate.json",
+      "sha256": "9ed5748b2c00b4dd959566eb24f76897ec574faedbfcf19466cdc07f98cf987f"
+    },
+    "compiledFiles": 359,
+    "compiledFilesUnchanged": true,
+    "sourceAndCopyNativePayloadUnchanged": true,
+    "nativePayloadFiles": 36,
+    "firstRevalidation": {
+      "zones": 7,
+      "reason": "Intent copied to a new workspace and schema installation path",
+      "payloadChanges": 0,
+      "savedWithBackup": true
+    },
+    "warm": {
+      "ms": 1389,
+      "rebuilt": 0,
+      "changedBytes": 0
+    },
+    "fresh": {
+      "ms": 21800,
+      "rebuilt": 0,
+      "changedBytes": 0
+    },
+    "timingScope": "Observed end-to-end local workload/cache conditions, including concurrent checks; no controlled ratio or billing-token claim"
+  },
+  "checks": {
+    "full": {
+      "tests": 1458,
+      "passed": 1457,
+      "skipped": 1,
+      "failed": 0,
+      "receipt": {
+        "file": "work/launch-diagnostics-20261022/casc-order-full-final.tap",
+        "sha256": "e52a9108d42be3112746a5f7d23a77221de778b0644619f41b55f57dbf555a02"
+      }
+    },
+    "focused": {
+      "passed": 60,
+      "failed": 0,
+      "receipt": {
+        "file": "work/launch-diagnostics-20261022/casc-order-focused-hardened.tap",
+        "sha256": "315dcc862450d56fe5af00d98d628962bb0ad231dabee1e27ed2b2a27438528b"
+      }
+    },
+    "build": "passed",
+    "releaseBuild": "passed",
+    "lint": "passed"
+  },
+  "privacy": {
+    "passed": true,
+    "checkedFiles": 9981,
+    "privateSourceFiles": 1113,
+    "privateCorpusCompared": true,
+    "violations": [],
+    "scope": "Explicit private paths/debug/test artifacts and exact external C++/Python/Galaxy source copies, including renamed files. Not proof against transformed snippets or binary reverse engineering.",
+    "privateRuntimeBundled": false,
+    "ordinarySourceMapsUninstrumented": true,
+    "sourceMapBoundaryEvidence": "Original Industrial archive/ownership and copied36 native payload files are unchanged; separate native GUI suites preserve their source map digests"
+  },
+  "nativeAcceptanceRenewed": false,
+  "published": false,
+  "remaining": [
+    "Native GUI structure/zero-bound representation and wider imported semantics",
+    "Broader native navigation/buildability and Data variants",
+    "Finished mission composition, UI, balance and art review",
+    "Other source-drift acceptance profiles remain separate"
+  ]
+}

@@ -23,6 +23,22 @@ command-card buttons and XP/level progression belong in native Data by default.
 Triggers coordinate the match, objectives, UI and persistence, issue native
 ability orders and read/restore native veterancy. Do not implement a second
 ability cooldown, damage or level system in periodic trigger code.
+
+GUI plans and validation return a bounded `nativeProfile` review. Resolve known
+original-generator risks before claiming full GUI readiness. `no_known_issues`
+and XML `valid:true` do not establish native compilation. Named-library variable
+types retain explicit TypeElement library bindings. Keep reusable library state
+library-owned or pass arguments; a library's direct read of map globals can fail
+because the original generator declares those globals later. A single literal
+zero array bound collapsed to a scalar in the observed generator; an additional
+Array tag did not repair it. New zero-bound declarations use a dedicated visible
+global integer constant of zero for each dimension, in the same library. This
+preserves the one-cell range for globals, fields and locals; it does not reuse or
+change an existing user constant. Inspect `nativeProfile.loweredZeroBounds` and
+verify the native result. Editing a generated helper produces a review finding,
+not an automatic overwrite. Imported graphs are reviewed without this rewrite.
+Do not silently relocate
+existing variables/callbacks or replace their logic to obtain a passing test.
 Expose hero abilities through native Data command cards. Do not duplicate them
 with trigger Dialog buttons, automatic targeting or periodic cooldown displays
 unless the user explicitly requests a separate ability interface.
@@ -128,10 +144,20 @@ New Unit pivots and moves outside them reject by default. An explicit
 engine from clamping a unit. Missing/unsupported MapInfo remains unverified.
 Compare requested and observed positions before diagnosing effect radius/range.
 
+For organic ground, use a related material base and regional
+`materials.patches` where appropriate. Patches can retain an existing background,
+blend coherent soil/litter/grass shapes and apply declared height/slope filters.
+Keep functional roads and pads readable. Long solid strips and overlapping
+canopy masks need a visual review even when their counts and spacing are valid.
+
 Use `terrain.catalog` to inspect tileset sections and source location candidates.
 Use `terrain.style` to retrieve one profile and a bounded Actor shortlist checked
 against the target catalog. Actor, Model, TerrainObject and TerrainTex are separate
 namespaces; a foliage Model cannot be placed as an Actor doodad.
+Pass the location's `condition` when choosing its style shortlist. Automatic
+composition excludes named wreckage for operational/abandoned defaults; explicit
+asset choices remain reviewable. Use bounded target `browse.search` when the
+observed tileset references omit an otherwise compatible prop, then measure it.
 
 `terrain.compose` supports named forest/natural clusters and explicit measured
 anchor-relative groups for base entrances, service yards and ruins. Polygon
@@ -149,12 +175,33 @@ to an owned object stop replacement. Unrelated objects remain independent.
 Objects, component registration and ownership state are saved as one transaction;
 terrain/dependency changes invalidate a staged save.
 
+Owned woodland locations can use explicit `config.clusterCount` and
+`config.clusterRadius` to reuse the scatter clustering already available in
+`terrain.compose`. Reserve routes first, then give canopy and understory their
+own spacing and grouping. Unspecified clustering retains the established uniform
+layout; it is not automatically added to every biome or infrastructure zone.
+Clustering controls object centers and does not establish engine collision or
+art quality. Impossible density rejects instead of silently becoming uniform.
+
 For incremental location terrain and decoration, use the named intent form of
 `terrain.landscape.plan` or `terrain landscape file=...` in the compact interface.
+Bind an existing relevant test suite with `intent.routeSource` and an explicit
+`clearWidth` before adding decor around established gameplay routes. Test
+tolerances are not design widths. This reserves positive route and formation
+lanes without painting them; blocked crossings and native pathing stay separate.
 Declare real overlay dependencies; repeated definitions are no-ops, and parent
 changes rebuild their dependants. Preserve the ownership record with the complete
 Terrain transaction. See [incremental locations](LANDSCAPE_OWNERSHIP.md) for the
 supported channels and remaining native/art-review limits.
+
+For intended building locations already declared by exact `game.pads` checks,
+bind `intent.padSource` with the test file and explicit per-pad `clearWidth` and
+`clearHeight`. This reserves decoration space through the same owned transaction.
+Do not infer an engine footprint from a rendered Model or turn a diagnostic
+nearby candidate into an exact authored pad. Resolve unselected owned conflicts
+by reviewing the named zones, preserve unrelated/manual work, then export and
+run the native placement suite. Reservation alone is not a predicate/build-order
+or navigation verdict.
 
 ## Evidence and limits
 
@@ -182,3 +229,17 @@ not quotas. Catalog location fragments are reference candidates. The current
 composition adapter does not reconstruct the native foliage distribution engine
 or certify engine collision footprints. Geometry dimensions and visual
 connection candidates are available through the measured decor tools.
+
+Even native placement searches need explicit result review. The verified SC2
+profile can snap an off-grid request to a different center with range0. Preserve
+both requested and returned coordinates. Default placement tests enforce the
+observed power/creep restrictions, while explicit tests=0 can bypass them; do not
+make that override a silent default or call a nearby candidate exact placement.
+Placement predicates do not by themselves check build orders, costs or tech.
+
+For a ground-topology question, declare explicit `game.pathing` passable/connected
+checks and `game.nativeProbe` timing. Keep point passability, point connectivity,
+placement and unit arrival distinct. An occupied endpoint may remain connected
+while not passable. A native false result is not a timeout, a diagnosis of its
+cause or a unit-footprint test. The private query pass closes before ordinary
+gameplay, so its state is not silently combined with later movement evidence.

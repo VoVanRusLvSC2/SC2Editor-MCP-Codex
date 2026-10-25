@@ -47,6 +47,13 @@ test('Pinned Host UVM fix is narrow, idempotent and refuses unknown platform cod
   assert.throws(()=>patchUvmArtifactUri('other version'),/CONTEXT_MISMATCH/);
   assert.throws(()=>patchUvmArtifactUri(source+source),/CONTEXT_MISMATCH/);
 });
+test('Pinned native ramp enum fix is idempotent and refuses unknown or duplicated guards',async()=>{
+ const {patchRampDirectionEnum}=await import(new URL('../../scripts/modkit/platform-patches.mjs',import.meta.url).href);
+ const source='ramp.dir < 1 || ramp.dir > 8; template.ramp.dir < 1 || template.ramp.dir > 8',patched=patchRampDirectionEnum(source);
+ assert.equal(patched,'ramp.dir < 0 || ramp.dir > 7; template.ramp.dir < 0 || template.ramp.dir > 7');assert.equal(patchRampDirectionEnum(patched),patched);
+ for(const invalid of ['other version',source+source,source.replace('template.ramp.dir > 8','template.ramp.dir > 9'),source+'; ramp.dir < 0 || ramp.dir > 7'])assert.throws(()=>patchRampDirectionEnum(invalid),/MODKIT_RAMP_ENUM_PATCH_CONTEXT_MISMATCH/);
+});
+
 test('ModKit world payload preserves typed arrays, maps and safe script boundaries',()=>{
   const encoded=encodeWorld({name:'</script><script>bad()</script>',array:new Float32Array([1.25,-2]),map:new Map([['x',new Uint16Array([65535])]]),large:4n});
   assert.equal(encoded.includes('</script>'),false);

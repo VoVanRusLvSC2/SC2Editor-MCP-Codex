@@ -1,0 +1,518 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-23T09:54:28.207Z",
+  "status": "persisted_revision3_migrations_and_scoped_native_routes_passed",
+  "scope": "Three existing authoring projects migrated through actual MCP with whole-group save/backups, followed by same-process and fresh-process unchanged plans. Exact new settlement archive passed two original-game launches. The native runs used the frozen pre-asset-index-optimization runtime; historical fingerprints are not refreshed to claim current optimization/native acceptance.",
+  "sourceFingerprints": [
+    {
+      "file": "src/modules/terrain/workspace.ts",
+      "sha256LfUtf8": "7f7a6dc1d67edecb05b778bdafbfef624e7638f2e3e7e94b44e86e01d79e95dc"
+    },
+    {
+      "file": "src/modules/terrain/landscapeOwnership.ts",
+      "sha256LfUtf8": "7c0b7716e7cef85f7f555b48d70111079c28c44bc30e1a108936b9eca413a606"
+    },
+    {
+      "file": "src/modules/terrain/nativeTopologyOwnership.ts",
+      "sha256LfUtf8": "fdfd52b685e9cbe824a70ef449c972e76ede7d4633acf20ecb0beac38323bc7c"
+    },
+    {
+      "file": "src/modules/placement/document.ts",
+      "sha256LfUtf8": "7d37e2dcec2b30d70518446aed3c866f9ebbfefa20bc83d3a07d86bbcd473af0"
+    },
+    {
+      "file": "src/modules/placement/measuredGroups.ts",
+      "sha256LfUtf8": "71ccc78df6582d4f24bacc7c6bcc6745c7e3f244cbdf0855c231354d41041246"
+    },
+    {
+      "file": "src/modules/placement/groupClearance.ts",
+      "sha256LfUtf8": "1e361e2ee7265098591ccb70c50ded4380fa6a703b5778c9a93745146e899901"
+    },
+    {
+      "file": "src/modules/browse/workspace.ts",
+      "sha256LfUtf8": "7aa4f37fcc001a02c845e88cc3b783accc1bdbc4b0527d8954f9da81f41c74fb"
+    }
+  ],
+  "maps": [
+    {
+      "id": "forest",
+      "map": "work/landscape-art-corpus/ForestOutpost_v2",
+      "zones": 12,
+      "generator": {
+        "before": 2,
+        "after": 3
+      },
+      "changed": [
+        {
+          "file": ".sc2mcp/locations.json",
+          "beforeSha256": "f963c133926ebfa69e690a661c64b93066cadbd80fa5814a715f1a49bcec7fd4",
+          "afterSha256": "4851927aeb6b171507807aa2f59670e9a24139f4e69811ef479a51e197f04932",
+          "deltaBytes": 0
+        }
+      ],
+      "originalNativeArchiveUnchanged": {
+        "file": "work/landscape-art-corpus/ForestOutpost_v2/.sc2mcp-output/ForestArtSurfaces.SC2Map",
+        "sha256": "ad96ee39ae0bcf6f89ba6ca603bf8ccd3997ec039dc7e48461d1c3320bfdb9ed"
+      },
+      "migration": {
+        "file": "work/launch-diagnostics-20261022/landscape-persisted-forest.log",
+        "sha256": "a7990b04604468259b1e6565861f110f2c752d14c9034c7d7766b832ec147fc5",
+        "observedMs": 65928
+      },
+      "warmRepeat": {
+        "rebuilt": 0,
+        "unchanged": 12,
+        "changedBytes": 0,
+        "observedMs": 1738
+      },
+      "freshRepeat": {
+        "file": "work/launch-diagnostics-20261022/landscape-fresh-forest.log",
+        "sha256": "b6d090d48d751144fc20558e0c597dd8966105642f19275ca2464a5d76e51efa",
+        "rebuilt": 0,
+        "unchanged": 12,
+        "changedBytes": 0,
+        "observedMs": 59200
+      },
+      "retainedDraftGuard": {
+        "file": "work/launch-diagnostics-20261022/landscape-staged-forest.log",
+        "sha256": "c11e58db1888bc63d56f9d9236083a5cb57fc4f6878d4e7cc751f62e26202c8a",
+        "reason": "A same-session replan before saving correctly rejects pending complete-group drafts; corrected harness saves first."
+      }
+    },
+    {
+      "id": "industrial",
+      "map": "work/landscape-art-corpus/Industrial_Arena",
+      "zones": 7,
+      "generator": {
+        "before": 2,
+        "after": 3
+      },
+      "changed": [
+        {
+          "file": ".sc2mcp/locations.json",
+          "beforeSha256": "893fc4bed197fe0bfd25ba32eac91589e2100921787a0d1df6c7c947e05a9b96",
+          "afterSha256": "9b92bb211d8af78dfd4cc8d77e342d07cd0123a309d9767c777ca505ffb737a1",
+          "deltaBytes": 0
+        }
+      ],
+      "originalNativeArchiveUnchanged": {
+        "file": "work/landscape-art-corpus/Industrial_Arena/.sc2mcp-output/IndustrialArtMachinery.SC2Map",
+        "sha256": "9e326ab187d089bff2c2413013e3abe6a7d31abe344b0e3ddb0a54888e8bc3a6"
+      },
+      "migration": {
+        "file": "work/launch-diagnostics-20261022/landscape-persisted-industrial.log",
+        "sha256": "2e8147fc19121b7610b4ff0371efbc18747ce85c14d35f805f63c02e7589e7f2",
+        "observedMs": 63008
+      },
+      "warmRepeat": {
+        "rebuilt": 0,
+        "unchanged": 7,
+        "changedBytes": 0,
+        "observedMs": 1636
+      },
+      "freshRepeat": {
+        "file": "work/launch-diagnostics-20261022/landscape-fresh-industrial.log",
+        "sha256": "4fcce782e9efa4e441176e49923779b521e60405935e38ec4ba2deb1b0a29e90",
+        "rebuilt": 0,
+        "unchanged": 7,
+        "changedBytes": 0,
+        "observedMs": 58924
+      },
+      "retainedDraftGuard": {
+        "file": "work/launch-diagnostics-20261022/landscape-staged-industrial.log",
+        "sha256": "02abd58b0d43a5f7bf4e574a2ffa2a5d35dda47c53e3696b4825bd3b8c7532d7",
+        "reason": "A same-session replan before saving correctly rejects pending complete-group drafts; corrected harness saves first."
+      }
+    },
+    {
+      "id": "settlement",
+      "map": "work/landscape-art-corpus/Plateau_Settlement",
+      "zones": 9,
+      "generator": {
+        "before": 2,
+        "after": 3
+      },
+      "changed": [
+        {
+          "file": "Objects",
+          "beforeSha256": "1cbf60a910d01d523aad51ac206bf9fc48c56596e21fb7835a909e3e3de2056e",
+          "afterSha256": "be0dae96bd2aa8e22f85b56a25a471226c098b2f4cd7aa4c5521fe253e3e8ad5",
+          "deltaBytes": 984
+        },
+        {
+          "file": ".sc2mcp/locations.json",
+          "beforeSha256": "97d88ad9c78eb3fdcb2745dc65b89bd46eb017124d9f41547cb30419297d5c2c",
+          "afterSha256": "2b2d266cc514bf4679f68d6b552792aa9959377f93a4a5f38b06bc1d47cb37f9",
+          "deltaBytes": 0
+        }
+      ],
+      "originalNativeArchiveUnchanged": {
+        "file": "work/landscape-art-corpus/Plateau_Settlement/.sc2mcp-output/SettlementArt.SC2Map",
+        "sha256": "04398925a0f647c8386105f481fbad8e623f1c0782f13133e564cedbba375fd8"
+      },
+      "migration": {
+        "file": "work/launch-diagnostics-20261022/landscape-persisted-settlement.log",
+        "sha256": "336c702b483e8c26eb02128d355220052a07e51bcdcf570b88946e6fa74c4a64",
+        "observedMs": 58765
+      },
+      "warmRepeat": {
+        "rebuilt": 0,
+        "unchanged": 9,
+        "changedBytes": 0,
+        "observedMs": 1552
+      },
+      "freshRepeat": {
+        "file": "work/launch-diagnostics-20261022/landscape-fresh-settlement.log",
+        "sha256": "c72cb5564c863e4573214142e3afb1b5e19d6a12e7fe623712e121a5c10da39f",
+        "rebuilt": 0,
+        "unchanged": 9,
+        "changedBytes": 0,
+        "observedMs": 52957
+      },
+      "retainedDraftGuard": {
+        "file": "work/launch-diagnostics-20261022/landscape-staged-settlement.log",
+        "sha256": "bbccb3ddc48fd62b4c84cf22cfb51cc0ac12c200ed3aa4af9f98bace9c97c58d",
+        "reason": "A same-session replan before saving correctly rejects pending complete-group drafts; corrected harness saves first."
+      }
+    }
+  ],
+  "settlementObjects": {
+    "file": "work/launch-diagnostics-20261022/landscape-settlement-object-diff.json",
+    "sha256": "020947425d95a78d2e57aef322fe90642fda3d7fc30147093083f3267ffaf9fc",
+    "before": 266,
+    "after": 266,
+    "perIdParsedAttributesTransformsAndFlagsChanged": 0,
+    "rawObjectsBytesChanged": true,
+    "scope": "Parsed object identity/fields exclude scanner node positions; not a universal XML equivalence proof"
+  },
+  "native": {
+    "archive": {
+      "file": "work/landscape-art-corpus/Plateau_Settlement/.sc2mcp-output/SettlementRevision3.SC2Map",
+      "sha256": "0c982ff46120b080985a7cc19b581bec93c50f0b05825c9b9b39a46de74d5379"
+    },
+    "runs": [
+      {
+        "jobId": "6d277393-ae66-4f62-a84d-4e252979a186",
+        "file": ".sc2mcp-output/project-tests/6d277393-ae66-4f62-a84d-4e252979a186/result.json",
+        "sha256": "23608a482687829eab0eb7d81676c33d9117f671d89098e8b29125cdedb95a11",
+        "session": "953ffdec2450ffca97d4ffaa7e7b4e4a",
+        "sourceSha256": "0c982ff46120b080985a7cc19b581bec93c50f0b05825c9b9b39a46de74d5379",
+        "routes": [
+          {
+            "id": "route:westMarine:forward",
+            "arrived": true,
+            "samples": 28,
+            "maxDeviation": 0,
+            "trajectoryFile": "K:\\SC2_MAP_Workspace\\SC2Editor-MCP-Codex\\.sc2mcp-output\\project-tests\\6d277393-ae66-4f62-a84d-4e252979a186\\route_westMarine_forward_trajectory.json"
+          },
+          {
+            "id": "route:westMarine:reverse",
+            "arrived": true,
+            "samples": 27,
+            "maxDeviation": 0,
+            "trajectoryFile": "K:\\SC2_MAP_Workspace\\SC2Editor-MCP-Codex\\.sc2mcp-output\\project-tests\\6d277393-ae66-4f62-a84d-4e252979a186\\route_westMarine_reverse_trajectory.json"
+          },
+          {
+            "id": "route:westMarauder:forward",
+            "arrived": true,
+            "samples": 25,
+            "maxDeviation": 0,
+            "trajectoryFile": "K:\\SC2_MAP_Workspace\\SC2Editor-MCP-Codex\\.sc2mcp-output\\project-tests\\6d277393-ae66-4f62-a84d-4e252979a186\\route_westMarauder_forward_trajectory.json"
+          },
+          {
+            "id": "route:westMarauder:reverse",
+            "arrived": true,
+            "samples": 28,
+            "maxDeviation": 0,
+            "trajectoryFile": "K:\\SC2_MAP_Workspace\\SC2Editor-MCP-Codex\\.sc2mcp-output\\project-tests\\6d277393-ae66-4f62-a84d-4e252979a186\\route_westMarauder_reverse_trajectory.json"
+          },
+          {
+            "id": "route:eastMarine:forward",
+            "arrived": true,
+            "samples": 27,
+            "maxDeviation": 0,
+            "trajectoryFile": "K:\\SC2_MAP_Workspace\\SC2Editor-MCP-Codex\\.sc2mcp-output\\project-tests\\6d277393-ae66-4f62-a84d-4e252979a186\\route_eastMarine_forward_trajectory.json"
+          },
+          {
+            "id": "route:eastMarine:reverse",
+            "arrived": true,
+            "samples": 27,
+            "maxDeviation": 0,
+            "trajectoryFile": "K:\\SC2_MAP_Workspace\\SC2Editor-MCP-Codex\\.sc2mcp-output\\project-tests\\6d277393-ae66-4f62-a84d-4e252979a186\\route_eastMarine_reverse_trajectory.json"
+          },
+          {
+            "id": "route:eastMarauder:forward",
+            "arrived": true,
+            "samples": 26,
+            "maxDeviation": 0,
+            "trajectoryFile": "K:\\SC2_MAP_Workspace\\SC2Editor-MCP-Codex\\.sc2mcp-output\\project-tests\\6d277393-ae66-4f62-a84d-4e252979a186\\route_eastMarauder_forward_trajectory.json"
+          },
+          {
+            "id": "route:eastMarauder:reverse",
+            "arrived": true,
+            "samples": 26,
+            "maxDeviation": 0,
+            "trajectoryFile": "K:\\SC2_MAP_Workspace\\SC2Editor-MCP-Codex\\.sc2mcp-output\\project-tests\\6d277393-ae66-4f62-a84d-4e252979a186\\route_eastMarauder_reverse_trajectory.json"
+          }
+        ],
+        "views": [
+          {
+            "requested": {
+              "x": 40,
+              "y": 40,
+              "distance": 130,
+              "pitch": 72,
+              "yaw": 90
+            },
+            "observed": {
+              "target": {
+                "x": 40,
+                "y": 40
+              },
+              "pitch": 71.8945,
+              "yaw": 90,
+              "distance": 130
+            },
+            "includeUI": false,
+            "visualReview": "not_checked",
+            "scope": "Camera readback and native PNG capture; framing and art quality require image review",
+            "file": "K:\\SC2_MAP_Workspace\\SC2Editor-MCP-Codex\\.sc2mcp-output\\project-tests\\6d277393-ae66-4f62-a84d-4e252979a186\\View_overview.png",
+            "sha256": "0bd7c43bd413eadd4730f7a9e2a2fe7b4b91d2687132acf3f55e4ba269480618",
+            "reviewedPixels": true,
+            "review": "Visible houses and closed ramp joins; repeated mirrored rows/rectangular surfaces remain an art limitation"
+          },
+          {
+            "requested": {
+              "x": 34,
+              "y": 41,
+              "distance": 39,
+              "pitch": 55,
+              "yaw": 200
+            },
+            "observed": {
+              "target": {
+                "x": 34,
+                "y": 41
+              },
+              "pitch": 54.8438,
+              "yaw": -160.1367,
+              "distance": 39
+            },
+            "includeUI": false,
+            "visualReview": "not_checked",
+            "scope": "Camera readback and native PNG capture; framing and art quality require image review",
+            "file": "K:\\SC2_MAP_Workspace\\SC2Editor-MCP-Codex\\.sc2mcp-output\\project-tests\\6d277393-ae66-4f62-a84d-4e252979a186\\View_west_ramp.png",
+            "sha256": "8e389207fa3dbcb0de6e23a513582cc6eba61d39e58e31e34caaa3a2b06e8ba9",
+            "reviewedPixels": true,
+            "review": "Visible houses and closed ramp joins; repeated mirrored rows/rectangular surfaces remain an art limitation"
+          },
+          {
+            "requested": {
+              "x": 20,
+              "y": 41,
+              "distance": 49,
+              "pitch": 56,
+              "yaw": 180
+            },
+            "observed": {
+              "target": {
+                "x": 20,
+                "y": 41
+              },
+              "pitch": 55.8984,
+              "yaw": 180,
+              "distance": 49
+            },
+            "includeUI": false,
+            "visualReview": "not_checked",
+            "scope": "Camera readback and native PNG capture; framing and art quality require image review",
+            "file": "K:\\SC2_MAP_Workspace\\SC2Editor-MCP-Codex\\.sc2mcp-output\\project-tests\\6d277393-ae66-4f62-a84d-4e252979a186\\View_settlement_detail.png",
+            "sha256": "9f42190b25cd46534d7ccfb58f7fdccc3d20ee91262360ecf630d72d1fbb5567",
+            "reviewedPixels": true,
+            "review": "Visible houses and closed ramp joins; repeated mirrored rows/rectangular surfaces remain an art limitation"
+          }
+        ],
+        "cleanup": "passed",
+        "sourceAndCopyUnchanged": true,
+        "diagnostics": "partial/inconclusive"
+      },
+      {
+        "jobId": "54e49f79-3e3f-41b4-92ca-66cbdee84b62",
+        "file": ".sc2mcp-output/project-tests/54e49f79-3e3f-41b4-92ca-66cbdee84b62/result.json",
+        "sha256": "813555206aa13c464df2afa751cd6ebe91ea013d5967fa09b43864a4a77c4621",
+        "session": "5e42c0b4146a4b8e5fe665f16e0f8b8f",
+        "sourceSha256": "0c982ff46120b080985a7cc19b581bec93c50f0b05825c9b9b39a46de74d5379",
+        "routes": [
+          {
+            "id": "route:westMarine:forward",
+            "arrived": true,
+            "samples": 27,
+            "maxDeviation": 0,
+            "trajectoryFile": "K:\\SC2_MAP_Workspace\\SC2Editor-MCP-Codex\\.sc2mcp-output\\project-tests\\54e49f79-3e3f-41b4-92ca-66cbdee84b62\\route_westMarine_forward_trajectory.json"
+          },
+          {
+            "id": "route:westMarine:reverse",
+            "arrived": true,
+            "samples": 26,
+            "maxDeviation": 0,
+            "trajectoryFile": "K:\\SC2_MAP_Workspace\\SC2Editor-MCP-Codex\\.sc2mcp-output\\project-tests\\54e49f79-3e3f-41b4-92ca-66cbdee84b62\\route_westMarine_reverse_trajectory.json"
+          },
+          {
+            "id": "route:westMarauder:forward",
+            "arrived": true,
+            "samples": 27,
+            "maxDeviation": 0,
+            "trajectoryFile": "K:\\SC2_MAP_Workspace\\SC2Editor-MCP-Codex\\.sc2mcp-output\\project-tests\\54e49f79-3e3f-41b4-92ca-66cbdee84b62\\route_westMarauder_forward_trajectory.json"
+          },
+          {
+            "id": "route:westMarauder:reverse",
+            "arrived": true,
+            "samples": 26,
+            "maxDeviation": 0,
+            "trajectoryFile": "K:\\SC2_MAP_Workspace\\SC2Editor-MCP-Codex\\.sc2mcp-output\\project-tests\\54e49f79-3e3f-41b4-92ca-66cbdee84b62\\route_westMarauder_reverse_trajectory.json"
+          },
+          {
+            "id": "route:eastMarine:forward",
+            "arrived": true,
+            "samples": 26,
+            "maxDeviation": 0,
+            "trajectoryFile": "K:\\SC2_MAP_Workspace\\SC2Editor-MCP-Codex\\.sc2mcp-output\\project-tests\\54e49f79-3e3f-41b4-92ca-66cbdee84b62\\route_eastMarine_forward_trajectory.json"
+          },
+          {
+            "id": "route:eastMarine:reverse",
+            "arrived": true,
+            "samples": 26,
+            "maxDeviation": 0,
+            "trajectoryFile": "K:\\SC2_MAP_Workspace\\SC2Editor-MCP-Codex\\.sc2mcp-output\\project-tests\\54e49f79-3e3f-41b4-92ca-66cbdee84b62\\route_eastMarine_reverse_trajectory.json"
+          },
+          {
+            "id": "route:eastMarauder:forward",
+            "arrived": true,
+            "samples": 28,
+            "maxDeviation": 0,
+            "trajectoryFile": "K:\\SC2_MAP_Workspace\\SC2Editor-MCP-Codex\\.sc2mcp-output\\project-tests\\54e49f79-3e3f-41b4-92ca-66cbdee84b62\\route_eastMarauder_forward_trajectory.json"
+          },
+          {
+            "id": "route:eastMarauder:reverse",
+            "arrived": true,
+            "samples": 26,
+            "maxDeviation": 0,
+            "trajectoryFile": "K:\\SC2_MAP_Workspace\\SC2Editor-MCP-Codex\\.sc2mcp-output\\project-tests\\54e49f79-3e3f-41b4-92ca-66cbdee84b62\\route_eastMarauder_reverse_trajectory.json"
+          }
+        ],
+        "views": [
+          {
+            "requested": {
+              "x": 40,
+              "y": 40,
+              "distance": 130,
+              "pitch": 72,
+              "yaw": 90
+            },
+            "observed": {
+              "target": {
+                "x": 40,
+                "y": 40
+              },
+              "pitch": 71.8945,
+              "yaw": 90,
+              "distance": 130
+            },
+            "includeUI": false,
+            "visualReview": "not_checked",
+            "scope": "Camera readback and native PNG capture; framing and art quality require image review",
+            "file": "K:\\SC2_MAP_Workspace\\SC2Editor-MCP-Codex\\.sc2mcp-output\\project-tests\\54e49f79-3e3f-41b4-92ca-66cbdee84b62\\View_overview.png",
+            "sha256": "50d84646df71a5dba7ce6ad6f448b771ca628025539b0db87c3eb38a943a7300",
+            "reviewedPixels": false,
+            "review": "PNG/readback/hash accepted; pixels not separately reviewed"
+          },
+          {
+            "requested": {
+              "x": 34,
+              "y": 41,
+              "distance": 39,
+              "pitch": 55,
+              "yaw": 200
+            },
+            "observed": {
+              "target": {
+                "x": 34,
+                "y": 41
+              },
+              "pitch": 54.8438,
+              "yaw": -160.1367,
+              "distance": 39
+            },
+            "includeUI": false,
+            "visualReview": "not_checked",
+            "scope": "Camera readback and native PNG capture; framing and art quality require image review",
+            "file": "K:\\SC2_MAP_Workspace\\SC2Editor-MCP-Codex\\.sc2mcp-output\\project-tests\\54e49f79-3e3f-41b4-92ca-66cbdee84b62\\View_west_ramp.png",
+            "sha256": "385eadbf99a7e9c112a5d421059db23ee1693dba44cd7af7e64e2e37cec407ef",
+            "reviewedPixels": false,
+            "review": "PNG/readback/hash accepted; pixels not separately reviewed"
+          },
+          {
+            "requested": {
+              "x": 20,
+              "y": 41,
+              "distance": 49,
+              "pitch": 56,
+              "yaw": 180
+            },
+            "observed": {
+              "target": {
+                "x": 20,
+                "y": 41
+              },
+              "pitch": 55.8984,
+              "yaw": 180,
+              "distance": 49
+            },
+            "includeUI": false,
+            "visualReview": "not_checked",
+            "scope": "Camera readback and native PNG capture; framing and art quality require image review",
+            "file": "K:\\SC2_MAP_Workspace\\SC2Editor-MCP-Codex\\.sc2mcp-output\\project-tests\\54e49f79-3e3f-41b4-92ca-66cbdee84b62\\View_settlement_detail.png",
+            "sha256": "a22853d5e08b9de96e5dd3f9c645015e8ff3958dd13ddabfb7f3ba61e1bc28c7",
+            "reviewedPixels": false,
+            "review": "PNG/readback/hash accepted; pixels not separately reviewed"
+          }
+        ],
+        "cleanup": "passed",
+        "sourceAndCopyUnchanged": true,
+        "diagnostics": "partial/inconclusive"
+      }
+    ],
+    "traversals": 16,
+    "captures": 6,
+    "reviewedFrames": 3,
+    "sameRetainedFrontend": "Both runs are produced by one run-map-tests invocation and retained MCP process",
+    "manifest": {
+      "file": "work/launch-diagnostics-20261022/settlement-revision3-game.json",
+      "sha256": "c04e57eb8933f3495c1ca3a9c0d4d8004f4007cc59265dade82a67eb36d287e4"
+    },
+    "candidateReceipt": {
+      "file": "work/launch-diagnostics-20261022/reference-native-candidate.json",
+      "sha256": "07c0cfa57f4a81240e49f6c4bcd327e1adf4afecc6b061917e130a548085af01"
+    },
+    "originalEditorRenewed": false,
+    "nativeNavigationRebuilt": false
+  },
+  "timingScope": "Observed migration/no-op/cache conditions with concurrent load; not a controlled ratio or billing-token estimate.",
+  "artReview": {
+    "forest": "Straight vegetation bands and an edge-clipped base overview remain weak.",
+    "industrial": "Repeated floor material/square enclosure need stronger service and storage context.",
+    "settlement": "Ramp seams are closed in inspected views; mirrored identical house rows and rectangular material patches still read as a layout sample.",
+    "numericArtScoreCertified": false
+  },
+  "retainedFailures": {
+    "draftGuardCount": 3,
+    "failedHarness": "collect-landscape-staged-repeat.mjs expected a replan before saving; actual MCP correctly refused and no passing record was emitted by that script"
+  },
+  "openCoverage": [
+    "Cold index construction remains slow; a separately measured optimization is in development",
+    "Three fixtures are technically functional, but final composition and human aesthetic acceptance remain open",
+    "Authoritative navigation mesh/buildability and original Editor GUI save/reopen are separate gates",
+    "Current native diagnostic sources are partial; no universal absence-of-error certificate"
+  ],
+  "published": false
+}

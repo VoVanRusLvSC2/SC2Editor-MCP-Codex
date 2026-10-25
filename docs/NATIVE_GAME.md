@@ -152,11 +152,45 @@ forwards these upstream properties without maintaining a second UI schema.
 `renderBackend` also works in `project.test` game manifests; Editor and game
 renderer choices are independent.
 
+Native `path` filtering includes descendant frames. Combine the currently
+observed button name and path, inspect the exact returned root, and require its
+visible/enabled/clickable state before activation. Visible-only inspection can
+omit empty command cells; an all-frame name search can also include the separate
+`CommandPanelAI`. Neither response count nor a numeric frame-name suffix is a
+universal Data row/page mapping. Handles must come from the current session.
+The observed Learn fixture uses an explicit tested native frame profile.
+
+Native frame bounds and a captured backbuffer can use different coordinate
+spaces. Passing a current, deliberately identified opaque control to
+`game.ui.activate` delegates input handling to the Toolkit; do not invent a
+client-side scale or window translation. Verify the actual normal-handler click
+event and independent same-unit state afterward. Handler acceptance alone does
+not establish the intended ability, current page or successful learning.
+
+For ability inspection, `abilityQuery.exists` can be true for a catalog ability
+that the selected unit has not learned. Inspect `unit.abilities` and the native
+enabled/command-gate state before and after learning. In the tested Learn case,
+the catalog entry exists while disabled and absent from the unit ability list;
+one native button click adds rank0 and gates the next rank. Configured points
+minus an inferred spend is not a directly observed numeric Learn-point counter.
+
 Text filters match the engine's actual localized text. English maintained
-instructions do not force an English game locale. The native GUI corpus uses
-the visible ruRU button text, requires a returned enabled button control, then
-checks the real callback's state change after activation. Do not guess a control
-handle or treat a normal handler return as proof of the intended gameplay result.
+instructions and the Editor compilation `locale` do not select the game's locale.
+The historical GUI corpus used the visible ruRU button text. Its current renewal
+observed the same ordinary map displaying its enUS string instead; the old text
+query correctly returned no controls and submitted no clicks. Preserve that
+failure rather than changing the map's strings to satisfy a test.
+
+A Dialog button and its clickable child can both expose the same text. Filtering
+by text and clickability therefore does not establish a unique root. Inspect the
+returned native names and paths, then combine the observed root name and path,
+require one visible enabled clickable control, and use its fresh opaque handle.
+The renewed fixture selects its observed `TriggerControlButtonTemplate` root
+without a localized text predicate. This is one declared frame profile, not a
+universal Dialog selector. Two fresh saved-artifact runs confirmed ordinary
+callbacks and the same marker unit's life13 to14 to15, without direct state edits.
+Do not guess a control handle or treat a normal handler return as proof of the
+intended gameplay result. See the [current GUI matrix](verification/native-gui-matrix-current-2026-10-25.json).
 
 For an event wait, obtain `game.events`' cursor before the action, then pass it
 to `game.wait`, for example `condition:{kind:"unit_died",source:"galaxy",

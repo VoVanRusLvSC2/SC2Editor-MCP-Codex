@@ -1,7 +1,10 @@
 {
-  "version": "0.10.0-rc.1",
-  "nativeProtocol": 11,
-  "archiveSha256": "f85f524ce4b98c3c1bc804c19ee42ac3f3f7478ea9587eaa91950d31d1f136b6",
+  "version": "1.0.0",
+  "nativeProtocol": 15,
+  "archiveSha256": "dbf9e727aa8d96ec7e53a499d5adb73fe8127ad8896ea69182c6e86a20e5be92",
   "repository": "VoVanRusLvSC2/SC2EditorToolkit",
-  "assetPrefix": "SC2EditorToolkit"
+  "assetPrefix": "SC2EditorToolkit",
+  "asset": "SC2EditorToolkit-v1.0.0-win64.zip",
+  "checksumAsset": "SHA256SUMS.txt",
+  "buildMetadata": "BUILD.json"
 }

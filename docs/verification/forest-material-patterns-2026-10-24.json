@@ -1,0 +1,231 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-24T01:15:16.283Z",
+  "status": "coherent_material_patterns_and_separated_forest_groups_verified",
+  "scope": "Reusable optional material masks, owned road protection and cluster-center separation, with a current forest source and separate MAIN GUI native diagnostic variant. Other styles, finished art and universal geometry/navigation remain open.",
+  "sourceFingerprints": {
+    "src/modules/terrain/materialPattern.ts": "26d884f28ee57b632b85f1a856e7edd1dd7930371706b8ca23732400e03d7d1b",
+    "src/modules/terrain/types.ts": "753b229fd133422db6434d02c0c33c1e9fdb4ba986a963b4b30a5fba05eeb364",
+    "src/modules/terrain/schemas.ts": "6179d4586b20ec086226578acdef743bda8c4e21b39b5ad3987dcc985c974607",
+    "src/modules/terrain/recipes.ts": "bd47842601d1f87351bef350b3aa27f872f024e7df8372b4d731a017d38f636f",
+    "src/modules/terrain/operations.ts": "5c739de5eaabec557fadbc5187ae8da9c8bb4579faf52b007ed20f2312ff95cc",
+    "src/modules/terrain/workspace.ts": "45ec71354fbfa900ff879e33bbf55c8d12ee0878b1605ddd134a3fa07cf19fc5",
+    "src/modules/terrain/tools.ts": "43ea575628857f4aab37329c50f8902e46a9b06266a18b4a781b1a9aeb7a0d36",
+    "src/modules/placement/compositions.ts": "585a136cada7a2cd1b6899a64f8dea6e3a8536056b03e80bd89a9e1e186154c4",
+    "src/modules/placement/planner.ts": "667f79ab880a41ecf5fa68353623af440f622d975952303737cff2d0137ff767",
+    "src/modules/placement/locationSchemas.ts": "2be0011a590857ddce4306663d94e685c0ab9678638fe9491c28f8b5f249db80",
+    "src/modules/placement/decorationSchemas.ts": "7796bedfe4a77b932baf7085e6006f21e67f89148f88c5085758e34f96df2a09",
+    "src/modules/placement/workspace.ts": "0bb230b75120559f231818ea2a793412a383dcd3711f7577f1f9ae03d62edfd4",
+    "src/tests/materialPattern.test.ts": "f424ac6beb052fc0c146395bd365171d4d3278a8c9aafaae059a2c3d9ace1403",
+    "src/tests/landscapeOwnership.test.ts": "9787e395638d0bc0d8270e1bdc4b684f44f73878d55ac73737eb8c4be7b512fd",
+    "src/tests/locationClusters.test.ts": "fb86dda3c7990df493428831b1d538a0d96ffd13efaf582e3acf9fa7cb4427e4",
+    "src/tests/terrainCompositions.test.ts": "2f2137d30160edf8b7411a2ff881887448ecfbc16f052eeab55734d612420861",
+    "docs/AUTHORING_PROTOCOL.md": "4dfe70132b6c9a2dfa80308d177081986fc8065516709fbd4b50587f383de75e",
+    "docs/LANDSCAPE_OWNERSHIP.md": "988da94a82f353e9f8760931403d14ef92c7b1d7ad93de8684fed955dae69a1e",
+    "docs/DECOR_VISUAL_WORKFLOW.md": "8b765b22b1aa2dd39f16e548b2582042e0a3ea89453a09f8dbbf0caca01007a5",
+    "generated/terrain-tools.json": "a7ef2c7553c09963699eb965750b3ad090e6f545612435210b6a90ab2109e319",
+    "generated/browse-placement-tools.json": "a124290e30685ece3807d0b89f6ffeca236602c434d1f90686378822de444be1",
+    "native-toolkit-release.json": "11d3050acbc2fde6190d1ec054b01b2b017775617716179db79ac8fdc0665dfb",
+    "game-toolkit-release.json": "7c8e2329dd4af5513e8fbc4f0a98cd4442fedc5460129fbc7291c3be4a5c96cf"
+  },
+  "implementation": {
+    "materialPattern": "Seeded, domain-warped two-scale world-space noise with soft signed threshold; optional and deterministic, not an area-percentage promise.",
+    "materialPatches": "Ordered optional recipe patches, active-palette validation, height/slope filters, derived or explicit seeds, background retention for patch-only requests and explicit preserve-mode conflicts.",
+    "roadProtection": "Owned patterned material passes preserve every declared route corridor, with the existing explicit50-mask budget; no terrain-height or pathing writes.",
+    "clusterSeparation": "Optional center distance through scatterDoodads/createLocation/terrain.compose, separate from per-object spacing. Legacy absent options retain existing behavior; impossible requested placement rejects."
+  },
+  "source": {
+    "receipt": {
+      "file": "work/launch-diagnostics-20261022/forest-pattern-separated-source.json",
+      "sha256": "79c17fcd9551db7fce162f1d3041a704d3c965e9c419a8ffb7cff062e2724894"
+    },
+    "audit": {
+      "file": "work/launch-diagnostics-20261022/forest-pattern-source-audit.json",
+      "sha256": "8d1b1737d0f4cc7e5d8695300d6fde19c84c51c8c2cf0e5ce815ed3cc8278570"
+    },
+    "freshNoOp": {
+      "file": "work/launch-diagnostics-20261022/forest-pattern-fresh.json",
+      "sha256": "97cf7fb577de27c77db56376db3ccc5f57aba66ee7ec91101939e37cb4c9d941"
+    },
+    "allMapWritesThroughMcp": true,
+    "ordinaryGalaxyArtSourcePreserved": true,
+    "originalFilesUnchanged": 35,
+    "counts": {
+      "objects": 292,
+      "vegetation": 246,
+      "fixedObjectsPreserved": 46,
+      "units": 4
+    },
+    "materials": {
+      "width": 512,
+      "height": 768,
+      "totalPixels": 393216,
+      "uniqueChangedPixels": 178370,
+      "cumulativeZonePassPixelCount": 436364,
+      "normalizedPixels": 393216,
+      "layerTotals": [
+        3244461,
+        329185,
+        379097,
+        756559,
+        224073,
+        702525,
+        0,
+        262340
+      ]
+    },
+    "warmAndFreshNoOp": true
+  },
+  "live": {
+    "fixture": {
+      "file": "work/launch-diagnostics-20261022/forest-pattern-camera-bounds-fixture.json",
+      "sha256": "12e1058ae854b4c705e87dc6e8625cef56c9083fb17d9dad4baebc9840b2eaa5"
+    },
+    "audit": {
+      "file": "work/launch-diagnostics-20261022/forest-pattern-native-audit.json",
+      "sha256": "d5ba9eb8d478c207ef4ef7884a3bd041f02465eeac9bd2a7bf6168f8f0db9056"
+    },
+    "renderReview": {
+      "file": "work/launch-diagnostics-20261022/forest-pattern-render-review.json",
+      "sha256": "195b81f9fee77131a254379dfa51a82d89274e0f9898c665fc9477228908b20e"
+    },
+    "sourceStable": {
+      "file": "work/launch-diagnostics-20261022/material-routes-source-after-live.json",
+      "sha256": "64850e24a4cdb37ec83afdd96880fa33b53e67363cc88e1968a80f0bd0d75caa"
+    },
+    "editorToolkit": "0.12.0-rc.1",
+    "nativeProtocol": 13,
+    "gameToolkit": "v0.1.0-dev.11",
+    "gameBuild": "5.0.17.98310",
+    "exactNativeSavedArtifacts": true,
+    "nativeSavePreservedTerrainObjectsAndGui": true,
+    "retainedEditorAndGameBridges": true,
+    "counts": {
+      "runs": 2,
+      "traversals": 24,
+      "captures": 10,
+      "distinctDecodedImages": 10
+    },
+    "groundTypes": [
+      "Marine",
+      "Marauder"
+    ],
+    "bothDirections": true,
+    "corridor": 2,
+    "tolerance": 0.75,
+    "maximumSampledDeviation": 0.009507396501429668,
+    "cameraTolerance": 0.5,
+    "imagesInspected": 10,
+    "editorOverviewsInspected": 1,
+    "finishedArtAccepted": false,
+    "diagnostics": [
+      {
+        "jobId": "14a9e35c-6e0d-4c14-9a60-ac93d18bfed5",
+        "id": "game.diagnostics",
+        "status": "inconclusive",
+        "required": false,
+        "reason": "No unexpected errors observed in available sources; diagnostic coverage is partial"
+      },
+      {
+        "jobId": "af609700-7847-43ff-bb23-1bfd2c7430d7",
+        "id": "game.diagnostics",
+        "status": "inconclusive",
+        "required": false,
+        "reason": "No unexpected errors observed in available sources; diagnostic coverage is partial"
+      }
+    ],
+    "diagnosticsScope": "Available optional Game diagnostics remain inconclusive; no error-free-console claim."
+  },
+  "regression": {
+    "build": {
+      "file": "work/launch-diagnostics-20261022/material-routes-build-final.log",
+      "sha256": "10a6f793ca5b371f50d30275f91bca10764ad37efaa83fe46600fc03690a7777"
+    },
+    "release": {
+      "file": "work/launch-diagnostics-20261022/material-routes-release-final.log",
+      "sha256": "ce885c9cd0c665e4687c64af3fac25fa25c371256a5119e5f8e25c7b3c516545"
+    },
+    "focused": {
+      "report": {
+        "file": "work/launch-diagnostics-20261022/material-routes-focused-final.tap",
+        "sha256": "bdc2b8560d47d94072cf0f53722339f253fadc707265938b1a1cdfc30c659ed4"
+      },
+      "pass": 56,
+      "fail": 0
+    },
+    "full": {
+      "report": {
+        "file": "work/launch-diagnostics-20261022/material-routes-full-recheck.tap",
+        "sha256": "3027293cd890ef15bb8afe88421dc9ee83ab27516bfb62d58285f7f8c6cd5c06"
+      },
+      "tests": 1527,
+      "pass": 1526,
+      "fail": 0,
+      "skip": 1,
+      "cancelled": 0
+    },
+    "lint": {
+      "file": "work/launch-diagnostics-20261022/material-routes-lint-final.log",
+      "sha256": "510475fdd23df5ab732ff12a7efe6eeeef1714f16cb3e683de0964513c9152a2"
+    },
+    "english": {
+      "files": 117,
+      "violations": 0
+    }
+  },
+  "retainedFailures": [
+    {
+      "report": {
+        "file": "work/launch-diagnostics-20261022/material-routes-full.tap",
+        "sha256": "26b6fb89af090dd0ba50197fcea5ad4f109a277cc8087e7123e8e738c9715e83"
+      },
+      "reason": "One Windows EPERM temporary XSD-index rename; exact unchanged-limit M28 recheck and subsequent complete full run pass. No platform-refusal fix claimed.",
+      "recheck": {
+        "file": "work/launch-diagnostics-20261022/material-routes-xsd-exact-recheck.tap",
+        "sha256": "c78b72c9641cde8c39d61ca1374da3e05e7327c692361149e65ebe5fccb42f29"
+      }
+    },
+    {
+      "report": {
+        "file": "work/launch-diagnostics-20261022/forest-pattern-author-attempt.json",
+        "sha256": "1ecfcd164a786f7acb1dc0d343b887d9418aaaca680a98a6bcd7c3a359f8a270"
+      },
+      "reason": "Initial44-tree request rejected after finding33 positions, before art mutation. Final explicitly revised layout uses separate cluster-center distance; no silent count fallback."
+    },
+    {
+      "report": {
+        "file": "work/launch-diagnostics-20261022/forest-pattern-native.json",
+        "sha256": "39a1e1e267348782b60e7a590c00e749544c6408cb48e2139aa0d3eb35043b7b"
+      },
+      "reason": "Driver omitted explicit Game launch enable flag; preflight stopped before Game launch. Native whole-map capture succeeded."
+    },
+    {
+      "report": {
+        "file": "work/launch-diagnostics-20261022/forest-pattern-native-launch-enabled.json",
+        "sha256": "9859a743d675d3a6aa65b9b52a0306483d7055b5a72f555116d37e1b49991b8b"
+      },
+      "reason": "All12 ordinary traversals passed, but two required views failed native camera-clamp readback. Corrected manifest moves only test-camera targets; required checks, routes, map bytes and tolerance unchanged."
+    }
+  ],
+  "portable": {
+    "receipt": {
+      "file": "work/launch-diagnostics-20261022/material-routes-candidate.json",
+      "sha256": "54d12400567ba767b161574431e15273ccf599e601539c0a0c6a762e09949132"
+    },
+    "compiledModules": 364,
+    "sourceStable": true,
+    "privacy": {
+      "entries": 10005,
+      "privateSourceFiles": 1113,
+      "violations": [],
+      "privateSdkSourcesBinariesOrInstrumentedMapsBundled": false
+    },
+    "published": false
+  },
+  "openCoverage": [
+    "Industrial/settlement renewal and finished regional art; the forest base and pads remain rectangular and road ends need integration.",
+    "Further widths, donors, edge/void/join and diagonal native topology profiles; authoritative path/collision/buildability queries.",
+    "Broader GUI/Data Learn/talent/UI/sound and main-unit animation corpus.",
+    "Comparable performance and the complete current acceptance gate; this checkpoint does not complete the roadmap."
+  ]
+}

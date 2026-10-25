@@ -3,7 +3,7 @@ import {promises as fs} from 'node:fs';
 import {randomUUID,createHash} from 'node:crypto';
 import type {ModkitIntegration} from '../../integrations/modkit/runtime.js';
 import {bytesHash} from '../../core/binaryTransactions.js';
-import {modkitTerrainPlanSchema,type ModkitTerrainPlan} from './modkitSchemas.js';
+import {modkitTerrainPlanSchema,modkitRampPlaceSchema,type ModkitTerrainPlan,type ModkitRampPlace} from './modkitSchemas.js';
 import {componentListWithGameData,gameDataIndexWithCatalog} from '../data/workspace.js';
 import {scanXml} from '../../core/xmlScanner.js';
 
@@ -20,7 +20,7 @@ export class ModkitTerrainWorkspace {
   private async load(directory:string,templates:Record<string,string>={}){
     const files=new Map<string,Uint8Array>(),source:Record<string,string>={},disk:Record<string,string>={};let total=0;
     for(const name of [...MODKIT_TERRAIN_COMPONENTS,...guards]){
-      const key=this.key(directory,name),raw=await this.workspace.binary.read(key),saved=await this.workspace.binary.read(key,false);
+      const key=this.key(directory,name),{current:raw,disk:saved}=await this.workspace.binary.readPair(key);
       total+=raw.bytes.length;if(total>192*1024*1024)throw Error('MODKIT_TERRAIN_TOTAL_BYTE_LIMIT');
       source[key]=bytesHash(raw.bytes);disk[key]=bytesHash(saved.bytes);
       if(raw.bytes.length)files.set(name,raw.bytes);
@@ -28,7 +28,7 @@ export class ModkitTerrainWorkspace {
     for(const[name,file]of Object.entries(templates)){
       if(!MODKIT_TERRAIN_COMPONENTS.includes(name as typeof MODKIT_TERRAIN_COMPONENTS[number]))throw Error('MODKIT_TERRAIN_TEMPLATE_COMPONENT_REFUSED');
       if(files.has(name))throw Error('MODKIT_TERRAIN_TEMPLATE_TARGET_EXISTS');
-      const raw=await this.workspace.binary.read(file),saved=await this.workspace.binary.read(file,false);
+      const {current:raw,disk:saved}=await this.workspace.binary.readPair(file);
       if(!raw.bytes.length)throw Error('MODKIT_TERRAIN_TEMPLATE_MISSING');
       source[raw.file]=bytesHash(raw.bytes);disk[raw.file]=bytesHash(saved.bytes);
       files.set(name,raw.bytes);
@@ -39,7 +39,7 @@ export class ModkitTerrainWorkspace {
     const loaded=await this.load(directory);
     return {backend:'ModKit',available:(await this.integration.provenance()).available,directory,
       components:MODKIT_TERRAIN_COMPONENTS.map(name=>({name,exists:loaded.files.has(name),bytes:loaded.files.get(name)?.length??0})),
-      added:['CellAttribute no-path/no-building/clear-path paint and flood fill','raw PaintedPathing/PaintedCreep channels','vertex-color stroke values','fluff doodad add/update/remove','native HRDT group replacement/duplicate-key repair','PATH hint values','static terrain navigation and route preview','native palette and block texture-set authoring','native ramp template transfer and qualified diagonal widening'],
+      added:['CellAttribute no-path/no-building/clear-path paint and flood fill','raw PaintedPathing/PaintedCreep channels','vertex-color stroke values','fluff doodad add/update/remove','native HRDT group replacement/duplicate-key repair','PATH hint values','static terrain navigation and route preview','native palette and block texture-set authoring','native ramp template transfer with SMAP100/102 and LFCT cutouts; qualified diagonal widening','joined ramp placement with measured closed-land preparation or adjoining-level verification'],
       retained:['terrain height/texture/water/cliff/ramp writers','placement.scatterDoodads/snapToTerrain','shared guarded transactions'],
       engineValidated:false,limitations:['Existing decoded components required; optional CellAttribute templates copy a native header and initialize empty target cells','Native pathing caches/paint are distinct from effective engine navigation','Original low-level formats do not promise every Editor brush, arbitrary RGBA or inferred road splines']};
   }
@@ -55,12 +55,16 @@ export class ModkitTerrainWorkspace {
   async fit(request:{donorDirectory:string;rampIndex:number;bounds:{minX:number;minY:number;maxX:number;maxY:number};crossings:{x:number;y:number}[];uphill:{x:number;y:number}}){
     return this.integration.exclusive(async()=>{const data=await this.load(request.donorDirectory);return {backend:'ModKit',...await (await this.integration.port()).terrain('fit',data.files,request)};});
   }
+  async place(input:ModkitRampPlace){
+    const {directory,...operation}=modkitRampPlaceSchema.parse(input);
+    return this.plan({directory,operations:[{op:'ramp.place',...operation}]});
+  }
   async plan(input:ModkitTerrainPlan){
     const request=modkitTerrainPlanSchema.parse(input);
     if(Buffer.byteLength(JSON.stringify(request))>1024*1024)throw Error('MODKIT_TERRAIN_REQUEST_BYTE_LIMIT');
     return this.integration.exclusive(async()=>{
       const loaded=await this.load(request.directory,request.templates),backend=await this.integration.port();
-      const donors=[...new Set(request.operations.filter(o=>o.op==='ramp.template').map(o=>o.donorDirectory))];if(donors.length>4)throw Error('MODKIT_TERRAIN_DONOR_LIMIT');
+      const donors=[...new Set(request.operations.filter(o=>(o.op==='ramp.template'||o.op==='ramp.place')).map(o=>o.donorDirectory))];if(donors.length>4)throw Error('MODKIT_TERRAIN_DONOR_LIMIT');
       for(const directory of donors){const donor=await this.load(directory);Object.assign(loaded.source,donor.source);Object.assign(loaded.disk,donor.disk);for(const[name,bytes]of donor.files)loaded.files.set('@donor:'+directory+':'+name,bytes);}
       if([...loaded.files.values()].reduce((n,b)=>n+b.length,0)>256*1024*1024)throw Error('MODKIT_TERRAIN_TOTAL_BYTE_LIMIT');
       const result=await backend.terrain('plan',loaded.files,{operations:request.operations,templateComponents:Object.keys(request.templates)}),next=new Map<string,Buffer>();

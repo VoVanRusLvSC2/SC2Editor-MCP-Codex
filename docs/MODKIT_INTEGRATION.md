@@ -42,6 +42,16 @@ Compatibility of public audits is corrected by isolated patches. `scripts/modkit
 
 Licenses and authorship of ModKit are retained. Runtime contains original source and notices; M3 has parts of GPL-2.0-only. Local results may contain resources of the installed game, they are not added to Git. Runtime is installed separately from the standard Windows portable package; installer and adapter are included in the package. Accurate parameters and compatibility should be checked using `modkit.runtime`.
 
+The pinned native ramp writer has a separate enum correction in
+`platform-patches.mjs`: observed source records use directions 0..7, including
+south=0, while its original serialization and placement guards accept 1..8.
+The installer patches only those two exact guards and emits the affected module
+even with `--finalize-only`. Its `nativeRampPatch` receipt records both source
+and emitted JavaScript digests. Reapplying is idempotent; unknown contexts fail.
+This does not widen the MCP's qualified terrain-version or geometry profiles.
+Native serialization, low-level placement and actual Editor/game acceptance
+remain separate checks.
+
 ## What's left ours
 
 Integration is limited to CASC, reading Data, and `map.preview`. Existing modules are not entirely replaced. "Better" below means a specific saved capability; the overall superiority of one project over another is not proven.
@@ -94,7 +104,8 @@ The missing public format/navigation APIs of the same fixed version of ModKit ar
 | Path cache | `pathing.hints` | Raw uint16 values `t3SyncPathingInfo`. Upstream does not confirm their independent influence in the game; CellAttribute is used for prohibitions. |
 | Palettes and texture block sets | `palette.author` | Original authoring updates terrain XML, CTerrain/CTerrainTex and GameData registration. Texture masks bytes remain the same: channel order needs to be set meaningfully. |
 | Selection of a native diagonal ramp | `terrain.ramp.fit` | Up to 16 options for crossing points and uphill direction.This is the selection of a suitable donor profile, not free generation of any mesh. |
-| Transfer/expansion of the native ramp | `ramp.template` | Original placement/widening; agreed HMAP, SMAP height/mask, CLIF and LFCT. Whole two-cell lattice; widening only qualified diagonal profiles; v115 identity XY/Z and supported versions of companions. Opaque Terrain/hard-tile handles are rejected |
+| Joined donor ramp | `terrain.ramp.place` / `ramp.place` | One guarded plan composes existing native cliff strokes with original ModKit ramp transfer. Default `prepare_closed` derives enclosed whole-level high landings on clear flat ground; `verify` checks existing adjoining landings. Preserves manual conflicts and rejects unsupported channels. Native water/footprints/navigation/rendering remain separate. |
+| Transfer/expansion of the native ramp | `ramp.template` | Support-only original placement/widening; no adjoining-ground preparation or verification. Agreed HMAP, SMAP height/mask, CLIF and LFCT. Whole two-cell lattice; widening only qualified diagonal profiles. Target stays v115; a read-only v114/v115 donor is accepted with identity XY/Z and supported companion versions. Donor bytes are preserved. Opaque Terrain/hard-tile handles are rejected |
 | Mass decor | `terrain.decorate` | Delegation to our `placement.scatterDoodads`: seed, weighted palette, height/slant/texture/water/distance/exclusion zones, up to 5,000 objects per request |
 | Relation of objects to the surface | `terrain.objects.snap` | Our `placement.snapToTerrain` retains the difference between unit offset Z and absolute doodad Z. |
 

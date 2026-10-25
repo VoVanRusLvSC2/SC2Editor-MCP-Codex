@@ -36,6 +36,11 @@ test('logic defaults to guarded Galaxy source and GUI is explicit',()=>{
   assert.throws(()=>compileAuthorScript('logic gui file=x','plan'),/AUTHOR_GUI_EXPLICIT/);
 });
 
+test('compact variation assignments retain the existing placement plan/apply/save boundary',()=>{
+ const steps=compileAuthorScript('objects variants assignments=\'[{"objectId":12,"variation":1},{"objectId":15,"variation":0}]\'','save');
+ assert.deepEqual(steps.map(s=>s.tool),['placement.setVariations','placement.apply','modkit.save']);assert.deepEqual(steps[0].args.assignments,[{objectId:12,variation:1},{objectId:15,variation:0}]);assert.deepEqual(steps[1].args.planId,{$from:'s1.id'});assert.equal(steps[1].args.stage,true);assert.equal(steps[2].args.file,'Objects');
+});
+
 test('save expands into existing apply and save tools, preserving stage boundary',()=>{
   const unit=compileAuthorScript('objects unit id=Marine at=25,31 owner=1','save');assert.deepEqual(unit[1].args.planId,{$from:'s1.id'});
   const ability=compileAuthorScript('data ability.instant id=Pulse effect=PulseSearch button=Pulse energy=25 cooldown=5','save');assert.deepEqual(ability.map(s=>s.tool),['data.ability.instant','modkit.save']);assert.equal(ability[0].args.dryRun,false);assert.equal(ability[1].args.file,'Base.SC2Data/GameData/UnitData.xml');

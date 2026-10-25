@@ -78,6 +78,13 @@ Direct disk commit uses `terrain.apply` with `dryRun:false, stage:false`. `terra
 
 `forest`, `desert`, `city`, `snow`, `jungle`, `swamp`, `volcanic`, `badlands`, `coastal`, `space_platform` generate flatten/noise/smoothing/painting recipes with different relief defaults. They are base variants, not complete biome simulations. They do not automatically create trees, buildings, cliffs or liquid.
 
+Optional `baseHeight` sets the flatten target in world units before relief;
+omission keeps the current-median default. It supports irregular areas with
+ordinary edge blending and protected masks, and is also available inside an
+owned location's `config.terrain`. `heightMode:"preserve"` rejects this option.
+Existing native height-range checks still apply; a smooth rise is separate from
+discrete cliff levels, ramps, navigation and building footprints.
+
 ```json
 {
   "style": "forest", "seed": 42,
@@ -129,8 +136,12 @@ Native cliff/ramp edits support the explicit v115 identity profile: rectangular
 two-cell cliff strokes and measured cardinal width-four ramps. Nonflat cliff
 junctions require adjacent levels 1..3. Their CLIF sync words now use the full
 coarse corner shape, matching 396 original native reference cells across 12
-orientations. Saddle, multi-level and void joins fail instead of writing guessed
-sync data. Supported strokes also normalize fine HMAP edge/center levels using
+orientations. The two diagonal saddle orientations also use measured all-high
+CLIF closure, low HMAP centers and high SMAP centers, with neutral scalar
+reference signatures for both level1-to2 and level2-to3 joins. Native SMAP edge
+smoothing has additional observed variants; this representation does not promise
+byte identity to every native edge sample. Multi-level and void joins still fail
+instead of writing guessed sync data. Supported strokes normalize fine HMAP edge/center levels using
 one observed native 3x3 pattern per orientation and update SMAP. Coarse corners,
 authored base heights and upper mask bits are preserved; measured ramp vertices
 are protected, including a brush halo sharing their boundary. This is not an
@@ -143,13 +154,75 @@ cliff cells. It fixes fine-vertex pits/spikes and CLIF/SMAP/LFCT sync using the
 supported corner profile, without repainting coarse corners or base heights.
 Unregistered freeform terrain is left alone; ramp contact and unmeasured cell or
 junction profiles reject before any commit. It is not a general hole filler.
+
+`terrain.ramp.place` plans a joined donor ramp in one shared transaction. Its
+`prepare_closed` default measures whole-level high landing cells from the donor,
+prepares them through the existing native cliff writer, then transfers ramp
+support through original ModKit. The donor bounds must enclose the landing with
+a low-level boundary. The target needs clear flat ground at the donor's lower
+level (including `levelOffset`) and a two-cell margin. `adjoining=verify` checks
+matching existing flat high and low landings before transferring support.
+
+Native donor SMAP can contain edge smoothing even on flat HMAP vertices. The
+qualified boundary band (within two cells of registered geometry) permits a
+half-world-unit residual; flat interiors retain the strict quantized-height
+check. Support vertices preserve the exact donor SMAP sample plus the requested
+level translation. This is a restricted donor profile, not arbitrary SMAP repair.
+
+Both modes reject incompatible HMAP/SMAP/CLIF landing channels, sculpted donor
+landings, hidden ground, holes in flat landings and object centers in the guarded
+envelope. Default preparation also rejects existing target topology and manual
+height/mask changes in that envelope. Fresh unregistered maps may receive the
+existing foundation's HMAP lane re-encoding; outside the envelope world heights
+stay within one quantization unit and SMAP, CLIF and flags stay unchanged.
+Registered maps preserve outside HMAP samples exactly. Native object footprints,
+water interaction, navigation and rendering still require their separate checks.
+
+The plan returns `planId`, changed `files` and measured adjoining/stroke details.
+Use `terrain.modkit.apply` followed by `modkit.save` on a returned file; all changed
+components save together with source/donor/Objects stale guards. The compact
+command follows the same plan/stage/save lifecycle:
+
+```text
+terrain ramp.place donorDirectory=Donor rampIndex=2 bounds=96,14,128,42 offset=-80,0 cliffSetIndex=1
+```
+
+The lower-level `ramp.template` operation in `terrain.modkit.plan` transfers only
+ramp support; it does not prepare or verify adjoining landings. Its
+v115 identity profile accepts SMAP100 and the native SMAP102 header while keeping
+unknown versions explicit. LFCT's geometric cutout bit travels with the original
+ModKit cell mapping, including qualified widening; it is independent of an f=2
+ramp registration. Smooth HMAP cliff offsets and SMAP samples use that same
+mapping rather than reconstructing heights from rounded quarter-level metadata.
+HMAP retains the qualified target base and requantizes the donor offset only as
+required by the target descriptor. Other target LFCT bits remain intact. The dimension guard
+reads LFCT dimensions at offsets24/28 and MASK dimensions at12/16; reserved words
+are preserved. These adapter checks are separate from native rendering.
+
+Template translations `offsetX`/`offsetY` use even native-cell units.
+`levelOffset` uses ModKit quarter-level units: a value of4 raises one complete
+native cliff level (two world units for the qualified profile). Do not multiply
+the existing SMAP delta by another factor of4. `extraHalfWidth` uses even lateral
+strips and remains limited to qualified native diagonal profiles. These lattice
+constraints reject in the MCP schema before loading a donor.
+
+Native cliff/ramp generation also synchronizes SMAP's low-byte level label with
+HMAP while retaining independent SMAP upper bits. This label remains low at a
+measured saddle even when its SMAP height uses the high-side correction. Native
+geometry ownership covers the updated label vertices, including coarse corners
+of repaired cells. Landscape recipe revision4 invalidates owned older plans so
+they rebuild through the same guarded transaction; manual edits still conflict.
 Review the plan and persist through the ordinary `terrain.apply`/save transaction.
 The compact equivalent is `terrain cliff.repair rect=14,20,16,22` in
 `modkit.author`. Cliff-paint synchronization halos also retain authored base
 heights outside the stroke.
 
 Ramp direction is the native enum (south=0, north=1, west=2, east=3), not an
-eight-heading compass angle. The previous rotated generator could produce open
+eight-heading compass angle. Diagonal native records use values4..7, not8.
+The pinned ModKit runtime's writer guards are corrected during installation;
+see its `nativeRampPatch` receipt. This source-enum correction is separate from
+qualified MCP geometry profiles and native traversal acceptance.
+The previous rotated generator could produce open
 side caps even when ground movement worked. `terrain.ramp.repair` repairs that
 specific legacy profile by changing only its `dir` attribute, after matching all
 measured frames and terrain channels. Hand-edited or unknown profiles reject.
@@ -168,6 +241,33 @@ Native geometry keeps additional cliff-cell and cliff/ramp-list attributes.
 Unknown nested rows, embedded text or comments inside those regenerated lists
 reject before staging instead of being silently discarded. This preservation
 contract does not establish the engine semantics of unknown attributes.
+
+### Geometry selection and refusal boundaries
+
+Choose the supported authoring operation before changing a junction. The format
+guards below describe implementation boundaries; native appearance, movement and
+point predicates still require their own exact-map evidence.
+
+| Operation/profile | Supported authoring scope | Refusal or preservation boundary |
+| --- | --- | --- |
+| Native cliff strokes | Qualified v115 identity transform, two-cell grid, adjacent levels1..3, measured corner/saddle normalization | Multi-level/void or unmeasured junctions reject. Coarse outline, base heights and independent mask bits are retained. |
+| Cardinal ramp creation | Measured width-four frames, native directions0..3, coherent adjacent one-level landings | Missing boundary, uneven side rails, unmeasured widths/frames and protected ramp intersections reject. |
+| Registered cliff repair | Existing registered f=1 cells using the measured fine-height/sync profile | Unregistered freeform depressions remain unchanged. Ramp contact rejects; this operation cannot infer that an intentional hole should be filled. |
+| Legacy ramp repair | Exact measured legacy frame/channel signature with the diagnosed direction mismatch | Edited or unknown channels reject; the accepted change is the direction attribute, not a guessed new mesh. |
+| Joined donor placement | Qualified measured donor support, enclosed low boundary, coherent flat landing channels, even translation/widening lattice and a two-cell margin | Hidden/holed/sculpted donor landings, manual target height/sync changes, existing topology or guarded object centers reject before commit. Verification mode requires already matching landings. |
+| Terrain transactions | Complete related components with source/donor/Objects fingerprints | Unknown regenerated row contents and stale dependencies reject before replacement. Refusals preserve the original inputs. |
+
+The refusal tests explicitly check byte preservation for manual target channels,
+donor companions and unknown XML. See
+[native geometry regressions](../src/tests/terrainNativeGeometry.test.ts) and
+[joined transaction regressions](../src/tests/terrainRampJoined.test.ts).
+A passing refusal test establishes that particular guard, not a newly observed
+native rendering result. Keep test version/source identities when reusing it.
+
+Visual bounds, point passability/connectivity, sampled single-unit movement,
+concurrent formations and exact building placement are different measurements.
+Neither a successful Save As nor one reached endpoint certifies every unit
+footprint, water interaction, existing opaque cache or navigation rebuild.
 
 Four user-supplied native maps provide compressed component fixtures with SHA-256 manifests. `npm test` exercises parsing, preservation, sync edits, stale plans, grouped save/rollback, styles/features, placement and GUI API/stdio integration. `npm run terrain:schemas` rebuilds schemas; `npm run terrain:demo` generates a diagnostic PNG and stage/save/restore report on a disposable fixture copy. That historical demo does not produce a playable SC2Map. The EXE evidence contains strings/addresses, not recovered serialization or a decompilation claim. Native acceptance is scoped to the exact recorded fixtures, not inferred from those static reports.
 

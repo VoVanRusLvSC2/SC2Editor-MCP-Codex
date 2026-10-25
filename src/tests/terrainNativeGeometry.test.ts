@@ -15,6 +15,15 @@ test('native cliff sync preserves the high side at right/top edges and convex ca
 });
 const area={type:'rectangle' as const,minX:4,minY:4,maxX:20,maxY:28};
 
+test('native cliff and ramp SMAP level labels follow HMAP while retaining independent upper bits',async t=>{
+ const f=await fixture(t),file=path.join(f.root,'t3SyncHeightMap'),bytes=await fs.readFile(file),width=bytes.readUInt32LE(8),height=bytes.readUInt32LE(12);
+ for(let i=0;i<width*height;i++)bytes.writeUInt16LE((bytes.readUInt16LE(64+i*4+2)&255)|0xab00,64+i*4+2);
+ await fs.writeFile(file,bytes);
+ const plan=await f.tr.plan({operations:[{op:'cliff.paint',area,parameters:{level:2}},{op:'ramp.create',parameters:{center:{x:22,y:17},direction:'west',lowerLevel:1}}]});await f.tr.apply(plan.id,{dryRun:false,stage:false,backup:false});
+ const state=await f.tr.state(),sync=state.sources.get('t3SyncHeightMap')!;
+ for(let y=0;y<height;y++)for(let x=0;x<width;x++){const word=sync.readUInt16LE(64+(y*width+x)*4+2);assert.equal(word&255,state.heights.mask(x,y)&255,'native level label '+x+','+y);assert.equal(word&0xff00,0xab00,'independent SMAP upper bits');}
+});
+
 test('mixed height/cliff/ramp batches match sequential component output without double SMAP displacement',async t=>{
  const batch=await fixture(t),sequential=await fixture(t);
  const operations:Parameters<TerrainWorkspace['plan']>[0]['operations']=[
@@ -54,11 +63,20 @@ test('native geometry retains additional cell/list attributes and rejects unhand
  }
 });
 
-test('diagonally touching plateau cells are rejected without writing a guessed open join',async t=>{
+test('diagonally touching plateaus use the measured low HMAP and high SMAP saddle center',async t=>{
  const f=await fixture(t),p=await f.tr.plan({operations:[{op:'cliff.paint',area:{type:'rectangle',minX:4,minY:4,maxX:12,maxY:12},parameters:{level:2}}]});await f.tr.apply(p.id,{dryRun:false,stage:false,backup:false});
  const file=path.join(f.root,'t3HeightMap'),before=await fs.readFile(file);
- await assert.rejects(f.tr.plan({operations:[{op:'cliff.paint',area:{type:'rectangle',minX:14,minY:14,maxX:20,maxY:20},parameters:{level:2}}]}),/SADDLE_JUNCTION_UNSUPPORTED/);
+ const request={operations:[{op:'cliff.paint' as const,area:{type:'rectangle' as const,minX:14,minY:14,maxX:20,maxY:20},parameters:{level:2}}]},plan=await f.tr.plan(request);
  assert.deepEqual(await fs.readFile(file),before);
+ await f.tr.apply(plan.id,{dryRun:false,stage:false,backup:false});const s=await f.tr.state();
+ assert.deepEqual([[12,12],[14,12],[14,14],[12,14]].map(([x,y])=>s.heights.mask(x,y)&255),[2,1,2,1]);
+ assert.equal(s.heights.mask(13,13)&255,1);assert.ok(Math.abs(s.heights.z(13,13)-8)<.002);
+ assert.ok(Math.abs(s.sources.get('t3SyncHeightMap')!.readInt16LE(64+(13*33+13)*4)/256-10)<.005);
+ const measured=JSON.parse(await fs.readFile('src/tests/fixtures/terrain-native/cliff-sync-mask-reference.json','utf8')).cases.find((c:{corners:number[]})=>c.corners.join(',')==='2,1,2,1'),masks:number[]=[];
+ for(let dy=0;dy<3;dy++)for(let dx=0;dx<3;dx++)masks.push(s.sources.get('t3SyncHeightMap')!.readUInt16LE(64+((12+dy)*33+12+dx)*4+2));
+ assert.deepEqual(masks,measured.syncMask,'SMAP height is high at the saddle center, but its level label follows low HMAP');
+ const sync=s.sources.get('t3SyncCliffLevel')!;for(let dy=0;dy<2;dy++)for(let dx=0;dx<2;dx++)assert.equal(sync.readUInt16LE(32+((12+dy)*32+12+dx)*2),128);
+ const repeat=await f.tr.plan(request);assert.equal(repeat.changedVertices,0);assert.ok(repeat.files.every(v=>v.changedBytes===0));
 });
 
 test('cliff painting fills a concave fine-vertex pit and synchronizes its height without moving coarse corners',async t=>{

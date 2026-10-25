@@ -3,8 +3,10 @@ import {coalesceDataAuthoringSteps} from './authoringDataGroups.js';
 
 export type AuthorMode='plan'|'stage'|'save';
 export const authoringGuide={
-  nativeEditorPolicy:'Optional pinned SC2NativeToolkit: editor.status reports connection without Editor startup; editor.check queues native load/Data, compile and save/reopen checks on a saved archive; editor.job polls compact results; editor.capture queues native images; editor.stop closes the owned hidden Editor. map.preview remains the fast ModKit renderer. Unknown diagnostics and native images do not certify gameplay.',
+  nativeEditorPolicy:'Optional pinned SC2NativeToolkit: editor.status reports connection without Editor startup; editor.check queues native load/Data, compile and save/reopen checks on a saved archive; editor.data.audit submits a full original effective-Data audit with separate native status/cancel and explicit coverage limits; editor.job polls compact results; editor.capture queues native images; editor.stop closes the owned hidden Editor. map.preview remains the fast ModKit renderer. Unknown diagnostics and native images do not certify gameplay.',
   testPolicy:'project.test.plan file=tests.json resolves a reusable saved-map suite; project.test.run planId=... in stage mode explicitly launches checks. Existing retained bridges are leased sequentially. Read compact status/report; source changes invalidate prior acceptance. Five trigger folders are recommended, never mandatory.',
+  landscapePolicy:'Inspect named owned zones with terrain landscape.inspect; use zone and field to page exact config values. Refine with terrain landscape.zone zone=... expectedRequestHash=... changes.config.clusterRadius=8. Only config/terrain merge; nested objects and arrays replace whole fields. Omitted values and bindings remain unchanged. Stage/save uses the existing Terrain transaction.',
+  qualityPolicy:'project quality.plan prepares a bounded reusable review plan without starting native jobs. Retain separate static, Editor, rendered and gameplay evidence.',
   presentationPolicy:'Player-facing abilities/effects normally include native Actor/Model feedback for cast, movement/travel and impact/area, plus sound when appropriate. Invisible helper effects/passives are explicit exceptions. Use native event/host/site-op/lifecycle bindings and visual preloads; mechanics or a Model ID alone do not prove visible playback.',
   format:'One command per line: section verb key=value. Quote values containing spaces. Use dotted keys for nested arguments and JSON only for complex arrays. A <<TAG block preserves Galaxy source verbatim.',
   modes:{plan:'Read or preview only; module tools keep their dry-run defaults.',stage:'For supported recipes, apply to staged workspace files without saving.',save:'For supported recipes, apply and save with existing stale guards. Compatible adjacent same-catalog Data commands form one atomic group; earlier distinct groups may remain saved if a later group fails.'},
@@ -49,7 +51,7 @@ export const authoringGuide={
   ],
   logicDefault:'Galaxy. logic file/function/body and galaxy file/function/body build guarded script plans. GUI is only gui.plan or trigger.plan; no Galaxy-to-GUI conversion.',
   ownershipDefault:'Hero abilities, native costs/cooldowns/buttons and XP/levels belong in Data. Triggers coordinate rounds, objectives, UI and Banks and issue native ability orders. When graphical organization is requested, use actual Triggers folders, not Galaxy directories. Explicit visible Custom Script blocks may contain complex Galaxy code; generate runtime from that same GUI source.',
-  sections:{project:'organize/check',map:'status/check/preview/create/clone',document:'empty/status',terrain:'status/check/paint/blend/raise/lower/flatten/pathing/nav/decorate/cliff/cliff.repair/ramp/catalog/style/compose/measure/palette_preview/prefab/assemble',objects:'status/check/unit/doodad',data:'find/check/set',logic:'status/check/symbols/file/function/body (Galaxy)',gui:'status/check/plan (explicit)',ui:'status/timer',cutscene:'status/show/create/compose',text:'check/set',settings:'status/players/player',ai:'status/find/check/definition/wave',assets:'find/inspect/preview/measure',casc:'find',lighting:'status'},
+  sections:{project:'organize/check/quality.plan',map:'status/check/preview/create/clone',document:'empty/status',terrain:'status/check/paint/blend/raise/lower/flatten/pathing/nav/decorate/cliff/cliff.repair/ramp/ramp.place/landscape/landscape.inspect/landscape.zone/catalog/style/compose/measure/palette_preview/prefab/assemble',objects:'status/check/unit/doodad',data:'find/check/set',logic:'status/check/symbols/file/function/body (Galaxy)',gui:'status/check/plan (explicit)',ui:'status/timer',cutscene:'status/show/create/compose',text:'check/set',settings:'status/players/player',ai:'status/find/check/definition/wave',assets:'find/inspect/preview/measure',casc:'find',lighting:'status'},
   limits:'20 underlying MCP steps, 64 KiB source. Every command runs the original tool schema; unsupported aliases fail before any tool is called.',
 };
 type Args=Record<string,unknown>;
@@ -60,9 +62,10 @@ const aliases:Record<string,string>={
   'terrain.status':'terrain.inspect','terrain.check':'terrain.validate',
   'terrain.pathing':'terrain.pathing.paint','terrain.nav':'terrain.navigation.preview',
   'terrain.cliff':'terrain.cliff.paint','terrain.ramp':'terrain.ramp.create',
-  'terrain.landscape':'terrain.landscape.plan_file',
+  'terrain.landscape':'terrain.landscape.plan_file','terrain.landscape.zone':'terrain.landscape.zone.plan',
   'objects.status':'placement.scan','objects.check':'placement.validate',
   'objects.unit':'placement.addUnit','objects.doodad':'placement.addDoodad',
+  'objects.variants':'placement.setVariations',
   'data.find':'data.peek','data.check':'data.validate',
   'logic.status':'script.inspect','logic.check':'script.validate','logic.symbols':'script.symbols',
   'galaxy.status':'script.inspect','galaxy.check':'script.validate',
@@ -77,16 +80,17 @@ const aliases:Record<string,string>={
   'lighting.status':'lighting.inspect',
 };
 const directCommands=new Set([
-  'project.test.plan','project.test.run','project.test.status','project.test.report','project.test.cancel',
+  'project.quality.plan','project.test.plan','project.test.run','project.test.status','project.test.report','project.test.cancel',
   'project.organize','project.check','trigger.organize','terrain.catalog','terrain.style','terrain.compose','terrain.measure','terrain.palette_preview','terrain.prefab','terrain.assemble','assets.measure','data.presentation.check',
   'map.inspect','map.validate','map.create','map.clone','map.blueprint.list','map.blueprint.inspect',
   'map.preview','terrain.inspect','terrain.validate','terrain.palette','terrain.capabilities','terrain.load.inspect','terrain.load.repair',
   'terrain.paint','terrain.blend','terrain.raise','terrain.lower','terrain.flatten',
-  'terrain.generate','terrain.cliff.paint','terrain.cliff.repair','terrain.ramp.create','terrain.ramp.remove','terrain.ramp.repair','terrain.plan_file','terrain.landscape.plan','terrain.landscape.plan_file',
+  'terrain.generate','terrain.cliff.paint','terrain.cliff.repair','terrain.ramp.create','terrain.ramp.remove','terrain.ramp.repair','terrain.plan_file','terrain.landscape.plan','terrain.landscape.plan_file','terrain.landscape.inspect','terrain.landscape.zone.plan',
   'terrain.pathing.paint','terrain.pathing.fill','terrain.navigation.preview','terrain.decorate',
-  'terrain.objects.snap','terrain.ramp.fit','terrain.modkit.inspect','terrain.modkit.plan_file',
+  'terrain.objects.snap','terrain.ramp.place','terrain.ramp.fit','terrain.modkit.inspect','terrain.modkit.plan_file',
   'placement.scan','placement.validate','placement.geometry_check','placement.addUnit',
   'placement.addDoodad','placement.addBatch','placement.scatterDoodads','placement.snapToTerrain',
+  'placement.setVariations',
   'data.peek','data.query','data.context','data.resolve','data.validate','data.card.check','data.set','data.ability.instant','data.ability.target','data.ability.charges','data.effect.projectile','data.hero.veterancy','data.xp.search','data.hero.learn','data.actor.ability_animation',
   'script.inspect','script.validate','script.symbols','script.context',
   'trigger.inspect','trigger.validate','trigger.plan_file','trigger.plan','trigger.custom_script',
@@ -163,6 +167,14 @@ function shorthand(name:string,args:Args,block?:string):{tool:string;args:Args;s
     const target=area(args);if(target)args.area=target;
   }
   if(['terrain.prefab','terrain.assemble'].includes(name)){const at=take(args,'at');if(at!==undefined){const [x,y]=point(at,2,'AT');args.anchor={x,y};}}
+  if(name==='terrain.ramp.place'||name==='terrain.ramp.fit'){
+    if(typeof args.bounds==='string'||Array.isArray(args.bounds)){const [minX,minY,maxX,maxY]=point(args.bounds,4,'BOUNDS');args.bounds={minX,minY,maxX,maxY};}
+    const offset=take(args,'offset');
+    if(offset!==undefined){
+      if(args.offsetX!==undefined||args.offsetY!==undefined)throw Error('AUTHOR_OFFSET_CONFLICT');
+      const [x,y]=point(offset,2,'OFFSET');args.offsetX=x;args.offsetY=y;
+    }
+  }
   if(name==='terrain.ramp'){
     const at=take(args,'at');if(at!==undefined){const [x,y]=point(at,2,'AT');args.center={x,y};}
   }
@@ -243,6 +255,8 @@ function shorthand(name:string,args:Args,block?:string):{tool:string;args:Args;s
 }
 function lifecycle(command:{tool:string;args:Args;saveFile?:string},mode:AuthorMode,base:string):BatchStep[]{
   const first:BatchStep={id:base,tool:command.tool,args:command.args};
+  if(command.tool==='project.quality.plan'){first.select=['integrity','roadmapReady','index','bindingsFile','pendingDrafts','coverage','bindingsTotal','offset','nextOffset','bindings','scope'];return [first];}
+  if(command.tool==='terrain.landscape.inspect'){first.select=['version','totalZones','total','offset','returned','truncated','zones','routeSource','padSource','field','staged'];return [first];}
   if(command.tool==='data.card.check')return [first];
   if(mode==='plan'){
     if(command.tool==='project.test.run'||command.tool==='project.test.cancel')throw new Error('AUTHOR_LIVE_REQUIRES_STAGE: test run/cancel is explicit; use stage mode');
@@ -263,10 +277,13 @@ function lifecycle(command:{tool:string;args:Args;saveFile?:string},mode:AuthorM
   }else if(command.tool==='trigger.plan_file'||command.tool==='trigger.plan'||command.tool==='trigger.recipe_skirmish'){
     apply={id:base+'_apply',tool:'trigger.apply',args:{planId:from('planId'),dryRun:false,stage:true}};
     if(mode==='save')save={id:base+'_save',tool:'trigger.save',args:{}};
-  }else if(command.tool==='terrain.plan'||command.tool==='terrain.plan_file'||command.tool==='terrain.landscape.plan'||command.tool==='terrain.landscape.plan_file'||command.tool==='terrain.paint'||command.tool==='terrain.blend'||command.tool==='terrain.cliff.paint'||command.tool==='terrain.cliff.repair'||command.tool==='terrain.load.repair'||command.tool==='terrain.ramp.create'||command.tool==='terrain.ramp.remove'||command.tool==='terrain.ramp.repair'||command.tool==='terrain.generate'){
+  }else if(command.tool==='terrain.plan'||command.tool==='terrain.plan_file'||command.tool==='terrain.landscape.plan'||command.tool==='terrain.landscape.plan_file'||command.tool==='terrain.landscape.zone.plan'||command.tool==='terrain.paint'||command.tool==='terrain.blend'||command.tool==='terrain.cliff.paint'||command.tool==='terrain.cliff.repair'||command.tool==='terrain.load.repair'||command.tool==='terrain.ramp.create'||command.tool==='terrain.ramp.remove'||command.tool==='terrain.ramp.repair'||command.tool==='terrain.generate'){
     apply={id:base+'_apply',tool:'terrain.apply',args:{planId:from('id'),dryRun:false,stage:true}};
     if(mode==='save')save={id:base+'_save',tool:'terrain.save',args:{planId:from('id'),dryRun:false}};
-  }else if(command.tool==='placement.addUnit'||command.tool==='placement.addDoodad'||command.tool==='placement.addBatch'||command.tool==='placement.scatterDoodads'){
+  }else if(command.tool==='terrain.ramp.place'){
+    apply={id:base+'_apply',tool:'terrain.modkit.apply',args:{planId:from('planId'),dryRun:false}};
+    if(mode==='save')save={id:base+'_save',tool:'modkit.save',args:{file:from('files.0.file')}};
+  }else if(command.tool==='placement.addUnit'||command.tool==='placement.addDoodad'||command.tool==='placement.addBatch'||command.tool==='placement.scatterDoodads'||command.tool==='placement.setVariations'){
     apply={id:base+'_apply',tool:'placement.apply',args:{planId:command.tool==='placement.scatterDoodads'?{$from:base+'.plan.id'}:from('id'),dryRun:false,stage:true}};
     if(mode==='save')save={id:base+'_save',tool:'modkit.save',args:{file:'Objects'}};
   }else if(command.tool==='data.apply'||command.tool==='data.ability.instant'||command.tool==='data.ability.target'||command.tool==='data.ability.charges'||command.tool==='data.effect.projectile'||command.tool==='data.hero.veterancy'||command.tool==='data.xp.search'||command.tool==='data.hero.learn'||command.tool==='data.actor.ability_animation'||command.tool==='text.apply'){

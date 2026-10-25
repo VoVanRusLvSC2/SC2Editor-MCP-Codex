@@ -1,0 +1,1175 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-23T02:05:48.451Z",
+  "status": "scoped_native_record_references_passed",
+  "scope": "Owned root/inline-library GUI record references, inclusive nested arrays, default arguments and deferred timer mutation. Two original-game launches of one exact archive; not universal GUI/import equivalence or original-Editor save/reopen.",
+  "sourceFingerprints": [
+    {
+      "file": "src/modules/script/typecheck.ts",
+      "sha256LfUtf8": "1ce32703287c16fceb0bf73e9e4055367d1feaf0ac792b4c8e6680f8edd0a9b2"
+    },
+    {
+      "file": "src/modules/trigger/ast/codec.ts",
+      "sha256LfUtf8": "2af3ab304010ccc435ac8a7a306c73a47ac64624ba07e852b3d6df9e99098871"
+    },
+    {
+      "file": "src/modules/trigger/runtime.ts",
+      "sha256LfUtf8": "8a4ccb5e1412c908dbbf0f6a7777b72e23a02102c483ffe029cfc9a63d8d3cab"
+    },
+    {
+      "file": "src/modules/trigger/runtimeGraph.ts",
+      "sha256LfUtf8": "331dcc11390820f64da4f21739a5eb7c2e81cbe76af095d24e68819ff0bae496"
+    },
+    {
+      "file": "src/modules/trigger/authoring.ts",
+      "sha256LfUtf8": "58c17cd6491084827137a581588f01a2dac7e2c20b8db75bbc9d91ff829fd1c8"
+    },
+    {
+      "file": "src/modules/trigger/typeSystem.ts",
+      "sha256LfUtf8": "76cd4302be838b643744424a4b0289d20b61703a59e7d57bd316bfd77140bfad"
+    },
+    {
+      "file": "src/modules/trigger/variables.ts",
+      "sha256LfUtf8": "2b3e5a161e3471843a10ef373a46e26cfcc83e45693eda7524fb127dca43fc2c"
+    },
+    {
+      "file": "src/modules/trigger/schemas.ts",
+      "sha256LfUtf8": "358f4be31c4fdc65fbf0e45cb05e4133bac200434f7ff806f9bfde010540a6ab"
+    },
+    {
+      "file": "src/modules/trigger/revisedImport.ts",
+      "sha256LfUtf8": "cb5255f3d143b3c58bae3d0ad0020cce2c29fa22f9c7992b4f19a0cb4a088b45"
+    },
+    {
+      "file": "src/modules/trigger/workspace.ts",
+      "sha256LfUtf8": "b356c4b109e1e9f9912b21e91494461d83692e579c0742b66916e5e986676ea6"
+    },
+    {
+      "file": "src/modules/trigger/tools.ts",
+      "sha256LfUtf8": "ebec606884721910c19669e066184b517f589aa586e52fa875a8abe8ff076fcb"
+    },
+    {
+      "file": "scripts/run-map-tests.mjs",
+      "sha256LfUtf8": "9471de409f9762360cf66c2de08a154dfcf584b8b0458e61f467bc0a6a1742b9"
+    },
+    {
+      "file": "scripts/mcp-session.mjs",
+      "sha256LfUtf8": "34f8888d8d778ac5c1a43429eb9bd3f58cd742c5382ab9059ec949ffc2a28834"
+    }
+  ],
+  "publishedImplementationCommit": "3210cd66849636f64d38dd0c04140549df710498",
+  "implementation": {
+    "qualifiedLookup": "Owned functions, records, global variables and constant bounds keep Library/Type/Id identity; unqualified names stay in the current scope and foreign locals remain hidden",
+    "rootReferences": "Library=\"\" remains explicit from a named library into root, including parameter/default expressions; root-only codec uses no artificial Map owner",
+    "arrayBounds": "Serialized value N is the native inclusive last index; [0] has one cell, [1,2] has dimensions[2,3]. No prior map arrays are resized",
+    "recordReferences": "Known addressable structure variables bind to structref<T>; wrong known record types reject and temporary/external cases remain statically incomplete",
+    "guiOnly": true,
+    "customScriptFallback": false
+  },
+  "fixture": {
+    "archive": {
+      "file": "work/gui-reference-native-20261023/ReferenceBoundedMap/.sc2mcp-output/ReferenceBounded.SC2Map",
+      "sha256": "6cfe7af4d2eab7f6003532c2bab93963ff22cdae9efaf6f25311e134a18ecab4",
+      "bytes": 48165
+    },
+    "guiSha256": "35d800a86e7dd6321e5900a8c88416dabff92c435d37c3c0865c44b933982e4e",
+    "galaxySha256": "08a24d44ead1d2a752cc103b51d75b36f3f35e31eac0c65527c123cbadce7984",
+    "counts": {
+      "folders": [
+        "LIBRARY_TEST",
+        "SYSTEMS",
+        "SYSTEMS/VALIDATION",
+        "GAMEPLAY",
+        "GAMEPLAY/REFERENCE_TEST"
+      ],
+      "libraries": [
+        {
+          "library": "A1B2C3D4",
+          "folders": [
+            "MAIN",
+            "GAMEPLAY",
+            "GAMEPLAY/REFERENCE_TEST"
+          ]
+        }
+      ],
+      "externalLibraries": [
+        "Ntve"
+      ],
+      "triggers": 5,
+      "functions": 8,
+      "variables": 21,
+      "calls": 97,
+      "customScripts": 0
+    },
+    "originalGuiAndGalaxyUnchangedAcrossMarkerCorrections": true,
+    "basePayload": {
+      "changed": [
+        {
+          "file": "enUS.SC2Data/LocalizedData/GameStrings.txt",
+          "before": "e29f318cbd63dce63fe9db400a1f33672ad39f30da4a2ac1c661a87413b9e40e",
+          "after": "2e0fd7d41472a84679bda191715977c7f7f0029f1166ee21806e014daac62d91"
+        },
+        {
+          "file": "Triggers",
+          "before": "05381d8acf4824ea8f9d4d2dbee8bf3cb957c07cc6e12076bb5793fd52310cb5",
+          "after": "35d800a86e7dd6321e5900a8c88416dabff92c435d37c3c0865c44b933982e4e"
+        },
+        {
+          "file": "MapScript.galaxy",
+          "before": "a0d167912d715cf82a1dbaf3403edb6ce555f21788494b0ef92be71fcd97f3d6",
+          "after": "08a24d44ead1d2a752cc103b51d75b36f3f35e31eac0c65527c123cbadce7984"
+        },
+        {
+          "file": "enUS.SC2Data/LocalizedData/TriggerStrings.txt",
+          "before": "53206f43004419169edd9bd3184577a6a600ef231beb7ee90791465ca98a652c",
+          "after": "7927a53f08ccf7ba9ef0da17416c4579b3bae790bca1a68239a7e9e319470b9c"
+        },
+        {
+          "file": "ruRU.SC2Data/LocalizedData/TriggerStrings.txt",
+          "before": "025e89dd104f96d202b493e6987749da0881e230175998abdf9a486b8526024a",
+          "after": "331aef1eef8aac9b569aa403dead721b309b105dcb0b6272d8f91cec54ba31a7"
+        }
+      ],
+      "unchanged": [
+        {
+          "file": "t3TextureMasks",
+          "sha256": "2f6c15de1c457389ddf991a7a06dd23e4f543e4877f3eb6d2eb7120bfe822ba2"
+        },
+        {
+          "file": "DocumentInfo.version",
+          "sha256": "7b54db08eab5dd57cacd703a6b25cbb0cb442743523b39a45af7254814f9c2ee"
+        },
+        {
+          "file": "MapInfo",
+          "sha256": "c125a13be567119b3fe56dab5186a89e0a2909d24934cb2b78e2bc4509419a18"
+        },
+        {
+          "file": "Minimap.tga",
+          "sha256": "829028470837d92b3937a8d599ec2672bb130b125114316cbcd4392e0b99fb97"
+        },
+        {
+          "file": "ComponentList.SC2Components",
+          "sha256": "063910a488c5f1869ed30ab47d2264a00acdb85a19de13bf71c4860ef5e83553"
+        },
+        {
+          "file": "ruRU.SC2Data/LocalizedData/GameStrings.txt",
+          "sha256": "e29f318cbd63dce63fe9db400a1f33672ad39f30da4a2ac1c661a87413b9e40e"
+        },
+        {
+          "file": "GameText.version",
+          "sha256": "caf6bba8f6331c261c20d5ce4be039773028ada0c3f7380250f9f4165072d2bc"
+        },
+        {
+          "file": "DocumentInfo",
+          "sha256": "d6c829974f36c986ee211a18172e71df734fa809a907000f672ee1201a82937f"
+        },
+        {
+          "file": "NativeSuite.json",
+          "sha256": "3aeddaea348df3e20c0e17d7c55744c0d01830f98bc3986ffa0cfd0f46c6bcd1"
+        },
+        {
+          "file": "t3HardTile",
+          "sha256": "12afa86368acf6158758ce235c2e3879d6edfab41cc2eef6738c939e746b745d"
+        },
+        {
+          "file": "t3Terrain.version",
+          "sha256": "083de04eb258496293af3a47cca7aa12567539dadc050a5cf12d3ec284f84b0a"
+        },
+        {
+          "file": "Reviewed.xml",
+          "sha256": "ea914bedf66f1c8bf89a50e055af3f31f8bb9cc6d2f1f884d23ccc4dbf6d1717"
+        },
+        {
+          "file": "t3FluffDoodad",
+          "sha256": "3f3f15b8480e7cf37d97bc9c4affe5af1348b352bbc1213a71da32195a88e937"
+        },
+        {
+          "file": "t3CellFlags",
+          "sha256": "943b78bb9e3d020823eb0a658f042956cc259125d7e222a9f9d83ad7d8064bd4"
+        },
+        {
+          "file": "t3HeightMap",
+          "sha256": "134e3142a3bde3854812721435f834e1d252b876346b59e2c72c21944a0d6360"
+        },
+        {
+          "file": "t3SyncCliffLevel",
+          "sha256": "7efc0b36c24a7173f1ed1555096697bd3518eb43a294c3fcdd8aa868b72d01a8"
+        },
+        {
+          "file": "t3Terrain.xml",
+          "sha256": "8cb945adc1ca575f5b25011435e7266aa76d19094a3b247ecc215b08d12c19e9"
+        },
+        {
+          "file": "Triggers.version",
+          "sha256": "706409e0e494f2df96ef65488652497962068d5be694947013a6b85c8a4380c7"
+        },
+        {
+          "file": "AuthorSuite.json",
+          "sha256": "80eca8c727c5b3fe46e90a11171395300176e362cc38fa8b59e5f681fdec71cb"
+        },
+        {
+          "file": "Template.SC2Map",
+          "sha256": "523d707a9a3c9aac24b4c4d16a4e159826d9a5b347468eba8e1932aee8bddf4d"
+        },
+        {
+          "file": "Attributes",
+          "sha256": "e168c65dfac460ab693e2a28e3796ca3e3466f881a289bb22cf18e55b85fb5fe"
+        },
+        {
+          "file": "t3Water",
+          "sha256": "c15e6e4da91564e9349a449302114f4248dfe1f2cebee1a29526cb5f41db5af5"
+        },
+        {
+          "file": "DocumentHeader",
+          "sha256": "4952b014e51989f388b03fa4f2b7c49a47fb0f26042ae2c679dd73fc0c9914c9"
+        },
+        {
+          "file": "Preload.xml",
+          "sha256": "f4cfe39298aa92f8a5b3b553899da0b7e4872164c35beb998d2f188f12c80b3f"
+        },
+        {
+          "file": "PreloadAssetDB.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "file": "MapInfo.version",
+          "sha256": "66ce0bde090a0e863fb56cf4a7bec542df4420eff0510629af427f96c97e7750"
+        },
+        {
+          "file": "t3SyncHeightMap",
+          "sha256": "d145d7f67c14219c8e6d405f425ac8e4481d8a1a03c2ee2ec4e50fd7068c40c5"
+        },
+        {
+          "file": "GameData.version",
+          "sha256": "863511a56e768452c0c43bf4b6486bffadb50994716603ea8d423be2932d32ea"
+        },
+        {
+          "file": "Objects.version",
+          "sha256": "b41afcd511ec66c389501d9153a88b7f3811c68f22a8aa55cf227e17e370ebd4"
+        },
+        {
+          "file": "t3SyncTextureInfo",
+          "sha256": "283ae7053475302f57f14c25944a540764ebec7b550036332f87ad181761297a"
+        },
+        {
+          "file": "Objects",
+          "sha256": "781ce349ec2abaa434a607a2ed4248b4768210c178df25b8ca2f07dd7f1f1b6b"
+        },
+        {
+          "file": "t3VertCol",
+          "sha256": "7709c16ada851a7e524b6fe2975bf0f4f1728a5ed1720b8d5c9f5ea896d63173"
+        },
+        {
+          "file": "Attributes.version",
+          "sha256": "327e819847bc1e2550b744e13c2e7742554a4b22dab835350a20edfe69ce7b94"
+        }
+      ]
+    },
+    "stableCorrection": {
+      "originalPayloadComponentsUnchanged": 38,
+      "guiAndGalaxyUnchanged": true,
+      "addedFiles": [
+        {
+          "file": "Base.SC2Data/GameData/ReferenceTestData.xml",
+          "sha256": "d49ea1a58e2b2b7ef4bfdc2eb3ff34862248aabd0deb52afc0c3d2f15b1f586e"
+        },
+        {
+          "file": "Base.SC2Data/GameData.xml",
+          "sha256": "5eb672340c007b63491d0277d55c51fc4a655d3666271dc64eb10ac0c7fd7b3f"
+        }
+      ],
+      "reason": "Disable native Hatchery life regeneration only in a separate exact-value marker fixture; original failed source/archive unchanged"
+    },
+    "boundedCorrection": {
+      "changed": [
+        {
+          "file": "Base.SC2Data/GameData/ReferenceTestData.xml",
+          "before": "d49ea1a58e2b2b7ef4bfdc2eb3ff34862248aabd0deb52afc0c3d2f15b1f586e",
+          "after": "a1f27fb4c9f7e79e49bbd8f855596cd13b5df133e9bb37d3050b25cf2a161448"
+        }
+      ],
+      "unchanged": [
+        {
+          "file": "t3TextureMasks",
+          "sha256": "2f6c15de1c457389ddf991a7a06dd23e4f543e4877f3eb6d2eb7120bfe822ba2"
+        },
+        {
+          "file": "DocumentInfo.version",
+          "sha256": "7b54db08eab5dd57cacd703a6b25cbb0cb442743523b39a45af7254814f9c2ee"
+        },
+        {
+          "file": "MapInfo",
+          "sha256": "c125a13be567119b3fe56dab5186a89e0a2909d24934cb2b78e2bc4509419a18"
+        },
+        {
+          "file": "Minimap.tga",
+          "sha256": "829028470837d92b3937a8d599ec2672bb130b125114316cbcd4392e0b99fb97"
+        },
+        {
+          "file": "ComponentList.SC2Components",
+          "sha256": "063910a488c5f1869ed30ab47d2264a00acdb85a19de13bf71c4860ef5e83553"
+        },
+        {
+          "file": "ruRU.SC2Data/LocalizedData/GameStrings.txt",
+          "sha256": "e29f318cbd63dce63fe9db400a1f33672ad39f30da4a2ac1c661a87413b9e40e"
+        },
+        {
+          "file": "GameText.version",
+          "sha256": "caf6bba8f6331c261c20d5ce4be039773028ada0c3f7380250f9f4165072d2bc"
+        },
+        {
+          "file": "DocumentInfo",
+          "sha256": "d6c829974f36c986ee211a18172e71df734fa809a907000f672ee1201a82937f"
+        },
+        {
+          "file": "NativeSuite.json",
+          "sha256": "3aeddaea348df3e20c0e17d7c55744c0d01830f98bc3986ffa0cfd0f46c6bcd1"
+        },
+        {
+          "file": "t3HardTile",
+          "sha256": "12afa86368acf6158758ce235c2e3879d6edfab41cc2eef6738c939e746b745d"
+        },
+        {
+          "file": "t3Terrain.version",
+          "sha256": "083de04eb258496293af3a47cca7aa12567539dadc050a5cf12d3ec284f84b0a"
+        },
+        {
+          "file": "Reviewed.xml",
+          "sha256": "ea914bedf66f1c8bf89a50e055af3f31f8bb9cc6d2f1f884d23ccc4dbf6d1717"
+        },
+        {
+          "file": "enUS.SC2Data/LocalizedData/GameStrings.txt",
+          "sha256": "2e0fd7d41472a84679bda191715977c7f7f0029f1166ee21806e014daac62d91"
+        },
+        {
+          "file": "t3FluffDoodad",
+          "sha256": "3f3f15b8480e7cf37d97bc9c4affe5af1348b352bbc1213a71da32195a88e937"
+        },
+        {
+          "file": "t3CellFlags",
+          "sha256": "943b78bb9e3d020823eb0a658f042956cc259125d7e222a9f9d83ad7d8064bd4"
+        },
+        {
+          "file": "t3HeightMap",
+          "sha256": "134e3142a3bde3854812721435f834e1d252b876346b59e2c72c21944a0d6360"
+        },
+        {
+          "file": "t3SyncCliffLevel",
+          "sha256": "7efc0b36c24a7173f1ed1555096697bd3518eb43a294c3fcdd8aa868b72d01a8"
+        },
+        {
+          "file": "t3Terrain.xml",
+          "sha256": "8cb945adc1ca575f5b25011435e7266aa76d19094a3b247ecc215b08d12c19e9"
+        },
+        {
+          "file": "Triggers.version",
+          "sha256": "706409e0e494f2df96ef65488652497962068d5be694947013a6b85c8a4380c7"
+        },
+        {
+          "file": "AuthorSuite.json",
+          "sha256": "80eca8c727c5b3fe46e90a11171395300176e362cc38fa8b59e5f681fdec71cb"
+        },
+        {
+          "file": "Base.SC2Data/GameData.xml",
+          "sha256": "5eb672340c007b63491d0277d55c51fc4a655d3666271dc64eb10ac0c7fd7b3f"
+        },
+        {
+          "file": "Template.SC2Map",
+          "sha256": "523d707a9a3c9aac24b4c4d16a4e159826d9a5b347468eba8e1932aee8bddf4d"
+        },
+        {
+          "file": "Attributes",
+          "sha256": "e168c65dfac460ab693e2a28e3796ca3e3466f881a289bb22cf18e55b85fb5fe"
+        },
+        {
+          "file": "t3Water",
+          "sha256": "c15e6e4da91564e9349a449302114f4248dfe1f2cebee1a29526cb5f41db5af5"
+        },
+        {
+          "file": "DocumentHeader",
+          "sha256": "4952b014e51989f388b03fa4f2b7c49a47fb0f26042ae2c679dd73fc0c9914c9"
+        },
+        {
+          "file": "Preload.xml",
+          "sha256": "f4cfe39298aa92f8a5b3b553899da0b7e4872164c35beb998d2f188f12c80b3f"
+        },
+        {
+          "file": "PreloadAssetDB.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "file": "MapInfo.version",
+          "sha256": "66ce0bde090a0e863fb56cf4a7bec542df4420eff0510629af427f96c97e7750"
+        },
+        {
+          "file": "t3SyncHeightMap",
+          "sha256": "d145d7f67c14219c8e6d405f425ac8e4481d8a1a03c2ee2ec4e50fd7068c40c5"
+        },
+        {
+          "file": "GameData.version",
+          "sha256": "863511a56e768452c0c43bf4b6486bffadb50994716603ea8d423be2932d32ea"
+        },
+        {
+          "file": "Objects.version",
+          "sha256": "b41afcd511ec66c389501d9153a88b7f3811c68f22a8aa55cf227e17e370ebd4"
+        },
+        {
+          "file": "Triggers",
+          "sha256": "35d800a86e7dd6321e5900a8c88416dabff92c435d37c3c0865c44b933982e4e"
+        },
+        {
+          "file": "t3SyncTextureInfo",
+          "sha256": "283ae7053475302f57f14c25944a540764ebec7b550036332f87ad181761297a"
+        },
+        {
+          "file": "Objects",
+          "sha256": "781ce349ec2abaa434a607a2ed4248b4768210c178df25b8ca2f07dd7f1f1b6b"
+        },
+        {
+          "file": "MapScript.galaxy",
+          "sha256": "08a24d44ead1d2a752cc103b51d75b36f3f35e31eac0c65527c123cbadce7984"
+        },
+        {
+          "file": "t3VertCol",
+          "sha256": "7709c16ada851a7e524b6fe2975bf0f4f1728a5ed1720b8d5c9f5ea896d63173"
+        },
+        {
+          "file": "Attributes.version",
+          "sha256": "327e819847bc1e2550b744e13c2e7742554a4b22dab835350a20edfe69ce7b94"
+        },
+        {
+          "file": "enUS.SC2Data/LocalizedData/TriggerStrings.txt",
+          "sha256": "7927a53f08ccf7ba9ef0da17416c4579b3bae790bca1a68239a7e9e319470b9c"
+        },
+        {
+          "file": "ruRU.SC2Data/LocalizedData/TriggerStrings.txt",
+          "sha256": "331aef1eef8aac9b569aa403dead721b309b105dcb0b6272d8f91cec54ba31a7"
+        }
+      ],
+      "reason": "Nexus marker needs exact760 HP, above stock750; test-only Data raises LifeMax to1000, preserving the original GUI calculation"
+    },
+    "authoring": "Actual MCP map.import, trigger.plan_file/apply, trigger.organize, trigger.generate_runtime/save, data.apply and map.export",
+    "staticTypecheck": "INCOMPLETE:137 checked/85 unknown; no reported errors; actual native execution is separate evidence"
+  },
+  "candidate": {
+    "file": "work/launch-diagnostics-20261022/reference-native-candidate.json",
+    "sha256": "07c0cfa57f4a81240e49f6c4bcd327e1adf4afecc6b061917e130a548085af01",
+    "compiledFiles": 358,
+    "sourceStableDuringBuild": true,
+    "sourceSnapshotSha256": "4e46fc0a816ab8a215ffa861492001009415f3a48d47fc31bce841363828dd79",
+    "authoringToReleaseJs": "Byte-identical after removing only the exact trailing development sourceMappingURL comment from nine GUI/validator modules; release compiler disables source maps",
+    "privacy": {
+      "passed": true,
+      "checkedFiles": 9977,
+      "privateSourceFiles": 1113,
+      "privateCorpusCompared": true,
+      "violations": [],
+      "scope": "Explicit private paths/debug/test artifacts and exact external C++/Python/Galaxy source copies, including renamed files. Not proof against transformed snippets or binary reverse engineering."
+    }
+  },
+  "native": {
+    "successfulLaunches": 2,
+    "scenariosPerLaunch": 14,
+    "totalPassedScenarioExecutions": 28,
+    "sameRetainedFrontend": true,
+    "separateGameSessions": true,
+    "originalEditorCompileRenewed": false,
+    "gameBuild": "5.0.17.98310",
+    "recordMutationMarkers": {
+      "scalar": 23,
+      "arrayElement": 37,
+      "untouchedRecord": 13,
+      "matrixLastIndex": 31,
+      "matrixControl": 7,
+      "rootAfterDeferredCall": 1140,
+      "unqualifiedRootFunction": 760,
+      "exactlyFourMutations": 1200,
+      "nestedRecordArray": 1230
+    },
+    "runs": [
+      {
+        "jobId": "95589968-9a2c-489a-8961-e84719d9fbf1",
+        "file": ".sc2mcp-output/project-tests/95589968-9a2c-489a-8961-e84719d9fbf1/result.json",
+        "sha256": "fa3017f753bb6c56a5d19c3d32842582d4612d1a8328cbcb52940a2ba666a228",
+        "outcome": "passed",
+        "sourceSha256": "6cfe7af4d2eab7f6003532c2bab93963ff22cdae9efaf6f25311e134a18ecab4",
+        "session": "b6022dd1dde9437ecca916d79379c017",
+        "worker": "3e119507-993e-4818-ae19-c5ff10448540",
+        "scenarios": [
+          {
+            "id": "library",
+            "file": ".sc2mcp-output/project-tests/95589968-9a2c-489a-8961-e84719d9fbf1/scenario_library.json",
+            "sha256": "7a64f6db865cb8ed5b11ddc55bc7e1b2945b2ed4f889069b382ecb1b03cbac49",
+            "session": "b6022dd1dde9437ecca916d79379c017",
+            "status": "passed",
+            "expectedLife": 42,
+            "observedLife": 42,
+            "type": "Marine",
+            "position": {
+              "x": 28.1599,
+              "y": 14.3999
+            },
+            "nativeGameTime": 3,
+            "worker": "3e119507-993e-4818-ae19-c5ff10448540"
+          },
+          {
+            "id": "nested",
+            "file": ".sc2mcp-output/project-tests/95589968-9a2c-489a-8961-e84719d9fbf1/scenario_nested.json",
+            "sha256": "3a22d49a954ecab0f6458337601a6dc6921178b359e7ad90d42179f0e62822ff",
+            "session": "b6022dd1dde9437ecca916d79379c017",
+            "status": "passed",
+            "expectedLife": 37,
+            "observedLife": 37,
+            "type": "Marine",
+            "position": {
+              "x": 30.0801,
+              "y": 14.3999
+            },
+            "nativeGameTime": 4.125,
+            "worker": "3e119507-993e-4818-ae19-c5ff10448540"
+          },
+          {
+            "id": "record",
+            "file": ".sc2mcp-output/project-tests/95589968-9a2c-489a-8961-e84719d9fbf1/scenario_record.json",
+            "sha256": "f8eca3d98a59832b8f186a178fe38515a6457fad9b8e83404cd5d45ee955f860",
+            "session": "b6022dd1dde9437ecca916d79379c017",
+            "status": "passed",
+            "expectedLife": 31,
+            "observedLife": 31,
+            "type": "Marine",
+            "position": {
+              "x": 32,
+              "y": 14.3999
+            },
+            "nativeGameTime": 5.25,
+            "worker": "3e119507-993e-4818-ae19-c5ff10448540"
+          },
+          {
+            "id": "preset",
+            "file": ".sc2mcp-output/project-tests/95589968-9a2c-489a-8961-e84719d9fbf1/scenario_preset.json",
+            "sha256": "e836eef9695bd4e547e9e0840ee87651455cae3acacda09d3f386b683b031c4a",
+            "session": "b6022dd1dde9437ecca916d79379c017",
+            "status": "passed",
+            "expectedLife": 17,
+            "observedLife": 17,
+            "type": "Marine",
+            "position": {
+              "x": 33.9199,
+              "y": 14.3999
+            },
+            "nativeGameTime": 6.375,
+            "worker": "3e119507-993e-4818-ae19-c5ff10448540"
+          },
+          {
+            "id": "localArray",
+            "file": ".sc2mcp-output/project-tests/95589968-9a2c-489a-8961-e84719d9fbf1/scenario_localArray.json",
+            "sha256": "684fe510f21e2a0aef03575377d18584a06ce04273d799264296a51a84c8f7e0",
+            "session": "b6022dd1dde9437ecca916d79379c017",
+            "status": "passed",
+            "expectedLife": 31,
+            "observedLife": 31,
+            "type": "Marine",
+            "position": {
+              "x": 35.8401,
+              "y": 14.3999
+            },
+            "nativeGameTime": 7.5,
+            "worker": "3e119507-993e-4818-ae19-c5ff10448540"
+          },
+          {
+            "id": "scalarReference",
+            "file": ".sc2mcp-output/project-tests/95589968-9a2c-489a-8961-e84719d9fbf1/scenario_scalarReference.json",
+            "sha256": "2df8fe6f57883e16b62d803cbb82cfe5346f2101f8634fae616ef942b3cde738",
+            "session": "b6022dd1dde9437ecca916d79379c017",
+            "status": "passed",
+            "expectedLife": 23,
+            "observedLife": 23,
+            "type": "Marine",
+            "position": {
+              "x": 28.1599,
+              "y": 16.8
+            },
+            "nativeGameTime": 9.125,
+            "worker": "3e119507-993e-4818-ae19-c5ff10448540"
+          },
+          {
+            "id": "arrayElementReference",
+            "file": ".sc2mcp-output/project-tests/95589968-9a2c-489a-8961-e84719d9fbf1/scenario_arrayElementReference.json",
+            "sha256": "56e033ea829ba53bec67d2678f0ec87abddfb062732ba7f290e0c6eaedf8eb6a",
+            "session": "b6022dd1dde9437ecca916d79379c017",
+            "status": "passed",
+            "expectedLife": 37,
+            "observedLife": 37,
+            "type": "Marine",
+            "position": {
+              "x": 30.0801,
+              "y": 16.8
+            },
+            "nativeGameTime": 10.25,
+            "worker": "3e119507-993e-4818-ae19-c5ff10448540"
+          },
+          {
+            "id": "untouchedRecord",
+            "file": ".sc2mcp-output/project-tests/95589968-9a2c-489a-8961-e84719d9fbf1/scenario_untouchedRecord.json",
+            "sha256": "2ea076b0faa024781632366ab9d57b407713cae4ae3d324818a20a60391959ca",
+            "session": "b6022dd1dde9437ecca916d79379c017",
+            "status": "passed",
+            "expectedLife": 13,
+            "observedLife": 13,
+            "type": "Marine",
+            "position": {
+              "x": 32,
+              "y": 16.8
+            },
+            "nativeGameTime": 11.375,
+            "worker": "3e119507-993e-4818-ae19-c5ff10448540"
+          },
+          {
+            "id": "matrixLastIndex",
+            "file": ".sc2mcp-output/project-tests/95589968-9a2c-489a-8961-e84719d9fbf1/scenario_matrixLastIndex.json",
+            "sha256": "296d9d5c4228cf812234c0f71bd88aedaacce64139f1a4c5d13eaab4880a213c",
+            "session": "b6022dd1dde9437ecca916d79379c017",
+            "status": "passed",
+            "expectedLife": 31,
+            "observedLife": 31,
+            "type": "Marine",
+            "position": {
+              "x": 33.9199,
+              "y": 16.8
+            },
+            "nativeGameTime": 12.5,
+            "worker": "3e119507-993e-4818-ae19-c5ff10448540"
+          },
+          {
+            "id": "matrixControl",
+            "file": ".sc2mcp-output/project-tests/95589968-9a2c-489a-8961-e84719d9fbf1/scenario_matrixControl.json",
+            "sha256": "b559ffc765d76911d50039cee5fb5480b45460586f1fd7ec22bb07411cd5a6df",
+            "session": "b6022dd1dde9437ecca916d79379c017",
+            "status": "passed",
+            "expectedLife": 7,
+            "observedLife": 7,
+            "type": "Marine",
+            "position": {
+              "x": 35.8401,
+              "y": 16.8
+            },
+            "nativeGameTime": 13.625,
+            "worker": "3e119507-993e-4818-ae19-c5ff10448540"
+          },
+          {
+            "id": "deferredRootReference",
+            "file": ".sc2mcp-output/project-tests/95589968-9a2c-489a-8961-e84719d9fbf1/scenario_deferredRootReference.json",
+            "sha256": "43d8eccab222578cea1aafeeff8a0305135a93b76c9c167eeeb664a6986cd553",
+            "session": "b6022dd1dde9437ecca916d79379c017",
+            "status": "passed",
+            "expectedLife": 1140,
+            "observedLife": 1140,
+            "type": "CommandCenter",
+            "position": {
+              "x": 7.5,
+              "y": 6.5
+            },
+            "nativeGameTime": 14.75,
+            "worker": "3e119507-993e-4818-ae19-c5ff10448540"
+          },
+          {
+            "id": "unqualifiedRootFunction",
+            "file": ".sc2mcp-output/project-tests/95589968-9a2c-489a-8961-e84719d9fbf1/scenario_unqualifiedRootFunction.json",
+            "sha256": "9a3e6279487214bbba83839cea0470f60593a80b01405a843c314bc5ba4dd3e1",
+            "session": "b6022dd1dde9437ecca916d79379c017",
+            "status": "passed",
+            "expectedLife": 760,
+            "observedLife": 760,
+            "type": "Nexus",
+            "position": {
+              "x": 55.5,
+              "y": 6.5
+            },
+            "nativeGameTime": 15.875,
+            "worker": "3e119507-993e-4818-ae19-c5ff10448540"
+          },
+          {
+            "id": "exactlyFourMutations",
+            "file": ".sc2mcp-output/project-tests/95589968-9a2c-489a-8961-e84719d9fbf1/scenario_exactlyFourMutations.json",
+            "sha256": "aa51ce1fd6ae0367901fd22f08915bc0d1618fbd1293f643b01e0bbdce2f8cac",
+            "session": "b6022dd1dde9437ecca916d79379c017",
+            "status": "passed",
+            "expectedLife": 1200,
+            "observedLife": 1200,
+            "type": "Hatchery",
+            "position": {
+              "x": 7.5,
+              "y": 40.5
+            },
+            "nativeGameTime": 17,
+            "worker": "3e119507-993e-4818-ae19-c5ff10448540"
+          },
+          {
+            "id": "nestedRecordArray",
+            "file": ".sc2mcp-output/project-tests/95589968-9a2c-489a-8961-e84719d9fbf1/scenario_nestedRecordArray.json",
+            "sha256": "a79f941a091657a17896046d3f9234393997ccf4f7d402033c16ad5d6b0cabb0",
+            "session": "b6022dd1dde9437ecca916d79379c017",
+            "status": "passed",
+            "expectedLife": 1230,
+            "observedLife": 1230,
+            "type": "PlanetaryFortress",
+            "position": {
+              "x": 55.5,
+              "y": 40.5
+            },
+            "nativeGameTime": 18.125,
+            "worker": "3e119507-993e-4818-ae19-c5ff10448540"
+          }
+        ],
+        "capture": {
+          "file": ".sc2mcp-output/project-tests/95589968-9a2c-489a-8961-e84719d9fbf1/Game.png",
+          "sha256": "8815b57b806a31d8518fc0592b7d6dfb2681babdca1f5de0993b09b2a94280d0",
+          "deliveredImageSha256": "8815b57b806a31d8518fc0592b7d6dfb2681babdca1f5de0993b09b2a94280d0",
+          "review": "Viewed original PNG: two rows of Marine markers and their differing life bars are visible; some objects are clipped at the edge, terrain is sparse and no unit is selected. Technical fixture only; no command-card, animation or mission-art acceptance."
+        },
+        "cleanup": "passed",
+        "sourceAndPrivateCopyUnchanged": true,
+        "diagnostics": "Partial native sources; no unexpected errors observed in available sources, not an all-clear"
+      },
+      {
+        "jobId": "0e8aa8ee-f7be-4ebf-b7df-7ab65547f5b3",
+        "file": ".sc2mcp-output/project-tests/0e8aa8ee-f7be-4ebf-b7df-7ab65547f5b3/result.json",
+        "sha256": "23322c2cf218d3f4865bf2e69c1002956b2bd795efc842c0323a2fe8e10ee55c",
+        "outcome": "passed",
+        "sourceSha256": "6cfe7af4d2eab7f6003532c2bab93963ff22cdae9efaf6f25311e134a18ecab4",
+        "session": "5475ed0c452c604408ca052bf1539b11",
+        "worker": "3e119507-993e-4818-ae19-c5ff10448540",
+        "scenarios": [
+          {
+            "id": "library",
+            "file": ".sc2mcp-output/project-tests/0e8aa8ee-f7be-4ebf-b7df-7ab65547f5b3/scenario_library.json",
+            "sha256": "c77455fcfe2ed7818e664a6376cbf1f075e90886bdafaa94b3a3d9d4448a88d2",
+            "session": "5475ed0c452c604408ca052bf1539b11",
+            "status": "passed",
+            "expectedLife": 42,
+            "observedLife": 42,
+            "type": "Marine",
+            "position": {
+              "x": 28.1599,
+              "y": 14.3999
+            },
+            "nativeGameTime": 3.125,
+            "worker": "3e119507-993e-4818-ae19-c5ff10448540"
+          },
+          {
+            "id": "nested",
+            "file": ".sc2mcp-output/project-tests/0e8aa8ee-f7be-4ebf-b7df-7ab65547f5b3/scenario_nested.json",
+            "sha256": "0c48695a1c83eb4512d050776e6b1b1ae0f99f649d8e5bb7726bf335034987d2",
+            "session": "5475ed0c452c604408ca052bf1539b11",
+            "status": "passed",
+            "expectedLife": 37,
+            "observedLife": 37,
+            "type": "Marine",
+            "position": {
+              "x": 30.0801,
+              "y": 14.3999
+            },
+            "nativeGameTime": 4.25,
+            "worker": "3e119507-993e-4818-ae19-c5ff10448540"
+          },
+          {
+            "id": "record",
+            "file": ".sc2mcp-output/project-tests/0e8aa8ee-f7be-4ebf-b7df-7ab65547f5b3/scenario_record.json",
+            "sha256": "b57e00aae3dea4929f192068a12b122c2e8d75d931e183f626e9b39022f84810",
+            "session": "5475ed0c452c604408ca052bf1539b11",
+            "status": "passed",
+            "expectedLife": 31,
+            "observedLife": 31,
+            "type": "Marine",
+            "position": {
+              "x": 32,
+              "y": 14.3999
+            },
+            "nativeGameTime": 5.375,
+            "worker": "3e119507-993e-4818-ae19-c5ff10448540"
+          },
+          {
+            "id": "preset",
+            "file": ".sc2mcp-output/project-tests/0e8aa8ee-f7be-4ebf-b7df-7ab65547f5b3/scenario_preset.json",
+            "sha256": "25b63e4cba71f399dae9eddb6ab4169f57c4f620b9e55f6f51f7de06249f10ee",
+            "session": "5475ed0c452c604408ca052bf1539b11",
+            "status": "passed",
+            "expectedLife": 17,
+            "observedLife": 17,
+            "type": "Marine",
+            "position": {
+              "x": 33.9199,
+              "y": 14.3999
+            },
+            "nativeGameTime": 6.5,
+            "worker": "3e119507-993e-4818-ae19-c5ff10448540"
+          },
+          {
+            "id": "localArray",
+            "file": ".sc2mcp-output/project-tests/0e8aa8ee-f7be-4ebf-b7df-7ab65547f5b3/scenario_localArray.json",
+            "sha256": "be4acd3fa90445f55930fc949d12cdaa61428424487d59f238e45ec43bcfac61",
+            "session": "5475ed0c452c604408ca052bf1539b11",
+            "status": "passed",
+            "expectedLife": 31,
+            "observedLife": 31,
+            "type": "Marine",
+            "position": {
+              "x": 35.8401,
+              "y": 14.3999
+            },
+            "nativeGameTime": 7.625,
+            "worker": "3e119507-993e-4818-ae19-c5ff10448540"
+          },
+          {
+            "id": "scalarReference",
+            "file": ".sc2mcp-output/project-tests/0e8aa8ee-f7be-4ebf-b7df-7ab65547f5b3/scenario_scalarReference.json",
+            "sha256": "bcba13abe70f2c0601f01f7e87a3f00d766d4cf87982f2375f1934681ef7a265",
+            "session": "5475ed0c452c604408ca052bf1539b11",
+            "status": "passed",
+            "expectedLife": 23,
+            "observedLife": 23,
+            "type": "Marine",
+            "position": {
+              "x": 28.1599,
+              "y": 16.8
+            },
+            "nativeGameTime": 8.75,
+            "worker": "3e119507-993e-4818-ae19-c5ff10448540"
+          },
+          {
+            "id": "arrayElementReference",
+            "file": ".sc2mcp-output/project-tests/0e8aa8ee-f7be-4ebf-b7df-7ab65547f5b3/scenario_arrayElementReference.json",
+            "sha256": "2af198e8048ab765e2865cb813b632d2f5f8e8f6a27ac250d7cea4da17adc23b",
+            "session": "5475ed0c452c604408ca052bf1539b11",
+            "status": "passed",
+            "expectedLife": 37,
+            "observedLife": 37,
+            "type": "Marine",
+            "position": {
+              "x": 30.0801,
+              "y": 16.8
+            },
+            "nativeGameTime": 9.875,
+            "worker": "3e119507-993e-4818-ae19-c5ff10448540"
+          },
+          {
+            "id": "untouchedRecord",
+            "file": ".sc2mcp-output/project-tests/0e8aa8ee-f7be-4ebf-b7df-7ab65547f5b3/scenario_untouchedRecord.json",
+            "sha256": "3362cc8fb28176efe0aefb2fb4a76afd566543b14bfb8cd312e1958dddd8c45b",
+            "session": "5475ed0c452c604408ca052bf1539b11",
+            "status": "passed",
+            "expectedLife": 13,
+            "observedLife": 13,
+            "type": "Marine",
+            "position": {
+              "x": 32,
+              "y": 16.8
+            },
+            "nativeGameTime": 11,
+            "worker": "3e119507-993e-4818-ae19-c5ff10448540"
+          },
+          {
+            "id": "matrixLastIndex",
+            "file": ".sc2mcp-output/project-tests/0e8aa8ee-f7be-4ebf-b7df-7ab65547f5b3/scenario_matrixLastIndex.json",
+            "sha256": "d7369491b940fc208e60290440690900f8807bba78b67fe40201a7df04433bb4",
+            "session": "5475ed0c452c604408ca052bf1539b11",
+            "status": "passed",
+            "expectedLife": 31,
+            "observedLife": 31,
+            "type": "Marine",
+            "position": {
+              "x": 33.9199,
+              "y": 16.8
+            },
+            "nativeGameTime": 12.125,
+            "worker": "3e119507-993e-4818-ae19-c5ff10448540"
+          },
+          {
+            "id": "matrixControl",
+            "file": ".sc2mcp-output/project-tests/0e8aa8ee-f7be-4ebf-b7df-7ab65547f5b3/scenario_matrixControl.json",
+            "sha256": "231a7d29fd6b12ae9e0a4b82bb9a4b4ddf0a69f600da502715f4d09ad4e24e35",
+            "session": "5475ed0c452c604408ca052bf1539b11",
+            "status": "passed",
+            "expectedLife": 7,
+            "observedLife": 7,
+            "type": "Marine",
+            "position": {
+              "x": 35.8401,
+              "y": 16.8
+            },
+            "nativeGameTime": 13.25,
+            "worker": "3e119507-993e-4818-ae19-c5ff10448540"
+          },
+          {
+            "id": "deferredRootReference",
+            "file": ".sc2mcp-output/project-tests/0e8aa8ee-f7be-4ebf-b7df-7ab65547f5b3/scenario_deferredRootReference.json",
+            "sha256": "dfcec678c80e05493f1a0de88f97289ae97069b371fdde65d387e45841a3f200",
+            "session": "5475ed0c452c604408ca052bf1539b11",
+            "status": "passed",
+            "expectedLife": 1140,
+            "observedLife": 1140,
+            "type": "CommandCenter",
+            "position": {
+              "x": 7.5,
+              "y": 6.5
+            },
+            "nativeGameTime": 14.375,
+            "worker": "3e119507-993e-4818-ae19-c5ff10448540"
+          },
+          {
+            "id": "unqualifiedRootFunction",
+            "file": ".sc2mcp-output/project-tests/0e8aa8ee-f7be-4ebf-b7df-7ab65547f5b3/scenario_unqualifiedRootFunction.json",
+            "sha256": "c52d9b9b43494972605239f76173ba76e89be13e64dc42270297f61fabc40b45",
+            "session": "5475ed0c452c604408ca052bf1539b11",
+            "status": "passed",
+            "expectedLife": 760,
+            "observedLife": 760,
+            "type": "Nexus",
+            "position": {
+              "x": 55.5,
+              "y": 6.5
+            },
+            "nativeGameTime": 15.75,
+            "worker": "3e119507-993e-4818-ae19-c5ff10448540"
+          },
+          {
+            "id": "exactlyFourMutations",
+            "file": ".sc2mcp-output/project-tests/0e8aa8ee-f7be-4ebf-b7df-7ab65547f5b3/scenario_exactlyFourMutations.json",
+            "sha256": "9bd4d4a63fcc9441ff84c5aa26c537201deb058128f8e4a60d1e88122f752b9f",
+            "session": "5475ed0c452c604408ca052bf1539b11",
+            "status": "passed",
+            "expectedLife": 1200,
+            "observedLife": 1200,
+            "type": "Hatchery",
+            "position": {
+              "x": 7.5,
+              "y": 40.5
+            },
+            "nativeGameTime": 16.875,
+            "worker": "3e119507-993e-4818-ae19-c5ff10448540"
+          },
+          {
+            "id": "nestedRecordArray",
+            "file": ".sc2mcp-output/project-tests/0e8aa8ee-f7be-4ebf-b7df-7ab65547f5b3/scenario_nestedRecordArray.json",
+            "sha256": "add6b727bdaf6bf43f4a24c2727e6cafaf1c0760fa793b6bd0da01bf9d35fc29",
+            "session": "5475ed0c452c604408ca052bf1539b11",
+            "status": "passed",
+            "expectedLife": 1230,
+            "observedLife": 1230,
+            "type": "PlanetaryFortress",
+            "position": {
+              "x": 55.5,
+              "y": 40.5
+            },
+            "nativeGameTime": 18,
+            "worker": "3e119507-993e-4818-ae19-c5ff10448540"
+          }
+        ],
+        "capture": {
+          "file": ".sc2mcp-output/project-tests/0e8aa8ee-f7be-4ebf-b7df-7ab65547f5b3/Game.png",
+          "sha256": "8968d7f656ef35d78f0028ffbdd2f82aac825fc131d942727a389f1210eb6e1a",
+          "deliveredImageSha256": "8968d7f656ef35d78f0028ffbdd2f82aac825fc131d942727a389f1210eb6e1a",
+          "review": "Viewed original PNG: two rows of Marine markers and their differing life bars are visible; some objects are clipped at the edge, terrain is sparse and no unit is selected. Technical fixture only; no command-card, animation or mission-art acceptance."
+        },
+        "cleanup": "passed",
+        "sourceAndPrivateCopyUnchanged": true,
+        "diagnostics": "Partial native sources; no unexpected errors observed in available sources, not an all-clear"
+      }
+    ]
+  },
+  "retainedFailures": {
+    "nativeRuns": [
+      {
+        "jobId": "16d12b3f-34aa-4a80-9be4-d3f1bd61df17",
+        "kind": "native_life_regeneration",
+        "file": ".sc2mcp-output/project-tests/16d12b3f-34aa-4a80-9be4-d3f1bd61df17/result.json",
+        "sha256": "777e18e20683c3767e75c5b7d54611e850b2a052869b2c6a59022e076a7f9bb3",
+        "sourceSha256": "b06d606449e606e376a57bb9b2015c9ec5cddba8f2ddf795ce607f5cae08fe0d",
+        "failed": [
+          "game.ready"
+        ],
+        "samples": [
+          {
+            "type": "Hatchery",
+            "life": 1205.6226,
+            "gameTime": 21
+          }
+        ],
+        "cleanup": "passed"
+      },
+      {
+        "jobId": "981be137-4742-41eb-969d-d059880a49f6",
+        "kind": "native_life_regeneration",
+        "file": ".sc2mcp-output/project-tests/981be137-4742-41eb-969d-d059880a49f6/result.json",
+        "sha256": "9a80569ce0c1ac8d68da008821a33b49a5f99b71ea29deee9bcda5334324eb05",
+        "sourceSha256": "b06d606449e606e376a57bb9b2015c9ec5cddba8f2ddf795ce607f5cae08fe0d",
+        "failed": [
+          "game.ready"
+        ],
+        "samples": [
+          {
+            "type": "Hatchery",
+            "life": 1205.4175,
+            "gameTime": 20.25
+          }
+        ],
+        "cleanup": "passed"
+      },
+      {
+        "jobId": "a6819802-d868-4c28-bf40-d3fabb3c0414",
+        "kind": "building_search_did_not_cover_native_snap",
+        "file": ".sc2mcp-output/project-tests/a6819802-d868-4c28-bf40-d3fabb3c0414/result.json",
+        "sha256": "e4c4841d11076357b5453f8433ca33c183f584d20fd4a71f0757dc0daad54b1d",
+        "sourceSha256": "569dbe3533bbd32ffde04365318fb4dcb1ab5edf90524a3b562a2b722b4df49a",
+        "failed": [
+          "scenario:unqualifiedRootFunction",
+          "scenario:nestedRecordArray"
+        ],
+        "samples": [
+          {
+            "id": "unqualifiedRootFunction",
+            "found": []
+          },
+          {
+            "id": "nestedRecordArray",
+            "found": []
+          }
+        ],
+        "cleanup": "passed"
+      },
+      {
+        "jobId": "0358e11b-a45f-48d3-b774-57862386e6a7",
+        "kind": "building_search_did_not_cover_native_snap",
+        "file": ".sc2mcp-output/project-tests/0358e11b-a45f-48d3-b774-57862386e6a7/result.json",
+        "sha256": "6907439e030e646315899e32631d0d9620fb9421dde736a9d82d0ed14fceaf4e",
+        "sourceSha256": "569dbe3533bbd32ffde04365318fb4dcb1ab5edf90524a3b562a2b722b4df49a",
+        "failed": [
+          "scenario:unqualifiedRootFunction",
+          "scenario:nestedRecordArray"
+        ],
+        "samples": [
+          {
+            "id": "unqualifiedRootFunction",
+            "found": []
+          },
+          {
+            "id": "nestedRecordArray",
+            "found": []
+          }
+        ],
+        "cleanup": "passed"
+      },
+      {
+        "jobId": "5f4cb1f2-a9f1-4e4d-8cb4-8503cf7a6fd5",
+        "kind": "Nexus_life_clamped_at_750",
+        "file": ".sc2mcp-output/project-tests/5f4cb1f2-a9f1-4e4d-8cb4-8503cf7a6fd5/result.json",
+        "sha256": "ae3452907a83a95649c96174ba61bbb1baff192b2f6ad367a8003d122b8884a6",
+        "sourceSha256": "569dbe3533bbd32ffde04365318fb4dcb1ab5edf90524a3b562a2b722b4df49a",
+        "failed": [
+          "scenario:unqualifiedRootFunction"
+        ],
+        "samples": [
+          {
+            "id": "unqualifiedRootFunction",
+            "found": [
+              {
+                "type": "Nexus",
+                "life": 750,
+                "position": {
+                  "x": 55.5,
+                  "y": 6.5
+                }
+              }
+            ]
+          }
+        ],
+        "cleanup": "passed"
+      },
+      {
+        "jobId": "1a56a50f-2c58-49b6-8ecb-70975a6517f1",
+        "kind": "Nexus_life_clamped_at_750",
+        "file": ".sc2mcp-output/project-tests/1a56a50f-2c58-49b6-8ecb-70975a6517f1/result.json",
+        "sha256": "4a7da6982fdbb6558dd8062d5137ea716823f16edbc0b14a8f138a550b21a50b",
+        "sourceSha256": "569dbe3533bbd32ffde04365318fb4dcb1ab5edf90524a3b562a2b722b4df49a",
+        "failed": [
+          "scenario:unqualifiedRootFunction"
+        ],
+        "samples": [
+          {
+            "id": "unqualifiedRootFunction",
+            "found": [
+              {
+                "type": "Nexus",
+                "life": 750,
+                "position": {
+                  "x": 55.5,
+                  "y": 6.5
+                }
+              }
+            ]
+          }
+        ],
+        "cleanup": "passed"
+      }
+    ],
+    "staticAuthoring": {
+      "file": "work/launch-diagnostics-20261022/reference-map-author-1.log",
+      "sha256": "6b623fe11af30eb86e37b4fe5b698a40f0cca282bd582e5cd61a7e95a50071fd",
+      "reason": "Initial bounded Galaxy validator rejected a correct structure lvalue passed to structref<T>; production validator and regression tests fixed before native runs"
+    },
+    "staticManifest": {
+      "file": "work/launch-diagnostics-20261022/reference-stable-footprint-game-1.log",
+      "sha256": "684e9b7ec975664e91070fbf2f80ffa1e6c01c5840f3dc8b664b07539fd70500",
+      "reason": "Overlong label rejected at plan schema before game launch; shorter new manifest retained"
+    },
+    "corrections": "Each input/archive revision is separate. No failed run relabeled as passed; exact life values and one-unit uniqueness remain required.",
+    "observedBuildingSnap": {
+      "Nexus": {
+        "x": 55.5,
+        "y": 6.5
+      },
+      "PlanetaryFortress": {
+        "x": 55.5,
+        "y": 40.5
+      },
+      "authoredX": 55.04,
+      "source": "Native find/inspect readback in both accepted runs; source Objects unchanged"
+    }
+  },
+  "regressions": {
+    "tests": 1452,
+    "pass": 1451,
+    "skip": 1,
+    "fail": 0,
+    "report": {
+      "file": "work/publication/publish-latest-full-20261023.tap",
+      "sha256": "601f33fcee5fea0604c43efaf9b1986b8cfb7ba55ecd9777909ff47b4c711e64"
+    },
+    "focused": 45,
+    "focusedReport": {
+      "file": "work/publication/publish-latest-focused-20261023.tap",
+      "sha256": "76cf4f7078d71518233d795243c43ab4e4b8001a61fed60c5817035287684b66"
+    },
+    "build": true,
+    "releaseBuild": true,
+    "lint": true
+  },
+  "privacy": {
+    "passed": true,
+    "checkedFiles": 9977,
+    "privateSourceFiles": 1113,
+    "privateCorpusCompared": true,
+    "violations": [],
+    "scope": "Explicit private paths/debug/test artifacts and exact external C++/Python/Galaxy source copies, including renamed files. Not proof against transformed snippets or binary reverse engineering."
+  },
+  "privateSdkModified": false,
+  "privateRuntimeBundled": false,
+  "published": false,
+  "openCoverage": [
+    "Original registration save/reopen handler457436bb-0dcc-48e1-abc7-907e91a7511d remains separate and unaccepted",
+    "External library implementations, cyclic inline initialization and local unit-reference parameters remain unsupported profiles",
+    "Broader callback/reference/type and original-Editor differential corpus remains open; two launches are scoped evidence",
+    "Native navigation/buildability, general startup matrix, whole-location fixtures and final gameplay/UI/art review remain required",
+    "Diagnostics remain partial; these health markers and sparse technical screenshots do not certify visual ability playback or mission quality"
+  ]
+}

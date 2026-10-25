@@ -12,6 +12,7 @@ import {StringTableDocument} from "../text/stringTable.js";
 import {projectPath} from "../../app/paths.js";
 import {describeFunction, renderCalls, registry, registryDigest, registrySourceDigest, digest, encode, type GuiRequest, type GuiText, functionSupport, registrationSupport, inspectGuiVariables, validateGuiRequestSize, collectGuiValues, inspectGuiFunctions, withGuiFunctions, resolveFunction} from './authoring.js';
 import {triggerPlanSchema} from './schemas.js';
+import {nativeGuiProfile} from './nativeProfile.js';
 import {declareVariables} from './variables.js';
 import {declareGuiTypes} from './declarations.js';
 import {declareFunctions,populateFunctions} from './functions.js';
@@ -296,7 +297,7 @@ export class TriggerWorkspace {
   async validate() {
     const {text}=await this.workspace.readRaw('Triggers');const g=graph(text);
     const issues=g.elements.flatMap(e=>g.refs(e).filter(r=>r.library===e.library&&!g.byKey.has(r.key)).map(r=>({code:'TRIGGER_DANGLING_REFERENCE',key:r.key,offset:r.node.start})));
-    return {valid:issues.length===0,issues,scope:'XML and local typed graph (not a compiler)',externalLibraries:[...new Set(g.elements.flatMap(e=>g.refs(e).filter(r=>r.library!==e.library).map(r=>r.library)))],compiler:'NOT_EXECUTED'};
+    return {valid:issues.length===0,issues,nativeProfile:nativeGuiProfile(text,g.parsed),scope:'XML and local typed graph (not a compiler)',externalLibraries:[...new Set(g.elements.flatMap(e=>g.refs(e).filter(r=>r.library!==e.library).map(r=>r.library)))],compiler:'NOT_EXECUTED'};
   }
   private async catalogRevision(values?:Array<{domain:string;id:string}>) {
     const records=await this.data.catalog();
@@ -396,7 +397,7 @@ export class TriggerWorkspace {
     this.plans.set(planId,{before:digest(before),xml,schema:registryDigest(registry(this.registryFile)),schemaFile:registrySourceDigest(this.registryFile),root:this.workspace.root,strings,stringRevisions,catalogRevision,objectsRevision,libraryRevision:libraryContext.revision,needsCatalogs:gamelinks.length>0});
     while(this.plans.size>32||[...this.plans.values()].reduce((bytes,p)=>bytes+Buffer.byteLength(p.xml)+[...p.strings.values()].reduce((n,s)=>n+Buffer.byteLength(s),0),0)>32*1024*1024)this.plans.delete(this.plans.keys().next().value!);
     if(!this.plans.has(planId))throw new Error('GUI_PLAN_BYTE_LIMIT');
-    return {planId,revision:digest(before),triggerId:target,variables:declared.variables,functions:headers.functions,presets:userTypes.presets,structures:userTypes.structures,definitionEditorValidation:headers.functions.length?'NOT_EXECUTED':undefined,customEventEditorValidation:headers.functions.some(f=>f.kind==='Event')?'NOT_EXECUTED':undefined,calls:request.calls.length,events:request.calls.filter(c=>c.kind==='Event').length,conditions:request.calls.filter(c=>c.kind==='Condition').length,actions:request.calls.filter(c=>c.kind==='Action'||c.kind==='Registration').length,registrations:request.calls.filter(c=>c.kind==='Registration').length,libraryContext:{libraries:libraryContext.libraries,cacheHit:libraryContext.cacheHit,build:libraryContext.build},customResourceLibraryCreated:false,localizedTextValues:texts.length,catalogValidation:'Local/declared-dependency definition identities; engine activation is not certified',sourceOfTruth:'Triggers',regenerateGalaxyInEditor:true,compiler:'NOT_EXECUTED'};
+    return {planId,nativeProfile:nativeGuiProfile(xml,result.parsed),revision:digest(before),triggerId:target,variables:declared.variables,functions:headers.functions,presets:userTypes.presets,structures:userTypes.structures,definitionEditorValidation:headers.functions.length?'NOT_EXECUTED':undefined,customEventEditorValidation:headers.functions.some(f=>f.kind==='Event')?'NOT_EXECUTED':undefined,calls:request.calls.length,events:request.calls.filter(c=>c.kind==='Event').length,conditions:request.calls.filter(c=>c.kind==='Condition').length,actions:request.calls.filter(c=>c.kind==='Action'||c.kind==='Registration').length,registrations:request.calls.filter(c=>c.kind==='Registration').length,libraryContext:{libraries:libraryContext.libraries,cacheHit:libraryContext.cacheHit,build:libraryContext.build},customResourceLibraryCreated:false,localizedTextValues:texts.length,catalogValidation:'Local/declared-dependency definition identities; engine activation is not certified',sourceOfTruth:'Triggers',regenerateGalaxyInEditor:true,compiler:'NOT_EXECUTED'};
   }
   async applyPlan(planId:string,dryRun=true,stage=true) {
     const plan=this.plans.get(planId);if(!plan)throw new Error('GUI_PLAN_NOT_FOUND');

@@ -101,6 +101,52 @@ test("CASC mounted catalog bytes are real read-only dependency input to Data and
  await assert.rejects(casc.restoreMounts(), /VIEW_CORRUPTED/);
 });
 
+test("CASC dependency order and browse identity survive the first mount and a fresh session", async t => {
+ const f=await fixture(t),second='mods/void.sc2mod';
+ f.backend.files.set(second+'/base.sc2data/gamedata/unitdata.xml',Buffer.from('<Catalog><CUnit id="VoidProbe"><LifeMax value="60"/></CUnit></Catalog>'));
+ f.backend.files.set(second+'/base.sc2data/gamedata.xml',Buffer.from('<Includes><Catalog path="GameData/unitdata.xml"/></Includes>'));
+ f.backend.files.set(second+'/documentinfo',Buffer.from('<DocInfo><Dependencies><Value>file:Mods/Core.SC2Mod</Value></Dependencies></DocInfo>'));
+ await fs.writeFile(path.join(f.workspaceRoot,'DocumentInfo'),'<DocInfo><Dependencies><Value>file:Mods/Void.SC2Mod</Value></Dependencies></DocInfo>');
+ const make=()=>{const workspace=new Workspace(f.workspaceRoot),data=new DataWorkspace(workspace),browse=new BrowseWorkspace(workspace,data),roots:string[]=[];
+  const casc=new CascWorkspace(f.workspaceRoot,{install:f.install,backendFactory:()=>f.backend,onMount:root=>{roots.push(root);data.addDependencyRoot(root);browse.addDependencyRoot(root);}});t.after(()=>casc.close());return {browse,casc,roots};};
+ const first=make();await first.casc.mount([second,'mods/core.sc2mod'],['catalogs'],[],12);
+ const before=await first.browse.status();
+ assert.equal((await first.browse.resolve({id:'Probe',catalogType:'Unit'})).dependencyReady,true);
+ assert.equal((await first.browse.resolve({id:'VoidProbe',catalogType:'Unit'})).dependencyReady,true);
+ const fresh=make();await fresh.casc.restoreMounts();
+ assert.deepEqual(fresh.roots,first.roots);
+ assert.equal((await fresh.browse.status()).fingerprint,before.fingerprint);
+ assert.equal((await fresh.browse.resolve({id:'Probe',catalogType:'Unit'})).dependencyReady,true);
+ assert.equal((await fresh.browse.resolve({id:'VoidProbe',catalogType:'Unit'})).dependencyReady,true);
+ await fresh.casc.mount(['mods/core.sc2mod',second],['catalogs'],[],12);
+ assert.deepEqual(fresh.roots,first.roots,'remounting existing packages must not reorder dependencies');
+ assert.equal((await fresh.browse.status()).fingerprint,before.fingerprint);
+});
+
+test('CASC legacy manifests retain their established order and reject invalid ordinals before registration',async t=>{
+ const f=await fixture(t),second='mods/void.sc2mod';f.backend.files.set(second+'/base.sc2data/gamedata/unitdata.xml',Buffer.from('<Catalog><CUnit id="VoidProbe"/></Catalog>'));
+ await f.casc.mount([second,'mods/core.sc2mod'],['catalogs'],[],12);
+ const directory=path.join(f.casc.cacheRoot,'a'.repeat(32),'mounts'),names=(await fs.readdir(directory)).sort(),expected:string[]=[];
+ for(const name of names){const file=path.join(directory,name),record=JSON.parse(await fs.readFile(file,'utf8'));delete record.registrationOrder;expected.push(record.root);await fs.writeFile(file,JSON.stringify(record));}
+ const roots:string[]=[],legacy=new CascWorkspace(f.workspaceRoot,{install:f.install,backendFactory:()=>f.backend,onMount:root=>roots.push(root)});t.after(()=>legacy.close());
+ await legacy.restoreMounts();assert.deepEqual(roots,expected);
+ for(const [i,name]of names.entries())assert.equal(JSON.parse(await fs.readFile(path.join(directory,name),'utf8')).registrationOrder,i);
+ await legacy.mount([second,'mods/core.sc2mod'],['catalogs'],[],12);assert.deepEqual(roots,expected);
+ const freshRoots:string[]=[],fresh=new CascWorkspace(f.workspaceRoot,{install:f.install,backendFactory:()=>f.backend,onMount:root=>freshRoots.push(root)});t.after(()=>fresh.close());await fresh.restoreMounts();assert.deepEqual(freshRoots,expected);
+ const file=path.join(directory,names[0]),record=JSON.parse(await fs.readFile(file,'utf8'));
+ for(const order of [-1,1.5,2,1]){
+  record.registrationOrder=order;await fs.writeFile(file,JSON.stringify(record));let registrations=0;
+  const invalid=new CascWorkspace(f.workspaceRoot,{install:f.install,backendFactory:()=>f.backend,onMount:()=>registrations++});t.after(()=>invalid.close());await assert.rejects(invalid.restoreMounts(),/MOUNT_ORDER_INVALID/);assert.equal(registrations,0);
+ }
+});
+
+test('CASC concurrent mount, ensure and restore preserve one registration sequence',async t=>{
+ const f=await fixture(t),second='mods/void.sc2mod';f.backend.files.set(second+'/base.sc2data/gamedata/unitdata.xml',Buffer.from('<Catalog><CUnit id="VoidProbe"/></Catalog>'));
+ const [mounted,ensured,restored]=await Promise.all([f.casc.mount(['mods/core.sc2mod'],['catalogs'],[],12),f.casc.ensurePackage(second,['catalogs'],[]),f.casc.restoreMounts()]);
+ assert.equal(mounted.reports[0].status,'MOUNTED');assert.equal(ensured.cacheHit,false);assert.deepEqual(restored,f.mounted);assert.equal(f.mounted.length,2);
+ const roots:string[]=[],fresh=new CascWorkspace(f.workspaceRoot,{install:f.install,backendFactory:()=>f.backend,onMount:root=>roots.push(root)});t.after(()=>fresh.close());await fresh.restoreMounts();assert.deepEqual(roots,f.mounted);
+});
+
 test("CASC mount limits and partial payloads do not register incomplete roots", async t => {
  const { casc, mounted, backend } = await fixture(t); await assert.rejects(casc.mount(["mods/core.sc2mod"], ["catalogs"], [], 1), /FILE_COUNT_BUDGET/); assert.equal(mounted.length, 0);
  backend.unavailable.add(file); const report = await casc.mount(["mods/core.sc2mod"], ["catalogs"], [], 5); assert.equal(report.reports[0].status, "PARTIAL_NOT_MOUNTED"); assert.equal(mounted.length, 0);

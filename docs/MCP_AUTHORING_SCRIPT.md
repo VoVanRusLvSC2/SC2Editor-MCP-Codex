@@ -44,6 +44,14 @@ the selected lifecycle. `logic file` creates a source file; `logic body` replace
 one function body. GUI authoring is explicit: `gui plan file=plans/mission.json`
 or `trigger.plan`. There is no automatic Galaxy-to-GUI conversion.
 
+Native handle types from the pinned API also participate in bounded local
+declaration checks. Names such as `marker`, `timer` and `wave` are reserved type
+identifiers, including when the local variable itself has type `unit` or `point`.
+Use distinct local names. Known handle assignments, call arguments and return
+types are checked; aliases, arrays, references and the full target grammar retain
+their explicit partial-coverage status. A successful structural plan still needs
+target compilation for native readiness.
+
 `project organize` creates a genre-based system scaffold and ownership manifest.
 Mission systems are FUNCTIONS, MAIN, GAMEPLAY, OBJECTIVES and CINEMATICS. Existing
 source files remain intact. The scaffold does not activate itself in InitMap.
@@ -63,6 +71,37 @@ Other aliases include `map status/check/preview`, `terrain paint/blend/cliff/ram
 Use `modkit.author_help` for the current command list and original module schemas
 for detailed arguments. Limits: 64 KiB source and 20 underlying MCP steps.
 
+`terrain ramp.place` accepts `bounds=minX,minY,maxX,maxY` and
+`offset=x,y` (or explicit `offsetX`/`offsetY`, never both forms). For example:
+
+```text
+terrain ramp.place donorDirectory=Donor rampIndex=2 bounds=96,14,128,42 offset=-80,0 cliffSetIndex=1
+```
+
+Plan mode returns a guarded joined-ramp plan. Stage mode adds
+`terrain.modkit.apply`; save mode also saves the complete transaction through
+`modkit.save`. The default `adjoining=prepare_closed` prepares measured enclosed
+high landings on clear flat ground; `adjoining=verify` checks existing landings.
+Both retain native rendering/navigation as separate acceptance checks. The
+older `terrain ramp` alias still uses the measured cardinal ramp creator.
+
 The workflow profile exposes compact entry points while retaining other tools
 for hidden dispatch and explicit activation. Restart the MCP process after
 updating the server. Offline validation does not certify SC2 engine behavior.
+
+
+### Existing landscape refinement
+
+`terrain landscape.inspect` lists bounded owned-zone summaries. Select
+`zone=west_trees field=terrain.materials` or page array values using
+`itemOffset`/`itemLimit`; measured members use `field=groups group=relay`.
+The returned `requestHash` is required by
+`terrain landscape.zone zone=west_trees expectedRequestHash=<hash> changes.config.clusterRadius=8`.
+The alias invokes `terrain.landscape.zone.plan`; stage/save follows the existing
+Terrain apply/save transaction. Only config and terrain merge. Arrays and other
+objects replace whole fields; do not submit a truncated inspection page as a
+complete replacement. See [owned-zone refinement](LANDSCAPE_OWNERSHIP.md).
+
+`project quality.plan` is a direct read-only planning command. It prepares a
+bounded review plan and does not start Editor or game jobs. Explicit suite
+execution remains `project.test.run` in stage mode.

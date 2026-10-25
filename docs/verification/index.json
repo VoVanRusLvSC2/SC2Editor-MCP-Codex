@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "recordedAt": "2026-10-23T00:51:55.774Z",
+  "recordedAt": "2026-10-25T13:24:33.172Z",
   "scope": "Inventory of retained records and explicit roadmap coverage. This does not supersede native observations or refresh historical source fingerprints.",
   "records": [
     {
@@ -182,6 +182,288 @@
       "file": "docs/verification/inline-library-runtime-2026-10-23.json",
       "role": "scoped",
       "sha256": "394b15476976ffb5d396b2615fa9b8ae719f12be49134ed320bee09ea8da15fd"
+    },
+    {
+      "id": "native_gui_references",
+      "file": "docs/verification/native-gui-references-2026-10-23.json",
+      "role": "scoped",
+      "sha256": "14cc55ec2fb0dce66c15cf158228ee13a87d32e3b98999a2d6c197eb35a40e3d"
+    },
+    {
+      "id": "landscape_migration",
+      "file": "docs/verification/landscape-migration-2026-10-23.json",
+      "role": "scoped",
+      "sha256": "d9620d7652443f423e6efb20790c7800efb581915065e9a46d2f19b540beb88a"
+    },
+    {
+      "id": "asset_index",
+      "file": "docs/verification/asset-index-2026-10-23.json",
+      "role": "scoped",
+      "sha256": "8a7c184389340eb7e4be257fdc97d68f6cca5ca2eddebe95a0df31c0d6824be7"
+    },
+    {
+      "id": "native_gui_reopen",
+      "file": "docs/verification/native-gui-reopen-2026-10-23.json",
+      "role": "scoped",
+      "sha256": "20eb3496beeca9389990f1f906ca45cd86bd6ddd6c34205491d96cb8577dbe7d"
+    },
+    {
+      "id": "casc_order",
+      "file": "docs/verification/casc-order-2026-10-23.json",
+      "role": "scoped",
+      "sha256": "981ac564eed46b107b8634d0ad9451fd2fa1952a78ecd3f97c7a80393c063e65"
+    },
+    {
+      "id": "native_gui_type_bounds",
+      "file": "docs/verification/native-gui-type-bounds-2026-10-23.json",
+      "sha256": "9f2ae865ba6c3b680824f8b197f34183f4ff57c8dce2abedcf2d75feefaf21dd",
+      "role": "scoped"
+    },
+    {
+      "id": "test_storage_preflight",
+      "file": "docs/verification/test-storage-preflight-2026-10-23.json",
+      "role": "scoped",
+      "sha256": "14cc546004d432ba70f4cbbb57c2c5cd81ac5665fccd8313004578c8e40dbca0"
+    },
+    {
+      "id": "native_storage",
+      "file": "docs/verification/native-storage-2026-10-23.json",
+      "role": "scoped",
+      "sha256": "0c5381414f52542ec33e8a886e81cf0309b6d99ff6435c5c5620ba2bc8b1bc82"
+    },
+    {
+      "id": "native_ramp_sync_labels",
+      "file": "docs/verification/native-ramp-sync-labels-2026-10-23.json",
+      "role": "scoped",
+      "sha256": "9a4c58994b3210142d0c1ca6246139d33822e7567b3f8af981a9773cafffceeb"
+    },
+    {
+      "id": "native_saddles_sync_labels",
+      "file": "docs/verification/native-saddles-sync-labels-2026-10-23.json",
+      "role": "scoped",
+      "sha256": "2c21e2f97c72cec5bd17f292b63f8aa80d391bea8b5d141f4b15a7eeff74de69"
+    },
+    {
+      "id": "location_clusters_schema_identity",
+      "file": "docs/verification/location-clusters-schema-identity-2026-10-23.json",
+      "role": "scoped",
+      "sha256": "eb7dfa06c9c45463aece46affa929a7d603b662a9231ac9f6535bfe8e884175b"
+    },
+    {
+      "id": "native_compile_context_preflight",
+      "file": "docs/verification/native-compile-context-preflight-2026-10-23.json",
+      "role": "scoped",
+      "sha256": "b63779052c9d1676a91696b4dfc7d3cd4142594a8cc1af029cedb4cbc8fc21b8"
+    },
+    {
+      "id": "decor_supply_condition",
+      "file": "docs/verification/decor-supply-condition-2026-10-24.json",
+      "role": "scoped",
+      "sha256": "85e91a16b87df7d4cd3f1d56a28a8726b256be5ec8cb1650aad250828729db51"
+    },
+    {
+      "id": "native_editor_012_filters",
+      "file": "docs/verification/native-editor-012-filters-2026-10-24.json",
+      "role": "scoped",
+      "sha256": "b84d016e8bf0fe89b2513709b9358e0f541160b49f15117d00616b2c3891906d"
+    },
+    {
+      "id": "native_012_forest_gui_game",
+      "file": "docs/verification/native-012-forest-gui-game-2026-10-24.json",
+      "role": "scoped",
+      "sha256": "1f7f262dc5cb98c8b454d147dda471be4135cfe27bf254359f4ed992173cdc53"
+    },
+    {
+      "id": "concurrent_ground_groups",
+      "file": "docs/verification/concurrent-ground-groups-2026-10-24.json",
+      "role": "scoped",
+      "sha256": "a6b718b3802b12c234b623af52fe94bd02f8251b6fbb071dfbaec274d4ba3a0f"
+    },
+    {
+      "id": "native_ramp_enum",
+      "file": "docs/verification/native-ramp-enum-2026-10-24.json",
+      "role": "scoped",
+      "sha256": "94f1f126ba10e0880a234d84415553d0bbe7f95ef8454795245eb4a82d4761bf"
+    },
+    {
+      "id": "forest_material_patterns",
+      "file": "docs/verification/forest-material-patterns-2026-10-24.json",
+      "role": "scoped",
+      "sha256": "e58547ff780e61f385e2aa642a89cb52e4a069848fbab7b57a84ec25732b0f93"
+    },
+    {
+      "id": "native_013_handoff",
+      "file": "docs/verification/native-editor-013-handoff-2026-10-24.json",
+      "role": "scoped",
+      "sha256": "a9fc4c568955f4d200ccab8ecf9a3db6501bc7e29d60e60f22fb617a1c3636bf"
+    },
+    {
+      "id": "native_013_guarded_jobs",
+      "file": "docs/verification/native-editor-013-guarded-jobs-2026-10-24.json",
+      "role": "scoped",
+      "sha256": "0f73370e1fc362c42fb9779974bef4bcd5836df43c4559a3c24b053ca6debdf2"
+    },
+    {
+      "id": "native_013_terminal_errors",
+      "file": "docs/verification/native-editor-013-terminal-errors-2026-10-24.json",
+      "role": "scoped",
+      "sha256": "6a9e695378885eb1a35ed1d81f8232ebd21a277c37c995ef4b0c2e6aec42534c"
+    },
+    {
+      "id": "native_regional_lifecycle_013",
+      "file": "docs/verification/native-regional-lifecycle-013-2026-10-24.json",
+      "role": "scoped",
+      "sha256": "f181c77cdbcd905497298245f2f00d775de3c9ba3372b8f7cfdbef1d13c23555"
+    },
+    {
+      "id": "native_regional_framing",
+      "file": "docs/verification/native-regional-framing-2026-10-24.json",
+      "role": "scoped",
+      "sha256": "6c663d96f4a1f7d75198c9441ccfd7e7166cdf7969a7ab418de55c673ab17146"
+    },
+    {
+      "id": "native_data_document_reuse",
+      "file": "docs/verification/native-data-document-reuse-2026-10-24.json",
+      "role": "scoped",
+      "sha256": "b95ee05a7ce6be482c2ed5cb51076212e1d6ef07690e03d015a61b1439a2649e"
+    },
+    {
+      "id": "native_data_source_return",
+      "file": "docs/verification/native-data-source-return-2026-10-24.json",
+      "role": "scoped",
+      "sha256": "f4aa15b82c7d2414123241459143293cc7c58bbde8c48dcfbdd95215e31f2ecb"
+    },
+    {
+      "id": "native_gui_adoption_013",
+      "file": "docs/verification/native-gui-adoption-013-2026-10-24.json",
+      "role": "scoped",
+      "sha256": "e75b1a964fc3ba18777b42bb59fcdf80c73ad91457f92f568dfbdb63ccd189d3"
+    },
+    {
+      "id": "native_target_height_clearing",
+      "file": "docs/verification/native-target-height-clearing-2026-10-24.json",
+      "role": "scoped",
+      "sha256": "159da60b12cc4217ff9df6b1ff1e226a86b538f452560b5e6144809357a15936"
+    },
+    {
+      "id": "native_placement_variations",
+      "file": "docs/verification/native-placement-variations-2026-10-24.json",
+      "role": "scoped",
+      "sha256": "e9ee06bdca19b94dc59e2547b180ed6e68ff1627094c54f2e93dcb6a965787c6"
+    },
+    {
+      "id": "native_runtime_ergonomics_style_review",
+      "file": "docs/verification/native-runtime-ergonomics-style-review-2026-10-24.json",
+      "role": "scoped",
+      "sha256": "93bb530118c6f0dab58a8d24f48f7f812656157ec10775d3cf0d0a23943767f6"
+    },
+    {
+      "id": "native_landscape_route_source",
+      "file": "docs/verification/native-landscape-route-source-2026-10-24.json",
+      "role": "scoped",
+      "sha256": "50fc73046863303ada89041f272e7fccdfd4200d81db344a0e375891f56780ad"
+    },
+    {
+      "id": "native_movement_clocks",
+      "file": "docs/verification/native-movement-clocks-2026-10-24.json",
+      "role": "scoped",
+      "sha256": "ac8eadd52c9d1e19ecf398d01936da6fc7a2595852a1001bc3a8b57b40348a51"
+    },
+    {
+      "id": "native_placement_probe_and_handles",
+      "file": "docs/verification/native-placement-probe-and-handles-2026-10-24.json",
+      "role": "scoped",
+      "sha256": "1fc53a0e181da8e51c6ff95eb32179df4fd4c665cbda59ddd2c3b938c3c718dd"
+    },
+    {
+      "id": "native_placement_grid_power_creep",
+      "file": "docs/verification/native-placement-grid-power-creep-2026-10-24.json",
+      "role": "scoped",
+      "sha256": "9e05b5c68b713e13f4301371c60d9169bf1acf4ce4ba3c74b9760d28004b1a8b"
+    },
+    {
+      "id": "native_014_data_audit",
+      "file": "docs/verification/native-editor-014-data-audit-2026-10-24.json",
+      "role": "scoped",
+      "sha256": "08db3f3f81dfac36a0a6146a250297ed97fc3f91ad10d9aa89ae8e3a3b9db59c"
+    },
+    {
+      "id": "native_pad_query_adapter",
+      "file": "docs/verification/native-pad-query-adapter-2026-10-24.json",
+      "role": "scoped",
+      "sha256": "d4ac86923e3a501256e5d4fadb05efafb389afff4a2c4317d46302f756c303a5"
+    },
+    {
+      "id": "native_landscape_pad_source",
+      "file": "docs/verification/native-landscape-pad-source-2026-10-24.json",
+      "role": "scoped",
+      "sha256": "28dd04adbe0bd8371e73bb44e30e389f34506adb7a8a15e537b311b0c62d861f"
+    },
+    {
+      "id": "native_point_pathing_queries",
+      "file": "docs/verification/native-point-pathing-queries-2026-10-24.json",
+      "role": "scoped",
+      "sha256": "80e3e2fc4f0c4aa443063fb920a1eeb57a8cad113cfbd4028546837e9f1b969c"
+    },
+    {
+      "id": "native_legacy_donor_topology",
+      "file": "docs/verification/native-legacy-donor-topology-2026-10-25.json",
+      "role": "scoped",
+      "sha256": "531effbc11ea508beff2463aa9d6ab6c8b584dd61fdb916f3191ea726de60dda"
+    },
+    {
+      "id": "native_route_state",
+      "file": "docs/verification/native-route-state-2026-10-25.json",
+      "role": "scoped",
+      "sha256": "dea53c3664c276365f91600e59430ecbd8307a531a3de3c858e1210c6dfb4cbe"
+    },
+    {
+      "id": "native_ramp_join",
+      "file": "docs/verification/native-ramp-join-2026-10-25.json",
+      "role": "scoped",
+      "sha256": "544b4ba5dcf606bf738c9fb3cd8ace8e5e6b6e09158a0c7571235d31983e75b0"
+    },
+    {
+      "id": "native_quality_zone",
+      "file": "docs/verification/native-quality-zone-2026-10-25.json",
+      "role": "scoped",
+      "sha256": "ae230fb8b4adbc06d648b8731c3a41480c7dd0081495b063e15cb47eab7611b5"
+    },
+    {
+      "id": "native_editor_100_scoped",
+      "file": "docs/verification/native-editor-100-scoped-2026-10-25.json",
+      "role": "scoped",
+      "sha256": "80d9b1635e502520930045f9115052eb28b989b1574bd56ee3e33d50dd81ff26"
+    },
+    {
+      "id": "native_data_class_controls",
+      "file": "docs/verification/native-data-class-controls-2026-10-25.json",
+      "role": "scoped",
+      "sha256": "7e31cbf42845c4e98167a692d44a13164c2f2ed3e5a681d062d884c1f8515c3f"
+    },
+    {
+      "id": "native_core_index",
+      "file": "docs/verification/native-core-index-2026-10-25.json",
+      "role": "scoped",
+      "sha256": "3c6763b6a15f59e29f28fb9c9024584e75bf5fa8e5f2789dee479176cb4549c6"
+    },
+    {
+      "id": "native_final_style_functional",
+      "file": "docs/verification/native-final-style-functional-2026-10-25.json",
+      "role": "scoped",
+      "sha256": "2845896516b2aaa1a7578325c0926e41373316d77402bddde635828ce779b5aa"
+    },
+    {
+      "id": "native_learn_ui",
+      "file": "docs/verification/native-learn-ui-2026-10-25.json",
+      "role": "scoped",
+      "sha256": "5a77d0c17aa5274819deca52eb72b3784000622ccdcbbd5c6c2031fd0b839c94"
+    },
+    {
+      "id": "native_gui_matrix_current",
+      "file": "docs/verification/native-gui-matrix-current-2026-10-25.json",
+      "role": "scoped",
+      "sha256": "a5c86dc1a61d5da30c490caa59775931c380548edec51e1c67e26d5f92f8ac75"
     }
   ],
   "coverage": [
@@ -196,18 +478,45 @@
         "gui_native_roundtrip",
         "startup_history",
         "action_events",
-        "reusable_action_checks"
+        "reusable_action_checks",
+        "native_gui_reopen",
+        "native_gui_type_bounds",
+        "test_storage_preflight",
+        "native_storage",
+        "native_ramp_sync_labels",
+        "native_saddles_sync_labels",
+        "native_compile_context_preflight",
+        "native_012_forest_gui_game",
+        "concurrent_ground_groups",
+        "native_ramp_enum",
+        "forest_material_patterns",
+        "native_013_handoff",
+        "native_013_guarded_jobs",
+        "native_013_terminal_errors",
+        "native_regional_lifecycle_013",
+        "native_data_document_reuse",
+        "native_data_source_return",
+        "native_gui_adoption_013",
+        "native_target_height_clearing",
+        "native_placement_variations",
+        "native_runtime_ergonomics_style_review",
+        "native_landscape_route_source",
+        "native_movement_clocks",
+        "native_placement_probe_and_handles",
+        "native_legacy_donor_topology",
+        "native_route_state"
       ],
-      "reason": "Known Galaxy/GUI/Data/dependency fixtures, representative complex GUI native save/reopen and negative startup cases passed. Retained startup history and native callback-state readiness now pass twice on the unchanged events fixture. General startup stability remains incomplete; an earlier unexplained frontend exit and stalled native handler are retained. Reusable manifest actions additionally pass two unchanged archives and a separate128-fixture/three-page history run; these do not complete the general startup matrix."
+      "reason": "Known Galaxy/GUI/Data/dependency fixtures, representative complex GUI native save/reopen and negative startup cases passed. Retained startup history and native callback-state readiness now pass twice on the unchanged events fixture. General startup stability remains incomplete; an earlier unexplained frontend exit and stalled native handler are retained. Reusable manifest actions additionally pass two unchanged archives and a separate128-fixture/three-page history run; these do not complete the general startup matrix. New owned registration roundtrip now preserves40 saved/reopened components and passes native recompile plus six exact-state scenarios on the saved artifact. A separate14-scenario reference graph fails original compilation on an untyped structure variable; no native GUI acceptance is claimed for it. Qualified native GUI type/bound metadata now passes original Editor save/reopen and exact saved-artifact recompilation. A frozen installed MCP authors new numeric-zero bounds via dedicated zero constants for global/record-field/local arrays; two saved-artifact game launches pass14 unchanged scenarios each. All42 saved/reopened components match. Static risk review preserves the original failed imported library-to-map-global graph; wider imported/library/control semantics remain open. Current output-volume preflight blocks a known-insufficient actual K-volume budget through installed MCP before queueing; low-space changes are rechecked before runs and queued execution. This does not complete native launch/save stability. The current installed MCP rejects the pinned SDK's known overlong temporary-save layout before frontend startup and exposes explicit short private native storage with exact-worker saved-artifact reads. Native save/launch acceptance remains independent. The current corrected low-byte sync-label profile passes two exact native-saved/recompiled launches,16 independently audited Marine/Marauder traversals at0 sampled deviation within the unchanged1.75 corridor, and eight repeated native views. Terrain and GUI bytes are unchanged by native save; broader profiles remain unaccepted. A fresh current-label matrix now passes112 independently audited traversals:32 original-archive saddle-center crossings and80 exact native-saved cardinal-ramp crossings, with both diagonal orientations and levels1/2 and2/3. Six successful runs retain the same bridges;32 captures contain16 inspected distinct frames. A preceding readiness failure remains recorded. Broader topology/native startup and final art acceptance remain open. The reproduced empty-GUI missing-context compile request now blocks through installed MCP planning before worker startup, including the implicit compile after native_saved adoption. The original failed native run remains recorded; a supplied label is not pre-certified. Current314-object forest MAIN GUI variant now passes two Editor0.12 save/recompile/exact-saved game runs,24 independently audited Marine/Marauder traversals and8inspected views through retained bridges. Art/formation/broader capability findings remain open. Public formation suites and CLI now pass two reused-bridge launches,16three-member group passages/48independently audited member trajectories, two known ground footprints and both directions at gate/north-road. All16group frames inspected. Other topology/crowd/rigid-shape/presentation/art scopes remain open. A reproducible pinned ModKit0..7 enum fix now passes fresh v115 donor transfers in all four cardinal directions, two original Editor0.12 save/reopen/recompile/game launches and32 independently audited ordinary ground traversals at zero sampled deviation. Eight distinct native cap views reviewed, eight pixel-matched repeats. Optional game diagnostics, wider geometry and owned-location profiles remain open. Optional coherent material patches and separated forest groups now pass warm/fresh MCP no-ops, two exact Editor0.12 saved/recompiled Game runs,24 independently audited traversals and10 inspected frames. The292-object source preserves geometry and46 fixed objects; finished art and other styles remain open. Complete SDK0.13/protocol14 installation and26advertised schemas are discovered, with8new guarded methods still pending. Whole-map export after GUI compilation reproduces native error91 on both0.12 and0.13; explicit Terrain reopening passes once but fails on repeat. Fresh exports and ordinary switches pass, but no fix or complete current qualification is claimed. SDK 14 guarded methods now include actual original map compile, 198-field Marine Data with original strings, catalog-qualified links and main Model presence. A frozen 365-module package keeps status responsive during a legacy read after the 47.456s blocking reproduction. Remaining corpus, native export-settings refusal and final art/presentation gates stay open. Current frozen SDK14 terminal error flags now preserve known FAILED operations without requiring transport recovery. Four main-Model/unsupported-resource observations qualify individually, while the subsequent Unit XML read remains failed. Repeated explicit reads of the identical logical archive reproduce the empty XML; no general Data recovery is claimed. Current SDK14 restricted regional lifecycle now has six independently audited native-saved/recompiled Game runs; twelve detail frames pass and six overview framing findings stay open. This does not close the separate broader corpus/style/art requirement. Current frozen pure Data inspections now reuse a verified same-source private document while making fresh native calls. The exact three-read same-source case and five-case resource sequence qualify; a different73-life source is read correctly, but return to Healthy still fails original XML identity. No general reopen repair is claimed. The current package also verifies explicit same-source Explorer links. A separate five-open/read source-transition control confirms native loads but reproduces both base-source XML return failures; formal opening is not treated as a fix. Current unchanged 365-module package additionally adopts original SDK14-generated runtime through guarded trigger.import_revised. Three stale/foreign requests reject without source mutation; dry-run/staging preserve source, save changes only MapScript.galaxy, and repeated import/save is byte-identical. Two exact native-saved/recompiled Game runs pass 28 independently audited scenarios / 112 exact assertions. All 441 GUI elements, folders, IDs and localized strings remain byte-identical; native save changes only DocumentHeader plus archive metadata. The older imported library-to-map-global failure and broader GUI/control corpus remain open. Optional Game diagnostics are inconclusive; search is bounded and complete-page, not an atomic snapshot. Current frozen package adds explicit smooth target heights with protected/range guards. A 296-object forest refinement preserves all 292 original IDs and 46 infrastructure objects, changes 843 height vertices and preserves 3945 outside vertices. Two exact native-saved/recompiled SDK14 Game suites pass 32 independently audited traversals/504 samples; warm/fresh MCP repeats are no-ops. Eight of 16 final frames are inspected; the solid grey slope band is removed, but bare-yard/fence composition and finished art remain open. Earlier camera-clamp and label-preflight failures remain retained. This is continuous terrain, not broader cliff/collision/buildability acceptance. Current frozen MCP adds guarded batch Unit/Doodad variation edits and fixes the observed applied-plan repeat refusal. Eighteen measured house variations preserve all266 IDs and other attributes; warm/fresh saves are byte-identical. Two SDK14 exact native-saved/recompiled Game runs preserve the18 assignments and pass16 independently audited traversals/409 samples at zero sampled deviation. Nine of12 frames were inspected and distinct house silhouettes are visible. Sparse yards, regular composition and east close-up cropping remain art findings; broader model/collision/GUI/Data scope is not accepted. Current frozen MCP repairs the observed Windows extraction staging boundary and retains PNG/HTML references in default compact previews. Both original failures are reproduced, then the real public import/preview workflow passes with source preservation and no staging residue. A separately identified earlier frozen package authors6 industrial control props, preserves86 objects and passes two exact native-saved/recompiled suites/16 independently audited traversals. The new package adds four Game-only framing runs on byte-identical native-saved industrial/settlement artifacts; seven of10 frames are inspected and all four overviews have at least37 pixels of margin. Package scopes stay separate. Finished composition, broader corpus and final integration remain open. Existing acceptance-suite positive routes and formation-member lanes can now bind explicit authored-width reservations to the owned landscape workflow. Source changes invalidate apply and staged save; unselected measured conflicts reject. One unchanged frozen package passes real MCP negative/positive checks, metadata-only adoption and byte-identical warm/fresh repeats. Both original Editor save/reopen/recompile cycles preserve92 objects and terrain; first Game suite passes8 independently audited arrivals. Its repeat on the identical saved archive moves every unit inside its corridor but leaves8 arrivals inconclusive before the unchanged deadline; the cause of slower wall-clock progress remains open. No retry or larger timeout. The initial stdio timeout is retained; its unchanged isolated check and complete sequential recheck pass. Native collision, broad topology, finished art and final integration stay open. Same-response movement clocks and identity are now retained without extra polls; late endpoint readback cannot pass an unchanged wall deadline. Frozen Game-only qualification on the exact previously native-saved artifact records2 runs,16 passed routes,0 inconclusive routes and2 passed two-member groups. Simulation/wall ratios are directly reported, with an independent post-order interval audit. No new Editor cycle or configured-speed/FPS/load diagnosis. The earlier inconclusive repeat and its conservative clock bounds stay retained. Full regression passes1587 with one skip. Broader integration remains open. Native local-handle declarations now participate in reserved-name and known type checks; frozen public MCP rejects the actually game-rejected unit marker declaration before staging, while corrected real probe sources validate unchanged. A separately identified earlier package executes33 original-game placement/pathing observations: free range0 returns the exact center, occupied range0 returns null, and range4 returns a shifted candidate. Occupied-point connectivity remains true even after one game second while point passability is false. Four shifted communication carriers and the first strict decoder refusal are retained separately; query coordinates/tolerances never change. This is query-semantic evidence, not a general pad adapter or new GUI/native corpus. Full regression passes1589 with one skip. Read-only native114 donors now transfer into115 targets while target/companion/transform guards remain. Fresh broad topology and measured diagonal joins have separately audited native observations, Editor save/reopen/compile and inspected overviews; failed assumptions and runtime ambiguity stay explicit. Full acceptance remains partial. Current372-module runner has exact-packet development replay for route ambiguity and two real exact-native-saved/recompiled suites through retained Editor0.14/Game dev11 bridges:16 routes,8 groups,12 point predicates and explicit per-leg cleanup pass. Two wider Game frames are inspected. Full startup/diagnostics and broader corpus remain partial."
     },
     {
       "id": "regional_native_profile",
       "required": true,
       "state": "passed",
       "records": [
-        "native_ownership"
+        "native_regional_lifecycle_013",
+        "native_regional_framing"
       ],
-      "reason": "Restricted V115 identity/even grid, rectangular two-cell cliff strokes and cardinal width-four ramps only; three exact archives, six launches and 48 traversals."
+      "reason": "Current unchanged frozen package renews the restricted V115 identity/even-grid two-cell cliff rectangles and cardinal width-four ramp lifecycle. Fresh MCP-authored Initial/Lowered/Final states preserve IDs/east geometry/texture weights and resnap west10→8→10. Current warm/fresh plans are no-ops; six exact native-saved/recompiled Game launches pass48 independently audited ground traversals and12 inspected detail frames. Six overview framing findings remain explicit; this is not three-style art or broader topology acceptance. The earlier six clipped regional overview images are retained. Six additional inspected Game-only overview runs on byte-identical native-saved artifacts now show the complete map with margins; native camera readback is retained. This closes diagnostic framing only, with art acceptance still false. The later Data-document bridge change leaves the previous exact package evidence preserved, but its whole-file source scope now needs final integration renewal. No earlier record fingerprints are rewritten."
     },
     {
       "id": "broad_topology_navigation",
@@ -217,9 +526,24 @@
         "terrain_junctions",
         "native_ownership",
         "native_junction_matrix",
-        "point_projectile_bounds"
+        "point_projectile_bounds",
+        "native_ramp_sync_labels",
+        "native_saddles_sync_labels",
+        "concurrent_ground_groups",
+        "native_ramp_enum",
+        "native_regional_lifecycle_013",
+        "native_target_height_clearing",
+        "native_movement_clocks",
+        "native_placement_probe_and_handles",
+        "native_placement_grid_power_creep",
+        "native_pad_query_adapter",
+        "native_landscape_pad_source",
+        "native_point_pathing_queries",
+        "native_legacy_donor_topology",
+        "native_route_state",
+        "native_ramp_join"
       ],
-      "reason": "Fresh twelve-orientation Agria fixture passed56 Marine/Marauder traversals, level2-to3 ramps and native detail review. Other saddle/void/edge/width/diagonal profiles and authoritative path/collision/buildability remain open. Default Unit-pivot containment and MapInfo stale-save guards now prevent this reproduced placement error; they are not native footprint/path/collision/buildability results."
+      "reason": "Fresh twelve-orientation Agria fixture passed56 Marine/Marauder traversals, level2-to3 ramps and native detail review. Other saddle/void/edge/width/diagonal profiles and authoritative path/collision/buildability remain open. Default Unit-pivot containment and MapInfo stale-save guards now prevent this reproduced placement error; they are not native footprint/path/collision/buildability results. The current corrected low-byte sync-label profile passes two exact native-saved/recompiled launches,16 independently audited Marine/Marauder traversals at0 sampled deviation within the unchanged1.75 corridor, and eight repeated native views. Terrain and GUI bytes are unchanged by native save; broader profiles remain unaccepted. A fresh current-label matrix now passes112 independently audited traversals:32 original-archive saddle-center crossings and80 exact native-saved cardinal-ramp crossings, with both diagonal orientations and levels1/2 and2/3. Six successful runs retain the same bridges;32 captures contain16 inspected distinct frames. A preceding readiness failure remains recorded. Broader topology/native startup and final art acceptance remain open. Public formation suites and CLI now pass two reused-bridge launches,16three-member group passages/48independently audited member trajectories, two known ground footprints and both directions at gate/north-road. All16group frames inspected. Other topology/crowd/rigid-shape/presentation/art scopes remain open. A reproducible pinned ModKit0..7 enum fix now passes fresh v115 donor transfers in all four cardinal directions, two original Editor0.12 save/reopen/recompile/game launches and32 independently audited ordinary ground traversals at zero sampled deviation. Eight distinct native cap views reviewed, eight pixel-matched repeats. Optional game diagnostics, wider geometry and owned-location profiles remain open. Current SDK14 restricted regional lifecycle now has six independently audited native-saved/recompiled Game runs; twelve detail frames pass and six overview framing findings stay open. This does not close the separate broader corpus/style/art requirement. Current frozen package adds explicit smooth target heights with protected/range guards. A 296-object forest refinement preserves all 292 original IDs and 46 infrastructure objects, changes 843 height vertices and preserves 3945 outside vertices. Two exact native-saved/recompiled SDK14 Game suites pass 32 independently audited traversals/504 samples; warm/fresh MCP repeats are no-ops. Eight of 16 final frames are inspected; the solid grey slope band is removed, but bare-yard/fence composition and finished art remain open. Earlier camera-clamp and label-preflight failures remain retained. This is continuous terrain, not broader cliff/collision/buildability acceptance. Same-response movement clocks and identity are now retained without extra polls; late endpoint readback cannot pass an unchanged wall deadline. Frozen Game-only qualification on the exact previously native-saved artifact records2 runs,16 passed routes,0 inconclusive routes and2 passed two-member groups. Simulation/wall ratios are directly reported, with an independent post-order interval audit. No new Editor cycle or configured-speed/FPS/load diagnosis. The earlier inconclusive repeat and its conservative clock bounds stay retained. Full regression passes1587 with one skip. Broader integration remains open. Native local-handle declarations now participate in reserved-name and known type checks; frozen public MCP rejects the actually game-rejected unit marker declaration before staging, while corrected real probe sources validate unchanged. A separately identified earlier package executes33 original-game placement/pathing observations: free range0 returns the exact center, occupied range0 returns null, and range4 returns a shifted candidate. Occupied-point connectivity remains true even after one game second while point passability is false. Four shifted communication carriers and the first strict decoder refusal are retained separately; query coordinates/tolerances never change. This is query-semantic evidence, not a general pad adapter or new GUI/native corpus. Full regression passes1589 with one skip. Two further original-game probes on unchanged code verify34/49 slot-correlated placement cases. Range0 snaps off-grid centers; default power/creep failures have isolated Pylon/creep positive controls, while explicit tests=0 bypasses them. Active catalog presence, original sources and independent archived source hashes are checked. This is scoped predicate evidence, not a general pad adapter, build-order/cost/tech, footprint/facing/cliff/collision or art acceptance. Frozen public project.test MCP now provides named native placement predicates via private query-only derivatives and the retained Game bridge. Two sequential positive suites pass16 independently reconstructed grid/occupancy/power/creep predicates. Exact-snap mismatch fails and an invalid catalog remains unsupported. All four query passes close, preserve the ordinary source and compare unrelated archive payloads independently. This does not establish building-order/cost/tech, arbitrary footprint/pathing or full topology/art readiness. Explicit intent.padSource now binds selected exact native test declarations to authored clearance rectangles in the existing location transaction. Frozen public MCP rejects unselected measured conflicts and stale apply/save, preserves92 original objects/terrain, authors12 small beacons outside reservations and retains warm/fresh byte-identical repeats. Cloned catalog reconciliation changes metadata only; both dependency stacks unwind to the same base. Two combined jobs run isolated placement queries then ordinary gameplay through retained bridges:16 predicates and4 short bidirectional Marine passages pass. No new Editor cycle, inferred footprint, broad topology or art acceptance. Frozen public MCP now exposes explicit native point passability/connectivity in the shared private query pass. Eight sequential cases reuse one retained Game bridge:52 positive point predicates,56 placement predicates,97-slot maximum/legacy channel and two expected mismatches qualify independently. A fresh64x64 no-ramp island has passable endpoints but disconnected ground topology; occupied industrial endpoint remains connected while impassable. One exact-source original Editor overview is inspected with no obvious black void at that scale. Neither point queries nor movement timeout certify a unit footprint, obstacle cause, broader geometry or later Game state. Read-only native114 donors now transfer into115 targets while target/companion/transform guards remain. Fresh broad topology and measured diagonal joins have separately audited native observations, Editor save/reopen/compile and inspected overviews; failed assumptions and runtime ambiguity stay explicit. Full acceptance remains partial. Current372-module runner has exact-packet development replay for route ambiguity and two real exact-native-saved/recompiled suites through retained Editor0.14/Game dev11 bridges:16 routes,8 groups,12 point predicates and explicit per-leg cleanup pass. Two wider Game frames are inspected. Full startup/diagnostics and broader corpus remain partial. Current frozen joined-ramp workflow authors a fresh ordinary/widened native114→115 closed landing through one compact save request; two exact-native-saved/recompiled suites pass16 routes,8 groups and12 point predicates. Paired component loading halves physical reads and lowers the measured isolated warm median; broad topology and end-to-end performance remain partial."
     },
     {
       "id": "owned_landscape_workflow",
@@ -227,9 +551,26 @@
       "state": "partial",
       "records": [
         "landscape_groups",
-        "native_ownership"
+        "native_ownership",
+        "landscape_migration",
+        "casc_order",
+        "location_clusters_schema_identity",
+        "decor_supply_condition",
+        "native_editor_012_filters",
+        "native_012_forest_gui_game",
+        "forest_material_patterns",
+        "native_regional_lifecycle_013",
+        "native_regional_framing",
+        "native_target_height_clearing",
+        "native_placement_variations",
+        "native_runtime_ergonomics_style_review",
+        "native_landscape_route_source",
+        "native_placement_grid_power_creep",
+        "native_pad_query_adapter",
+        "native_landscape_pad_source",
+        "native_quality_zone"
       ],
-      "reason": "Existing zones, textures, measured groups, dependency rebuilds and regional native ownership are implemented. Old style-fixture records retain their exact prior source scope; final composition acceptance remains separate."
+      "reason": "Existing zones, textures, measured groups, dependency rebuilds and regional native ownership are implemented. Old style-fixture records retain their exact prior source scope; final composition acceptance remains separate. Three original projects now persist generator3 through MCP and produce unchanged same/fresh-session plans. The exact migrated settlement passes16 new corridor-bound traversals and six captures; per-ID fields of266 objects are unchanged, with raw XML differences retained. Finished art and broader whole-location profiles remain open. Persisted CASC registration order now prevents the reproduced first-mount/reconnect fingerprint drift. Frozen installed MCP preserves36 native payload files and gives zero rebuilt zones/changed bytes after both same-session and fresh-session repeats; all source/manual/dependency guards stay active. Optional owned-location clusters now preserve304 object IDs, unrelated work and terrain/GUI bytes while rebuilding only the five-zone forest closure; warm/fresh repeats are no-ops. Three guarded metadata-only upgrades and a relocated362-module identical package retain stable catalog identity. Impossible40/48 density remains a rejected plan. Final art/native footprint and broader performance coverage remain open. Measured asymmetric supply groups and condition-aware defaults are now authored through frozen MCP. The314-object forest has an unchanged fresh-process no-op and actual original Editor model-filter/3D visibility proof. Final composition and broader profiles remain open. Current314-object forest MAIN GUI variant now passes two Editor0.12 save/recompile/exact-saved game runs,24 independently audited Marine/Marauder traversals and8inspected views through retained bridges. Art/formation/broader capability findings remain open. Optional coherent material patches and separated forest groups now pass warm/fresh MCP no-ops, two exact Editor0.12 saved/recompiled Game runs,24 independently audited traversals and10 inspected frames. The292-object source preserves geometry and46 fixed objects; finished art and other styles remain open. Current SDK14 restricted regional lifecycle now has six independently audited native-saved/recompiled Game runs; twelve detail frames pass and six overview framing findings stay open. This does not close the separate broader corpus/style/art requirement. The earlier six clipped regional overview images are retained. Six additional inspected Game-only overview runs on byte-identical native-saved artifacts now show the complete map with margins; native camera readback is retained. This closes diagnostic framing only, with art acceptance still false. Current frozen package adds explicit smooth target heights with protected/range guards. A 296-object forest refinement preserves all 292 original IDs and 46 infrastructure objects, changes 843 height vertices and preserves 3945 outside vertices. Two exact native-saved/recompiled SDK14 Game suites pass 32 independently audited traversals/504 samples; warm/fresh MCP repeats are no-ops. Eight of 16 final frames are inspected; the solid grey slope band is removed, but bare-yard/fence composition and finished art remain open. Earlier camera-clamp and label-preflight failures remain retained. This is continuous terrain, not broader cliff/collision/buildability acceptance. Current frozen MCP adds guarded batch Unit/Doodad variation edits and fixes the observed applied-plan repeat refusal. Eighteen measured house variations preserve all266 IDs and other attributes; warm/fresh saves are byte-identical. Two SDK14 exact native-saved/recompiled Game runs preserve the18 assignments and pass16 independently audited traversals/409 samples at zero sampled deviation. Nine of12 frames were inspected and distinct house silhouettes are visible. Sparse yards, regular composition and east close-up cropping remain art findings; broader model/collision/GUI/Data scope is not accepted. Current frozen MCP repairs the observed Windows extraction staging boundary and retains PNG/HTML references in default compact previews. Both original failures are reproduced, then the real public import/preview workflow passes with source preservation and no staging residue. A separately identified earlier frozen package authors6 industrial control props, preserves86 objects and passes two exact native-saved/recompiled suites/16 independently audited traversals. The new package adds four Game-only framing runs on byte-identical native-saved industrial/settlement artifacts; seven of10 frames are inspected and all four overviews have at least37 pixels of margin. Package scopes stay separate. Finished composition, broader corpus and final integration remain open. Existing acceptance-suite positive routes and formation-member lanes can now bind explicit authored-width reservations to the owned landscape workflow. Source changes invalidate apply and staged save; unselected measured conflicts reject. One unchanged frozen package passes real MCP negative/positive checks, metadata-only adoption and byte-identical warm/fresh repeats. Both original Editor save/reopen/recompile cycles preserve92 objects and terrain; first Game suite passes8 independently audited arrivals. Its repeat on the identical saved archive moves every unit inside its corridor but leaves8 arrivals inconclusive before the unchanged deadline; the cause of slower wall-clock progress remains open. No retry or larger timeout. The initial stdio timeout is retained; its unchanged isolated check and complete sequential recheck pass. Native collision, broad topology, finished art and final integration stay open. Two further original-game probes on unchanged code verify34/49 slot-correlated placement cases. Range0 snaps off-grid centers; default power/creep failures have isolated Pylon/creep positive controls, while explicit tests=0 bypasses them. Active catalog presence, original sources and independent archived source hashes are checked. This is scoped predicate evidence, not a general pad adapter, build-order/cost/tech, footprint/facing/cliff/collision or art acceptance. Frozen public project.test MCP now provides named native placement predicates via private query-only derivatives and the retained Game bridge. Two sequential positive suites pass16 independently reconstructed grid/occupancy/power/creep predicates. Exact-snap mismatch fails and an invalid catalog remains unsupported. All four query passes close, preserve the ordinary source and compare unrelated archive payloads independently. This does not establish building-order/cost/tech, arbitrary footprint/pathing or full topology/art readiness. Explicit intent.padSource now binds selected exact native test declarations to authored clearance rectangles in the existing location transaction. Frozen public MCP rejects unselected measured conflicts and stale apply/save, preserves92 original objects/terrain, authors12 small beacons outside reservations and retains warm/fresh byte-identical repeats. Cloned catalog reconciliation changes metadata only; both dependency stacks unwind to the same base. Two combined jobs run isolated placement queries then ordinary gameplay through retained bridges:16 predicates and4 short bidirectional Marine passages pass. No new Editor cycle, inferred footprint, broad topology or art acceptance. Current375-module frozen SDK0.14 package adds bounded quality/zone inspection and hash-guarded edits; three private style refinements preserve unrelated/manual objects and stable slots, with warm/fresh no-ops. Six exact native-saved/recompiled suites pass64 route legs and38 named captures. Overall-planner paired-read measurements and19 new regressions pass. Final framing/composition and broader integration remain partial."
     },
     {
       "id": "gui_roundtrip",
@@ -240,9 +581,14 @@
         "startup_history",
         "runtime_registration",
         "registration_discovery",
-        "inline_library_runtime"
+        "inline_library_runtime",
+        "native_gui_references",
+        "native_gui_reopen",
+        "native_gui_type_bounds",
+        "native_012_forest_gui_game",
+        "native_gui_adoption_013"
       ],
-      "reason": "Native explicit-target Registration now preserves the generated target/timer/local/array call and passes two game launches with exact one-callback/phase/wrong-target controls. Its own save/reopen handler is still live beyond observation deadline; exact saved-artifact equivalence/execution is not accepted. Earlier306-element roundtrips retain their original scope; broader imported semantics remain open. Registration discovery now exposes verified versus rejected static signatures before mutation; this does not close native saved-artifact parity. Local generation now executes the same three library-bearing graphs twice each, with unchanged GUI/Data/Objects and explicit unsupported profiles; original-Editor saved-artifact parity remains separate."
+      "reason": "Native explicit-target Registration now preserves the generated target/timer/local/array call and passes two game launches with exact one-callback/phase/wrong-target controls. At its original checkpoint the save/reopen handler exceeded its observation deadline. A later owned-process/handle audit found no handler and no final result; that attempt is interrupted and exact saved-artifact equivalence/execution remains unaccepted. Earlier306-element roundtrips retain their original scope; broader imported semantics remain open. Registration discovery now exposes verified versus rejected static signatures before mutation; this does not close native saved-artifact parity. Local generation now executes the same three library-bearing graphs twice each, with unchanged GUI/Data/Objects and explicit unsupported profiles; original-Editor saved-artifact parity remains separate. A dedicated reference fixture now passes14 exact-state/uniqueness scenarios in two game launches, including deferred root/library structref mutation and inclusive nested bounds. Its GUI/Galaxy stayed unchanged while separate Data marker corrections and six failed launches were retained. This does not close original Editor saved-artifact equivalence or wider reference/callback profiles. New owned registration roundtrip now preserves40 saved/reopened components and passes native recompile plus six exact-state scenarios on the saved artifact. A separate14-scenario reference graph fails original compilation on an untyped structure variable; no native GUI acceptance is claimed for it. Qualified native GUI type/bound metadata now passes original Editor save/reopen and exact saved-artifact recompilation. A frozen installed MCP authors new numeric-zero bounds via dedicated zero constants for global/record-field/local arrays; two saved-artifact game launches pass14 unchanged scenarios each. All42 saved/reopened components match. Static risk review preserves the original failed imported library-to-map-global graph; wider imported/library/control semantics remain open. Current314-object forest MAIN GUI variant now passes two Editor0.12 save/recompile/exact-saved game runs,24 independently audited Marine/Marauder traversals and8inspected views through retained bridges. Art/formation/broader capability findings remain open. Current unchanged 365-module package additionally adopts original SDK14-generated runtime through guarded trigger.import_revised. Three stale/foreign requests reject without source mutation; dry-run/staging preserve source, save changes only MapScript.galaxy, and repeated import/save is byte-identical. Two exact native-saved/recompiled Game runs pass 28 independently audited scenarios / 112 exact assertions. All 441 GUI elements, folders, IDs and localized strings remain byte-identical; native save changes only DocumentHeader plus archive metadata. The older imported library-to-map-global failure and broader GUI/control corpus remain open. Optional Game diagnostics are inconclusive; search is bounded and complete-page, not an atomic snapshot."
     },
     {
       "id": "data_ability_corpus",
@@ -258,38 +604,75 @@
         "combat_actor_lifecycle",
         "point_projectile_bounds",
         "native_charges_range",
-        "native_learn_xp"
+        "native_learn_xp",
+        "native_013_guarded_jobs",
+        "native_013_terminal_errors",
+        "native_data_document_reuse",
+        "native_data_source_return",
+        "native_014_data_audit"
       ],
-      "reason": "Two frozen launches now pass three native Learn point profiles, rank/level/max gates,14 damage/energy/completion casts and14 XP kills. A separate named-XP diagnostic reproduced16.6665-per-hero sharing and verified the explicit map-wide radius0 policy gives50 only to the killer. Broader Learn/talent/UI activation, sound and final presentation remain open."
+      "reason": "Two frozen launches now pass three native Learn point profiles, rank/level/max gates,14 damage/energy/completion casts and14 XP kills. A separate named-XP diagnostic reproduced16.6665-per-hero sharing and verified the explicit map-wide radius0 policy gives50 only to the killer. Broader Learn/talent/UI activation, sound and final presentation remain open. SDK 14 guarded methods now include actual original map compile, 198-field Marine Data with original strings, catalog-qualified links and main Model presence. A frozen 365-module package keeps status responsive during a legacy read after the 47.456s blocking reproduction. Remaining corpus, native export-settings refusal and final art/presentation gates stay open. Current frozen SDK14 terminal error flags now preserve known FAILED operations without requiring transport recovery. Four main-Model/unsupported-resource observations qualify individually, while the subsequent Unit XML read remains failed. Repeated explicit reads of the identical logical archive reproduce the empty XML; no general Data recovery is claimed. Current frozen pure Data inspections now reuse a verified same-source private document while making fresh native calls. The exact three-read same-source case and five-case resource sequence qualify; a different73-life source is read correctly, but return to Healthy still fails original XML identity. No general reopen repair is claimed. The current package also verifies explicit same-source Explorer links. A separate five-open/read source-transition control confirms native loads but reproduces both base-source XML return failures; formal opening is not treated as a fix. Current Editor0.14/protocol15 integration adds27th guarded operation and full Data audit. One109-catalog traversal is independently reconstructed from complete JSONL (87052 objects,15953492 fields); coverage remains partial and validationPassed is null. The retained-worker missing-model audit fails resource error171, and45→73→original Unit XML return still fails. Explicit audit cancellation and a healthy post-cancel Model resource read pass. This does not renew the full gameplay/GUI/art corpus."
     },
     {
       "id": "compact_authoring_cache",
       "required": true,
-      "state": "passed",
+      "state": "partial",
       "records": [
         "native_ownership",
-        "actor_death_data_groups"
+        "actor_death_data_groups",
+        "asset_index",
+        "casc_order",
+        "location_clusters_schema_identity",
+        "decor_supply_condition",
+        "native_editor_012_filters",
+        "concurrent_ground_groups",
+        "native_013_guarded_jobs",
+        "native_013_terminal_errors",
+        "native_regional_lifecycle_013",
+        "native_data_document_reuse",
+        "native_data_source_return",
+        "native_target_height_clearing",
+        "native_placement_variations",
+        "native_runtime_ergonomics_style_review",
+        "native_landscape_route_source",
+        "native_movement_clocks",
+        "native_placement_probe_and_handles",
+        "native_014_data_audit",
+        "native_pad_query_adapter",
+        "native_landscape_pad_source",
+        "native_point_pathing_queries",
+        "native_ramp_join",
+        "native_quality_zone"
       ],
-      "reason": "Real MCP same-catalog grouping reduced one warm no-op three-command Data save from82.3s/6 internal calls to37.5s/2; bytes and duration are scoped proxies, not billed-token savings. Prior regional ownership benchmark retains its exact scope."
+      "reason": "Real MCP same-catalog grouping reduced one warm no-op three-command Data save from82.3s/6 internal calls to37.5s/2; bytes and duration are scoped proxies, not billed-token savings. Prior regional ownership benchmark retains its exact scope. Shared asset provenance now preserves exact selected-page and plan receipts with observed cold queries43.4→17.1s and52.0→21.9s. Broader cache profiles and source drift remain separate; no billed-token claim. Persisted CASC registration order now prevents the reproduced first-mount/reconnect fingerprint drift. Frozen installed MCP preserves36 native payload files and gives zero rebuilt zones/changed bytes after both same-session and fresh-session repeats; all source/manual/dependency guards stay active. Optional owned-location clusters now preserve304 object IDs, unrelated work and terrain/GUI bytes while rebuilding only the five-zone forest closure; warm/fresh repeats are no-ops. Three guarded metadata-only upgrades and a relocated362-module identical package retain stable catalog identity. Impossible40/48 density remains a rejected plan. Final art/native footprint and broader performance coverage remain open. Measured asymmetric supply groups and condition-aware defaults are now authored through frozen MCP. The314-object forest has an unchanged fresh-process no-op and actual original Editor model-filter/3D visibility proof. Final composition and broader profiles remain open. Public formation suites and CLI now pass two reused-bridge launches,16three-member group passages/48independently audited member trajectories, two known ground footprints and both directions at gate/north-road. All16group frames inspected. Other topology/crowd/rigid-shape/presentation/art scopes remain open. SDK 14 guarded methods now include actual original map compile, 198-field Marine Data with original strings, catalog-qualified links and main Model presence. A frozen 365-module package keeps status responsive during a legacy read after the 47.456s blocking reproduction. Remaining corpus, native export-settings refusal and final art/presentation gates stay open. Current frozen SDK14 terminal error flags now preserve known FAILED operations without requiring transport recovery. Four main-Model/unsupported-resource observations qualify individually, while the subsequent Unit XML read remains failed. Repeated explicit reads of the identical logical archive reproduce the empty XML; no general Data recovery is claimed. Current SDK14 restricted regional lifecycle now has six independently audited native-saved/recompiled Game runs; twelve detail frames pass and six overview framing findings stay open. This does not close the separate broader corpus/style/art requirement. Current frozen pure Data inspections now reuse a verified same-source private document while making fresh native calls. The exact three-read same-source case and five-case resource sequence qualify; a different73-life source is read correctly, but return to Healthy still fails original XML identity. No general reopen repair is claimed. The current package also verifies explicit same-source Explorer links. A separate five-open/read source-transition control confirms native loads but reproduces both base-source XML return failures; formal opening is not treated as a fix. Current frozen package adds explicit smooth target heights with protected/range guards. A 296-object forest refinement preserves all 292 original IDs and 46 infrastructure objects, changes 843 height vertices and preserves 3945 outside vertices. Two exact native-saved/recompiled SDK14 Game suites pass 32 independently audited traversals/504 samples; warm/fresh MCP repeats are no-ops. Eight of 16 final frames are inspected; the solid grey slope band is removed, but bare-yard/fence composition and finished art remain open. Earlier camera-clamp and label-preflight failures remain retained. This is continuous terrain, not broader cliff/collision/buildability acceptance. Current frozen MCP adds guarded batch Unit/Doodad variation edits and fixes the observed applied-plan repeat refusal. Eighteen measured house variations preserve all266 IDs and other attributes; warm/fresh saves are byte-identical. Two SDK14 exact native-saved/recompiled Game runs preserve the18 assignments and pass16 independently audited traversals/409 samples at zero sampled deviation. Nine of12 frames were inspected and distinct house silhouettes are visible. Sparse yards, regular composition and east close-up cropping remain art findings; broader model/collision/GUI/Data scope is not accepted. Current frozen MCP repairs the observed Windows extraction staging boundary and retains PNG/HTML references in default compact previews. Both original failures are reproduced, then the real public import/preview workflow passes with source preservation and no staging residue. A separately identified earlier frozen package authors6 industrial control props, preserves86 objects and passes two exact native-saved/recompiled suites/16 independently audited traversals. The new package adds four Game-only framing runs on byte-identical native-saved industrial/settlement artifacts; seven of10 frames are inspected and all four overviews have at least37 pixels of margin. Package scopes stay separate. Finished composition, broader corpus and final integration remain open. Existing acceptance-suite positive routes and formation-member lanes can now bind explicit authored-width reservations to the owned landscape workflow. Source changes invalidate apply and staged save; unselected measured conflicts reject. One unchanged frozen package passes real MCP negative/positive checks, metadata-only adoption and byte-identical warm/fresh repeats. Both original Editor save/reopen/recompile cycles preserve92 objects and terrain; first Game suite passes8 independently audited arrivals. Its repeat on the identical saved archive moves every unit inside its corridor but leaves8 arrivals inconclusive before the unchanged deadline; the cause of slower wall-clock progress remains open. No retry or larger timeout. The initial stdio timeout is retained; its unchanged isolated check and complete sequential recheck pass. Native collision, broad topology, finished art and final integration stay open. Same-response movement clocks and identity are now retained without extra polls; late endpoint readback cannot pass an unchanged wall deadline. Frozen Game-only qualification on the exact previously native-saved artifact records2 runs,16 passed routes,0 inconclusive routes and2 passed two-member groups. Simulation/wall ratios are directly reported, with an independent post-order interval audit. No new Editor cycle or configured-speed/FPS/load diagnosis. The earlier inconclusive repeat and its conservative clock bounds stay retained. Full regression passes1587 with one skip. Broader integration remains open. Native local-handle declarations now participate in reserved-name and known type checks; frozen public MCP rejects the actually game-rejected unit marker declaration before staging, while corrected real probe sources validate unchanged. A separately identified earlier package executes33 original-game placement/pathing observations: free range0 returns the exact center, occupied range0 returns null, and range4 returns a shifted candidate. Occupied-point connectivity remains true even after one game second while point passability is false. Four shifted communication carriers and the first strict decoder refusal are retained separately; query coordinates/tolerances never change. This is query-semantic evidence, not a general pad adapter or new GUI/native corpus. Full regression passes1589 with one skip. Current Editor0.14/protocol15 integration adds27th guarded operation and full Data audit. One109-catalog traversal is independently reconstructed from complete JSONL (87052 objects,15953492 fields); coverage remains partial and validationPassed is null. The retained-worker missing-model audit fails resource error171, and45→73→original Unit XML return still fails. Explicit audit cancellation and a healthy post-cancel Model resource read pass. This does not renew the full gameplay/GUI/art corpus. Frozen public project.test MCP now provides named native placement predicates via private query-only derivatives and the retained Game bridge. Two sequential positive suites pass16 independently reconstructed grid/occupancy/power/creep predicates. Exact-snap mismatch fails and an invalid catalog remains unsupported. All four query passes close, preserve the ordinary source and compare unrelated archive payloads independently. This does not establish building-order/cost/tech, arbitrary footprint/pathing or full topology/art readiness. Explicit intent.padSource now binds selected exact native test declarations to authored clearance rectangles in the existing location transaction. Frozen public MCP rejects unselected measured conflicts and stale apply/save, preserves92 original objects/terrain, authors12 small beacons outside reservations and retains warm/fresh byte-identical repeats. Cloned catalog reconciliation changes metadata only; both dependency stacks unwind to the same base. Two combined jobs run isolated placement queries then ordinary gameplay through retained bridges:16 predicates and4 short bidirectional Marine passages pass. No new Editor cycle, inferred footprint, broad topology or art acceptance. Frozen public MCP now exposes explicit native point passability/connectivity in the shared private query pass. Eight sequential cases reuse one retained Game bridge:52 positive point predicates,56 placement predicates,97-slot maximum/legacy channel and two expected mismatches qualify independently. A fresh64x64 no-ramp island has passable endpoints but disconnected ground topology; occupied industrial endpoint remains connected while impassable. One exact-source original Editor overview is inspected with no obvious black void at that scale. Neither point queries nor movement timeout certify a unit footprint, obstacle cause, broader geometry or later Game state. Current frozen joined-ramp workflow authors a fresh ordinary/widened native114→115 closed landing through one compact save request; two exact-native-saved/recompiled suites pass16 routes,8 groups and12 point predicates. Paired component loading halves physical reads and lowers the measured isolated warm median; broad topology and end-to-end performance remain partial. Current375-module frozen SDK0.14 package adds bounded quality/zone inspection and hash-guarded edits; three private style refinements preserve unrelated/manual objects and stable slots, with warm/fresh no-ops. Six exact native-saved/recompiled suites pass64 route legs and38 named captures. Overall-planner paired-read measurements and19 new regressions pass. Final framing/composition and broader integration remain partial."
     },
     {
       "id": "private_runtime_boundary",
       "required": true,
       "state": "passed",
       "records": [
-        "action_events"
+        "native_quality_zone"
       ],
-      "reason": "Current frozen action-event candidate checked9965 entries against1113 external private sources, zero violations. SDK/test maps excluded; local unpublished candidate and no reverse-engineering guarantee."
+      "reason": "Current375-module package passes10042-entry comparison against1113 private sources with zero violations; SDKs and instrumented derivatives remain external. Exact owned workers close;9552 was absent before and after, never attached/killed. Latest1.0 staging/adapter scratch is separate and not distributed. Not a reverse-engineering guarantee."
     },
     {
       "id": "art_and_gameplay_review",
       "required": true,
-      "state": "not_checked",
+      "state": "partial",
       "records": [
         "landscape_groups",
-        "native_ownership"
+        "native_ownership",
+        "native_editor_012_filters",
+        "native_012_forest_gui_game",
+        "concurrent_ground_groups",
+        "forest_material_patterns",
+        "native_regional_lifecycle_013",
+        "native_regional_framing",
+        "native_target_height_clearing",
+        "native_placement_variations",
+        "native_runtime_ergonomics_style_review"
       ],
-      "reason": "Technical frames were reviewed. Finished mission composition, readable selection/UI, balance and human aesthetic approval remain open."
+      "reason": "All five native map category/restoration images and the original3D relay view were inspected. Functional cargo/fuel/relay infrastructure is visible; regular texture bands, repeated forest outlines, broader mission/UI readability, balance and human aesthetic approval remain unresolved. Current314-object forest MAIN GUI variant now passes two Editor0.12 save/recompile/exact-saved game runs,24 independently audited Marine/Marauder traversals and8inspected views through retained bridges. Art/formation/broader capability findings remain open. Public formation suites and CLI now pass two reused-bridge launches,16three-member group passages/48independently audited member trajectories, two known ground footprints and both directions at gate/north-road. All16group frames inspected. Other topology/crowd/rigid-shape/presentation/art scopes remain open. Optional coherent material patches and separated forest groups now pass warm/fresh MCP no-ops, two exact Editor0.12 saved/recompiled Game runs,24 independently audited traversals and10 inspected frames. The292-object source preserves geometry and46 fixed objects; finished art and other styles remain open. Current SDK14 restricted regional lifecycle now has six independently audited native-saved/recompiled Game runs; twelve detail frames pass and six overview framing findings stay open. This does not close the separate broader corpus/style/art requirement. The earlier six clipped regional overview images are retained. Six additional inspected Game-only overview runs on byte-identical native-saved artifacts now show the complete map with margins; native camera readback is retained. This closes diagnostic framing only, with art acceptance still false. Current frozen package adds explicit smooth target heights with protected/range guards. A 296-object forest refinement preserves all 292 original IDs and 46 infrastructure objects, changes 843 height vertices and preserves 3945 outside vertices. Two exact native-saved/recompiled SDK14 Game suites pass 32 independently audited traversals/504 samples; warm/fresh MCP repeats are no-ops. Eight of 16 final frames are inspected; the solid grey slope band is removed, but bare-yard/fence composition and finished art remain open. Earlier camera-clamp and label-preflight failures remain retained. This is continuous terrain, not broader cliff/collision/buildability acceptance. Current frozen MCP adds guarded batch Unit/Doodad variation edits and fixes the observed applied-plan repeat refusal. Eighteen measured house variations preserve all266 IDs and other attributes; warm/fresh saves are byte-identical. Two SDK14 exact native-saved/recompiled Game runs preserve the18 assignments and pass16 independently audited traversals/409 samples at zero sampled deviation. Nine of12 frames were inspected and distinct house silhouettes are visible. Sparse yards, regular composition and east close-up cropping remain art findings; broader model/collision/GUI/Data scope is not accepted. Current frozen MCP repairs the observed Windows extraction staging boundary and retains PNG/HTML references in default compact previews. Both original failures are reproduced, then the real public import/preview workflow passes with source preservation and no staging residue. A separately identified earlier frozen package authors6 industrial control props, preserves86 objects and passes two exact native-saved/recompiled suites/16 independently audited traversals. The new package adds four Game-only framing runs on byte-identical native-saved industrial/settlement artifacts; seven of10 frames are inspected and all four overviews have at least37 pixels of margin. Package scopes stay separate. Finished composition, broader corpus and final integration remain open."
     }
   ]
 }

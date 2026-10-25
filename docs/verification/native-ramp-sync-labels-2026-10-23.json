@@ -1,0 +1,603 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-23T17:40:36.301Z",
+  "status": "qualified_native_ramp_sync_labels_passed_saved_artifact_and_corridor_checks",
+  "scope": "One qualified cardinal DonorP ramp transferred into generated terrain, with a separate unchanged native-reference ramp. Actual saved-artifact movement and scoped visual closure, not universal cliff/ramp/nav support.",
+  "sourceFingerprints": [
+    {
+      "file": "src/modules/terrain/nativeGeometry.ts",
+      "sha256LfUtf8": "c10cd6f821287913dc8f116ec4e840dcf86c950c4cdb5fc5f5393fbcf2d74622"
+    },
+    {
+      "file": "src/modules/terrain/landscapeOwnership.ts",
+      "sha256LfUtf8": "fe09fc223346a50f7c412db6b93104a38b17a40d64a2f6904c63da9eff3e8787"
+    },
+    {
+      "file": "src/modules/terrain/modkitSchemas.ts",
+      "sha256LfUtf8": "97a46bd26f6b3d03de7fec244f3fa3540d924bcc1c55983ee60b37e77dc326c6"
+    },
+    {
+      "file": "src/modules/terrain/workspace.ts",
+      "sha256LfUtf8": "78ab8799617d9cc164b3d8f0c8f06b9bb7b6f3d5667d0f21c1abfcc77b3053cd"
+    },
+    {
+      "file": "scripts/modkit/terrain-api.mjs",
+      "sha256LfUtf8": "f14aa31d31f5be266b82a087e626f9bf9005f1c0bbb15bbba1076cfef48e9be3"
+    },
+    {
+      "file": "scripts/modkit/terrain-ramp-api.mjs",
+      "sha256LfUtf8": "5b55e645edc8a8d34e0b097b4ed39086f62c9973e11d7103d7529dd039a0662d"
+    },
+    {
+      "file": "src/tests/terrainNativeGeometry.test.ts",
+      "sha256LfUtf8": "2290eb72a566e84781c15d32144b737bd07ce804f093e7a17de2657675208799"
+    },
+    {
+      "file": "src/tests/landscapeNativeOwnership.test.ts",
+      "sha256LfUtf8": "08a43026bdfe016466db40107ed016fc549fe7ce9320d656ff5331aee0596144"
+    },
+    {
+      "file": "src/tests/fixtures/terrain-native/cliff-sync-mask-reference.json",
+      "sha256LfUtf8": "8406c1e8d0e3fa3078c1a3d6cf215482b92953057f63b88f6e1398350ce35906"
+    },
+    {
+      "file": "src/tests/fixtures/terrain-native/native-cardinal-reference.json",
+      "sha256LfUtf8": "126f9a2657ceeee9a84ca40c7dc4d04216bc6db7837a6511073f1f05e6baf2e3"
+    }
+  ],
+  "implementation": {
+    "syncLabels": "Synchronize the low-byte SMAP level label with touched HMAP levels independently of the native saddle-height correction. Preserve the independent upper byte, coarse heights and manual ownership guards.",
+    "ownership": "Generator revision4 owns the two SMAP height bytes plus the low level-label byte. Existing scenes migrate through the full MCP terrain transaction; unrelated object bytes stay independent.",
+    "qualifiedTransfer": "Validated root/version, identity height map, even translation/widening and quarter-level offset profile. Carry actual smooth HMAP offsets through native mapping, preserving the target base and stock ramp channels. Unsupported source/frame variants remain explicit."
+  },
+  "installed": {
+    "audit": {
+      "file": "work/launch-diagnostics-20261022/native-mask-short-root-audit-final.json",
+      "sha256": "bf8e3bbb5ebc29aa60c17e2f325ee8918538b050cf145d123f733111df96c58c"
+    },
+    "transcript": {
+      "file": "work/launch-diagnostics-20261022/native-storage-controlled-save-game.log",
+      "sha256": "5feaeeda4713ab44ca040a0908fe7b2e386ddeadf377237055bea4add1da0832"
+    },
+    "candidate": {
+      "file": "work/launch-diagnostics-20261022/native-storage-candidate.json",
+      "sha256": "1d6a014d92bfe7550eddeaf184ce3719628013f48352a1eed710b56a012237de"
+    },
+    "sourceSha256": "10c3b9de3d97c40a1b40bfb3e8560b24a8db946ae57db2801ab075b10a2ea15c",
+    "sourceUnchanged": true,
+    "manifest": {
+      "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SyncMasks-314374b1-2645-4548-8ee4-518b67cb93ed\\manifest.json",
+      "sha256": "73352323be6ad410ff68d5e1346b526537c72ebed7255b41fcbfcf8c702ef014"
+    },
+    "counts": {
+      "savedReopenedRecompiledRuns": 2,
+      "traversals": 16,
+      "views": 8,
+      "distinctReviewedViews": 4
+    },
+    "editorWorkerReused": true,
+    "gameBridgeReused": true,
+    "maximumSampledDeviation": 0,
+    "unchangedCorridor": 1.75,
+    "unitProfiles": [
+      "Marine",
+      "Marauder"
+    ],
+    "directions": [
+      "forward",
+      "reverse"
+    ],
+    "routeContract": "Each raw trajectory independently verifies one live/valid unit identity, declared type/owner, start/end0.75 tolerance, actual displacement and the original1.75 corridor. Both the transferred and native-control ramp pass twice.",
+    "runs": [
+      {
+        "jobId": "fb1d0b66-1a41-450b-a0e5-f3d84c9a00af",
+        "result": {
+          "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SyncMasks-314374b1-2645-4548-8ee4-518b67cb93ed\\.sc2mcp-output\\project-tests\\fb1d0b66-1a41-450b-a0e5-f3d84c9a00af\\result.json",
+          "sha256": "18188d254092a19e09987263a106d4fb0aaff618fac4d242acc9d0dcc6baa8f8"
+        },
+        "nativeInitial": {
+          "file": "L:\\NE\\jobs\\8abc5062-0866-48d7-855f-66abca0fb99c\\result.json",
+          "sha256": "9a1e647ae20614545d831fede21ae2c3d6db884f42dbb216af8aa9aa33ed1314"
+        },
+        "nativeSavedRevalidation": {
+          "file": "L:\\NE\\jobs\\b0b4d57c-f605-40d8-8887-a2bac3e03f22\\result.json",
+          "sha256": "90aa75a44c48963974ce48d2eb0f36b67a62b2c0f0d0e18c2722437fe8eeacf1"
+        },
+        "savedArchive": {
+          "sha256": "62e6f52080c6cc38eb88195993f775b3bf392fab0358005f7cb9dac68f8fc46c",
+          "bytes": 8567,
+          "origin": "native_saved"
+        },
+        "componentComparison": {
+          "beforeCount": 33,
+          "savedCount": 32,
+          "reopenedCount": 32,
+          "savedToReopenedEqual": true
+        },
+        "serializationReview": {
+          "changedNames": [
+            "(attributes)",
+            "(listfile)",
+            "Base.SC2Data/GameData.xml",
+            "ComponentList.SC2Components",
+            "DocumentHeader"
+          ],
+          "nativeTerrainAndGuiBytesUnchanged": true,
+          "emptyIncludesRemoved": true,
+          "componentRegistrationOnlyAddsOptimized": true,
+          "beforeComponentListSha256": "e19eb3a5c779ee8fb3f932758c9ea0b92241336e9b232793954a5cde7d14cf5c",
+          "afterComponentListSha256": "9ea7c9e7667d365b8eee877f4027736dc4b0d8c7727e7d4438397b671d0545b4",
+          "emptyIncludesSha256": "bbe5d28d75810657c6e365fa217a8847569097401b2c978782eab8cbb8e633e0"
+        },
+        "gameRuntime": {
+          "provenance": "pinned_release",
+          "releaseTag": "v0.1.0-dev.11",
+          "archiveSha256": "514096c72332f4d6629dee4a33a092957d3ee02a9c45281bb3a7ad59031c30f3",
+          "verifiedFiles": 113,
+          "binaryOverride": false
+        },
+        "trajectories": [
+          {
+            "id": "route:transferredMarine:forward",
+            "type": "Marine",
+            "owner": 1,
+            "samples": 13,
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SyncMasks-314374b1-2645-4548-8ee4-518b67cb93ed\\.sc2mcp-output\\project-tests\\fb1d0b66-1a41-450b-a0e5-f3d84c9a00af\\route_transferredMarine_forward_trajectory.json",
+              "sha256": "586df05fb11adc5e4ba35861de7b13be6e47ac445b7b9957b5add63c20c611f8"
+            }
+          },
+          {
+            "id": "route:transferredMarine:reverse",
+            "type": "Marine",
+            "owner": 1,
+            "samples": 14,
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SyncMasks-314374b1-2645-4548-8ee4-518b67cb93ed\\.sc2mcp-output\\project-tests\\fb1d0b66-1a41-450b-a0e5-f3d84c9a00af\\route_transferredMarine_reverse_trajectory.json",
+              "sha256": "26cc9ae92847caef97fe717949d44b2cfec367ba080ebfe77f6e06c4087cf2e9"
+            }
+          },
+          {
+            "id": "route:transferredMarauder:forward",
+            "type": "Marauder",
+            "owner": 1,
+            "samples": 13,
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SyncMasks-314374b1-2645-4548-8ee4-518b67cb93ed\\.sc2mcp-output\\project-tests\\fb1d0b66-1a41-450b-a0e5-f3d84c9a00af\\route_transferredMarauder_forward_trajectory.json",
+              "sha256": "3a6905f99260aaddc39116028b19e2b9c36b2dc89a56cc700d14c9ccb7247ed9"
+            }
+          },
+          {
+            "id": "route:transferredMarauder:reverse",
+            "type": "Marauder",
+            "owner": 1,
+            "samples": 13,
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SyncMasks-314374b1-2645-4548-8ee4-518b67cb93ed\\.sc2mcp-output\\project-tests\\fb1d0b66-1a41-450b-a0e5-f3d84c9a00af\\route_transferredMarauder_reverse_trajectory.json",
+              "sha256": "178a0b0f852faf747d24ee5859fe5ef5b0081b068298b4108ef183ed848d25ee"
+            }
+          },
+          {
+            "id": "route:nativeReferenceMarine:forward",
+            "type": "Marine",
+            "owner": 1,
+            "samples": 13,
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SyncMasks-314374b1-2645-4548-8ee4-518b67cb93ed\\.sc2mcp-output\\project-tests\\fb1d0b66-1a41-450b-a0e5-f3d84c9a00af\\route_nativeReferenceMarine_forward_trajectory.json",
+              "sha256": "0a652f9ba22f5476382ea67718943e22ccdf4a9d7df37a683e4730cb4849371a"
+            }
+          },
+          {
+            "id": "route:nativeReferenceMarine:reverse",
+            "type": "Marine",
+            "owner": 1,
+            "samples": 13,
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SyncMasks-314374b1-2645-4548-8ee4-518b67cb93ed\\.sc2mcp-output\\project-tests\\fb1d0b66-1a41-450b-a0e5-f3d84c9a00af\\route_nativeReferenceMarine_reverse_trajectory.json",
+              "sha256": "6f6f7dc51948d9d9937b132d72a4058d17aaac63bf03055404323b8312900ceb"
+            }
+          },
+          {
+            "id": "route:nativeReferenceMarauder:forward",
+            "type": "Marauder",
+            "owner": 1,
+            "samples": 14,
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SyncMasks-314374b1-2645-4548-8ee4-518b67cb93ed\\.sc2mcp-output\\project-tests\\fb1d0b66-1a41-450b-a0e5-f3d84c9a00af\\route_nativeReferenceMarauder_forward_trajectory.json",
+              "sha256": "ec7270037c60b38399eac46594606f31286431a6b5bafd3863bbe6a5008c4170"
+            }
+          },
+          {
+            "id": "route:nativeReferenceMarauder:reverse",
+            "type": "Marauder",
+            "owner": 1,
+            "samples": 13,
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SyncMasks-314374b1-2645-4548-8ee4-518b67cb93ed\\.sc2mcp-output\\project-tests\\fb1d0b66-1a41-450b-a0e5-f3d84c9a00af\\route_nativeReferenceMarauder_reverse_trajectory.json",
+              "sha256": "2f4800989e0ae87223774cf23dbe498c25537f2268f69890ea81fc04e9e3ac9e"
+            }
+          }
+        ],
+        "views": [
+          {
+            "id": "view:transferredDetail",
+            "sha256": "0c0a127b27ba301d13c4f87a3b73b9a938789fe73db1629dcfdd4dedca34b7b9",
+            "pixelSha256": "60b0a176291a9012e49f268294cddeec5653eba756891432dc8983f25f32d82f",
+            "requested": {
+              "x": 38,
+              "y": 39,
+              "distance": 24,
+              "pitch": 60,
+              "yaw": 240
+            },
+            "observed": {
+              "target": {
+                "x": 38,
+                "y": 39
+              },
+              "pitch": 59.9414,
+              "yaw": -120.0586,
+              "distance": 24
+            },
+            "review": "Four first-run native views inspected: closed ramp surface with no black void; edge lips match the retained native reference. Sparse uniform diagnostic terrain is not finished mission art. Second-run equality is checked by decoded pixels."
+          },
+          {
+            "id": "view:transferredReverse",
+            "sha256": "c97ad4f60f92a16ccbd5c79258df16ccfa602a11bd36435ade1afa6f33abbb91",
+            "pixelSha256": "31056717ebd591944d655ba17edfde312927cc47ac68f240792d4f1fe0e32f7a",
+            "requested": {
+              "x": 38,
+              "y": 39,
+              "distance": 24,
+              "pitch": 60,
+              "yaw": 60
+            },
+            "observed": {
+              "target": {
+                "x": 38,
+                "y": 39
+              },
+              "pitch": 59.9414,
+              "yaw": 59.9414,
+              "distance": 24
+            },
+            "review": "Four first-run native views inspected: closed ramp surface with no black void; edge lips match the retained native reference. Sparse uniform diagnostic terrain is not finished mission art. Second-run equality is checked by decoded pixels."
+          },
+          {
+            "id": "view:referenceDetail",
+            "sha256": "e653565c439078980ef15c6fe189759c6dc917e7c1bece2cd2fc89c72e289972",
+            "pixelSha256": "afa32fd6b53e88bdf424c057868bbf25c6da8b9bf4b08231a381784b4520d0ec",
+            "requested": {
+              "x": 38,
+              "y": 71,
+              "distance": 24,
+              "pitch": 60,
+              "yaw": 240
+            },
+            "observed": {
+              "target": {
+                "x": 38,
+                "y": 71
+              },
+              "pitch": 59.9414,
+              "yaw": -120.0586,
+              "distance": 24
+            },
+            "review": "Four first-run native views inspected: closed ramp surface with no black void; edge lips match the retained native reference. Sparse uniform diagnostic terrain is not finished mission art. Second-run equality is checked by decoded pixels."
+          },
+          {
+            "id": "view:referenceReverse",
+            "sha256": "7e4f56a76c7088c5557aa5f7b845e3eb79c7f545c7ea88fa8360a23d21875a30",
+            "pixelSha256": "c02d8c3f115f80bbd9aedba994728451330fdcef8a24448c2e874e143dacb3f2",
+            "requested": {
+              "x": 38,
+              "y": 71,
+              "distance": 24,
+              "pitch": 60,
+              "yaw": 60
+            },
+            "observed": {
+              "target": {
+                "x": 38,
+                "y": 71
+              },
+              "pitch": 59.9414,
+              "yaw": 59.9414,
+              "distance": 24
+            },
+            "review": "Four first-run native views inspected: closed ramp surface with no black void; edge lips match the retained native reference. Sparse uniform diagnostic terrain is not finished mission art. Second-run equality is checked by decoded pixels."
+          }
+        ]
+      },
+      {
+        "jobId": "fac07e54-4d22-4f8a-b856-1056d295af3b",
+        "result": {
+          "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SyncMasks-314374b1-2645-4548-8ee4-518b67cb93ed\\.sc2mcp-output\\project-tests\\fac07e54-4d22-4f8a-b856-1056d295af3b\\result.json",
+          "sha256": "3b87d8d98d288524881833485d82cc2c8bf768b3e31514cf1e58f140f3e34eff"
+        },
+        "nativeInitial": {
+          "file": "L:\\NE\\jobs\\b21744fc-f567-4f28-a5ab-e963bdb9d879\\result.json",
+          "sha256": "066c37f0c4d3bce01131cdd31dfc83428a6a4baaf7a202975bbab1abd011845f"
+        },
+        "nativeSavedRevalidation": {
+          "file": "L:\\NE\\jobs\\59bcd60f-9bba-4848-bb4b-27bc58251158\\result.json",
+          "sha256": "a69c9dc1cbcdc4a8961993985b30565e546791248c416e2eb753dabe02f84ab1"
+        },
+        "savedArchive": {
+          "sha256": "62e6f52080c6cc38eb88195993f775b3bf392fab0358005f7cb9dac68f8fc46c",
+          "bytes": 8567,
+          "origin": "native_saved"
+        },
+        "componentComparison": {
+          "beforeCount": 33,
+          "savedCount": 32,
+          "reopenedCount": 32,
+          "savedToReopenedEqual": true
+        },
+        "serializationReview": {
+          "changedNames": [
+            "(attributes)",
+            "(listfile)",
+            "Base.SC2Data/GameData.xml",
+            "ComponentList.SC2Components",
+            "DocumentHeader"
+          ],
+          "nativeTerrainAndGuiBytesUnchanged": true,
+          "emptyIncludesRemoved": true,
+          "componentRegistrationOnlyAddsOptimized": true,
+          "beforeComponentListSha256": "e19eb3a5c779ee8fb3f932758c9ea0b92241336e9b232793954a5cde7d14cf5c",
+          "afterComponentListSha256": "9ea7c9e7667d365b8eee877f4027736dc4b0d8c7727e7d4438397b671d0545b4",
+          "emptyIncludesSha256": "bbe5d28d75810657c6e365fa217a8847569097401b2c978782eab8cbb8e633e0"
+        },
+        "gameRuntime": {
+          "provenance": "pinned_release",
+          "releaseTag": "v0.1.0-dev.11",
+          "archiveSha256": "514096c72332f4d6629dee4a33a092957d3ee02a9c45281bb3a7ad59031c30f3",
+          "verifiedFiles": 113,
+          "binaryOverride": false
+        },
+        "trajectories": [
+          {
+            "id": "route:transferredMarine:forward",
+            "type": "Marine",
+            "owner": 1,
+            "samples": 13,
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SyncMasks-314374b1-2645-4548-8ee4-518b67cb93ed\\.sc2mcp-output\\project-tests\\fac07e54-4d22-4f8a-b856-1056d295af3b\\route_transferredMarine_forward_trajectory.json",
+              "sha256": "973fcb139aeb9aa45612963a815542234ce5c4e685b3362bedf465c1d229260c"
+            }
+          },
+          {
+            "id": "route:transferredMarine:reverse",
+            "type": "Marine",
+            "owner": 1,
+            "samples": 13,
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SyncMasks-314374b1-2645-4548-8ee4-518b67cb93ed\\.sc2mcp-output\\project-tests\\fac07e54-4d22-4f8a-b856-1056d295af3b\\route_transferredMarine_reverse_trajectory.json",
+              "sha256": "e0136bac0e4f8ad42818ee94dae785b6ae456b76ed90be722b3f78302639af02"
+            }
+          },
+          {
+            "id": "route:transferredMarauder:forward",
+            "type": "Marauder",
+            "owner": 1,
+            "samples": 13,
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SyncMasks-314374b1-2645-4548-8ee4-518b67cb93ed\\.sc2mcp-output\\project-tests\\fac07e54-4d22-4f8a-b856-1056d295af3b\\route_transferredMarauder_forward_trajectory.json",
+              "sha256": "435e461f073e8d5aa46368210667749cf6ec77dc01268cd03758024fdbce0792"
+            }
+          },
+          {
+            "id": "route:transferredMarauder:reverse",
+            "type": "Marauder",
+            "owner": 1,
+            "samples": 13,
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SyncMasks-314374b1-2645-4548-8ee4-518b67cb93ed\\.sc2mcp-output\\project-tests\\fac07e54-4d22-4f8a-b856-1056d295af3b\\route_transferredMarauder_reverse_trajectory.json",
+              "sha256": "21c8ddd556dcb382452c733817994771786d5f81d57718f51c3e95c6da36d714"
+            }
+          },
+          {
+            "id": "route:nativeReferenceMarine:forward",
+            "type": "Marine",
+            "owner": 1,
+            "samples": 13,
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SyncMasks-314374b1-2645-4548-8ee4-518b67cb93ed\\.sc2mcp-output\\project-tests\\fac07e54-4d22-4f8a-b856-1056d295af3b\\route_nativeReferenceMarine_forward_trajectory.json",
+              "sha256": "725bd9f93c2c66c1dc29211e9f1c2082d2ccad03aaf056df479d464df2c3078b"
+            }
+          },
+          {
+            "id": "route:nativeReferenceMarine:reverse",
+            "type": "Marine",
+            "owner": 1,
+            "samples": 13,
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SyncMasks-314374b1-2645-4548-8ee4-518b67cb93ed\\.sc2mcp-output\\project-tests\\fac07e54-4d22-4f8a-b856-1056d295af3b\\route_nativeReferenceMarine_reverse_trajectory.json",
+              "sha256": "f3e82cd4e82b64dca1b3322d7f1089e7cdb3ffeead0cfe96719ea95a1889eef6"
+            }
+          },
+          {
+            "id": "route:nativeReferenceMarauder:forward",
+            "type": "Marauder",
+            "owner": 1,
+            "samples": 14,
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SyncMasks-314374b1-2645-4548-8ee4-518b67cb93ed\\.sc2mcp-output\\project-tests\\fac07e54-4d22-4f8a-b856-1056d295af3b\\route_nativeReferenceMarauder_forward_trajectory.json",
+              "sha256": "2fe0c3f4e4ec43521fc6a2b60a633a46e5e6abc355eb18a5e477aae49210a968"
+            }
+          },
+          {
+            "id": "route:nativeReferenceMarauder:reverse",
+            "type": "Marauder",
+            "owner": 1,
+            "samples": 13,
+            "maximumDeviation": 0,
+            "corridor": 1.75,
+            "trajectory": {
+              "file": "L:\\SC2EditorToolkit_PrivateEvidence\\Verification\\SyncMasks-314374b1-2645-4548-8ee4-518b67cb93ed\\.sc2mcp-output\\project-tests\\fac07e54-4d22-4f8a-b856-1056d295af3b\\route_nativeReferenceMarauder_reverse_trajectory.json",
+              "sha256": "ef5e100ac5eeccc83a5137e66d9466dfc9844ba93e00d671609a356d7cfa438c"
+            }
+          }
+        ],
+        "views": [
+          {
+            "id": "view:transferredDetail",
+            "sha256": "0c0a127b27ba301d13c4f87a3b73b9a938789fe73db1629dcfdd4dedca34b7b9",
+            "pixelSha256": "60b0a176291a9012e49f268294cddeec5653eba756891432dc8983f25f32d82f",
+            "requested": {
+              "x": 38,
+              "y": 39,
+              "distance": 24,
+              "pitch": 60,
+              "yaw": 240
+            },
+            "observed": {
+              "target": {
+                "x": 38,
+                "y": 39
+              },
+              "pitch": 59.9414,
+              "yaw": -120.0586,
+              "distance": 24
+            },
+            "review": "Four first-run native views inspected: closed ramp surface with no black void; edge lips match the retained native reference. Sparse uniform diagnostic terrain is not finished mission art. Second-run equality is checked by decoded pixels."
+          },
+          {
+            "id": "view:transferredReverse",
+            "sha256": "c97ad4f60f92a16ccbd5c79258df16ccfa602a11bd36435ade1afa6f33abbb91",
+            "pixelSha256": "31056717ebd591944d655ba17edfde312927cc47ac68f240792d4f1fe0e32f7a",
+            "requested": {
+              "x": 38,
+              "y": 39,
+              "distance": 24,
+              "pitch": 60,
+              "yaw": 60
+            },
+            "observed": {
+              "target": {
+                "x": 38,
+                "y": 39
+              },
+              "pitch": 59.9414,
+              "yaw": 59.9414,
+              "distance": 24
+            },
+            "review": "Four first-run native views inspected: closed ramp surface with no black void; edge lips match the retained native reference. Sparse uniform diagnostic terrain is not finished mission art. Second-run equality is checked by decoded pixels."
+          },
+          {
+            "id": "view:referenceDetail",
+            "sha256": "e653565c439078980ef15c6fe189759c6dc917e7c1bece2cd2fc89c72e289972",
+            "pixelSha256": "afa32fd6b53e88bdf424c057868bbf25c6da8b9bf4b08231a381784b4520d0ec",
+            "requested": {
+              "x": 38,
+              "y": 71,
+              "distance": 24,
+              "pitch": 60,
+              "yaw": 240
+            },
+            "observed": {
+              "target": {
+                "x": 38,
+                "y": 71
+              },
+              "pitch": 59.9414,
+              "yaw": -120.0586,
+              "distance": 24
+            },
+            "review": "Four first-run native views inspected: closed ramp surface with no black void; edge lips match the retained native reference. Sparse uniform diagnostic terrain is not finished mission art. Second-run equality is checked by decoded pixels."
+          },
+          {
+            "id": "view:referenceReverse",
+            "sha256": "7e4f56a76c7088c5557aa5f7b845e3eb79c7f545c7ea88fa8360a23d21875a30",
+            "pixelSha256": "c02d8c3f115f80bbd9aedba994728451330fdcef8a24448c2e874e143dacb3f2",
+            "requested": {
+              "x": 38,
+              "y": 71,
+              "distance": 24,
+              "pitch": 60,
+              "yaw": 60
+            },
+            "observed": {
+              "target": {
+                "x": 38,
+                "y": 71
+              },
+              "pitch": 59.9414,
+              "yaw": 59.9414,
+              "distance": 24
+            },
+            "review": "Four first-run native views inspected: closed ramp surface with no black void; edge lips match the retained native reference. Sparse uniform diagnostic terrain is not finished mission art. Second-run equality is checked by decoded pixels."
+          }
+        ]
+      }
+    ]
+  },
+  "serialization": "Both native saves retain every terrain/GUI/MapScript payload byte.32 saved components exactly match the reopened components. Five differences from the33-member source are retained: archive attributes/listfile, DocumentHeader, removal of an empty Includes file and only an Optimized marker added to ComponentList. Do not describe the native save as terrain repair.",
+  "previousFailures": {
+    "wrongOrSnappedRamp": "800465d9-5d8e-474f-a90e-c66ae94a881d",
+    "smoothHeightsStillWrongLabels": "5a5c8212-a565-4a41-9f04-d4ffc5f489f2",
+    "scope": "Earlier transferred-ramp traversals arrived by detouring3.36..3.38 beyond the original1.75 corridor, while the native reference passed. Those remain failed. Neither arrivals alone nor the earlier smooth-height fix established correct traversal."
+  },
+  "pathComparison": {
+    "guardRecord": {
+      "file": "docs/verification/native-storage-2026-10-23.json",
+      "sha256": "0c5381414f52542ec33e8a886e81cf0309b6d99ff6435c5c5620ba2bc8b1bc82"
+    },
+    "oldObservation": {
+      "file": "work/launch-diagnostics-20261022/native-save-path-observation.json",
+      "sha256": "976b3abdbaf95e589482c925e10612aad9fd9a57cef4f3916bbd63734ce1109d"
+    },
+    "scope": "A new frozen MCP explicitly uses short private native storage for this controlled comparison. The old overlong handler is preserved separately; successful short-root execution does not by itself prove that old handler's terminal cause."
+  },
+  "regressions": {
+    "current": {
+      "file": "docs/verification/native-storage-2026-10-23.json",
+      "sha256": "0c5381414f52542ec33e8a886e81cf0309b6d99ff6435c5c5620ba2bc8b1bc82"
+    },
+    "qualifiedReadback": {
+      "file": "work/launch-diagnostics-20261022/native-ramp-mask-transfer-readback.json",
+      "sha256": "7d4e8f59f73f7da78efd0ff5f8e27122740e5b3e1b3d39e88a788b902c500d0a"
+    },
+    "nativeReferenceAudit": {
+      "file": "work/launch-diagnostics-20261022/native-sync-mask-audit.json",
+      "sha256": "cf2df75acc833d1617657cbc59a2a218e99c9a924b61c03924fd552426194a26"
+    }
+  },
+  "openCoverage": [
+    "Other cardinal/diagonal/saddle/width/edge profiles, formations, authoritative path/collision/buildability queries and a current full topology matrix remain separate.",
+    "The three landscape scenes still require native art/gameplay acceptance; migration/no-op checks alone do not establish finished compositions.",
+    "Wider GUI, Data presentation, isolated sound and final mission-quality acceptance remain open."
+  ],
+  "published": false
+}

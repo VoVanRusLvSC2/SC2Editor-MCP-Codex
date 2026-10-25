@@ -82,6 +82,25 @@ export class BinaryTransactions {
       staged: draft !== undefined || text !== undefined,
     };
   }
+  /** Capture disk and effective staged bytes with one filesystem read.
+   * Each result owns its buffer; callers can hash or edit one without aliasing
+   * the other or an internal draft. Apply/save still perform their stale checks.
+   */
+  async readPair(file: string): Promise<{current: ByteSnapshot; disk: ByteSnapshot}> {
+    const disk = await this.read(file, false);
+    const owner = this.owners.get(disk.file);
+    const draft = owner ? this.groups.get(owner)?.bytes.get(disk.file) : undefined;
+    const text = this.textDraft(disk.file);
+    return {
+      disk,
+      current: {
+        file: disk.file,
+        bytes: Buffer.from(draft ?? (text === undefined ? disk.bytes : Buffer.from(text))),
+        exists: disk.exists,
+        staged: draft !== undefined || text !== undefined,
+      },
+    };
+  }
   async stagedText(file: string): Promise<string | undefined> {
     if (!this.hasDraft(file)) return undefined;
     const bytes = (await this.read(file)).bytes;

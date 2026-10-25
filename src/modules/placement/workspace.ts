@@ -7,7 +7,7 @@ import { Workspace } from "../../core/workspace.js";
 import { BrowseWorkspace } from "../browse/workspace.js";
 import type { BrowseSearchResult } from "../browse/types.js";
 import { componentListWithObjects, PlacementDocument } from "./document.js";
-import { planPositions, seededRandom,placementAreaBounds } from "./planner.js";
+import { planPositions, seededRandom,placementAreaBounds,scatterClusters } from "./planner.js";
 import { DistanceIndex } from "./spatialIndex.js";
 import { compactPlacementPlan } from "./summary.js";
 import {
@@ -452,8 +452,7 @@ export class PlacementWorkspace {
           })
       : [];
     let attempts = 0;
-    const clusters=args.clusterCount?planPositions({x:b.minX,y:b.minY,z:0},args.clusterCount,{type:'scatter',area:args.area,seed:args.seed^0x7192,minimumDistance:0,exclusionZones:args.exclusionZones}):[];
-    const clusterRadius=args.clusterRadius??Math.min(b.maxX-b.minX,b.maxY-b.minY)/4;
+    const clusters=scatterClusters(args.area,args.seed,args.clusterCount,args.clusterRadius,args.exclusionZones,undefined,args.clusterSeparation);
     const rejected = {
       holes: 0,
       protected: 0,
@@ -477,7 +476,7 @@ export class PlacementWorkspace {
         maxAttempts: args.maxAttempts,
         acceptPoint: (p) => {
           attempts++;
-          if(clusters.length&&!clusters.some(c=>Math.hypot(c.x-p.x,c.y-p.y)<=clusterRadius))return false;
+          if(!clusters.accepts(p))return false;
           const point = args.textures
             ? surface.sample(p)
             : surface.sampleGround(p);
@@ -714,6 +713,15 @@ export class PlacementWorkspace {
     return this.remember({request:args,objectFile:file,componentListFile:args.componentListFile??'ComponentList.SC2Components',operations:args.objectIds.map(objectId=>({op:'remove' as const,objectId})),candidates:[],evidence:['INFERRED'],warnings:['Trigger/Galaxy object references are not rewritten; callers must select disposable decoration IDs.']});
   }
 
+  async setVariations(args:{assignments:Array<{objectId:number;variation:number}>;objectFile?:string;componentListFile?:string}) {
+    if(!args.assignments.length||args.assignments.length>5000)throw Error('INVALID_VARIATION_BATCH');
+    const file=args.objectFile??'Objects',raw=await this.workspace.readRaw(file),document=new PlacementDocument(raw.text,file);
+    document.setVariations(args.assignments);
+    const plan=await this.remember({request:args,objectFile:file,componentListFile:args.componentListFile??'ComponentList.SC2Components',operations:args.assignments.map(a=>({op:'variation' as const,...a})),candidates:[],evidence:['PROVEN_BY_REAL_MAP'],warnings:['Variation is an observed Unit/Doodad attribute. Available model variants, changed visual bounds and native playback require separate measurement/review; this plan does not infer them. Existing IDs and references are preserved. Editing an owned composition intentionally becomes a manual change guarded against later regeneration.']});
+    if(!plan.applied&&plan.sourceSha256[raw.file]!==textHash(raw.text))throw Error('OBJECTS_CHANGED_DURING_PLANNING');
+    return plan;
+  }
+
   async scan(objectFile = "Objects") {
     const raw = await this.workspace.readRaw(objectFile);
     const document =
@@ -748,6 +756,9 @@ export class PlacementWorkspace {
     density?: number;
     seed?: number;
     minimumDistance?: number;
+    clusterCount?: number;
+    clusterRadius?: number;
+    clusterSeparation?:number;
     scaleRange?: { min: number; max: number };
     rotationRange?: { min: number; max: number };
     exclusionZones?: ExclusionZone[];
@@ -861,6 +872,11 @@ export class PlacementWorkspace {
         ]
       : [];
     const exclusionZones = [...(args.exclusionZones ?? []), ...reservedPaths];
+    const outsideCorridors=(p:Position3)=>(args.reservedCorridors??[]).every(route=>route.points.slice(1).every((b,i)=>{
+      const a=route.points[i],dx=b.x-a.x,dy=b.y-a.y,n=dx*dx+dy*dy,t=n?Math.max(0,Math.min(1,((p.x-a.x)*dx+(p.y-a.y)*dy)/n)):0;
+      return Math.hypot(p.x-a.x-t*dx,p.y-a.y-t*dy)>=route.width/2;
+    }));
+    const clusters=scatterClusters(args.area,seed,args.clusterCount,args.clusterRadius,exclusionZones,outsideCorridors,args.clusterSeparation);
     const positions = planPositions(
       args.area.type === "circle"
         ? args.area.center
@@ -873,10 +889,7 @@ export class PlacementWorkspace {
         seed,
         exclusionZones,
       },
-      {existingPoints:foundation?.list().flatMap(o=>{if(!o.position||!['ObjectDoodad','ObjectUnit'].includes(o.kind))return [];const [x,y,z]=o.position.split(',').map(Number);return [{x,y,z}];}),acceptPoint:p=>(args.reservedCorridors??[]).every(route=>route.points.slice(1).every((b,i)=>{
-        const a=route.points[i],dx=b.x-a.x,dy=b.y-a.y,n=dx*dx+dy*dy,t=n?Math.max(0,Math.min(1,((p.x-a.x)*dx+(p.y-a.y)*dy)/n)):0;
-        return Math.hypot(p.x-a.x-t*dx,p.y-a.y-t*dy)>=route.width/2;
-      }))},
+      {existingPoints:foundation?.list().flatMap(o=>{if(!o.position||!['ObjectDoodad','ObjectUnit'].includes(o.kind))return [];const [x,y,z]=o.position.split(',').map(Number);return [{x,y,z}];}),acceptPoint:p=>outsideCorridors(p)&&clusters.accepts(p)},
     );
     const scaleMin = args.scaleRange?.min ?? 1;
     const scaleMax = args.scaleRange?.max ?? scaleMin;
@@ -936,6 +949,7 @@ export class PlacementWorkspace {
         locationType: args.locationType,
         objects: operations.length,
         candidates: candidates.length,
+        ...(clusters.centers.length?{clustering:{count:clusters.centers.length,radius:clusters.radius,centers:clusters.centers,...args.clusterSeparation===undefined?{}:{minimumCenterDistance:args.clusterSeparation}}}:{}),
         landmarks: landmarkCount,
         reservedPaths,
         exclusionZones,

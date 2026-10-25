@@ -37,18 +37,20 @@ const attribute = (value:unknown) => text(value).replaceAll('"', '&quot;').repla
 // the document itself carry no Library attribute, and the enclosing library is
 // implicit. `serializeTriggerLibrary` sets this to the owning id for the length
 // of one synchronous serialization so that every reference tag, at whatever
-// depth, drops the attribute the editor would not have written. A reference
-// from a named library into the map root must retain an explicit Library="".
+// depth, drops ordinary same-library attributes. Type metadata bindings retain
+// their qualified library because the native type resolver does not use the
+// ordinary reference default. A reference from a named library into the map
+// root must retain an explicit Library="".
 let implicitLibraryScope:string|undefined
 
-function refAttributes(ref:any, fallbackLibrary:string) {
+function refAttributes(ref:any, fallbackLibrary:string, qualifiedType=false) {
   const implicitLibrary = implicitLibraryScope
   if (ref === undefined || ref === null || typeof ref !== 'object') return undefined
   const id = String(ref.id ?? '')
   if (id.length === 0) return undefined
   const typeName = String(ref.type ?? '')
   const named = String(ref.library ?? fallbackLibrary ?? '')
-  const library = implicitLibrary !== undefined && named === implicitLibrary ? '' : named
+  const library = !qualifiedType && implicitLibrary !== undefined && named === implicitLibrary ? '' : named
   return [
     ...(typeName ? [`Type="${attribute(typeName)}"`] : []),
     ...(library ? [`Library="${attribute(library)}"`] : named===''&&(implicitLibrary??fallbackLibrary)!==''?['Library=""']:[]),
@@ -68,6 +70,7 @@ function refTag(name:string, ref:any, fallbackLibrary:string, indent = '      ')
       ? { ...ref, type: implied }
       : ref,
     fallbackLibrary,
+    name === 'TypeElement',
   )
   return attributes === undefined ? [] : [`${indent}<${name} ${attributes}/>`]
 }
@@ -223,7 +226,7 @@ function commonElementLines(element:any, libraryId:string) {
       if (variableType.length > 0 && ((element.arraySizes?.length ?? 0) > 0 || element.isConstant === true)) {
         const variableTypeChildren = [
           ...(element.arraySizes ?? []).map((size:any) => {
-            const ref = refAttributes(size.variable, libraryId)
+            const ref = refAttributes(size.variable, libraryId, true)
             const attributes = [
               `Dim="${attribute(size.dim ?? 0)}"`,
               ...(size.value === undefined ? [] : [`Value="${attribute(size.value)}"`]),

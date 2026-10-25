@@ -18,6 +18,24 @@ export interface Brush {
   edgeBlend?: number;
   protectedAreas?: TerrainArea[];
 }
+export interface TexturePattern {
+  seed:number;
+  wavelength:number;
+  threshold:number;
+  transition:number;
+}
+export interface TerrainMaterialPatch {
+  texture:string;
+  wavelength:number;
+  seed?:number;
+  threshold:number;
+  transition:number;
+  strength:number;
+  minHeight?:number;
+  maxHeight?:number;
+  minSlope?:number;
+  maxSlope?:number;
+}
 export type TerrainStyle =
   | "forest"
   | "desert"
@@ -77,6 +95,7 @@ export type TerrainOperation =
       op: "texture.paint" | "texture.blend";
       area: TerrainArea;
       texture: string;
+      pattern?:TexturePattern;
     } & Brush)
   | ({
       op: "texture.replace";
@@ -88,6 +107,7 @@ export type TerrainOperation =
   | ({
       op: "texture.paint_rules";
       area: TerrainArea;
+      pattern?:TexturePattern;
       rules: Array<{
         texture: string;
         minHeight?: number;

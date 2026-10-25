@@ -99,6 +99,14 @@ The created component-directory becomes the new `SC2_UI_ROOT`. Then the old Terr
 
 `document.inspect` verifies **unchanged basis**. After copyright editing, the expected SHA fundamentals are changed; then use the usual validators of the corresponding module. Service `.sc2mcp-document.json` is excluded from MPQ and parent indexes. General `ui.test_readiness` is focused on map with Terrain; for mod and no-terrain foundation, use `document.inspect` and the necessary Data/Text/Script checks.
 
+After authoring a dependent or extension mod, save all drafts and export through
+`map.export` with a `.SC2Mod` destination. This validates supported mod metadata
+and registered component markers, then packs/reopens the current committed
+entries without requiring the empty-foundation manifest to remain unchanged.
+For a root mod workspace, use `.sc2mcp-output/MyMod.SC2Mod`. Authored Data, GUI,
+scripts and other eligible entries are preserved exactly; map placement/preload
+preparation is skipped. Archive verification is separate from native acceptance.
+
 ## Inspections and limitations
 
 Checked native Header reader on existing fixture, all its truncated prefixes, exact 44-byte marker, fresh complete MapInfo, initial rectangular grids, inheritance/tokens, strict schemas, mod subtype, localisation, dryRun, full source guards, stale builds, cyclic/local dependencies, existing destinations, actual native MPQ pack/reopen and real SDK creation through installed SC2.

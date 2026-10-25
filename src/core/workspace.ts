@@ -86,11 +86,12 @@ export class Workspace {
     }
     this.mergeReads(reads);return true;
   }
-  readMemoFingerprint(memo:WorkspaceReadMemo):string{
+  readMemoFingerprint(memo:WorkspaceReadMemo,identities:ReadonlyMap<string,string>=new Map()):string{
     const reads=this.readMemos.get(memo);if(!reads)throw Error('FOREIGN_READ_MEMO');const hash=createHash('sha256');
-    for(const [file,snapshot]of [...reads].sort(([a],[b])=>a.localeCompare(b)))hash.update(JSON.stringify([file,snapshot.exists,createHash('sha256').update(snapshot.bytes).digest('hex')]));
-    for(const [file,text]of [...reads.effective].sort(([a],[b])=>a.localeCompare(b)))hash.update(JSON.stringify([file,sha256(text)]));
-    for(const [key,directory]of [...reads.directories].sort(([a],[b])=>a.localeCompare(b)))hash.update(JSON.stringify([key,directory.entries]));
+    const seen=new Map<string,string>(),identity=(file:string)=>{const key=identities.get(file)??file,previous=seen.get(key);if(previous!==undefined&&previous!==file)throw Error('READ_MEMO_IDENTITY_COLLISION');seen.set(key,file);return key;};
+    for(const [file,snapshot]of [...reads].map(([file,value])=>[identity(file),value] as const).sort(([a],[b])=>a.localeCompare(b)))hash.update(JSON.stringify([file,snapshot.exists,createHash('sha256').update(snapshot.bytes).digest('hex')]));
+    for(const [file,text]of [...reads.effective].map(([file,value])=>[identity(file),value] as const).sort(([a],[b])=>a.localeCompare(b)))hash.update(JSON.stringify([file,sha256(text)]));
+    for(const [key,directory]of [...reads.directories].map(([key,value])=>[identity(key),value] as const).sort(([a],[b])=>a.localeCompare(b)))hash.update(JSON.stringify([key,directory.entries]));
     return hash.digest('hex');
   }
   private captureRead(absolute: string, snapshot: FileSnapshot) {

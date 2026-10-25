@@ -8,7 +8,8 @@ import {Workspace} from '../core/workspace.js';
 import {ModelMeasurements,measureGeometry,type Geometry,type MeasuredModel} from '../modules/assets/measurement.js';
 import {attachmentMeasurements} from '../modules/assets/attachmentMeasurements.js';
 import {modelSheetSvg,modelSheetPng} from '../modules/assets/measurementRender.js';
-import {layoutPrefab,overlaps,type Slot} from '../modules/placement/decorPrefabs.js';
+import {DecorPrefabs,layoutPrefab,overlaps,prefabSchema,type Slot} from '../modules/placement/decorPrefabs.js';
+import {compositionSchema} from '../modules/placement/compositions.js';
 import {measuredMemberGeometry} from '../modules/placement/compositionGeometry.js';
 import {DecorPalette,catalogScale,type DecorModel} from '../modules/placement/decorPalette.js';
 import {BrowseWorkspace} from '../modules/browse/workspace.js';
@@ -50,6 +51,28 @@ test('all ready groups preserve a measured corridor and actual noncentral pivot 
   }
  const gate=layoutPrefab('base_entrance',slots(),6,42);assert.equal(gate.members[0].heightOffset,.3);assert.notEqual(gate.members[0].offset.x,-5);assert.match(String(gate.connections[0].evidence),/not verified sockets/);
  assert.throws(()=>layoutPrefab('base_entrance',[],6,42),/SLOT_REQUIRED/);
+});
+
+test('supply cluster preserves an open service apron and real sizes with distinct asymmetric storage',()=>{
+ const models=[...slots(),{name:'secondaryProp',decor:{actor:{id:'Crates',key:'Actor:Crates'},measured:box(.8,1.3,.7,[2,-3,-.2]),variation:0,scales:{combined:[1,1,1]}} as DecorModel}];
+ const input=prefabSchema.parse({tileset:'Agria',recipe:'supply_cluster',prop:'SupplyTanks',secondaryProp:'Crates',clearance:3}),r=layoutPrefab(input.recipe,models,input.clearance,42);
+ assert.deepEqual(r,layoutPrefab(input.recipe,models,input.clearance,42));assert.equal(r.members.length,6);assert.equal(new Set(r.members.map(m=>m.key)).size,3);
+ assert.equal(r.reserved[0].minY,-3);assert.equal(r.reserved[0].maxY,0);assert.equal(r.connections[0].type,'service_apron');
+ for(let i=0;i<r.bounds.length;i++){assert.equal(overlaps(r.bounds[i],r.reserved[0]),false);assert.ok(r.bounds[i].minY>0);for(let j=0;j<i;j++)assert.equal(overlaps(r.bounds[i],r.bounds[j]),false);}
+ assert.equal(r.members.filter(m=>m.id==='Crates').length,3);assert.equal(r.members.find(m=>m.id==='Crates')!.heightOffset,.2);
+ const primary=r.bounds[0];assert.ok(Math.abs(primary.maxX-primary.minX-1.5)<1e-8);assert.ok(Math.abs(primary.maxY-primary.minY-2)<1e-8);
+ const config=compositionSchema.parse({zone:'logistics',tileset:'Agria',recipe:'measured_group',prefabRecipe:input.recipe,anchor:{x:40,y:24},members:r.members});assert.equal(config.prefabRecipe,'supply_cluster');
+ const transformed=r.members.map(m=>measuredMemberGeometry({x:40,y:24},.7,m));assert.ok(transformed.every(v=>v.corners.length===4));
+ assert.throws(()=>layoutPrefab('supply_cluster',slots(),3,42),/SLOT_REQUIRED/);
+ const broadLight=models.map(v=>v.name==='light'?{...v,decor:{...v.decor,measured:box(2,14,3,[3,4,-1])}}:v);const broad=layoutPrefab('supply_cluster',broadLight,3,42);assert.ok(broad.bounds.every(b=>!overlaps(b,broad.reserved[0])));
+});
+
+test('automatic supply slots avoid named wreckage and require distinct available props',async()=>{
+ let rows=[{id:'DestroyedContainer'},{id:'LandingLights'},{id:'SupplyTanks'},{id:'BraxisAlphaBarrels'}];const called:string[]=[];
+ const fake={browse:{withSnapshot:async(fn:()=>unknown)=>fn()},catalog:{pack:async()=>({sections:{decor:rows}})},resolve:async({id}:{id:string})=>{called.push(id);assert.notEqual(id,'DestroyedContainer');return {actor:{id,key:'Actor:'+id},measured:id==='SupplyTanks'?box(3,2,1):box(.4,.6,1),scales:{combined:[1,1,1]},variation:0} as DecorModel;},image:async()=>({pngFile:'derived.png'}),summary:(model:DecorModel)=>({id:model.actor.id})} as unknown as DecorPalette;
+ const prefabs=new DecorPrefabs(fake),first=await prefabs.plan({tileset:'Agria',recipe:'supply_cluster',includeImage:false});assert.equal(new Set(first.slots.map(s=>s.id)).size,3);assert.equal(first.members.length,6);assert.ok(!called.includes('DestroyedContainer'));
+ rows=rows.filter(r=>r.id!=='BraxisAlphaBarrels');await assert.rejects(prefabs.plan({tileset:'Agria',recipe:'supply_cluster'}),/DISTINCT_AUTOMATIC_SLOT_REQUIRED/);
+ const explicit=await prefabs.plan({tileset:'Agria',recipe:'supply_cluster',secondaryProp:'SupplyTanks'});assert.equal(new Set(explicit.slots.map(s=>s.id)).size,2);
 });
 test('Actor -> Model -> CASC passport composes scales; palette joins original catalog and reuses derived image cache',async t=>{
  const root=await fs.mkdtemp(path.join(os.tmpdir(),'decor-measure-'));t.after(()=>fs.rm(root,{recursive:true,force:true}));await fs.cp('src/tests/fixtures/browse-placement-map',root,{recursive:true});

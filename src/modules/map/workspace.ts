@@ -15,6 +15,7 @@ import type { TerrainOperation } from "../terrain/types.js";
 import type { GenerateArgs } from "../terrain/recipes.js";
 import { commitFiles } from "../../core/fileTransactions.js";
 import {editorLoadFiles,prepareEditorLoad} from './editorLoad.js';
+import { inspectModExport } from "./modExport.js";
 
 const blueprintRegistry = ".sc2mcp-blueprints.json";
 const blueprintTerrainFiles = ["t3Terrain.xml", "t3HeightMap", "t3TextureMasks", "t3SyncHeightMap", "t3SyncCliffLevel", "t3SyncTextureInfo", "t3CellFlags", "t3HardTile", "t3FluffDoodad", "t3VertCol", "t3Water"];
@@ -274,23 +275,33 @@ export class MapWorkspace {
     const relative = path.relative(source,target).replaceAll("\\","/");
     if(relative !== ".." && !relative.startsWith("../") && !path.isAbsolute(relative) && !relative.startsWith(".sc2mcp-output/")) throw new Error("MAP_EXPORT_INSIDE_COMPONENTS: use .sc2mcp-output/result.SC2Map or an output outside the map directory");
     this.assertNoDrafts(directory);
-    const inspection = await this.inspect(directory);
-    if(!inspection.valid) throw new Error("INVALID_MAP_FOUNDATION: " + JSON.stringify(inspection.issues));
-    if(dryRun){const inputs=new Map(await Promise.all(editorLoadFiles.map(async file=>[file,await fs.readFile(path.join(source,file)).catch(e=>{if(e.code!=='ENOENT')throw e;return Buffer.alloc(0);})] as const)));const load=prepareEditorLoad(inputs);return {dryRun:true,directory,archive,entryCount:inspection.files.length,validation:inspection.validationScope,editorLoad:{changed:load.changed,objects:load.objects,addedPreloads:load.addedPreloads,rendering:load.rendering}};}
+    const kind = /\.SC2Mod$/i.test(target) ? "mod" : "map";
+    if(kind === "map") {
+      const header = await readSnapshot(path.join(source,"DocumentHeader"));
+      if(header.bytes.length >= 28 && header.bytes.toString("ascii",0,4) === "H2CS" && header.bytes.readUInt32LE(24) === 2)
+        throw new Error("DOCUMENT_EXPORT_KIND_MISMATCH: a mod requires .SC2Mod");
+    }
+    const inspection = kind === "mod" ? await inspectModExport(source,await directoryManifest(source)) : await this.inspect(directory);
+    if(!inspection.valid) throw new Error("INVALID_MAP_FOUNDATION: " + JSON.stringify("issues" in inspection ? inspection.issues : []));
+    const prepareLoad = async (root: string) => {
+      if(kind === "mod") return { changed:[] as string[],objects:0,addedPreloads:0,rendering:"NOT_APPLICABLE_MOD",next:new Map<string,Buffer>() };
+      const inputs = new Map(await Promise.all(editorLoadFiles.map(async file => [file,await fs.readFile(path.join(root,file)).catch(e => { if(e.code !== "ENOENT") throw e; return Buffer.alloc(0); })] as const)));
+      return prepareEditorLoad(inputs);
+    };
+    if(dryRun){const load=await prepareLoad(source);return {dryRun:true,directory,archive,kind,entryCount:inspection.files.length,validation:inspection.validationScope,editorLoad:{changed:load.changed,objects:load.objects,addedPreloads:load.addedPreloads,rendering:load.rendering}};}
     return this.workspace.transactions.run(async () => {
       this.assertNoDrafts(directory);
       const staging = await fs.mkdtemp(path.join(os.tmpdir(),"sc2mcp-map-export-"));
       try {
         const meta = await this.snapshotCopy(directory,staging,inspection.files);
-        const loadInputs=new Map(await Promise.all(editorLoadFiles.map(async file=>[file,await fs.readFile(path.join(staging,file)).catch(e=>{if(e.code!=='ENOENT')throw e;return Buffer.alloc(0);})] as const)));
-        const load=prepareEditorLoad(loadInputs);
+        const load=await prepareLoad(staging);
         for(const file of load.changed)await fs.writeFile(path.join(staging,file),load.next.get(file)!);
         const result = await packArchive(staging,target,{ backup,beforePublish:async () => {
           this.assertNoDrafts(directory);
           if(JSON.stringify(await directoryManifest(source)) !== JSON.stringify(inspection.files)) throw new Error("STALE_MAP_EXPORT");
           await assertSnapshots(file => file,new Map([[path.join(source,archiveMetadataFile),meta]]));
         } });
-        return { ...result,componentDirectory:source,dryRun:false,validation:inspection.validationScope,editorLoad:{changed:load.changed,objects:load.objects,addedPreloads:load.addedPreloads,rendering:load.rendering},editorValidation:"NOT_EXECUTED",runtimeValidation:"NOT_EXECUTED" };
+        return { ...result,componentDirectory:source,dryRun:false,kind,validation:inspection.validationScope,editorLoad:{changed:load.changed,objects:load.objects,addedPreloads:load.addedPreloads,rendering:load.rendering},editorValidation:"NOT_EXECUTED",runtimeValidation:"NOT_EXECUTED" };
       } finally { await fs.rm(staging,{ recursive:true,force:true }); }
     });
   }
