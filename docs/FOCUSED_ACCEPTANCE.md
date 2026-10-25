@@ -33,11 +33,25 @@ observation, and that observation does not automatically certify the newer code.
 | F3 | Convert/import a complex editable GUI graph with a named library, nested records/arrays, reference parameters, callbacks and runtime registration. | Preserve the GUI graph and localized TriggerStrings; compare original expected behavior with the original Editor's regenerated, saved and recompiled artifact. Verify the receiver, call timing and exactly one callback. Exercise a known invalid cross-scope graph as a separate expected refusal/finding. | No silent variable relocation, widened bounds, substitute script emitter or Custom Script wrapper. Keep unsupported library-to-map-global initialization/order visible; do not claim arbitrary library equivalence. |
 | F4 | Rebuild a hero-selection/ability dialog after closing it, with changing pages, long localized labels and an overlapping child control. | Use the actual returned native root and normal handler. The chosen hero/state must match the selected entry; one activation fires one callback. Closed/stale handles cannot activate the new dialog. Inspect text clipping, disabled requirements and page changes at the observed viewport. | Accept the tested locale/viewport/control profile. Other resolutions, keyboard routes or direct numeric counters need their own observation; unsupported access is a bounded limitation, not a reason for endless retries. |
 
-All four rows start **pending**. Existing controls above are retained evidence,
-not executions of these additional combined cases. Record a row as passed,
+Initial state: all four rows were **pending**. Existing controls above are retained
+evidence, not executions of these additional combined cases. Record a row as passed,
 failed with a reproducible defect, or limited by a specifically named unsupported
 operation. A diagnosed limitation closes investigation of that operation without
 reclassifying it as a pass or blocking every supported map workflow.
+
+## Recorded outcomes
+
+- **F2: mechanics passed; presentation scope limited.** The
+  [new compound native observation](verification/focused-data-lifecycle-2026-10-26.json)
+  verifies concurrent caster identities, early cancellation with zero pulse damage,
+  target loss between the second ability's body and finish, six pulses/300 damage
+  on a same-unit recast, ordinary attack/movement recovery and matching observed
+  main Actor create/destroy instances. One unsuccessful harness attempt is retained.
+  Exact animation-sequence identity and isolated sound remain unverified; three
+  selected frames were inspected. Do not repeat this mechanical case without a
+  diagnosed relevant change. Global absence of every possible orphan/duplicate
+  actor is not inferred from paginated snapshots.
+- **F1, F3 and F4: pending.** No result for these combined cases is inferred from F2.
 
 ## Execution and stopping rules
 
