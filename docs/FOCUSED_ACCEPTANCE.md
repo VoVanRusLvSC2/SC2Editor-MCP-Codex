@@ -51,7 +51,18 @@ reclassifying it as a pass or blocking every supported map workflow.
   selected frames were inspected. Do not repeat this mechanical case without a
   diagnosed relevant change. Global absence of every possible orphan/duplicate
   actor is not inferred from paginated snapshots.
-- **F1, F3 and F4: pending.** No result for these combined cases is inferred from F2.
+- **F1: preservation and declared native cases verified; earlier suites retained
+  as failed.** The [compound terrain evidence](verification/focused-terrain-ownership-2026-10-26.json)
+  records stale/manual-owner refusals, 99 changed vertices with no outside change,
+  preserved manual object/depression, a zero-byte repeat and normal Editor
+  save/reopen/recompile. Four group directions/eight member trajectories and
+  positive/negative building predicates were checked on the exact saved bytes.
+  Targeted followups corrected an out-of-bounds test point, an unjustified blocked
+  expectation on a high plateau and an observed camera clamp; the original whole
+  suite verdicts remain failed. This exposed and fixed a missing source-bounds
+  preflight and omitted compact job handles. Broader geometry and finished art
+  are not inferred.
+- **F3 and F4: pending.** No result for these combined cases is inferred from F1/F2.
 
 ## Execution and stopping rules
 

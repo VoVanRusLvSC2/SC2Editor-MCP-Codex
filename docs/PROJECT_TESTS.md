@@ -126,6 +126,15 @@ sessions and release the bridges for the next map. They do not create new bridge
 instances or close shared frontends after every test. Server shutdown drains the
 runner before closing the frontends.
 
+Planning reads the source archive's bounded MapInfo entry when routes, formations,
+placement or pathing predicates need named points. Outside centers/member offsets
+and unreadable bounds prevent `ready:true` before any Editor or Game job is queued.
+This preflight does not certify a footprint or navigation. The runner separately
+rechecks the exact native-saved artifact before game launch; source bounds cannot
+substitute for metadata changed by native save. MapInfo byte caches are keyed by
+the whole archive digest. Compact batch responses retain `ready`, `jobId`, state
+and phase so callers can stop blocked plans and poll owned jobs without full logs.
+
 Separate MCP processes use distinct retained worker/session directories, even
 when they share a workspace. Repeated tests in one process reuse its same bridges
 and directories. This prevents session-file collisions between chats; it does not

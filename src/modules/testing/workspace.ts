@@ -77,6 +77,15 @@ export class ProjectTestWorkspace {
   if(this.terrainLoadCache.size>=32)this.terrainLoadCache.delete(this.terrainLoadCache.keys().next().value!);
   this.terrainLoadCache.set(source.sha256,check);return check;
  }
+ private async playableBoundsCheck(manifest:TestManifest,artifact:Identity):Promise<TestCheck|undefined>{
+  if(!manifest.game||!(manifest.game.routes.length||manifest.game.formations.length||manifest.game.pads.length||manifest.game.pathing.length))return;
+  try{
+   if((await this.identity(artifact.file)).sha256!==artifact.sha256)throw Error('TEST_EXECUTED_ARTIFACT_CHANGED');
+   let bytes=this.mapInfoCache.get(artifact.sha256);
+   if(!bytes){bytes=await (this.options.mapInfo??readArchiveMapInfo)(artifact.file);if((await this.identity(artifact.file)).sha256!==artifact.sha256)throw Error('TEST_EXECUTED_ARTIFACT_CHANGED');if(bytes.length>1024*1024)throw Error('TEST_MAPINFO_SIZE_LIMIT');if(this.mapInfoCache.size>=32)this.mapInfoCache.delete(this.mapInfoCache.keys().next().value!);this.mapInfoCache.set(artifact.sha256,Buffer.from(bytes));}
+   return routeBoundsCheck(manifest,bytes);
+  }catch(e){return {id:'map.playable_bounds',status:'unsupported',required:true,reason:('TEST_ROUTE_BOUNDS_UNAVAILABLE: '+String(e)).slice(0,640)};}
+ }
  async plan(input:unknown){
   this.pending();const manifest=testManifestSchema.parse(input),source=await this.identity(manifest.map);
   if(!/\.sc2map$/i.test(source.file))throw Error('TEST_SAVED_SC2MAP_REQUIRED');
@@ -85,6 +94,9 @@ export class ProjectTestWorkspace {
   for(const d of manifest.dependencies){try{const value=await this.identity(d.file,d.id);if(d.sha256&&value.sha256!==d.sha256)throw Error('Dependency digest mismatch');dependencies.push(value);}catch(e){issues.push({id:'dependency:'+d.id,status:'failed',required:true,reason:String(e)});}}
   const storage=await this.storageChecks(manifest,source);issues.push(...storage.filter(c=>c.status!=='passed'));
   const load=await this.terrainLoadCheck(source);if(load&&load.status!=='passed')issues.push(load);
+  // Source metadata can reject invalid routes before an expensive Editor job.
+  // The exact native-saved artifact is still checked separately before launch.
+  const bounds=await this.playableBoundsCheck(manifest,source);if(bounds&&bounds.status!=='passed')issues.push({...bounds,id:'source.playable_bounds'});
   const game=this.options.runtime.game.configuration();
   if(manifest.game&&(!game.configured||!game.launchEnabled))issues.push({id:'game.configuration',status:'unsupported',required:manifest.game.required,reason:'Configure SC2_GAME_TOOLKIT_HOME and explicitly enable SC2_GAME_ALLOW_LAUNCH=1'});
   if(manifest.game?.routes.some(r=>r.expected==='blocked'))issues.push({id:'navigation.authoritative_query',status:'unsupported',required:false,reason:'Movement non-arrival cannot prove an obstruction. Explicit game.pathing checks report separate native point predicates; they do not certify this unit footprint or the later movement Game state'});
@@ -180,14 +192,7 @@ export class ProjectTestWorkspace {
    }
    if(j.testedArtifact){const load=await this.terrainLoadCheck(j.testedArtifact);if(load){j.checks.push(load);if(load.status==='failed')return;}}
    if(m.game&&(m.game.routes.length||m.game.formations.length||m.game.pads.length||m.game.pathing.length)){
-    this.checkCancel(j);j.phase='map.playable_bounds';let check:TestCheck;
-    try{
-     const artifact=j.testedArtifact!;
-     if((await this.identity(artifact.file)).sha256!==artifact.sha256)throw Error('TEST_EXECUTED_ARTIFACT_CHANGED');
-     let bytes=this.mapInfoCache.get(artifact.sha256);
-     if(!bytes){bytes=await (this.options.mapInfo??readArchiveMapInfo)(artifact.file);if((await this.identity(artifact.file)).sha256!==artifact.sha256)throw Error('TEST_EXECUTED_ARTIFACT_CHANGED');if(bytes.length>1024*1024)throw Error('TEST_MAPINFO_SIZE_LIMIT');if(this.mapInfoCache.size>=32)this.mapInfoCache.delete(this.mapInfoCache.keys().next().value!);this.mapInfoCache.set(artifact.sha256,Buffer.from(bytes));}
-     check=routeBoundsCheck(m,bytes);
-    }catch(e){check={id:'map.playable_bounds',status:'unsupported',required:true,reason:'TEST_ROUTE_BOUNDS_UNAVAILABLE: '+String(e)};}
+    this.checkCancel(j);j.phase='map.playable_bounds';const check=(await this.playableBoundsCheck(m,j.testedArtifact!))!;
     j.checks.push(check);if(check.status!=='passed')return;
    }
    if(m.game&&(m.game.pads.length||m.game.pathing.length)&&!await this.pads(j,runtime))return;

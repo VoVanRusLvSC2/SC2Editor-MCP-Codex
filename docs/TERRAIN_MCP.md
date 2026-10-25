@@ -1,5 +1,11 @@
 # Terrain MCP
 
+Rendering metadata such as sampled `protected` or `nativeMeshHole` is not a
+building-placement verdict. A measured high plateau point with those flags was
+accepted by the native SupplyDepot predicate. Use an explicit native placement
+check at the actual intended footprint; do not infer a blocked site from the
+label of a rendering flag or a model's bounds.
+
 `placement.createLocation` can combine an irregular polygon, existing terrain
 generation, authored roads and decoration in one terrain/Objects/ComponentList
 transaction. Its `terrain.routes` entries accept points, width, optional texture,

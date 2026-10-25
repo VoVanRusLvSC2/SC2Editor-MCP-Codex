@@ -194,12 +194,13 @@ test('changing a manifest file invalidates its resolved plan',async t=>{
  await fs.writeFile(file,JSON.stringify({...manifest,label:'changed'}));await assert.rejects(f.tests.run(p.planId),/STALE/);assert.equal(f.calls.length,0);
 });
 
-test('outside route centers fail before game launch; unsupported metadata cannot become a route pass',async t=>{
- const f=await fixture(t),p=await f.tests.plan({...manifest,game:{...manifest.game,points:{...manifest.game.points,start:{x:6,y:20}}}});
- const r=await finished(f.tests,(await f.tests.run(p.planId)).jobId);
- assert.equal(r.outcome,'failed');assert.match(r.checks.find(c=>c.id==='map.playable_bounds')?.reason??'',/OUTSIDE.*start/);assert.equal(f.calls.length,0);
- const g=await fixture(t);g.setMapInfo(Buffer.from('unknown profile'));const q=await g.tests.plan(manifest),u=await finished(g.tests,(await g.tests.run(q.planId)).jobId);
- assert.equal(u.outcome,'unsupported');assert.equal(g.calls.length,0);
+test('outside route centers block planning before Editor startup; unreadable bounds cannot become ready',async t=>{
+ const f=await fixture(t);let editorCalls=0;f.runtime.editor.check=async()=>{editorCalls++;return {id:'unexpected'} as any;};
+ const p=await f.tests.plan({...manifest,editor:{checks:['load','compile','save_reopen'],contextLabel:'MAIN',gameArtifact:'native_saved'},game:{...manifest.game,points:{...manifest.game.points,start:{x:6,y:20}}}});
+ assert.equal(p.ready,false);assert.match(p.issues.find(c=>c.id==='source.playable_bounds')?.reason??'',/OUTSIDE.*start/);
+ await assert.rejects(f.tests.run(p.planId),/TEST_PLAN_BLOCKED/);assert.equal(editorCalls,0);assert.equal(f.calls.length,0);assert.equal(f.gate.busy,null);await assert.rejects(fs.access(f.tests.work));
+ const g=await fixture(t);g.setMapInfo(Buffer.from('unknown profile'));const q=await g.tests.plan(manifest);
+ assert.equal(q.ready,false);assert.equal(q.issues.find(c=>c.id==='source.playable_bounds')?.status,'unsupported');await assert.rejects(g.tests.run(q.planId),/TEST_PLAN_BLOCKED/);assert.equal(g.calls.length,0);
 });
 
 const formation={id:'squad',from:'start',to:'end',type:'Marine',mobility:'ground',offsets:[{x:-1,y:0},{x:1,y:0}],timeout:1,maxDeviation:2,viewId:'overview'};
@@ -233,7 +234,7 @@ test('formation suites observe both directions, preserve group frames before cle
 
 test('formation endpoint offsets are checked against exact MapInfo before the game starts',async t=>{
  const f=await fixture(t),p=await f.tests.plan({version:1,map:'Map.SC2Map',game:{capture:false,points:manifest.game.points,formations:[{...formation,viewId:undefined,offsets:[{x:0,y:0},{x:50,y:0}]}]}});
- const r=await finished(f.tests,(await f.tests.run(p.planId)).jobId);assert.equal(r.outcome,'failed');assert.match(r.checks.find(c=>c.id==='map.playable_bounds')?.reason??'',/FORMATION_MEMBER_OUTSIDE/);
+ assert.equal(p.ready,false);assert.match(p.issues.find(c=>c.id==='source.playable_bounds')?.reason??'',/FORMATION_MEMBER_OUTSIDE/);await assert.rejects(f.tests.run(p.planId),/TEST_PLAN_BLOCKED/);
  assert.equal(f.calls.some(c=>c.method==='attach'),false);assert.equal(f.calls.some(c=>c.method==='game.fixture'),false);assert.equal(f.mapInfoReads(),1);
 });
 
@@ -407,8 +408,9 @@ test('native artifact selection requires successful save/reopen and gameplay',()
 });
 
 test('route preflight checks the selected native-saved artifact before launching it',async t=>{
- const f=await fixture(t);await savedArtifact(f);f.setMapInfo(createMapInfo(24,24,'Native changed bounds',6,0));
- const p=await f.tests.plan({...manifest,editor:{contextLabel:"MAIN",checks:['load','save_reopen'],gameArtifact:'native_saved'}}),r=await finished(f.tests,(await f.tests.run(p.planId)).jobId);
+ const f=await fixture(t);await savedArtifact(f);
+ const p=await f.tests.plan({...manifest,editor:{contextLabel:"MAIN",checks:['load','save_reopen'],gameArtifact:'native_saved'}});assert.equal(p.ready,true);assert.equal(f.mapInfoReads(),1);
+ f.setMapInfo(createMapInfo(24,24,'Native changed bounds',6,0));const r=await finished(f.tests,(await f.tests.run(p.planId)).jobId);assert.equal(f.mapInfoReads(),2);
  assert.equal(r.testedArtifact?.origin,'native_saved');assert.equal(r.outcome,'failed');assert.equal(f.calls.filter(c=>c.method==='attach').length,0);
  assert.match(r.checks.find(c=>c.id==='map.playable_bounds')?.reason??'',/OUTSIDE/);
 });

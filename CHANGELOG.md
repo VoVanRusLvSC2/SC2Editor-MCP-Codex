@@ -1,5 +1,15 @@
 # Changelog
 
+## Source bounds preflight and compact job handles — 2026-10-26
+
+- Reject out-of-bounds movement/placement points and unreadable source MapInfo
+  during test planning, before any Editor job. Keep the independent exact
+  native-saved artifact check and archive-digest cache semantics.
+- Retain `ready`, `jobId`, state, phase and outcome in compact MCP responses so
+  clients can inspect readiness and poll the owned job without full logs.
+- Record the compound F1 ownership/manual-edit/native checks and retain their
+  original failed expectations. Remove obsolete GUI save/reopen pending wording.
+
 ## Guarded authoring and scoped native acceptance — 2026-10-26
 
 - Pin Editor Toolkit 1.0.0/protocol15 with verified release assets, bounded owned

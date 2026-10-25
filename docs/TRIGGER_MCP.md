@@ -71,8 +71,12 @@ passed original generation/compilation and four clean gameplay launches across
 two exact archives. It covers library coexistence, nested control flow,
 structures, global/local arrays, presets, function defaults/parameters/returns,
 native Dialog click callbacks, event parameters and dynamic per-player indices.
-The complex typed-core save/reopen handler remains pending. Other functions,
-libraries and controls are not certified by this representative corpus.
+The [2026-10-25 GUI matrix](verification/native-gui-matrix-current-2026-10-25.json)
+subsequently passed native save/reopen, saved-artifact recompilation and expected
+gameplay for three declared profiles, including the typed core and explicit-target
+registration. Do not repeat those controls because the earlier record lacked
+save/reopen. Other functions, libraries, revised-import equivalence and controls
+are not certified by that representative corpus.
 
 The offline emitter supports native boolean groups, exclusive If/Else If chains,
 integer increments, Skip Remaining and abilcmd literals with ValueId indices.
