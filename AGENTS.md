@@ -53,6 +53,11 @@ localization, resource IDs and original catalog source annotations.
   inspect the image and retain sparse/flat `contentAssessment` review flags.
 - Record static validity, native compile, rendered appearance and gameplay as
   distinct evidence. Unknown/unreadable diagnostics remain unknown.
+- Before another native run, identify the unverified behavior or changed code
+  that justifies it. Reuse retained results within their recorded scope; do not
+  replay passing fixtures solely to refresh a general readiness label. Follow
+  `docs/FOCUSED_ACCEPTANCE.md` for the remaining bounded stress cases. A failed
+  case gets a diagnosed fix and a targeted rerun, not an expanding renewal matrix.
 - For authorized native checks, use `editor.check`, `editor.job`, `editor.capture`
   and `editor.stop`. Toolkit owns a hidden Editor and private copies. Never attach
   to the user's visible Editor or force-kill active native handlers. Game tests

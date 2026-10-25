@@ -1,5 +1,12 @@
 # MCP quality roadmap
 
+The current user-requested exit pass is limited to the four compound cases in
+[focused functional acceptance](FOCUSED_ACCEPTANCE.md). Cutscene acceptance and
+universal compatibility are outside that pass. Preserve the historical roadmap
+below, but do not turn its broad coverage aspirations into repeated native runs
+of already confirmed controls. The focused cases are pending until observed;
+their selection is not a test result.
+
 - Three existing GUI profiles now pass two current frozen-runtime native
   save/reopen/recompile/Game cycles each: typed records/references/arrays,
   events/Dialog callbacks with retained startup death history, and explicit-target
