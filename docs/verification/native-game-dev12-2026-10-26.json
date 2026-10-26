@@ -1,0 +1,125 @@
+{
+  "date": "2026-10-26",
+  "scope": "Pinned dev.12 installation and one fresh outer-MCP hidden-game lifecycle/UI observation. No broad corpus or independent external physical-input stress acceptance.",
+  "sourceFingerprints": [
+    {
+      "file": "game-toolkit-release.json",
+      "sha256LfUtf8": "2045e425942ec70e58277821b283e4fad73100b1fb6c9c34d7f702bb08e91a19"
+    }
+  ],
+  "release": {
+    "tag": "v0.1.0-dev.12",
+    "archiveSha256": "618d9a2bab1126135e022dd5142dacc525c0f55eb800d02b1a4ed51d18d165ef",
+    "manifestSha256": "6f0f429578aaa9546c10c5adff4a5c81b1d208b222151a0e08e8172d4fcec183",
+    "verifiedFiles": 121,
+    "binaries": {
+      "SC2GameBootstrap.dll": "96742ce06225234b94b84c6cccf361203f3354424b931be91e71c8b0fd9420c6",
+      "SC2GameBridge.dll": "7b0f9f43eada214dbff81671d314080e9ae3c051f8ac12c2b1d14ea21864fd0a",
+      "SC2GameHost.exe": "a5d0fcced4d48980c25705c0c9ed74b7df7ca794ac3c5145c1e4dcd8dbafcfaf",
+      "SC2GameInject.exe": "154905cf1d6739c7282745f7f50e859bfe0ccd0794fbbae459b89c1cd46f13d5"
+    }
+  },
+  "native": {
+    "game": "5.0.17.98310",
+    "session": "79049537cafc83613a1914343875768a",
+    "sourceMapSha256": "b0dd4f60c79b6a8788e4311f58e14445f07942906b7a9288d9eddd9bc4cb50fd",
+    "handshake": true,
+    "bridgeActive": true,
+    "renderBackend": "vulkan",
+    "inputIsolationBeforeUi": {
+      "blockedCalls": {
+        "AttachThreadInput": 0,
+        "ClipCursor": 4,
+        "D3D.SetCursorPosition": 0,
+        "D3D.SetCursorProperties": 0,
+        "D3D.ShowCursor": 0,
+        "LockSetForegroundWindow": 0,
+        "RegisterRawInputDevices": 0,
+        "ReleaseCapture": 0,
+        "SendInput": 0,
+        "SetActiveWindow": 3,
+        "SetCapture": 0,
+        "SetCursor": 117,
+        "SetCursorPos": 0,
+        "SetFocus": 1,
+        "SetForegroundWindow": 1,
+        "SetPhysicalCursorPos": 0,
+        "ShowCursor": 0,
+        "SwitchDesktop": 0,
+        "keybd_event": 0,
+        "mouse_event": 0
+      },
+      "coveredApiCount": 18,
+      "cursorPositionCounterAlias": "SetPhysicalCursorPos shares SetCursorPos counter",
+      "d3dHardwareCursorForwarded": false,
+      "hookCount": 17,
+      "installedBeforeGameResume": true,
+      "physicalInputReadsSuppressed": true,
+      "renderDesktopIsolation": "private",
+      "status": "ok"
+    },
+    "inputIsolationAfterUi": {
+      "blockedCalls": {
+        "AttachThreadInput": 0,
+        "ClipCursor": 6,
+        "D3D.SetCursorPosition": 0,
+        "D3D.SetCursorProperties": 0,
+        "D3D.ShowCursor": 0,
+        "LockSetForegroundWindow": 0,
+        "RegisterRawInputDevices": 0,
+        "ReleaseCapture": 1,
+        "SendInput": 0,
+        "SetActiveWindow": 3,
+        "SetCapture": 1,
+        "SetCursor": 133,
+        "SetCursorPos": 0,
+        "SetFocus": 1,
+        "SetForegroundWindow": 1,
+        "SetPhysicalCursorPos": 0,
+        "ShowCursor": 0,
+        "SwitchDesktop": 0,
+        "keybd_event": 0,
+        "mouse_event": 0
+      },
+      "coveredApiCount": 18,
+      "cursorPositionCounterAlias": "SetPhysicalCursorPos shares SetCursorPos counter",
+      "d3dHardwareCursorForwarded": false,
+      "hookCount": 17,
+      "installedBeforeGameResume": true,
+      "physicalInputReadsSuppressed": true,
+      "renderDesktopIsolation": "private",
+      "status": "ok"
+    }
+  },
+  "ui": {
+    "originalHandlerReturned": true,
+    "normalUIHandlerConfirmed": true,
+    "eventGameTime": 2.875,
+    "dialogVisibleAfterClick": true,
+    "globalInputInjected": false
+  },
+  "cleanup": {
+    "stopped": true,
+    "sourceUnchanged": true,
+    "ownedMcpClosed": true,
+    "foreignFrontendsUntouched": true
+  },
+  "configuration": {
+    "futureSc2editor": "v0.1.0-dev.12",
+    "futureDirectSc2game": "v0.1.0-dev.12",
+    "existingFrontends": "Older dev.11 Python frontends still require reconnecting; they were not killed or hot-patched."
+  },
+  "tests": {
+    "adapterAndPrivacy": 16,
+    "passed": true,
+    "documentationLanguage": true
+  },
+  "privacy": {
+    "privateImplementationBundled": false,
+    "ordinarySourceMapModified": false
+  },
+  "limitations": [
+    "Reported native guards and one successful original UI handler were observed; external physical cursor/focus stress was not repeated.",
+    "This test does not reconfirm every operation, map, renderer or web-video capability."
+  ]
+}

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "recordedAt": "2026-10-26T15:04:58.479Z",
+  "recordedAt": "2026-10-26T18:05:14.504Z",
   "scope": "Inventory of retained records and explicit roadmap coverage. This does not supersede native observations or refresh historical source fingerprints.",
   "records": [
     {
@@ -512,6 +512,12 @@
       "file": "docs/verification/minimap-and-browser-2026-10-26.json",
       "role": "historical",
       "sha256": "ab37ff771183fa6daedc0714ac15873643d2275c19de3819ec7d7f319e87707f"
+    },
+    {
+      "id": "native_game_dev12",
+      "file": "docs/verification/native-game-dev12-2026-10-26.json",
+      "role": "scoped",
+      "sha256": "bae36cc74479649118357151425cfd50da5db2fceee7a56d9292d5f06ad8ae68"
     }
   ],
   "coverage": [

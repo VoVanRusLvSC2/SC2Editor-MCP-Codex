@@ -6,7 +6,7 @@ workflow leases and digest-bound reports. Direct commands below remain available
 
 SC2EditorToolkit can use an external SC2GameToolkit installation. The game
 adapter is separate from the native Editor adapter. Its current upstream version
-is experimental `0.1.0-dev`; the pinned release is `v0.1.0-dev.11` and the
+is experimental `0.1.0-dev`; the pinned release is `v0.1.0-dev.12` and the
 observed game build is `5.0.17.98310`. A matching
 frontend version is a contract check, not a binary provenance or stability claim.
 
@@ -19,7 +19,7 @@ the server environment with absolute local paths:
 SC2_GAME_TOOLKIT_HOME=<private SC2GameToolkit directory>
 SC2_GAME_PYTHON=<Python 3.11+ executable>
 SC2_GAME_ALLOW_LAUNCH=1
-SC2_GAME_REQUIRED_RELEASE=v0.1.0-dev.11
+SC2_GAME_REQUIRED_RELEASE=v0.1.0-dev.12
 SC2_MCP_PROFILE=game
 SC2_UI_ROOT=<workspace containing saved test maps>
 ```
@@ -43,7 +43,7 @@ Use a client tool timeout of at least 600 seconds for load and recording operati
 authenticated `gh` access. It never downloads at server startup, starts a game,
 overwrites an existing installation or changes a neighboring development checkout.
 The ignored `.game-toolkit-runtime/<version>/` installation preserves upstream
-notices. The installer checks the pinned archive and its complete 113-file
+notices. The installer checks the pinned archive and its complete 121-file
 manifest. Before starting Python the adapter rechecks that manifest, rejects added
 executable/source files and refuses a different binary directory. A required
 release prevents silently falling back to an unpinned checkout. Deliberate external
@@ -277,6 +277,23 @@ Reproduce the frontend check with `npm run game:verify`. Explicit live testing
 uses `npm run game:verify -- --live --workspace <directory> --map <saved.SC2Map>`.
 The verifier writes private evidence under `work/native-game-verification/` and
 never starts a game in frontend-only mode.
+
+## Pinned dev.12 update on 2026-10-26
+
+The complete private ZIP and all 121 manifest files passed local integrity
+verification. Both future `sc2editor` and direct `sc2game` configurations select
+the isolated dev.12 directory. Already-running foreign MCP frontends remain
+untouched; reconnect those connections to load the new Python/DLL package.
+
+One fresh public outer-MCP run loaded SC2 5.0.17.98310 and confirmed the Galaxy
+handshake, native bridge and Vulkan renderer. `native.inputIsolation` reports
+`status:ok`, installation before game resume, 18 covered APIs, suppression of
+physical input reads and a private render desktop. A normal authored UI button
+returned through its original handler and opened its dialog; the source map digest
+stayed unchanged and owned detach completed. This verifies the reported guard
+state and one UI interaction, not an independent external cursor/focus stress
+test or a new claim for every operation. Private native implementations and
+instrumented derivatives remain outside ordinary maps and public source.
 
 ## Pinned dev.11 update on 2026-10-21
 
