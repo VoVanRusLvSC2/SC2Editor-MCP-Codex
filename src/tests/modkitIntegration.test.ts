@@ -19,6 +19,9 @@ async function fixture(t:test.TestContext){
 }
 test('ModKit snapshots preserve unknown bytes, isolate inputs and detect same-length changes/tampering',async t=>{
   const {map,integration}=await fixture(t),first=await integration.snapshot('Map');
+  await fs.writeFile(path.join(map,'MapInfo.sc2uimcp.bak'),'backup');
+  await fs.writeFile(path.join(map,'Minimap.tga.sc2uimcp.test.tmp'),'pending commit');
+  assert.equal((await integration.snapshot('Map')).revision,first.revision);
   assert.deepEqual(await fs.readFile(path.join(first.target,'unknown.bin')),Buffer.from([0,255,13,10]));
   await fs.writeFile(path.join(map,'unknown.bin'),Buffer.from([1,255,13,10]));
   const next=await integration.snapshot('Map');assert.notEqual(first.revision,next.revision);

@@ -118,7 +118,14 @@ Not stated: full Editor New Document default fidelity, native publish identity s
 
 ## Correction of the stop on Loading Terrain (11.10.2026)
 
-The first `EmptyAgriaPacked.SC2Map` card was checked by the container, but it hovered when Terrain was opened in the editor. There were two defects in the generator: there was no `heightMap/cliffCellList`, through which the native XML-reader allocates half a grid of ledges, and `t3SyncHeightMap` remained zero scale. The new `native-empty-v39-v115-local-2` profile always creates an empty `cliffCellList` of the size of `width*height/4` and a single Q12 scale of `[4096,4096,4096]` at offsets of 28/32/36.
+The first `EmptyAgriaPacked.SC2Map` card was checked by the container, but it hovered when Terrain was opened in the editor. There were two defects in the generator: there was no `heightMap/cliffCellList`, through which the native XML-reader allocates half a grid of ledges, and `t3SyncHeightMap` remained zero scale. Profile `native-empty-v39-v115-local-2` introduced an empty `cliffCellList` of the size of `width*height/4` and a single Q12 scale of `[4096,4096,4096]` at offsets of 28/32/36.
+
+Profile `native-empty-v39-v115-local-3` keeps those repairs and writes the neutral
+foundation minimap as a complete top-left-origin TGA 2.0 with its footer. After
+authoring terrain, use `map.minimap.rebuild` to replace that neutral placeholder
+with the actual ModKit overview. A native lab test reproduced a black in-game
+minimap with the old image, then displayed terrain and unit markers after the
+replacement. This is scoped rendering evidence, not universal map acceptance.
 
 The `terrainLoadContract` test rejects missed cliff/block grids, incorrect SMAP sizes and zero scale. The regression test reproduces both previous defects. The user confirmed the successful opening of the corrected card. This confirmation refers to the cumulative fix: separately, the effect of each defect on hanging was not measured.
 

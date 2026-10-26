@@ -84,5 +84,28 @@
     "File/Loop on a new generic root produced unknown tags; these belong on the inherited typed child.",
     "IsPlaying was rejected as read-only by build 98310 and removed.",
     "Native video and screenshots stay in local work evidence; no private Toolkit implementation or instrumented map is distributed."
-  ]
+  ],
+  "sourceFingerprints": [
+    {
+      "file": "src/schema/schemaRegistry.ts",
+      "sha256LfUtf8": "eb8b2b6314c16ff2766072dac22e941eba6f2a18b758ab14d276608e686ee29a"
+    },
+    {
+      "file": "src/mcp/uiServer.ts",
+      "sha256LfUtf8": "bd2c5b2c4237533375d1a1e362e450ba14e74cdc71dda45a272791d1fe2f7f6a"
+    },
+    {
+      "file": "src/core/validator.ts",
+      "sha256LfUtf8": "2149020db84ea12dc236185826ba77c62462a5217685521f6db059d0860a6793"
+    },
+    {
+      "file": "src/gui/api.ts",
+      "sha256LfUtf8": "9a23dd388ac445fc2660b54547ec618c66063b4a53bf4bb5c0588b75f96f6f84"
+    },
+    {
+      "file": "src/tests/uiFrameInheritance.test.ts",
+      "sha256LfUtf8": "a7d11e0d965b2e01bb01baf9e7f9b5b4533c6caaf8551eab0d9585cf208ede7e"
+    }
+  ],
+  "sourceFingerprintScope": "Published8fbff40 implementation and static/public-MCP regression scope. Native movie evidence retains its recorded archive/session and does not certify this exact adapter revision."
 }

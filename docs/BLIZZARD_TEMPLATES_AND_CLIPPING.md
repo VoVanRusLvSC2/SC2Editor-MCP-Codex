@@ -91,6 +91,18 @@ For the supplied example:
 - `LaunchURLButton` derives from `Button`, so the latter template is class-compatible;
 - `{$TextSource/@Text}` resolves through a hidden Label with `<Handle val="TextSource"/>` and is checked as a binding reference.
 
+The same inherited-child schema is used by individual property commands and
+`ui.apply` batches. A failed batch must not stage its preceding property edits.
+Fit the Core background and browser children to the actual Dialog Pane. A
+`visible:true` native frame can still be clipped outside its parent's hit area.
+Browser texture dimensions, actual navigation and web video playback are separate
+checks. A local MovieFrame clip is not evidence for a YouTube URL. In the observed
+build 98310, an actual YouTube embed page rendered a player configuration error.
+The normal watch URL loaded YouTube's "Please update your browser" page. This
+establishes web page rendering inside SC2, but not video playback. Do not label
+YouTube playback supported or keep changing Frame compatibility to conceal that
+browser/runtime limitation. The particular embed error code was not exposed.
+
 ## Two kinds of cropping
 
 ### Viewport clipping

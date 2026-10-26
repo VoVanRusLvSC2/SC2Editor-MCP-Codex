@@ -1,5 +1,19 @@
 # Changelog
 
+## 2026-10-26 — Minimap images and inherited UI batches
+
+- Add guarded `map.minimap.rebuild` using the ModKit overview and a complete
+  top-left-origin TGA 2.0 envelope. New terrain foundations share that encoder.
+  The native lab minimap now displays terrain and unit markers after replacement.
+- Exclude transaction temporary files and backups from ModKit input identities;
+  preserve real source/dependency change detection during staged minimap saves.
+- Apply the inherited Core child schema consistently in `ui.apply`, including
+  batched creation and property edits. Invalid batches retain atomic rollback.
+- Record actual SceneBrowser web rendering separately from movie playback:
+  YouTube's embed page reports a configuration error, and its ordinary watch page
+  rejects the old embedded browser. YouTube video playback remains unsupported
+  by this tested runtime; no downloaded-video substitution is used.
+
 ## Generic Frame templates and economical GUI authoring — 2026-10-26
 
 - Accept every known Core template on generic Frame while retaining specialized

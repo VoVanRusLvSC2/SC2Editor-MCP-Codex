@@ -1,5 +1,7 @@
 # Generated examples must match byte-for-byte tests on Windows and Unix.
 examples/** text=auto eol=lf
+# Evidence record digests must survive Windows checkouts unchanged.
+docs/verification/** text eol=lf
 # Synthetic native components retain their original byte representation.
 src/tests/fixtures/terrain-surface/** -text
 generated/o200k_base.tiktoken -text

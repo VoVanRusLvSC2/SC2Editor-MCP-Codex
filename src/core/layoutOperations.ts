@@ -87,8 +87,11 @@ export function applyLayoutOperations(
         if (type?.blizzardOnly && !operation.allowBlizzardOnly) {
           throw new Error(`Frame type '${operation.type}' is Blizzard-only/locked; explicit override is required`);
         }
-        validateProperties(schema, operation.type, operation.properties, Boolean(operation.allowUnknownProperties || operation.allowUnknownType));
         const parentPath = resolvePath(operation.parentPath, aliases);
+        const propertyType = schema.layoutFrameType({
+          path: createdPath(parentPath, operation.name), type: operation.type, template: operation.template,
+        }, doc.listFrames());
+        validateProperties(schema, propertyType, operation.properties, Boolean(operation.allowUnknownProperties || operation.allowUnknownType));
         doc.createFrame({
           parentPath,
           type: operation.type,
@@ -128,7 +131,7 @@ export function applyLayoutOperations(
           doc.removeProperty(framePath, operation.property, operation.selector);
         } else {
           const frame = doc.getFrame(framePath);
-          validateElement(schema, frame.type, {
+          validateElement(schema, schema.layoutFrameType(frame, doc.listFrames()), {
             tag: operation.property,
             value: operation.value,
             attrs: operation.attrs,
@@ -162,7 +165,7 @@ export function applyLayoutOperations(
       case "text.bindStyle": {
         const framePath = resolvePath(operation.framePath, aliases)!;
         const frame = doc.getFrame(framePath);
-        const property = schema.getProperty(frame.type, "Style");
+        const property = schema.getProperty(schema.layoutFrameType(frame, doc.listFrames()), "Style");
         if (!property) throw new Error(`Frame type '${frame.type}' does not expose the SC2 Style property`);
         doc.setProperty(framePath, "Style", { value: operation.style });
         result.target = `${framePath}.Style`;

@@ -1,0 +1,133 @@
+{
+  "date": "2026-10-26",
+  "scope": "One reproduced in-game minimap failure and repair, inherited UI batch consistency, and actual YouTube URL page rendering. Video playback is not accepted.",
+  "gameBuild": "5.0.17.98310",
+  "sourceFingerprints": [
+    {
+      "file": "src/core/layoutOperations.ts",
+      "sha256LfUtf8": "9475926ae4137d71bbf9c62ae0ae9ef82329ce50433c48cca2afc6bbcb5519e0"
+    },
+    {
+      "file": "src/integrations/modkit/runtime.ts",
+      "sha256LfUtf8": "0bd4ca077937c42111c6250c691541f79909735b8ddc0d1c243e8c24f49ad23f"
+    },
+    {
+      "file": "src/integrations/modkit/tools.ts",
+      "sha256LfUtf8": "c65ccd721916c1ce55592b089428574ecae3c55864914fe92d27a9412a826286"
+    },
+    {
+      "file": "src/modules/document/manifest.ts",
+      "sha256LfUtf8": "651cf5969262b023e47a04db1be25585ba82908c25189efd3c676d2d53c4532f"
+    },
+    {
+      "file": "src/modules/map/minimap.ts",
+      "sha256LfUtf8": "3cc197b93251e9552d549e17181022753b767f348e4e5ee5e7d33646feee8fba"
+    },
+    {
+      "file": "src/modules/map/preview.ts",
+      "sha256LfUtf8": "9c6a61f4c62446d51a4470c11d8e4fae2335a6e5576ef12df6b738dfb38c2b6b"
+    },
+    {
+      "file": "src/modules/map/mapInfo.ts",
+      "sha256LfUtf8": "6ae03ca0eea5c3b23ad098a3b6af650380466ec2f5f8941315a005984035f261"
+    }
+  ],
+  "sourceFingerprintScope": "Published implementation and static regression scope. Native observations retain their ordinary archive/session identities. The new-foundation profile is checked statically; this record does not claim a fresh native run of that foundation.",
+  "minimap": {
+    "status": "passed",
+    "baseline": {
+      "session": "dcee98ce33a6d4cf717a2da71a272a7e",
+      "image": {
+        "width": 64,
+        "height": 64,
+        "uniformRgb": 128,
+        "tgaFooter": false
+      },
+      "observation": "Black terrain layer while native unit dots and camera rectangle are visible.",
+      "frame": {
+        "sha256": "6192a9cf911c55b965f4e740e24b203156d614be99299161923d6f8dd40a23f1",
+        "gameTime": 21.25,
+        "source": "hidden_game_backbuffer",
+        "review": "Actual native screenshot reviewed; no synthetic web/video substitution."
+      }
+    },
+    "repair": {
+      "tool": "map.minimap.rebuild",
+      "image": {
+        "width": 256,
+        "height": 256,
+        "sha256": "6494aeb93c439a028cbc345f61924f1f6cea58507b4d2c996f3c691f69ebaa90",
+        "tgaFooter": true,
+        "topLeftOrigin": true
+      },
+      "session": "c2f24e8c3ee3cd81a49911f8503b0cc4",
+      "frame": {
+        "sha256": "1a04afb1c41091041814b0449d37b233103e7d5f2c506ea7bf8ff8b15d74b245",
+        "gameTime": 33.125,
+        "source": "hidden_game_backbuffer",
+        "review": "Actual native screenshot reviewed; no synthetic web/video substitution."
+      },
+      "observation": "Ground overview, both cliff formations, native unit dots and camera rectangle are visible."
+    },
+    "controls": {
+      "editorSaveReopen": "Did not regenerate Minimap.tga or fix the black terrain layer.",
+      "terrainToggle": "Native button activation did not repair the missing image.",
+      "metadataImagePath": "Explicit reference to the old Minimap.tga did not repair it; restored to the original empty path.",
+      "legacyRenderer": "The old image also remained black with legacy rendering."
+    },
+    "causalityLimit": "The repaired image changes envelope, origin, size and pixels together. This observation does not isolate one TGA field as the sole cause.",
+    "rendererLimit": "ModKit top-down overview is approximate and does not reproduce native minimap material shading.",
+    "futureFoundations": "Profile native-empty-v39-v115-local-3 shares the complete TGA encoder; regenerate the neutral placeholder after final landscape edits."
+  },
+  "browser": {
+    "container": "StandardDialog/BrowserDialogTemplate",
+    "typedChild": "SceneBrowser",
+    "authoredContainerAndChildTypes": "Frame",
+    "fitting": "Core background resized to900x506; inherited OK/labels hidden; browser texture860x400; controls inside actual Pane bounds.",
+    "embed": {
+      "url": "https://www.youtube.com/embed/M_XwzBMTJaM?autoplay=1&mute=1&playsinline=1",
+      "session": "c2f24e8c3ee3cd81a49911f8503b0cc4",
+      "frame": {
+        "sha256": "bab29eb8407126f4ec1bb253e3a8eeb57ad533ec4c861bd6902b1e45f3779409",
+        "gameTime": 226.75,
+        "source": "hidden_game_backbuffer",
+        "review": "Actual native screenshot reviewed; no synthetic web/video substitution."
+      },
+      "pageRendered": true,
+      "playback": false,
+      "result": "Video player configuration error; numeric error code not observed."
+    },
+    "watch": {
+      "url": "https://www.youtube.com/watch?v=M_XwzBMTJaM&autoplay=1",
+      "session": "a58e69e19b4a762840cf9175ec92c2af",
+      "frame": {
+        "sha256": "7965c7ee98d819b652b00ce425c5c3599ac6e41397eb9a6391b215610a2ffa6f",
+        "gameTime": 184.125,
+        "source": "hidden_game_backbuffer",
+        "review": "Actual native screenshot reviewed; no synthetic web/video substitution."
+      },
+      "pageRendered": true,
+      "playback": false,
+      "result": "YouTube Please update your browser page.",
+      "address": "https://www.youtube.com/supported_browsers?next_url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DM_XwzBMTJaM&autoplay=1"
+    },
+    "status": "blocked_by_observed_embedded_browser_compatibility",
+    "noDownloadedVideoSubstitution": true,
+    "diagnosticLimit": "Native engine log retained0 entries; overall diagnostic coverage remains partial."
+  },
+  "ordinaryArchive": {
+    "sha256": "b0dd4f60c79b6a8788e4311f58e14445f07942906b7a9288d9eddd9bc4cb50fd",
+    "privateToolkitImplementationIncluded": false
+  },
+  "cleanup": {
+    "allObservedDetachesSourceUnchanged": true,
+    "ownedSessionClosed": true
+  },
+  "tests": {
+    "build": true,
+    "releaseBuild": true,
+    "focusedTests": 14,
+    "documentRegressionTests": 22,
+    "documentationLanguage": true
+  }
+}

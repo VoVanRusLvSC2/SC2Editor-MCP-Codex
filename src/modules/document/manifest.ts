@@ -2,6 +2,7 @@ import { buildTuple, contentIdentity, documentHeader, documentInfo, versionMarke
 import { createMapInfo } from "./codecs/mapInfoFactory.js";
 import { createFlatTerrain, type TerrainSet } from "./codecs/flatTerrainFactory.js";
 import type { DocumentRequest } from "./schemas.js";
+import { minimapTga } from '../map/minimap.js';
 export interface FoundationManifest {
     kind: 'map' | 'mod';
     modType?: 'dependent' | 'extension';
@@ -67,13 +68,9 @@ export function generateFoundation(request: DocumentRequest, version: string, ti
             for (const [file, bytes] of createFlatTerrain(request.map.width, request.map.height, set, texture, baseHeight))
                 files.set(file, bytes);
             components.push({ type: 'terr', root: 't3Terrain.xml', count: 1 });
-            const tga = Buffer.alloc(18 + 64 * 64 * 3);
-            tga[2] = 2;
-            tga.writeUInt16LE(64, 12);
-            tga.writeUInt16LE(64, 14);
-            tga[16] = 24;
-            tga.fill(128, 18);
-            files.set('Minimap.tga', tga);
+            // A foundation has no authored landscape yet. Keep its neutral preview,
+            // but use the same complete TGA envelope as a rebuilt map minimap.
+            files.set('Minimap.tga', minimapTga(Buffer.alloc(64 * 64 * 3, 128), 64, 64));
         }
     }
     files.set('ComponentList.SC2Components', Buffer.from('<?xml version="1.0" encoding="utf-8"?>\r\n<Components>\r\n' + components.map(c => `    <DataComponent Type="${c.type}"${c.locale ? ' Locale="' + c.locale + '"' : ''}>${c.root}</DataComponent>\r\n`).join('') + '</Components>\r\n'));
@@ -83,5 +80,5 @@ export function generateFoundation(request: DocumentRequest, version: string, ti
         if (!files.has(key))
             files.set(key, versionMarker(c.type, build, timestamp, c.count));
     }
-    return { files, title, build, identity: contentIdentity(identitySeed), baseHeight: map && request.terrain.enabled ? request.terrain.baseHeight : undefined, initialTexture: map && request.terrain.enabled ? (request.terrain.initialTexture ?? set!.textures[0]) : undefined, dependencies: specs, profile: 'native-empty-v39-v115-local-2' };
+    return { files, title, build, identity: contentIdentity(identitySeed), baseHeight: map && request.terrain.enabled ? request.terrain.baseHeight : undefined, initialTexture: map && request.terrain.enabled ? (request.terrain.initialTexture ?? set!.textures[0]) : undefined, dependencies: specs, profile: 'native-empty-v39-v115-local-3' };
 }

@@ -135,6 +135,10 @@ are different states. Variety alone does not justify wreckage or fire.
 5. Add irregular vegetation clusters and quieter clearings.
 6. Add supported foliage and surface markings separately.
 7. Resnap after height edits and inspect overview/gameplay-camera previews.
+8. After final landscape edits, use `map.minimap.rebuild`, save its staged
+   transaction with `map.save`, then export. A foundation's neutral preview is
+   not an updated landscape overview. Check the in-game minimap separately from
+   fog, unit dots and the Editor overview; ordinary save/reopen need not rebuild it.
 
 Distinguish full terrain dimensions, visible camera area and MapInfo playable
 bounds before placing gameplay units or selecting spell test points. Supported

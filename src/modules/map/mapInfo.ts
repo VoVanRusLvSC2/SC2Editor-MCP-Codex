@@ -17,6 +17,7 @@ export class MapInfoDocument {
   readonly playableBounds: MapBounds;
   readonly baseHeightFixed: number;
   readonly minimapResolution: number;
+  readonly minimapImage: string;
   readonly gameOptionsFlags: number;
   readonly opaqueTailOffset: number;
   private readonly fields = new Map<string,{ start: number; end: number }>();
@@ -47,7 +48,7 @@ export class MapInfoDocument {
     const previewType = numeric("previewType");
     if(previewType > 2) throw new Error("INVALID_MAPINFO_PREVIEW_TYPE");
     if(previewType === 2) string("previewPath");
-    string("minimapPath"); string("hoverPath");
+    this.minimapImage = string("minimapPath"); string("hoverPath");
     this.minimapResolution = numeric("minimapResolution"); numeric("difficulty");
     this.fogMaskStyle = string("fogMaskStyle"); this.mapDescription = string("description");
     this.playableBounds = { left:numeric("left",true),bottom:numeric("bottom",true),right:numeric("right",true),top:numeric("top",true) };
@@ -71,7 +72,7 @@ export class MapInfoDocument {
   inspect() {
     return { version:this.version, cells:[this.width,this.height],playableBounds:this.playableBounds,
       mapDescription:this.mapDescription,fogMaskStyle:this.fogMaskStyle,baseHeightFixed:this.baseHeightFixed,
-      minimapResolution:this.minimapResolution,gameOptionsFlags:this.gameOptionsFlags,
+      minimapResolution:this.minimapResolution,minimapImage:this.minimapImage,gameOptionsFlags:this.gameOptionsFlags,
       integrityHash:this.integrityHash.toString(),integrityVerified:true,opaqueTailOffset:this.opaqueTailOffset,
       opaqueTailBytes:this.bytes.length-this.opaqueTailOffset,sha256:createHash("sha256").update(this.bytes).digest("hex"),
       writerScope:["playableBounds","fogMaskStyle","minimapResolution"],

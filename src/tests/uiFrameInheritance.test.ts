@@ -29,6 +29,17 @@ test('public MCP inherits Core containers through Frame and edits typed children
   assert.equal(automatic.created.runtimeTargetPath,'AutomaticMovie/MovieFrame');
   await tool('ui.create_restricted_frame',{file,type:'SceneBrowser',name:'AutomaticBrowser',properties:[{tag:'Address',value:'https://example.invalid'}],dryRun:false});
   await tool('ui.set_property',{file,framePath:'MovieContainer/MovieFrame',property:'Loop',value:false,dryRun:false});
+  await tool('ui.apply',{file,dryRun:false,operations:[
+    {op:'set_property',framePath:'AutomaticBrowser/SceneBrowser',property:'Address',value:'https://example.org/'},
+    {op:'create_frame',type:'Frame',name:'BatchedMovie',template:'CommanderSelectionPopupContainers/MovieContainerTemplate'},
+    {op:'create_frame',parentPath:'BatchedMovie',type:'Frame',name:'MovieFrame',properties:[{tag:'Loop',value:true}]},
+    {op:'set_property',framePath:'MovieContainer/MovieFrame',property:'Loop',value:false},
+  ]});
+  const badBatch=await rpc('tools/call',{name:'ui.apply',arguments:{file,dryRun:false,operations:[
+    {op:'set_property',framePath:'AutomaticBrowser/SceneBrowser',property:'Address',value:'https://must-not-be-staged.invalid'},
+    {op:'set_property',framePath:'MovieContainer/MovieFrame',property:'Loop',value:'invalid'},
+  ]}});
+  assert.equal(badBatch.isError,true);
   const rejected=await rpc('tools/call',{name:'ui.set_property',arguments:{file,framePath:'MovieContainer/MovieFrame',property:'Loop',value:'invalid',dryRun:false}});
   assert.equal(rejected.isError,true);
   await tool('ui.save',{file});
@@ -38,5 +49,7 @@ test('public MCP inherits Core containers through Frame and edits typed children
   assert.doesNotMatch(saved,/<Loop val="invalid"/);
   assert.match(saved,/type="Frame" name="AutomaticMovie"/);
   assert.match(saved,/type="Frame" name="SceneBrowser"/);
+  assert.match(saved,/<Address val="https:\/\/example.org\/"\/>/);
+  assert.doesNotMatch(saved,/must-not-be-staged/);
   assert.doesNotMatch(saved,/type="(?:MovieFrame|SceneBrowser|SceneBrowserDialog)"/);
 });

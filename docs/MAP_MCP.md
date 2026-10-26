@@ -15,10 +15,20 @@
 | map.export | Export a committed map or authored local mod with the matching archive extension; reopen and compare every user entry name/locale/hash before publishing |
 | map.clone | Full native scenario copy into a new sibling directory; not a clean-map generator |
 | map.metadata.plan | Plan playable bounds, fog mask or minimap resolution |
+| map.minimap.rebuild | Rebuild Minimap.tga from committed terrain with ModKit; stage/save or commit atomically |
 | map.metadata.apply | Shared byte transaction, default dry-run and grouped staging |
 | map.save / map.discard | Save/discard the complete staged byte group |
 
 All file paths stay inside SC2_UI_ROOT. Using a parent workspace containing separate `input`, `maps` and `output` directories allows import, clone and export without path escapes.
+
+After changing the landscape, `map.minimap.rebuild` replaces the default
+`Minimap.tga` through the same byte transaction coordinator. It defaults to a
+256px ModKit top-down overview, dry run and staging. Use `map.save` with its
+transactionId, or explicitly set `dryRun:false, stage:false` to commit. Existing
+backups and transaction temporary files do not enter ModKit source snapshots.
+The result is an approximate terrain overview; it does not reproduce native
+material shading or change fog, unit visibility, custom minimap paths or HUD
+settings. In-game rendering remains a separate check.
 
 ## Creation from a template
 

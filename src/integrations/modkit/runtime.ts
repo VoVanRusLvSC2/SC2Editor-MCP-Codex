@@ -57,7 +57,7 @@ export class ModkitIntegration {
     let bytes=0;
     const read=async(folder:string,prefix='')=>{
       for(const e of (await fs.readdir(folder,{withFileTypes:true})).sort((a,b)=>a.name.localeCompare(b.name))){
-        if(e.name.startsWith('.sc2mcp-')||['.git','node_modules'].includes(e.name))continue;
+        if(e.name.startsWith('.sc2mcp-')||e.name.includes('.sc2uimcp.')||['.git','node_modules'].includes(e.name))continue;
         if(e.isSymbolicLink())throw Error('MODKIT_INPUT_SYMLINK_REFUSED');
         const file=this.workspace.resolveUserPath(path.join(folder,e.name)),relative=prefix+e.name;
         if(e.isDirectory())await read(file,relative+'/');else if(e.isFile()){
@@ -78,7 +78,7 @@ export class ModkitIntegration {
     const dependencyState:unknown[]=[];let dependencyFiles=0,dependencyBytes=0;
     const dependency=async(folder:string)=>{
       for(const e of (await fs.readdir(folder,{withFileTypes:true})).sort((a,b)=>a.name.localeCompare(b.name))){
-        if(e.name.startsWith('.')||e.name==='node_modules')continue;
+        if(e.name.startsWith('.')||e.name.includes('.sc2uimcp.')||e.name==='node_modules')continue;
         const file=path.join(folder,e.name);if(e.isSymbolicLink())throw Error('MODKIT_DEPENDENCY_SYMLINK_REFUSED');
         if(e.isDirectory())await dependency(file);else if(e.isFile()){
           if(++dependencyFiles>12000)throw Error('MODKIT_DEPENDENCY_FILE_LIMIT');

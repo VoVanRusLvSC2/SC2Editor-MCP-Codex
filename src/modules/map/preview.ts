@@ -3,6 +3,7 @@ import path from 'node:path';
 import {createHash} from 'node:crypto';
 import {gzipSync} from 'node:zlib';
 import {ModkitIntegration} from '../../integrations/modkit/runtime.js';
+import {minimapTga} from './minimap.js';
 
 export interface MapPreviewRequest {
   directory:string; output:'html'|'png'|'both';mode:'topdown'|'render';width:number;height:number;
@@ -32,6 +33,23 @@ export const worldReviver=`(_key,v)=>{
 export class MapPreviewWorkspace {
   private cache?:{key:string;value:{input:Record<string,any>;summary:Record<string,any>}};
   constructor(readonly modkit:ModkitIntegration){}
+  async rebuildMinimap(request:{directory:string;size:number;dryRun:boolean;stage:boolean;backup:boolean}){
+    if(![64,128,256,512].includes(request.size))throw Error('MINIMAP_SIZE');
+    const workspace=this.modkit.workspace;
+    // Reject archives: authoring is a guarded component transaction, never an archive rewrite.
+    if(!(await fs.stat(workspace.resolveUserPath(request.directory))).isDirectory())throw Error('MINIMAP_COMPONENT_DIRECTORY_REQUIRED');
+    const before=await this.modkit.snapshot(request.directory);
+    const rendered=await this.preview({directory:request.directory,output:'png',mode:'topdown',width:request.size,height:request.size,maxModels:1,maxModelMiB:16,locales:['enUS']});
+    if(rendered.inputRevision!==before.revision)throw Error('MINIMAP_SOURCE_CHANGED');
+    const {default:sharp}=await import('sharp');
+    const {data,info}=await sharp(rendered.files.png!).resize(request.size,request.size,{fit:'contain',background:{r:0,g:0,b:0}}).removeAlpha().toColourspace('srgb').raw().toBuffer({resolveWithObject:true});
+    if(info.channels!==3)throw Error('MINIMAP_PIXEL_FORMAT');
+    const bytes=minimapTga(data,info.width,info.height),file=workspace.binary.key(path.join(request.directory,'Minimap.tga'));
+    const previous=await workspace.binary.read(file,false);
+    const verify=async()=>{if((await this.modkit.snapshot(request.directory)).revision!==before.revision)throw Error('STALE_MINIMAP_SOURCE');};
+    const transaction=await workspace.binary.apply([file],()=>new Map([[file,bytes]]),{...request,expectedSha256:{[file]:createHash('sha256').update(previous.bytes).digest('hex')},verify});
+    return {...transaction,file,width:info.width,height:info.height,sha256:createHash('sha256').update(bytes).digest('hex'),inputRevision:before.revision,preview:rendered.files.png,renderer:'ModKit top-down overview',limitations:['Approximate overview; not the native SC2 minimap renderer.','In-game terrain and fog rendering require their own observation.']};
+  }
   async preview(request:MapPreviewRequest){
     return this.modkit.exclusive(async()=>{
       const started=performance.now(),snapshot=await this.modkit.snapshot(request.directory),backend=await this.modkit.port();
