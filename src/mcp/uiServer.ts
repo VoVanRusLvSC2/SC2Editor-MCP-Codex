@@ -399,16 +399,21 @@ export function createUiServer(workspace: Workspace, schema: SchemaRegistry, cut
     const type = schema.getFrameType(args.type);
     if (!type && !args.allowUnknownType) throw new Error(`Unknown frame type '${args.type}'. Use ui.describe_type/ui.get_schema or explicitly allow it.`);
     if (type?.blizzardOnly && !args.allowBlizzardOnly) throw new Error(`Frame type '${args.type}' is marked Blizzard-only; explicit override required.`);
-    validateCreationProperties(schema, args.type, args.properties, {
-      allowUnknown: args.allowUnknownProperties || args.allowUnknownType,
-      allowReadonly: args.allowReadonlyProperties,
-    });
     const mutation = await workspace.mutate(args.file, {
       dryRun: args.dryRun,
       stage: args.stage,
       expectedSha256: args.expectedSha256,
       summary: `Create ${args.type} ${args.name}`,
-    }, (doc) => doc.createFrame({
+    }, (doc) => {
+      const propertyType = schema.layoutFrameType({
+        path: args.parentPath ? `${args.parentPath}/${args.name}` : args.name,
+        type: args.type, template: args.template,
+      }, doc.listFrames());
+      validateCreationProperties(schema, propertyType, args.properties, {
+        allowUnknown: args.allowUnknownProperties || args.allowUnknownType,
+        allowReadonly: args.allowReadonlyProperties,
+      });
+      return doc.createFrame({
       parentPath: args.parentPath,
       type: args.type,
       name: args.name,
@@ -416,7 +421,8 @@ export function createUiServer(workspace: Workspace, schema: SchemaRegistry, cut
       frameFile: args.frameFile,
       properties: args.properties,
       anchors: args.anchors,
-    }));
+      });
+    });
     return textResult({
       ...mutation,
       templateUsage: args.template ? schema.assessTemplateUsage(args.type, args.template) : undefined,
@@ -443,16 +449,20 @@ export function createUiServer(workspace: Workspace, schema: SchemaRegistry, cut
     if (!schema.isTemplateCompatible(args.type, args.template)) {
       throw new Error(`Template '${args.template}' (${template.frameType}) is not class-compatible with '${args.type}'`);
     }
-    validateCreationProperties(schema, args.type, args.properties, {
-      allowUnknown: args.allowUnknownProperties,
-      allowReadonly: args.allowReadonlyProperties,
-    });
     const mutation = await workspace.mutate(args.file, {
       dryRun: args.dryRun,
       stage: args.stage,
       expectedSha256: args.expectedSha256,
       summary: `Create ${args.type} ${args.name} from verified Blizzard template ${args.template}`,
-    }, (doc) => doc.createFrame({
+    }, (doc) => {
+      validateCreationProperties(schema, schema.layoutFrameType({
+        path: args.parentPath ? `${args.parentPath}/${args.name}` : args.name,
+        type: args.type, template: args.template,
+      }, doc.listFrames()), args.properties, {
+        allowUnknown: args.allowUnknownProperties,
+        allowReadonly: args.allowReadonlyProperties,
+      });
+      return doc.createFrame({
       parentPath: args.parentPath,
       type: args.type,
       name: args.name,
@@ -460,17 +470,19 @@ export function createUiServer(workspace: Workspace, schema: SchemaRegistry, cut
       frameFile: args.frameFile,
       properties: args.properties,
       anchors: args.anchors,
-    }));
+      });
+    });
     return textResult({ ...mutation, templateUsage: schema.assessTemplateUsage(args.type, args.template) });
   });
 
   server.registerTool("ui.create_restricted_frame", {
-    description: "Automatically choose a verified direct or container-template route for any Blizzard-only type. Required hookups are inherited when possible, but locked frames may still fail at SC2 runtime.",
+    description: "Inherit a verified Core container through generic Frame and override its existing typed child through Frame. Default construction=inherited-frame avoids direct locked class creation. construction=typed retains the explicit legacy route. Hookups and properties are checked; native instantiation/playback still require game evidence.",
     inputSchema: z.object({
       ...mutationCommon,
       parentPath: z.string().optional(),
       type: z.string().min(1),
       name: z.string().min(1),
+      construction: z.enum(["inherited-frame", "typed"]).default("inherited-frame"),
       properties: z.array(elementSchema).optional(),
       anchors: z.array(anchorSchema).max(4).optional(),
     }),
@@ -478,13 +490,23 @@ export function createUiServer(workspace: Workspace, schema: SchemaRegistry, cut
     const plan = schema.restrictionPlan(args.type);
     if (!plan) throw new Error(`Unknown frame type '${args.type}'`);
     if (!plan.restricted) throw new Error(`Frame type '${args.type}' is not Blizzard-only; use ui.create_frame`);
-    if (plan.recommended.strategy === "explicit-override") {
+    if (args.construction === "typed" && plan.recommended.strategy === "explicit-override") {
       throw new Error(`No verified template route for '${args.type}'. Use ui.create_frame with allowBlizzardOnly only after manual hookup review.`);
     }
     if (plan.recommended.strategy === "unrestricted") throw new Error(`Unexpected unrestricted plan for '${args.type}'`);
 
     validateCreationProperties(schema, args.type, args.properties, { allowUnknown: false, allowReadonly: true });
-    const route = plan.recommended;
+    const inherited = args.construction === "inherited-frame"
+      ? plan.containerRoutes.find(route => route.requiredHookupsCovered && route.targetPath.split("/").filter(Boolean).length === 1)
+      : undefined;
+    if (args.construction === "inherited-frame" && !inherited) {
+      throw new Error(`No verified direct-child Core container for '${args.type}'. A generic Frame root does not acquire specialized root properties. Choose a reviewed container or use explicit construction=typed for the legacy attempt.`);
+    }
+    const route = inherited ? {
+      strategy: "container-template" as const, template: inherited.containerTemplate,
+      containerFrameType: inherited.containerFrameType, targetPath: inherited.targetPath,
+    } : plan.recommended;
+    if (route.strategy === "explicit-override") throw new Error(`No supported template route for '${args.type}'`);
     const containerName = args.name;
     const escapedName = containerName.replaceAll("~", "~0").replaceAll("/", "~1");
     const containerPath = args.parentPath ? `${args.parentPath}/${escapedName}` : escapedName;
@@ -510,7 +532,7 @@ export function createUiServer(workspace: Workspace, schema: SchemaRegistry, cut
       }
       doc.createFrame({
         parentPath: args.parentPath,
-        type: route.containerFrameType,
+        type: args.construction === "inherited-frame" ? "Frame" : route.containerFrameType,
         name: containerName,
         template: route.template,
       });
@@ -523,13 +545,13 @@ export function createUiServer(workspace: Workspace, schema: SchemaRegistry, cut
       }
       doc.createFrame({
         parentPath: containerPath,
-        type: args.type,
+        type: args.construction === "inherited-frame" ? "Frame" : args.type,
         name: targetSegments[0],
         properties: args.properties,
         anchors: args.anchors,
       });
     });
-    return textResult({ mutation, restrictionPlan: plan, created: { containerPath, runtimeTargetPath } });
+    return textResult({ mutation, restrictionPlan: plan, construction: args.construction, created: { containerPath, runtimeTargetPath } });
   });
 
   server.registerTool("ui.create_clipped_image", {
@@ -665,7 +687,7 @@ export function createUiServer(workspace: Workspace, schema: SchemaRegistry, cut
       return;
     }
     const frame = doc.getFrame(args.framePath);
-    const property = schema.getProperty(frame.type, args.property);
+    const property = schema.getProperty(schema.layoutFrameType(frame, doc.listFrames()), args.property);
     if (!property && !args.allowUnknown) throw new Error(`Unknown property '${args.property}' for frame type '${frame.type}'`);
     if (property?.readonly && !args.allowReadonly) throw new Error(`Property '${args.property}' is marked read-only`);
     if (property && args.value !== undefined) {

@@ -41,6 +41,11 @@ localization, resource IDs and original catalog source annotations.
   not invent animation names or add a second primary unit actor for a spell.
   Use `data.presentation.check` for a bounded declared-event/model review; retain
   inherited/asset/native-playback uncertainty and explicit invisible exceptions.
+- For locked UI features, inherit an existing Core container through `type="Frame"`
+  and override its existing named typed child through Frame. Generic Frame accepts
+  any known template; specialized types retain their class checks. Root properties
+  remain Frame properties, so movie/browser properties belong on inherited typed
+  children. Read `docs/BLIZZARD_TEMPLATES_AND_CLIPPING.md`; verify actual playback.
 - Plan biome, purpose, condition and circulation before decoration. Reserve paths,
   gates, resources and pads. Use `terrain.catalog`/`terrain.style`, measured palettes
   and named owned compositions. Actor, Model, TerrainObject and TerrainTex are

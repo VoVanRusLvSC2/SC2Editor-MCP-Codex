@@ -276,6 +276,17 @@ The previous graft, normalizeScriptLayout, get/inspect/apply/save/discard are sa
 
 `trigger.plan_file` accepts one GuiRequest or an array of requests from JSON inside workspace. The array is built on an isolated staged image: the source files and drafts of the calling project do not change. The result is applied by one `trigger.apply`, stored by one group. `trigger.describe_functions` returns up to 40 compact signatures with limited preset lists.
 
+Runtime receipts default to `response="compact"`: source previews alone are
+omitted; diagnostics, hashes and incomplete/unsupported states remain. Choose
+`response="full"` to retrieve the original transaction previews.
+
+Reviewed native GUI imports can retain exact declarative Action-splice macros
+when an eligible original-Editor compilation proves the supplied tree. The
+accepted template is only `#SUBFUNCS(actions)`, with one matching scoped Action
+subfunction declaration and a void return. Extra Galaxy code, foreign roles and
+ordinary Custom Script remain refused. This exception does not extend the local
+runtime emitter or establish general converter equivalence.
+
 `trigger.generate_runtime` generates and stages MapScript from the GUI XML graph,
 without a separately maintained Galaxy implementation or converter call. Its
 explicit subset includes root and self-contained inline-library structures,

@@ -1,6 +1,8 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { SchemaRegistry } from "../schema/schemaRegistry.js";
+import {LayoutDocument} from "../core/layoutDocument.js";
+import {validateLayout} from "../core/validator.js";
 
 test("loads the full bundled SC2 UI schema and Blizzard observations", async () => {
   const schema = await SchemaRegistry.loadBundled();
@@ -80,6 +82,39 @@ test("labels ordinary templates separately from locked-frame template usage", as
 
   const incompatible = schema.assessTemplateUsage("Image", "StandardBattlenetTemplates/BattlenetMediumAlternateButtonTemplate");
   assert.equal(incompatible.runtimeExpectation, "unsupported");
+});
+
+test("generic Frame inherits every known template without weakening specialized class checks", async () => {
+  const schema = await SchemaRegistry.loadBundled();
+  for (const template of schema.blizzardTemplates.values()) {
+    assert.equal(schema.isTemplateCompatible("Frame", template.reference), true, template.reference);
+  }
+  assert.equal(schema.isTemplateCompatible("Frame", "Unknown/NotRegistered"), false);
+  assert.equal(schema.isTemplateCompatible("Image", "StandardDialog/BrowserDialogTemplate"), false);
+  const movie = schema.assessTemplateUsage("Frame", "StandardTemplates/StandardMovieTemplate");
+  assert.equal(movie.classCompatible, true);
+  assert.equal(movie.kind, "inherited-frame-template");
+  assert.equal(movie.rootPropertyType, "Frame");
+  assert.equal(movie.targetRestricted, false);
+  assert.equal(movie.templateRestricted, true);
+  assert.equal(movie.runtimeExpectation, "may-not-work");
+});
+
+test("generic Frame properties and Core container child overrides keep inherited scalar and hookup validation", async () => {
+  const schema = await SchemaRegistry.loadBundled();
+  const doc = new LayoutDocument('<Desc><Frame type="Frame" name="Movie" template="CommanderSelectionPopupContainers/MovieContainerTemplate"><Frame type="Frame" name="MovieFrame"><Loop val="true"/></Frame></Frame><Frame type="Frame" name="Browser" template="StandardDialog/BrowserDialogTemplate"><Frame type="Frame" name="SceneBrowser"><Address val="https://example.invalid"/></Frame><Frame type="Frame" name="Unrelated"/></Frame></Desc>');
+  const frames = doc.listFrames();
+  assert.equal(schema.layoutFrameType(doc.getFrame("Movie"), frames), "Frame");
+  assert.equal(schema.layoutFrameType(doc.getFrame("Movie/MovieFrame"), frames), "MovieFrame");
+  assert.equal(schema.layoutFrameType(doc.getFrame("Browser/SceneBrowser"), frames), "SceneBrowser");
+  assert.equal(schema.layoutFrameType(doc.getFrame("Browser/Unrelated"), frames), "Frame");
+  const report = validateLayout("test.SC2Layout", doc, schema);
+  assert.equal(report.diagnostics.some(d => d.code === "schema.unknown_property" || d.code === "hookup.required_missing"), false);
+  assert.ok(report.diagnostics.some(d => d.code === "schema.blizzard_only_runtime_uncertain"));
+  const invalid = new LayoutDocument('<Desc><Frame type="Frame" name="Movie" template="CommanderSelectionPopupContainers/MovieContainerTemplate"><Frame type="Frame" name="MovieFrame"><Loop val="not-a-boolean"/></Frame></Frame></Desc>');
+  assert.ok(validateLayout("test.SC2Layout", invalid, schema).diagnostics.some(d => d.code === "property.invalid_value"));
+  const wrongRoot = new LayoutDocument('<Desc><Frame type="Frame" name="Movie" template="StandardTemplates/StandardMovieTemplate"><Loop val="true"/></Frame></Desc>');
+  assert.ok(validateLayout("test.SC2Layout", wrongRoot, schema).diagnostics.some(d => d.code === "schema.unknown_property"));
 });
 
 test("recommends a visible standard template while retaining alternative choices", async () => {

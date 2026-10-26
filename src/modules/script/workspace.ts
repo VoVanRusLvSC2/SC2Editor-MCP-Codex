@@ -12,6 +12,7 @@ const file = z.string().min(1).max(1024).refine(v => /\.galaxy$/i.test(v), 'Gala
 const code = z.string().max(512 * 1024);
 export const scriptPlanSchema = z.object({ operations: z.array(z.discriminatedUnion('op', [
         z.object({ op: z.literal('file.create'), file, source: code }).strict(),
+        z.object({ op: z.literal('file.replace'), file, source: code, expectedSourceSha256:z.string().regex(/^[a-f0-9]{64}$/) }).strict(),
         z.object({ op: z.literal('function.add'), file, source: code }).strict(),
         z.object({ op: z.literal('function.body'), file, name: identifier, body: code }).strict(),
         z.object({ op: z.literal('function.rename'), file, name: identifier, newName: identifier }).strict(),
@@ -208,6 +209,14 @@ export class ScriptWorkspace {
     }
     async validateSource(source:string){const api=await this.api(),doc=new GalaxyDocument(source),typecheck=checkGalaxyTypes(doc,api.byName);const diagnostics=[...doc.diagnostics,...typecheck.diagnostics];return {valid:!diagnostics.some(d=>d.severity==='error'),diagnostics,typecheck,compiler:'NOT_EXECUTED'};}
     async validate() { return this.validation(await this.snapshot()); }
+    async planFile(file: string) {
+        const raw = await this.workspace.readRaw(file);
+        if (!raw.exists && !raw.staged) throw new Error('SCRIPT_PLAN_FILE_MISSING');
+        if (Buffer.byteLength(raw.text) > 1024 * 1024) throw new Error('SCRIPT_PLAN_FILE_BYTE_LIMIT');
+        // Declarative JSON only. The normal planner still owns schema checks,
+        // source snapshots and the immutable plan; this cannot execute a file.
+        return this.plan(JSON.parse(raw.text));
+    }
     async plan(input: z.input<typeof scriptPlanSchema>) {
         const args = scriptPlanSchema.parse(input);
         const schemaHash=(await this.api()).sourceSha256;
@@ -222,6 +231,11 @@ export class ScriptWorkspace {
                     throw new Error('SCRIPT_FILE_EXISTS');
                 after.set(key, op.source);
                 present.set(key, true);
+            }
+            if(op.op==='file.replace'){
+                if(!present.get(key))throw new Error('SCRIPT_FILE_NOT_FOUND');
+                if(hash(source)!==op.expectedSourceSha256)throw new Error('SCRIPT_REPLACE_SOURCE_STALE');
+                after.set(key,op.source);
             }
             if (op.op === 'function.add') {
                 if (!present.get(key))

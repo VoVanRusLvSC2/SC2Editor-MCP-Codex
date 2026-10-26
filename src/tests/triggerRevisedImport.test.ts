@@ -11,6 +11,13 @@ const names=['FUNCTIONS','MAIN','GAMEPLAY','OBJECTIVES','CINEMATICS'];
 const tree='<TriggerData><Root>'+names.map((_,i)=>`<Item Type="Category" Id="0000000${i}"/>`).join('')+'</Root>'+names.map((n,i)=>`<Element Type="Category" Id="0000000${i}"><Identifier>${n}</Identifier></Element>`).join('')+'</TriggerData>';
 const hash=(s:string)=>createHash('sha256').update(s).digest('hex');
 
+test('only exact typed Action splice declarations cross the native compiled import boundary',()=>{
+ const macro='<TriggerData><Root/><Element Type="FunctionDef" Id="A"><Identifier>Initializer</Identifier><FlagEvent/><FlagOperator/><FlagSubFunctions/><ReturnType><Type Value="void"/></ReturnType><SubFunctionType Type="SubFuncType" Id="B"/><ScriptCode> #SUBFUNCS(actions) </ScriptCode></Element><Element Type="SubFuncType" Id="B"><Identifier>actions</Identifier><Action/></Element></TriggerData>';
+ assert.throws(()=>inspectRevisedGui(macro),/SCRIPT_FALLBACK/);
+ assert.equal(inspectRevisedGui(macro,{nativeLibraries:true}).declarativeMacros,1);
+ for(const changed of [macro.replace('#SUBFUNCS(actions)','#SUBFUNCS(actions); Call();'),macro.replace('<Action/>','<Condition/>'),macro.replace('<FlagEvent/>','<FlagAction/>'),macro.replace('Type="SubFuncType" Id="B"/>','Type="SubFuncType" Library="Foreign" Id="B"/>'),macro.replace('<ReturnType><Type Value="void"/>','<ReturnType><Type Value="int"/>'),macro.replace('<Action/>','<Action/><FunctionDef Type="FunctionDef" Id="A"/>')])assert.throws(()=>inspectRevisedGui(changed,{nativeLibraries:true}),/SCRIPT_FALLBACK/);
+});
+
 test('native GUI inspection resolves library-qualified IDs and preserves library folders',()=>{
  const library=(id:string,other:string)=>`<Library Id="${id}"><Root><Item Type="Category" Library="${id}" Id="AA"/></Root><Element Type="Category" Id="AA"><Identifier>HELPERS</Identifier><Item Type="FunctionDef" Library="${id}" Id="BB"/></Element><Element Type="FunctionDef" Id="BB"><FunctionDef Type="FunctionDef" Library="${other}" Id="CC"/></Element><Element Type="FunctionDef" Id="CC"/></Library>`;
  const xml='<TriggerData><Root><Item Type="Library" Id="ABCD"/><Item Type="Library" Id="EF01"/></Root>'+library('ABCD','EF01')+library('EF01','ABCD')+'</TriggerData>';

@@ -1,0 +1,88 @@
+{
+  "date": "2026-10-26",
+  "scope": "Generic Frame template compatibility, typed inherited Core children, and one native local movie playback case. No universal UI or web-video guarantee.",
+  "gameBuild": "5.0.17.98310",
+  "code": {
+    "genericFrame": "Accepts every registered Core template; specialized authored types retain their class checks.",
+    "rootProperties": "A new generic root keeps Frame properties. Specialized fields resolve only on exact recorded inherited children.",
+    "automaticTool": "ui.create_restricted_frame defaults to inherited-frame; legacy typed construction remains explicit.",
+    "tests": {
+      "uiSchemaAndGuiAndPublicMcp": 17,
+      "passed": true,
+      "build": true,
+      "releaseBuild": true
+    }
+  },
+  "native": {
+    "session": "70a05fe119e032057d8a070935a87653",
+    "archiveSha256": "2be69492a348a2d7e1f4eac71a01454f152662079a5120c000913efd634475e7",
+    "container": "CommanderSelectionPopupContainers/MovieContainerTemplate",
+    "authoredContainerType": "Frame",
+    "inheritedChild": "MovieFrame",
+    "authoredChildOverrideType": "Frame",
+    "movie": "Assets/Textures/briefing_video_thanson01_00.ogv",
+    "playback": "Observed decoded movie pixels in native game frames; first/last review recorded separately.",
+    "videoSha256": "b58e3a54e56f14b8d4a7cd530e82c625b3f2c297eded401b00be2e7314c9cba2",
+    "frames": [
+      {
+        "sha256": "fd035162aa7643a47ea260d3555b1de1a0e2c3fd6d5fcc637b405e1b2f6823f6",
+        "gameTime": 131.25
+      },
+      {
+        "sha256": "9b6409152e37e108e80d3b7d2fd298e91b5c54387c1f1b176c870fe1d747bed3",
+        "gameTime": 131.375
+      },
+      {
+        "sha256": "bc743b3097a09a9dc4e6613d03bbb418f564c6cc7e9b2528fbdbbfb209f32ac0",
+        "gameTime": 131.5
+      },
+      {
+        "sha256": "57e46394244677773280c5858ce9da433f4688eba4fc9f4c72fa2c5135640f9e",
+        "gameTime": 131.75
+      },
+      {
+        "sha256": "2e806ed9c2dfdf67fc7dc15d20aeeb31c580e5c30eb72f39c1a3e8ffec014283",
+        "gameTime": 131.875
+      },
+      {
+        "sha256": "b48dcde2a24541bd060c55d7c2baa4750619754558eaee93de71ee179b61f9a3",
+        "gameTime": 132.25
+      },
+      {
+        "sha256": "d9de7dda935347074e7f9f200740ff457b0fc97224d50ff2b9acb68d6b2785de",
+        "gameTime": 132.375
+      },
+      {
+        "sha256": "428320ae3fc543cc69817649ed0bcf571b615398a9a5449dd5c4261567badf59",
+        "gameTime": 132.5
+      },
+      {
+        "sha256": "90858d60674bf2f224820816549a158a4fa59a111b5b7d479504afad3e18dd7b",
+        "gameTime": 132.625
+      }
+    ],
+    "manualMotionReview": "Passed: native first/last frames show the tank and scene moving inside the UI movie rectangle; final screenshots contain no prior IsPlaying error line.",
+    "diagnostics": "The final archive removes the rejected read-only IsPlaying assignment. Observed EngineLog snapshots have zero retained entries; other diagnostic sources have partial coverage."
+  },
+  "browser": {
+    "session": "55298a7ca8fd4e36d27419025e1c7525",
+    "container": "StandardDialog/BrowserDialogTemplate",
+    "authoredTypes": "Frame container and Frame child override",
+    "observed": [
+      "visible native SceneBrowser",
+      "BrowserImage",
+      "AddressEditBox with https://www.youtube.com/"
+    ],
+    "webPageAndYouTubePlayback": "not confirmed",
+    "navigation": {
+      "status": "inconclusive",
+      "reason": "No matching native Go-button click handler return; submission may have occurred and was not retried."
+    }
+  },
+  "limitations": [
+    "The earlier direct locked types and direct Movie dialog control failed to instantiate.",
+    "File/Loop on a new generic root produced unknown tags; these belong on the inherited typed child.",
+    "IsPlaying was rejected as read-only by build 98310 and removed.",
+    "Native video and screenshots stay in local work evidence; no private Toolkit implementation or instrumented map is distributed."
+  ]
+}

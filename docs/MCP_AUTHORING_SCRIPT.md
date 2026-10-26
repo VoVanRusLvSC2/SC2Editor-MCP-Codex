@@ -58,6 +58,18 @@ source files remain intact. The scaffold does not activate itself in InitMap.
 For GUI, use `target=gui`, or `trigger.organize` with exact element assignments.
 New typed GUI plans accept `create.folder`, for example GAMEPLAY/WAVES.
 
+For a large Galaxy authoring request, `script.plan_file` reads a strict JSON
+request from the workspace (at most 1 MiB). It creates the same immutable plan as
+`script.plan`; apply and save remain explicit. `file.replace` requires the exact
+current `expectedSourceSha256`, in addition to the ordinary apply/save stale
+guards. Use this explicit operation when a complete source replacement is
+intentional; do not disguise replacement as a function patch.
+
+`trigger.generate_runtime` returns compact receipts by default. These retain
+transaction hashes, diagnostics and completeness states while omitting the
+unsolicited source preview. Set `response="full"` when the source diff is needed.
+This reduces transport output, not the size or fidelity of the saved runtime.
+
 `terrain catalog` is paged reference lookup; `terrain style` adds profile guidance
 and target Actor candidates. `terrain compose` owns a named group of placements,
 keeps seed/parameters, and replaces only its recorded objects on repeated calls.

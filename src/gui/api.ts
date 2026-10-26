@@ -291,7 +291,7 @@ export async function dispatchGuiApi(
         file,
         sha256: doc.sha256,
         frame,
-        type: schema.describeType(frame.type),
+        type: schema.describeType(schema.layoutFrameType(frame, doc.listFrames())),
         restrictionPlan: schema.restrictionPlan(frame.type),
       } };
     }
@@ -430,13 +430,17 @@ export async function dispatchGuiApi(
         throw new Error(`Frame type '${type}' is Blizzard-only/locked; explicit override is required`);
       }
       const properties = parseProperties(body.properties);
-      validateProperties(schema, type, properties);
       const template = optionalString(body.template, "template");
       const result = await workspace.mutate(file, mutationOptions(body, `Create ${type} ${String(body.name)}`), (doc) => {
+        const parentPath = optionalString(body.parentPath, "parentPath");
+        const name = asString(body.name, "name");
+        validateProperties(schema, schema.layoutFrameType({
+          path: parentPath ? `${parentPath}/${name}` : name, type, template,
+        }, doc.listFrames()), properties);
         doc.createFrame({
-          parentPath: optionalString(body.parentPath, "parentPath"),
+          parentPath,
           type,
-          name: asString(body.name, "name"),
+          name,
           template,
           frameFile: optionalString(body.frameFile, "frameFile"),
           properties,
@@ -463,7 +467,7 @@ export async function dispatchGuiApi(
       const propertyName = asString(body.property, "property");
       const result = await workspace.mutate(file, mutationOptions(body, `Set ${framePath}.${propertyName}`), (doc) => {
         const frame = doc.getFrame(framePath);
-        const property = schema.getProperty(frame.type, propertyName);
+        const property = schema.getProperty(schema.layoutFrameType(frame, doc.listFrames()), propertyName);
         if (!property && !asBoolean(body.allowUnknown, false)) {
           throw new Error(`Unknown property '${propertyName}' for frame type '${frame.type}'`);
         }

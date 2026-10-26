@@ -2,7 +2,7 @@ import { promises as fs } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { scanXml } from "../core/xmlScanner.js";
-import type { ElementSpec, ParsedXml, ScalarValue, XmlNode } from "../core/types.js";
+import type { ElementSpec, FrameSummary, ParsedXml, ScalarValue, XmlNode } from "../core/types.js";
 
 export interface SimpleTypeSchema {
   name: string;
@@ -124,7 +124,9 @@ export interface TemplateUsageAssessment {
   templateObservedInCore: boolean;
   classCompatible?: boolean;
   targetRestricted: boolean;
-  kind: "ordinary-template" | "locked-frame-template" | "incompatible-template";
+  kind: "ordinary-template" | "locked-frame-template" | "incompatible-template" | "inherited-frame-template";
+  rootPropertyType?: string;
+  templateRestricted?: boolean;
   runtimeExpectation: "expected-to-work" | "may-not-work" | "unsupported";
   notice: string;
 }
@@ -236,6 +238,7 @@ export class SchemaRegistry {
   readonly styleAttributes = new Map<string, number>();
   readonly blizzardTemplates = new Map<string, BlizzardTemplateSchema>();
   readonly restrictedFrameRoutes = new Map<string, RestrictedFrameRoute[]>();
+  private containerChildTypes?: Map<string, Set<string>>;
   corpusFiles = 0;
 
   static bundledDirectory(): string {
@@ -441,6 +444,7 @@ export class SchemaRegistry {
     mergeCounts(this.observedStateConditions, observation.stateConditionTypes);
     mergeCounts(this.styleAttributes, observation.styleAttributes);
     if (source === "blizzard-corpus") {
+      this.containerChildTypes = undefined;
       for (const template of observation.templates ?? []) {
         this.blizzardTemplates.set(template.reference.toLowerCase(), { ...template, source });
       }
@@ -517,7 +521,33 @@ export class SchemaRegistry {
     const child = this.getFrameType(frameType);
     const base = template && this.getFrameType(template.frameType);
     if (!template || !child || !base) return false;
+    // Frame is the generic template carrier. This permits inheritance of the
+    // template without asserting that its specialized root properties exist.
+    if (child.name.toLowerCase() === "frame") return true;
     return this.classInheritance(child.classType).includes(base.classType);
+  }
+
+  layoutFrameType(frame: Pick<FrameSummary, "path" | "type" | "template">, frames: FrameSummary[] = []): string {
+    if (frame.type.toLowerCase() !== "frame") return frame.type;
+    // Core container templates also supply typed children. Infer only exact,
+    // unambiguous recorded paths; unrelated Frame children retain their type.
+    const ancestors = frames.filter(parent => parent.template && frame.path.startsWith(parent.path + "/"))
+      .sort((a, b) => b.path.length - a.path.length);
+    if (ancestors.length && !this.containerChildTypes) {
+      this.containerChildTypes = new Map();
+      for (const routes of this.restrictedFrameRoutes.values()) for (const route of routes) {
+        const key = route.containerTemplate.toLowerCase() + "\0" + route.targetPath.toLowerCase();
+        const types = this.containerChildTypes.get(key) ?? new Set<string>();
+        types.add(route.frameType);
+        this.containerChildTypes.set(key, types);
+      }
+    }
+    for (const parent of ancestors) {
+      const relative = frame.path.slice(parent.path.length + 1).toLowerCase();
+      const types = this.containerChildTypes?.get(parent.template!.toLowerCase() + "\0" + relative);
+      if (types?.size === 1) return [...types][0];
+    }
+    return frame.type;
   }
 
   assessTemplateUsage(frameType: string, templateReference: string): TemplateUsageAssessment {
@@ -525,6 +555,18 @@ export class SchemaRegistry {
     const template = this.getBlizzardTemplate(templateReference);
     const compatible = template ? this.isTemplateCompatible(frameType, templateReference) : undefined;
     const targetRestricted = target?.blizzardOnly ?? false;
+    if (target?.name.toLowerCase() === "frame" && template && compatible) {
+      const inherited = this.getFrameType(template.frameType);
+      return {
+        reference: template.reference, targetType: target.name,
+        templateFrameType: template.frameType, templateObservedInCore: true,
+        classCompatible: true, targetRestricted: false,
+        rootPropertyType: target.name, templateRestricted: inherited?.blizzardOnly ?? false,
+        kind: "inherited-frame-template",
+        runtimeExpectation: inherited?.blizzardOnly ? "may-not-work" : "expected-to-work",
+        notice: "Generic Frame accepts this template. The authored root retains Frame properties; specialized properties belong on inherited typed children. Native instantiation and feature playback remain separate runtime checks.",
+      };
+    }
     if (template && compatible === false) {
       return {
         reference: template.reference,

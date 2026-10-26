@@ -25,6 +25,49 @@ The API deliberately distinguishes two cases in `usage` results:
 
 Locked-template creation is therefore an evidence-backed XML construction feature, not a promise that SC2 will instantiate or permit the frame. `ui.describe_type`, `ui.describe_blizzard_template`, `ui.list_blizzard_templates`, `ui.create_frame`, `ui.create_from_blizzard_template`, `ui.create_restricted_frame`, `ui.apply_template`, and `ui.validate` all expose this distinction.
 
+## Generic Frame inheritance
+
+Use `type="Frame"` as the generic carrier for an existing Core template. It is
+compatible with every known frame template; applying a specialized class check
+to this generic form incorrectly rejects valid template inheritance. Specialized
+authored types still retain their normal compatibility checks.
+
+For locked features, prefer a Core **container** that already owns the required
+typed child. Override the existing child by its exact name using `type="Frame"`.
+This preserves the supplied hookups and child type without creating a new locked
+instance directly. For example:
+
+```xml
+<Frame type="Frame" name="VideoPanel"
+       template="CommanderSelectionPopupContainers/MovieContainerTemplate">
+    <Frame type="Frame" name="MovieFrame">
+        <File val="Assets/Textures/briefing_video_thanson01_00.ogv"/>
+        <Visible val="true"/>
+        <Loop val="true"/>
+    </Frame>
+</Frame>
+```
+
+The generic root retains **Frame properties**. Do not put `File`, `Loop`, or other
+MovieFrame-only properties on that root: build 98310 reports unknown start tags.
+The MCP resolves exact recorded Core container-child paths when validating
+creation, property edits and layouts. Ambiguous or unknown child types remain
+unresolved rather than silently accepting arbitrary properties.
+
+Use `ui.create_from_blizzard_template` with `type="Frame"` for the container,
+then `ui.create_frame` for the named child override. Save and register the custom
+layout through `ui.assets.register` / `ui.assets.save`. The compatible descriptor
+is separate evidence from native instantiation, decoded video, web loading or
+YouTube playback; record those actual results independently.
+
+`ui.create_restricted_frame` now defaults to `construction="inherited-frame"`:
+it chooses a verified Core container with a direct typed child and emits both
+the container and child override as Frame. `construction="typed"` preserves the
+explicit legacy construction. Missing verified containers are reported rather
+than treating a generic root as a specialized widget. In build 98310, `IsPlaying`
+is actually read-only; supplying File starts the tested local movie. Use native
+movie controls/hookups for playback state instead of assigning IsPlaying in XML.
+
 ## SceneBrowser
 
 `SceneBrowser` is also `blizzOnly`. Unlike `LaunchURLButton`, it requires six hookups: `BrowserImage`, `ForwardButton`, `BackButton`, `GoButton`, `ScrollBar`, and `AddressEditBox`. A naked frame is therefore rejected by validation.
@@ -32,14 +75,14 @@ Locked-template creation is therefore an evidence-backed XML construction featur
 The generated Core-route registry finds the complete instance inside `StandardDialog/BrowserDialogTemplate`. The automatic operation emits this merge-friendly pattern:
 
 ```xml
-<Frame type="SceneBrowserDialog" name="MyBrowser" template="StandardDialog/BrowserDialogTemplate">
-    <Frame type="SceneBrowser" name="SceneBrowser">
+<Frame type="Frame" name="MyBrowser" template="StandardDialog/BrowserDialogTemplate">
+    <Frame type="Frame" name="SceneBrowser">
         <Address val="https://example.invalid"/>
     </Frame>
 </Frame>
 ```
 
-The outer Core template supplies the browser controls and required hookups; the nested description is only the semantic override. The same discovery and selection algorithm is applied to every schema-marked Blizzard-only type. If no verified route covers its required hookups, the automatic tool refuses and leaves only the explicit low-level override path.
+The outer Core template supplies the browser controls and required hookups; the nested description is the existing child override. The automatic `ui.create_restricted_frame` operation uses this generic construction by default. Selecting a route is separate from proving native behavior. If no verified container covers the required hookups, report that gap.
 
 For the supplied example:
 

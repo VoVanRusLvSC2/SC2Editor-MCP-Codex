@@ -42,7 +42,7 @@ if(!process.argv.includes('--finalize-only')){
   if(!existsSync(path.join(blizzard,'node_modules','@modkit','uv','package.json')))
     pnpm(['add','-Dw','@modkit/uv@file:./vendor/modkit-uv-1.0.0.tgz','--ignore-scripts'],blizzard);
   for(const name of ['build:mpq','build:casc','build:models'])pnpm(['run',name],blizzard);
-  for(const config of ['tsconfig.sc2-data.json','tsconfig.sc2-map.json','tsconfig.sc2-mod.json','tsconfig.battlenet.json','tsconfig.json'])
+  for(const config of ['tsconfig.sc2-triggers.json','tsconfig.sc2-data.json','tsconfig.sc2-map.json','tsconfig.sc2-mod.json','tsconfig.battlenet.json','tsconfig.json'])
     pnpm(['exec','tsc','-p','starcraft2/'+config],blizzard);
   pnpm(['--dir','starcraft2','exec','vite','build','--config','vite.sc2-map-portable.config.mjs'],blizzard);
 }

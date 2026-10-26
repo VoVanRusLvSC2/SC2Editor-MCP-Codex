@@ -57,17 +57,20 @@ export function validateLayout(
   const allFrames = doc.listFrames();
   for (const frame of allFrames) {
     const details = doc.getFrame(frame.path);
-    const type = registry.getFrameType(frame.type);
-    const description = registry.describeType(frame.type);
+    const propertyType = registry.layoutFrameType(frame, allFrames);
+    const type = registry.getFrameType(propertyType);
+    const description = registry.describeType(propertyType);
     if (!type) {
       add(diagnostics, "warning", "schema.unknown_frame_type", `Unknown/forward frame type '${frame.type}' is preserved`, file, frame.path);
     } else if (type.blizzardOnly) {
-      const templateDetail = frame.template ? ` Template '${frame.template}' does not bypass that restriction.` : "";
+      const templateDetail = propertyType !== frame.type
+        ? ` Generic Frame inherits '${propertyType}'; descriptor compatibility is separate from runtime behavior.`
+        : frame.template ? ` Template '${frame.template}' does not establish native playback.` : "";
       add(
         diagnostics,
         "warning",
         "schema.blizzard_only_runtime_uncertain",
-        `Frame type '${frame.type}' is Blizzard-only/locked and may not work at SC2 runtime.${templateDetail}`,
+        `Frame type '${propertyType}' is Blizzard-only/locked and may not work at SC2 runtime.${templateDetail}`,
         file,
         frame.path,
       );
@@ -82,14 +85,14 @@ export function validateLayout(
         .map((candidate) => candidate.path.slice(frame.path.length + 1).toLowerCase()));
       const missingHookups = requiredHookups.filter((hookup) => !descendantPaths.has(hookup.path.toLowerCase()));
       let inheritedFromVerifiedTemplate = Boolean(
-        frame.template && registry.getBlizzardTemplate(frame.template)?.frameType.toLowerCase() === frame.type.toLowerCase(),
+        frame.template && registry.getBlizzardTemplate(frame.template)?.frameType.toLowerCase() === propertyType.toLowerCase(),
       );
       if (!inheritedFromVerifiedTemplate && frame.template && resolver) {
         inheritedFromVerifiedTemplate = missingHookups.every((hookup) =>
           resolver.templateProvidesHookup(frame.template!, file, hookup.path));
       }
       if (!inheritedFromVerifiedTemplate) {
-        const plan = registry.restrictionPlan(frame.type);
+        const plan = registry.restrictionPlan(propertyType);
         inheritedFromVerifiedTemplate = allFrames.some((ancestor) => {
           if (!ancestor.template || ancestor.path === frame.path || !frame.path.startsWith(`${ancestor.path}/`)) return false;
           const relative = frame.path.slice(ancestor.path.length + 1);

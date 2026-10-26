@@ -1,5 +1,19 @@
 # Changelog
 
+## Generic Frame templates and economical GUI authoring — 2026-10-26
+
+- Accept every known Core template on generic Frame while retaining specialized
+  class checks. Validate exact inherited container children without granting
+  specialized properties to a new base root. Preserve native playback uncertainty.
+- Make `ui.create_restricted_frame` inherit a verified Core container and named
+  child through Frame by default; retain the explicit legacy typed strategy.
+  Document the in-game movie route and keep YouTube playback unconfirmed.
+- Add immutable `script.plan_file`, explicit source-hash guarded file replacement,
+  cached GUI graph metadata and compact runtime receipts that retain diagnostics.
+- Admit only exact declarative Action-splice macros behind original-Editor
+  import proof. A new deeply nested string-Generic-Event program and its editable
+  GUI both produced 729/121/81 in real SC2; converter round-trip limits remain.
+
 ## Focused GUI import and UI lifecycle outcomes — 2026-10-26
 
 - Finish the bounded four-area functional pass with explicit per-case evidence

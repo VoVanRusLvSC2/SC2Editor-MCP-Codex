@@ -1,0 +1,59 @@
+{
+  "date": "2026-10-26",
+  "scope": "One deliberately nested Galaxy program converted to editable GUI, organized through public MCP, compiled by the original Editor, and checked in two sequential hidden SC2 sessions.",
+  "gameBuild": "5.0.17.98310",
+  "authoring": {
+    "branches": 6,
+    "nestedLoops": 6,
+    "recordsByReference": true,
+    "recordArray": true,
+    "recordFieldDimensions": [3, 3],
+    "genericEvents": ["Lab/outer", "Lab/inner", "Lab/leaf", "Lab/late"],
+    "checks": ["nested event context restoration", "late registration ignores an earlier send", "wrong-name listener does not fire"]
+  },
+  "conversion": {
+    "implementation": "Existing experimental K converter v433 graph snapshot, convertGalaxyToTriggers",
+    "productionCurrentChanged": false,
+    "elapsedMs": 16843.2362,
+    "rawElements": 462,
+    "guiTriggers": 7,
+    "functionDefinitions": 13,
+    "variables": 23,
+    "functionCalls": 134,
+    "opaqueCustomScript": 0,
+    "declarativeActionSpliceMacros": 2,
+    "newExactNativeDescriptions": 1,
+    "nativeDescription": "TriggerAddEventGeneric(trigger,string) as an explicit-target Action; the stock Event has an implicit trigger.",
+    "canonicalRoundTrip": "partial; header/script differences remain",
+    "converterTypeChecker": "Reports unresolved native declaration context. Not accepted as a clean static semantic certificate."
+  },
+  "folders": ["FUNCTIONS", "STATE", "EVENTS", "MAIN", "VALIDATION"],
+  "nativeCompile": {
+    "job": "c5ca8e2a-f707-4e52-b801-9aa19c4b02d6",
+    "nativeGenerationVerified": true,
+    "nativeCompilePassed": true,
+    "compilerErrors": 0
+  },
+  "gameOracle": {
+    "expectedMarkerLife": [729, 121, 81],
+    "originalGalaxy": {
+      "archiveSha256": "128b1e33398357f946bb875633fa6abea7cf42498b19b98cd026b425169275fa",
+      "session": "250adbe097c52b0a48bfc09a2b39745d",
+      "gameTime": 57.75,
+      "actual": [729, 121, 81]
+    },
+    "convertedGui": {
+      "archiveSha256": "a8d45458b9d4040184077dafc3065c52ecb3a3570bb8024f4a9e56f9a00f2fb6",
+      "session": "9514680fec07d7c89f83119fc97605b6",
+      "gameTime": 226.5,
+      "actual": [729, 121, 81]
+    },
+    "passed": true
+  },
+  "limitations": [
+    "The initial unconventional startup was refused; a subsequent source version failed native declaration ordering. The recorded successful oracle uses corrected source order.",
+    "Matching these concrete engine counters establishes this case, not universal converter equivalence.",
+    "Declarative macro import requires eligible original-Editor evidence; the local emitter remains a separate bounded subset.",
+    "This record does not certify the subsequent Data mechanics or video frames."
+  ]
+}

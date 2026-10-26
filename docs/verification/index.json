@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "recordedAt": "2026-10-26T00:22:25.164Z",
+  "recordedAt": "2026-10-26T13:41:30.041Z",
   "scope": "Inventory of retained records and explicit roadmap coverage. This does not supersede native observations or refresh historical source fingerprints.",
   "records": [
     {
@@ -494,6 +494,18 @@
       "file": "docs/verification/focused-ui-lifecycle-2026-10-26.json",
       "sha256": "f0b4a38646e4f3ce94b311c6d9139ea5b462e5303d2c8fb576cd262fee4ec51b",
       "role": "scoped"
+    },
+    {
+      "id": "advanced_generic_gui",
+      "file": "docs/verification/advanced-generic-gui-2026-10-26.json",
+      "role": "scoped",
+      "sha256": "ae1b2bd78d2208ddeb3f7af10594901dc53946acb7639cc37757ee808c5d156c"
+    },
+    {
+      "id": "generic_frame_video",
+      "file": "docs/verification/generic-frame-native-video-2026-10-26.json",
+      "role": "scoped",
+      "sha256": "c05e5bfa39f4e0b9996bc7b14e1a72cfc25218f2dbaf8eb3a5d47b462fdfff8c"
     }
   ],
   "coverage": [

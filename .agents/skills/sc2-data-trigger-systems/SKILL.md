@@ -33,6 +33,11 @@ original Editor checks. Inspect actual tool schemas before using recipes.
 5. Handle initialization, transitions, duplicate input, death, cleanup and restart.
    Keep UI state per player where needed. Use native command cards unless a
    separate ability interface is explicitly requested.
+   For locked UI features, read `docs/BLIZZARD_TEMPLATES_AND_CLIPPING.md`. Prefer
+   a verified Core container inherited through generic `type="Frame"`, then an
+   exact named Frame override of its existing typed child. Generic Frame accepts
+   known templates; specialized properties belong on the typed child, not the
+   base root. Native instantiation and video/web playback require separate proof.
 6. Apply guarded transactions, validate references/generated source, and use native
    compilation when available and authorized. Separate compiler, load, image and
    gameplay evidence.

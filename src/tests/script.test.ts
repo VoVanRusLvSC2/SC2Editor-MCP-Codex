@@ -3,10 +3,20 @@ import assert from 'node:assert/strict';
 import {promises as fs} from 'node:fs';
 import path from 'node:path';
 import os from 'node:os';
+import {createHash} from 'node:crypto';
 import {Workspace} from '../core/workspace.js';
 import {ScriptWorkspace} from '../modules/script/workspace.js';
 import {GalaxyDocument} from '../modules/script/document.js';
 async function fixture(t:{after(fn:()=>Promise<void>):void}){const root=await fs.mkdtemp(path.join(os.tmpdir(),'sc2-script-'));t.after(()=>fs.rm(root,{recursive:true,force:true}));const w=new Workspace(root);return{root,w,s:new ScriptWorkspace(w)};}
+
+test('whole-file replacement requires an explicit exact source hash and retains apply-time guards',async t=>{
+ const {root,w,s}=await fixture(t),source='void InitMap () {}',sha=(v:string)=>createHash('sha256').update(v).digest('hex');await fs.writeFile(path.join(root,'MapScript.galaxy'),source);
+ const op={op:'file.replace' as const,file:'MapScript.galaxy',source:'void Helpers () {}\nvoid InitMap () { Helpers(); }',expectedSourceSha256:sha(source)};
+ await assert.rejects(s.plan({operations:[{...op,expectedSourceSha256:'0'.repeat(64)}]}),/REPLACE_SOURCE_STALE/);assert.deepEqual(w.draftFiles(),[]);
+ const plan=await s.plan({operations:[op]});await fs.writeFile(path.join(root,'MapScript.galaxy'),source+'\n// Concurrent edit');await assert.rejects(s.apply(plan.planId,false),/STALE_SCRIPT_PLAN/);
+ await fs.writeFile(path.join(root,'MapScript.galaxy'),source);const next=await s.plan({operations:[op]});await s.apply(next.planId,false);await s.save('MapScript.galaxy',false);assert.equal(await fs.readFile(path.join(root,'MapScript.galaxy'),'utf8'),op.source);
+ await assert.rejects(s.plan({operations:[{...op,file:'missing.galaxy'}]}),/SCRIPT_FILE_NOT_FOUND/);
+});
 
 test('for headers cannot hide invalid calls inside the loop and immediately after it',async t=>{
  const {s}=await fixture(t);
@@ -26,3 +36,18 @@ test('create and connect stage/save atomically, preserve entry code and reject e
 test('periodic recipe checks action signature and produces valid native arities without touching GUI triggers',async t=>{const{w,s}=await fixture(t);await fs.writeFile(w.resolveUserPath('MapScript.galaxy'),'void Action () {}\nvoid InitMap () {}');await fs.writeFile(w.resolveUserPath('Triggers'),'opaque GUI triggers');const p=await s.recipe({file:'Scripts/Income.galaxy',name:'IncomeInit',kind:'periodic',seconds:2,action:'Action'});assert.equal(p.validation.valid,true);await s.apply(p.planId,false);await s.save('Scripts/Income.galaxy',false);assert.match((await w.readRaw('Scripts/Income.galaxy')).text,/TriggerAddEventTimePeriodic\(IncomeInit_trigger, 2.0000, c_timeGame\)/);assert.equal((await w.readRaw('Triggers')).text,'opaque GUI triggers');await assert.rejects(s.recipe({file:'Scripts/Bad.galaxy',name:'Bad',kind:'periodic',action:'Missing'}),/ACTION_MUST/);});
 
 test('file-set changes after staging block script save and leave the complete group staged',async t=>{const{w,s}=await fixture(t);await fs.writeFile(w.resolveUserPath('a.galaxy'),'void A () {}');const p=await s.plan({operations:[{op:'function.body',file:'a.galaxy',name:'A',body:' int x = 1; '}]});await s.apply(p.planId,false);await fs.writeFile(w.resolveUserPath('new.galaxy'),'void New () {}');await assert.rejects(s.save('a.galaxy',false),/STALE_SCRIPT_SAVE/);assert.equal((await w.readRaw('a.galaxy',false)).text,'void A () {}');assert.equal(w.hasDraft('a.galaxy'),true);s.discard('a.galaxy');assert.equal(w.draftFiles().length,0);});
+
+test('declarative plan file keeps immutable operations and stale-source guards',async t=>{
+ const {root,w,s}=await fixture(t);await fs.writeFile(path.join(root,'MapScript.galaxy'),'void InitMap () {}');
+ const file=path.join(root,'request.json');await fs.writeFile(file,JSON.stringify({operations:[{op:'file.create',file:'Lab.galaxy',source:'void Lab_Init () {}'},{op:'connect',file:'Lab.galaxy',entryFile:'MapScript.galaxy',entry:'InitMap',init:'Lab_Init'}]}));
+ const plan=await s.planFile('request.json');assert.deepEqual(w.draftFiles(),[]);
+ await fs.writeFile(file,JSON.stringify({operations:[{op:'file.create',file:'Other.galaxy',source:'void Other () {}'}]}));
+ await s.apply(plan.planId,false);assert.match((await w.readRaw('Lab.galaxy')).text,/Lab_Init/);assert.equal((await w.readRaw('Other.galaxy')).exists,false);assert.match((await w.readRaw('MapScript.galaxy')).text,/Lab_Init\(\)/);
+ const next=await fixture(t);await fs.writeFile(path.join(next.root,'Existing.galaxy'),'void Existing () {}');await fs.writeFile(path.join(next.root,'request.json'),JSON.stringify({operations:[{op:'function.body',file:'Existing.galaxy',name:'Existing',body:' int value=1; '}]}));const stale=await next.s.planFile('request.json');await fs.writeFile(path.join(next.root,'Existing.galaxy'),'void Existing () { int changed=2; }');await assert.rejects(next.s.apply(stale.planId,false),/STALE_SCRIPT_PLAN/);assert.deepEqual(next.w.draftFiles(),[]);
+});
+test('plan files reject missing, non-JSON, oversized and escaping input without source execution',async t=>{
+ const {root,w,s}=await fixture(t);await assert.rejects(s.planFile('missing.json'),/SCRIPT_PLAN_FILE_MISSING/);
+ await fs.writeFile(path.join(root,'bad.json'),'process.exit(77)');await assert.rejects(s.planFile('bad.json'),SyntaxError);
+ await fs.writeFile(path.join(root,'big.json'),' '.repeat(1024*1024+1));await assert.rejects(s.planFile('big.json'),/SCRIPT_PLAN_FILE_BYTE_LIMIT/);
+ await assert.rejects(s.planFile('../escape.json'));assert.deepEqual(w.draftFiles(),[]);
+});
