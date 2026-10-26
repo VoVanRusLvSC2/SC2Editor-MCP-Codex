@@ -192,6 +192,19 @@ callbacks and the same marker unit's life13 to14 to15, without direct state edit
 Do not guess a control handle or treat a normal handler return as proof of the
 intended gameplay result. See the [current GUI matrix](verification/native-gui-matrix-current-2026-10-25.json).
 
+The [focused UI lifecycle fixture](verification/focused-ui-lifecycle-2026-10-26.json)
+adds page-dependent Marine/Ghost selection, close/rebuild, stale root/text-child
+refusal and an unavailable requirement control. Three normal selection clicks
+produce exactly three marker changes; two English 1280x720 frames show wrapped
+long labels. These are scoped observations, not general localization, resolution,
+keyboard or arbitrary widget acceptance.
+
+The upstream `game.test.run` assertion reader does not treat `.length` as an
+array property in the observed profile. For a bounded unique search, assert the
+first returned entry and `units.1:null` or `controls.1:null`, retaining the page
+truncation check separately. This differs from the local `project.test` assertion
+reader; do not silently replay actions after a failed native assertion.
+
 For an event wait, obtain `game.events`' cursor before the action, then pass it
 to `game.wait`, for example `condition:{kind:"unit_died",source:"galaxy",
 unitType:"Marine",owner:1}`. A matching event is returned as the `matched` object,

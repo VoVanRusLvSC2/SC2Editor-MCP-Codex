@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "recordedAt": "2026-10-25T13:24:33.172Z",
+  "recordedAt": "2026-10-26T00:22:25.164Z",
   "scope": "Inventory of retained records and explicit roadmap coverage. This does not supersede native observations or refresh historical source fingerprints.",
   "records": [
     {
@@ -481,6 +481,18 @@
       "id": "test_bounds_preflight",
       "file": "docs/verification/test-bounds-preflight-2026-10-26.json",
       "sha256": "932216413d316bd915aca0d60156b29f671b12a45197cf8f455b10067b37d69a",
+      "role": "scoped"
+    },
+    {
+      "id": "focused_gui_import",
+      "file": "docs/verification/focused-gui-import-2026-10-26.json",
+      "sha256": "240d6cde3eec5416fc22300b988d8d11fdbdcc9f61fb1d8a2172333d87fa5179",
+      "role": "scoped"
+    },
+    {
+      "id": "focused_ui_lifecycle",
+      "file": "docs/verification/focused-ui-lifecycle-2026-10-26.json",
+      "sha256": "f0b4a38646e4f3ce94b311c6d9139ea5b462e5303d2c8fb576cd262fee4ec51b",
       "role": "scoped"
     }
   ],

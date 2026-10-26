@@ -62,7 +62,33 @@ reclassifying it as a pass or blocking every supported map workflow.
   suite verdicts remain failed. This exposed and fixed a missing source-bounds
   preflight and omitted compact job handles. Broader geometry and finished art
   are not inferred.
-- **F3 and F4: pending.** No result for these combined cases is inferred from F1/F2.
+- **F3: retained complex-import behavior reconciled; cross-scope limit preserved.**
+  The [focused reconciliation](verification/focused-gui-import-2026-10-26.json)
+  confirms that the already imported named-library graph includes nested records,
+  arrays, reference parameters and runtime timer registration. The exact saved
+  native artifact was recompiled and its deferred mutation and exact shared
+  count were observed twice. GUI/strings and original expectations stayed intact.
+  Separate receiver/timing controls retain their own artifact identity; they are
+  not relabeled as one new combined run. Known library-to-map-global generation
+  remains diagnosed and unsupported, with no silent relocation. No native replay
+  was needed to restate this evidence, and no newer-runtime acceptance is inferred.
+- **F4: tested lifecycle passed; locale save remains a finding.** The
+  [new UI lifecycle observation](verification/focused-ui-lifecycle-2026-10-26.json)
+  records 29 passing native steps, three ordinary selection callbacks and four
+  expected disabled/stale-control refusals. The selected units were Marine, Ghost
+  and Marine after rebuilding; previous heroes were removed and the marker
+  advanced exactly once per choice. Old root and text-child handles refused after
+  destruction/recreation. Two 1280x720 English frames were inspected for wrapping
+  and control placement. The original one-step harness assertion failure remains
+  failed and submitted no action. Original Editor load/compile/save/reopen passed,
+  but enUS native save removed inactive ruRU string files. Gameplay uses the
+  unchanged ordinary MCP export, and all-locale preservation is not accepted.
+
+This bounded pass is **finished**. F1/F2 have their recorded scoped outcomes,
+F3 reuses the already observed complex import without another native renewal,
+and F4 adds the missing lifecycle/routing assertions. Open native compatibility
+and presentation limits are explicit findings, not a request to repeat passing
+controls or a full-release/artwork acceptance claim.
 
 ## Execution and stopping rules
 

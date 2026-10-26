@@ -8,6 +8,18 @@ provide original GUI-to-Galaxy compilation, operation-scoped Messages/Console
 diagnostics, native save/close/reopen comparison and selected original images.
 They do not author map content or validate gameplay.
 
+## Native save and locale preservation
+
+A successful native save/reopen confirms that the saved archive can be reopened;
+it does not promise byte identity or preservation of every authored locale.
+The focused UI fixture saved in enUS removed inactive ruRU GameStrings and
+TriggerStrings, plus an empty GameData.xml, while preserving the GUI and leaving
+the supplied source unchanged. Inspect `componentComparison` before adopting a
+native-saved artifact. Do not replace an ordinary map or claim all-locale
+preservation from `nativeValidationPassed` alone. The cause and a general locale
+preservation fix remain unconfirmed; see the
+[UI lifecycle evidence](verification/focused-ui-lifecycle-2026-10-26.json).
+
 ## Setup and lifecycle
 
 Run `npm run native:setup` on Windows. This downloads the pinned

@@ -1,5 +1,16 @@
 # Changelog
 
+## Focused GUI import and UI lifecycle outcomes — 2026-10-26
+
+- Finish the bounded four-area functional pass with explicit per-case evidence
+  and limits; reuse the already observed complex native GUI import instead of
+  replaying its successful controls. Keep the cross-scope generation finding.
+- Record one new editable-GUI UI lifecycle fixture: page-dependent hero routing,
+  destroy/rebuild, exactly-once callbacks and disabled/stale-control refusals.
+- Document native assertion-path limits and inactive-locale removal during the
+  original Editor save. Ordinary map sources remain unchanged; all-locale
+  preservation and universal release readiness are not inferred.
+
 ## Source bounds preflight and compact job handles — 2026-10-26
 
 - Reject out-of-bounds movement/placement points and unreadable source MapInfo
