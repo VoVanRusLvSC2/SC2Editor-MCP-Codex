@@ -249,6 +249,23 @@ the owned Editor Messages/Console after native checks. Missing visual models
 still require actor/asset and rendered-frame investigation when no error is
 reported. Empty partial diagnostics do not prove that all subsystems are clear.
 
+### Regression review before delivery
+
+Apply this review to changed scope. Reuse relevant retained evidence; these rows
+do not require replaying accepted fixtures or launching an unauthorized test.
+
+| Reproduced failure | Future authoring and acceptance rule |
+| --- | --- |
+| Objects listed but invisible in the Editor | Preserve the native placement/preload contract through `map.prepare_editor`/`map.export`. Review actual 3D visibility when changed; a list entry, in-game spawn or manually inserted refresh object does not establish generator acceptance. |
+| Black or gray/white minimap despite vision | Use the default native `map.minimap.rebuild` workflow and review actual terrain textures, dots and camera alignment. Preserve intended fog/vision; extra reveal is not an image repair. |
+| Damage works but the visual model is absent | Review `data.presentation.check`, including point-effect `eventScopeReview`, native actor lifetime and rendered frames. Actor counts and damage alone do not establish visible playback. Preserve main-unit animations and verify attachment hosts/site operations where changed. |
+| A silent console is treated as success | Read launch/action diagnostics and original Editor Messages/Console. Follow continuations; retain warnings and partial/unavailable coverage. |
+| The same generated defect returns on another map | Fix the reusable writer/recipe or authoring rule, retain a focused regression where meaningful, then apply the map repair through MCP. Keep remaining native/art limits explicit. |
+
+The [textured minimap and point-effect observation](verification/native-textured-minimap-2026-10-26.json)
+is the retained control for these two repaired cases, not proof of every future
+map, model, fog transition or viewport.
+
 The catalog's 32x32 counts are broad source observations or authored suggestions,
 not quotas. Catalog location fragments are reference candidates. The current
 composition adapter does not reconstruct the native foliage distribution engine

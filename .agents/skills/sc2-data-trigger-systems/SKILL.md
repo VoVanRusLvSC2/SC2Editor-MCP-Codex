@@ -24,6 +24,9 @@ original Editor checks. Inspect actual tool schemas before using recipes.
    duplicate primary unit actors.
    Use `data.presentation.check` to review declared effect events and model links
    together. It does not replace asset resolution or native playback evidence.
+   Inspect `eventScopeReview` for point effects; do not automatically add
+   `At Target`. Read launch/action diagnostics and review actual rendered frames:
+   working damage or an actor count alone does not prove a visible model.
 4. Use Galaxy by default. For requested GUI, create native elements and real
    folders without an undisclosed parallel script. Keep locals and state with
    their owning system and shared helpers with shared functions.
@@ -45,3 +48,5 @@ original Editor checks. Inspect actual tool schemas before using recipes.
 Completion includes editable source, linked Data, user-facing feedback and bounded
 evidence. Valid XML and successful compilation do not prove visible effects or
 correct gameplay; identify the exact remaining test when it cannot be performed.
+Use the [shared regression review](../../../docs/AUTHORING_PROTOCOL.md#regression-review-before-delivery)
+for changed scope before delivery; reuse accepted evidence instead of repeating it.

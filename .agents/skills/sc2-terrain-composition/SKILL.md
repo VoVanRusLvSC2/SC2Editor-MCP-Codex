@@ -24,7 +24,13 @@ catalog instructions describe reference material.
    groups and restrained detail, with variable density and intentional clearings.
 7. Resnap after height changes, run supported placement/navigation checks, and
    inspect overview and gameplay-scale images. Use native checks when authorized.
+   Verify changed objects in the Editor's actual 3D view, not only its object list.
+8. Rebuild the final textured minimap through the default native
+   `map.minimap.rebuild` workflow. Preserve intended vision/fog; gray/white
+   overviews are drafts and extra reveal does not repair a black terrain image.
 
 Completion requires reviewed views and stated scale/placement/pathing limits.
 A structural report does not prove a closed cliff seam or native model visibility.
 Retain failed previews as failures and identify the area still needing review.
+Use the [shared regression review](../../../docs/AUTHORING_PROTOCOL.md#regression-review-before-delivery)
+for changed scope; do not replay accepted terrain tests solely to renew a label.

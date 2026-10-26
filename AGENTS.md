@@ -66,6 +66,10 @@ localization, resource IDs and original catalog source annotations.
   `map.minimap.rebuild` backend. The explicit `overview` backend is a draft only.
   Preserve vision/fog and verify the minimap in game; gray/white placeholder
   overviews do not satisfy standard textured minimap acceptance.
+- For generation defects, correct the reusable writer, recipe or authoring rule
+  and add a focused regression where meaningful, then repair affected maps through
+  MCP. Do not present a one-map patch as a generator fix. Before delivery follow
+  `docs/AUTHORING_PROTOCOL.md#regression-review-before-delivery` for changed scope.
 - Before another native run, identify the unverified behavior or changed code
   that justifies it. Reuse retained results within their recorded scope; do not
   replay passing fixtures solely to refresh a general readiness label. Follow

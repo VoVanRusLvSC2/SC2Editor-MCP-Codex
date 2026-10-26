@@ -21,7 +21,10 @@ only when their subsystem is being authored.
 6. Check startup, inputs, objectives, failure/death, success, cleanup and repeat.
    Include persistence and multiplayer state when applicable. Native/game tests
    depend on available tools and task authorization.
-7. Export through MCP and deliver the artifact with compact verification evidence.
+7. Apply the [shared regression review](../../../docs/AUTHORING_PROTOCOL.md#regression-review-before-delivery)
+   to changed scope, then export through MCP and deliver compact evidence.
+   A recurring generated defect needs a reusable writer/recipe or authoring-rule
+   correction; patching one archive alone does not establish a generator fix.
 
 Completion means a reachable user-facing flow and a truthful check report.
 Static export/reopen does not establish gameplay quality. Report missing native,
