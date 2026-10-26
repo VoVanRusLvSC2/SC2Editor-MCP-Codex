@@ -518,6 +518,12 @@
       "file": "docs/verification/native-game-dev12-2026-10-26.json",
       "role": "scoped",
       "sha256": "bae36cc74479649118357151425cfd50da5db2fceee7a56d9292d5f06ad8ae68"
+    },
+    {
+      "id": "native_textured_minimap",
+      "file": "docs/verification/native-textured-minimap-2026-10-26.json",
+      "role": "scoped",
+      "sha256": "886b00ef15338a06f3fe866e809d8915b525417e35ce81f5cb04ebc78c483c4d"
     }
   ],
   "coverage": [

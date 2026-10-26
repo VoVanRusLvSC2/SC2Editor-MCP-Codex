@@ -58,6 +58,14 @@ localization, resource IDs and original catalog source annotations.
   inspect the image and retain sparse/flat `contentAssessment` review flags.
 - Record static validity, native compile, rendered appearance and gameplay as
   distinct evidence. Unknown/unreadable diagnostics remain unknown.
+- Read game diagnostics after every launch and after the tested ability/action,
+  following returned continuations and retaining source coverage. Read the owned
+  Editor Messages/Console after native checks. Inspect missing models even when
+  no error was reported; an empty partial log is not an all-clear verdict.
+- Final minimaps use the original Editor terrain render through the default
+  `map.minimap.rebuild` backend. The explicit `overview` backend is a draft only.
+  Preserve vision/fog and verify the minimap in game; gray/white placeholder
+  overviews do not satisfy standard textured minimap acceptance.
 - Before another native run, identify the unverified behavior or changed code
   that justifies it. Reuse retained results within their recorded scope; do not
   replay passing fixtures solely to refresh a general readiness label. Follow

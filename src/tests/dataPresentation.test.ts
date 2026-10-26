@@ -16,3 +16,13 @@ test('missing models and inherited-only bindings are review findings, with expli
  const hidden=inspectEffectPresentation(objects,{effects:['Pulse'],invisible:[{effect:'Pulse',reason:'Internal targeting helper'}]});assert.equal(hidden.effects[0].presentation,'intentionally_invisible');assert.equal(hidden.effects[0].bindings.length,1);
  assert.throws(()=>presentationSchema.parse({effects:['Pulse'],invisible:[{effect:'Other',reason:'helper'}]}));
 });
+
+test('point-only effects with target actor scope remain review findings, without rejecting unit targets or unscoped ground visuals',()=>{
+ const objects=declarations('<Catalog><CEffectEnumArea id="Cell"><ImpactLocation Value="TargetPoint"/></CEffectEnumArea><CEffectDamage id="UnitHit"/><CModel id="Triangle"/><CActorModel id="Filtered"><Model value="Triangle"/><On Terms="Effect.Cell.Start; At Target" Send="Create"/></CActorModel><CActorModel id="Ground"><Model value="Triangle"/><On Terms="Effect.Cell.Start" Send="Create"/><HostSiteOps Ops="SOpShadow"/></CActorModel><CActorModel id="Hit"><Model value="Triangle"/><On Terms="Effect.UnitHit.Start; At Target" Send="Create"/></CActorModel></Catalog>');
+ const result=inspectEffectPresentation(objects,{effects:['Cell','UnitHit']});
+ assert.match(result.effects[0].bindings.find(b=>b.actor==='Filtered')!.eventScopeReview[0],/POINT_EFFECT_TARGET_ACTOR_SCOPE/);
+ assert.deepEqual(result.effects[0].bindings.find(b=>b.actor==='Ground')!.eventScopeReview,[]);
+ assert.deepEqual(result.effects[1].bindings[0].eventScopeReview,[]);
+ assert.equal(result.effects[0].presentation,'declared_links_found');
+ assert.equal(result.nativePlayback,'not_checked');
+});

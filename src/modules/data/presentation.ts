@@ -15,6 +15,7 @@ export function inspectEffectPresentation(objects:Declaration[],input:z.input<ty
  const args=presentationSchema.parse(input),actors=objects.filter(o=>o.domain==='Actor'&&o.id),models=objects.filter(o=>o.domain==='Model'&&o.id);
  const results=args.effects.map(effect=>{
   const exception=args.invisible.find(e=>e.effect===effect),definitions=objects.filter(o=>o.domain==='Effect'&&o.id===effect);
+  const declaredPoint=definitions.some(o=>o.fields.some(f=>['ImpactLocation','WhichLocation'].includes(f.name)&&f.attrs.Value==='TargetPoint'));
   const escaped=effect.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),pattern=new RegExp('(?:^|[;\\s])Effect\\.'+escaped+'\\.(Start|Stop)(?=[;\\s]|$)');
   const candidates=actors.flatMap(actor=>{
    const events=flatten(actor.fields).filter(f=>f.name==='On'&&f.attrs.removed!=='1'&&pattern.test(f.attrs.Terms??''));
@@ -25,6 +26,8 @@ export function inspectEffectPresentation(objects:Declaration[],input:z.input<ty
     model:modelId??null,modelDeclaration:!modelId?'not_declared':found.length===1?'found':found.length?'ambiguous':'unresolved',
     events:events.slice(0,8).map(e=>({terms:e.attrs.Terms,send:e.attrs.Send,target:e.attrs.Target})),eventsTruncated:events.length>8,
     host:actor.fields.find(f=>f.name==='Host')?.attrs.Subject,siteOps:actor.fields.find(f=>f.name==='HostSiteOps')?.attrs.Ops,
+    eventScopeReview:declaredPoint&&events.some(e=>/^Create(?:\s|$)/.test(e.attrs.Send??'')&&/(?:^|;)\s*At Target(?:\s*;|\s*$)/.test(e.attrs.Terms??''))
+      ?['POINT_EFFECT_TARGET_ACTOR_SCOPE: At Target can filter out point-only execution. Review the location-bearing effect event and ground site operations; verify actual actor creation and rendered playback.']:[],
     nativePlayback:'not_checked',assetResolution:'not_checked'}];
   });
   const linked=candidates.some(c=>c.visualClassCandidate&&c.declaredCreateEvent&&c.modelDeclaration==='found');

@@ -15,7 +15,7 @@
 | map.export | Export a committed map or authored local mod with the matching archive extension; reopen and compare every user entry name/locale/hash before publishing |
 | map.clone | Full native scenario copy into a new sibling directory; not a clean-map generator |
 | map.metadata.plan | Plan playable bounds, fog mask or minimap resolution |
-| map.minimap.rebuild | Rebuild Minimap.tga from committed terrain with ModKit; stage/save or commit atomically |
+| map.minimap.rebuild | Rebuild textured Minimap.tga with the original Editor; guarded queue, then stage/save |
 | map.metadata.apply | Shared byte transaction, default dry-run and grouped staging |
 | map.save / map.discard | Save/discard the complete staged byte group |
 
@@ -23,12 +23,19 @@ All file paths stay inside SC2_UI_ROOT. Using a parent workspace containing sepa
 
 After changing the landscape, `map.minimap.rebuild` replaces the default
 `Minimap.tga` through the same byte transaction coordinator. It defaults to a
-256px ModKit top-down overview, dry run and staging. Use `map.save` with its
-transactionId, or explicitly set `dryRun:false, stage:false` to commit. Existing
-backups and transaction temporary files do not enter ModKit source snapshots.
-The result is an approximate terrain overview; it does not reproduce native
-material shading or change fog, unit visibility, custom minimap paths or HUD
-settings. In-game rendering remains a separate check.
+256px image from the original Editor, dry run and staging. With `dryRun:false`
+the first call exports an owned archive and queues the native full-map render
+(units excluded, doodads included). Poll `editor.job`, then repeat with `jobId`
+in the same MCP session to stage its pixels. Use `map.save` with the returned
+transactionId, or explicitly set `stage:false` to commit. A changed component,
+dependency or input archive rejects; unrelated/cropped/unconfirmed capture jobs
+cannot supply pixels. No silent approximate fallback is used.
+
+`backend:"overview"` explicitly selects the old approximate gray ModKit overview
+for drafts. It does not satisfy final standard textured minimap acceptance.
+Neither backend changes fog, unit visibility, custom minimap paths or HUD
+settings. Verify terrain appearance and dot/camera mapping in game separately.
+Existing backups and transaction temporary files do not enter source snapshots.
 
 ## Creation from a template
 

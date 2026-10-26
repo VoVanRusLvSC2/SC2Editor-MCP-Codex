@@ -1,0 +1,267 @@
+{
+  "date": "2026-10-26",
+  "scope": "Standard textured minimap repair through reusable public MCP, console protocol, and one native point-effect presentation failure with controlled damage observations.",
+  "gameBuild": "5.0.17.98310",
+  "gameToolkit": "0.1.0-dev.12",
+  "editorToolkit": "1.0.0 / native protocol15",
+  "sourceFingerprints": [
+    {
+      "file": "src/modules/map/nativeMinimap.ts",
+      "sha256LfUtf8": "94136f2b9b03bf5b70102ae2ec472b7e034d29cac543fd1849bfd1813131fbe7"
+    },
+    {
+      "file": "src/modules/map/preview.ts",
+      "sha256LfUtf8": "b20b2d27207b605a53b103901f047356a4b53278f24764fb8cc598ddf99943b8"
+    },
+    {
+      "file": "src/app/project.ts",
+      "sha256LfUtf8": "629a43d5df055aca25bd694da3665cc717bdab6b4b3788bc26db61aab25bc349"
+    },
+    {
+      "file": "src/integrations/modkit/tools.ts",
+      "sha256LfUtf8": "733cf9304d7d171dcaaabdf3be1d4df093f08ea170f20fc75a48c1784a5040c3"
+    },
+    {
+      "file": "src/modules/data/presentation.ts",
+      "sha256LfUtf8": "56bc505f22f05c1fccdf199d926ef77bc5bbd56a81ececa57fcb95c5be6c3499"
+    },
+    {
+      "file": "src/tests/nativeMinimap.test.ts",
+      "sha256LfUtf8": "9e15eb40bf583b472137d28cc8d7fea8cb0ad9100460179336212d9b54d538b7"
+    },
+    {
+      "file": "src/tests/mapMinimap.test.ts",
+      "sha256LfUtf8": "37701211b7112481fdae2f97e2f9a26d1539ae0cdbd132a61798d614efe52d77"
+    },
+    {
+      "file": "src/tests/dataPresentation.test.ts",
+      "sha256LfUtf8": "c06f526f1e3024d507fd2679dc8d5c3158ac90225d2e22dff48fc9ce6709264e"
+    },
+    {
+      "file": "AGENTS.md",
+      "sha256LfUtf8": "5117960dbed90b270c126b85a2e35dca80d5b223c6065a75c389830d7fe14747"
+    },
+    {
+      "file": "docs/AUTHORING_PROTOCOL.md",
+      "sha256LfUtf8": "3467be81e33454e7af078ca5569ce6b8a4930cae193eb7cdc74d0bd539535db0"
+    },
+    {
+      "file": "docs/MAP_MCP.md",
+      "sha256LfUtf8": "b171c55c14d3505b70c98e265f6bbcf18b0ea7b1db4876ff8da584b22e67781e"
+    },
+    {
+      "file": "docs/DATA_MCP.md",
+      "sha256LfUtf8": "c790b821d2c3a9a33787b31410b05b2e45c230c3d4a5e2c15d647d0d448c86d5"
+    },
+    {
+      "file": "docs/NATIVE_GAME.md",
+      "sha256LfUtf8": "fdfefe2d42add65cb794aae40502edea81b3cd136e68b1e66b8fe73f4c160551"
+    }
+  ],
+  "supersedes": {
+    "record": "docs/verification/minimap-and-browser-2026-10-26.json",
+    "scope": "Its gray ModKit image rendered, but the user rejected it as final minimap appearance. That historical observation does not establish standard textured minimap acceptance."
+  },
+  "minimap": {
+    "status": "passed_scoped",
+    "tool": "map.minimap.rebuild",
+    "defaultBackend": "native",
+    "jobId": "8a225cd9-69f9-4489-a539-55027639c800",
+    "wholeMapVerified": true,
+    "filters": {
+      "units": false,
+      "doodads": true,
+      "matchingNativeReadback": true
+    },
+    "inputArchiveSha256": "b0dd4f60c79b6a8788e4311f58e14445f07942906b7a9288d9eddd9bc4cb50fd",
+    "minimapSha256": "eb9942e1213b7e085230b4e8cc1b31b1913e23ffb58e97662b910948495d8834",
+    "dimensions": [
+      256,
+      256
+    ],
+    "renderer": "Original SC2 Editor full-map terrain export",
+    "transactionSaved": true,
+    "gameSession": "f7874fb17988e4c45131dbbe44ab876d",
+    "frame": {
+      "sha256": "739796b73e4de8173a8f23c5eef4ade6e45eb33eb48b18aa315a63c13ce9c8b1",
+      "gameTime": 86.875,
+      "source": "hidden_game_backbuffer",
+      "review": "Actual terrain textures, both cliff shapes, unit dots and camera rectangle are visible. The gray/white draft overview is replaced."
+    },
+    "vision": "Only Minimap.tga changed in the rebuild transaction. Existing map reveal/fog logic was preserved; no additional vision or fog override was added. This fixture already reveals the map and does not prove every fog transition or rectangular-map mapping.",
+    "guards": [
+      "Owned queued full-map capture only",
+      "Original map export filter readback",
+      "Component/dependency and archive revision checks before staging and save",
+      "No silent overview fallback",
+      "No gameplay or vision mutation"
+    ]
+  },
+  "pointEffect": {
+    "status": "passed_scoped",
+    "baseline": {
+      "session": "f7874fb17988e4c45131dbbe44ab876d",
+      "createdVisualActors": 0,
+      "observation": "Ability/damage occurred without the triangle visual actors."
+    },
+    "fix": "Remove At Target from the point-search effect Start event and use SOpShadow. Original native Actor Data read confirmed the inherited animation bracket; its event merge was not rewritten.",
+    "mapAuthoring": "Public data.batch strict transaction:5 field/event changes; no direct component writer.",
+    "nativeRuns": [
+      {
+        "session": "a6c8eb473c9056add4a458d7cb8ef57c",
+        "actionGameTime": 48.75,
+        "accepted": true,
+        "createdVisualActors": 28,
+        "videoSha256": "e034a994040891cb717685400673dc787dbb639e10b782ed7e4c49d00f3c0420",
+        "reviewFrame": {
+          "sha256": "c5b074893188633297e9f7c581db8d44c4c4650f640c420146a7a60dab1358a9",
+          "gameTime": 50,
+          "source": "hidden_game_backbuffer"
+        },
+        "damage": [
+          {
+            "unit": "6",
+            "amount": 40,
+            "gameTime": 48.9375
+          }
+        ],
+        "review": "Rendered triangular lattice reviewed in actual game frames. Individual cells animate and fade; no synthetic media."
+      },
+      {
+        "session": "a6c8eb473c9056add4a458d7cb8ef57c",
+        "actionGameTime": 230.25,
+        "accepted": true,
+        "createdVisualActors": 28,
+        "videoSha256": "03cff2862d47785dd95c9aabab817df327c1aaa99df5a77290ab202e30aad83d",
+        "reviewFrame": {
+          "sha256": "90a5554b2c2e44b3f6c6945e0cf10e91631bbc5554eb105c0445d193d4381c96",
+          "gameTime": 231.625,
+          "source": "hidden_game_backbuffer"
+        },
+        "damage": [
+          {
+            "unit": "10",
+            "amount": 40,
+            "gameTime": 230.375
+          },
+          {
+            "unit": "9",
+            "amount": 40,
+            "gameTime": 230.5
+          },
+          {
+            "unit": "9",
+            "amount": 40,
+            "gameTime": 230.6875
+          },
+          {
+            "unit": "9",
+            "amount": 40,
+            "gameTime": 230.6875
+          },
+          {
+            "unit": "9",
+            "amount": 40,
+            "gameTime": 230.875
+          },
+          {
+            "unit": "6",
+            "amount": 40,
+            "gameTime": 231.125
+          },
+          {
+            "unit": "6",
+            "amount": 40,
+            "gameTime": 231.375
+          },
+          {
+            "unit": "6",
+            "amount": 40,
+            "gameTime": 231.4375
+          }
+        ],
+        "review": "Rendered triangular lattice reviewed in actual game frames. Individual cells animate and fade; no synthetic media."
+      }
+    ],
+    "controls": [
+      {
+        "position": {
+          "x": 68,
+          "y": 50
+        },
+        "beforeLife": 3000,
+        "afterLife": 3000
+      },
+      {
+        "position": {
+          "x": 60,
+          "y": 64
+        },
+        "beforeLife": 2960,
+        "afterLife": 2840
+      },
+      {
+        "position": {
+          "x": 78,
+          "y": 64
+        },
+        "beforeLife": 3000,
+        "afterLife": 3000
+      },
+      {
+        "position": {
+          "x": 60,
+          "y": 67
+        },
+        "beforeLife": 3000,
+        "afterLife": 2840
+      },
+      {
+        "position": {
+          "x": 60,
+          "y": 70
+        },
+        "beforeLife": 3000,
+        "afterLife": 2960
+      }
+    ],
+    "controlInterpretation": "With caster at56,58 and target60,70, all three in-pattern targets lost life. Negative controls at78,64 and68,50 were unchanged. Multiple overlapping cells may each deal40 damage. Earlier controls at67/70 north of a60,64 cast were outside the caster-relative pattern, not evidence that offsets failed.",
+    "mcpPrevention": "data.presentation.check now reports explicit TargetPoint/At Target event-scope combinations for review. This is not a blanket ban on unit-target actor scope.",
+    "backModule": {
+      "change": "Create LabBackModule from the main unit ActorCreation and host on _Selectable; preserve the existing main unit animation handlers.",
+      "review": "Two native close-ups reviewed; the small mechanical back attachment is visible. Full firing/rotation/death lifecycle acceptance is not claimed."
+    }
+  },
+  "diagnostics": {
+    "protocol": "Read game diagnostics after launch and tested actions; follow continuations and read original owned Editor Messages/Console.",
+    "lastGameCursor": "a6c8eb473c9056add4a458d7cb8ef57c:3118",
+    "hasMore": false,
+    "issues": [],
+    "allSourcesClear": null,
+    "coverage": "Game actor/model/Galaxy sources remain partial. Empty partial logs do not prove all subsystems clear. Recording also collected incremental diagnostics.",
+    "editor": "Original retained Messages/Console read completed with no new errors/warnings. A prior Data inspection baseline contained a missing stock PhotonCannon icon image; it was not reclassified as a new ability/model error."
+  },
+  "ordinaryMap": {
+    "file": "work/advanced-lab-20261026/Advanced_Data_Lab/.sc2mcp-output/Advanced_Presentation_Fix.SC2Map",
+    "sha256": "769b60444bdb501ebabb51574637e634e521052b9121a94148a23f81dcb3d855",
+    "privateGameCodeIncluded": false
+  },
+  "cleanup": {
+    "games": [
+      {
+        "stopped": true,
+        "sourceUnchanged": true
+      },
+      {
+        "stopped": true,
+        "sourceUnchanged": true
+      }
+    ],
+    "editorStopped": true
+  },
+  "staticVerification": {
+    "tests": "20 final focused minimap, ModKit and presentation tests passed.",
+    "build": "Final TypeScript build, release build, English documentation check and verification-evidence integrity check passed.",
+    "limits": "Does not certify every map, model, hotkey, sound, fog transition, water profile or UI browser playback."
+  }
+}

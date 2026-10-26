@@ -60,6 +60,15 @@ Reuse verified native bindings, including Start/Stop timing, source/target host,
 site operations and animation lifecycle. Validate model links separately from
 actual native playback; do not call an effect visually verified from XML alone.
 
+Point effects need a location-bearing actor event. Do not automatically add
+`At Target`: it filtered out all 28 visual actors in the retained point-search
+case, despite valid Data and working damage. An unscoped effect Start with
+`SOpShadow` produced 28 visible triangles. This is a scoped native observation,
+not a ban on `At Target` for unit effects. `data.presentation.check` reports
+declared TargetPoint/At Target combinations for review without rejecting them.
+For an attached module, bind its creation to the main unit actor lifecycle and
+verify its selectable host, measured attachment and rendered position.
+
 Configure the unit's main `CActorUnit` as well: retain native movement, attack,
 death and other required lifecycle animation handling. Bind custom ability
 cast/channel/recovery animation where the model supports it, with appropriate
@@ -135,10 +144,15 @@ are different states. Variety alone does not justify wreckage or fire.
 5. Add irregular vegetation clusters and quieter clearings.
 6. Add supported foliage and surface markings separately.
 7. Resnap after height edits and inspect overview/gameplay-camera previews.
-8. After final landscape edits, use `map.minimap.rebuild`, save its staged
-   transaction with `map.save`, then export. A foundation's neutral preview is
-   not an updated landscape overview. Check the in-game minimap separately from
-   fog, unit dots and the Editor overview; ordinary save/reopen need not rebuild it.
+8. After final landscape edits, use `map.minimap.rebuild` with its default native
+   backend. `dryRun=false` queues an owned original Editor full-map render. Poll
+   `editor.job`, then repeat the rebuild with `jobId` and `dryRun=false` to stage
+   its textured image; save with `map.save`, then export. The explicit
+   `backend=overview` is a draft gray ModKit image, not final minimap acceptance.
+   A foundation's neutral preview is not an updated landscape overview. Verify
+   the standard textured minimap in game, with unit dots/camera alignment and
+   normal fog/vision. Do not reveal terrain or change fog to conceal an image bug.
+   Ordinary save/reopen need not rebuild Minimap.tga.
 
 Distinguish full terrain dimensions, visible camera area and MapInfo playable
 bounds before placing gameplay units or selecting spell test points. Supported
@@ -227,6 +241,13 @@ Record pass, fail, not_checked or not_applicable with actual evidence. Static
 checks do not prove visual cliff closure, unit navigation, buildability or runtime
 performance. Use `project.check` and module validation, then actual preview images.
 SC2 Editor/game validation is reported only when performed or confirmed by the user.
+
+Read `game.diagnostics` immediately after every test launch and again after the
+tested ability or action. Follow returned continuations without skipping to the
+latest cursor; retain coverage, dropped entries and unavailable sources. Read
+the owned Editor Messages/Console after native checks. Missing visual models
+still require actor/asset and rendered-frame investigation when no error is
+reported. Empty partial diagnostics do not prove that all subsystems are clear.
 
 The catalog's 32x32 counts are broad source observations or authored suggestions,
 not quotas. Catalog location fragments are reference candidates. The current

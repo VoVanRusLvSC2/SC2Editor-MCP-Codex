@@ -335,6 +335,11 @@ remains visible in the report. `declared_links_found` is not native playback:
 inherited/tokenized events, macros, overlays and assets require further resolution.
 Use this review after writing effect presentation; a sound Actor alone is not a
 visual. Missing declared bindings are review findings, not universal proof of absence.
+Bindings with an explicit TargetPoint location and `At Target` also return an
+`eventScopeReview`: that unit-actor scope can suppress point-only visuals. This
+is a review finding, not an error or a ban on unit-target bindings. The retained
+triangle case uses a location-bearing effect Start and `SOpShadow`;28 actual
+actors and rendered triangles were observed separately from this static audit.
 
 `data.apply` also supports `recipe.unitActor` and `recipe.effectModel` (single
 catalog transactions; the multi-catalog `data.batch` expander does not support

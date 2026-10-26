@@ -71,6 +71,9 @@ before claiming the direct connection has upgraded. Adapter discovery uses
    inspects the actual game. Use returned IDs and cursors, not guessed values.
    The same route supports diagnostics, orders, selection, camera, capture,
    events, fixtures, UI, recording and bounded test scenarios.
+   Read `game.diagnostics` after launch and after the tested action, following
+   continuations and preserving coverage. No error in a partial source is not an
+   all-clear result. Diagnose missing visual models even when the log is silent.
 5. `game.detach({})` stops only that bridge's game and checks the source digest.
    Server EOF also drains accepted requests and gracefully closes the frontend.
 

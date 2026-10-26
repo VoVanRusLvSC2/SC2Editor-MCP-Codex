@@ -4,6 +4,7 @@ import {createHash} from 'node:crypto';
 import {gzipSync} from 'node:zlib';
 import {ModkitIntegration} from '../../integrations/modkit/runtime.js';
 import {minimapTga} from './minimap.js';
+import type {MinimapRequest,NativeMinimapWorkspace} from './nativeMinimap.js';
 
 export interface MapPreviewRequest {
   directory:string; output:'html'|'png'|'both';mode:'topdown'|'render';width:number;height:number;
@@ -32,8 +33,13 @@ export const worldReviver=`(_key,v)=>{
 }`;
 export class MapPreviewWorkspace {
   private cache?:{key:string;value:{input:Record<string,any>;summary:Record<string,any>}};
-  constructor(readonly modkit:ModkitIntegration){}
-  async rebuildMinimap(request:{directory:string;size:number;dryRun:boolean;stage:boolean;backup:boolean}){
+  constructor(readonly modkit:ModkitIntegration,readonly nativeMinimap?:NativeMinimapWorkspace){}
+  async rebuildMinimap(request:MinimapRequest){
+    if(request.backend!=='overview'){
+      if(!this.nativeMinimap)throw Error('MINIMAP_NATIVE_EDITOR_UNAVAILABLE: overview must be selected explicitly');
+      return this.nativeMinimap.rebuild(request);
+    }
+    if(request.jobId)throw Error('MINIMAP_OVERVIEW_HAS_NO_NATIVE_JOB');
     if(![64,128,256,512].includes(request.size))throw Error('MINIMAP_SIZE');
     const workspace=this.modkit.workspace;
     // Reject archives: authoring is a guarded component transaction, never an archive rewrite.
@@ -48,7 +54,7 @@ export class MapPreviewWorkspace {
     const previous=await workspace.binary.read(file,false);
     const verify=async()=>{if((await this.modkit.snapshot(request.directory)).revision!==before.revision)throw Error('STALE_MINIMAP_SOURCE');};
     const transaction=await workspace.binary.apply([file],()=>new Map([[file,bytes]]),{...request,expectedSha256:{[file]:createHash('sha256').update(previous.bytes).digest('hex')},verify});
-    return {...transaction,file,width:info.width,height:info.height,sha256:createHash('sha256').update(bytes).digest('hex'),inputRevision:before.revision,preview:rendered.files.png,renderer:'ModKit top-down overview',limitations:['Approximate overview; not the native SC2 minimap renderer.','In-game terrain and fog rendering require their own observation.']};
+    return {...transaction,file,width:info.width,height:info.height,sha256:createHash('sha256').update(bytes).digest('hex'),inputRevision:before.revision,preview:rendered.files.png,backend:'overview',renderer:'ModKit top-down overview',limitations:['Draft only: approximate overview, not standard textured SC2 terrain.','In-game terrain and fog rendering require their own observation.']};
   }
   async preview(request:MapPreviewRequest){
     return this.modkit.exclusive(async()=>{

@@ -10,6 +10,7 @@ import {AssetWorkspace} from "../modules/assets/workspace.js";
 import path from "node:path";
 import {ModkitIntegration,ModkitCascBackend,modkitAvailable} from '../integrations/modkit/runtime.js';
 import {MapPreviewWorkspace} from '../modules/map/preview.js';
+import {NativeMinimapWorkspace} from '../modules/map/nativeMinimap.js';
 import {ModkitTerrainWorkspace} from '../modules/terrain/modkitWorkspace.js';
 import { DocumentWorkspace } from "../modules/document/workspace.js";
 import { SettingsWorkspace } from "../modules/settings/workspace.js";
@@ -60,7 +61,7 @@ export async function createProject(root: string, options: {loadUiSchema?:boolea
   const placement = new PlacementWorkspace(workspace, browse), terrain = new TerrainWorkspace(workspace, browse, placement,lighting);
   placement.terrain = terrain;
   const map = new MapWorkspace(workspace,terrain);
-  const mapPreview=new MapPreviewWorkspace(modkit);
+  const mapPreview=new MapPreviewWorkspace(modkit,new NativeMinimapWorkspace(modkit,map,nativeGate.protect(nativeEditor)));
   const modkitTerrain=new ModkitTerrainWorkspace(modkit);
   const settings = new SettingsWorkspace(workspace);
   const document = new DocumentWorkspace(workspace,casc);

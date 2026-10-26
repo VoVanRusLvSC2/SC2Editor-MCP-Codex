@@ -38,11 +38,13 @@ test('minimap rebuild commits with backups and rejects terrain edits made after 
   await sharp({create:{width:128,height:128,channels:3,background:{r:20,g:60,b:100}}}).png().toFile(png);
   const workspace=new Workspace(root),integration=new ModkitIntegration(workspace,path.join(root,'missing-install')),preview=new MapPreviewWorkspace(integration);
   preview.preview=async()=>({inputRevision:(await integration.snapshot('Map')).revision,files:{png}} as any);
-  const request={directory:'Map',size:128,dryRun:false,stage:false,backup:true};
-  assert.equal((await preview.rebuildMinimap(request)).saved,true);
+  const request={directory:'Map',size:128,dryRun:false,stage:false,backup:true,backend:'overview' as const};
+  const saved=await preview.rebuildMinimap(request);
+  assert.ok('saved' in saved);assert.equal(saved.saved,true);
   assert.equal(await fs.readFile(path.join(root,'Map','Minimap.tga.sc2uimcp.bak'),'utf8'),'old overview');
   await sharp({create:{width:128,height:128,channels:3,background:{r:40,g:80,b:120}}}).png().toFile(png);
   const staged=await preview.rebuildMinimap({...request,stage:true});
+  assert.ok('transactionId' in staged);
   await fs.writeFile(path.join(root,'Map','terrain.dat'),'changed terrain');
   await assert.rejects(workspace.binary.save(staged.transactionId!,{dryRun:false}),/STALE_MINIMAP_SOURCE/);
 });
