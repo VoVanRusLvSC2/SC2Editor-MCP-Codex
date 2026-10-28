@@ -93,6 +93,8 @@ localization, resource IDs and original catalog source annotations.
 Project skills live in `.agents/skills/`: `sc2-mission-authoring`,
 `sc2-terrain-composition`, and `sc2-data-trigger-systems`. Read a skill only for
 its task. They reference the common protocol instead of replacing it.
+For server architecture and maintainability work use `sc2-mcp-refactoring`; preserve
+public contracts, transaction groups and native ownership across extractions.
 
 ## Development and publication
 

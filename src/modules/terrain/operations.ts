@@ -2,7 +2,7 @@ import {editNativeGeometry,type NativeGeometryCoverage} from './nativeGeometry.j
 import { TerrainVisibility } from "./visibility.js";
 import {repairLegacyTerrainLoadContract} from './loadContract.js';
 import type { TerrainArea, TerrainIssue, TerrainOperation } from "./types.js";
-import { componentListWithGameData, gameDataIndexWithCatalog } from "../data/workspace.js";
+import { componentListWithGameData, gameDataIndexWithCatalog } from "../data/catalogRegistration.js";
 import { LightingCatalog } from "./lighting.js";
 import { WaterCatalog } from "./waterCatalog.js";
 import { areaBounds, areaWeight, valueNoise } from "./geometry.js";

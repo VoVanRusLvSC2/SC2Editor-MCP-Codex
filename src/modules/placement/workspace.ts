@@ -99,7 +99,7 @@ function positionInBounds(
 }
 
 export class PlacementWorkspace {
-  terrain?: TerrainWorkspace;
+  terrain?: Pick<TerrainWorkspace, "sample" | "surface" | "state" | "createLocation">;
   private readonly plans = new Map<string, PlacementPlan>();
   private readonly appliedSources = new Map<string, Record<string, string>>();
   constructor(

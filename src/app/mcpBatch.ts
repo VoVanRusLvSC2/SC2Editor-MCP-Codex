@@ -1,53 +1,206 @@
-import * as z from 'zod/v4';
-import type {McpServer} from '@modelcontextprotocol/server';
-export interface BatchTool {schema:{parse:(value:unknown)=>unknown};invoke:(args:unknown,context:unknown)=>Promise<unknown>}
-export interface BatchStep {id:string;tool:string;args:Record<string,unknown>;select?:string[]}
-function jsonResult(result:unknown){const r=result as {content?:Array<{type:string;text?:string}>};const text=r.content?.find(c=>c.type==='text')?.text;if(!text)return result;try{return JSON.parse(text);}catch{return {message:text.slice(0,1000)}}}
-const keys=['jobId','ready','state','phase','outcome','nativeProfile','organization','modules','zone','profile','recipe','seed','replaced','saveFile','entryFile','activation','logicDefault','systems','folders','created','moved','issues','checks','manifest','textures','style','offset','nextOffset','countsAreQuotas','evidence','section','ok','completed','failed','steps','scope','mode','language','format','modes','examples','logicDefault','sections','limits','total','nextOffset','version','pagination','coverage','coverageIssueCount','backend','cacheHit','elapsedMilliseconds','complete','models','modelFacets','cliffPieces','rampPieces','terrainTextures','counts','catalogFootprints','engineValidated','inputRevision','status','accepted','valid','planId','transactionId','reportId','reportFile','reportBytes','diagnosticsTotal','errors','warnings','filesTotal','appliedTotal','id','file','directory','archive','pngFile','htmlFile','imageFile','comparisonFile','manifestFile','topPngFile','images','dimensions','pivot','bottom','scales','connectors','reservedLocal','reservedWorld','clearance','prefab','variantCount','frameCount','issueCount','dialogs','dialogItems','error','sourceSha256','sourceBytes','dryRun','staged','saved','unchanged'];
-function compactArtifactPaths(value:unknown){
- if(!value||typeof value!=='object'||Array.isArray(value))return;
- const files=(value as Record<string,unknown>).files;
- if(!files||typeof files!=='object'||Array.isArray(files))return;
- const paths:Record<string,string>={};
- for(const key of ['html','png']){
-  const file=Object.hasOwn(files,key)?(files as Record<string,unknown>)[key]:undefined;
-  if(typeof file==='string'&&file.length<=4096&&!/^(?:data|blob):/i.test(file.trim())&&(key==='png'?/\.png$/i:/\.html?$/i).test(file))paths[key]=file;
- }
- return Object.keys(paths).length?paths:undefined;
+import * as z from "zod/v4";
+import type { McpServer } from "@modelcontextprotocol/server";
+export interface BatchTool {
+  schema: { parse: (value: unknown) => unknown };
+  invoke: (args: unknown, context: unknown) => Promise<unknown>;
 }
-export function compactResult(value:unknown){
- if(value&&typeof value==='object'&&!Array.isArray(value)){
-  const v=value as Record<string,unknown>;
-  const animationReviews=Array.isArray(v.applied)?v.applied.filter(a=>a&&typeof a==='object'&&a.animation):[];
-  if(v.cardReview||v.cardReviews||v.bindingAccepted!==undefined||animationReviews.length||Array.isArray(v.applied))return {...compactGeneralResult(v) as Record<string,unknown>,...Array.isArray(v.applied)&&v.appliedTotal===undefined?{appliedTotal:v.applied.length}:{},...Object.fromEntries(['bindingAccepted','layoutResolved','bindingCount','conflictCount','warningCount','unresolvedCount','conflicts','unresolved','nativePresentation','cardReviewCount'].filter(k=>v[k]!==undefined).map(k=>[k,v[k]])),...v.cardReview?{cardReview:v.cardReview}:{},...Array.isArray(v.cardReviews)?{cardReviews:v.cardReviews.slice(0,4),cardReviewsTruncated:v.cardReviews.length>4}:{},...animationReviews.length?{animationReviewCount:animationReviews.length,animationReviews:animationReviews.slice(0,4).map(a=>({operation:a.index,...a.animation})),animationReviewsTruncated:animationReviews.length>4}:{}};
- }
- if(value&&typeof value==='object'&&!Array.isArray(value)){
-  const v=value as Record<string,unknown>;
-  if(typeof v.id==='string'&&v.id.startsWith('terrain_')&&Array.isArray(v.files)){
-   const changed=v.files.filter(f=>f&&typeof f==='object'&&typeof f.changedBytes==='number'&&f.changedBytes>0);
-   const issues=Array.isArray(v.issues)?v.issues:[];
-   return {id:v.id,directory:v.directory,valid:v.valid,changedVertices:v.changedVertices,changedTexturePixels:v.changedTexturePixels,changedFiles:changed.length,filesTotal:v.files.length,files:changed.slice(0,8).map(f=>({file:f.file,changedBytes:f.changedBytes,afterBytes:f.afterBytes})),issueCount:issues.length,issues:issues.slice(0,8),...(v.ownership?{ownership:v.ownership}:{}),...(v.atomicComponents?{atomicComponents:v.atomicComponents}:{}),sourceIdentity:'Retained by the guarded plan; full hashes available from the detailed tool'};
-  }
-  if(typeof v.planId==='string'&&v.planId.startsWith('modkit_terrain_')&&Array.isArray(v.operations)){
-   const operations=v.operations.slice(0,8).map(o=>{
-    if(!o||typeof o!=='object')return o;
-    const report=Object.fromEntries(['op','changed','changedVertices','changedCells','updatedSyncVertices','extraHalfWidth','engineValidated'].filter(k=>o[k]!==undefined).map(k=>[k,o[k]]));
-    if(o.adjoining&&typeof o.adjoining==='object')report.adjoining=Object.fromEntries(['mode','highCells','checkedFlatCells','preparedStrokes','envelope','scope'].filter(k=>o.adjoining[k]!==undefined).map(k=>[k,o.adjoining[k]]));
-    return report;
-   });
-   return {...compactGeneralResult(v) as Record<string,unknown>,operationsTotal:v.operations.length,operations,operationsTruncated:v.operations.length>8};
-  }
-  if(v.stopped===true)return {stopped:true};
-  if(typeof v.state==='string'&&['check','capture','cameras','diagnostics'].includes(String(v.operation)))
-   return Object.fromEntries(['id','state','operation','phase','createdAt','startedAt','finishedAt','deadlineExceeded','report','error','result'].filter(k=>v[k]!==undefined).map(k=>[k,v[k]]));
-  if(v.transport==='retained stdio MCP')return v;
- }
- const summary=compactGeneralResult(value),files=compactArtifactPaths(value);
- return files&&summary&&typeof summary==='object'&&!Array.isArray(summary)?{...summary,files}:summary;
+export interface BatchStep {
+  id: string;
+  tool: string;
+  args: Record<string, unknown>;
+  select?: string[];
 }
-function compactGeneralResult(value:unknown){if(!value||typeof value!=='object')return value;if(Array.isArray(value))return {total:value.length,items:value.slice(0,8).map(item=>{const raw=JSON.stringify(item);return raw.length<=2000?item:{truncated:true,preview:raw.slice(0,1000)}})};const v=value as Record<string,unknown>,out:Record<string,unknown>={};for(const key of keys)if(v[key]!==undefined)out[key]=v[key];for(const key of ['plan','transaction'])if(v[key]&&typeof v[key]==='object')out[key]=compactResult(v[key]);if(Array.isArray(v.diagnostics))out.diagnostics=v.diagnostics.slice(0,8).map(item=>{const text=JSON.stringify(item);return text.length<=4000?item:{truncated:true,preview:text.slice(0,1000)};});if(Array.isArray(v.files)){out.filesTotal=v.files.length;out.files=v.files.slice(0,8).map(item=>typeof item==='string'?item:item&&typeof item==='object'?Object.fromEntries(Object.entries(item).filter(([key,val])=>['file','path','name','sha256','bytes','changed'].includes(key)&&typeof val!=='object')):item);}if(Array.isArray(v.variants))out.variants=v.variants.slice(0,8).map(compactResult);if(Array.isArray(v.items))out.items=v.items.slice(0,8).map(item=>{const raw=JSON.stringify(item);return raw.length<=2000?item:{truncated:true,preview:raw.slice(0,1000)}});if(Array.isArray(v.players))out.players=v.players.slice(0,16);if(Array.isArray(v.objects))out.objects=v.objects.slice(0,8).map(item=>{const raw=JSON.stringify(item);return raw.length<=3000?item:{truncated:true,preview:raw.slice(0,1000)}});if(Array.isArray(v.items)&&v.items.length>8&&typeof v.offset==='number'){out.nextOffset=v.offset+8;out.responseTruncated=true;}if(typeof v.objects==='number')out.objects=v.objects;if(!Object.keys(out).length)out.resultAvailable=true;return out;}
-export function resolveBatchReferences(value:unknown,results:Map<string,unknown>,depth=0):unknown{if(depth>30)throw new Error('MCP_BATCH_DEPTH');if(Array.isArray(value))return value.map(v=>resolveBatchReferences(v,results,depth+1));if(value&&typeof value==='object'){const v=value as Record<string,unknown>;if(Object.keys(v).length===1&&typeof v.$from==='string'){const parts=v.$from.split('.');if(parts.length>12||parts.some(p=>!/^\w+$/.test(p)||['__proto__','prototype','constructor'].includes(p)))throw new Error('MCP_BATCH_REFERENCE_UNSAFE');let found=results.get(parts.shift()!);for(const key of parts){if(!found||typeof found!=='object'||!Object.hasOwn(found,key))throw new Error('MCP_BATCH_REFERENCE_MISSING: '+v.$from);found=(found as Record<string,unknown>)[key];}if(found===undefined)throw new Error('MCP_BATCH_REFERENCE_MISSING: '+v.$from);return structuredClone(found);}const out:Record<string,unknown>={};for(const [key,item]of Object.entries(v)){if(['__proto__','prototype','constructor'].includes(key))throw new Error('MCP_BATCH_KEY_UNSAFE');out[key]=resolveBatchReferences(item,results,depth+1);}return out;}return value;}
-const hasBatchReference=(value:unknown):boolean=>Array.isArray(value)?value.some(hasBatchReference):value&&typeof value==='object'?Object.entries(value).some(([key,item])=>key==='$from'||hasBatchReference(item)):false;
-export async function runMcpBatch(steps:BatchStep[],tools:ReadonlyMap<string,BatchTool>,context:unknown){if(JSON.stringify(steps).length>131072)throw new Error('MCP_BATCH_INPUT_BUDGET');const ids=new Set<string>();for(const s of steps){if(ids.has(s.id)||!tools.has(s.tool)||s.tool==='modkit.batch')throw new Error('MCP_BATCH_PREFLIGHT: '+s.id+' '+s.tool);ids.add(s.id);}for(const s of steps)if(!hasBatchReference(s.args)){try{tools.get(s.tool)!.schema.parse(s.args);}catch(error){return {ok:false,completed:0,failed:s.id,steps:[{id:s.id,tool:s.tool,ok:false,preflight:true,error:error instanceof Error?error.message:String(error)}],scope:'No step was invoked; static arguments failed schema preflight.'};}}const results=new Map<string,unknown>(),rows:Array<Record<string,unknown>>=[];for(const s of steps){const start=performance.now();try{const tool=tools.get(s.tool)!,args=tool.schema.parse(resolveBatchReferences(s.args,results)),result=await tool.invoke(args,context),json=jsonResult(result);if((result as {isError?:boolean})?.isError||(json as {valid?:boolean;ok?:boolean})?.valid===false||(json as {ok?:boolean})?.ok===false||(json as {accepted?:boolean})?.accepted===false){rows.push({id:s.id,tool:s.tool,ok:false,ms:Math.round(performance.now()-start),result:compactResult(json)});return {ok:false,completed:rows.length-1,failed:s.id,steps:rows,scope:'Sequential tool calls; earlier committed changes are retained.'};}results.set(s.id,json);rows.push({id:s.id,tool:s.tool,ok:true,ms:Math.round(performance.now()-start),result:s.select?Object.fromEntries(s.select.map(k=>[k,(json as Record<string,unknown>)?.[k]])):compactResult(json)});}catch(e){rows.push({id:s.id,tool:s.tool,ok:false,ms:Math.round(performance.now()-start),error:e instanceof Error?e.message:String(e)});return {ok:false,completed:rows.length-1,failed:s.id,steps:rows,scope:'Sequential tool calls; earlier committed changes are retained.'};}}return {ok:true,completed:rows.length,steps:rows};}
-export function registerMcpBatch(server:McpServer,tools:ReadonlyMap<string,BatchTool>){server.registerTool('modkit.batch',{description:'Run 1–20 existing SC2 MCP tools sequentially in one request. Exact original schemas/defaults/stale guards apply. Args can use {"$from":"stepId.planId"} from earlier JSON results. Stops on first failure; earlier saves remain committed. Returns compact summaries, not full XML/schemas. Use for plan→apply→save→validate→preview→export. No shell execution.',inputSchema:z.object({steps:z.array(z.object({id:z.string().regex(/^[A-Za-z_]\w*$/).max(32),tool:z.string().min(1).max(128),args:z.record(z.string(),z.unknown()).default({}),select:z.array(z.string().regex(/^[A-Za-z_]\w*$/).refine(k=>!['__proto__','prototype','constructor'].includes(k))).min(1).max(12).optional()}).strict()).min(1).max(20)}).strict(),annotations:{readOnlyHint:false,destructiveHint:false,openWorldHint:false}},async(a,context)=>{const result=await runMcpBatch(a.steps,tools,context);return {isError:!result.ok,content:[{type:'text' as const,text:JSON.stringify(result)}]};});}
-
+function jsonResult(result: unknown) {
+  const structured = (result as { structuredContent?: unknown })?.structuredContent;
+  if (structured !== undefined) return structured;
+  const r = result as { content?: Array<{ type: string; text?: string }> };
+  const text = r.content?.find((c) => c.type === "text")?.text;
+  if (!text) return result;
+  try {
+    return JSON.parse(text);
+  } catch {
+    return { message: text.slice(0, 1000) };
+  }
+}
+export { compactResult } from "./toolResults.js";
+import { compactResult } from "./toolResults.js";
+export function resolveBatchReferences(
+  value: unknown,
+  results: Map<string, unknown>,
+  depth = 0,
+): unknown {
+  if (depth > 30) throw new Error("MCP_BATCH_DEPTH");
+  if (Array.isArray(value)) return value.map((v) => resolveBatchReferences(v, results, depth + 1));
+  if (value && typeof value === "object") {
+    const v = value as Record<string, unknown>;
+    if (Object.keys(v).length === 1 && typeof v.$from === "string") {
+      const parts = v.$from.split(".");
+      if (
+        parts.length > 12 ||
+        parts.some((p) => !/^\w+$/.test(p) || ["__proto__", "prototype", "constructor"].includes(p))
+      )
+        throw new Error("MCP_BATCH_REFERENCE_UNSAFE");
+      let found = results.get(parts.shift()!);
+      for (const key of parts) {
+        if (!found || typeof found !== "object" || !Object.hasOwn(found, key))
+          throw new Error("MCP_BATCH_REFERENCE_MISSING: " + v.$from);
+        found = (found as Record<string, unknown>)[key];
+      }
+      if (found === undefined) throw new Error("MCP_BATCH_REFERENCE_MISSING: " + v.$from);
+      return structuredClone(found);
+    }
+    const out: Record<string, unknown> = {};
+    for (const [key, item] of Object.entries(v)) {
+      if (["__proto__", "prototype", "constructor"].includes(key))
+        throw new Error("MCP_BATCH_KEY_UNSAFE");
+      out[key] = resolveBatchReferences(item, results, depth + 1);
+    }
+    return out;
+  }
+  return value;
+}
+const hasBatchReference = (value: unknown): boolean =>
+  Array.isArray(value)
+    ? value.some(hasBatchReference)
+    : value && typeof value === "object"
+      ? Object.entries(value).some(([key, item]) => key === "$from" || hasBatchReference(item))
+      : false;
+export async function runMcpBatch(
+  steps: BatchStep[],
+  tools: ReadonlyMap<string, BatchTool>,
+  context: unknown,
+) {
+  if (JSON.stringify(steps).length > 131072) throw new Error("MCP_BATCH_INPUT_BUDGET");
+  const ids = new Set<string>();
+  for (const s of steps) {
+    if (ids.has(s.id) || !tools.has(s.tool) || s.tool === "modkit.batch")
+      throw new Error("MCP_BATCH_PREFLIGHT: " + s.id + " " + s.tool);
+    ids.add(s.id);
+  }
+  for (const s of steps)
+    if (!hasBatchReference(s.args)) {
+      try {
+        tools.get(s.tool)!.schema.parse(s.args);
+      } catch (error) {
+        return {
+          ok: false,
+          completed: 0,
+          failed: s.id,
+          steps: [
+            {
+              id: s.id,
+              tool: s.tool,
+              ok: false,
+              preflight: true,
+              error: error instanceof Error ? error.message : String(error),
+            },
+          ],
+          scope: "No step was invoked; static arguments failed schema preflight.",
+        };
+      }
+    }
+  const results = new Map<string, unknown>(),
+    rows: Array<Record<string, unknown>> = [];
+  for (const s of steps) {
+    const start = performance.now();
+    try {
+      const tool = tools.get(s.tool)!,
+        args = tool.schema.parse(resolveBatchReferences(s.args, results)),
+        result = await tool.invoke(args, context),
+        json = jsonResult(result);
+      if (
+        (result as { isError?: boolean })?.isError ||
+        (json as { valid?: boolean; ok?: boolean })?.valid === false ||
+        (json as { ok?: boolean })?.ok === false ||
+        (json as { accepted?: boolean })?.accepted === false
+      ) {
+        rows.push({
+          id: s.id,
+          tool: s.tool,
+          ok: false,
+          ms: Math.round(performance.now() - start),
+          result: compactResult(json),
+        });
+        return {
+          ok: false,
+          completed: rows.length - 1,
+          failed: s.id,
+          steps: rows,
+          scope: "Sequential tool calls; earlier committed changes are retained.",
+        };
+      }
+      results.set(s.id, json);
+      rows.push({
+        id: s.id,
+        tool: s.tool,
+        ok: true,
+        ms: Math.round(performance.now() - start),
+        result: s.select
+          ? Object.fromEntries(s.select.map((k) => [k, (json as Record<string, unknown>)?.[k]]))
+          : compactResult(json),
+      });
+    } catch (e) {
+      rows.push({
+        id: s.id,
+        tool: s.tool,
+        ok: false,
+        ms: Math.round(performance.now() - start),
+        error: e instanceof Error ? e.message : String(e),
+      });
+      return {
+        ok: false,
+        completed: rows.length - 1,
+        failed: s.id,
+        steps: rows,
+        scope: "Sequential tool calls; earlier committed changes are retained.",
+      };
+    }
+  }
+  return { ok: true, completed: rows.length, steps: rows };
+}
+export function registerMcpBatch(server: McpServer, tools: ReadonlyMap<string, BatchTool>) {
+  server.registerTool(
+    "modkit.batch",
+    {
+      description:
+        'Run 1–20 existing SC2 MCP tools sequentially in one request. Exact original schemas/defaults/stale guards apply. Args can use {"$from":"stepId.planId"} from earlier JSON results. Stops on first failure; earlier saves remain committed. Returns compact summaries, not full XML/schemas. Use for plan→apply→save→validate→preview→export. No shell execution.',
+      inputSchema: z
+        .object({
+          steps: z
+            .array(
+              z
+                .object({
+                  id: z
+                    .string()
+                    .regex(/^[A-Za-z_]\w*$/)
+                    .max(32),
+                  tool: z.string().min(1).max(128),
+                  args: z.record(z.string(), z.unknown()).default({}),
+                  select: z
+                    .array(
+                      z
+                        .string()
+                        .regex(/^[A-Za-z_]\w*$/)
+                        .refine((k) => !["__proto__", "prototype", "constructor"].includes(k)),
+                    )
+                    .min(1)
+                    .max(12)
+                    .optional(),
+                })
+                .strict(),
+            )
+            .min(1)
+            .max(20),
+        })
+        .strict(),
+      annotations: { readOnlyHint: false, destructiveHint: false, openWorldHint: false },
+    },
+    async (a, context) => {
+      const result = await runMcpBatch(a.steps, tools, context);
+      return {
+        isError: !result.ok,
+        content: [{ type: "text" as const, text: JSON.stringify(result) }],
+      };
+    },
+  );
+}

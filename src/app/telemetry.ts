@@ -1,34 +1,166 @@
-import {registerMcpBatch,runMcpBatch,type BatchTool} from './mcpBatch.js';
-import {authoringGuide,compileAuthorScript} from './authoringScript.js';
-import {promises as fs} from 'node:fs';import path from 'node:path';import {performance} from 'node:perf_hooks';import * as z from 'zod/v4';import type {McpServer} from '@modelcontextprotocol/server';import {Worker} from 'node:worker_threads';import {resolveModuleSelection} from './moduleSelection.js';
-let worker:Worker|undefined,nextWorkerId=0;const pendingTokens=new Map<number,(value:{input:number|null;output:number|null})=>void>();
-function measureText(input:string,output:string):Promise<{input:number|null;output:number|null}>{
- if(!worker){worker=new Worker(new URL('./tokenWorker.js',import.meta.url));worker.on('message',message=>{const resolve=pendingTokens.get(message.id);pendingTokens.delete(message.id);resolve?.(message);if(!pendingTokens.size)worker?.unref();});worker.on('error',()=>{for(const resolve of pendingTokens.values())resolve({input:null,output:null});pendingTokens.clear();worker=undefined;});worker.unref();}
- const id=++nextWorkerId;worker.ref();return new Promise(resolve=>{pendingTokens.set(id,resolve);worker!.postMessage({id,input,output});});
-}
-export interface ToolMetric {at:string;tool:string;durationMs:number;inputBytes:number;outputBytes:number;inputTextTokens:number|null;outputTextTokens:number|null;tokenCountStatus?:'counted'|'over_budget'|'failed';isError:boolean;encoding:'o200k_base';actualModelUsage:null}
-export class ToolTelemetry {
- private records:ToolMetric[]=[];private pending=Promise.resolve();readonly file:string;
- constructor(root:string){this.file=path.join(root,'.sc2mcp-telemetry','tools.jsonl');}
- record(tool:string,args:unknown,result:unknown,durationMs:number){const input=(JSON.stringify(args)??"null"),output=(result as {content?:Array<{type:string;text?:string}>})?.content?.filter(c=>c.type==='text').map(c=>c.text??'').join('\n')??(JSON.stringify(result)??"null"); const metric:ToolMetric={at:new Date().toISOString(),tool,durationMs:Number(durationMs.toFixed(3)),inputBytes:Buffer.byteLength(input),outputBytes:Buffer.byteLength(output),inputTextTokens:null,outputTextTokens:null,isError:!!(result as {isError?:boolean})?.isError,encoding:'o200k_base',actualModelUsage:null};this.records.push(metric);if(this.records.length>2000)this.records.shift();this.pending=this.pending.then(async()=>{if(metric.inputBytes+metric.outputBytes>1024*1024)metric.tokenCountStatus='over_budget';else{const counted=await measureText(input,output);metric.inputTextTokens=counted.input;metric.outputTextTokens=counted.output;metric.tokenCountStatus=counted.input===null||counted.output===null?'failed':'counted';}await fs.mkdir(path.dirname(this.file),{recursive:true});await fs.appendFile(this.file,JSON.stringify(metric)+'\n')}).catch(()=>undefined);return metric;}
- async summary(){await this.pending;let rows=this.records;try{const stat=await fs.stat(this.file);if(stat.size<=8*1024*1024)rows=(await fs.readFile(this.file,'utf8')).trim().split('\n').filter(Boolean).map(s=>JSON.parse(s));}catch{/* In-memory metrics remain available. */}const groups=new Map<string,{tool:string;calls:number;durationMs:number;inputTextTokens:number;outputTextTokens:number;unmeasured:number;errors:number}>();for(const m of rows){let g=groups.get(m.tool);if(!g){g={tool:m.tool,calls:0,durationMs:0,inputTextTokens:0,outputTextTokens:0,unmeasured:0,errors:0};groups.set(m.tool,g)}g.calls++;g.durationMs+=m.durationMs;g.inputTextTokens+=m.inputTextTokens??0;g.outputTextTokens+=m.outputTextTokens??0;g.unmeasured+=Number(m.inputTextTokens===null||m.outputTextTokens===null);g.errors+=Number(m.isError)}return {scope:'Parsed MCP argument JSON and text response bodies only. Excludes system/tool schemas, assistant reasoning, user messages, images and model billing. Payloads above 1 MiB skip tokenization and still record bytes/duration.',actualModelUsage:null,encoding:'o200k_base',calls:rows.length,inputTextTokens:rows.reduce((n,m)=>n+(m.inputTextTokens??0),0),outputTextTokens:rows.reduce((n,m)=>n+(m.outputTextTokens??0),0),overBudgetTokenCounts:rows.filter(m=>m.tokenCountStatus==='over_budget').length,tools:[...groups.values()].sort((a,b)=>b.outputTextTokens-a.outputTextTokens),logFile:this.file,payloadTextStored:false};}
-}
-
-const builderTools=new Set(['map.preview','data.modkit.query','document.inspect','document.plan_file','document.create','document.validate_plan','document.dependencies.list','document.terrain_sets.list','map.create','map.import','map.export','map.inspect','trigger.describe_functions','trigger.plan_file','trigger.recipe_skirmish','trigger.generate_runtime','trigger.apply','trigger.save','trigger.validate','trigger.inspect','terrain.plan_file','terrain.inspect','terrain.palette','terrain.cliff.paint','terrain.ramp.create','terrain.ramp.remove','terrain.apply','terrain.save','terrain.validate','placement.geometry_check','placement.addBatch','placement.apply','placement.validate','placement.scan','ui.recipe_timer','ui.assets.register','ui.assets.save','ui.hookup.validate','ui.save','ui.discard','text.context','text.apply','text.validate','data.apply','data.query','data.context','data.resolve','casc.search','casc.file.inspect','casc.read_text','casc.mount','settings.inspect','settings.plan_file','settings.apply','settings.save']);
-export function instrumentTools(server:McpServer,root:string,exposeUsage=true){
- const meter=new ToolTelemetry(root),original=server.registerTool.bind(server),entries=new Map<string,{description:string;registered:ReturnType<McpServer['registerTool']>}>(),batchTools=new Map<string,BatchTool>(),profile=resolveModuleSelection().profile,focused=['map-builder','workflow','cutscene-preview'].includes(profile),workflow=profile==='workflow'||profile==='cutscene-preview',workflowTools=new Set(['modkit.author','modkit.author_help','modkit.batch','modkit.tools','modkit.enable_tools','modkit.capabilities','modkit.usage',...(profile==='cutscene-preview'?['cutscene.preview','cutscene.render']:['ui.preview_batch'])]);
- server.registerTool=((name:string,config:any,callback:any)=>{const registered=original(name,config,async(...args:any[])=>{const start=performance.now();try{const result=await callback(...args);meter.record(name,args[0],result,performance.now()-start);return result;}catch(error){meter.record(name,args[0],{isError:true,content:[{type:'text',text:error instanceof Error?error.message:String(error)}]},performance.now()-start);throw error;}});entries.set(name,{description:config.description??'',registered});const schema=config.inputSchema?.parse?config.inputSchema:z.object(config.inputSchema??{}).strict();batchTools.set(name,{schema,invoke:callback});if(workflow?!workflowTools.has(name):focused&&!name.startsWith('modkit.')&&!builderTools.has(name))registered.disable();return registered;}) as typeof server.registerTool;
- if(exposeUsage){server.registerTool('modkit.usage',{description:'MCP text token counts and per-tool durations; actual model/billing usage is unavailable. No payload text saved.',inputSchema:z.object({}).strict()},async()=>({content:[{type:'text' as const,text:JSON.stringify(await meter.summary())}]}));
- if(focused){server.registerTool('modkit.tools',{description:'Find additional tool names with compact descriptions; activate selected names to expose their schemas in focused profiles.',inputSchema:z.object({query:z.string().max(100).default(''),offset:z.number().int().min(0).default(0),limit:z.number().int().min(1).max(30).default(10)}).strict()},async a=>{const all=[...entries].filter(([name,e])=>(name+' '+e.description).toLowerCase().includes(a.query.toLowerCase())).sort(([left],[right])=>Number(right.toLowerCase()===a.query.toLowerCase())-Number(left.toLowerCase()===a.query.toLowerCase())||Number(right.toLowerCase().startsWith(a.query.toLowerCase()))-Number(left.toLowerCase().startsWith(a.query.toLowerCase())));return {content:[{type:'text' as const,text:JSON.stringify({total:all.length,items:all.slice(a.offset,a.offset+a.limit).map(([name,e])=>({name,description:e.description,enabled:e.registered.enabled})),nextOffset:a.offset+a.limit<all.length?a.offset+a.limit:null})}]};});
- server.registerTool('modkit.enable_tools',{description:'Enable named tools and notify the MCP client that the tool list changed. No map modification.',inputSchema:z.object({names:z.array(z.string().min(1).max(128)).min(1).max(40)}).strict()},async a=>{const missing=a.names.filter(n=>!entries.has(n));if(missing.length)throw new Error('MCP_TOOL_UNKNOWN: '+missing.join(', '));for(const name of a.names)entries.get(name)!.registered.enable();return {content:[{type:'text' as const,text:JSON.stringify({enabled:a.names,profile:focused?profile:'unchanged'})}]};});}
- }
- if(exposeUsage){
-  registerMcpBatch(server,batchTools);
-  server.registerTool('modkit.author_help',{description:'Compact syntax and examples for writing map, terrain, objects, Data, Galaxy, GUI, UI, cutscene, text, settings, AI and assets through modkit.author.',inputSchema:z.object({}).strict(),annotations:{readOnlyHint:true,destructiveHint:false,openWorldHint:false}},async()=>({content:[{type:'text' as const,text:JSON.stringify(authoringGuide)}]}));
-  server.registerTool('modkit.author',{description:'Write concise line commands across map, terrain, objects, Data, Galaxy, GUI, UI, cutscene, text, settings, assets and CASC. Compatible adjacent same-catalog Data setters/recipes share one atomic apply/save; reads, advanced options and result references preserve boundaries. Galaxy is default; GUI requires explicit gui.*. Plan by default; stage/save only for supported guarded workflows. No source execution or Galaxy-to-GUI conversion.',inputSchema:z.object({script:z.string().min(1).max(65536),mode:z.enum(['plan','stage','save']).default('plan')}).strict(),annotations:{readOnlyHint:false,destructiveHint:false,openWorldHint:false}},async(a,context)=>{
-   try{const steps=compileAuthorScript(a.script,a.mode,batchTools);const result=await runMcpBatch(steps,batchTools,context);return {isError:!result.ok,content:[{type:'text' as const,text:JSON.stringify({...result,mode:a.mode,language:'SC2 compact authoring'})}]};}
-   catch(error){return {isError:true,content:[{type:'text' as const,text:JSON.stringify({ok:false,error:error instanceof Error?error.message:String(error)})}]};}
+import type { InvocationSpan } from "./toolExecutor.js";
+import { promises as fs } from "node:fs";
+import path from "node:path";
+import { Worker } from "node:worker_threads";
+let worker: Worker | undefined,
+  nextWorkerId = 0;
+const pendingTokens = new Map<
+  number,
+  (value: { input: number | null; output: number | null }) => void
+>();
+function measureText(
+  input: string,
+  output: string,
+): Promise<{ input: number | null; output: number | null }> {
+  if (!worker) {
+    worker = new Worker(new URL("./tokenWorker.js", import.meta.url));
+    worker.on("message", (message) => {
+      const resolve = pendingTokens.get(message.id);
+      pendingTokens.delete(message.id);
+      resolve?.(message);
+      if (!pendingTokens.size) worker?.unref();
+    });
+    worker.on("error", () => {
+      for (const resolve of pendingTokens.values()) resolve({ input: null, output: null });
+      pendingTokens.clear();
+      worker = undefined;
+    });
+    worker.unref();
+  }
+  const id = ++nextWorkerId;
+  worker.ref();
+  return new Promise((resolve) => {
+    pendingTokens.set(id, resolve);
+    worker!.postMessage({ id, input, output });
   });
- }
- return meter;
+}
+export interface ToolMetric {
+  at: string;
+  tool: string;
+  durationMs: number;
+  inputBytes: number;
+  outputBytes: number;
+  inputTextTokens: number | null;
+  outputTextTokens: number | null;
+  tokenCountStatus?: "counted" | "over_budget" | "failed";
+  isError: boolean;
+  encoding: "o200k_base";
+  actualModelUsage: null;
+  spanId?: string;
+  parentSpanId?: string;
+  origin?: "direct" | "internal";
+}
+export class ToolTelemetry {
+  private records: ToolMetric[] = [];
+  private pending = Promise.resolve();
+  readonly file: string;
+  constructor(root: string) {
+    this.file = path.join(root, ".sc2mcp-telemetry", "tools.jsonl");
+  }
+  record(tool: string, args: unknown, result: unknown, durationMs: number, span?: InvocationSpan) {
+    const input = JSON.stringify(args) ?? "null",
+      output =
+        (result as { content?: Array<{ type: string; text?: string }> })?.content
+          ?.filter((c) => c.type === "text")
+          .map((c) => c.text ?? "")
+          .join("\n") ??
+        JSON.stringify(result) ??
+        "null";
+    const metric: ToolMetric = {
+      at: new Date().toISOString(),
+      tool,
+      durationMs: Number(durationMs.toFixed(3)),
+      inputBytes: Buffer.byteLength(input),
+      outputBytes: Buffer.byteLength(output),
+      inputTextTokens: null,
+      outputTextTokens: null,
+      isError: !!(result as { isError?: boolean })?.isError,
+      encoding: "o200k_base",
+      actualModelUsage: null,
+      ...span,
+    };
+    this.records.push(metric);
+    if (this.records.length > 2000) this.records.shift();
+    this.pending = this.pending
+      .then(async () => {
+        if (metric.inputBytes + metric.outputBytes > 1024 * 1024)
+          metric.tokenCountStatus = "over_budget";
+        else {
+          const counted = await measureText(input, output);
+          metric.inputTextTokens = counted.input;
+          metric.outputTextTokens = counted.output;
+          metric.tokenCountStatus =
+            counted.input === null || counted.output === null ? "failed" : "counted";
+        }
+        await fs.mkdir(path.dirname(this.file), { recursive: true });
+        await fs.appendFile(this.file, JSON.stringify(metric) + "\n");
+      })
+      .catch(() => undefined);
+    return metric;
+  }
+  async summary() {
+    await this.pending;
+    let rows = this.records;
+    try {
+      const stat = await fs.stat(this.file);
+      if (stat.size <= 8 * 1024 * 1024)
+        rows = (await fs.readFile(this.file, "utf8"))
+          .trim()
+          .split("\n")
+          .filter(Boolean)
+          .map((s) => JSON.parse(s));
+    } catch {
+      /* In-memory metrics remain available. */
+    }
+    const internal = rows.filter((row) => row.origin === "internal");
+    rows = rows.filter((row) => row.origin !== "internal");
+    const groups = new Map<
+      string,
+      {
+        tool: string;
+        calls: number;
+        durationMs: number;
+        inputTextTokens: number;
+        outputTextTokens: number;
+        unmeasured: number;
+        errors: number;
+      }
+    >();
+    for (const m of rows) {
+      let g = groups.get(m.tool);
+      if (!g) {
+        g = {
+          tool: m.tool,
+          calls: 0,
+          durationMs: 0,
+          inputTextTokens: 0,
+          outputTextTokens: 0,
+          unmeasured: 0,
+          errors: 0,
+        };
+        groups.set(m.tool, g);
+      }
+      g.calls++;
+      g.durationMs += m.durationMs;
+      g.inputTextTokens += m.inputTextTokens ?? 0;
+      g.outputTextTokens += m.outputTextTokens ?? 0;
+      g.unmeasured += Number(m.inputTextTokens === null || m.outputTextTokens === null);
+      g.errors += Number(m.isError);
+    }
+    return {
+      scope:
+        "Parsed MCP argument JSON and text response bodies only. Excludes system/tool schemas, assistant reasoning, user messages, images and model billing. Internal calls are reported separately and excluded from model-facing payload totals; nested durations are inclusive, not wall time. Payloads above 1 MiB skip tokenization and still record bytes/duration.",
+      actualModelUsage: null,
+      internalCalls: internal.length,
+      internalDurationMs: internal.reduce((n, m) => n + m.durationMs, 0),
+      encoding: "o200k_base",
+      calls: rows.length,
+      inputTextTokens: rows.reduce((n, m) => n + (m.inputTextTokens ?? 0), 0),
+      outputTextTokens: rows.reduce((n, m) => n + (m.outputTextTokens ?? 0), 0),
+      overBudgetTokenCounts: rows.filter((m) => m.tokenCountStatus === "over_budget").length,
+      tools: [...groups.values()].sort((a, b) => b.outputTextTokens - a.outputTextTokens),
+      logFile: this.file,
+      payloadTextStored: false,
+    };
+  }
 }

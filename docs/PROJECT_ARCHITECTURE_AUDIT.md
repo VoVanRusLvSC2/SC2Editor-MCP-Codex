@@ -1,3 +1,7 @@
+> Historical alpha.10 audit, retained in its original scope.
+> Read [Architecture](ARCHITECTURE.md) for current recovery, locking and module boundaries.
+> These old missing-feature statements are not a current readiness report.
+
 # Architectural audit - alpha.10
 
 The architecture of the available source project, eight modules, writing, drafts, diagrams and tests are tested. This is not a new complete analysis of the SC2Editor machine code or run the editor.

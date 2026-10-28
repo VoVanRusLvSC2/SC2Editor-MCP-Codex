@@ -1,3 +1,5 @@
+import {terrainCapabilityManifest} from './capabilities.js';
+import {planTerrainLocation,type TerrainLocationRequest,type LocationPlacementPort} from './locationPlanner.js';
 import {landscapeZonePlanSchema,landscapeInspectSchema,editLandscapeZone,inspectLandscapeState} from './landscapeEditing.js';
 import type {LightingWorkspace,LightingResolveOptions} from '../lighting/workspace.js';
 import {resolveGlobalLighting} from '../lighting/catalog.js';
@@ -7,8 +9,6 @@ import path from "node:path";
 import { Workspace } from "../../core/workspace.js";
 import { bytesHash, type ByteOptions } from "../../core/binaryTransactions.js";
 import type { BrowseWorkspace } from "../browse/workspace.js";
-import type { PlacementWorkspace } from "../placement/workspace.js";
-import type {LocationRoute} from '../placement/types.js';
 import type {PlacementPlan,PlacementMutation,ExclusionZone} from '../placement/types.js';
 import {measuredObjects} from '../placement/measuredGroups.js';
 import {checkGroupClearance} from '../placement/groupClearance.js';
@@ -41,7 +41,7 @@ import {
 import { renderTerrainPng, type PreviewMode } from "./preview.js";
 import {
   terrainPlanSchema,
-  terrainGenerateSchema, terrainLandscapeSchema, terrainVisibilitySchema,terrainLocationSchema,
+  terrainGenerateSchema, terrainLandscapeSchema, terrainVisibilitySchema,
   terrainFeatureSchema,
 } from "./schemas.js";
 import { areaWeight,areaDistance,areaBounds,corridorWithinArea } from "./geometry.js";
@@ -71,7 +71,7 @@ export class TerrainWorkspace {
   constructor(
     readonly workspace: Workspace,
     readonly browse?: BrowseWorkspace,
-    readonly placement?: PlacementWorkspace,
+    readonly placement?: LocationPlacementPort,
     readonly globalLighting?: LightingWorkspace,
   ) {}
   private file(directory: string, name: string): string {
@@ -196,6 +196,7 @@ export class TerrainWorkspace {
     return {
       directory,
       ...inspected.capabilities,
+      authoring:terrainCapabilityManifest,
       reason:
         "Writers are format-specific. ModKit adds native CellAttribute masks, scalar color/fluff/road records and template ramps through terrain.modkit tools. Engine navigation acceptance remains separate.",
     };
@@ -1011,138 +1012,11 @@ export class TerrainWorkspace {
       operations: featureRecipe(name, args),
     });
   }
-  async createLocation(
-    args: Parameters<PlacementWorkspace["createLocation"]>[0] & {
-      terrain: Omit<GenerateArgs, "area"> & {routes?:LocationRoute[]};
-      maxSlope?: number;
-    },
-  ) {
-    if (!this.placement) throw new Error("PLACEMENT_CONTEXT_UNAVAILABLE");
-    const placementArea = args.area;
-    const area: TerrainArea =
-      placementArea.type === "polygon"
-        ? {type:"polygon",points:placementArea.points.map(p=>({x:p.x,y:p.y}))}
-        : placementArea.type === "circle"
-        ? {
-            type: "circle",
-            center: { x: placementArea.center.x, y: placementArea.center.y },
-            radius: placementArea.radius,
-          }
-        : {
-            type: "rectangle",
-            minX: placementArea.minX,
-            minY: placementArea.minY,
-            maxX: placementArea.maxX,
-            maxY: placementArea.maxY,
-          };
-    const {routes,topology,...settings}=terrainLocationSchema.parse(args.terrain);
-    if(topology)throw Error('LOCATION_NATIVE_TOPOLOGY_REQUIRES_OWNED_INTENT: use terrain.landscape.plan intent');
-    for(const route of routes)if((route.flatten||route.texture)&&!corridorWithinArea(area,route.points,route.width))throw Error('LOCATION_ROUTE_OUTSIDE_AREA: the whole painted/flattened road must fit inside its location; use a separate road plan for cross-zone connections');
-    const generation={
-      ...settings,
-      area,
-      seed: args.seed ?? args.terrain.seed,
-    };
-    const source=await this.state(generation.directory);
-    const roads=routes.flatMap(route=>{
-      const operations=route.flatten?featureRecipe('road',route):route.texture?[{op:'texture.paint' as const,area:{type:'corridor' as const,points:route.points,width:route.width},texture:route.texture,edgeBlend:route.edgeBlend}]:[];
-      return operations.map(op=>({...op,protectedAreas:settings.protectedAreas}));
-    });
-    const terrainPlan=await this.plan({directory:generation.directory,operations:[...this.generateOperations(generation,source),...roads]});
-    const stored = await this.checked(terrainPlan.id);
-    const state = await this.state("", terrainPlan.id);
-    const placed = await this.placement.createLocation({...args,reservedCorridors:[...(args.reservedCorridors??[]),...routes]});
-    const preview = await this.placement.preview(placed.plan.id);
-    if (!preview.validation.valid)
-      throw new Error("LOCATION_PLACEMENT_VALIDATION_FAILED");
-    const objectFile = placed.plan.objectFile,
-      componentFile = placed.plan.componentListFile;
-    const raw = await this.workspace.readRaw(objectFile),
-      component = await this.workspace.readRaw(componentFile);
-    const document = raw.text
-      ? new PlacementDocument(raw.text, objectFile)
-      : PlacementDocument.create(objectFile);
-    const operations = placed.plan.operations.map((op) => {
-      if (op.op !== "add") return op;
-      const sample = state.heights.sample(op.object.position);
-      if (
-        sample.mask === 0 ||
-        (args.maxSlope !== undefined && sample.slope > args.maxSlope)
-      )
-        throw new Error(
-          "LOCATION_OBJECT_ON_HOLE_OR_EXCESSIVE_SLOPE: adjust exclusions or seed",
-        );
-      return {
-        ...op,
-        object: {
-          ...op.object,
-          position: { ...op.object.position, z: op.object.kind === "Unit" ? 0 : sample.height },
-          ...(op.object.kind === "Doodad"
-            ? { flags: { ...op.object.flags, HeightAbsolute: "1" } }
-            : {}),
-        },
-      };
-    });
-    document.apply(operations);
-    if (document.validate().some((i) => i.severity === "error"))
-      throw new Error("LOCATION_OBJECT_SERIALIZATION_FAILED");
-    const before = new Map(stored.before),
-      next = new Map(stored.next),
-      sourceSha256 = { ...stored.summary.sourceSha256 },
-      diskSha256 = { ...stored.summary.diskSha256 };
-    for (const [file, bytes] of [
-      [objectFile, Buffer.from(raw.text)],
-      [componentFile, Buffer.from(component.text)],
-    ] as Array<[string, Buffer]>) {
-      const key = this.workspace.binary.key(file);
-      if (next.has(key) && !next.get(key)!.equals(bytes)) throw new Error("LOCATION_COMPONENT_FILE_CONFLICT");
-      before.set(key, bytes);
-      sourceSha256[key] = bytesHash(bytes);
-      diskSha256[key] = bytesHash(
-        (await this.workspace.binary.read(key, false)).bytes,
-      );
-    }
-    next.set(
-      this.workspace.binary.key(objectFile),
-      Buffer.from(document.source),
-    );
-    next.set(
-      this.workspace.binary.key(componentFile),
-      Buffer.from(componentListWithObjects(component.text)),
-    );
-    const issues = [
-      ...stored.summary.issues,
-      {
-        severity: "warning" as const,
-        code: "PLACEMENT_PATHING_UNVERIFIED",
-        message:
-          "Objects are snapped to sampled ground; model footprints, native pathing and runtime collisions remain unverified.",
-      },
-    ];
-    const summary = this.remember(
-      stored.summary.directory,
-      stored.summary.operations,
-      before,
-      next,
-      sourceSha256,
-      diskSha256,
-      stored.dependencyHashes,
-      issues,
-      stored.summary.changedVertices,
-      stored.summary.changedTexturePixels,
-    );
-    if (this.browse)
-      this.plans.get(summary.id)!.browseFingerprint = (
-        await this.browse.index()
-      ).fingerprint;
-    return {
-      plan: summary,
-      objects: operations.length,
-      composition: placed.composition,
-      atomicComponents: "terrain + Objects + ComponentList",
-      reservedRoutes:routes.map(r=>({points:r.points,width:r.width})),
-      routeClearanceScope:'Decoration pivot exclusions; measured mesh bounds, engine pathing and buildability need separate checks',
-      groundSnapping: true,
-    };
-  }
+ async createLocation(args:TerrainLocationRequest){
+  return planTerrainLocation({workspace:this.workspace,browse:this.browse,placement:this.placement,
+   state:this.state.bind(this),plan:this.plan.bind(this),checked:this.checked.bind(this),
+   generateOperations:this.generateOperations.bind(this),remember:this.remember.bind(this),
+   pinBrowseFingerprint:(id,fingerprint)=>{this.plans.get(id)!.browseFingerprint=fingerprint;},
+  },args);
+ }
 }

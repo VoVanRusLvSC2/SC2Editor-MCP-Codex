@@ -54,29 +54,41 @@ async function serveStatic(pathname: string, response: ServerResponse): Promise<
   try {
     const body = await fs.readFile(absolute);
     response.writeHead(200, {
-      "content-type": CONTENT_TYPES[path.extname(absolute).toLowerCase()] ?? "application/octet-stream",
+      "content-type":
+        CONTENT_TYPES[path.extname(absolute).toLowerCase()] ?? "application/octet-stream",
       "cache-control": "no-cache",
       "x-content-type-options": "nosniff",
-      "content-security-policy": "default-src 'self'; style-src 'self'; script-src 'self'; img-src 'self' data:; connect-src 'self'",
+      "content-security-policy":
+        "default-src 'self'; style-src 'self'; script-src 'self'; img-src 'self' data:; connect-src 'self'",
     });
     response.end(body);
   } catch (error) {
-    if ((error as NodeJS.ErrnoException).code === "ENOENT") json(response, 404, { error: "File not found" });
+    if ((error as NodeJS.ErrnoException).code === "ENOENT")
+      json(response, 404, { error: "File not found" });
     else throw error;
   }
 }
 
-export function createGuiHttpServer(workspace: Workspace, schema: SchemaRegistry, authoring?: GuiAuthoringContext) {
+export function createGuiHttpServer(
+  workspace: Workspace,
+  schema: SchemaRegistry,
+  authoring?: GuiAuthoringContext,
+) {
   return createServer(async (request, response) => {
     try {
       const url = new URL(request.url ?? "/", "http://127.0.0.1");
       if (url.pathname.startsWith("/api/")) {
-        const result = await dispatchGuiApi(workspace, schema, {
-          method: request.method ?? "GET",
-          pathname: url.pathname,
-          query: url.searchParams,
-          body: request.method === "POST" ? await readBody(request) : undefined,
-        }, authoring);
+        const result = await dispatchGuiApi(
+          workspace,
+          schema,
+          {
+            method: request.method ?? "GET",
+            pathname: url.pathname,
+            query: url.searchParams,
+            body: request.method === "POST" ? await readBody(request) : undefined,
+          },
+          authoring,
+        );
         json(response, result.status, result.body);
         return;
       }
@@ -93,17 +105,38 @@ export async function startGuiServer(options: {
   port?: number;
 }): Promise<{ url: string; close: () => Promise<void> }> {
   const project = await createProject(options.root);
-  const server = createGuiHttpServer(project.workspace, project.schema, { ...project, projectStatus: () => projectCoverage(project),projectPreflight:()=>projectPreflight(project) });
+  const server = createGuiHttpServer(project.workspace, project.schema, {
+    ...project,
+    projectStatus: () => projectCoverage(project),
+    projectPreflight: () => projectPreflight(project),
+  });
   const host = options.host ?? "127.0.0.1";
   const port = options.port ?? 4312;
-  await new Promise<void>((resolve, reject) => {
-    server.once("error", reject);
-    server.listen(port, host, resolve);
-  });
+  try {
+    await new Promise<void>((resolve, reject) => {
+      server.once("error", reject);
+      server.listen(port, host, resolve);
+    });
+  } catch (error) {
+    try {
+      await project.close();
+    } catch (cleanup) {
+      throw new AggregateError([error, cleanup], "GUI_START_FAILED", { cause: cleanup });
+    }
+    throw error;
+  }
   const address = server.address();
   const actualPort = typeof address === "object" && address ? address.port : port;
   return {
     url: `http://${host}:${actualPort}`,
-    close: async () => {await new Promise<void>((resolve, reject) => server.close((error) => error ? reject(error) : resolve()));await project.testing.close();await project.nativeGame.close();await project.nativeEditor.close();project.casc.close();await project.modkit.close();},
+    close: async () => {
+      try {
+        await new Promise<void>((resolve, reject) =>
+          server.close((error) => (error ? reject(error) : resolve())),
+        );
+      } finally {
+        await project.close();
+      }
+    },
   };
 }

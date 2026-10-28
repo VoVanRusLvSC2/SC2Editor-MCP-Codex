@@ -1,35 +1,109 @@
-# Architecture — alpha.11
+# Architecture
 
-The project is a modular monolith: one MCP server, one localhost GUI, eight authoring modules. It edits component files rather than reimplementing the SC2 engine.
+Updated 2026-10-28. This is a modular monolith with MCP and localhost GUI adapters,
+shared authoring state and optional retained external Toolkits. Older alpha audits
+are historical; current code and scoped verification describe current behavior.
 
-## Composition
+## Composition and lifecycle
 
-`src/app/project.ts` is the shared composition root for MCP and GUI. Independent registries load concurrently. All modules receive one Workspace. Data feeds Browse and AI; Browse resolves assets for Placement and Terrain; Placement and Terrain cooperate on joint location plans. Their explicit bidirectional association remains a future interface-cleanup candidate.
+[project.ts](../src/app/project.ts) wires typed lazy providers through
+[ModuleContainer](../src/app/moduleContainer.ts). MCP and GUI share one Workspace.
+Module selection is resolved once; tool visibility remains separate from service
+demand. Capability reads can instantiate providers without launching the Editor
+or game. Small bundled registries still load at project creation.
 
-| Layer | Responsibility |
+Data/Browse defer CASC mounts and native catalog initialization to their dependency
+refresh hook, preserving tracked reads and build/dependency invalidation.
+[ResourceScope](../src/core/resourceScope.ts) closes initialized resources in reverse
+dependency order and collects errors without skipping later cleanup.
+Project.close() is idempotent and shared by MCP and GUI. Test workflows drain
+before retained bridges close. Native handlers keep graceful EOF and ownership.
+
+## Tool dispatch
+
+| Component | Responsibility |
 | --- | --- |
-| app | Composition and project-wide coverage |
-| core | Source-span XML, Workspace, snapshots, transaction queue and compensated writes |
-| schema/modules | Registries, evidence and semantic operations |
-| mcp/gui | Transport, input validation, presentation; no separate authoring state |
-| runtime/archive | Explicit external adapters; configuration is not verification |
+| toolRegistry.ts | Definitions, schemas, discovery, enabled state and SDK binding |
+| toolPolicy.ts | Profile visibility; not an authorization boundary |
+| toolExecutor.ts | Common invocation and parent/child execution spans |
+| commandTools.ts | Compact authoring, discovery, usage and batch tools |
+| authoringScript.ts | Compact commands to existing typed tool steps |
+| mcpBatch.ts | Schema preflight, ordering, result references and stopping |
+| toolResults.ts | Bounded summaries and diagnostic continuations |
+| telemetry.ts | Payload metrics and durations, without registration policy |
 
-GUI has UI, Browse/Placement, AI and Terrain panels, not separate panels for all eight modules.
+The bound SDK adapter preserves method receivers without replacing the SDK
+instance's registration method. Direct calls and internal steps share an executor.
+Existing text envelopes, schemas and defaults remain compatible. Batches also
+accept structured result bodies.
+
+Internal metrics are excluded from model-facing payload totals to avoid counting
+nested results twice. Payload token counts do not represent actual model billing.
+Nested durations are inclusive and cannot be summed as end-to-end wall time.
+
+## Domain boundaries
+
+DataWorkspace remains the public facade. DataCatalogRepository owns discovery,
+active layers and parse caches. effectiveData.ts resolves inheritance, tokens and
+array uncertainty. DataReferenceGraph owns catalog/script/GUI/object consumers.
+recipePlanner.ts dispatches recipes against the evolving candidate document;
+the workspace retains grouped validation and commit. Catalog registration XML
+is an independent helper used by terrain.
+
+Trigger authoring retains its typed graph, type system, native profile, GUI import,
+organization and Galaxy emitter. Shared XML/type fragments no longer depend on
+declaration orchestration, removing the former value-import cycle. Further compiler
+phase extraction remains possible behind the facade. Compilation and semantic
+equivalence remain separate.
+
+Terrain and Placement retain native codecs, seeded algorithms and ownership.
+locationPlanner.ts coordinates combined terrain/object plans through narrow ports.
+Placement receives a delegated terrain context instead of a direct workspace
+back-reference. The larger owned-landscape planner remains in TerrainWorkspace.
+
+Asset transforms live in a pure module shared by triangle and attachment
+measurement, without the former measurement import cycle.
+
+## External runtimes
+
+integrations/jsonLineProcess.ts shares child-process lifecycle, JSON-line framing,
+request correlation and bounded messages. Editor/Game clients retain different
+handshakes, error codes, job/session policies and limits. Editor queue uncertainty
+does not authorize replay. The transport does not add a cancellation/timeout policy.
+
+ModKit stays optional and retained. Runtime JavaScript still lives under
+scripts/modkit; migration of that packaging boundary is deferred. Private Toolkit
+sources and instrumented copies stay outside distributed map content.
 
 ## Transactions
 
-All component text writes, Cutscene writes, Terrain bytes and font imports use one queue per Workspace and `core/fileTransactions.ts`. Operations mutate private copies. Snapshots pin exact bytes and existence. Rejected operations do not stage or commit candidates.
+Text/binary candidates share Workspace coordination. Bytes, existence, dependency
+reads and group identity guard plans and staged saves. Partial coupled saves are
+refused; unknown XML and unrelated/manual edits are preserved.
 
-Text staging records the complete participating group, including unchanged members. Save/discard of any member affects the whole group; save returns `savedFiles`. Partial group edits fail. External changes to staged bases cannot be silently rebased. Binary groups have equivalent guards; conflicting text/binary drafts must first be saved/discarded.
+fileTransactions.ts, workspaceLock.ts and recoveryJournal.ts provide serialized
+writes, process locks, atomic per-file rename, handled-failure compensation and
+interrupted-commit recovery. This is not a universal filesystem transaction or
+power-loss certification. Untracked adapter reads and hostile concurrent path
+changes retain explicit limitations.
 
-Commit prepares UUID temporary files, rechecks snapshots, then performs per-file atomic rename. Handled failures compensate already-written files only where bytes still match this transaction's output. Drafts clear only after success.
+A tool batch is a sequence of guarded operations. Earlier committed groups remain
+saved if a later command fails; the batch is not one all-or-nothing transaction.
 
-Alpha.11 automatically tracks Workspace text reads during preflight and validation, including external catalog reads and effective drafts. Read snapshots persist in staged groups until save. Data/AI preflight shares that context; AI/Browse bypass cached indexes during tracked editing. Missing root Triggers is explicitly pinned. See [dependency transactions](DEPENDENCY_TRANSACTIONS.md).
+## Capabilities and checks
 
-This is not crash-wide multi-file atomicity: no persistent recovery journal or cross-process lock. Directory enumeration and untracked binary/adapter reads are not universally pinned. Ordinary symlink destinations and lexical escapes are rejected, but checks cannot eliminate hostile symlink swaps between check and open.
+Terrain's operation manifest is shared by registration and capability summaries.
+Implementation inventory, runtime availability and static/compiler/render/gameplay
+evidence are distinct. Evidence must match the artifact, dependencies and runtime.
+Other historical capability text still needs gradual migration to domain manifests.
 
-## Coverage
+Run npm run build, relevant regressions, npm run lint, npm run format:check and
+npm run architecture:check for changed scope. Formatting covers the extracted
+boundary, excluding vendored codecs and paused renderer research. Architecture
+checks inspect static value imports after type erasure, rejecting cycles and
+violations of the extracted pure boundaries. Dynamic imports and external runtime
+internals are outside that scan.
 
-`ui.project_status`, GUI Project coverage and `npm run project:audit` cover all eight sections. The generated audit captures actual registrations, including dynamic tool names. Historical corpus totals are not a newly executed sweep. Preservation of unknown XML does not prove safe creation of unknown structures.
-
-See [full audit](PROJECT_ARCHITECTURE_AUDIT.md). Editor/runtime gates remain NOT_EXECUTED.
+See [refactoring plan](ARCHITECTURE_REFACTOR_PLAN.md),
+[authoring protocol](AUTHORING_PROTOCOL.md) and
+[dependency transactions](DEPENDENCY_TRANSACTIONS.md).

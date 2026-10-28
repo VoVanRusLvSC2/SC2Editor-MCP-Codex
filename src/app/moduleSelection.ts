@@ -1,10 +1,29 @@
-export const publicModules = ["ui", "cutscene", "cutscene-preview", "text", "data", "browse", "placement", "ai", "terrain", "map", "script", "casc", "settings", "document", "assets", "lighting", "editor", "game"] as const;
-export type PublicModule = typeof publicModules[number];
+export const publicModules = [
+  "ui",
+  "cutscene",
+  "cutscene-preview",
+  "text",
+  "data",
+  "browse",
+  "placement",
+  "ai",
+  "terrain",
+  "map",
+  "script",
+  "casc",
+  "settings",
+  "document",
+  "assets",
+  "lighting",
+  "editor",
+  "game",
+] as const;
+export type PublicModule = (typeof publicModules)[number];
 
 const profiles: Record<string, PublicModule[]> = {
-  game: ['game'],
-  editor: ['ui','editor'],
-  "cutscene-preview": ["ui","cutscene","cutscene-preview","casc","assets","data","lighting"],
+  game: ["game"],
+  editor: ["ui", "editor"],
+  "cutscene-preview": ["ui", "cutscene", "cutscene-preview", "casc", "assets", "data", "lighting"],
   assets: ["ui", "casc", "assets"],
   minimal: [],
   "focused-data": ["data"],
@@ -33,14 +52,32 @@ export interface ModuleSelection {
 }
 
 export function resolveModuleSelection(env: NodeJS.ProcessEnv = process.env): ModuleSelection {
-  const explicit = env.SC2_MCP_MODULES?.split(",").map((entry) => entry.trim().toLowerCase()).filter(Boolean);
+  const explicit = env.SC2_MCP_MODULES?.split(",")
+    .map((entry) => entry.trim().toLowerCase())
+    .filter(Boolean);
   if (explicit?.length) {
-    const known = explicit.filter((entry): entry is PublicModule => (publicModules as readonly string[]).includes(entry));
-    return { profile: "custom", modules: new Set<PublicModule>(["ui", ...known]), unknown: explicit.filter((entry) => !(publicModules as readonly string[]).includes(entry)), source: "SC2_MCP_MODULES" };
+    const known = explicit.filter((entry): entry is PublicModule =>
+      (publicModules as readonly string[]).includes(entry),
+    );
+    return {
+      profile: "custom",
+      modules: new Set<PublicModule>(["ui", ...known]),
+      unknown: explicit.filter((entry) => !(publicModules as readonly string[]).includes(entry)),
+      source: "SC2_MCP_MODULES",
+    };
   }
   const requested = env.SC2_MCP_PROFILE?.trim().toLowerCase() || "all";
   const selected = profiles[requested] ?? profiles.all;
-  return { profile: profiles[requested] ? requested : "all", modules: new Set(selected), unknown: profiles[requested] ? [] : [requested], source: env.SC2_MCP_PROFILE ? "SC2_MCP_PROFILE" : "default" };
+  return {
+    profile: profiles[requested] ? requested : "all",
+    modules: new Set(selected),
+    unknown: profiles[requested] ? [] : [requested],
+    source: env.SC2_MCP_PROFILE ? "SC2_MCP_PROFILE" : "default",
+  };
 }
 
-export function moduleProfiles() { return Object.fromEntries(Object.entries(profiles).map(([name, modules]) => [name, [...modules]])); }
+export function moduleProfiles() {
+  return Object.fromEntries(
+    Object.entries(profiles).map(([name, modules]) => [name, [...modules]]),
+  );
+}

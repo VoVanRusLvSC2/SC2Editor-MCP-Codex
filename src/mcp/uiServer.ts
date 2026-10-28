@@ -1,7 +1,7 @@
+import {resolveModuleSelection,type ModuleSelection} from '../app/moduleSelection.js';
 import {formatUiXml} from '../core/uiXmlFormat.js';
-import {resolveModuleSelection} from '../app/moduleSelection.js';
 import {registerUiAssetTools} from './uiAssetContracts.js';
-import {instrumentTools} from '../app/telemetry.js';
+import {createToolServer} from '../app/toolServer.js';
 import { APP_TITLE, APP_VERSION } from "../app/version.js";
 import { registerTerrainTools, type TerrainToolContext } from "../modules/terrain/tools.js";
 import { McpServer } from "@modelcontextprotocol/server";
@@ -183,9 +183,8 @@ const layoutOperationSchema = z.discriminatedUnion("op", [
   }),
 ]);
 
-export function createUiServer(workspace: Workspace, schema: SchemaRegistry, cutscene?: CutsceneToolContext, text?: TextToolContext, data?: DataToolContext, browse?: BrowseToolContext, placement?: PlacementToolContext, ai?: AiToolContext, terrain?: TerrainToolContext, includeUi = true): McpServer {
-  const server = new McpServer({ name: "sc2editor-mcp", title: APP_TITLE, version: APP_VERSION });
-  instrumentTools(server,workspace.root,resolveModuleSelection().modules.size>0);
+export function createUiServer(workspace: Workspace, schema: SchemaRegistry, cutscene?: CutsceneToolContext, text?: TextToolContext, data?: DataToolContext, browse?: BrowseToolContext, placement?: PlacementToolContext, ai?: AiToolContext, terrain?: TerrainToolContext, includeUi = true, selection: ModuleSelection = resolveModuleSelection()): McpServer {
+  const server = createToolServer(new McpServer({ name: "sc2editor-mcp", title: APP_TITLE, version: APP_VERSION }), workspace.root, selection);
   if(includeUi)registerUiAssetTools(server,workspace);
 
   if (includeUi) {

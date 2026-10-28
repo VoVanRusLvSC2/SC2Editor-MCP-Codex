@@ -1,10 +1,11 @@
+import {terrainCapabilityManifest} from './capabilities.js';
 import path from 'node:path';
 import {promises as fs} from 'node:fs';
 import {randomUUID,createHash} from 'node:crypto';
 import type {ModkitIntegration} from '../../integrations/modkit/runtime.js';
 import {bytesHash} from '../../core/binaryTransactions.js';
 import {modkitTerrainPlanSchema,modkitRampPlaceSchema,type ModkitTerrainPlan,type ModkitRampPlace} from './modkitSchemas.js';
-import {componentListWithGameData,gameDataIndexWithCatalog} from '../data/workspace.js';
+import {componentListWithGameData,gameDataIndexWithCatalog} from '../data/catalogRegistration.js';
 import {scanXml} from '../../core/xmlScanner.js';
 
 export const MODKIT_TERRAIN_COMPONENTS=['t3Terrain.xml','t3HeightMap','t3SyncHeightMap','t3SyncCliffLevel','t3CellFlags','t3TextureMasks','t3SyncTextureInfo','t3Water','t3FluffDoodad','t3VertCol','t3HardTile','t3SyncPathingInfo','PaintedPathingLayer','PaintedCreepLayer','CellAttribute_Pnp','CellAttribute_Pnb','CellAttribute_Pcl','CellAttribute_Pgr','Terrain'] as const;
@@ -37,7 +38,7 @@ export class ModkitTerrainWorkspace {
   }
   async capabilities(directory=''){
     const loaded=await this.load(directory);
-    return {backend:'ModKit',available:(await this.integration.provenance()).available,directory,
+    return {authoring:terrainCapabilityManifest,backend:'ModKit',available:(await this.integration.provenance()).available,directory,
       components:MODKIT_TERRAIN_COMPONENTS.map(name=>({name,exists:loaded.files.has(name),bytes:loaded.files.get(name)?.length??0})),
       added:['CellAttribute no-path/no-building/clear-path paint and flood fill','raw PaintedPathing/PaintedCreep channels','vertex-color stroke values','fluff doodad add/update/remove','native HRDT group replacement/duplicate-key repair','PATH hint values','static terrain navigation and route preview','native palette and block texture-set authoring','native ramp template transfer with SMAP100/102 and LFCT cutouts; qualified diagonal widening','joined ramp placement with measured closed-land preparation or adjoining-level verification'],
       retained:['terrain height/texture/water/cliff/ramp writers','placement.scatterDoodads/snapToTerrain','shared guarded transactions'],

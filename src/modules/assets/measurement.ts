@@ -8,13 +8,12 @@ import {readM3Geometry} from './m3.js';
 import {readM3Metadata} from '../cutscene/assets.js';
 import {attachmentMeasurements} from './attachmentMeasurements.js';
 
-export type Vec3=[number,number,number];
+import {transformPoint,type Transform} from './transform.js';
+export {transformPoint,type Transform,type Vec3} from './transform.js';
 export type Geometry=ReturnType<typeof readM3Geometry>;
 export const vector=z.tuple([z.number().finite(),z.number().finite(),z.number().finite()]);
 export const measurementSchema=z.object({file:z.string().min(1).max(1024),scale:z.union([z.number().positive().max(1000),vector]).default(1),rotation:z.number().finite().default(0),position:vector.default([0,0,0]),preview:z.boolean().default(true),includeImage:z.boolean().default(true)}).strict();
-export interface Transform {scale?:number|Vec3;rotation?:number;position?:Vec3}
 const round=(n:number)=>Math.round(n*1e6)/1e6;
-export function transformPoint(p:number[],t:Transform):Vec3{const s=typeof t.scale==='number'?[t.scale,t.scale,t.scale]:t.scale??[1,1,1],a=t.rotation??0,c=Math.cos(a),sn=Math.sin(a),o=t.position??[0,0,0],x=p[0]*s[0],y=p[1]*s[1];return [c*x-sn*y+o[0],sn*x+c*y+o[1],p[2]*s[2]+o[2]];}
 export function measureGeometry(g:Pick<Geometry,'positions'|'indices'>,t:Transform={}){
  if(!g.indices.length||g.positions.length%3)throw new Error('MEASURE_EMPTY_GEOMETRY');
  const min=[Infinity,Infinity,Infinity],max=[-Infinity,-Infinity,-Infinity];

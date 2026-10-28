@@ -1,4 +1,4 @@
-import {transformPoint,type Transform} from './measurement.js';
+import {transformPoint,type Transform} from './transform.js';
 
 /** ATT_ v1 + IREF bind matrices. These are model attachments, not fence connector semantics. */
 export function attachmentMeasurements(b:Buffer,transform:Transform={}){

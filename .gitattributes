@@ -5,3 +5,11 @@ docs/verification/** text eol=lf
 # Synthetic native components retain their original byte representation.
 src/tests/fixtures/terrain-surface/** -text
 generated/o200k_base.tiktoken -text
+
+# Stable source formatting and checksum-pinned authoring catalog bytes on Windows.
+src/**/*.ts text eol=lf
+scripts/**/*.mjs text eol=lf
+package.json text eol=lf
+package-lock.json text eol=lf
+.prettierrc.json text eol=lf
+resources/authoring-catalog/** -text

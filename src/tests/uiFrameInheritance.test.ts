@@ -12,7 +12,7 @@ test('public MCP inherits Core containers through Frame and edits typed children
   const pending=new Map<number,{resolve:(value:any)=>void;reject:(error:Error)=>void}>();
   const closed=new Promise<void>(resolve=>child.once('close',()=>resolve()));
   child.stderr.on('data',data=>{stderr+=data;});
-  child.stdout.on('data',data=>{buffer+=data;let end:number;while((end=buffer.indexOf('\n'))>=0){const line=buffer.slice(0,end);buffer=buffer.slice(end+1);const value=JSON.parse(line),p=pending.get(value.id);if(p){pending.delete(value.id);value.error?p.reject(Error(JSON.stringify(value.error))):p.resolve(value.result);}}});
+  child.stdout.on('data',data=>{buffer+=data;let end:number;while((end=buffer.indexOf('\n'))>=0){const line=buffer.slice(0,end);buffer=buffer.slice(end+1);const value=JSON.parse(line),p=pending.get(value.id);if(p){pending.delete(value.id);if(value.error)p.reject(Error(JSON.stringify(value.error)));else p.resolve(value.result);}}});
   child.once('exit',()=>{for(const p of pending.values())p.reject(Error('Owned UI server exited: '+stderr));pending.clear();});
   t.after(async()=>{child.stdin.end();await closed;await fs.rm(root,{recursive:true,force:true});});
   const rpc=(method:string,params:unknown)=>new Promise<any>((resolve,reject)=>{const n=++id;pending.set(n,{resolve,reject});child.stdin.write(JSON.stringify({jsonrpc:'2.0',id:n,method,params})+'\n');});

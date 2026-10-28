@@ -1,0 +1,27 @@
+name: Architecture and offline contracts
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  offline:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - run: npm run build:release
+      - run: npm run lint
+      - run: npm run format:check
+      - run: npm run architecture:check
+      - name: Self-contained dispatch, lifecycle and batch contracts
+        run: node --test dist/tests/refactoringBoundaries.test.js dist/tests/mcpBatch.test.js
+      # Original Editor/game acceptance needs an authorized native host.

@@ -21,7 +21,8 @@
     "README_LEGACY.md",
     "SCRIPT-GUIDE.md",
     "CHANGELOG.md",
-    "AGENTS.md"
+    "AGENTS.md",
+    ".prettierrc.json"
   ],
   "sourceDirectories": [
     "src/",
@@ -30,7 +31,8 @@
     "tests/terrain-surface/",
     "resources/authoring-catalog/",
     "docs/verification/",
-    ".agents/skills/"
+    ".agents/skills/",
+    ".github/workflows/"
   ],
   "localDirectories": [
     ".git/",
@@ -176,7 +178,9 @@
     "mcp-hardening/MEASUREMENTS.md",
     "mcp-hardening/MEASUREMENTS_2026-09-29.md",
     "mcp-hardening/PUBLISH_FILES_2026-09-29.txt",
-    "mcp-hardening/STATUS.md"
+    "mcp-hardening/STATUS.md",
+    "ARCHITECTURE_REFACTOR_PLAN.md",
+    "REFACTORING_REPORT_2026-10-28.md"
   ],
   "publicationHolds": [
     {
