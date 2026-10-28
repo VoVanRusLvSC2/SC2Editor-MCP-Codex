@@ -1,5 +1,19 @@
 # Changelog
 
+## 2026-10-28 — Editor Toolkit 1.1 release candidate
+
+- Pin the complete SHA-verified1.1.0-rc.1 package/native protocol16; preserve the
+  existing31 public operation names and private runtime/source boundary.
+- Expose explicit Terrain camera target/angles/distance/FOV through
+  `editor.capture`, validate incompatible selectors, and retain original numeric
+  readback. Two different native frames are reviewed on an unchanged lab map.
+- Forward immutable effective-field query/comparison filters and retain exact
+  value/coverage metadata, including false/null and bounded page continuations.
+  Positive new field-enabled audit queries remain untested in this integration;
+  mocked adapter checks and an actual unknown-report refusal are separate evidence.
+- Add the independent installed1.1 schema fixture and targeted regression checks.
+  Historical compilation, audit and gameplay records keep their original versions.
+
 ## 2026-10-26 — Minimap images and inherited UI batches
 
 - Add guarded `map.minimap.rebuild` using the ModKit overview and a complete

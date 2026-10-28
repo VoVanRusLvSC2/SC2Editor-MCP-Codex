@@ -207,6 +207,23 @@ test('named native capture forwards exact camera ID and preserves readback, not 
   await assert.rejects(bridge.capture({archive:'Test.SC2Map',mode:'map',cameraId:'2001',size:1024,deadlineSeconds:1200}),/REQUIRES_VIEWPORT/);
 });
 
+test('explicit native camera forwards all parameters, retains readback and rejects ambiguous requests before queuing',async t=>{
+ const pose={x:60,y:64,z:8.5,pitch:56,yaw:180,roll:0,distance:34,fov:27.8};
+ const terrainCamera={requested:pose,actual:{target:{x:60,y:64,z:8.5},pitch:56,yaw:180,roll:0,distance:34,fov:27.8},verification:{checked:['target.x','target.y','target.z','pitch','yaw','roll','distance','fov'],numericTolerance:.11,targetTolerance:.02},triggerExecution:false};
+ const f=await fixture(t,async()=>({structuredContent:{status:'TERRAIN_FRAME_CAPTURED',terrainCamera,requestedTerrainFrameVerified:true}}));
+ const request={archive:'Test.SC2Map',mode:'viewport' as const,terrainCamera:pose,size:1024,deadlineSeconds:1200};
+ const job=await finished(f.bridge,(await f.bridge.capture(request)).id);
+ assert.equal(job.state,'completed');assert.deepEqual(f.calls[0].args.terrain_camera,pose);assert.equal(f.calls[0].args.map_camera_id,undefined);assert.equal(f.calls[0].args.size,undefined);assert.deepEqual(job.result?.capture.terrainCamera,terrainCamera);
+ const count=f.calls.length;
+ await assert.rejects(f.bridge.capture({...request,cameraId:'2001'}),/SELECTOR_CONFLICT/);
+ await assert.rejects(f.bridge.capture({...request,mode:'map'}),/REQUIRES_VIEWPORT/);
+ await assert.rejects(f.bridge.capture({...request,terrainCamera:{...pose,distance:0}}));
+ assert.equal(f.calls.length,count);
+ const tools=new Map<string,any>();registerNativeEditorTools({registerTool:(name:string,config:unknown)=>tools.set(name,config)} as unknown as McpServer,f.bridge);
+ const schema=tools.get('editor.capture').inputSchema;assert.deepEqual(schema.parse(request).terrainCamera,pose);
+ assert.throws(()=>schema.parse({...request,cameraId:'2001'}));assert.throws(()=>schema.parse({...request,mode:'region',bounds:{left:0,right:4,bottom:0,top:4}}));
+});
+
 test('Win32 startup failure preserves actionable diagnostics; next job can recover without stale Galaxy export',async t=>{
   let attempt=0;
   const failure={status:'FAILED',failureKind:'NATIVE_CONTROLLER_FAILED',failureStage:'startup',failureEvidence:'private/evidence',

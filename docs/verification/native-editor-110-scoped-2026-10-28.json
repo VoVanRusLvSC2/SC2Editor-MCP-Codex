@@ -1,0 +1,322 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-28T10:37:57.732Z",
+  "status": "passed_scoped_installation_contracts_and_explicit_native_camera",
+  "scope": "Toolkit1.1.0-rc.1 complete installation,31 advertised contracts, changed camera/effective-field adapter inputs, two actual original Terrain frames, console and owned closure. Positive1.1 field-enabled audit/index comparison is not checked.",
+  "sourceFingerprints": [
+    {
+      "file": "native-toolkit-release.json",
+      "sha256LfUtf8": "a081d0bc330856f5a370aae55d2659bc9ada191cae1d4a8b8a06383aa96b7e98"
+    },
+    {
+      "file": "src/integrations/native/contracts.ts",
+      "sha256LfUtf8": "a719ad3309391759627a89ce6199eb034f894b10b56bc22322c32249fe444208"
+    },
+    {
+      "file": "src/integrations/native/bridge.ts",
+      "sha256LfUtf8": "cbd2b74b0f953daba85644a03e683740956de5f6e3376dbf8af089d185cb166d"
+    },
+    {
+      "file": "src/integrations/native/background.ts",
+      "sha256LfUtf8": "43119b030558acef78477c61b76bf884a515b2b1b5e7431f98b020370e3a6261"
+    },
+    {
+      "file": "src/integrations/native/tools.ts",
+      "sha256LfUtf8": "1887405a162cd3d6c34427b73ac912e7f3423831a22281c4653420b2cd9b12ef"
+    },
+    {
+      "file": "src/tests/nativeEditor.test.ts",
+      "sha256LfUtf8": "09fa39f95277aef19b8f1a266e06d383040e1a239df1d5df3cee0c82a949c411"
+    },
+    {
+      "file": "src/tests/nativeEditorV1.test.ts",
+      "sha256LfUtf8": "afaf5851c7e28babe990fc03a573521582a3e8933e378d8098b7dd3a9863cfeb"
+    },
+    {
+      "file": "src/tests/fixtures/native-editor-v1.1-contract.json",
+      "sha256LfUtf8": "1b43a2b613e443b9fb353543d97ef7124051af61af3a9d5c32c473daa55ff6b4"
+    }
+  ],
+  "release": {
+    "version": "1.1.0-rc.1",
+    "nativeProtocol": 16,
+    "archiveSha256": "5e93bb7c1d92e4b69823478c7ccc1afc2470ec2cbf9ad98bafcafeecbbd5c055",
+    "repository": "VoVanRusLvSC2/SC2EditorToolkit",
+    "assetPrefix": "SC2EditorToolkit",
+    "asset": "SC2EditorToolkit-v1.1.0-rc.1-win64.zip",
+    "checksumAsset": "SHA256SUMS.txt",
+    "buildMetadata": "BUILD.json",
+    "releaseUrl": "https://github.com/VoVanRusLvSC2/SC2EditorToolkit/releases/tag/v1.1.0-rc.1",
+    "isFinalRelease": false,
+    "sourceCommit": "d06739cb75a3e89bbdcaf072fcccaade01e25850",
+    "executableSha256": "87773c5468f56ae648add98bd9a3e9647a7a0ec4f9f9839ce61ac0b1ca76e84f",
+    "fullPackageInstalled": true,
+    "archiveChecksumVerified": true
+  },
+  "schemaDiscovery": {
+    "methods": 31,
+    "changedMethods": [
+      "sc2_capture_terrain",
+      "sc2_query_audit",
+      "sc2_compare_audits"
+    ],
+    "fixture": "src/tests/fixtures/native-editor-v1.1-contract.json",
+    "source": "Actual installed MCP tools/list through public editor.tools; no private implementation source included"
+  },
+  "doctor": {
+    "jobId": "99360d10-3e8d-48f5-9bfa-0cb8ffd74e09",
+    "status": "PREFLIGHT_PASSED",
+    "originalEditor": "5.0.17.98310",
+    "nativeComponentHashesVerified": true,
+    "graphicsLiveTest": "Two later actual Vulkan Terrain captures, not doctor preflight alone"
+  },
+  "regressions": {
+    "build": "passed",
+    "releaseBuild": "passed",
+    "tests": 85,
+    "passed": 85,
+    "failed": 0,
+    "documentationLanguage": "passed",
+    "scope": "Selected native bridge, v1.1 contracts, outcome, background transport and release-asset tests. Fixture field values are mock adapter observations, not an actual new audit."
+  },
+  "captures": [
+    {
+      "jobId": "0bba918b-df16-4d0e-8bf3-52891486573a",
+      "nativeJobId": "5e0329d7fbbe49c484fb3e1ce0bb86ad",
+      "reportSha256": "4e562c7088f11441e02f26e71a77cf34b1c551c258e15697019f23aa4b87f517",
+      "sourceSha256": "769b60444bdb501ebabb51574637e634e521052b9121a94148a23f81dcb3d855",
+      "sourceUnchanged": true,
+      "sourceWindow": 3146876,
+      "terrainCamera": {
+        "requested": {
+          "z": 8.5,
+          "fov": 27.8,
+          "roll": 0,
+          "pitch": 56,
+          "x": 60,
+          "distance": 34,
+          "yaw": 180,
+          "y": 64
+        },
+        "actual": {
+          "selected": 1,
+          "valuesRead": 1,
+          "name": "Current Terrain Camera",
+          "target": {
+            "x": 60,
+            "y": 64,
+            "z": 8.5
+          },
+          "pitch": 56,
+          "yaw": 180,
+          "roll": 0,
+          "distance": 34,
+          "fov": 27.8
+        },
+        "verification": {
+          "checked": [
+            "target.x",
+            "target.y",
+            "pitch",
+            "yaw",
+            "roll",
+            "distance",
+            "fov",
+            "target.z"
+          ],
+          "unverifiedSavedParameters": [],
+          "numericTolerance": 0.11,
+          "targetTolerance": 0.02,
+          "source": "original Get Game Camera controls; bounded native UI precision"
+        },
+        "implementation": "original Camera Editor Set Game Camera and Get Game Camera; no archive modification",
+        "triggerExecution": false
+      },
+      "frame": {
+        "sha256": "a792eadae63503a00437a7470787f82b24bf95f16455821348f1eb43d5a4972a",
+        "bytes": 1969871,
+        "width": 1297,
+        "height": 868,
+        "source": "original D3D9 backbuffer",
+        "desktopPixelsRead": false
+      },
+      "desktopObservation": {
+        "samples": 673,
+        "visibleWindowsOnUserDesktopPeak": 0,
+        "editorForegroundSamples": 0,
+        "inputDesktopChanges": 0,
+        "inputInjectionUsed": false,
+        "desktopSwitchApiUsed": false
+      },
+      "visualReview": "Three placed blue units and textured floor are visible in a useful scoped view."
+    },
+    {
+      "jobId": "e2f0cfcb-3fed-40c6-80e8-1d8c0022ca5a",
+      "nativeJobId": "33e646f56f0142449cefa9c3c8e93e55",
+      "reportSha256": "c138b1d4a3d01f093975adf7e1d1a5ef0a85f504369d15e7dbb0f853eb77adbd",
+      "sourceSha256": "769b60444bdb501ebabb51574637e634e521052b9121a94148a23f81dcb3d855",
+      "sourceUnchanged": true,
+      "sourceWindow": 3146876,
+      "terrainCamera": {
+        "requested": {
+          "z": 8.5,
+          "fov": 34,
+          "roll": 0,
+          "pitch": 46,
+          "x": 52,
+          "distance": 24,
+          "yaw": 135,
+          "y": 54
+        },
+        "actual": {
+          "selected": 1,
+          "valuesRead": 1,
+          "name": "Current Terrain Camera",
+          "target": {
+            "x": 52,
+            "y": 54,
+            "z": 8.5
+          },
+          "pitch": 46,
+          "yaw": 135,
+          "roll": 0,
+          "distance": 24,
+          "fov": 34
+        },
+        "verification": {
+          "checked": [
+            "target.x",
+            "target.y",
+            "pitch",
+            "yaw",
+            "roll",
+            "distance",
+            "fov",
+            "target.z"
+          ],
+          "unverifiedSavedParameters": [],
+          "numericTolerance": 0.11,
+          "targetTolerance": 0.02,
+          "source": "original Get Game Camera controls; bounded native UI precision"
+        },
+        "implementation": "original Camera Editor Set Game Camera and Get Game Camera; no archive modification",
+        "triggerExecution": false
+      },
+      "frame": {
+        "sha256": "7b6ecccca5151624a54e4b5f67f74d98b4b81eedde7af782358ecd884d066732",
+        "bytes": 1797724,
+        "width": 1297,
+        "height": 868,
+        "source": "original D3D9 backbuffer",
+        "desktopPixelsRead": false
+      },
+      "desktopObservation": {
+        "samples": 1671,
+        "visibleWindowsOnUserDesktopPeak": 0,
+        "editorForegroundSamples": 0,
+        "inputDesktopChanges": 0,
+        "inputInjectionUsed": false,
+        "desktopSwitchApiUsed": false
+      },
+      "visualReview": "Two placed red units and a third blue unit near the top edge are visible. Oblique grid orientation, relative scale and composition differ from the first pose. The top unit is clipped; this is a camera-control check, not final art acceptance."
+    }
+  ],
+  "diagnostics": {
+    "jobId": "85f404be-c273-4545-9bfe-a7ce026c04a3",
+    "status": "EDITOR_DIAGNOSTICS_READ",
+    "editorPid": 19100,
+    "editorLog": {
+      "inspected": true,
+      "windowFound": true,
+      "entries": [],
+      "recognizedErrors": [],
+      "recognizedWarnings": [],
+      "clear": true,
+      "complete": true,
+      "rawLog": "L:\\NE110\\w\\83c42058388d46fab2a7eeb67201128d\\diagnostics\\2b7bd41e339c473982a0d1ce0daf58dd\\01-diagnostics\\native-log.txt"
+    },
+    "inspectionComplete": true,
+    "newErrorsClear": true,
+    "compiler": "Not compiled in this scoped update",
+    "operationDiagnostics": {
+      "status": "COMPLETE",
+      "inspectionComplete": true,
+      "classificationComplete": true,
+      "freshOwnedSession": false,
+      "scope": "new native output observed during this operation; not a gameplay test",
+      "newErrors": [],
+      "newWarnings": [],
+      "newMessages": [],
+      "unclassifiedMessages": [],
+      "baselineMessages": [],
+      "newErrorsClear": true,
+      "newErrorCount": 0,
+      "knownNewErrorCount": 0,
+      "comparisons": [
+        {
+          "channel": "Messages - StarCraft II Editor|RichEdit20W|13",
+          "baselineRows": 0,
+          "afterRows": 0,
+          "newOutputRows": 0,
+          "basis": "snapshotAppend",
+          "reliable": true,
+          "resetOrReplacementObserved": false
+        },
+        {
+          "channel": "Console - StarCraft II Editor|RichEdit20W|15",
+          "baselineRows": 0,
+          "afterRows": 0,
+          "newOutputRows": 0,
+          "basis": "snapshotAppend",
+          "reliable": true,
+          "resetOrReplacementObserved": false
+        }
+      ],
+      "nativeOperationFailed": false,
+      "evidence": {
+        "before": "L:\\NE110\\w\\83c42058388d46fab2a7eeb67201128d\\diagnostics\\2b7bd41e339c473982a0d1ce0daf58dd\\01-diagnostics\\diagnostics-before.json",
+        "after": "L:\\NE110\\w\\83c42058388d46fab2a7eeb67201128d\\diagnostics\\2b7bd41e339c473982a0d1ce0daf58dd\\01-diagnostics\\diagnostics-after.json",
+        "events": "L:\\NE110\\w\\83c42058388d46fab2a7eeb67201128d\\diagnostics\\2b7bd41e339c473982a0d1ce0daf58dd\\01-diagnostics\\diagnostics-events.json"
+      }
+    }
+  },
+  "effectiveFields": {
+    "argumentsForwarded": true,
+    "mockedExactEncodingAndCoveragePreserved": true,
+    "actualUnknownReportRefusal": {
+      "jobId": "c97ac9d9-f62b-449b-a003-b1af0b55988c",
+      "status": "FAILED",
+      "errorInfo": {
+        "code": "NOT_FOUND",
+        "message": "'Unknown artifact'",
+        "nextStep": "Use an ID returned by this server and work directory.",
+        "automaticRetry": false
+      }
+    },
+    "positiveIndexedNativeQuery": "not_checked",
+    "newFullAudit": "not_run",
+    "scope": "No matching field-enabled report was created in this owned store. Unknown report remains NOT_FOUND; no automatic full audit or fabricated equality."
+  },
+  "lifecycle": {
+    "singleRetainedFrontend": true,
+    "sameCaptureSourceWindow": true,
+    "loadedMapReuseClaim": false,
+    "ownedEditorPidClosed": 19100,
+    "gracefulStop": true,
+    "userVisibleSessionsUntouched": true,
+    "configUpdate": "Only sc2editor SC2_NATIVE_TOOLKIT_HOME/SC2_NATIVE_WORK_ROOT changed; backup retained privately. Existing host connections are not forcibly reloaded."
+  },
+  "distribution": {
+    "privateCompleteRuntimeExternal": true,
+    "privateImplementationPublished": false,
+    "ordinaryMapChanged": false,
+    "scope": "No binary/source hiding guarantee against reverse engineering. This integration does not put private Toolkit implementation or test instrumentation into ordinary delivered maps."
+  },
+  "limitations": [
+    "RC package, not final1.1.0.",
+    "No positive new field-enabled indexed audit/diff acceptance.",
+    "No new compile/save/reopen/gameplay regression claim; historical evidence keeps actual runtime identity.",
+    "Two lab images prove scoped camera operation, not map art quality, animation or sound playback.",
+    "Current host tool schemas/configuration are startup-scoped; already connected frontends may require reconnection."
+  ]
+}

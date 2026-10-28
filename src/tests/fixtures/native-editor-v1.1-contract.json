@@ -1,0 +1,1340 @@
+{
+  "source": "Original installed SC2EditorToolkit v1.1.0-rc.1 MCP tools/list through public editor.tools; SHA-verified complete ZIP 5e93bb7c1d92e4b69823478c7ccc1afc2470ec2cbf9ad98bafcafeecbbd5c055, source d06739cb75a3e89bbdcaf072fcccaade01e25850",
+  "tools": [
+    {
+      "name": "sc2_doctor",
+      "operation": "doctor",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "editor_path": {
+            "type": "string",
+            "description": "Owned startup: original x64 Editor EXE or installation directory. Defaults to SC2_EDITOR_PATH, registry and standard install discovery. Supported binary required; restart to change installation.",
+            "minLength": 1
+          },
+          "render_backend": {
+            "type": "string",
+            "enum": [
+              "auto",
+              "legacy",
+              "vulkan"
+            ],
+            "description": "Owned worker startup only: auto uses bundled pinned DXVK/Vulkan when present, otherwise system D3D9. Restart the owned worker to change backend."
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "sc2_query_audit",
+      "operation": "query_audit",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "report_id": {
+            "type": "string",
+            "minLength": 32,
+            "maxLength": 32
+          },
+          "section": {
+            "type": "string",
+            "enum": [
+              "objects",
+              "findings",
+              "fields"
+            ],
+            "default": "findings"
+          },
+          "catalog": {
+            "type": "string",
+            "minLength": 1
+          },
+          "object_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "field": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1024,
+            "description": "Exact native effective field path; requires section=fields"
+          },
+          "kind": {
+            "type": "string",
+            "minLength": 1
+          },
+          "finding_status": {
+            "type": "string",
+            "enum": [
+              "present",
+              "missing",
+              "unknown"
+            ]
+          },
+          "offset": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 10000000
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 500,
+            "default": 100
+          }
+        },
+        "required": [
+          "report_id"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "sc2_find_object_uses",
+      "operation": "find_object_uses",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "report_id": {
+            "type": "string",
+            "minLength": 32,
+            "maxLength": 32
+          },
+          "target_catalog": {
+            "type": "string",
+            "minLength": 1
+          },
+          "target_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "catalog": {
+            "type": "string",
+            "minLength": 1
+          },
+          "object_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "offset": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 10000000
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 500,
+            "default": 100
+          }
+        },
+        "required": [
+          "report_id",
+          "target_catalog",
+          "target_id"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "sc2_compare_audits",
+      "operation": "compare_audits",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "before_report_id": {
+            "type": "string",
+            "minLength": 32,
+            "maxLength": 32
+          },
+          "after_report_id": {
+            "type": "string",
+            "minLength": 32,
+            "maxLength": 32
+          },
+          "section": {
+            "type": "string",
+            "enum": [
+              "objects",
+              "findings",
+              "fields"
+            ],
+            "default": "findings"
+          },
+          "catalog": {
+            "type": "string",
+            "minLength": 1
+          },
+          "object_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "field": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1024,
+            "description": "Exact native effective field path; requires section=fields"
+          },
+          "offset": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 10000000
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 500,
+            "default": 100
+          }
+        },
+        "required": [
+          "before_report_id",
+          "after_report_id"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "sc2_submit_job",
+      "operation": "jobs.submit",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "operation": {
+            "type": "string",
+            "enum": [
+              "start",
+              "open_document",
+              "execute",
+              "compile_current",
+              "export_galaxy",
+              "diagnostics",
+              "validate_document",
+              "save_reopen_document",
+              "cutscene_open",
+              "cutscene_seek",
+              "capture_frame",
+              "capture_terrain",
+              "export_map_image",
+              "capture_map_region",
+              "list_map_cameras",
+              "search_objects",
+              "export_video",
+              "check_document",
+              "read_data",
+              "data_links",
+              "check_resources",
+              "audit_data",
+              "query_audit",
+              "find_object_uses",
+              "compare_audits",
+              "doctor"
+            ]
+          },
+          "arguments": {
+            "type": "object"
+          },
+          "timeout_seconds": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 14400
+          }
+        },
+        "required": [
+          "operation"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "sc2_job_status",
+      "operation": "jobs.status",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "job_id": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "job_id"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "sc2_job_wait",
+      "operation": "jobs.wait",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "job_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "wait_ms": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 30000
+          }
+        },
+        "required": [
+          "job_id"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "sc2_job_cancel",
+      "operation": "jobs.cancel",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "job_id": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "job_id"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "sc2_check_map",
+      "operation": "check_document",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "editor_path": {
+            "type": "string",
+            "description": "Owned startup: original x64 Editor EXE or installation directory. Defaults to SC2_EDITOR_PATH, registry and standard install discovery. Supported binary required; restart to change installation.",
+            "minLength": 1
+          },
+          "render_backend": {
+            "type": "string",
+            "enum": [
+              "auto",
+              "legacy",
+              "vulkan"
+            ],
+            "description": "Owned worker startup only: auto uses bundled pinned DXVK/Vulkan when present, otherwise system D3D9. Restart the owned worker to change backend."
+          },
+          "template": {
+            "type": "string",
+            "minLength": 1
+          },
+          "map": {
+            "type": "string",
+            "minLength": 1
+          },
+          "scope": {
+            "type": "string",
+            "minLength": 1
+          },
+          "context_label": {
+            "type": "string",
+            "minLength": 1
+          },
+          "locale": {
+            "type": "string",
+            "minLength": 1
+          },
+          "baseline_template": {
+            "type": "string",
+            "description": "Optional healthy startup archive for diagnosing a failing map in a fresh worker",
+            "minLength": 1
+          },
+          "save_reopen": {
+            "type": "boolean",
+            "default": false
+          },
+          "include_diffs": {
+            "type": "boolean",
+            "default": false,
+            "description": "Include bounded textual component diffs in the downloadable comparison report"
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "sc2_audit_data",
+      "operation": "audit_data",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "editor_path": {
+            "type": "string",
+            "description": "Owned startup: original x64 Editor EXE or installation directory. Defaults to SC2_EDITOR_PATH, registry and standard install discovery. Supported binary required; restart to change installation.",
+            "minLength": 1
+          },
+          "render_backend": {
+            "type": "string",
+            "enum": [
+              "auto",
+              "legacy",
+              "vulkan"
+            ],
+            "description": "Owned worker startup only: auto uses bundled pinned DXVK/Vulkan when present, otherwise system D3D9. Restart the owned worker to change backend."
+          },
+          "template": {
+            "type": "string",
+            "minLength": 1
+          },
+          "map": {
+            "type": "string",
+            "minLength": 1
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 500,
+            "default": 100
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "sc2_read_data",
+      "operation": "read_data",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "editor_path": {
+            "type": "string",
+            "description": "Owned startup: original x64 Editor EXE or installation directory. Defaults to SC2_EDITOR_PATH, registry and standard install discovery. Supported binary required; restart to change installation.",
+            "minLength": 1
+          },
+          "render_backend": {
+            "type": "string",
+            "enum": [
+              "auto",
+              "legacy",
+              "vulkan"
+            ],
+            "description": "Owned worker startup only: auto uses bundled pinned DXVK/Vulkan when present, otherwise system D3D9. Restart the owned worker to change backend."
+          },
+          "template": {
+            "type": "string",
+            "minLength": 1
+          },
+          "map": {
+            "type": "string",
+            "minLength": 1
+          },
+          "catalog": {
+            "type": "string",
+            "minLength": 1
+          },
+          "object_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "field_offset": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 100000
+          },
+          "field_limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 500
+          },
+          "include_xml": {
+            "type": "boolean",
+            "default": false
+          }
+        },
+        "required": [
+          "catalog",
+          "object_id"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "sc2_data_links",
+      "operation": "data_links",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "editor_path": {
+            "type": "string",
+            "description": "Owned startup: original x64 Editor EXE or installation directory. Defaults to SC2_EDITOR_PATH, registry and standard install discovery. Supported binary required; restart to change installation.",
+            "minLength": 1
+          },
+          "render_backend": {
+            "type": "string",
+            "enum": [
+              "auto",
+              "legacy",
+              "vulkan"
+            ],
+            "description": "Owned worker startup only: auto uses bundled pinned DXVK/Vulkan when present, otherwise system D3D9. Restart the owned worker to change backend."
+          },
+          "template": {
+            "type": "string",
+            "minLength": 1
+          },
+          "map": {
+            "type": "string",
+            "minLength": 1
+          },
+          "catalog": {
+            "type": "string",
+            "minLength": 1
+          },
+          "object_id": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "catalog",
+          "object_id"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "sc2_check_resources",
+      "operation": "check_resources",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "editor_path": {
+            "type": "string",
+            "description": "Owned startup: original x64 Editor EXE or installation directory. Defaults to SC2_EDITOR_PATH, registry and standard install discovery. Supported binary required; restart to change installation.",
+            "minLength": 1
+          },
+          "render_backend": {
+            "type": "string",
+            "enum": [
+              "auto",
+              "legacy",
+              "vulkan"
+            ],
+            "description": "Owned worker startup only: auto uses bundled pinned DXVK/Vulkan when present, otherwise system D3D9. Restart the owned worker to change backend."
+          },
+          "template": {
+            "type": "string",
+            "minLength": 1
+          },
+          "map": {
+            "type": "string",
+            "minLength": 1
+          },
+          "catalog": {
+            "type": "string",
+            "minLength": 1
+          },
+          "object_id": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "catalog",
+          "object_id"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "sc2_modules",
+      "operation": null,
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "required": [],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "sc2_editor_start",
+      "operation": "start",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "template": {
+            "type": "string",
+            "minLength": 1
+          },
+          "editor_path": {
+            "type": "string",
+            "description": "Owned startup: original x64 Editor EXE or installation directory. Defaults to SC2_EDITOR_PATH, registry and standard install discovery. Supported binary required; restart to change installation.",
+            "minLength": 1
+          },
+          "render_backend": {
+            "type": "string",
+            "enum": [
+              "auto",
+              "legacy",
+              "vulkan"
+            ],
+            "description": "Owned worker startup only: auto uses bundled pinned DXVK/Vulkan when present, otherwise system D3D9. Restart the owned worker to change backend."
+          },
+          "startup_module": {
+            "type": "string",
+            "enum": [
+              "triggers",
+              "terrain",
+              "default"
+            ],
+            "default": "triggers"
+          }
+        },
+        "required": [
+          "template"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "sc2_open_document",
+      "operation": "open_document",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "map": {
+            "type": "string",
+            "minLength": 1
+          },
+          "editor_path": {
+            "type": "string",
+            "description": "Owned startup: original x64 Editor EXE or installation directory. Defaults to SC2_EDITOR_PATH, registry and standard install discovery. Supported binary required; restart to change installation.",
+            "minLength": 1
+          },
+          "render_backend": {
+            "type": "string",
+            "enum": [
+              "auto",
+              "legacy",
+              "vulkan"
+            ],
+            "description": "Owned worker startup only: auto uses bundled pinned DXVK/Vulkan when present, otherwise system D3D9. Restart the owned worker to change backend."
+          }
+        },
+        "required": [
+          "map"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "sc2_convert_xml",
+      "operation": "execute",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "editor_path": {
+            "type": "string",
+            "description": "Owned startup: original x64 Editor EXE or installation directory. Defaults to SC2_EDITOR_PATH, registry and standard install discovery. Supported binary required; restart to change installation.",
+            "minLength": 1
+          },
+          "render_backend": {
+            "type": "string",
+            "enum": [
+              "auto",
+              "legacy",
+              "vulkan"
+            ],
+            "description": "Owned worker startup only: auto uses bundled pinned DXVK/Vulkan when present, otherwise system D3D9. Restart the owned worker to change backend."
+          },
+          "template": {
+            "type": "string",
+            "minLength": 1
+          },
+          "map": {
+            "type": "string",
+            "minLength": 1
+          },
+          "scope": {
+            "type": "string",
+            "minLength": 1
+          },
+          "context_label": {
+            "type": "string",
+            "minLength": 1
+          },
+          "locale": {
+            "type": "string",
+            "minLength": 1
+          },
+          "startup_module": {
+            "type": "string",
+            "enum": [
+              "triggers",
+              "terrain",
+              "default"
+            ],
+            "default": "triggers"
+          },
+          "triggers_xml": {
+            "type": "string",
+            "minLength": 1
+          },
+          "triggers_file": {
+            "type": "string",
+            "minLength": 1
+          },
+          "trigger_strings": {
+            "type": "string",
+            "minLength": 1
+          },
+          "game_strings": {
+            "type": "string",
+            "minLength": 1
+          },
+          "marker": {
+            "type": "string"
+          },
+          "expect_text": {
+            "type": "array",
+            "maxItems": 100,
+            "items": {
+              "type": "string"
+            }
+          },
+          "compile": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "template"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "sc2_compile_all",
+      "operation": "compile_current",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "scope": {
+            "type": "string",
+            "minLength": 1
+          },
+          "context_label": {
+            "type": "string",
+            "minLength": 1
+          },
+          "locale": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "sc2_export_galaxy",
+      "operation": "export_galaxy",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "output": {
+            "type": "string",
+            "minLength": 1
+          },
+          "overwrite": {
+            "type": "boolean"
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "sc2_diagnostics",
+      "operation": "diagnostics",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "required": [],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "sc2_cutscene_open",
+      "operation": "cutscene_open",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "editor_path": {
+            "type": "string",
+            "description": "Owned startup: original x64 Editor EXE or installation directory. Defaults to SC2_EDITOR_PATH, registry and standard install discovery. Supported binary required; restart to change installation.",
+            "minLength": 1
+          },
+          "render_backend": {
+            "type": "string",
+            "enum": [
+              "auto",
+              "legacy",
+              "vulkan"
+            ],
+            "description": "Owned worker startup only: auto uses bundled pinned DXVK/Vulkan when present, otherwise system D3D9. Restart the owned worker to change backend."
+          },
+          "template": {
+            "type": "string",
+            "minLength": 1
+          },
+          "map": {
+            "type": "string",
+            "minLength": 1
+          },
+          "scene": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "sc2_cutscene_seek",
+      "operation": "cutscene_seek",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "camera": {
+            "type": "string",
+            "minLength": 1
+          },
+          "time_ms": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 600000
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "sc2_capture_frame",
+      "operation": "capture_frame",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "camera": {
+            "type": "string",
+            "minLength": 1
+          },
+          "time_ms": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 600000
+          },
+          "output": {
+            "type": "string",
+            "minLength": 1
+          },
+          "overwrite": {
+            "type": "boolean"
+          },
+          "allow_empty": {
+            "type": "boolean"
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "sc2_capture_terrain",
+      "operation": "capture_terrain",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "editor_path": {
+            "type": "string",
+            "description": "Owned startup: original x64 Editor EXE or installation directory. Defaults to SC2_EDITOR_PATH, registry and standard install discovery. Supported binary required; restart to change installation.",
+            "minLength": 1
+          },
+          "render_backend": {
+            "type": "string",
+            "enum": [
+              "auto",
+              "legacy",
+              "vulkan"
+            ],
+            "description": "Owned worker startup only: auto uses bundled pinned DXVK/Vulkan when present, otherwise system D3D9. Restart the owned worker to change backend."
+          },
+          "template": {
+            "type": "string",
+            "minLength": 1
+          },
+          "map": {
+            "type": "string",
+            "minLength": 1
+          },
+          "map_camera_id": {
+            "type": "string",
+            "description": "Exact saved ObjectCamera ID from sc2_list_map_cameras; applies only to Terrain capture",
+            "minLength": 1
+          },
+          "terrain_camera": {
+            "type": "object",
+            "properties": {
+              "x": {
+                "type": "number"
+              },
+              "y": {
+                "type": "number"
+              },
+              "z": {
+                "type": "number"
+              },
+              "pitch": {
+                "type": "number"
+              },
+              "yaw": {
+                "type": "number"
+              },
+              "roll": {
+                "type": "number"
+              },
+              "distance": {
+                "type": "number"
+              },
+              "fov": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "x",
+              "y",
+              "z",
+              "pitch",
+              "yaw",
+              "roll",
+              "distance",
+              "fov"
+            ],
+            "additionalProperties": false,
+            "description": "Custom native Terrain camera: target XYZ, pitch/yaw/roll in degrees, distance and FOV in degrees. Mutually exclusive with map_camera_id. Uses the original Camera Editor Set Game Camera and verifies native numeric readback."
+          },
+          "output": {
+            "type": "string",
+            "minLength": 1
+          },
+          "overwrite": {
+            "type": "boolean"
+          },
+          "allow_empty": {
+            "type": "boolean"
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "sc2_list_map_cameras",
+      "operation": "list_map_cameras",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "map": {
+            "type": "string",
+            "minLength": 1
+          },
+          "locale": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "sc2_export_map_image",
+      "operation": "export_map_image",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "editor_path": {
+            "type": "string",
+            "description": "Owned startup: original x64 Editor EXE or installation directory. Defaults to SC2_EDITOR_PATH, registry and standard install discovery. Supported binary required; restart to change installation.",
+            "minLength": 1
+          },
+          "render_backend": {
+            "type": "string",
+            "enum": [
+              "auto",
+              "legacy",
+              "vulkan"
+            ],
+            "description": "Owned worker startup only: auto uses bundled pinned DXVK/Vulkan when present, otherwise system D3D9. Restart the owned worker to change backend."
+          },
+          "template": {
+            "type": "string",
+            "minLength": 1
+          },
+          "map": {
+            "type": "string",
+            "minLength": 1
+          },
+          "size": {
+            "type": "integer",
+            "enum": [
+              512,
+              1024,
+              2048,
+              4096
+            ],
+            "default": 2048
+          },
+          "include_units": {
+            "type": "boolean",
+            "default": true
+          },
+          "include_doodads": {
+            "type": "boolean",
+            "default": true
+          },
+          "output": {
+            "type": "string",
+            "minLength": 1
+          },
+          "overwrite": {
+            "type": "boolean"
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "sc2_export_video",
+      "operation": "export_video",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "editor_path": {
+            "type": "string",
+            "description": "Owned startup: original x64 Editor EXE or installation directory. Defaults to SC2_EDITOR_PATH, registry and standard install discovery. Supported binary required; restart to change installation.",
+            "minLength": 1
+          },
+          "render_backend": {
+            "type": "string",
+            "enum": [
+              "auto",
+              "legacy",
+              "vulkan"
+            ],
+            "description": "Owned worker startup only: auto uses bundled pinned DXVK/Vulkan when present, otherwise system D3D9. Restart the owned worker to change backend."
+          },
+          "template": {
+            "type": "string",
+            "minLength": 1
+          },
+          "map": {
+            "type": "string",
+            "minLength": 1
+          },
+          "scene": {
+            "type": "string",
+            "minLength": 1
+          },
+          "camera": {
+            "type": "string",
+            "minLength": 1
+          },
+          "start_ms": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 600000
+          },
+          "end_ms": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 600000
+          },
+          "fps": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 60
+          },
+          "keep_frames": {
+            "type": "boolean"
+          },
+          "include_audio": {
+            "type": "boolean",
+            "default": true
+          },
+          "output": {
+            "type": "string",
+            "minLength": 1
+          },
+          "overwrite": {
+            "type": "boolean"
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "sc2_search_objects",
+      "operation": "search_objects",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "map": {
+            "type": "string",
+            "minLength": 1
+          },
+          "locale": {
+            "type": "string",
+            "minLength": 1
+          },
+          "query": {
+            "type": "string",
+            "maxLength": 256
+          },
+          "kinds": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "enum": [
+                "unit",
+                "doodad",
+                "point",
+                "camera",
+                "other"
+              ]
+            }
+          },
+          "owner": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 255
+          },
+          "bounds": {
+            "type": "object",
+            "properties": {
+              "left": {
+                "type": "number"
+              },
+              "bottom": {
+                "type": "number"
+              },
+              "right": {
+                "type": "number"
+              },
+              "top": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "left",
+              "bottom",
+              "right",
+              "top"
+            ],
+            "additionalProperties": false
+          },
+          "offset": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 500000
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 500,
+            "default": 100
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "sc2_capture_map_region",
+      "operation": "capture_map_region",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "editor_path": {
+            "type": "string",
+            "description": "Owned startup: original x64 Editor EXE or installation directory. Defaults to SC2_EDITOR_PATH, registry and standard install discovery. Supported binary required; restart to change installation.",
+            "minLength": 1
+          },
+          "render_backend": {
+            "type": "string",
+            "enum": [
+              "auto",
+              "legacy",
+              "vulkan"
+            ],
+            "description": "Owned worker startup only: auto uses bundled pinned DXVK/Vulkan when present, otherwise system D3D9. Restart the owned worker to change backend."
+          },
+          "template": {
+            "type": "string",
+            "minLength": 1
+          },
+          "map": {
+            "type": "string",
+            "minLength": 1
+          },
+          "bounds": {
+            "type": "object",
+            "properties": {
+              "left": {
+                "type": "number"
+              },
+              "bottom": {
+                "type": "number"
+              },
+              "right": {
+                "type": "number"
+              },
+              "top": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "left",
+              "bottom",
+              "right",
+              "top"
+            ],
+            "additionalProperties": false
+          },
+          "size": {
+            "type": "integer",
+            "enum": [
+              512,
+              1024,
+              2048,
+              4096
+            ],
+            "default": 2048
+          },
+          "include_units": {
+            "type": "boolean",
+            "default": true
+          },
+          "include_doodads": {
+            "type": "boolean",
+            "default": true
+          },
+          "output": {
+            "type": "string",
+            "minLength": 1
+          },
+          "overwrite": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "bounds"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "sc2_validate_document",
+      "operation": "validate_document",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "editor_path": {
+            "type": "string",
+            "description": "Owned startup: original x64 Editor EXE or installation directory. Defaults to SC2_EDITOR_PATH, registry and standard install discovery. Supported binary required; restart to change installation.",
+            "minLength": 1
+          },
+          "render_backend": {
+            "type": "string",
+            "enum": [
+              "auto",
+              "legacy",
+              "vulkan"
+            ],
+            "description": "Owned worker startup only: auto uses bundled pinned DXVK/Vulkan when present, otherwise system D3D9. Restart the owned worker to change backend."
+          },
+          "template": {
+            "type": "string",
+            "minLength": 1
+          },
+          "map": {
+            "type": "string",
+            "minLength": 1
+          },
+          "baseline_template": {
+            "type": "string",
+            "description": "Optional healthy startup archive for diagnosing a failing map in a fresh worker",
+            "minLength": 1
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "sc2_save_reopen",
+      "operation": "save_reopen_document",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "editor_path": {
+            "type": "string",
+            "description": "Owned startup: original x64 Editor EXE or installation directory. Defaults to SC2_EDITOR_PATH, registry and standard install discovery. Supported binary required; restart to change installation.",
+            "minLength": 1
+          },
+          "render_backend": {
+            "type": "string",
+            "enum": [
+              "auto",
+              "legacy",
+              "vulkan"
+            ],
+            "description": "Owned worker startup only: auto uses bundled pinned DXVK/Vulkan when present, otherwise system D3D9. Restart the owned worker to change backend."
+          },
+          "template": {
+            "type": "string",
+            "minLength": 1
+          },
+          "map": {
+            "type": "string",
+            "minLength": 1
+          },
+          "baseline_template": {
+            "type": "string",
+            "description": "Optional healthy startup archive for diagnosing a failing map in a fresh worker",
+            "minLength": 1
+          },
+          "include_diffs": {
+            "type": "boolean",
+            "default": false,
+            "description": "Include bounded textual component diffs in the downloadable comparison report"
+          },
+          "output": {
+            "type": "string",
+            "minLength": 1
+          },
+          "overwrite": {
+            "type": "boolean"
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      }
+    }
+  ]
+}

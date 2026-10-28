@@ -11,7 +11,7 @@ import {NativeStdioClient,type NativeClient} from '../integrations/native/transp
 import {nativeArgumentSchemas,parseNativeArguments} from '../integrations/native/contracts.js';
 import {nativeQueuedMethods,nativeJobOperations,nativeExtendedSummary} from '../integrations/native/background.js';
 import {nativeRelease} from '../integrations/native/release.js';
-const upstream=JSON.parse(readFileSync(path.resolve('src/tests/fixtures/native-editor-v1-contract.json'),'utf8'));
+const upstream=JSON.parse(readFileSync(path.resolve('src/tests/fixtures/native-editor-v1.1-contract.json'),'utf8'));
 const id='a'.repeat(32);
 async function finished(bridge:NativeEditorBridge,id:string){for(let i=0;i<500;i++){const j=bridge.job(id);if(['completed','failed'].includes(j.state))return j;await new Promise(r=>setTimeout(r,5));}throw Error('Fixture timeout');}
 async function fixture(t:test.TestContext,call:NativeClient['call']){
@@ -19,12 +19,12 @@ async function fixture(t:test.TestContext,call:NativeClient['call']){
  const client:NativeClient={start:async()=>{},close:async()=>{},info:()=>({connected:true}),describe:()=>upstream.tools,call:async(name,args)=>{calls.push({name,args});return call(name,args);}};
  const bridge=new NativeEditorBridge(new Workspace(root),{client,env:{}});t.after(()=>bridge.close());return{root,bridge,calls};
 }
-test('release1.0 pin uses the exact published archive and actual BUILD metadata layout',async()=>{
+test('release1.1 RC pin uses the exact published archive and actual BUILD metadata layout',async()=>{
  const pin=JSON.parse(readFileSync(path.resolve('native-toolkit-release.json'),'utf8'));
- assert.equal(pin.version,'1.0.0');assert.equal(pin.nativeProtocol,15);assert.equal(pin.archiveSha256,'dbf9e727aa8d96ec7e53a499d5adb73fe8127ad8896ea69182c6e86a20e5be92');assert.equal(pin.buildMetadata,'BUILD.json');
+ assert.equal(pin.version,'1.1.0-rc.1');assert.equal(pin.nativeProtocol,16);assert.equal(pin.archiveSha256,'5e93bb7c1d92e4b69823478c7ccc1afc2470ec2cbf9ad98bafcafeecbbd5c055');assert.equal(pin.buildMetadata,'BUILD.json');
  const {nativeReleaseAssets,nativeBuildMetadata}=await import(pathToFileURL(path.resolve('scripts/native-release-assets.mjs')).href);
- assert.equal(nativeReleaseAssets(pin).name,'SC2EditorToolkit-v1.0.0-win64.zip');assert.equal(nativeBuildMetadata(pin,{version:'1.0.0',nativeProtocol:15,sourceCommit:'942c12977e44d3099850ade966c28c292441b0e2'}).sourceCommit,'942c12977e44d3099850ade966c28c292441b0e2');
- assert.throws(()=>nativeBuildMetadata(pin,{version:'1.0.0',nativeProtocol:14}));
+ assert.equal(nativeReleaseAssets(pin).name,'SC2EditorToolkit-v1.1.0-rc.1-win64.zip');assert.equal(nativeBuildMetadata(pin,{version:'1.1.0-rc.1',nativeProtocol:16,sourceCommit:'d06739cb75a3e89bbdcaf072fcccaade01e25850'}).sourceCommit,'d06739cb75a3e89bbdcaf072fcccaade01e25850');
+ assert.throws(()=>nativeBuildMetadata(pin,{version:'1.0.0',nativeProtocol:15}));
 });
 test('all31 public v1 method fields and requirements match independent tagged upstream schemas',()=>{
  assert.equal(upstream.tools.length,31);assert.deepEqual(new Set(nativeOperations),new Set(upstream.tools.map((t:any)=>t.name)));assert.equal(nativeJobOperations.length,26);
@@ -63,6 +63,36 @@ test('doctor and stored audit queries require no owned document and preserve ful
 });
 test('bounded audit pages do not skip native rows when the inline page is shorter',()=>{
  for(const key of ['items','changes']){const summary=nativeExtendedSummary({offset:40,limit:20,nextOffset:60,totalMatches:100,[key]:Array.from({length:20},(_,i)=>({id:40+i,payloadOmitted:i===0}))});assert.equal(summary.nextOffset,48);assert.equal(summary.nativeNextOffset,60);assert.equal(summary.inlineReturned,8);assert.equal(summary.nativeReturned,20);assert.equal(summary.responseTruncated,true);}
+});
+
+test('v1.1 camera and effective-field arguments validate direct and nested calls without silently losing data',()=>{
+ const pose={x:60,y:64,z:8.5,pitch:56,yaw:180,roll:0,distance:34,fov:27.8};
+ assert.deepEqual(parseNativeArguments('sc2_capture_terrain',{terrain_camera:pose}),{terrain_camera:pose});
+ assert.deepEqual(parseNativeArguments('sc2_submit_job',{operation:'capture_terrain',arguments:{terrain_camera:pose}}).arguments,{terrain_camera:pose});
+ for(const [key,value] of [['distance',0],['fov',180],['pitch',91],['yaw',361],['z',Infinity],['x','60']] as const)assert.throws(()=>parseNativeArguments('sc2_capture_terrain',{terrain_camera:{...pose,[key]:value}}));
+ assert.throws(()=>parseNativeArguments('sc2_capture_terrain',{terrain_camera:{...pose,unknown:1}}));
+ assert.throws(()=>parseNativeArguments('sc2_submit_job',{operation:'capture_terrain',arguments:{map_camera_id:'1',terrain_camera:pose}}),/SELECTOR_CONFLICT/);
+ for(const method of ['sc2_query_audit','sc2_compare_audits'] as const){
+  const ids=method==='sc2_query_audit'?{report_id:id}:{before_report_id:id,after_report_id:id};
+  const args={...ids,section:'fields',catalog:'Unit',object_id:'Marine',field:'LifeMax',offset:0,limit:2};
+  assert.deepEqual(parseNativeArguments(method,args),args);
+  assert.throws(()=>parseNativeArguments(method,{...args,section:'objects'}),/REQUIRES_FIELDS/);
+  assert.throws(()=>parseNativeArguments(method,{...args,field:'x'.repeat(1025)}));
+ }
+});
+
+test('effective-field query and comparison preserve exact value encodings and incomplete coverage',async t=>{
+ const coverage={complete:false,unsupportedValues:1};
+ const row={catalog:'Unit',objectId:'Marine',path:'LifeMax',value:{serialization:'45.000000',primitiveBits:'42340000'}};
+ const f=await fixture(t,async(name)=>({structuredContent:{outcome:'completed',status:'AUDIT_PAGE_READ',section:'fields',editorRequired:false,reportId:id,fieldValueCoverage:coverage,fieldValueEncodingVersion:1,fieldValuesRecorded:1,comparisonCoverageComplete:false,offset:0,limit:2,totalMatches:1,nextOffset:null,...name==='sc2_compare_audits'?{changes:[{before:row,after:{...row,value:{serialization:'73.000000',primitiveBits:'42920000'}}}]}:{items:[row]}}}));
+ for(const method of ['sc2_query_audit','sc2_compare_audits'] as const){
+  const args={...method==='sc2_query_audit'?{report_id:id}:{before_report_id:id,after_report_id:id},section:'fields',field:'LifeMax',limit:2};
+  const job=await finished(f.bridge,(await f.bridge.call(method,args)).id);assert.equal(job.state,'completed');
+  const summary=job.result!.response.extended;assert.deepEqual(summary.fieldValueCoverage,coverage);assert.equal(summary.fieldValueEncodingVersion,1);assert.equal(summary.comparisonCoverageComplete,false);assert.equal(summary.fieldValuesRecorded,1);
+  assert.deepEqual(f.calls.at(-1)!.args,args);
+  assert.match(JSON.stringify(summary),/42340000/);
+ }
+ assert.equal(nativeExtendedSummary({fieldValueCoverage:null,fieldValueEncodingVersion:null}).fieldValueCoverage,null);
 });
 test('new document-free operations remain incomplete when v1 result envelope is missing or unknown',async t=>{
  let outcome:unknown=undefined;const f=await fixture(t,async()=>({structuredContent:{status:'OK',...outcome===undefined?{}:{outcome}}}));

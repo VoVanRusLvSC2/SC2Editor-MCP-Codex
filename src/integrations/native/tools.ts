@@ -2,6 +2,7 @@ import type {McpServer} from '@modelcontextprotocol/server';
 import * as z from 'zod/v4';
 import {nativeOperations,type NativeEditorBridge} from './bridge.js';
 import {nativeRelease} from './release.js';
+import {terrainCameraSchema} from './contracts.js';
 const deadlineSeconds=z.number().int().min(30).max(7200).default(1200);
 const renderBackend=z.enum(['auto','legacy','vulkan']).default('auto');
 const archive=z.string().min(1).describe('Saved SC2Map/SC2Mod inside the workspace. Export components through map.export first.');
@@ -19,12 +20,13 @@ export function registerNativeEditorTools(server:McpServer,bridge:NativeEditorBr
       includeDiffs:z.boolean().default(false),renderBackend,deadlineSeconds}).strict()},a=>run(()=>bridge.check(a)));
   server.registerTool('editor.cameras',{description:'Queue a read-only list of saved map camera IDs, localized names, targets and original parameters, without starting an Editor. Bounded pagination; full evidence stays local. Does not evaluate trigger-created cameras or cutscenes. Poll editor.job.',
     inputSchema:z.object({archive,locale:z.string().regex(/^[a-z]{2}[A-Z]{2}$/).optional(),offset:z.number().int().min(0).max(500000).default(0),limit:z.number().int().min(1).max(100).default(40)}).strict()},a=>run(()=>bridge.cameras(a)));
-  server.registerTool('editor.capture',{description:'Queue a native Terrain PNG on a private map. viewport optionally selects cameraId with original camera readback; map exports the whole map at size horizontal pixels and native aspect; region crops that export. includeUnits/includeDoodads independently filter map/region models, default true; inspect matching native objectFilters readback. Saved placements do not execute triggers. Review water separately. ModKit map.preview stays the fast default. Poll editor.job.',
+  server.registerTool('editor.capture',{description:'Queue a native Terrain PNG on a private map. viewport accepts either saved cameraId or explicit terrainCamera target XYZ, pitch/yaw/roll, distance and FOV with fresh original readback. Angles/FOV are degrees; viewport resolution is native. map exports the whole map; region crops that export. includeUnits/includeDoodads filter map/region models independently; inspect native readback. Saved placements do not execute triggers. Poll editor.job.',
     inputSchema:z.object({archive,mode:z.enum(['viewport','map','region']).default('viewport'),
       cameraId:z.string().min(1).max(256).optional(),
+      terrainCamera:terrainCameraSchema.optional(),
       includeUnits:z.boolean().optional(),includeDoodads:z.boolean().optional(),
       bounds:z.object({left:z.number().finite(),bottom:z.number().finite(),right:z.number().finite(),top:z.number().finite()}).strict().refine(v=>v.left<v.right&&v.bottom<v.top,'Bounds must have positive area').optional(),
-      size:z.union([z.literal(512),z.literal(1024),z.literal(2048),z.literal(4096)]).default(2048),renderBackend,deadlineSeconds}).strict().refine(a=>!a.cameraId||a.mode==='viewport','cameraId requires viewport mode').refine(a=>a.mode!=='viewport'||a.includeUnits===undefined&&a.includeDoodads===undefined,'Object filters require map or region mode')},a=>run(()=>bridge.capture(a)));
+      size:z.union([z.literal(512),z.literal(1024),z.literal(2048),z.literal(4096)]).default(2048),renderBackend,deadlineSeconds}).strict().refine(a=>!a.cameraId&&!a.terrainCamera||a.mode==='viewport','Camera selectors require viewport mode').refine(a=>!a.cameraId||!a.terrainCamera,'Supply cameraId or terrainCamera, not both').refine(a=>a.mode!=='viewport'||a.includeUnits===undefined&&a.includeDoodads===undefined,'Object filters require map or region mode')},a=>run(()=>bridge.capture(a)));
   server.registerTool('editor.diagnostics',{description:'Queue current original Messages/Console diagnostics from the retained owned Editor. Does not start a map; an unopened session fails explicitly. Old/new messages and compiler diagnostics are distinct. Poll editor.job.',
     inputSchema:z.object({}).strict()},()=>run(()=>bridge.diagnostics()));
   server.registerTool('editor.job',{description:'Read compact native-job progress/result and evidence paths. Optional details pages the complete owned report through an RFC 6901 JSON pointer; large values remain explicit previews. No filesystem/shell access needed for deep Toolkit metadata. deadlineExceeded is advisory; active handlers are never force-killed. includeImage returns a bounded native PNG.',

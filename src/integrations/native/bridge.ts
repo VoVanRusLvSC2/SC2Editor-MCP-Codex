@@ -1,4 +1,4 @@
-import {parseNativeArguments,nativeArgumentSchemas} from './contracts.js';
+import {parseNativeArguments,nativeArgumentSchemas,terrainCameraSchema,type NativeTerrainCamera} from './contracts.js';
 import {nativeOutcome} from './outcome.js';
 import {existsSync,promises as fs} from 'node:fs';
 import path from 'node:path';
@@ -72,8 +72,8 @@ export class NativeEditorBridge {
   }
   configuration(){return {available:!!this.client||existsSync(path.join(this.home,'sc2-mcp-runtime.json'))||!!this.env.SC2_NATIVE_MCP_PATH,
     expectedVersion:nativeRelease.version,nativeProtocol:nativeRelease.nativeProtocol,runtimeHome:this.home,transport:'retained stdio MCP',launchPolicy:'Explicit editor.check/editor.capture may start an owned hidden Editor on private map copies',
-    stability:'Pinned stable1.0 API; native startup, compilation and rendering still require local evidence',updatePolicy:'Pinned complete release; setup does not auto-upgrade or start an Editor',workerDirectory:this.workerDirectory(),storageLayout:'compact-owned-v1',artifactStorage:this.storage.external?'configured_external':'workspace_default',pathBudget:nativePathBudget(this.workerDirectory()),
-    setup:'npm run native:setup',gameplayValidation:false,fastMapPreview:'map.preview (ModKit)',terrainCameraControl:'Saved map cameras only; native readback required'};}
+    stability:'Pinned1.1 release candidate with API contract1; native startup, compilation and rendering require local evidence',updatePolicy:'Pinned complete release; setup does not auto-upgrade or start an Editor',workerDirectory:this.workerDirectory(),storageLayout:'compact-owned-v1',artifactStorage:this.storage.external?'configured_external':'workspace_default',pathBudget:nativePathBudget(this.workerDirectory()),
+    setup:'npm run native:setup',gameplayValidation:false,fastMapPreview:'map.preview (ModKit)',terrainCameraControl:'Saved cameras or explicit target XYZ/angles/distance/FOV; fresh native readback required'};}
   private async connect(){
     return this.connecting??=this.connectImpl().catch(error=>{this.connecting=undefined;throw error;});
   }
@@ -307,7 +307,7 @@ export class NativeEditorBridge {
       'nativeGenerationVerified','nativeCompilePassed','sourceSha256','sourceUnchanged','componentComparison','desktopObservation','evidenceDirectory','artifact','savedArchive','componentDiffArtifact',
       'requestedTerrainFrameVerified','wholeMapVerified','objectFiltersVerified','coordinateMappingValidated','preview','width','height',
       'failureKind','failureStage','failureEvidence','failureNative','ownedWorkerReset','automaticRetry',
-      'mapCamera','cameraReadback','nativeCameraVerified','nativeLoad','controllerExitCode','failure','handlerCompletionKnown','renderBackend','transportJob'];
+      'mapCamera','terrainCamera','cameraReadback','nativeCameraVerified','nativeLoad','controllerExitCode','failure','handlerCompletionKnown','renderBackend','transportJob'];
     const result=Object.fromEntries(selected.filter(k=>k in value).map(k=>[k,value[k]]));
     if(value.errorInfo&&typeof value.errorInfo==='object')result.errorInfo={code:String(value.errorInfo.code??'UNKNOWN').slice(0,128),message:String(value.errorInfo.message??'').slice(0,2000),nextStep:String(value.errorInfo.nextStep??'').slice(0,1000),automaticRetry:typeof value.errorInfo.automaticRetry==='boolean'?value.errorInfo.automaticRetry:null,...value.errorInfo.evidence?{evidence:nativeReportPage(value,'/errorInfo/evidence',0,4)}:{}};
     const diag=value.diagnostics??value.operationDiagnostics??value.loadDiagnostics;
@@ -389,10 +389,12 @@ export class NativeEditorBridge {
       await fs.writeFile(job.report,JSON.stringify(result,null,2)+'\n');return result;
     });
   }
-  async capture(args:{archive:string;mode:'viewport'|'map'|'region';cameraId?:string;bounds?:{left:number;bottom:number;right:number;top:number};includeUnits?:boolean;includeDoodads?:boolean;size:number;deadlineSeconds:number;renderBackend?:'auto'|'legacy'|'vulkan'}){
+  async capture(args:{archive:string;mode:'viewport'|'map'|'region';cameraId?:string;terrainCamera?:NativeTerrainCamera;bounds?:{left:number;bottom:number;right:number;top:number};includeUnits?:boolean;includeDoodads?:boolean;size:number;deadlineSeconds:number;renderBackend?:'auto'|'legacy'|'vulkan'}){
     const source=await this.source(args.archive);
     if(args.mode==='region'&&!args.bounds)throw Error('NATIVE_REGION_BOUNDS_REQUIRED');
-    if(args.cameraId&&args.mode!=='viewport')throw Error('NATIVE_CAMERA_REQUIRES_VIEWPORT');
+    if((args.cameraId||args.terrainCamera)&&args.mode!=='viewport')throw Error('NATIVE_CAMERA_REQUIRES_VIEWPORT');
+    if(args.cameraId&&args.terrainCamera)throw Error('NATIVE_CAMERA_SELECTOR_CONFLICT');
+    if(args.terrainCamera)args={...args,terrainCamera:terrainCameraSchema.parse(args.terrainCamera)};
     if(args.mode==='viewport'&&(args.includeUnits!==undefined||args.includeDoodads!==undefined))throw Error('NATIVE_FILTERS_REQUIRE_MAP_EXPORT');
     if(args.cameraId&&!/\.sc2map$/i.test(source.absolute))throw Error('NATIVE_MAP_REQUIRED');
     return this.enqueue('capture',args.deadlineSeconds,async job=>{
@@ -403,7 +405,7 @@ export class NativeEditorBridge {
       const tool=args.mode==='viewport'?'sc2_capture_terrain':args.mode==='map'?'sc2_export_map_image':'sc2_capture_map_region';
       const filters={include_units:args.includeUnits??true,include_doodads:args.includeDoodads??true};
       const reusedLoadedMap=this.loadedCaptureSource?.absolute===source.absolute&&this.loadedCaptureSource.sha256===source.sha256&&this.ownedDocument?.sha256===source.sha256;
-      const value=await this.invoke(tool,{...(reusedLoadedMap?{}:{map:copy}),render_backend:args.renderBackend??'auto',...(args.cameraId?{map_camera_id:args.cameraId}:{}),...(args.mode==='viewport'?{}:{size:args.size,...filters}),...(args.mode==='region'?{bounds:args.bounds}:{})},directory);
+      const value=await this.invoke(tool,{...(reusedLoadedMap?{}:{map:copy}),render_backend:args.renderBackend??'auto',...(args.cameraId?{map_camera_id:args.cameraId}:{}),...(args.terrainCamera?{terrain_camera:args.terrainCamera}:{}),...(args.mode==='viewport'?{}:{size:args.size,...filters}),...(args.mode==='region'?{bounds:args.bounds}:{})},directory);
       const readback=value.native?.terrainExport;
       const objectFilters=args.mode==='viewport'?undefined:{requested:{units:filters.include_units,doodads:filters.include_doodads},
         actual:{units:nativeFlag(readback?.actualUnits),doodads:nativeFlag(readback?.actualDoodads)},

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "recordedAt": "2026-10-26T18:05:14.504Z",
+  "recordedAt": "2026-10-28T10:37:57.736Z",
   "scope": "Inventory of retained records and explicit roadmap coverage. This does not supersede native observations or refresh historical source fingerprints.",
   "records": [
     {
@@ -524,6 +524,12 @@
       "file": "docs/verification/native-textured-minimap-2026-10-26.json",
       "role": "scoped",
       "sha256": "886b00ef15338a06f3fe866e809d8915b525417e35ce81f5cb04ebc78c483c4d"
+    },
+    {
+      "id": "native_editor_110_scoped",
+      "file": "docs/verification/native-editor-110-scoped-2026-10-28.json",
+      "role": "scoped",
+      "sha256": "f7460d074b4eafb0adf0addbcc47d2a45316f4402ad0bd13927d28d0574f5df6"
     }
   ],
   "coverage": [

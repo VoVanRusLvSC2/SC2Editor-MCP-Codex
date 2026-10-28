@@ -23,11 +23,11 @@ preservation fix remain unconfirmed; see the
 ## Setup and lifecycle
 
 Run `npm run native:setup` on Windows. This downloads the pinned
-`v1.0.0` package (native protocol 15), checks its published SHA-256 and preserves all notices in
+`v1.1.0-rc.1` package (native protocol 16), checks its published SHA-256 and preserves all notices in
 the ignored `.native-toolkit-runtime/` directory. The executable hash is recorded
 and checked before use. Setup does not launch the Editor. Windows `tar.exe` is
 used for extraction. An explicit `SC2_NATIVE_MCP_PATH` can select another local
-1.0.0 MCP executable; that override is version-checked, but has no package pin.
+1.1.0-rc.1 MCP executable; that override is version-checked, but has no package pin.
 Older frontends are rejected instead of mixing incompatible native protocols.
 
 `SC2_NATIVE_TOOLKIT_HOME` selects an absolute external directory for the complete
@@ -417,7 +417,7 @@ whole-map pixels and saved-camera framing are assessed separately.
 
 ## Version 1 contracts and immutable audit inspection
 
-The complete pinned 1.0.0 release uses native protocol15 and provides31 MCP
+The complete pinned 1.1.0-rc.1 release uses native protocol16 and provides31 MCP
 operations. Its BUILD.json records version, native protocol, source commit and
 embedded helper hashes; the installer verifies the exact ZIP and executable.
 The client validates each public tool's input fields, types and nested queued
@@ -449,8 +449,9 @@ editor.job details. Existing private-input, source identity, dirty-state,
 owned-output and shutdown guards apply to all document operations.
 
 Incoming uses cover typed native Data references; they exclude opaque Actor
-strings and trigger/computed/runtime references. Comparison covers recorded
-object/reference/resource observations, not every scalar effective value.
+strings and trigger/computed/runtime references. Object/finding comparisons cover
+recorded object/reference/resource observations. Effective-value comparisons
+require the separate fields section and a new field-enabled audit (see below).
 Project manifests cover declared local archives and installed build identity;
 native physical cache paths and every CASC resource byte remain unverified.
 The [SDK 1.0 scoped check](verification/native-editor-100-scoped-2026-10-25.json)
@@ -470,3 +471,50 @@ preserved. Both underlying audits still have incomplete reference/resource
 coverage and null validationPassed. The small Core corpus does not repair the
 separate full-map timeouts, original-source return or resource171 finding.
 Art and current whole-package readiness remain unaccepted.
+
+## Version 1.1 explicit camera and effective fields
+
+The pinned version is the published **1.1.0-rc.1 release candidate**, not a final
+1.1.0 release. Its API contract remains version1 and retains31 operation names.
+The changed inputs are `sc2_capture_terrain.terrain_camera` and the fields
+section/filter in `sc2_query_audit` and `sc2_compare_audits`. The checked-in
+`native-editor-v1.1-contract.json` fixture records schemas obtained from the
+complete installed package; the older v1 fixture remains historical evidence.
+
+For a real Terrain close-up, use `editor.capture` with `mode="viewport"` and
+either a saved `cameraId` or an explicit `terrainCamera`, never both:
+
+```json
+{"archive":"Example.SC2Map","mode":"viewport","terrainCamera":{"x":60,"y":64,"z":8.5,"pitch":56,"yaw":180,"roll":0,"distance":34,"fov":27.8}}
+```
+
+All eight camera numbers are required. XYZ are world coordinates; angles and FOV
+are degrees. This controls the original Camera Editor and retains fresh Get Game
+Camera readback, tolerances and checked fields under `capture.terrainCamera`.
+It does not modify the source archive or execute gameplay triggers. Inspect the
+resulting image: matching numbers alone do not establish useful framing. The
+viewport keeps the native resolution; `size` is for map/region export. A region
+crop still does not move the camera.
+
+To inspect a recorded value, call `sc2_query_audit` with an immutable report_id,
+`section="fields"`, optional catalog/object_id, and an optional exact `field`
+path. The same filters apply to `sc2_compare_audits` with two report IDs. A field
+filter without the fields section rejects. Offset/limit and returned continuation
+metadata remain bounded; original serialization and primitive-bit evidence stay
+in the recorded rows. Preserve `fieldValueCoverage`, `fieldValueEncodingVersion`
+and `comparisonCoverageComplete`: absent or unsupported values are not proof of
+equality. Old reference-only reports do not acquire values after upgrading.
+
+A new full audit may need many gigabytes and a long native deadline. The Toolkit
+requires at least12GiB free before a field-enabled audit. Reuse retained indices
+for queries instead of repeating an audit for every object. Default saved Data
+variant coverage excludes runtime player state. Original main Actor behavior,
+model/animation/sound playback and gameplay still need their respective checks.
+
+The [1.1 scoped integration check](verification/native-editor-110-scoped-2026-10-28.json)
+records the exact release ZIP,31 actual schemas,85 adapter tests, two inspected
+native camera frames, matching eight-parameter readbacks, unchanged source,
+original Messages/Console and graceful owned closure. Its actual fields query
+uses an unknown report and correctly returns NOT_FOUND. Positive new field-value
+queries/comparisons remain untested here; no new full audit or gameplay claim is
+derived from the adapter fixtures.

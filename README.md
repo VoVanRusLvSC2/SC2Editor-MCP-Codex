@@ -1,8 +1,9 @@
 # SC2EditorToolkit
 
 **Verified scope:** supported MCP authoring workflows and original Editor checks
-on recorded fixtures. The pinned Toolkit 1.0.0/protocol15 integration has scoped
-native compilation, Data, save/reopen and original Editor rendering evidence.
+on recorded fixtures. The optional Toolkit integration is pinned to
+1.1.0-rc.1/protocol16. Native compilation, Data, save/reopen and original Editor
+rendering evidence remains versioned by the actual tested runtime.
 Compilation, save/reopen and exact saved-artifact gameplay have their own dated
 acceptance records; the complete quality roadmap remains open. See the
 [acceptance matrix and reproducible checks](docs/VERIFICATION.md) for evidence and
@@ -20,7 +21,7 @@ and three scoped [project skills](.agents/skills/README.md). These are runtime a
 authoring inputs, not optional local reports. Verify them with
 `npm run catalog:verify` and `npm run docs:check-language`.
 
-[Native Editor checks](docs/NATIVE_EDITOR.md) use the optional pinned Toolkit 1.0.0
+[Native Editor checks](docs/NATIVE_EDITOR.md) use the optional pinned Toolkit 1.1.0-rc.1
 backend; `map.preview` remains the fast ModKit preview. Native compilation,
 save/reopen, rendered appearance and gameplay have distinct verification scopes.
 
