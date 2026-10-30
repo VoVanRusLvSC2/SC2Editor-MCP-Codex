@@ -33,11 +33,37 @@ export function decodeUtf8(bytes: Buffer, file: string): string {
   if (!Buffer.from(text).equals(bytes)) throw new Error(`UNSUPPORTED_TEXT_ENCODING: ${file}; binary/non-UTF8 bytes cannot be edited through XML tools`);
   return text;
 }
-export async function assertSnapshots(resolve: (file: string) => string, originals: ReadonlyMap<string, FileSnapshot>): Promise<void> {
-  for (const [file, original] of originals) {
-    const disk = await readSnapshot(resolve(file));
-    if (disk.exists !== original.exists || !disk.bytes.equals(original.bytes)) throw new Error(`STALE_FILE_TRANSACTION: ${file}`);
+/** Bounded independent reads; preserve the first mismatch/error in source order.
+ * Drain every started read before returning, including failed comparisons.
+ */
+export async function changedSnapshot(
+  resolve: (file: string) => string,
+  originals: ReadonlyMap<string, FileSnapshot>,
+): Promise<string | undefined> {
+  const entries = [...originals];
+  for (let offset = 0; offset < entries.length; offset += 4) {
+    const chunk = entries.slice(offset, offset + 4);
+    const results = await Promise.allSettled(
+      chunk.map(async ([file, original]) => {
+        const disk = await readSnapshot(resolve(file));
+        return disk.exists !== original.exists || !disk.bytes.equals(original.bytes);
+      }),
+    );
+    for (let index = 0; index < results.length; index++) {
+      const result = results[index];
+      if (result.status === "rejected") throw result.reason;
+      if (result.value) return chunk[index][0];
+    }
   }
+  return undefined;
+}
+
+export async function assertSnapshots(
+  resolve: (file: string) => string,
+  originals: ReadonlyMap<string, FileSnapshot>,
+): Promise<void> {
+  const changed = await changedSnapshot(resolve, originals);
+  if (changed !== undefined) throw new Error(`STALE_FILE_TRANSACTION: ${changed}`);
 }
 
 /** Per-file atomic rename with compensation on handled failures; not crash-wide atomicity. */

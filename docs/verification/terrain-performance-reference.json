@@ -1,0 +1,414 @@
+{
+  "scope": "Full-grid implementation captured from the live dirty-tree baseline before the bounded brush optimization; exact output, diagnostic/count receipt and touch order references.",
+  "baselineOperationSourceSha256": "6339857ce98f0300a5d9f774532f19b005f8665efa5d21334e34a8e4c526d4d0",
+  "cases": [
+    {
+      "id": "nydus",
+      "operations": [
+        {
+          "op": "height.noise",
+          "area": {
+            "type": "rectangle",
+            "minX": 2,
+            "minY": 2,
+            "maxX": 13,
+            "maxY": 13
+          },
+          "amplitude": 0.2,
+          "wavelength": 2,
+          "seed": 42
+        },
+        {
+          "op": "height.smooth",
+          "area": {
+            "type": "rectangle",
+            "minX": 2,
+            "minY": 2,
+            "maxX": 13,
+            "maxY": 13
+          },
+          "radius": 3,
+          "iterations": 4,
+          "method": "gaussian",
+          "edgeBlend": 1,
+          "protectedAreas": [
+            {
+              "type": "circle",
+              "center": {
+                "x": 7,
+                "y": 7
+              },
+              "radius": 1.5
+            }
+          ]
+        },
+        {
+          "op": "height.smooth",
+          "area": {
+            "type": "rectangle",
+            "minX": 2,
+            "minY": 2,
+            "maxX": 13,
+            "maxY": 13
+          },
+          "radius": 3,
+          "iterations": 4,
+          "method": "edge_preserving",
+          "edgeBlend": 1,
+          "protectedAreas": [
+            {
+              "type": "circle",
+              "center": {
+                "x": 7,
+                "y": 7
+              },
+              "radius": 1.5
+            }
+          ]
+        },
+        {
+          "op": "height.flatten",
+          "area": {
+            "type": "circle",
+            "center": {
+              "x": 7,
+              "y": 7
+            },
+            "radius": 2
+          },
+          "height": "currentMedian",
+          "strength": 0.5
+        },
+        {
+          "op": "height.raise",
+          "area": {
+            "type": "rectangle",
+            "minX": 2.2,
+            "minY": 2.2,
+            "maxX": 2.4,
+            "maxY": 2.4
+          },
+          "amount": 0.2
+        }
+      ],
+      "componentManifestSha256": "ed416567e7bbb4174d377dd493834ee4b612356872c0425bd29b2948532da56f",
+      "result": {
+        "issues": [
+          {
+            "severity": "warning",
+            "code": "SYNC_DELTA_REFERENCE_SUPPORTED",
+            "message": "Sync heights retain native residuals and receive the quantized height delta. Editor save/reopen and runtime movement have not been executed."
+          }
+        ],
+        "changedVertices": 144,
+        "changedTexturePixels": 0
+      },
+      "visitsSha256": "8f68e6aa1c2a9b46541ca06e0a47c7c4583cdbefc8b59ff29653ea021e50ed5d",
+      "visits": 885
+    },
+    {
+      "id": "city",
+      "operations": [
+        {
+          "op": "height.noise",
+          "area": {
+            "type": "rectangle",
+            "minX": 2,
+            "minY": 2,
+            "maxX": 13,
+            "maxY": 13
+          },
+          "amplitude": 0.2,
+          "wavelength": 2,
+          "seed": 42
+        },
+        {
+          "op": "height.smooth",
+          "area": {
+            "type": "rectangle",
+            "minX": 2,
+            "minY": 2,
+            "maxX": 13,
+            "maxY": 13
+          },
+          "radius": 3,
+          "iterations": 4,
+          "method": "gaussian",
+          "edgeBlend": 1,
+          "protectedAreas": [
+            {
+              "type": "circle",
+              "center": {
+                "x": 7,
+                "y": 7
+              },
+              "radius": 1.5
+            }
+          ]
+        },
+        {
+          "op": "height.smooth",
+          "area": {
+            "type": "rectangle",
+            "minX": 2,
+            "minY": 2,
+            "maxX": 13,
+            "maxY": 13
+          },
+          "radius": 3,
+          "iterations": 4,
+          "method": "edge_preserving",
+          "edgeBlend": 1,
+          "protectedAreas": [
+            {
+              "type": "circle",
+              "center": {
+                "x": 7,
+                "y": 7
+              },
+              "radius": 1.5
+            }
+          ]
+        },
+        {
+          "op": "height.flatten",
+          "area": {
+            "type": "circle",
+            "center": {
+              "x": 7,
+              "y": 7
+            },
+            "radius": 2
+          },
+          "height": "currentMedian",
+          "strength": 0.5
+        },
+        {
+          "op": "height.raise",
+          "area": {
+            "type": "rectangle",
+            "minX": 2.2,
+            "minY": 2.2,
+            "maxX": 2.4,
+            "maxY": 2.4
+          },
+          "amount": 0.2
+        }
+      ],
+      "componentManifestSha256": "46372dcbb33e3be242981d3b2798c88d8ac0a865dacd1ed37393cdd45bf3aa72",
+      "result": {
+        "issues": [
+          {
+            "severity": "warning",
+            "code": "SYNC_DELTA_REFERENCE_SUPPORTED",
+            "message": "Sync heights retain native residuals and receive the quantized height delta. Editor save/reopen and runtime movement have not been executed."
+          }
+        ],
+        "changedVertices": 144,
+        "changedTexturePixels": 0
+      },
+      "visitsSha256": "8f68e6aa1c2a9b46541ca06e0a47c7c4583cdbefc8b59ff29653ea021e50ed5d",
+      "visits": 885
+    },
+    {
+      "id": "ant",
+      "operations": [
+        {
+          "op": "height.noise",
+          "area": {
+            "type": "rectangle",
+            "minX": 2,
+            "minY": 2,
+            "maxX": 13,
+            "maxY": 13
+          },
+          "amplitude": 0.2,
+          "wavelength": 2,
+          "seed": 42
+        },
+        {
+          "op": "height.smooth",
+          "area": {
+            "type": "rectangle",
+            "minX": 2,
+            "minY": 2,
+            "maxX": 13,
+            "maxY": 13
+          },
+          "radius": 3,
+          "iterations": 4,
+          "method": "gaussian",
+          "edgeBlend": 1,
+          "protectedAreas": [
+            {
+              "type": "circle",
+              "center": {
+                "x": 7,
+                "y": 7
+              },
+              "radius": 1.5
+            }
+          ]
+        },
+        {
+          "op": "height.smooth",
+          "area": {
+            "type": "rectangle",
+            "minX": 2,
+            "minY": 2,
+            "maxX": 13,
+            "maxY": 13
+          },
+          "radius": 3,
+          "iterations": 4,
+          "method": "edge_preserving",
+          "edgeBlend": 1,
+          "protectedAreas": [
+            {
+              "type": "circle",
+              "center": {
+                "x": 7,
+                "y": 7
+              },
+              "radius": 1.5
+            }
+          ]
+        },
+        {
+          "op": "height.flatten",
+          "area": {
+            "type": "circle",
+            "center": {
+              "x": 7,
+              "y": 7
+            },
+            "radius": 2
+          },
+          "height": "currentMedian",
+          "strength": 0.5
+        },
+        {
+          "op": "height.raise",
+          "area": {
+            "type": "rectangle",
+            "minX": 2.2,
+            "minY": 2.2,
+            "maxX": 2.4,
+            "maxY": 2.4
+          },
+          "amount": 0.2
+        }
+      ],
+      "componentManifestSha256": "66d15246e18c4b536c5a020fb00924063d3d3f783eddb3da75a6b3468e533c3b",
+      "result": {
+        "issues": [
+          {
+            "severity": "warning",
+            "code": "SYNC_DELTA_REFERENCE_SUPPORTED",
+            "message": "Sync heights retain native residuals and receive the quantized height delta. Editor save/reopen and runtime movement have not been executed."
+          }
+        ],
+        "changedVertices": 144,
+        "changedTexturePixels": 0
+      },
+      "visitsSha256": "8f68e6aa1c2a9b46541ca06e0a47c7c4583cdbefc8b59ff29653ea021e50ed5d",
+      "visits": 885
+    },
+    {
+      "id": "warships",
+      "operations": [
+        {
+          "op": "height.noise",
+          "area": {
+            "type": "rectangle",
+            "minX": 1,
+            "minY": 1,
+            "maxX": 12,
+            "maxY": 12
+          },
+          "amplitude": 0.2,
+          "wavelength": 2,
+          "seed": 42
+        },
+        {
+          "op": "height.smooth",
+          "area": {
+            "type": "rectangle",
+            "minX": 1,
+            "minY": 1,
+            "maxX": 12,
+            "maxY": 12
+          },
+          "radius": 3,
+          "iterations": 4,
+          "method": "gaussian",
+          "edgeBlend": 1,
+          "protectedAreas": [
+            {
+              "type": "circle",
+              "center": {
+                "x": 6,
+                "y": 6
+              },
+              "radius": 1.5
+            }
+          ]
+        },
+        {
+          "op": "height.smooth",
+          "area": {
+            "type": "rectangle",
+            "minX": 1,
+            "minY": 1,
+            "maxX": 12,
+            "maxY": 12
+          },
+          "radius": 3,
+          "iterations": 4,
+          "method": "edge_preserving",
+          "edgeBlend": 1,
+          "protectedAreas": [
+            {
+              "type": "circle",
+              "center": {
+                "x": 6,
+                "y": 6
+              },
+              "radius": 1.5
+            }
+          ]
+        },
+        {
+          "op": "height.raise",
+          "area": {
+            "type": "rectangle",
+            "minX": 1.2,
+            "minY": 1.2,
+            "maxX": 1.4,
+            "maxY": 1.4
+          },
+          "amount": 0.2
+        }
+      ],
+      "componentManifestSha256": "fb469ef3c7ce7b4c4a2d5d84f3e5b807037718a14e6f595f47729475a5afed6d",
+      "result": {
+        "issues": [
+          {
+            "severity": "warning",
+            "code": "PROTECTED_NATIVE_GEOMETRY",
+            "message": "Skipped 872 brush visits near holes, cliff boundaries or ramps."
+          },
+          {
+            "severity": "warning",
+            "code": "SYNC_DELTA_REFERENCE_SUPPORTED",
+            "message": "Sync heights retain native residuals and receive the quantized height delta. Editor save/reopen and runtime movement have not been executed."
+          }
+        ],
+        "changedVertices": 0,
+        "changedTexturePixels": 0
+      },
+      "visitsSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "visits": 0
+    }
+  ]
+}

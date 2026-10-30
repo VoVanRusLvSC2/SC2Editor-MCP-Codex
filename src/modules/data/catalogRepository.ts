@@ -46,6 +46,7 @@ export class DataCatalogRepository {
     };
   }
   private readonly nativePackageProfiles = new Map<string, string>();
+  private readonly dependencyPreparationKeys = new Map<string, object>();
   nativeCatalogFiles: ReadonlySet<string> = new Set();
   nativePackageProfile(root: string) {
     return this.nativePackageProfiles.get(path.resolve(root));
@@ -141,13 +142,15 @@ export class DataCatalogRepository {
           });
           continue;
         }
+        const document = this.cachedDocument(absolute, source, workspaceRelative);
         let validation = this.validationCache.get(absolute);
         if (validation?.source !== source) {
-          const parsed = scanXml(source);
           validation = {
             source,
-            invalid: parsed.diagnostics.some((d) => d.severity === "error"),
-            catalog: parsed.rootIds.some((id) => parsed.nodes[id].tag === "Catalog"),
+            invalid: document.diagnostics.some((d) => d.severity === "error"),
+            catalog: document.nodes.some(
+              (node) => node.parentId === null && node.tag === "Catalog",
+            ),
           };
           this.validationCache.set(absolute, validation);
           while (this.validationCache.size > 1024)
@@ -168,7 +171,7 @@ export class DataCatalogRepository {
               layer === "workspace"
                 ? provenance(absolute)
                 : [path.basename(base), ...provenance(absolute)],
-            document: this.cachedDocument(absolute, source, workspaceRelative),
+            document,
           });
       } catch (error) {
         if (error instanceof Error && error.message.startsWith("STALE_")) throw error;
@@ -234,6 +237,43 @@ export class DataCatalogRepository {
     }
     return files;
   }
+  private async discoverDependency(root: string): Promise<CatalogRecords> {
+    if (!this.workspace.trackingReads) return this.discoverRoot(root, "dependency");
+    const signature = JSON.stringify([
+      root,
+      this.nativePackageProfiles.get(root),
+      [...this.nativeCatalogFiles].sort(),
+    ]);
+    let key = this.dependencyPreparationKeys.get(signature);
+    if (!key) {
+      this.dependencyPreparationKeys.set(signature, (key = {}));
+      if (this.dependencyPreparationKeys.size > 256)
+        this.dependencyPreparationKeys.delete(this.dependencyPreparationKeys.keys().next().value!);
+    }
+    const prepared = await this.workspace.prepareReadScope(key, async () => {
+      const captured = await this.workspace.memoizeReads(() =>
+        this.discoverRoot(root, "dependency"),
+      );
+      return { ...captured, used: false, sources: captured.value.map((r) => r.document.source) };
+    });
+    if (prepared.used && !(await this.workspace.reuseReads(prepared.memo)))
+      throw new Error("STALE_DATA_DEPENDENCY_CATALOG");
+    if (prepared.value.some((r, i) => r.document.source !== prepared.sources[i]))
+      throw new Error("STALE_DATA_DEPENDENCY_CATALOG");
+    prepared.used = true;
+    // Failed discovery must remain retryable inside the same operation.
+    if (prepared.value.issues.length) this.dependencyPreparationKeys.delete(signature);
+    // Activation/order metadata is assigned by catalog(), not by this snapshot.
+    return Object.assign(
+      prepared.value.map((r) => ({
+        ...r,
+        provenance: [...r.provenance],
+        ...(r.activationWarnings ? { activationWarnings: [...r.activationWarnings] } : {}),
+      })),
+      { issues: prepared.value.issues.map((issue) => ({ ...issue })) },
+    );
+  }
+
   async catalog(overrides?: ReadonlyMap<string, string>): Promise<CatalogRecords> {
     referenceSchema.refresh();
     const records = await this.discoverRoot(this.workspace.root, "workspace", overrides);
@@ -315,7 +355,7 @@ export class DataCatalogRepository {
       record.declarationOrder = ordered.length;
     }
     for (const root of [...ordered, ...this.extraRoots.filter((r) => !ordered.includes(r))]) {
-      const dependency = await this.discoverRoot(root, "dependency");
+      const dependency = await this.discoverDependency(root);
       const active = ordered.includes(root);
       for (const record of dependency) {
         record.dependencyAvailability = active

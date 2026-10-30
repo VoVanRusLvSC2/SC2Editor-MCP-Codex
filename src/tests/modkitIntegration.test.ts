@@ -35,6 +35,75 @@ test('ModKit snapshot identity includes configured dependency catalogs',async t=
   const integration=new ModkitIntegration(new Workspace(root),path.join(root,'missing-install'),()=>[dep]);
   const a=await integration.snapshot('Map');await fs.writeFile(path.join(dep,'UnitData.xml'),'two');const b=await integration.snapshot('Map');assert.notEqual(a.revision,b.revision);
 });
+
+test("map preview reuses verified artifacts but regenerates missing, edited and changed-backend outputs", async (t) => {
+  const { map, integration } = await fixture(t);
+  let worlds = 0,
+    renders = 0,
+    scripts = 0;
+  const backend = () =>
+    ({
+      preview: async () => {
+        worlds++;
+        return { input: { terrain: new Float32Array([1]) }, summary: { models: 1 } };
+      },
+      viewerScript: async () => {
+        scripts++;
+        return "// viewer";
+      },
+      png: async () => {
+        renders++;
+        return {
+          bytes: Buffer.from("render " + renders),
+          width: 64,
+          height: 64,
+          diagnostics: [],
+          limitations: [],
+        };
+      },
+    }) as unknown as Awaited<ReturnType<ModkitIntegration["port"]>>;
+  let current = backend();
+  integration.port = async () => current;
+  const preview = new MapPreviewWorkspace(integration),
+    request = {
+      directory: "Map",
+      output: "both" as const,
+      mode: "render" as const,
+      width: 64,
+      height: 64,
+      maxModels: 10,
+      maxModelMiB: 4,
+      locales: ["enUS"],
+    };
+  const first = await preview.preview(request),
+    again = await preview.preview(request);
+  assert.equal(first.cacheHit, false);
+  assert.equal(again.cacheHit, true);
+  assert.deepEqual(again.artifactHits, { html: true, png: true });
+  assert.deepEqual([worlds, renders, scripts], [1, 1, 1]);
+  await fs.writeFile(first.files.png!, "tampered");
+  const repaired = await preview.preview(request);
+  assert.deepEqual(repaired.artifactHits, { html: true, png: false });
+  assert.deepEqual([worlds, renders, scripts], [1, 2, 1]);
+  await fs.rm(first.files.html!);
+  await preview.preview(request);
+  assert.deepEqual([worlds, renders, scripts], [1, 2, 2]);
+  await preview.preview({
+    ...request,
+    camera: { azimuth: 0, elevation: 1, zoom: 1, target: [0, 0, 0] },
+  });
+  assert.deepEqual([worlds, renders, scripts], [1, 3, 3]);
+  current = backend();
+  await preview.preview(request);
+  assert.deepEqual([worlds, renders, scripts], [2, 4, 4]);
+  await fs.writeFile(path.join(map, "Objects"), "<PlacedObjects>edited</PlacedObjects>");
+  await preview.preview(request);
+  assert.deepEqual([worlds, renders, scripts], [3, 5, 5]);
+  const snapshot = await integration.snapshot("Map");
+  await fs.writeFile(path.join(snapshot.target, "Objects"), "bad snapshot");
+  await assert.rejects(preview.preview(request), /INTEGRITY_MISMATCH/);
+  assert.deepEqual([worlds, renders, scripts], [3, 5, 5]);
+});
 test('ModKit input revision changes when the installed CASC build changes',async t=>{
   const {root}=await fixture(t),install=path.join(root,'Game');await fs.mkdir(install);await fs.writeFile(path.join(install,'.build.info'),'first');
   const integration=new ModkitIntegration(new Workspace(root),install);

@@ -19,7 +19,8 @@ import {declareFunctions,populateFunctions} from './functions.js';
 import {PlacementDocument} from '../placement/document.js';
 import { randomBytes } from 'node:crypto';
 import { Workspace } from '../../core/workspace.js';
-import { scanXml, decodeXmlValue } from '../../core/xmlScanner.js';
+import { decodeXmlValue } from "../../core/xmlScanner.js";
+import { readTriggerXml as scanXml } from "./preparedXml.js";
 import type { XmlNode } from '../../core/types.js';
 import { normalizeCustomScriptLayout } from './scriptLayout.js';
 import {upsertCustomScripts,customScriptsSchema,type CustomScriptsArgs} from './customScripts.js';
@@ -29,23 +30,69 @@ import type {NativeGuiEvidence} from '../../integrations/native/guiEvidence.js';
 
 type Kind = 'Event' | 'Action';
 const key = (library: string, type: string, id: string) => JSON.stringify([library,type,id]);
+function buildGraph(xml: string, parsed: ReturnType<typeof scanXml>) {
+  if (parsed.diagnostics.some((d) => d.severity === "error"))
+    throw new Error("TRIGGER_XML_INVALID: " + JSON.stringify(parsed.diagnostics.slice(0, 5)));
+  const libraries = parsed.nodes.filter((n) => n.tag === "Library");
+  const scopes = new Map<number, string>();
+  for (const node of parsed.nodes)
+    scopes.set(
+      node.id,
+      node.tag === "Library"
+        ? (node.attrs.Id ?? "")
+        : node.parentId === null
+          ? ""
+          : (scopes.get(node.parentId) ?? ""),
+    );
+  const libraryOf = (node: XmlNode): string => scopes.get(node.id) ?? "";
+  const elements = parsed.nodes
+    .filter((n) => n.tag === "Element" && n.attrs.Type && n.attrs.Id)
+    .map((node) => ({
+      node,
+      library: libraryOf(node),
+      type: node.attrs.Type,
+      id: node.attrs.Id,
+      xml: xml.slice(node.start, node.end),
+    }));
+  const byKey = new Map<string, (typeof elements)[number]>();
+  for (const element of elements) {
+    const k = key(element.library, element.type, element.id);
+    if (byKey.has(k)) throw new Error("TRIGGER_DUPLICATE_KEY: " + k);
+    byKey.set(k, element);
+  }
+  type Ref = { node: XmlNode; library: string; type: string; id: string; key: string };
+  const references = new Map<number, Ref[]>();
+  const refs = (element: (typeof elements)[number]): Ref[] => {
+    const cached = references.get(element.node.id);
+    if (cached) return cached;
+    const result: Ref[] = [],
+      pending = [...element.node.childIds].reverse();
+    while (pending.length) {
+      const node = parsed.nodes[pending.pop()!];
+      if (node.attrs.Type && node.attrs.Id)
+        result.push({
+          node,
+          library: node.attrs.Library ?? element.library,
+          type: node.attrs.Type,
+          id: node.attrs.Id,
+          key: key(node.attrs.Library ?? element.library, node.attrs.Type, node.attrs.Id),
+        });
+      for (let i = node.childIds.length - 1; i >= 0; i--) pending.push(node.childIds[i]);
+    }
+    references.set(element.node.id, result);
+    return result;
+  };
+  return { parsed, libraries, elements, byKey, refs, libraryOf };
+}
+const graphViews = new WeakMap<ReturnType<typeof scanXml>, ReturnType<typeof buildGraph>>();
 function graph(xml: string) {
   const parsed = scanXml(xml);
-  if (parsed.diagnostics.some(d=>d.severity==='error')) throw new Error('TRIGGER_XML_INVALID: '+JSON.stringify(parsed.diagnostics.slice(0,5)));
-  const libraries = parsed.nodes.filter(n=>n.tag==='Library');
-  const libraryOf = (node: XmlNode): string => {
-    let current: XmlNode | undefined = node;
-    while (current) { if(current.tag==='Library') return current.attrs.Id ?? ''; current=current.parentId===null ? undefined : parsed.nodes[current.parentId]; }
-    return '';
-  };
-  const elements = parsed.nodes.filter(n=>n.tag==='Element' && n.attrs.Type && n.attrs.Id).map(node=>({node,library:libraryOf(node),type:node.attrs.Type,id:node.attrs.Id,xml:xml.slice(node.start,node.end)}));
-  const byKey = new Map<string,typeof elements[number]>();
-  for(const element of elements) { const k=key(element.library,element.type,element.id); if(byKey.has(k)) throw new Error('TRIGGER_DUPLICATE_KEY: '+k); byKey.set(k,element); }
-  const refs = (element: typeof elements[number]) => {
-    const walk=(node:XmlNode):XmlNode[]=>node.childIds.flatMap(id=>[parsed.nodes[id],...walk(parsed.nodes[id])]);
-    return walk(element.node).filter(n=>n.attrs.Type && n.attrs.Id).map(node=>({node,library:node.attrs.Library ?? element.library,type:node.attrs.Type,id:node.attrs.Id,key:key(node.attrs.Library ?? element.library,node.attrs.Type,node.attrs.Id)}));
-  };
-  return {parsed,libraries,elements,byKey,refs,libraryOf};
+  let view = graphViews.get(parsed);
+  if (!view) {
+    view = buildGraph(xml, parsed);
+    graphViews.set(parsed, view);
+  }
+  return view;
 }
 function trigger(xml: string, name: string) {
   const g=graph(xml);
@@ -122,20 +169,57 @@ function graft(target: string, source: string, sourceTrigger: string, targetTrig
 
 export class TriggerWorkspace {
   nativeGuiArtifact?: (jobId:string)=>Promise<NativeGuiEvidence>;
-  constructor(private readonly workspace: Workspace,private readonly registryFile=projectPath('generated/trigger-authoring-registry.json'),private readonly data=new DataWorkspace(workspace),private readonly casc?:CascWorkspace) {this.libraries=new TriggerLibraries(workspace,data,casc);}
+  constructor(
+    private readonly workspace: Workspace,
+    private readonly registryFile = projectPath("generated/trigger-authoring-registry.json"),
+    private readonly data = new DataWorkspace(workspace),
+    private readonly casc?: CascWorkspace,
+    private readonly scripts = new ScriptWorkspace(workspace),
+  ) {
+    this.libraries = new TriggerLibraries(workspace, data, casc);
+  }
   private readonly libraries:TriggerLibraries;
   private async stringFiles():Promise<string[]> {return (await fs.readdir(this.workspace.root,{withFileTypes:true})).filter(e=>e.isDirectory()&&!/^Base\.SC2Data$/i.test(e.name)&&/^[a-z]{4}\.SC2Data$/i.test(e.name)).map(e=>e.name+'/LocalizedData/TriggerStrings.txt').sort();}
   private nameKey(type:string,library:string,id:string){return type+'/Name/'+(library?'lib_'+library+'_':'')+id;}
-  async organize(input:OrganizationArgs){
-    const args=organizationSchema.parse(input),raw=await this.workspace.readRaw('Triggers'),organized=organizeTriggerXml(raw.text,args,await this.localizedNames());
-    const locales=await this.stringFiles();if(!locales.length)locales.push('enUS.SC2Data/LocalizedData/TriggerStrings.txt');
-    const transaction=await this.workspace.applyRawTransaction(this.workspace.coupledDraftFiles(['Triggers',...locales]),files=>{
-      if(digest(files.get('Triggers')??'')!==digest(raw.text))throw new Error('ORGANIZATION_SOURCE_STALE');
-      const next=new Map(files);next.set('Triggers',organized.xml);
-      for(const file of locales){const table=new StringTableDocument(files.get(file)??'');for(const folder of organized.created)table.set(this.nameKey('Category',args.library,folder.id),folder.name);next.set(file,table.source);}
-      return next;
-    },{dryRun:args.dryRun,stage:args.stage,backup:true,summary:'Organize GUI folders without changing executable elements'});
-    return {...organized,xml:undefined,transaction,compiler:'NOT_EXECUTED',sourceOfTruth:'Triggers'};
+  async organize(input: OrganizationArgs) {
+    const args = organizationSchema.parse(input),
+      raw = await this.workspace.readRaw("Triggers"),
+      organized = organizeTriggerXml(raw.text, args, await this.localizedNames());
+    const locales = await this.stringFiles();
+    if (!locales.length) locales.push("enUS.SC2Data/LocalizedData/TriggerStrings.txt");
+    const transaction = await this.workspace.applyRawTransaction(
+      this.workspace.coupledDraftFiles(["Triggers", ...locales]),
+      (files) => {
+        if (digest(files.get("Triggers") ?? "") !== digest(raw.text))
+          throw new Error("ORGANIZATION_SOURCE_STALE");
+        const next = new Map(files);
+        next.set("Triggers", organized.xml);
+        for (const file of locales) {
+          const table = new StringTableDocument(files.get(file) ?? "");
+          table.setMany(
+            organized.created.map((folder) => ({
+              key: this.nameKey("Category", args.library, folder.id),
+              value: folder.name,
+            })),
+          );
+          next.set(file, table.source);
+        }
+        return next;
+      },
+      {
+        dryRun: args.dryRun,
+        stage: args.stage,
+        backup: true,
+        summary: "Organize GUI folders without changing executable elements",
+      },
+    );
+    return {
+      ...organized,
+      xml: undefined,
+      transaction,
+      compiler: "NOT_EXECUTED",
+      sourceOfTruth: "Triggers",
+    };
   }
   async customScripts(input:CustomScriptsArgs){
     const args=customScriptsSchema.parse(input),raw=await this.workspace.readRaw('Triggers'),result=upsertCustomScripts(raw.text,args,await this.localizedNames()),locales=await this.stringFiles();
@@ -233,56 +317,241 @@ export class TriggerWorkspace {
     const raw=await this.workspace.readRaw(file),context=await this.libraries.context(registry(this.registryFile));
     return {...emitGuiGalaxy(raw.text,context.registry),sourceFile:file,sourceSha256:digest(raw.text),librarySources:context.sources,registryRevision:context.revision};
   }
-  async generateRuntime(dryRun=true,stage=true){
-    const raw=await this.workspace.readRaw('Triggers'),context=await this.libraries.context(registry(this.registryFile)),generated=emitGuiGalaxy(raw.text,context.registry);
-    const validation=await new ScriptWorkspace(this.workspace).validateSource(generated.source);if(!validation.valid)throw new Error('GUI_RUNTIME_STATIC_ERRORS: '+JSON.stringify(validation.diagnostics.filter(d=>d.severity==='error').slice(0,10)));
-    const transaction=await this.workspace.applyRawTransaction(this.workspace.coupledDraftFiles(['Triggers','MapScript.galaxy']),files=>{if(digest(files.get('Triggers')!)!==digest(raw.text))throw new Error('GUI_RUNTIME_SOURCE_STALE');const next=new Map(files);next.set('MapScript.galaxy',generated.source);return next;},{dryRun,stage,backup:true,summary:'Generate playable Galaxy from the same GUI graph'});
-    return {...generated,source:undefined,sourceBytes:Buffer.byteLength(generated.source),sourceSha256:digest(generated.source),transaction,validation,converterUsed:false};
+  async generateRuntime(dryRun = true, stage = true) {
+    const raw = await this.workspace.readRaw("Triggers"),
+      context = await this.libraries.context(registry(this.registryFile)),
+      generated = emitGuiGalaxy(raw.text, context.registry);
+    const validation = await this.scripts.validateSource(generated.source);
+    if (!validation.valid)
+      throw new Error(
+        "GUI_RUNTIME_STATIC_ERRORS: " +
+          JSON.stringify(validation.diagnostics.filter((d) => d.severity === "error").slice(0, 10)),
+      );
+    const transaction = await this.workspace.applyRawTransaction(
+      this.workspace.coupledDraftFiles(["Triggers", "MapScript.galaxy"]),
+      (files) => {
+        if (digest(files.get("Triggers")!) !== digest(raw.text))
+          throw new Error("GUI_RUNTIME_SOURCE_STALE");
+        const next = new Map(files);
+        next.set("MapScript.galaxy", generated.source);
+        return next;
+      },
+      { dryRun, stage, backup: true, summary: "Generate playable Galaxy from the same GUI graph" },
+    );
+    return {
+      ...generated,
+      source: undefined,
+      sourceBytes: Buffer.byteLength(generated.source),
+      sourceSha256: digest(generated.source),
+      transaction,
+      validation,
+      converterUsed: false,
+    };
   }
   recipeSkirmish(options:SkirmishOptions){return this.planBatch(skirmishRecipe(options));}
-  async importRevised(args:{file:string;stringsFile?:string;nativeJobId?:string;expectedSourceSha256:string;expectedRuntimeSha256:string;dryRun:boolean;stage:boolean}):Promise<{counts:ReturnType<typeof inspectRevisedGui>;validation:unknown;transaction:Awaited<ReturnType<Workspace['applyRawTransaction']>>;inputSha256:string;runtimeSha256:string;semanticEquivalence:string;compiler:string;nativeContext:unknown}>{
-    if(!this.workspace.trackingReads)return this.workspace.withReadSet(()=>this.importRevised(args));
-    const input=await this.workspace.readRaw(args.file),source=await this.workspace.readRaw('Triggers'),runtime=await this.workspace.readRaw('MapScript.galaxy');
-    if(digest(source.text)!==args.expectedSourceSha256||digest(runtime.text)!==args.expectedRuntimeSha256)throw new Error('GUI_IMPORT_SOURCE_STALE');
-    const counts=inspectRevisedGui(input.text,{nativeLibraries:!!args.nativeJobId,localLibraries:!args.nativeJobId});
-    let generated:{source:string},validation:unknown,nativeContext:unknown;
-    if(args.nativeJobId){
-      if(!this.nativeGuiArtifact)throw Error('GUI_NATIVE_COMPILER_NOT_CONFIGURED: use a profile with editor and script');
-      const proof=await this.nativeGuiArtifact(args.nativeJobId);
-      if(proof.xmlSha256!==digest(input.text))throw Error('GUI_NATIVE_XML_MISMATCH');
-      const bound=await bindNativeGuiContext(this.workspace,proof);generated={source:bound.source};nativeContext=bound.context;
-      validation={valid:true,compiler:'ORIGINAL_EDITOR',jobId:args.nativeJobId,scope:'Exact XML and matching template components; gameplay equivalence is separate'};
-    }else{
-      const context=await this.libraries.context(registry(this.registryFile));generated=emitGuiGalaxy(input.text,context.registry);
-      const checked=await new ScriptWorkspace(this.workspace).validateSource(generated.source);validation=checked;
-      if(!checked.valid)throw new Error('GUI_IMPORT_RUNTIME_ERRORS: '+JSON.stringify(checked.diagnostics.filter(d=>d.severity==='error').slice(0,10)));
+  async importRevised(args: {
+    file: string;
+    stringsFile?: string;
+    nativeJobId?: string;
+    preserveExistingScripts?: boolean;
+    expectedSourceSha256: string;
+    expectedRuntimeSha256: string;
+    dryRun: boolean;
+    stage: boolean;
+  }): Promise<{
+    counts: ReturnType<typeof inspectRevisedGui>;
+    validation: unknown;
+    transaction: Awaited<ReturnType<Workspace["applyRawTransaction"]>>;
+    inputSha256: string;
+    runtimeSha256: string;
+    semanticEquivalence: string;
+    compiler: string;
+    nativeContext: unknown;
+  }> {
+    if (!this.workspace.trackingReads)
+      return this.workspace.withReadSet(() => this.importRevised(args));
+    const input = await this.workspace.readRaw(args.file),
+      source = await this.workspace.readRaw("Triggers"),
+      runtime = await this.workspace.readRaw("MapScript.galaxy");
+    if (
+      digest(source.text) !== args.expectedSourceSha256 ||
+      digest(runtime.text) !== args.expectedRuntimeSha256
+    )
+      throw new Error("GUI_IMPORT_SOURCE_STALE");
+    if (args.preserveExistingScripts && !args.nativeJobId)
+      throw Error("GUI_IMPORT_PRESERVE_REQUIRES_NATIVE");
+    const counts = inspectRevisedGui(input.text, {
+      nativeLibraries: !!args.nativeJobId,
+      localLibraries: !args.nativeJobId,
+      existingSource: args.preserveExistingScripts ? source.text : undefined,
+    });
+    let generated: { source: string }, validation: unknown, nativeContext: unknown;
+    if (args.nativeJobId) {
+      if (!this.nativeGuiArtifact)
+        throw Error("GUI_NATIVE_COMPILER_NOT_CONFIGURED: use a profile with editor and script");
+      const proof = await this.nativeGuiArtifact(args.nativeJobId);
+      if (proof.xmlSha256 !== digest(input.text)) throw Error("GUI_NATIVE_XML_MISMATCH");
+      const bound = await bindNativeGuiContext(this.workspace, proof);
+      generated = { source: bound.source };
+      nativeContext = bound.context;
+      validation = {
+        valid: true,
+        compiler: "ORIGINAL_EDITOR",
+        jobId: args.nativeJobId,
+        scope: "Exact XML and matching template components; gameplay equivalence is separate",
+      };
+    } else {
+      const context = await this.libraries.context(registry(this.registryFile));
+      generated = emitGuiGalaxy(input.text, context.registry);
+      const checked = await this.scripts.validateSource(generated.source);
+      validation = checked;
+      if (!checked.valid)
+        throw new Error(
+          "GUI_IMPORT_RUNTIME_ERRORS: " +
+            JSON.stringify(checked.diagnostics.filter((d) => d.severity === "error").slice(0, 10)),
+        );
     }
-    const strings=args.stringsFile?await this.workspace.readRaw(args.stringsFile):undefined;
-    const labels:Record<string,string>=strings?JSON.parse(strings.text):{};
-    if(Array.isArray(labels)||typeof labels!=='object'||labels===null||Object.keys(labels).length>10000||Object.entries(labels).some(([k,v])=>!/^(Category|Trigger|FunctionDef|Variable|ParamDef)\/Name\/(?:lib_[A-Za-z0-9]+_)?[A-Fa-f0-9]+$/.test(k)||typeof v!=='string'||/[\r\n]/.test(v)))throw new Error('GUI_IMPORT_LABELS');
-    const locales=await this.stringFiles();if(!locales.length)locales.push('enUS.SC2Data/LocalizedData/TriggerStrings.txt');
-    const files=['Triggers','MapScript.galaxy',args.file,...(args.stringsFile?[args.stringsFile]:[]),...locales];
-    const transaction=await this.workspace.applyRawTransaction(this.workspace.coupledDraftFiles(files),files=>{
-      if(digest(files.get('Triggers')??'')!==args.expectedSourceSha256||digest(files.get('MapScript.galaxy')??'')!==args.expectedRuntimeSha256||files.get(args.file)!==input.text||(args.stringsFile&&files.get(args.stringsFile)!==strings!.text))throw new Error('GUI_IMPORT_SOURCE_STALE');
-      const next=new Map(files);next.set('Triggers',input.text);next.set('MapScript.galaxy',generated.source);
-      for(const file of locales){const table=new StringTableDocument(files.get(file)??'');for(const [key,value]of Object.entries(labels))table.set(key,value);next.set(file,table.source);}return next;
-    },{dryRun:args.dryRun,stage:args.stage,backup:true,summary:'Import reviewed full GUI tree and generate its runtime atomically'});
-    return {counts,validation,transaction,inputSha256:digest(input.text),runtimeSha256:digest(generated.source),semanticEquivalence:'NOT_PROVEN',compiler:args.nativeJobId?'NATIVE_PASSED':'NOT_EXECUTED',nativeContext};
+    const strings = args.stringsFile ? await this.workspace.readRaw(args.stringsFile) : undefined;
+    const labels: Record<string, string> = strings ? JSON.parse(strings.text) : {};
+    if (
+      Array.isArray(labels) ||
+      typeof labels !== "object" ||
+      labels === null ||
+      Object.keys(labels).length > 10000 ||
+      Object.entries(labels).some(
+        ([k, v]) =>
+          !/^(Category|Trigger|FunctionDef|Variable|ParamDef)\/Name\/(?:lib_[A-Za-z0-9]+_)?[A-Fa-f0-9]+$/.test(
+            k,
+          ) ||
+          typeof v !== "string" ||
+          /[\r\n]/.test(v),
+      )
+    )
+      throw new Error("GUI_IMPORT_LABELS");
+    const locales = await this.stringFiles();
+    if (!locales.length) locales.push("enUS.SC2Data/LocalizedData/TriggerStrings.txt");
+    const files = [
+      "Triggers",
+      "MapScript.galaxy",
+      args.file,
+      ...(args.stringsFile ? [args.stringsFile] : []),
+      ...locales,
+    ];
+    const transaction = await this.workspace.applyRawTransaction(
+      this.workspace.coupledDraftFiles(files),
+      (files) => {
+        if (
+          digest(files.get("Triggers") ?? "") !== args.expectedSourceSha256 ||
+          digest(files.get("MapScript.galaxy") ?? "") !== args.expectedRuntimeSha256 ||
+          files.get(args.file) !== input.text ||
+          (args.stringsFile && files.get(args.stringsFile) !== strings!.text)
+        )
+          throw new Error("GUI_IMPORT_SOURCE_STALE");
+        const next = new Map(files);
+        next.set("Triggers", input.text);
+        next.set("MapScript.galaxy", generated.source);
+        for (const file of locales) {
+          const table = new StringTableDocument(files.get(file) ?? "");
+          table.setMany(Object.entries(labels).map(([key, value]) => ({ key, value })));
+          next.set(file, table.source);
+        }
+        return next;
+      },
+      {
+        dryRun: args.dryRun,
+        stage: args.stage,
+        backup: true,
+        summary: "Import reviewed full GUI tree and generate its runtime atomically",
+      },
+    );
+    return {
+      counts,
+      validation,
+      transaction,
+      inputSha256: digest(input.text),
+      runtimeSha256: digest(generated.source),
+      semanticEquivalence: "NOT_PROVEN",
+      compiler: args.nativeJobId ? "NATIVE_PASSED" : "NOT_EXECUTED",
+      nativeContext,
+    };
   }
   async planFile(file:string){const raw=await this.workspace.readRaw(file);if(!raw.exists&&!raw.staged)throw new Error('GUI_PLAN_FILE_MISSING');if(Buffer.byteLength(raw.text)>1024*1024)throw new Error('GUI_PLAN_FILE_BYTE_LIMIT');const value=JSON.parse(raw.text);return Array.isArray(value)?this.planBatch(value):this.plan(value);}
-  async planBatch(requests:GuiRequest[]){
-    if(!requests.length||requests.length>100||Buffer.byteLength(JSON.stringify(requests))>1024*1024)throw new Error('GUI_PLAN_BATCH_LIMIT');
-    const source=this.workspace;
-    class PlanningWorkspace extends Workspace {override async readRaw(file:string,includeDraft=true){const own=await super.readRaw(file,includeDraft);return own.staged?own:source.readRaw(file,includeDraft);}}
-    const virtual=new PlanningWorkspace(source.root),data=new DataWorkspace(virtual,this.data.schema,[...this.data.extraRoots]),planner=new TriggerWorkspace(virtual,this.registryFile,data,this.casc),steps=[];
-    data.nativeCatalogFiles=this.data.nativeCatalogFiles;
-    for(const root of this.data.extraRoots){const profile=this.data.nativePackageProfile(root);if(profile)data.addDependencyRoot(root,profile);}
-    let last:NonNullable<ReturnType<typeof planner.plans.get>>|undefined,objectsRevision:string|undefined,catalogRevision:string|undefined,needsCatalogs=false;
-    for(const request of requests){const step=await planner.plan(request);const saved=planner.plans.get(step.planId)!;objectsRevision??=saved.objectsRevision;catalogRevision??=saved.catalogRevision;needsCatalogs ||= !!saved.needsCatalogs;await planner.applyPlan(step.planId,false,true);last=saved;steps.push(step);}
-    const strings=new Map<string,string>(),stringRevisions=new Map<string,string>();for(const file of virtual.draftFiles()){if(file==='Triggers')continue;strings.set(file,(await virtual.readRaw(file)).text);stringRevisions.set(file,digest((await source.readRaw(file)).text));}
-    const planId=randomBytes(16).toString('hex'),before=digest((await source.readRaw('Triggers')).text),context=await this.libraries.context(registry(this.registryFile),needsCatalogs);
-    this.plans.set(planId,{...last!,before,xml:(await virtual.readRaw('Triggers')).text,root:source.root,strings,stringRevisions,objectsRevision,catalogRevision,needsCatalogs,libraryRevision:context.revision});
-    return {planId,revision:before,steps:steps.length,triggerIds:steps.map(s=>s.triggerId).filter(Boolean),variables:steps.flatMap(s=>s.variables),functions:steps.flatMap(s=>s.functions),presets:steps.flatMap(s=>s.presets),structures:steps.flatMap(s=>s.structures),calls:steps.reduce((n,s)=>n+s.calls,0),customResourceLibraryCreated:false,compiler:'NOT_EXECUTED',sourceFilesStaged:false};
+  async planBatch(requests: GuiRequest[]) {
+    return this.workspace.withReadSet(() => this.planBatchTracked(requests));
+  }
+  private async planBatchTracked(requests: GuiRequest[]) {
+    if (
+      !requests.length ||
+      requests.length > 100 ||
+      Buffer.byteLength(JSON.stringify(requests)) > 1024 * 1024
+    )
+      throw new Error("GUI_PLAN_BATCH_LIMIT");
+    const source = this.workspace;
+    class PlanningWorkspace extends Workspace {
+      override async readRaw(file: string, includeDraft = true) {
+        const own = await super.readRaw(file, includeDraft);
+        return own.staged ? own : source.readRaw(file, includeDraft);
+      }
+    }
+    const virtual = new PlanningWorkspace(source.root),
+      data = new DataWorkspace(virtual, this.data.schema, [...this.data.extraRoots]),
+      planner = new TriggerWorkspace(virtual, this.registryFile, data, this.casc),
+      steps: Array<Awaited<ReturnType<TriggerWorkspace["plan"]>>> = [];
+    data.nativeCatalogFiles = this.data.nativeCatalogFiles;
+    for (const root of this.data.extraRoots) {
+      const profile = this.data.nativePackageProfile(root);
+      if (profile) data.addDependencyRoot(root, profile);
+    }
+    let last: NonNullable<ReturnType<typeof planner.plans.get>> | undefined,
+      objectsRevision: string | undefined,
+      catalogRevision: string | undefined,
+      needsCatalogs = false;
+    for (const request of requests) {
+      const step = await planner.plan(request);
+      const saved = planner.plans.get(step.planId)!;
+      objectsRevision ??= saved.objectsRevision;
+      catalogRevision ??= saved.catalogRevision;
+      needsCatalogs ||= !!saved.needsCatalogs;
+      await planner.applyPlan(step.planId, false, true);
+      last = saved;
+      steps.push(step);
+    }
+    const strings = new Map<string, string>(),
+      stringRevisions = new Map<string, string>();
+    for (const file of virtual.draftFiles()) {
+      if (file === "Triggers") continue;
+      strings.set(file, (await virtual.readRaw(file)).text);
+      stringRevisions.set(file, digest((await source.readRaw(file)).text));
+    }
+    const planId = randomBytes(16).toString("hex"),
+      before = digest((await source.readRaw("Triggers")).text),
+      context = await this.libraries.context(registry(this.registryFile), needsCatalogs);
+    this.plans.set(planId, {
+      ...last!,
+      before,
+      xml: (await virtual.readRaw("Triggers")).text,
+      root: source.root,
+      strings,
+      stringRevisions,
+      objectsRevision,
+      catalogRevision,
+      needsCatalogs,
+      libraryRevision: context.revision,
+    });
+    return {
+      planId,
+      revision: before,
+      steps: steps.length,
+      triggerIds: steps.map((s) => s.triggerId).filter(Boolean),
+      variables: steps.flatMap((s) => s.variables),
+      functions: steps.flatMap((s) => s.functions),
+      presets: steps.flatMap((s) => s.presets),
+      structures: steps.flatMap((s) => s.structures),
+      calls: steps.reduce((n, s) => n + s.calls, 0),
+      customResourceLibraryCreated: false,
+      compiler: "NOT_EXECUTED",
+      sourceFilesStaged: false,
+    };
   }
   async describeAvailableFunction(name:string,library='') {
     const raw=await this.workspace.readRaw('Triggers'),context=await this.libraries.context(registry(this.registryFile)),r=withGuiFunctions(context.registry,raw.text,library);
@@ -305,99 +574,322 @@ export class TriggerWorkspace {
     for(const value of values??[]){const matches=records.flatMap(r=>r.engineActive===false&&r.dependencyAvailability!=='DECLARED_AVAILABLE'||!r.document.source.includes(value.id)?[]:r.document.entries()).filter(o=>dataDomainFromType(o.tag)===value.domain&&o.attrs.id===value.id);if(!matches.length)throw new Error('GUI_GAMELINK_UNRESOLVED: '+value.domain+':'+value.id);}
     return digest(records.map(r=>r.absolute+'\0'+r.document.sha256+'\0'+r.engineActive+'\0'+r.dependencyAvailability).sort().join('\n'));
   }
-  async plan(request:GuiRequest) {
+  async plan(request: GuiRequest) {
     validateGuiRequestSize(request);
-    request=triggerPlanSchema.parse(request);
-    const values=collectGuiValues(request);
-    const gamelinks=values.filter(v=>v.kind==='gamelink') as Array<{kind:'gamelink';domain:string;id:string}>;
-    const unitValues=values.filter(v=>v.kind==='unit') as Array<{kind:'unit';objectId:number}>;
-    let objectsRevision:string|undefined;
-    if(unitValues.length){
-      const raw=(await this.workspace.readRaw('Objects')).text,objects=new PlacementDocument(raw);
-      if(objects.validate().some(d=>d.severity==='error'))throw new Error('GUI_OBJECTS_INVALID');
-      for(const value of unitValues)if(!objects.list().some(o=>o.kind==='ObjectUnit'&&o.id===value.objectId))throw new Error('GUI_PLACED_UNIT_UNRESOLVED: '+value.objectId);
-      objectsRevision=digest(raw);
+    request = triggerPlanSchema.parse(request);
+    const values = collectGuiValues(request);
+    const gamelinks = values.filter((v) => v.kind === "gamelink") as Array<{
+      kind: "gamelink";
+      domain: string;
+      id: string;
+    }>;
+    const unitValues = values.filter((v) => v.kind === "unit") as Array<{
+      kind: "unit";
+      objectId: number;
+    }>;
+    let objectsRevision: string | undefined;
+    if (unitValues.length) {
+      const raw = (await this.workspace.readRaw("Objects")).text,
+        objects = new PlacementDocument(raw);
+      if (objects.validate().some((d) => d.severity === "error"))
+        throw new Error("GUI_OBJECTS_INVALID");
+      for (const value of unitValues)
+        if (!objects.list().some((o) => o.kind === "ObjectUnit" && o.id === value.objectId))
+          throw new Error("GUI_PLACED_UNIT_UNRESOLVED: " + value.objectId);
+      objectsRevision = digest(raw);
     }
-    const libraryContext=await this.libraries.context(registry(this.registryFile),gamelinks.length>0),schema=libraryContext.registry;
-    const catalogRevision=gamelinks.length?await this.catalogRevision(gamelinks):undefined;
-    const before=(await this.workspace.readRaw('Triggers')).text;
-    let xml=before;
-    const g=graph(xml),used=new Set([...g.elements.map(e=>e.id),...(schema.definitions??schema.functions).map(f=>f.id)]);
-    const nextId=()=>{let id:string;do{id=randomBytes(4).toString('hex').toUpperCase();}while(used.has(id));used.add(id);return id;};
-    const container=(g:ReturnType<typeof graph>,library:string)=>{
-      const nodes=library ? g.libraries.filter(n=>n.attrs.Id===library) : g.parsed.rootIds.map(id=>g.parsed.nodes[id]).filter(n=>n.tag==='TriggerData');
-      if(nodes.length!==1)throw new Error(library?'GUI_LIBRARY_NOT_UNIQUE':'GUI_ROOT_NOT_UNIQUE');
+    const libraryContext = await this.libraries.context(
+        registry(this.registryFile),
+        gamelinks.length > 0,
+      ),
+      schema = libraryContext.registry;
+    const catalogRevision = gamelinks.length ? await this.catalogRevision(gamelinks) : undefined;
+    const before = (await this.workspace.readRaw("Triggers")).text;
+    let xml = before;
+    const g = graph(xml),
+      used = new Set([
+        ...g.elements.map((e) => e.id),
+        ...(schema.definitions ?? schema.functions).map((f) => f.id),
+      ]);
+    const nextId = () => {
+      let id: string;
+      do {
+        id = randomBytes(4).toString("hex").toUpperCase();
+      } while (used.has(id));
+      used.add(id);
+      return id;
+    };
+    const container = (g: ReturnType<typeof graph>, library: string) => {
+      const nodes = library
+        ? g.libraries.filter((n) => n.attrs.Id === library)
+        : g.parsed.rootIds.map((id) => g.parsed.nodes[id]).filter((n) => n.tag === "TriggerData");
+      if (nodes.length !== 1)
+        throw new Error(library ? "GUI_LIBRARY_NOT_UNIQUE" : "GUI_ROOT_NOT_UNIQUE");
       return nodes[0];
     };
-    const append=(source:string,node:XmlNode,fragment:string)=>node.selfClosing
-      ? source.slice(0,node.start)+source.slice(node.start,node.startTagEnd).replace(/\/\s*>$/,'>')+fragment+`</${node.tag}>`+source.slice(node.end)
-      : source.slice(0,node.endTagStart)+fragment+source.slice(node.endTagStart);
-    let target=request.targetTrigger;
-    const names:GuiText[]=[],texts:GuiText[]=[];
-    if(request.create){
-      if(target)throw new Error('GUI_TARGET_CONFLICT');
-      const c={...request.create,library:request.create.library??''};
-      if(c.category&&c.folder)throw new Error('GUI_FOLDER_CATEGORY_CONFLICT');
-      let folderId:string|undefined;
-      if(c.folder||c.category){const folders=ensureTriggerFolder(xml,c.library,c.folder??c.category!,nextId,await this.localizedNames());xml=folders.xml;folderId=folders.id;for(const folder of folders.created)names.push({key:this.nameKey('Category',c.library,folder.id),value:folder.name});}
-      const currentGraph=graph(xml),lib=container(currentGraph,c.library);
-      const localLibrary=c.library ? ` Library="${encode(c.library)}"` : '';
-      const id=nextId();target=id;names.push({key:this.nameKey("Trigger",c.library,id),value:c.identifier,translations:c.translations});
-      const item=`<Item Type="Trigger"${localLibrary} Id="${id}"/>`;
-      let fragment=`<Element Type="Trigger" Id="${id}"><Identifier>${encode(c.identifier)}</Identifier></Element>`;
-      const root=currentGraph.parsed.nodes.find(n=>n.tag==='Root'&&n.parentId===lib.id);
-      if(folderId){const folder=currentGraph.byKey.get(key(c.library,'Category',folderId))!;xml=append(xml,folder.node,item);}
-      else if(root){xml=xml.slice(0,root.start)+(root.selfClosing?xml.slice(root.start,root.startTagEnd).replace(/\/\s*>$/,'>')+item+'</Root>':xml.slice(root.start,root.endTagStart)+item+'</Root>')+xml.slice(root.end);}else fragment='<Root>'+item+'</Root>'+fragment;
-      const current=container(graph(xml),c.library);
-      xml=append(xml,current,fragment);
+    const append = (source: string, node: XmlNode, fragment: string) =>
+      node.selfClosing
+        ? source.slice(0, node.start) +
+          source.slice(node.start, node.startTagEnd).replace(/\/\s*>$/, ">") +
+          fragment +
+          `</${node.tag}>` +
+          source.slice(node.end)
+        : source.slice(0, node.endTagStart) + fragment + source.slice(node.endTagStart);
+    let target = request.targetTrigger;
+    const names: GuiText[] = [],
+      texts: GuiText[] = [];
+    if (request.create) {
+      if (target) throw new Error("GUI_TARGET_CONFLICT");
+      const c = { ...request.create, library: request.create.library ?? "" };
+      if (c.category && c.folder) throw new Error("GUI_FOLDER_CATEGORY_CONFLICT");
+      let folderId: string | undefined;
+      if (c.folder || c.category) {
+        const folders = ensureTriggerFolder(
+          xml,
+          c.library,
+          c.folder ?? c.category!,
+          nextId,
+          await this.localizedNames(),
+        );
+        xml = folders.xml;
+        folderId = folders.id;
+        for (const folder of folders.created)
+          names.push({ key: this.nameKey("Category", c.library, folder.id), value: folder.name });
+      }
+      const currentGraph = graph(xml),
+        lib = container(currentGraph, c.library);
+      const localLibrary = c.library ? ` Library="${encode(c.library)}"` : "";
+      const id = nextId();
+      target = id;
+      names.push({
+        key: this.nameKey("Trigger", c.library, id),
+        value: c.identifier,
+        translations: c.translations,
+      });
+      const item = `<Item Type="Trigger"${localLibrary} Id="${id}"/>`;
+      let fragment = `<Element Type="Trigger" Id="${id}"><Identifier>${encode(c.identifier)}</Identifier></Element>`;
+      const root = currentGraph.parsed.nodes.find((n) => n.tag === "Root" && n.parentId === lib.id);
+      if (folderId) {
+        const folder = currentGraph.byKey.get(key(c.library, "Category", folderId))!;
+        xml = append(xml, folder.node, item);
+      } else if (root) {
+        xml =
+          xml.slice(0, root.start) +
+          (root.selfClosing
+            ? xml.slice(root.start, root.startTagEnd).replace(/\/\s*>$/, ">") + item + "</Root>"
+            : xml.slice(root.start, root.endTagStart) + item + "</Root>") +
+          xml.slice(root.end);
+      } else fragment = "<Root>" + item + "</Root>" + fragment;
+      const current = container(graph(xml), c.library);
+      xml = append(xml, current, fragment);
     }
-    if(!target&&(request.calls.length||request.variables?.some(v=>v.scope==='local')))throw new Error('GUI_TARGET_MISSING');
-    const scope=target?trigger(xml,target).library:'';
-    const userTypes=declareGuiTypes(xml,request,scope,nextId,schema,text=>texts.push(text));xml=userTypes.xml;names.push(...userTypes.names);
-    const headers=declareFunctions(xml,request.functions??[],scope,nextId,schema);xml=headers.xml;names.push(...headers.names);
-    const declared=declareVariables(xml,request.variables??[],scope,target,nextId,withGuiFunctions(schema,xml,scope),text=>texts.push(text));
-    xml=declared.xml;names.push(...declared.names);
-    const bodies=populateFunctions(xml,request.functions??[],headers.functions,scope,nextId,schema,text=>texts.push(text));xml=bodies.xml;names.push(...bodies.names);
-    if(request.calls.length){
-      const block=trigger(xml,target!),rendered=renderCalls(request.calls,block.library,nextId,xml,withGuiFunctions(schema,xml,scope),{triggerId:block.id,onText:text=>texts.push(text)});
-      xml=append(xml,container(graph(xml),block.library),rendered.elements);
-      for(const kind of ['Event','Condition','Action'] as const){
-        const references=rendered.references.filter(ref=>ref.kind===kind).map(ref=>`<${kind} Type="FunctionCall"${scope?` Library="${encode(scope)}"`:''} Id="${ref.id}"/>`).join('');if(!references)continue;
-        const current=trigger(xml,target!),parsed=graph(xml).parsed,siblings=current.node.childIds.map(id=>parsed.nodes[id]);
-        const insertion=siblings.filter(n=>n.tag===kind).at(-1)?.end??(kind==='Event'?siblings.find(n=>['Condition','Action'].includes(n.tag))?.start:kind==='Condition'?siblings.find(n=>n.tag==='Action')?.start:undefined)??current.node.endTagStart;
-        if(current.node.selfClosing)xml=xml.slice(0,current.offset)+current.xml.replace(/\/\s*>$/,'>')+references+'</Element>'+xml.slice(current.node.end);
-        else xml=xml.slice(0,insertion)+references+xml.slice(insertion);
+    if (!target && (request.calls.length || request.variables?.some((v) => v.scope === "local")))
+      throw new Error("GUI_TARGET_MISSING");
+    const scope = target ? trigger(xml, target).library : "";
+    const userTypes = declareGuiTypes(xml, request, scope, nextId, schema, (text) =>
+      texts.push(text),
+    );
+    xml = userTypes.xml;
+    names.push(...userTypes.names);
+    const headers = declareFunctions(xml, request.functions ?? [], scope, nextId, schema);
+    xml = headers.xml;
+    names.push(...headers.names);
+    const declared = declareVariables(
+      xml,
+      request.variables ?? [],
+      scope,
+      target,
+      nextId,
+      withGuiFunctions(schema, xml, scope),
+      (text) => texts.push(text),
+    );
+    xml = declared.xml;
+    names.push(...declared.names);
+    const bodies = populateFunctions(
+      xml,
+      request.functions ?? [],
+      headers.functions,
+      scope,
+      nextId,
+      schema,
+      (text) => texts.push(text),
+    );
+    xml = bodies.xml;
+    names.push(...bodies.names);
+    if (request.calls.length) {
+      const block = trigger(xml, target!),
+        rendered = renderCalls(
+          request.calls,
+          block.library,
+          nextId,
+          xml,
+          withGuiFunctions(schema, xml, scope),
+          { triggerId: block.id, onText: (text) => texts.push(text) },
+        );
+      xml = append(xml, container(graph(xml), block.library), rendered.elements);
+      for (const kind of ["Event", "Condition", "Action"] as const) {
+        const references = rendered.references
+          .filter((ref) => ref.kind === kind)
+          .map(
+            (ref) =>
+              `<${kind} Type="FunctionCall"${scope ? ` Library="${encode(scope)}"` : ""} Id="${ref.id}"/>`,
+          )
+          .join("");
+        if (!references) continue;
+        const current = trigger(xml, target!),
+          parsed = graph(xml).parsed,
+          siblings = current.node.childIds.map((id) => parsed.nodes[id]);
+        const insertion =
+          siblings.filter((n) => n.tag === kind).at(-1)?.end ??
+          (kind === "Event"
+            ? siblings.find((n) => ["Condition", "Action"].includes(n.tag))?.start
+            : kind === "Condition"
+              ? siblings.find((n) => n.tag === "Action")?.start
+              : undefined) ??
+          current.node.endTagStart;
+        if (current.node.selfClosing)
+          xml =
+            xml.slice(0, current.offset) +
+            current.xml.replace(/\/\s*>$/, ">") +
+            references +
+            "</Element>" +
+            xml.slice(current.node.end);
+        else xml = xml.slice(0, insertion) + references + xml.slice(insertion);
       }
     }
-    if(request.create?.folder){
-      const folder=request.create.folder,tree=graph(xml),lib=container(tree,scope),root=tree.parsed.nodes.find(n=>n.tag==='Root'&&n.parentId===lib.id);
-      const allowed=['Trigger','FunctionDef','Variable','CustomScript','Preset','Structure','Comment'] as const;
-      const assignments=(root?.childIds??[]).map(i=>tree.parsed.nodes[i]).filter(n=>n.tag==='Item'&&allowed.includes(n.attrs.Type as typeof allowed[number])&&!g.byKey.has(key(scope,n.attrs.Type,n.attrs.Id))).map(n=>({type:n.attrs.Type as typeof allowed[number],id:n.attrs.Id,folder}));
-      const organized=organizeTriggerXml(xml,{genre:request.create.genre,library:scope,folders:[folder],assignments},await this.localizedNames());xml=organized.xml;
-      for(const f of organized.created)names.push({key:this.nameKey('Category',scope,f.id),value:f.name});
+    if (request.create?.folder) {
+      const folder = request.create.folder,
+        tree = graph(xml),
+        lib = container(tree, scope),
+        root = tree.parsed.nodes.find((n) => n.tag === "Root" && n.parentId === lib.id);
+      const allowed = [
+        "Trigger",
+        "FunctionDef",
+        "Variable",
+        "CustomScript",
+        "Preset",
+        "Structure",
+        "Comment",
+      ] as const;
+      const assignments = (root?.childIds ?? [])
+        .map((i) => tree.parsed.nodes[i])
+        .filter(
+          (n) =>
+            n.tag === "Item" &&
+            allowed.includes(n.attrs.Type as (typeof allowed)[number]) &&
+            !g.byKey.has(key(scope, n.attrs.Type, n.attrs.Id)),
+        )
+        .map((n) => ({ type: n.attrs.Type as (typeof allowed)[number], id: n.attrs.Id, folder }));
+      const organized = organizeTriggerXml(
+        xml,
+        { genre: request.create.genre, library: scope, folders: [folder], assignments },
+        await this.localizedNames(),
+      );
+      xml = organized.xml;
+      for (const f of organized.created)
+        names.push({ key: this.nameKey("Category", scope, f.id), value: f.name });
     }
-    const result=graph(xml);
-    for(const e of result.elements)for(const r of result.refs(e))if(r.library===e.library&&!result.byKey.has(r.key))throw new Error('GUI_PLAN_DANGLING_REFERENCE: '+r.key);
-    const strings=new Map<string,string>(),stringRevisions=new Map<string,string>();
-    const stringFiles=request.stringFiles ?? (names.length ? await this.stringFiles() : []);
-    if((names.length||texts.length)&&!stringFiles.length)stringFiles.push('enUS.SC2Data/LocalizedData/TriggerStrings.txt');
-    const requestedLocales=new Set([...names,...texts].flatMap(n=>Object.keys(n.translations??{})));
-    for(const locale of requestedLocales)if(!stringFiles.some(f=>f.startsWith(locale+'.SC2Data/')))stringFiles.push(locale+'.SC2Data/LocalizedData/TriggerStrings.txt');
-    for(const file of [...new Set(stringFiles)]){
-      if(/^Base\.SC2Data\//i.test(file)||!/^[a-z]{4}\.SC2Data\/LocalizedData\/TriggerStrings\.txt$/i.test(file))throw new Error('GUI_STRING_FILE_SCOPE_INVALID');
-      const source=(await this.workspace.readRaw(file)).text,table=new StringTableDocument(source);stringRevisions.set(file,digest(source));
-      const locale=file.slice(0,4);
-      for(const entry of [...names,...texts])table.set(entry.key,entry.translations?.[locale]??entry.value);strings.set(file,table.source);
-      if(texts.length){
-        const gameFile=file.replace(/TriggerStrings\.txt$/,'GameStrings.txt'),gameSource=(await this.workspace.readRaw(gameFile)).text,gameTable=new StringTableDocument(gameSource);
-        stringRevisions.set(gameFile,digest(gameSource));for(const entry of texts)gameTable.set(entry.key,entry.translations?.[locale]??entry.value);strings.set(gameFile,gameTable.source);
+    const result = graph(xml);
+    for (const e of result.elements)
+      for (const r of result.refs(e))
+        if (r.library === e.library && !result.byKey.has(r.key))
+          throw new Error("GUI_PLAN_DANGLING_REFERENCE: " + r.key);
+    const strings = new Map<string, string>(),
+      stringRevisions = new Map<string, string>();
+    const stringFiles = request.stringFiles ?? (names.length ? await this.stringFiles() : []);
+    if ((names.length || texts.length) && !stringFiles.length)
+      stringFiles.push("enUS.SC2Data/LocalizedData/TriggerStrings.txt");
+    const requestedLocales = new Set(
+      [...names, ...texts].flatMap((n) => Object.keys(n.translations ?? {})),
+    );
+    for (const locale of requestedLocales)
+      if (!stringFiles.some((f) => f.startsWith(locale + ".SC2Data/")))
+        stringFiles.push(locale + ".SC2Data/LocalizedData/TriggerStrings.txt");
+    for (const file of [...new Set(stringFiles)]) {
+      if (
+        /^Base\.SC2Data\//i.test(file) ||
+        !/^[a-z]{4}\.SC2Data\/LocalizedData\/TriggerStrings\.txt$/i.test(file)
+      )
+        throw new Error("GUI_STRING_FILE_SCOPE_INVALID");
+      const source = (await this.workspace.readRaw(file)).text,
+        table = new StringTableDocument(source);
+      stringRevisions.set(file, digest(source));
+      const locale = file.slice(0, 4);
+      table.setMany(
+        [...names, ...texts].map((entry) => ({
+          key: entry.key,
+          value: entry.translations?.[locale] ?? entry.value,
+        })),
+      );
+      strings.set(file, table.source);
+      if (texts.length) {
+        const gameFile = file.replace(/TriggerStrings\.txt$/, "GameStrings.txt"),
+          gameSource = (await this.workspace.readRaw(gameFile)).text,
+          gameTable = new StringTableDocument(gameSource);
+        stringRevisions.set(gameFile, digest(gameSource));
+        for (const entry of texts)
+          gameTable.set(entry.key, entry.translations?.[locale] ?? entry.value);
+        strings.set(gameFile, gameTable.source);
       }
     }
-    const planId=randomBytes(16).toString('hex');
-    this.plans.set(planId,{before:digest(before),xml,schema:registryDigest(registry(this.registryFile)),schemaFile:registrySourceDigest(this.registryFile),root:this.workspace.root,strings,stringRevisions,catalogRevision,objectsRevision,libraryRevision:libraryContext.revision,needsCatalogs:gamelinks.length>0});
-    while(this.plans.size>32||[...this.plans.values()].reduce((bytes,p)=>bytes+Buffer.byteLength(p.xml)+[...p.strings.values()].reduce((n,s)=>n+Buffer.byteLength(s),0),0)>32*1024*1024)this.plans.delete(this.plans.keys().next().value!);
-    if(!this.plans.has(planId))throw new Error('GUI_PLAN_BYTE_LIMIT');
-    return {planId,nativeProfile:nativeGuiProfile(xml,result.parsed),revision:digest(before),triggerId:target,variables:declared.variables,functions:headers.functions,presets:userTypes.presets,structures:userTypes.structures,definitionEditorValidation:headers.functions.length?'NOT_EXECUTED':undefined,customEventEditorValidation:headers.functions.some(f=>f.kind==='Event')?'NOT_EXECUTED':undefined,calls:request.calls.length,events:request.calls.filter(c=>c.kind==='Event').length,conditions:request.calls.filter(c=>c.kind==='Condition').length,actions:request.calls.filter(c=>c.kind==='Action'||c.kind==='Registration').length,registrations:request.calls.filter(c=>c.kind==='Registration').length,libraryContext:{libraries:libraryContext.libraries,cacheHit:libraryContext.cacheHit,build:libraryContext.build},customResourceLibraryCreated:false,localizedTextValues:texts.length,catalogValidation:'Local/declared-dependency definition identities; engine activation is not certified',sourceOfTruth:'Triggers',regenerateGalaxyInEditor:true,compiler:'NOT_EXECUTED'};
+    const planId = randomBytes(16).toString("hex");
+    this.plans.set(planId, {
+      before: digest(before),
+      xml,
+      schema: registryDigest(registry(this.registryFile)),
+      schemaFile: registrySourceDigest(this.registryFile),
+      root: this.workspace.root,
+      strings,
+      stringRevisions,
+      catalogRevision,
+      objectsRevision,
+      libraryRevision: libraryContext.revision,
+      needsCatalogs: gamelinks.length > 0,
+    });
+    while (
+      this.plans.size > 32 ||
+      [...this.plans.values()].reduce(
+        (bytes, p) =>
+          bytes +
+          Buffer.byteLength(p.xml) +
+          [...p.strings.values()].reduce((n, s) => n + Buffer.byteLength(s), 0),
+        0,
+      ) >
+        32 * 1024 * 1024
+    )
+      this.plans.delete(this.plans.keys().next().value!);
+    if (!this.plans.has(planId)) throw new Error("GUI_PLAN_BYTE_LIMIT");
+    return {
+      planId,
+      nativeProfile: nativeGuiProfile(xml, result.parsed),
+      revision: digest(before),
+      triggerId: target,
+      variables: declared.variables,
+      functions: headers.functions,
+      presets: userTypes.presets,
+      structures: userTypes.structures,
+      definitionEditorValidation: headers.functions.length ? "NOT_EXECUTED" : undefined,
+      customEventEditorValidation: headers.functions.some((f) => f.kind === "Event")
+        ? "NOT_EXECUTED"
+        : undefined,
+      calls: request.calls.length,
+      events: request.calls.filter((c) => c.kind === "Event").length,
+      conditions: request.calls.filter((c) => c.kind === "Condition").length,
+      actions: request.calls.filter((c) => c.kind === "Action" || c.kind === "Registration").length,
+      registrations: request.calls.filter((c) => c.kind === "Registration").length,
+      libraryContext: {
+        libraries: libraryContext.libraries,
+        cacheHit: libraryContext.cacheHit,
+        build: libraryContext.build,
+      },
+      customResourceLibraryCreated: false,
+      localizedTextValues: texts.length,
+      catalogValidation:
+        "Local/declared-dependency definition identities; engine activation is not certified",
+      sourceOfTruth: "Triggers",
+      regenerateGalaxyInEditor: true,
+      compiler: "NOT_EXECUTED",
+    };
   }
   async applyPlan(planId:string,dryRun=true,stage=true) {
     const plan=this.plans.get(planId);if(!plan)throw new Error('GUI_PLAN_NOT_FOUND');

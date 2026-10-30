@@ -1,5 +1,7 @@
 import { createHash } from "node:crypto";
-import { scanXml } from "../../../core/xmlScanner.js";
+import { XmlParseCache } from "../../../core/xmlParseCache.js";
+const preparedInfoXml = new XmlParseCache(8, 2 * 1024 * 1024);
+const scanXml = (source: string) => preparedInfoXml.read(source);
 import { escapeXml } from "../schemas.js";
 export interface DocumentBuild {
     major: number;

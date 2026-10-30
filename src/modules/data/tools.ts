@@ -1,4 +1,7 @@
 import {compactDataContext} from './peek.js';
+import { spellRecipeSchema } from './spellRecipe.js';
+import { unitCopySchema } from './unitCopyRecipe.js';
+import { unitConfigureSchema, spellConfigureSchema } from "./configureRecipes.js";
 import {checkEffectPresentation,presentationSchema} from './presentation.js';
 import {compactDataBatch,compactDataValidation,DataResponseStore} from './responseStore.js';
 import { McpServer } from "@modelcontextprotocol/server";
@@ -26,46 +29,160 @@ const nativeField: z.ZodType<DataNativeFieldSpec> = z.lazy(() => z.object({
   attrs: z.record(z.string(), scalar).optional(), children: z.array(nativeField).optional(),
 }));
 const operation = z.discriminatedUnion("op", [
-  unitAnimationSchema.extend({op:z.literal('recipe.unitAbilityAnimation')}),
-  veterancySchema.extend({op:z.literal('recipe.veterancy')}),
-  xpSearchSchema.extend({op:z.literal('recipe.xpSearch')}),
-  learnSchema.extend({op:z.literal('recipe.learn')}),
-  timedInstantAbilitySchema.extend({op:z.literal('recipe.instantAbility')}),
-  targetAbilitySchema.extend({op:z.literal('recipe.targetAbility')}),
-  projectileSchema.extend({op:z.literal('recipe.projectileEffect')}),
-  abilityChargesSchema.extend({op:z.literal('recipe.abilityCharges')}),
-  z.object({op:z.literal('recipe.unitActor'),id:dataId,unit:dataId,sourceActor:dataId,model:dataId,replace:z.boolean().default(false),scale:z.number().positive().max(20).optional()}),
-  z.object({op:z.literal('recipe.effectModel'),id:dataId,effect:dataId,model:dataId,at:z.enum(['Caster','Target','Effect','Source']).optional(),event:z.enum(['Start','Stop']).optional(),stopEffect:dataId.optional(),stopEvent:z.enum(['Start','Stop']).optional(),orphanPolicy:z.enum(['keep','stop']).optional(),host:z.literal('_Selectable').optional(),inheritScale:z.boolean().optional(),scale:z.number().positive().max(20).optional(),siteOp:dataId.optional(),replace:z.boolean().default(false)}),
-  z.object({ op: z.literal("object.create"), as: z.string().optional(), ctype: z.string().regex(/^C[A-Z]/), id: z.string().min(1), parent: z.string().optional(), attrs: z.record(z.string(), scalar).optional(), fields: z.array(nativeField).optional() }),
-  z.object({ op: z.literal("object.clone"), as: z.string().optional(), object: selector, id: z.string().min(1), parent: z.string().optional() }),
-  z.object({ op: z.literal("object.rename"), object: selector, newId: z.string().min(1), updateReferences: z.boolean().optional() }),
-  z.object({ op: z.literal("object.delete"), object: selector, force: z.boolean().optional() }),
-  z.object({ op: z.literal("object.setParent"), object: selector, parent: z.string().optional() }),
-  z.object({ op: z.literal("object.setType"), object: selector, ctype: z.string().regex(/^C[A-Z][A-Za-z0-9_]*$/) }),
-  z.object({ op: z.literal("object.setAttribute"), object: selector, attribute: z.string().min(1), value: scalar }),
-  z.object({ op: z.literal("object.removeAttribute"), object: selector, attribute: z.string().min(1) }),
-  z.object({ op: z.literal("field.set"), object: selector, path: z.string().min(1), value: scalar }),
-  z.object({ op: z.literal("field.setLink"), object: selector, path: z.string().min(1), link: z.string().min(1) }),
-  z.object({ op: z.literal("field.setAttribute"), object: selector, path: z.string().min(1), attribute: z.string().min(1), value: scalar }),
-  z.object({ op: z.literal("field.removeAttribute"), object: selector, path: z.string().min(1), attribute: z.string().min(1) }),
-  z.object({ op: z.literal("field.remove"), object: selector, path: z.string().min(1) }),
-  z.object({ op: z.literal("array.append"), object: selector, path: z.string().min(1), value: scalar.optional(), link: z.string().optional(), attrs: z.record(z.string(), scalar).optional() }),
-  z.object({ op: z.literal("native.add"), object: selector, parentPath: z.string().optional(), field: nativeField }),
+  unitConfigureSchema.safeExtend({ op: z.literal("recipe.unitConfigure") }),
+  spellConfigureSchema.safeExtend({ op: z.literal("recipe.spellConfigure") }),
+  spellRecipeSchema.safeExtend({ op: z.literal("recipe.spell") }),
+  unitCopySchema.extend({ op: z.literal("recipe.unitCopy") }),
+  unitAnimationSchema.extend({ op: z.literal("recipe.unitAbilityAnimation") }),
+  veterancySchema.extend({ op: z.literal("recipe.veterancy") }),
+  xpSearchSchema.extend({ op: z.literal("recipe.xpSearch") }),
+  learnSchema.extend({ op: z.literal("recipe.learn") }),
+  timedInstantAbilitySchema.extend({ op: z.literal("recipe.instantAbility") }),
+  targetAbilitySchema.extend({ op: z.literal("recipe.targetAbility") }),
+  projectileSchema.extend({ op: z.literal("recipe.projectileEffect") }),
+  abilityChargesSchema.extend({ op: z.literal("recipe.abilityCharges") }),
   z.object({
-    op: z.literal("recipe.weaponBurn"), as: z.string().optional(), id: dataId,
-    carrierEffect: dataId, carrierCtype: z.string().regex(/^CEffect[A-Za-z0-9_]*$/).default("CEffectCreatePersistent"),
-    carrierPath: z.string().min(1).default("PeriodicEffectArray[0]"), impactEffect: dataId,
-    duration: z.number().positive(), period: z.number().positive(), periodicDamage: z.number().nonnegative(),
-    visualModel: dataId, attachSite: dataId.default("SOpAttachHead"),
-    damageKind: z.string().min(1).optional(), alignment: z.string().min(1).optional(), editorCategories: z.string().min(1).optional(),
+    op: z.literal("recipe.unitActor"),
+    id: dataId,
+    unit: dataId,
+    sourceActor: dataId,
+    model: dataId,
+    replace: z.boolean().default(false),
+    scale: z.number().positive().max(20).optional(),
   }),
   z.object({
-    op: z.literal("recipe.unitTextureByVital"), as: z.string().optional(), id: dataId, unit: dataId,
-    threshold: z.number().positive().max(1), pollInterval: z.number().positive().default(0.5),
-    textures: z.array(z.object({
-      slot: z.string().regex(/^[A-Za-z_][A-Za-z0-9_.]*$/),
-      healthyFile: z.string().min(1), damagedFile: z.string().min(1),
-    })).min(1).max(8),
+    op: z.literal("recipe.effectModel"),
+    id: dataId,
+    effect: dataId,
+    model: dataId,
+    at: z.enum(["Caster", "Target", "Effect", "Source"]).optional(),
+    event: z.enum(["Start", "Stop"]).optional(),
+    stopEffect: dataId.optional(),
+    stopEvent: z.enum(["Start", "Stop"]).optional(),
+    orphanPolicy: z.enum(["keep", "stop"]).optional(),
+    host: z.literal("_Selectable").optional(),
+    inheritScale: z.boolean().optional(),
+    scale: z.number().positive().max(20).optional(),
+    siteOp: dataId.optional(),
+    replace: z.boolean().default(false),
+  }),
+  z.object({
+    op: z.literal("object.create"),
+    as: z.string().optional(),
+    ctype: z.string().regex(/^C[A-Z]/),
+    id: z.string().min(1),
+    parent: z.string().optional(),
+    attrs: z.record(z.string(), scalar).optional(),
+    fields: z.array(nativeField).optional(),
+  }),
+  z.object({
+    op: z.literal("object.clone"),
+    as: z.string().optional(),
+    object: selector,
+    id: z.string().min(1),
+    parent: z.string().optional(),
+  }),
+  z.object({
+    op: z.literal("object.rename"),
+    object: selector,
+    newId: z.string().min(1),
+    updateReferences: z.boolean().optional(),
+  }),
+  z.object({ op: z.literal("object.delete"), object: selector, force: z.boolean().optional() }),
+  z.object({ op: z.literal("object.setParent"), object: selector, parent: z.string().optional() }),
+  z.object({
+    op: z.literal("object.setType"),
+    object: selector,
+    ctype: z.string().regex(/^C[A-Z][A-Za-z0-9_]*$/),
+  }),
+  z.object({
+    op: z.literal("object.setAttribute"),
+    object: selector,
+    attribute: z.string().min(1),
+    value: scalar,
+  }),
+  z.object({
+    op: z.literal("object.removeAttribute"),
+    object: selector,
+    attribute: z.string().min(1),
+  }),
+  z.object({
+    op: z.literal("field.set"),
+    object: selector,
+    path: z.string().min(1),
+    value: scalar,
+  }),
+  z.object({
+    op: z.literal("field.setLink"),
+    object: selector,
+    path: z.string().min(1),
+    link: z.string().min(1),
+  }),
+  z.object({
+    op: z.literal("field.setAttribute"),
+    object: selector,
+    path: z.string().min(1),
+    attribute: z.string().min(1),
+    value: scalar,
+  }),
+  z.object({
+    op: z.literal("field.removeAttribute"),
+    object: selector,
+    path: z.string().min(1),
+    attribute: z.string().min(1),
+  }),
+  z.object({ op: z.literal("field.remove"), object: selector, path: z.string().min(1) }),
+  z.object({
+    op: z.literal("array.append"),
+    object: selector,
+    path: z.string().min(1),
+    value: scalar.optional(),
+    link: z.string().optional(),
+    attrs: z.record(z.string(), scalar).optional(),
+  }),
+  z.object({
+    op: z.literal("native.add"),
+    object: selector,
+    parentPath: z.string().optional(),
+    field: nativeField,
+  }),
+  z.object({
+    op: z.literal("recipe.weaponBurn"),
+    as: z.string().optional(),
+    id: dataId,
+    carrierEffect: dataId,
+    carrierCtype: z
+      .string()
+      .regex(/^CEffect[A-Za-z0-9_]*$/)
+      .default("CEffectCreatePersistent"),
+    carrierPath: z.string().min(1).default("PeriodicEffectArray[0]"),
+    impactEffect: dataId,
+    duration: z.number().positive(),
+    period: z.number().positive(),
+    periodicDamage: z.number().nonnegative(),
+    visualModel: dataId,
+    attachSite: dataId.default("SOpAttachHead"),
+    damageKind: z.string().min(1).optional(),
+    alignment: z.string().min(1).optional(),
+    editorCategories: z.string().min(1).optional(),
+  }),
+  z.object({
+    op: z.literal("recipe.unitTextureByVital"),
+    as: z.string().optional(),
+    id: dataId,
+    unit: dataId,
+    threshold: z.number().positive().max(1),
+    pollInterval: z.number().positive().default(0.5),
+    textures: z
+      .array(
+        z.object({
+          slot: z.string().regex(/^[A-Za-z_][A-Za-z0-9_.]*$/),
+          healthyFile: z.string().min(1),
+          damagedFile: z.string().min(1),
+        }),
+      )
+      .min(1)
+      .max(8),
   }),
 ]);
 
@@ -81,18 +198,68 @@ export function registerDataTools(server: McpServer, context: DataToolContext): 
   server.registerTool('data.presentation.check',{description:'Audit 1–16 effect IDs for declared Start/Stop Actor events, Create messages, Model links, host/site operations and sound-only gaps. Explicit invisible exceptions require a reason. Read-only, bounded and declared-only; inheritance/macros, asset resolution and native playback remain separate checks.',inputSchema:presentationSchema,annotations:{readOnlyHint:true}},async a=>textResult(await checkEffectPresentation(data,a)));
   const reports=new DataResponseStore(data.workspace.root);
   const snapshot=async(value:unknown)=>{try{return await reports.save(value);}catch(error){return {reportUnavailable:error instanceof Error?error.message:String(error)};}};
+  const bundleLifecycle = {file:z.string().default('Base.SC2Data/GameData/UnitData.xml'),dryRun:z.boolean().default(true),stage:z.boolean().default(true),backup:z.boolean().default(true)};
+  const bundleResult=async(request:Parameters<DataWorkspace['apply']>[0])=>{
+    const result=await data.apply(request);
+    return {...compactDataBatch(result),authoring:result.authoring,efficiency:result.efficiency,
+      nativePlayback:'not_checked',...await snapshot(result)};
+  };
+  server.registerTool(
+  "data.unit.configure",
+  {
+    description:
+      "Tune explicit scalar fields of one local Unit: life/shields/energy max and start, speed, heroic and optional primary Actor scale. Keeps unknown fields, inherited mechanics and Actor animations. No replacement or graph duplication; dry-run by default.",
+    inputSchema: unitConfigureSchema.safeExtend(bundleLifecycle),
+  },
+  async ({ file, dryRun, stage, backup, ...recipe }) =>
+    authorResult(
+      bundleResult({
+        file,
+        dryRun,
+        stage,
+        backup,
+        operations: [{ op: "recipe.unitConfigure", ...recipe }],
+      }),
+    ),
+);
+  server.registerTool(
+  "data.spell.configure",
+  {
+    description:
+      "Tune an existing compact data.spell graph using id and only changed scalar parameters: damage, energy, cooldown, target range, burn duration/period. Requires explicit local recipe identities and timing; preserves shape, cards, Actors, targeting and manual fields. No silent replacement; dry-run by default.",
+    inputSchema: spellConfigureSchema.safeExtend(bundleLifecycle),
+  },
+  async ({ file, dryRun, stage, backup, ...recipe }) =>
+    authorResult(
+      bundleResult({
+        file,
+        dryRun,
+        stage,
+        backup,
+        operations: [{ op: "recipe.spellConfigure", ...recipe }],
+      }),
+    ),
+);
+  server.registerTool('data.unit.copy',{
+    description:'Create a derived Unit and one independent main Actor from a unique active source. Few scalar parameters: id/from and optional life/shields/energy/speed/scale/heroic. Auto-selects the source main Actor and pins its Model and identity-dependent presentation, retaining movement/attack/death fields. Native weapons/abilities/morphs remain shared; this is not a recursive graph clone. Ambiguous/layered concrete Actors and existing IDs reject. Atomic Data/preload group, dry-run by default; save the whole group. Static validity does not prove playback.',
+    inputSchema:unitCopySchema.extend(bundleLifecycle),
+  },async({file,dryRun,stage,backup,...recipe})=>authorResult(bundleResult({file,dryRun,stage,backup,operations:[{op:'recipe.unitCopy',...recipe}]})));
+  server.registerTool('data.spell',{
+    description:'One native spell graph: damage, caster pulse, aimed line, aimed ring with safe sector, or timed burn. Required id/kind/damage/model/face are exact catalog IDs; other parameters are scalar. Creates private effects, execution ability, Button derived from face, Model Actors and preloads; optional unit+slot binds a guarded 3x5 card. Delay requires warningModel; model is impact feedback, sound optional. Area spells hit enemy ground units and use a short per-spell overlap lock. Burn damage is per tick. Defaults: pulse uses Stimpack, line/ring EMP, damage/burn Snipe; sourceAbility explicitly changes inherited targeting. Main-unit cast animation and localization remain separate. Creation only, no silent overwrite. Atomic, dry-run by default; native gameplay unverified.',
+    inputSchema:spellRecipeSchema.safeExtend(bundleLifecycle),
+  },async({file,dryRun,stage,backup,...recipe})=>authorResult(bundleResult({file,dryRun,stage,backup,operations:[{op:'recipe.spell',...recipe}]})));
   server.registerTool('data.peek',{description:'Cheap bounded Data lookup: ids/types and only requested effective fields. No raw XML, span trees or cross-reference scan. Map declarations by default; dependencies explicit. Pagination/provenance/unknown inheritance retained.',inputSchema:z.object({text:z.string().max(128).optional(),ids:z.array(z.string().max(128)).max(8).optional(),domain:z.string().max(128).optional(),fields:z.array(z.string().max(256)).max(12).default([]),includeDependencies:z.boolean().default(false),offset:z.number().int().min(0).default(0),limit:z.number().int().min(1).max(20).default(8)}).strict()},async a=>{const context=await data.context({text:a.text,ids:a.ids,domains:a.domain?[a.domain]:undefined,fields:a.fields,includeDependencies:a.includeDependencies,includeInherited:a.fields.length>0,includeReferences:false,includeRaw:false,offset:a.offset,limit:a.limit});return {content:[{type:'text' as const,text:JSON.stringify(compactDataContext(context,a.fields.length>0))}]};});
   server.registerTool("data.references",{description:"Paged typed XML references with domains, spans and explicit coverage limits.",inputSchema:z.object({id:z.string().optional(),domain:z.string().optional(),direction:z.enum(["incoming","outgoing","both"]).default("both"),issueOffset:z.number().int().min(0).default(0),issueLimit:z.number().int().min(1).max(500).default(100),offset:z.number().int().min(0).default(0),limit:z.number().int().min(1).max(500).default(100)}).strict()},async args=>textResult(await data.referenceQuery(args)));
   server.registerTool("data.resolve",{description:"Selective available-parent effective fields and provenance; runtime layer equivalence is not claimed.",inputSchema:z.object({id:z.string().min(1),domain:z.string().min(1),fields:z.array(z.string()).max(200).optional()}).strict()},async args=>textResult(await data.resolveFields(args)));
   server.registerTool("data.explain_usage",{description:"Explain known incoming references or unknown usage within the loaded XML scope.",inputSchema:z.object({id:z.string().min(1),domain:z.string().min(1)}).strict()},async args=>{const r=await data.referenceQuery({...args,direction:"incoming"});return textResult({...r,status:r.total?"used":"unknown",reason:r.total?"Known typed incoming reference":"No known XML reference; external/dynamic consumers are not proven absent"});});
   server.registerTool("data.context", {
     description: "Selective one-call context for SC2 Data Editor Catalog objects, inheritance, fields, references, dependencies and diagnostics.",
-    inputSchema: z.object({ text:z.string().optional(),parent:z.string().optional(),link:z.string().optional(),file: z.string().optional(), ids: z.array(z.string()).max(500).optional(), ctypes: z.array(z.string()).max(200).optional(), domains: z.array(z.string()).max(200).optional(), fields: z.array(z.string()).max(200).optional(), activeOnly:z.boolean().default(false), offset:z.number().int().min(0).default(0), includeRaw: z.boolean().default(false), includeInherited: z.boolean().default(true), includeDependencies: z.boolean().default(true), includeReferences: z.boolean().default(true), limit: z.number().int().min(1).max(5000).default(200) }),
+    inputSchema: z.object({ text:z.string().optional(),parent:z.string().optional(),link:z.string().optional(),file: z.string().optional(), ids: z.array(z.string()).max(500).optional(), ctypes: z.array(z.string()).max(200).optional(), domains: z.array(z.string()).max(200).optional(), fields: z.array(z.string()).max(200).optional(), activeOnly:z.boolean().default(false), offset:z.number().int().min(0).default(0), includeRaw: z.boolean().default(false), includeInherited: z.boolean().default(true), includeDependencies: z.boolean().default(true), includeReferences: z.boolean().default(true), limit: z.number().int().min(1).max(5000).default(200) }).strict(),
   }, async (args) => textResult(await data.context(args)));
 
   server.registerTool("data.query", {
     description: "Batch-search catalog objects by id/type/domain/field/parent/Link and return invalid or missing references.",
-    inputSchema: z.object({ text: z.string().optional(), ids: z.array(z.string()).max(500).optional(), ctypes: z.array(z.string()).max(200).optional(), domains: z.array(z.string()).max(200).optional(), field: z.string().optional(), link: z.string().optional(), parent: z.string().optional(), invalidOnly: z.boolean().default(false), offset:z.number().int().min(0).default(0),includeDependencies: z.boolean().default(true), limit: z.number().int().min(1).max(5000).default(200) }),
+    inputSchema: z.object({ text: z.string().optional(), ids: z.array(z.string()).max(500).optional(), ctypes: z.array(z.string()).max(200).optional(), domains: z.array(z.string()).max(200).optional(), field: z.string().optional(), link: z.string().optional(), parent: z.string().optional(), invalidOnly: z.boolean().default(false), offset:z.number().int().min(0).default(0),includeDependencies: z.boolean().default(true), limit: z.number().int().min(1).max(5000).default(200) }).strict(),
   }, async (args) => textResult(await data.query(args)));
 
   server.registerTool("data.describe_type", {
@@ -109,11 +276,11 @@ export function registerDataTools(server: McpServer, context: DataToolContext): 
   server.registerTool('data.effect.projectile',{description:'Create a native launch-missile Effect and matching Action Actor from explicit active sourceEffect/sourceActor templates. Supports the observed GenericAttack/GenericAttackMissile profile with one ActionDamage event. Retains native ammo/mover and pins its Missile Actor/Model, explicit impact Model and inherited sounds; rebinds launch/impact/damage events and merges preloads atomically. Rejects ambiguous or unsupported templates and implicit replacement. No second main unit Actor. Use data.ability.target to expose it; native mechanics, body animation and visible playback still require tests. Single catalog, dry-run by default.',inputSchema:projectileSchema.extend({file:z.string().default('Base.SC2Data/GameData/EffectData.xml'),dryRun:z.boolean().default(true),stage:z.boolean().default(true),backup:z.boolean().default(true)}).strict()},async({file,dryRun,stage,backup,...recipe})=>authorResult(data.apply({file,dryRun,stage,backup,operations:[{op:'recipe.projectileEffect',...recipe}]})));
   server.registerTool('data.ability.charges',{description:'Configure native charges on one unambiguous local CAbilEffectInstant/Target, direct Cost[0] only. Owns Charge while retaining effects, energy, cooldown, command card and presentation. max/start/use are available counts; regen is recovery seconds, zero means finite stock. Positive recovery also sets the initial timer; partial/empty finite stocks use the native no-initial-refill timer sentinel. Explicit Abil/Unit/Player/Global scope and own/default link avoid inherited sharing. max=0 disables the charge gate. Normal gameplay/shared state require native tests; no trigger counters or forced resets. Unsupported/unindexed local costs reject. Single catalog, dry-run by default.',inputSchema:abilityChargesSchema.extend({file:z.string().default('Base.SC2Data/GameData/UnitData.xml'),dryRun:z.boolean().default(true),stage:z.boolean().default(true),backup:z.boolean().default(true)}).strict()},async({file,dryRun,stage,backup,...recipe})=>authorResult(data.apply({file,dryRun,stage,backup,operations:[{op:'recipe.abilityCharges',...recipe}]})));
   server.registerTool("data.apply", {
-    description: "Atomically edit Data catalogs. Strict by default: declared XSD fields and typed references validate before staging. Known incompatible parent classes are errors in both policies. object.setType repairs the XML class within the same catalog domain without deleting the ID or fields. Compatibility mode reports an unverified verdict. Defaults to dry-run.",
+    description: "Atomically edit Data catalogs. Strict by default: declared XSD fields and typed references validate before staging. Known incompatible parent classes are errors in both policies. object.clone copies one object only: explicitly remap references and actor events for duplicated weapons, abilities, effects and upgrades; preserve intentionally shared dependencies. Verify effective links and animations in the game. object.setType repairs the XML class within the same catalog domain without deleting the ID or fields. Compatibility mode reports an unverified verdict. Defaults to dry-run.",
     inputSchema: dataApplySchema,
   }, async (args) => authorResult(data.apply({ ...args, operations: args.operations as DataOperation[] })));
 
-  server.registerTool("data.batch",{description:"Strict atomic multi-catalog Data batch. Compact response by default; full report is stored locally and paged with data.report.page. Set response=full for legacy output.",inputSchema:z.object({changes:z.array(z.object({file:z.string().min(1),operations:z.array(operation).min(1).max(500)}).strict()).min(1).max(48),componentListFile:z.string().optional(),gameDataIndexFile:z.string().optional(),dryRun:z.boolean().default(true),stage:z.boolean().default(true),backup:z.boolean().default(true),expectedSha256:z.record(z.string(),z.string()).optional(),response:z.enum(['summary','full']).default('summary')}).strict()},async args=>authorResult((async()=>{const {response,...request}=args;const result=await data.batch({...request,changes:request.changes.map(c=>({...c,operations:c.operations as DataOperation[]}))});return response==='full'?result:{...compactDataBatch(result),...await snapshot(result)};})()));
+  server.registerTool("data.batch",{description:"Strict atomic multi-catalog Data batch. An explicit preserveExistingErrors reason permits only identical baseline errors on untouched catalogs, retaining the failed global validation report. New or edited-catalog errors still reject. Compact response by default; full report is stored locally and paged with data.report.page. Set response=full for legacy output.",inputSchema:z.object({changes:z.array(z.object({file:z.string().min(1),operations:z.array(operation).min(1).max(500)}).strict()).min(1).max(48),componentListFile:z.string().optional(),gameDataIndexFile:z.string().optional(),dryRun:z.boolean().default(true),stage:z.boolean().default(true),backup:z.boolean().default(true),expectedSha256:z.record(z.string(),z.string()).optional(),preserveExistingErrors:z.object({reason:z.string().trim().min(10).max(1000)}).strict().optional(),response:z.enum(['summary','full']).default('summary')}).strict()},async args=>authorResult((async()=>{const {response,...request}=args;const result=await data.batch({...request,changes:request.changes.map(c=>({...c,operations:c.operations as DataOperation[]}))});return response==='full'?result:{...compactDataBatch(result),...await snapshot(result)};})()));
   server.registerTool("data.plan", {description:"Preview and store an immutable strict Data batch with final-graph validation and a stale source fingerprint.",inputSchema:dataApplySchema},async args=>authorResult(data.plan({...args,operations:args.operations as DataOperation[]})));
   server.registerTool("data.apply_plan", {description:"Apply a previously previewed strict Data batch if catalogs, consumers, dependencies and schema evidence are unchanged. Defaults to dry-run.",inputSchema:z.object({planId:z.string().min(1),dryRun:z.boolean().default(true),stage:z.boolean().default(true)}).strict()},async args=>authorResult(data.applyPlan(args.planId,args.dryRun,args.stage)));
 

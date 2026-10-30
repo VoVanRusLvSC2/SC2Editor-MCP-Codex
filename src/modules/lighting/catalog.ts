@@ -1,4 +1,6 @@
-import {scanXml} from '../../core/xmlScanner.js';
+import { XmlParseCache } from "../../core/xmlParseCache.js";
+const preparedXml = new XmlParseCache(8, 8 * 1024 * 1024);
+const scanXml = (source: string) => preparedXml.read(source);
 import type {GlobalLighting,ColorVariation} from './types.js';
 /** SC2 LightData colors/multipliers. Direction is ray travel; shaders need surface-to-light. */
 export function resolveGlobalLighting(texts:string[],preset='DefaultLight',timeIndex=0):GlobalLighting{

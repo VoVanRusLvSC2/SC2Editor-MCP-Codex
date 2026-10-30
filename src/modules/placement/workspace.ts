@@ -328,25 +328,41 @@ export class PlacementWorkspace {
   }
 
   async addBatch(args: {
-    outsidePlayableReason?:string;
+    outsidePlayableReason?: string;
     objectFile?: string;
     componentListFile?: string;
     objects: Array<
-      Omit<
-        PlanObjectArgs,
-        "objectFile" | "componentListFile" | "count" | "layout"
-      > & { kind: "Unit" | "Doodad" }
+      Omit<PlanObjectArgs, "objectFile" | "componentListFile" | "count" | "layout"> & {
+        kind: "Unit" | "Doodad";
+      }
     >;
     bounds?: PlacementBounds;
-  }) {
+  }): Promise<PlacementPlan> {
+    return this.workspace.withReadSet(() =>
+      this.browse.withSnapshot(() => this.addBatchTracked(args)),
+    );
+  }
+
+  private async addBatchTracked(
+    args: Parameters<PlacementWorkspace["addBatch"]>[0],
+  ): Promise<PlacementPlan> {
     if (!args.objects.length || args.objects.length > 5_000)
       throw new Error("placement.addBatch accepts 1..5000 objects");
     const operations: PlacementMutation[] = [];
     const candidates: BrowseSearchResult[] = [];
-    const resolvedSelectors = new Map<string, Awaited<ReturnType<PlacementWorkspace["resolvePlaceable"]>>>();
+    const resolvedSelectors = new Map<
+      string,
+      Awaited<ReturnType<PlacementWorkspace["resolvePlaceable"]>>
+    >();
     const candidateKeys = new Set<string>();
     for (const object of args.objects) {
-      const selector = JSON.stringify([object.kind, object.id, object.key, object.query, object.catalogType]);
+      const selector = JSON.stringify([
+        object.kind,
+        object.id,
+        object.key,
+        object.query,
+        object.catalogType,
+      ]);
       let resolved = resolvedSelectors.get(selector);
       if (!resolved) {
         resolved = await this.resolvePlaceable(object.kind, object);
@@ -358,19 +374,11 @@ export class PlacementWorkspace {
           kind: object.kind,
           catalogId: resolved.id,
           sourceKey: resolved.key,
-          position: object.position,
-          ...(object.rotation !== undefined
-            ? { rotation: object.rotation }
-            : {}),
-          ...(normalizedScale(object.scale)
-            ? { scale: normalizedScale(object.scale)! }
-            : {}),
-          ...(object.kind === "Unit" && object.owner !== undefined
-            ? { owner: object.owner }
-            : {}),
-          ...(object.variation !== undefined
-            ? { variation: object.variation }
-            : {}),
+          position: { ...object.position },
+          ...(object.rotation !== undefined ? { rotation: object.rotation } : {}),
+          ...(normalizedScale(object.scale) ? { scale: normalizedScale(object.scale)! } : {}),
+          ...(object.kind === "Unit" && object.owner !== undefined ? { owner: object.owner } : {}),
+          ...(object.variation !== undefined ? { variation: object.variation } : {}),
           ...(object.flags ? { flags: object.flags } : {}),
         },
       });
@@ -385,17 +393,58 @@ export class PlacementWorkspace {
         if (compact.results[0]) candidates.push(compact.results[0]);
       }
     }
-    return this.remember({
-      request: { type: "batch", ...args },
+    const terrainHashes = {
+      sourceSha256: {} as Record<string, string>,
+      diskSha256: {} as Record<string, string>,
+    };
+    const samplesByDirectory = new Map<string, number[]>();
+    for (const [index, object] of args.objects.entries())
+      if (object.snapToTerrain) {
+        const directory = object.terrainDirectory ?? "",
+          indices = samplesByDirectory.get(directory) ?? [];
+        indices.push(index);
+        samplesByDirectory.set(directory, indices);
+      }
+    for (const [directory, indices] of samplesByDirectory) {
+      if (!this.terrain) throw new Error("Terrain context is unavailable");
+      const sampled = await this.terrain.sample(
+        indices.map((i) => args.objects[i].position),
+        directory,
+      );
+      for (const [sampleIndex, index] of indices.entries()) {
+        const point = sampled.samples[sampleIndex],
+          source = args.objects[index];
+        if (
+          point.mask === 0 ||
+          point.hidden ||
+          (source.maxSlope !== undefined && point.slope > source.maxSlope)
+        )
+          throw new Error("Placement point is on a terrain hole or excessive slope");
+        const object = (operations[index] as Extract<PlacementMutation, { op: "add" }>).object;
+        object.position.z = object.kind === "Unit" ? 0 : point.height;
+        if (object.kind === "Doodad") object.flags = { ...object.flags, HeightAbsolute: "1" };
+      }
+      for (const key of ["sourceSha256", "diskSha256"] as const)
+        for (const [file, hash] of Object.entries(sampled[key] ?? {})) {
+          const previous = terrainHashes[key][file];
+          if (previous !== undefined && previous !== hash)
+            throw new Error("STALE_PLACEMENT_TERRAIN");
+          terrainHashes[key][file] = hash;
+        }
+    }
+    const plan = await this.remember({
+      request: { type: "batch", ...args, ...(samplesByDirectory.size ? { terrainHashes } : {}) },
       objectFile: args.objectFile ?? "Objects",
-      componentListFile:
-        args.componentListFile ?? "ComponentList.SC2Components",
+      componentListFile: args.componentListFile ?? "ComponentList.SC2Components",
       operations,
       candidates,
       evidence: ["PROVEN_BY_REAL_MAP", "OBSERVED_CATALOG_XML"],
       warnings: ["Runtime collision and pathing are not checked."],
       ...(args.bounds ? { bounds: args.bounds } : {}),
     });
+    Object.assign(plan.sourceSha256, terrainHashes.sourceSha256);
+    Object.assign(plan.diskSha256, terrainHashes.diskSha256);
+    return plan;
   }
 
   async scatterDoodads(input: ScatterDoodadsArgs) {
@@ -438,21 +487,33 @@ export class PlacementWorkspace {
       : PlacementDocument.create(args.objectFile);
     if (document.validate().some((i) => i.severity === "error"))
       throw new Error("INVALID_EXISTING_OBJECTS");
-    for(const id of args.replaceObjectIds){if(document.list().find(o=>o.id===id)?.kind!=='ObjectDoodad')throw new Error('REPLACEMENT_REQUIRES_DOODAD: '+id);document.remove(id);}
+    const replacementKinds = new Map(document.list().map((object) => [object.id, object.kind]));
+    const removedIds = new Set<number>();
+    for (const id of args.replaceObjectIds) {
+      if (replacementKinds.get(id) !== "ObjectDoodad" || removedIds.has(id))
+        throw new Error("REPLACEMENT_REQUIRES_DOODAD: " + id);
+      removedIds.add(id);
+    }
+    document.removeMany(args.replaceObjectIds);
     const existingPoints = args.avoidExisting
       ? document
           .list()
-          .filter(
-            (o) =>
-              ["ObjectDoodad", "ObjectUnit"].includes(o.kind) && o.position,
-          )
+          .filter((o) => ["ObjectDoodad", "ObjectUnit"].includes(o.kind) && o.position)
           .map((o) => {
             const [x, y, z] = o.position!.split(",").map(Number);
             return { x, y, z };
           })
       : [];
     let attempts = 0;
-    const clusters=scatterClusters(args.area,args.seed,args.clusterCount,args.clusterRadius,args.exclusionZones,undefined,args.clusterSeparation);
+    const clusters = scatterClusters(
+      args.area,
+      args.seed,
+      args.clusterCount,
+      args.clusterRadius,
+      args.exclusionZones,
+      undefined,
+      args.clusterSeparation,
+    );
     const rejected = {
       holes: 0,
       protected: 0,
@@ -476,11 +537,9 @@ export class PlacementWorkspace {
         maxAttempts: args.maxAttempts,
         acceptPoint: (p) => {
           attempts++;
-          if(!clusters.accepts(p))return false;
-          const point = args.textures
-            ? surface.sample(p)
-            : surface.sampleGround(p);
-          if ((point.mask === 0 || point.hidden)) {
+          if (!clusters.accepts(p)) return false;
+          const point = args.textures ? surface.sample(p) : surface.sampleGround(p);
+          if (point.mask === 0 || point.hidden) {
             rejected.holes++;
             return false;
           }
@@ -509,9 +568,7 @@ export class PlacementWorkspace {
           if (
             args.textures &&
             !args.textures.some((t) =>
-              point.textures?.some(
-                (v) => v.id === t.id && v.weight >= t.minWeight,
-              ),
+              point.textures?.some((v) => v.id === t.id && v.weight >= t.minWeight),
             )
           ) {
             rejected.texture++;
@@ -535,9 +592,7 @@ export class PlacementWorkspace {
           break;
         }
       }
-      const scale =
-        args.scaleRange.min +
-        random() * (args.scaleRange.max - args.scaleRange.min);
+      const scale = args.scaleRange.min + random() * (args.scaleRange.max - args.scaleRange.min);
       return {
         op: "add",
         object: {
@@ -546,14 +601,16 @@ export class PlacementWorkspace {
           sourceKey: choice.resolved.key,
           position,
           rotation:
-            args.rotationRange.min +
-            random() * (args.rotationRange.max - args.rotationRange.min),
+            args.rotationRange.min + random() * (args.rotationRange.max - args.rotationRange.min),
           scale: { x: scale, y: scale, z: scale },
           flags: { HeightAbsolute: "1" },
         },
       };
     });
-    const operations:PlacementMutation[]=[...args.replaceObjectIds.map(objectId=>({op:'remove' as const,objectId})),...additions];
+    const operations: PlacementMutation[] = [
+      ...args.replaceObjectIds.map((objectId) => ({ op: "remove" as const, objectId })),
+      ...additions,
+    ];
     const plan = await this.remember({
       request: {
         type: "scatterDoodads",

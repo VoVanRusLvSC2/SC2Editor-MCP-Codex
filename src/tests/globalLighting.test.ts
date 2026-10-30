@@ -1,9 +1,50 @@
 import test from 'node:test';import assert from 'node:assert/strict';import vm from 'node:vm';
 import {resolveGlobalLighting} from '../modules/lighting/catalog.js';
+import { promises as fs } from "node:fs";
+import os from "node:os";
+import path from "node:path";
+import { Workspace } from "../core/workspace.js";
+import { LightingWorkspace } from "../modules/lighting/workspace.js";
+import type { CascWorkspace } from "../modules/casc/workspace.js";
 import {createGlobalLightingKernel} from '../modules/lighting/math.js';
 import {decodeAmbientCube} from '../modules/lighting/cube.js';
 import {createGlobalToneMath} from '../modules/lighting/tone.js';
 const native='<Catalog><CLight id="Base"><AmbientEnvironmentMap value="Assets/sky.dds"/><ToDInfoArray AmbientColor=".2,.3,.4"><DirectionalLight index="Key" Color="1,.5,.25" Direction="0,0,-1" ColorMultiplier="2"/><DirectionalLight index="Fill" Color=".2,.4,.6" Direction="0,0,1"/></ToDInfoArray></CLight><CLight id="Scene" parent="Base"><ToDInfoArray><DirectionalLight index="Key" ColorMultiplier="0"/><Param index="HDRExposure" value="2"/></ToDInfoArray></CLight></Catalog>';
+
+test("prepared lighting follows exact local content and ordered overlays while preserving fresh source guards", async (t) => {
+  const root = await fs.mkdtemp(path.join(os.tmpdir(), "lighting-preparation-"));
+  t.after(() => fs.rm(root, { recursive: true, force: true }));
+  const file = "Base.SC2Data/GameData/LightData.xml";
+  await fs.mkdir(path.dirname(path.join(root, file)), { recursive: true });
+  const xml =
+    '<Catalog><CLight id="Scene"><ToDInfoArray AmbientColor=".2,.3,.4"/></CLight></Catalog>';
+  await fs.writeFile(path.join(root, file), xml);
+  const workspace = new Workspace(root),
+    lights = new LightingWorkspace(workspace, {} as CascWorkspace),
+    request = { packages: [], preset: "Scene" };
+  const first = await lights.resolve(request);
+  first.lighting.ambient[0] = 9;
+  assert.deepEqual((await lights.resolve(request)).lighting.ambient, [0.2, 0.3, 0.4]);
+  await fs.writeFile(path.join(root, file), xml.replace(".2,", ".8,"));
+  assert.deepEqual((await lights.resolve(request)).lighting.ambient, [0.8, 0.3, 0.4]);
+  const overlay = xml.replace(".2,", ".6,");
+  assert.deepEqual(
+    (await lights.resolve({ ...request, localTexts: [xml, overlay] })).lighting.ambient,
+    [0.6, 0.3, 0.4],
+  );
+  assert.deepEqual(
+    (await lights.resolve({ ...request, localTexts: [overlay, xml] })).lighting.ambient,
+    [0.2, 0.3, 0.4],
+  );
+  const read = workspace.readRaw.bind(workspace);
+  let reads = 0;
+  workspace.readRaw = async (name) => {
+    const value = await read(name);
+    if (++reads === 1) await fs.writeFile(path.join(root, file), xml);
+    return value;
+  };
+  await assert.rejects(lights.resolve(request), /LIGHTING_LOCAL_CATALOG_CHANGED|STALE_DEPENDENCY/);
+});
 const close=(actual:number[],expected:number[])=>actual.forEach((value,i)=>assert.ok(Math.abs(value-expected[i])<1e-12,`${actual} != ${expected}`));
 function knownCube(color=0xffff){const b=Buffer.alloc(128+48);b.write('DDS ');b.writeUInt32LE(124,4);b.writeUInt32LE(4,12);b.writeUInt32LE(4,16);b.writeUInt32LE(1,28);b.writeUInt32LE(32,76);b.write('DXT1',84);b.writeUInt32LE(0xfe00,112);for(let i=0;i<6;i++)b.writeUInt16LE(color,128+i*8);return decodeAmbientCube(b);}
 test('shared global catalog retains native zero overrides and exact inherited asset path',()=>{const l=resolveGlobalLighting([native],'Scene');assert.equal(l.environmentMap,'Assets/sky.dds');assert.deepEqual(l.directional[0].color,[0,0,0]);assert.deepEqual(l.ambient,[.2,.3,.4]);assert.equal(l.parameters?.HDRExposure,2);});

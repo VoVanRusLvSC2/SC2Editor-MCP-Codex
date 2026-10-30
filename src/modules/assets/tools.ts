@@ -2,4 +2,129 @@ import {promises as fs} from 'node:fs';
 import {measurementSchema} from './measurement.js';
 import {modelSheetPng} from './measurementRender.js';
 import type {McpServer} from '@modelcontextprotocol/server';import * as z from 'zod/v4';import type {AssetWorkspace} from './workspace.js';
-export function registerAssetTools(server:McpServer,assets:AssetWorkspace){server.registerTool('assets.measure',{description:'Measure M3 referenced rest geometry with explicit scale/rotation/position. Return pivot, bottom, dimensions, authored bind attachments and top/side/isometric PNGs. Geometry is separate from engine footprint. Derived cached files only.',inputSchema:measurementSchema,annotations:{readOnlyHint:false,destructiveHint:false,openWorldHint:false}},async a=>{try{const model=await assets.measurements.load(a.file,{scale:a.scale,rotation:a.rotation,position:a.position}),images=[];if(a.preview)for(const view of ['top','side','isometric'] as const){const image=await assets.measurements.writeDerived({file:model.file,sha:model.sha256,transform:model.transform,view},'png',async()=>(await modelSheetPng([{id:a.file.split('/').at(-1)!,model}],{view})).bytes);images.push({view,pngFile:image.file,cacheHit:image.cacheHit});}const pngFile=images.at(-1)?.pngFile;return {content:[{type:'text' as const,text:JSON.stringify({...assets.measurements.summary(model),images,pngFile})},...(a.includeImage&&pngFile?[{type:'image' as const,mimeType:'image/png',data:(await fs.readFile(pngFile)).toString('base64')}]:[])]};}catch(e){return {isError:true,content:[{type:'text' as const,text:JSON.stringify({error:e instanceof Error?e.message:String(e)})}]};}});const file=z.string().min(1).max(1024),run=async(work:()=>Promise<unknown>)=>{try{return {content:[{type:'text' as const,text:JSON.stringify(await work())}]};}catch(e){return {isError:true,content:[{type:'text' as const,text:JSON.stringify({error:e instanceof Error?e.message:String(e)})}]};}},annotations={readOnlyHint:true,destructiveHint:false,openWorldHint:false};server.registerTool('assets.search',{description:'Search local CASC model/texture logical paths. Kind filters the bounded native page; follow nextOffset even for empty filtered pages. No asset blobs in responses.',inputSchema:z.object({prefix:z.string().max(1024).default(''),query:z.string().max(128).default(''),kind:z.enum(['all','texture','model']).default('all'),offset:z.number().int().nonnegative().default(0),limit:z.number().int().min(1).max(100).default(20)}).strict(),annotations},a=>run(()=>assets.search(a.prefix,a.query,a.kind,a.offset,a.limit)));server.registerTool('assets.inspect',{description:'Compact verified DDS dimensions/format or M3 static geometry bounds, counts, animation names and supported-format diagnostics. Reads installed CASC, no editor.',inputSchema:z.object({file}).strict(),annotations},a=>run(()=>assets.inspect(a.file)));server.registerTool('assets.preview',{description:'Generate a standalone offline HTML preview and return local paths: DDS thumbnail or rotating M3 static wireframe/surface. No materials/animation, first mesh division only. Writes derived previews under .sc2mcp-assets-preview; no map/game writes.',inputSchema:z.object({file,maxSize:z.number().int().min(64).max(1024).default(512)}).strict(),annotations:{readOnlyHint:false,destructiveHint:false,openWorldHint:false}},a=>run(()=>assets.preview(a.file,a.maxSize)));}
+export function registerAssetTools(server: McpServer, assets: AssetWorkspace) {
+  server.registerTool(
+    "assets.measure",
+    {
+      description:
+        "Measure M3 referenced rest geometry with explicit scale/rotation/position. Return pivot, bottom, dimensions, authored bind attachments and top/side/isometric PNGs. Geometry is separate from engine footprint. Derived cached files only.",
+      inputSchema: measurementSchema,
+      annotations: { readOnlyHint: false, destructiveHint: false, openWorldHint: false },
+    },
+    async (a) => {
+      try {
+        const model = await assets.measurements.load(a.file, {
+            scale: a.scale,
+            rotation: a.rotation,
+            position: a.position,
+          }),
+          images = [];
+        if (a.preview)
+          for (const view of ["top", "side", "isometric"] as const) {
+            const image = await assets.measurements.writeDerived(
+              { file: model.file, sha: model.sha256, transform: model.transform, view },
+              "png",
+              async () =>
+                (await modelSheetPng([{ id: a.file.split("/").at(-1)!, model }], { view })).bytes,
+            );
+            images.push({ view, pngFile: image.file, cacheHit: image.cacheHit });
+          }
+        const pngFile = images.at(-1)?.pngFile;
+        return {
+          content: [
+            {
+              type: "text" as const,
+              text: JSON.stringify({ ...assets.measurements.summary(model), images, pngFile }),
+            },
+            ...(a.includeImage && pngFile
+              ? [
+                  {
+                    type: "image" as const,
+                    mimeType: "image/png",
+                    data: (await fs.readFile(pngFile)).toString("base64"),
+                  },
+                ]
+              : []),
+          ],
+        };
+      } catch (e) {
+        return {
+          isError: true,
+          content: [
+            {
+              type: "text" as const,
+              text: JSON.stringify({ error: e instanceof Error ? e.message : String(e) }),
+            },
+          ],
+        };
+      }
+    },
+  );
+  const file = z.string().min(1).max(1024),
+    run = async (work: () => Promise<unknown>) => {
+      try {
+        return { content: [{ type: "text" as const, text: JSON.stringify(await work()) }] };
+      } catch (e) {
+        return {
+          isError: true,
+          content: [
+            {
+              type: "text" as const,
+              text: JSON.stringify({ error: e instanceof Error ? e.message : String(e) }),
+            },
+          ],
+        };
+      }
+    },
+    annotations = { readOnlyHint: true, destructiveHint: false, openWorldHint: false };
+  server.registerTool(
+    "assets.search",
+    {
+      description:
+        "Search local CASC model/texture logical paths. Kind filters the bounded native page; follow nextOffset even for empty filtered pages. No asset blobs in responses.",
+      inputSchema: z
+        .object({
+          prefix: z.string().max(1024).default(""),
+          query: z.string().max(128).default(""),
+          kind: z.enum(["all", "texture", "model"]).default("all"),
+          offset: z.number().int().nonnegative().default(0),
+          limit: z.number().int().min(1).max(100).default(20),
+        })
+        .strict(),
+      annotations,
+    },
+    (a) => run(() => assets.search(a.prefix, a.query, a.kind, a.offset, a.limit)),
+  );
+  server.registerTool(
+    "assets.inspect_many",
+    {
+      description:
+        "Inspect up to 24 exact M3/DDS paths in one retained read scope, without images or asset blobs. Reuses content-verified geometry/metadata; reports each source hash, format/animation limits and one consistent CASC build. Static inspection does not prove native playback.",
+      inputSchema: z.object({ files: z.array(file).min(1).max(24) }).strict(),
+      annotations,
+    },
+    (a) => run(() => assets.inspectMany(a.files)),
+  );
+  server.registerTool(
+    "assets.inspect",
+    {
+      description:
+        "Compact verified DDS dimensions/format or M3 static geometry bounds, counts, animation names and supported-format diagnostics. Reads installed CASC, no editor.",
+      inputSchema: z.object({ file }).strict(),
+      annotations,
+    },
+    (a) => run(() => assets.inspect(a.file)),
+  );
+  server.registerTool(
+    "assets.preview",
+    {
+      description:
+        "Generate a standalone offline HTML preview and return local paths: DDS thumbnail or rotating M3 static wireframe/surface. No materials/animation, first mesh division only. Writes derived previews under .sc2mcp-assets-preview; no map/game writes.",
+      inputSchema: z
+        .object({ file, maxSize: z.number().int().min(64).max(1024).default(512) })
+        .strict(),
+      annotations: { readOnlyHint: false, destructiveHint: false, openWorldHint: false },
+    },
+    (a) => run(() => assets.preview(a.file, a.maxSize)),
+  );
+}

@@ -1,5 +1,6 @@
 import type { BatchStep, BatchTool } from "./mcpBatch.js";
 import { coalesceDataAuthoringSteps } from "./authoringDataGroups.js";
+import { coalesceAuthoringSteps } from "./authoringGroups.js";
 
 export type AuthorMode = "plan" | "stage" | "save";
 export const authoringGuide = {
@@ -21,7 +22,18 @@ export const authoringGuide = {
     save: "For supported recipes, apply and save with existing stale guards. Compatible adjacent same-catalog Data commands form one atomic group; earlier distinct groups may remain saved if a later group fails.",
   },
   dataGroupingPolicy:
-    "Adjacent compatible data.set, instant/target ability, veterancy and main Actor animation commands for one catalog share one guarded Data apply/save, up to500 operations. Original schemas/defaults are checked first. Reads, another file, different transaction flags, advanced edits and result references keep their boundaries. Group receipts use the first command ID and ordered operation indices.",
+    "Adjacent compatible Data, Text, Settings, Terrain and single-object Placement commands share one candidate and grouped save. Original schemas/defaults and per-tool limits remain authoritative. Reads, differing files/options, advanced guards and external result references retain boundaries. Data recipes expand inside the transaction with a final limit of 500 native operations. Receipts keep the first command ID; compilation reports declared scopes and avoided calls, while module results report actual files and validity.",
+  dataQuickStart: {
+    preferred:
+      "Use data unit and data spell before low-level XML/JSON. Send multiple adjacent commands in one modkit.author call. mode=plan previews; mode=save stages and saves the complete Data group once.",
+    spells:
+      "kind=damage|pulse|line|ring|burn. Required id/kind/damage/model/face; Model and Button face are existing exact catalog IDs. Optional unit+slot(0..14) binds a 3x5 command card; slot selects row and column. A positive delay requires warningModel. duration/period apply only to burn, damage is per tick. Sound is optional. Target templates are Stimpack for caster pulse, EMP for line/ring and Snipe for unit damage/burn; sourceAbility overrides explicitly. Area spells hit enemy ground units.",
+    unit: "data unit id=Hero from=Marine life=600 scale=1.2 heroic=true creates a derived Unit and independent main Actor, retaining the source movement/attack/death presentation. Existing weapons, abilities and morph forms remain shared. Unsupported layered actors or ambiguous templates reject; no recursive graph duplication or silent replacement.",
+    limits:
+      "Button text/icon/hotkey inherit face; author distinct localized labels/hotkeys separately when needed. Cast/channel animations use data actor.ability_animation with real sequences. Static validation and model links do not prove native playback or balance. Creation bundles reject existing IDs; explicit configure commands update supported scalar fields of local graphs.",
+    updates:
+      "data unit.configure id=Hero life=800 speed=3 scale=1.4 changes explicit local Unit values and optional main Actor scale. data spell.configure id=Pulse damage=50 energy=20 cooldown=8 tunes an existing compact spell; target range and burn duration/period are supported where applicable. Omitted values, shape, cards, presentation and manual fields remain unchanged. No graph replacement or implicit creation.",
+  },
   examples: [
     "project organize genre=mission",
     "terrain catalog tileset=Agria section=vegetation limit=8",
@@ -38,6 +50,10 @@ export const authoringGuide = {
     "objects unit id=Marine at=25,31 owner=1 count=3",
     "data set id=MyMarine path=LifeMax value=600",
     "data card.check unit=Hero",
+    "data unit id=Hero from=Marine life=600 scale=1.2 heroic=true",
+    "data spell id=Pulse kind=pulse unit=Hero slot=11 damage=40 radius=4 model=GhostEMPAttackImpactEffect face=EMP energy=25 cooldown=5",
+    "data spell id=Rift kind=line damage=48 model=GhostEMPAttackImpactEffect face=EMP delay=1.4 warningModel=MyWarningModel",
+    "data spell id=Burn kind=burn damage=2 duration=180 period=1 model=MyFireModel face=Snipe",
     "data ability.instant id=Pulse effect=PulseSearch button=Pulse energy=25 cooldown=5",
     "data ability.target id=TargetPulse sourceAbility=Snipe effect=TargetDamage button=TargetPulse range=6 energy=25 cooldown=5",
     "data ability.charges id=TargetPulse max=3 start=3 use=1 regen=8 location=Unit",
@@ -71,15 +87,15 @@ export const authoringGuide = {
     terrain:
       "status/check/paint/blend/raise/lower/flatten/pathing/nav/decorate/cliff/cliff.repair/ramp/ramp.place/landscape/landscape.inspect/landscape.zone/catalog/style/compose/measure/palette_preview/prefab/assemble",
     objects: "status/check/unit/doodad",
-    data: "find/check/set",
+    data: "unit/unit.configure/spell/spell.configure/find/check/set/ability.instant/ability.target/ability.charges/hero.veterancy/hero.learn/actor.ability_animation",
     logic: "status/check/symbols/file/function/body (Galaxy)",
     gui: "status/check/plan (explicit)",
     ui: "status/timer",
     cutscene: "status/show/create/compose",
     text: "check/set",
-    settings: "status/players/player",
+    settings: "status/players/player/player.set",
     ai: "status/find/check/definition/wave",
-    assets: "find/inspect/preview/measure",
+    assets: "find/inspect/inspect_many/preview/measure",
     casc: "find",
     lighting: "status",
   },
@@ -107,6 +123,7 @@ const aliases: Record<string, string> = {
   "objects.doodad": "placement.addDoodad",
   "objects.variants": "placement.setVariations",
   "data.find": "data.peek",
+  "data.unit": "data.unit.copy",
   "data.check": "data.validate",
   "logic.status": "script.inspect",
   "logic.check": "script.validate",
@@ -205,6 +222,10 @@ const directCommands = new Set([
   "data.validate",
   "data.card.check",
   "data.set",
+  "data.unit.copy",
+  "data.unit.configure",
+  "data.spell.configure",
+  "data.spell",
   "data.ability.instant",
   "data.ability.target",
   "data.ability.charges",
@@ -254,6 +275,7 @@ const directCommands = new Set([
   "settings.player",
   "assets.search",
   "assets.inspect",
+  "assets.inspect_many",
   "assets.preview",
   "ai.context",
   "ai.query",
@@ -478,6 +500,12 @@ function shorthand(
     };
   }
   if (name === "objects.unit" || name === "objects.doodad") {
+    const player = take(args, "player");
+    if (player !== undefined) {
+      if (name !== "objects.unit" || args.owner !== undefined)
+        throw Error("AUTHOR_OBJECT_PLAYER_ALIAS");
+      args.owner = player;
+    }
     const at = take(args, "at");
     if (at !== undefined) {
       const coords = String(at).split(",");
@@ -532,6 +560,11 @@ function shorthand(
     args.entries = [entry];
   }
   if (
+    name === "data.unit" ||
+    name === "data.unit.copy" ||
+    name === "data.unit.configure" ||
+    name === "data.spell.configure" ||
+    name === "data.spell" ||
     name === "data.ability.instant" ||
     name === "data.ability.target" ||
     name === "data.ability.charges" ||
@@ -550,7 +583,21 @@ function shorthand(
           : name === "data.xp.search"
             ? "Base.SC2Data/GameData/GameData.xml"
             : "Base.SC2Data/GameData/UnitData.xml");
-    return { tool: name, args: { file, ...args }, saveFile: String(file) };
+    return { tool: aliases[name] ?? name, args: { file, ...args }, saveFile: String(file) };
+  }
+  if (name === "assets.inspect_many") {
+    const files = take(args, "files");
+    args.files = typeof files === "string" ? files.split(",").map((file) => file.trim()) : files;
+    return { tool: name, args };
+  }
+  if (name === "cutscene.show" || name === "cutscene.preview") {
+    const times = take(args, "times");
+    if (typeof times === "string") {
+      const parts = times.split(",").map((value) => value.trim());
+      if (parts.some((value) => !/^\d+$/.test(value))) throw Error("AUTHOR_CUTSCENE_TIMES");
+      args.times = parts.map(Number);
+    } else if (times !== undefined) args.times = times;
+    return { tool: aliases[name] ?? name, args };
   }
   if (name === "document.empty") {
     const kind = take(args, "kind") ?? "map",
@@ -563,6 +610,14 @@ function shorthand(
     }
     if (kind === "mod") return { tool: "document.plan", args: { ...args, kind } };
     throw new Error("AUTHOR_DOCUMENT_KIND");
+  }
+  if (name === "settings.player.set") {
+    const playerId = take(args, "id"),
+      directory = take(args, "directory") ?? "";
+    return {
+      tool: "settings.plan",
+      args: { directory, operations: [{ op: "player.set", playerId, patch: args }] },
+    };
   }
   if (name === "settings.player") {
     const playerId = take(args, "id"),
@@ -785,9 +840,17 @@ function lifecycle(
       },
     };
     if (mode === "save")
-      save = { id: base + "_save", tool: "modkit.save", args: { file: "Objects" } };
+      save = {
+        id: base + "_save",
+        tool: "modkit.save",
+        args: { file: command.args.objectFile ?? "Objects" },
+      };
   } else if (
     command.tool === "data.apply" ||
+    command.tool === "data.unit.copy" ||
+    command.tool === "data.unit.configure" ||
+    command.tool === "data.spell.configure" ||
+    command.tool === "data.spell" ||
     command.tool === "data.ability.instant" ||
     command.tool === "data.ability.target" ||
     command.tool === "data.ability.charges" ||
@@ -827,7 +890,7 @@ function lifecycle(
     apply = {
       id: base + "_apply",
       tool: "settings.apply",
-      args: { planId: from("planId"), dryRun: false, stage: true },
+      args: { planId: from("id"), dryRun: false, stage: true },
     };
     if (mode === "save")
       save = {
@@ -835,20 +898,39 @@ function lifecycle(
         tool: "settings.save",
         args: { transactionId: { $from: base + "_apply.transactionId" }, dryRun: false },
       };
+  } else if (command.tool === "document.plan" || command.tool === "document.plan_file") {
+    if (mode === "stage") throw Error("AUTHOR_DOCUMENT_NO_STAGING: use plan or save");
+    apply = {
+      id: base + "_create",
+      tool: "document.create",
+      args: { planId: from("id"), dryRun: false, output: "components" },
+    };
   } else if (command.tool === "map.create" || command.tool === "map.clone") {
     if (mode === "stage") throw new Error("AUTHOR_MAP_NO_STAGING: use plan or save");
     first.args = { ...first.args, dryRun: false };
   } else throw new Error("AUTHOR_LIFECYCLE_UNSUPPORTED: " + command.tool);
   return [first, ...(apply ? [apply] : []), ...(save ? [save] : [])];
 }
+export interface AuthorCompilationReceipt {
+  commands: number;
+  expandedCalls: number;
+  groupedCalls: number;
+  avoidedCalls: number;
+  declaredFiles: string[];
+  declaredDirectories: string[];
+  validationTools: string[];
+}
+
 export function compileAuthorScript(
   source: string,
   mode: AuthorMode,
   tools?: ReadonlyMap<string, BatchTool>,
+  receipt?: (value: AuthorCompilationReceipt) => void,
 ): BatchStep[] {
   if (Buffer.byteLength(source) > 65536) throw new Error("AUTHOR_SOURCE_LIMIT");
   const lines = source.replaceAll("\r\n", "\n").split("\n"),
     steps: BatchStep[] = [];
+  let commands = 0;
   for (let line = 0; line < lines.length; line++) {
     const raw = lines[line].trim();
     if (!raw || raw.startsWith("#")) continue;
@@ -878,6 +960,7 @@ export function compileAuthorScript(
     )
       throw new Error("AUTHOR_BLOCK_ONLY_GALAXY");
     const command = shorthand(name, argumentsOf(tokens), block);
+    commands++;
     if (tools && !tools.has(command.tool))
       throw new Error("AUTHOR_TOOL_UNAVAILABLE: " + command.tool);
     const next = lifecycle(command, mode, "s" + (steps.length + 1));
@@ -886,7 +969,36 @@ export function compileAuthorScript(
     steps.push(...next);
   }
   if (!steps.length) throw new Error("AUTHOR_EMPTY");
-  const grouped = coalesceDataAuthoringSteps(steps, mode, tools);
+  const grouped = coalesceAuthoringSteps(
+    coalesceDataAuthoringSteps(steps, mode, tools),
+    mode,
+    tools,
+  );
   if (grouped.length > 20) throw new Error("AUTHOR_STEP_LIMIT");
+  const strings = (keys: string[]) =>
+    [
+      ...new Set(
+        grouped.flatMap((step) =>
+          keys
+            .map((key) => step.args[key])
+            .filter((value): value is string => typeof value === "string"),
+        ),
+      ),
+    ].sort();
+  receipt?.({
+    commands,
+    expandedCalls: steps.length,
+    groupedCalls: grouped.length,
+    avoidedCalls: steps.length - grouped.length,
+    declaredFiles: strings(["file", "objectFile", "componentListFile"]),
+    declaredDirectories: strings(["directory", "terrainDirectory"]),
+    validationTools: [
+      ...new Set(
+        grouped
+          .filter((step) => /\.(?:apply|plan|check|validate)$/.test(step.tool))
+          .map((step) => step.tool),
+      ),
+    ],
+  });
   return grouped;
 }

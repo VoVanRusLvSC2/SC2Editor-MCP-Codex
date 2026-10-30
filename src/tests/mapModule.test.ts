@@ -50,6 +50,21 @@ test("metadata stage/save guards the entire file list and source bytes, while ke
   assert.deepEqual(new MapInfoDocument(await fs.readFile(path.join(f.source,"MapInfo"))).playableBounds,bounds);
 });
 
+test('native terrain logical root accepts t3Terrain.xml without guessing other missing components',async t=>{
+ const f=await fixture(t),file=path.join(f.source,'ComponentList.SC2Components');
+ const original=await fs.readFile(file,'utf8');
+ const logical=original.replace(/(<DataComponent\b[^>]*Type="terr"[^>]*>)t3Terrain\.xml(<\/DataComponent>)/,'$1t3Terrain$2');
+ assert.notEqual(logical,original);
+ await fs.writeFile(file,logical);
+ assert.equal((await f.map.inspect('map')).valid,true);
+ assert.equal(await fs.readFile(file,'utf8'),logical);
+ await fs.writeFile(file,logical.replace('>t3Terrain</DataComponent>','>MissingTerrain</DataComponent>'));
+ assert.ok((await f.map.inspect('map')).issues.some(i=>i.code==='DECLARED_COMPONENT_MISSING'&&i.message==='terr: MissingTerrain'));
+ await fs.writeFile(file,logical);
+ await fs.unlink(path.join(f.source,'t3Terrain.xml'));
+ assert.ok((await f.map.inspect('map')).issues.some(i=>i.code==='DECLARED_COMPONENT_MISSING'&&i.message==='terr: t3Terrain'));
+});
+
 test("complete native clone preserves scripts and unknown entries and rejects pending drafts",async t => {
   const f = await fixture(t);
   await fs.writeFile(path.join(f.source,"custom.galaxy"),"void Custom () {}\n");
@@ -75,27 +90,82 @@ test("metadata dependency guard survives a generic restage of the byte group",as
   assert.equal(new MapInfoDocument(await fs.readFile(path.join(f.source,"MapInfo"))).minimapResolution,2);
 });
 
-test("native backend preserves unknown content, encrypted entry intent, empty files and locale variants",{ skip:!archiveBackendAvailable() },async t => {
-  const root = await fs.mkdtemp(path.join(os.tmpdir(),"sc2-mpq-test-")); t.after(() => fs.rm(root,{ recursive:true,force:true }));
-  const source = path.join(root,"source"); await fs.mkdir(path.join(source,".sc2mcp-locales/1033"),{ recursive:true });
-  await fs.writeFile(path.join(source,"neutral.bin"),Buffer.from([0,255,128,1,2,3]));
-  await fs.writeFile(path.join(source,"empty"),Buffer.alloc(0));
-  await fs.writeFile(path.join(source,".sc2mcp-locales/1033/neutral.bin"),"localized");
-  await fs.writeFile(path.join(source,archiveMetadataFile),JSON.stringify({ protocol:"sc2-mcp-storm-v1",stormRevision:"fixture",headerOffset:0,
-    entries:[{ name:"neutral.bin",localPath:"neutral.bin",locale:0,flags:0x30000,size:6,fileTime:"1234",internal:false },
-      { name:"neutral.bin",localPath:".sc2mcp-locales/1033/neutral.bin",locale:1033,flags:0,size:9,fileTime:"0",internal:false }] }));
-  await fs.writeFile(path.join(source,"neutral.bin.sc2uimcp.bak"),"backup must not be packed");
-  const target = path.join(root,"Map.SC2Map"), result = await packArchive(source,target,{ backup:false });
-  assert.equal(result.verification.entryCount,3); assert.equal(result.verification.reopened,true); assert.equal(result.backup,undefined);
-  const manifest = await inspectArchive(target);
-  assert.equal(manifest.entries.filter(e => !e.internal).length,3);
-  assert.ok(manifest.entries.some(e => e.name === "neutral.bin" && e.locale === 1033));
-  assert.ok(manifest.entries.some(e => e.name === "neutral.bin" && !e.locale && (e.flags & 0x10000)));
-  const destination = path.join(root,"extracted"); await extractArchive(target,destination);
-  assert.deepEqual(await fs.readFile(path.join(destination,"neutral.bin")),Buffer.from([0,255,128,1,2,3]));
-  assert.equal(await fs.readFile(path.join(destination,".sc2mcp-locales/1033/neutral.bin"),"utf8"),"localized");
-  await assert.rejects(extractArchive(target,destination),/DESTINATION_EXISTS/);
-});
+test(
+  "native backend preserves unknown content, encrypted entry intent, empty files and locale variants",
+  { skip: !archiveBackendAvailable() },
+  async (t) => {
+    const root = await fs.mkdtemp(path.join(os.tmpdir(), "sc2-mpq-test-"));
+    t.after(() => fs.rm(root, { recursive: true, force: true }));
+    const source = path.join(root, "source");
+    await fs.mkdir(path.join(source, ".sc2mcp-locales/1033"), { recursive: true });
+    await fs.writeFile(path.join(source, "neutral.bin"), Buffer.from([0, 255, 128, 1, 2, 3]));
+    await fs.writeFile(path.join(source, "empty"), Buffer.alloc(0));
+    await fs.writeFile(path.join(source, ".sc2mcp-locales/1033/neutral.bin"), "localized");
+    await fs.writeFile(
+      path.join(source, archiveMetadataFile),
+      JSON.stringify({
+        protocol: "sc2-mcp-storm-v1",
+        stormRevision: "fixture",
+        headerOffset: 0,
+        entries: [
+          {
+            name: "neutral.bin",
+            localPath: "neutral.bin",
+            locale: 0,
+            flags: 0x30000,
+            size: 6,
+            fileTime: "1234",
+            internal: false,
+          },
+          {
+            name: "neutral.bin",
+            localPath: ".sc2mcp-locales/1033/neutral.bin",
+            locale: 1033,
+            flags: 0,
+            size: 9,
+            fileTime: "0",
+            internal: false,
+          },
+        ],
+      }),
+    );
+    await fs.writeFile(path.join(source, "neutral.bin.sc2uimcp.bak"), "backup must not be packed");
+    const target = path.join(root, "Map.SC2Map"),
+      result = await packArchive(source, target, { backup: false });
+    assert.equal(result.verification.entryCount, 3);
+    assert.equal(result.verification.reopened, true);
+    assert.equal(result.backup, undefined);
+    assert.equal(result.performance?.inputFiles, 3);
+    assert.ok(result.performance!.inputBytes > 0);
+    for (const name of [
+      "inputManifest",
+      "privateCopy",
+      "snapshotManifest",
+      "adapterPack",
+      "reopenVerification",
+      "finalSourceManifest",
+      "publication",
+    ])
+      assert.ok(Number.isFinite(result.performance!.stagesMilliseconds[name]), name);
+    const manifest = await inspectArchive(target);
+    assert.equal(manifest.entries.filter((e) => !e.internal).length, 3);
+    assert.ok(manifest.entries.some((e) => e.name === "neutral.bin" && e.locale === 1033));
+    assert.ok(
+      manifest.entries.some((e) => e.name === "neutral.bin" && !e.locale && e.flags & 0x10000),
+    );
+    const destination = path.join(root, "extracted");
+    await extractArchive(target, destination);
+    assert.deepEqual(
+      await fs.readFile(path.join(destination, "neutral.bin")),
+      Buffer.from([0, 255, 128, 1, 2, 3]),
+    );
+    assert.equal(
+      await fs.readFile(path.join(destination, ".sc2mcp-locales/1033/neutral.bin"), "utf8"),
+      "localized",
+    );
+    await assert.rejects(extractArchive(target, destination), /DESTINATION_EXISTS/);
+  },
+);
 
 test("MCP map export supports a root workspace via reserved output and verifies every entry",{ skip:!archiveBackendAvailable() },async t => {
   const f = await fixture(t), map = new MapWorkspace(new Workspace(f.source));

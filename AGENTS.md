@@ -12,6 +12,15 @@ localization, resource IDs and original catalog source annotations.
   is appropriate for server development/tests/packaging, not a parallel map writer.
 - Query bounded pages/fields, reuse caches, batch a logical change, and validate
   once. Keep complete transaction groups, stale guards, backups and manual edits.
+- For derived units and common spells, prefer `modkit.author_help section=data`
+  and compact `data unit` / `data spell` commands before writing raw Data JSON.
+  Put adjacent same-catalog recipes in one author call to share validation/save.
+  Inspect supported targeting, shared native mechanics and presentation limits;
+  custom mechanics still use the detailed tools rather than forcing a preset.
+  For balance edits, prefer `data unit.configure` / `data spell.configure` with
+  only changed scalar parameters. They preserve existing graphs and manual fields.
+  Adjacent compatible Text, Settings, Terrain and single-object placements also
+  coalesce; inspect compilation receipts and keep reads/advanced guards as boundaries.
 - Galaxy is the default. When GUI is requested, create native GUI elements and
   actual trigger folders; filesystem script folders and Custom Script wrappers do
   not satisfy full GUI authoring. Use genre-appropriate ownership and organization.

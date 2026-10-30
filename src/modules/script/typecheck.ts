@@ -7,7 +7,7 @@ const primitiveTypes=new Set(['void','int','fixed','bool','string','text','char'
 const numericTypes=new Set(['int','fixed','byte']);
 const precedence:Record<string,number>={'||':1,'&&':2,'==':3,'!=':3,'<':4,'<=':4,'>':4,'>=':4,'+':5,'-':5,'*':6,'/':6,'%':6};
 const typeOf=(raw:string)=>raw.trim().replace(/^(?:(?:const|static|native)\s+)*/,'').split(/\s+/)[0]?.replace(/\[.*$/,'')??'';
-const compatible=(target:string,source:string)=>target===source||(target==='fixed'&&numericTypes.has(source))||(source==='null'&&!primitiveTypes.has(target));
+const compatible=(target:string,source:string)=>target===source||(target==='fixed'&&numericTypes.has(source))||(source==='null'&&(target==='string'||!primitiveTypes.has(target)));
 
 function pieces(doc:GalaxyDocument,start:number,end:number):Array<[number,number]> {
   const out:Array<[number,number]>=[];let from=start;
@@ -133,9 +133,24 @@ export function checkGalaxyTypes(doc:GalaxyDocument,natives:ReadonlyMap<string,G
             if(!left){if(declared.has(name))fail('GALAXY_SCOPE_UNBOUND',first.start,`${name} is outside its local scope`);else unknown++;}
           }
         }else{cursor++;return reportUnknown();}
+        // Arrays and record members are outside this bounded binder. Consume
+        // their postfix syntax without confusing the container's type with the
+        // selected value; known enclosing calls still retain arity checks.
+        while(cursor<end&&['[','.'].includes(tokens[cursor].value)){
+          if(tokens[cursor].value==='['){
+            const close=doc.pairs.get(cursor);
+            if(close===undefined||close>=end){cursor=end;return reportUnknown();}
+            cursor=close+1;
+          }else{
+            cursor+=2;
+            if(tokens[cursor]?.value==='('){const close=doc.pairs.get(cursor);if(close===undefined||close>=end){cursor=end;return reportUnknown();}cursor=close+1;}
+          }
+          left=reportUnknown();
+        }
         while(cursor<end){
           const op=operator(cursor,end);
-          if(!op||!(op.value in precedence)||precedence[op.value]<minimum)break;
+          if(!op||!(op.value in precedence)){cursor=end;return reportUnknown();}
+          if(precedence[op.value]<minimum)break;
           const position=tokens[cursor].start;cursor+=op.length;
           const right=parse(precedence[op.value]+1);
           if(left&&right){
@@ -217,7 +232,8 @@ export function checkGalaxyTypes(doc:GalaxyDocument,natives:ReadonlyMap<string,G
           if(!type){if(declared.has(value))fail('GALAXY_SCOPE_UNBOUND',token.start,`${value} is outside its local scope`);else unknown++;}
           else if(actual){
             if(next.value==='='&&!compatible(type,actual))fail('GALAXY_ASSIGN_TYPE',token.start,`${value}: expected ${type}, got ${actual}`);
-            if(next.value!=='='&&(!numericTypes.has(type)||!numericTypes.has(actual)))fail('GALAXY_OPERATOR_TYPE',token.start,`${next.value} expects numbers, got ${type} and ${actual}`);
+            const concat=next.value==='+='&&type===actual&&['string','text'].includes(type);
+            if(next.value!=='='&&!concat&&(!numericTypes.has(type)||!numericTypes.has(actual)))fail('GALAXY_OPERATOR_TYPE',token.start,`${next.value} expects numbers, got ${type} and ${actual}`);
           }
           checked++;i=end;continue;
         }

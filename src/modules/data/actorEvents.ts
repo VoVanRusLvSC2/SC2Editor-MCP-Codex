@@ -1,6 +1,16 @@
 import type {XmlNode} from '../../core/types.js';
 export interface ActorEdge {value:string;domain:string;start:number;end:number;raw:string;unknown:boolean}
 export interface ActorIssue {targetDomain?:string;code:string;offset:number}
+/** Walk the actor's own subtree in source order, rather than scanning the entire
+ * catalog once for each actor. Keep the original span containment rule. */
+function* actorOnNodes(entry:XmlNode,nodes:XmlNode[]):Generator<XmlNode>{
+ const pending=[...entry.childIds].reverse();
+ while(pending.length){
+  const node=nodes[pending.pop()!];
+  if(node.tag==='On'&&node.start>entry.start&&node.end<entry.end)yield node;
+  for(let i=node.childIds.length-1;i>=0;i--)pending.push(node.childIds[i]);
+ }
+}
 /** These measured signatures contain animation labels/properties, not catalog
  * links. Extra commands/unknown argument forms remain unverified. */
 function opaqueAnimationMessage(raw:string){
@@ -14,7 +24,7 @@ function opaqueAnimationMessage(raw:string){
 export function actorEvents(source:string,entry:XmlNode,nodes:XmlNode[],resolve:(raw:string)=>string) {
  const references:ActorEdge[]=[],issues:ActorIssue[]=[];
  if(!/^CActor/.test(entry.tag))return {references,issues};
- for(const on of nodes.filter(n=>n.tag==='On'&&n.start>entry.start&&n.end<entry.end)){
+ for(const on of actorOnNodes(entry,nodes)){
   for(const carrier of ['Terms','Send','Target']){
    const values:Array<{raw:string;start:number}>=[];
    const attr=on.attrSpans.find(a=>a.name===carrier);if(attr)values.push({raw:source.slice(attr.valueStart,attr.valueEnd),start:attr.valueStart});

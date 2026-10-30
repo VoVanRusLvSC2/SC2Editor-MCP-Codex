@@ -1,6 +1,6 @@
 import { createHash } from "node:crypto";
 import path from "node:path";
-import { Workspace } from "../../core/workspace.js";
+import { Workspace, type WorkspaceReadMemo } from "../../core/workspace.js";
 import { referenceSchema } from "./document.js";
 import { dataDomainFromType } from "./domains.js";
 import {
@@ -12,8 +12,18 @@ import {
 } from "./crossReferences.js";
 import type { DataObject, DataReference } from "./types.js";
 import type { CatalogRecord } from "./catalogTypes.js";
+import type { CatalogObjectIndex } from "./catalogIndex.js";
 import { normalizeCatalogPath as normalize, CATALOG_SKIP as SKIP } from "./catalogSupport.js";
 export class DataReferenceGraph {
+  private consumerCache?: {
+    draftFiles: string;
+    memo: WorkspaceReadMemo;
+    value: {
+      references: CrossReference[];
+      issues: CrossIssue[];
+      files: Array<{ file: string; sha256: string }>;
+    };
+  };
   constructor(private readonly workspace: Workspace) {}
   referenceTokenResolver(objects: DataObject[]) {
     const types = new Map<string, DataObject[]>(),
@@ -58,21 +68,31 @@ export class DataReferenceGraph {
       return tokens;
     };
   }
-  actorIssues(records: CatalogRecord[]) {
+  actorIssues(records: CatalogRecord[], preparedIndex?: CatalogObjectIndex) {
     return referenceSchema.withPinnedReads(() => {
-      const resolve = this.referenceTokenResolver(records.flatMap((r) => r.document.objects()));
+      preparedIndex?.assertMatches(records);
+      const resolve = this.referenceTokenResolver(
+        preparedIndex?.objects ?? records.flatMap((r) => r.document.objects()),
+      );
       return records.flatMap((r) =>
         r.document.actorCoverageIssues((entry) => resolve(entry.tag, entry.attrs.id)),
       );
     });
   }
-  references(records: CatalogRecord[], scope: "all" | "workspace" = "all"): DataReference[] {
+  references(
+    records: CatalogRecord[],
+    scope: "all" | "workspace" = "all",
+    preparedIndex?: CatalogObjectIndex,
+  ): DataReference[] {
     return referenceSchema.withPinnedReads(() => {
-      const objects = records.flatMap((record) =>
-        record.document
-          .objects()
-          .map((object) => ({ ...object, file: record.file, layer: record.layer })),
-      );
+      preparedIndex?.assertMatches(records);
+      const objects =
+        preparedIndex?.objects ??
+        records.flatMap((record) =>
+          record.document
+            .objects()
+            .map((object) => ({ ...object, file: record.file, layer: record.layer })),
+        );
       const byId = new Map<string, typeof objects>();
       for (const object of objects)
         if (object.id) byId.set(object.id, [...(byId.get(object.id) ?? []), object]);
@@ -168,6 +188,21 @@ export class DataReferenceGraph {
     });
   }
   async crossReferences() {
+    const draftFiles = JSON.stringify(
+      this.workspace
+        .draftFiles()
+        .filter((file) => /\.galaxy$/i.test(file) || ["Triggers", "Objects"].includes(file))
+        .sort(),
+    );
+    const prior = this.consumerCache;
+    if (prior?.draftFiles === draftFiles && (await this.workspace.reuseReads(prior.memo)))
+      return structuredClone(prior.value);
+    const captured = await this.workspace.memoizeReads(() => this.buildCrossReferences());
+    this.consumerCache = { draftFiles, memo: captured.memo, value: captured.value };
+    // Callers append coverage findings; cached results must remain isolated.
+    return structuredClone(captured.value);
+  }
+  private async buildCrossReferences() {
     const references: CrossReference[] = [],
       issues: CrossIssue[] = [],
       consumerFiles: Array<{ file: string; sha256: string }> = [];

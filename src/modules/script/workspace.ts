@@ -218,102 +218,214 @@ export class ScriptWorkspace {
         return this.plan(JSON.parse(raw.text));
     }
     async plan(input: z.input<typeof scriptPlanSchema>) {
-        const args = scriptPlanSchema.parse(input);
-        const schemaHash=(await this.api()).sourceSha256;
-        const extra = args.operations.flatMap(o => o.op === 'connect' ? [o.file, o.entryFile ?? 'MapScript.galaxy'] : [o.file]);
-        const before = await this.snapshot(extra), after = new Map(before.sources), present = new Map(before.exists);
-        for (const op of args.operations) {
-            const key = this.key(op.file), source = after.get(key) ?? '', d = new GalaxyDocument(source);
-            if (d.diagnostics.some(x => x.severity === 'error'))
-                throw new Error('INVALID_SCRIPT_SOURCE: ' + key);
-            if (op.op === 'file.create') {
-                if (present.get(key))
-                    throw new Error('SCRIPT_FILE_EXISTS');
-                after.set(key, op.source);
-                present.set(key, true);
-            }
-            if(op.op==='file.replace'){
-                if(!present.get(key))throw new Error('SCRIPT_FILE_NOT_FOUND');
-                if(hash(source)!==op.expectedSourceSha256)throw new Error('SCRIPT_REPLACE_SOURCE_STALE');
-                after.set(key,op.source);
-            }
-            if (op.op === 'function.add') {
-                if (!present.get(key))
-                    throw new Error('SCRIPT_FILE_NOT_FOUND');
-                const add = new GalaxyDocument(op.source);
-                if (add.symbols.length !== 1 || add.symbols[0]?.kind !== 'function' || add.diagnostics.some(x => x.severity === 'error'))
-                    throw new Error('ONE_FUNCTION_REQUIRED');
-                if ([...after.values()].some(s => new GalaxyDocument(s).symbols.some(x => x.name === add.symbols[0]!.name)))
-                    throw new Error('SCRIPT_SYMBOL_COLLISION');
-                after.set(key, source + (source.endsWith('\n') ? '' : '\n') + op.source + '\n');
-            }
-            if (op.op === 'function.body') {
-                const fn = d.function(op.name);
-                after.set(key, editSpans(source, [{ start: fn.bodyStart!, end: fn.bodyEnd!, text: op.body }]));
-            }
-            if (op.op === 'function.rename') {
-                d.function(op.name);
-                if (op.newName === op.name)
-                    continue;
-                const definitions = [...after].flatMap(([file, s]) => new GalaxyDocument(s).symbols.filter(x => x.name === op.name && x.kind === 'function').map(() => file));
-                if (definitions.length !== 1)
-                    throw new Error('AMBIGUOUS_RENAME');
-                for (const [file, s] of after) {
-                    const doc = new GalaxyDocument(s);
-                    if (doc.tokens.some(t => t.kind === 'identifier' && t.value === op.newName))
-                        throw new Error('SCRIPT_SYMBOL_COLLISION');
-                    for(const token of doc.tokens)if(token.kind === 'string' && decodeGalaxyString(token.value)===op.name)throw new Error('DYNAMIC_FUNCTION_REFERENCE: '+file);
-                    const edits=doc.functionBindings(op.name).bound.map(token=>({start:token.start,end:token.end,text:op.newName}));
-                    after.set(file, editSpans(s, edits));
-                }
-            }
-            if (op.op === 'connect') {
-                if (!present.get(key))
-                    throw new Error('SCRIPT_FILE_NOT_FOUND');
-                const init = d.function(op.init);
-                if (init.returnType !== 'void' || init.parameters?.length)
-                    throw new Error('INIT_MUST_BE_VOID_NO_ARGS');
-                const entryKey = this.key(op.entryFile ?? 'MapScript.galaxy');
-                if (key === entryKey)
-                    throw new Error('CONNECT_SELF_INCLUDE');
-                const entrySource = after.get(entryKey) ?? '', entryDoc = new GalaxyDocument(entrySource), entry = entryDoc.function(op.entry ?? 'InitMap');
-                if (entry.returnType !== 'void' || entry.parameters?.length)
-                    throw new Error('ENTRY_MUST_BE_VOID_NO_ARGS');
-                if (entryDoc.tokens.some(t => t.value === 'return' && t.start > entry.bodyStart! && t.end < entry.bodyEnd!))
-                    throw new Error('ENTRY_EARLY_RETURN_UNSUPPORTED');
-                if ([...after].some(([f, s]) => f !== key && new GalaxyDocument(s).symbols.some(x => x.name === op.init)))
-                    throw new Error('INIT_SYMBOL_COLLISION');
-                const includePath = path.posix.relative(path.posix.dirname(entryKey), key).replace(/\.galaxy$/i, '');
-                if (includePath.startsWith('../'))
-                    throw new Error('CONNECT_INCLUDE_OUTSIDE_ENTRY_DIRECTORY');
-                const newline = entrySource.includes('\r\n') ? '\r\n' : '\n';
-                const edits = [];
-                if (!entryDoc.includes.some(x => x.path.replace(/\.galaxy$/i, '') === includePath))
-                    edits.push({ start: entry.start, end: entry.start, text: `include ${JSON.stringify(includePath)}${newline}` });
-                const initCalls=entryDoc.calls().filter(c=>c.name===op.init&&c.offset>=entry.bodyStart!&&c.offset<entry.bodyEnd!);
-                const hasOtherCode=entryDoc.tokens.some(t=>t.start>=entry.bodyStart!&&t.end<=entry.bodyEnd!&&['if','for','while','switch','do','break','continue'].includes(t.value));
-                if(initCalls.length && (hasOtherCode || initCalls.length!==1 || initCalls.some(c=>{const i=entryDoc.tokens.findIndex(t=>t.start===c.offset);return c.member || !['{','}',';'].includes(entryDoc.tokens[i-1]?.value??'') || entryDoc.tokens[i+2]?.value!==')' || entryDoc.tokens[i+3]?.value!==';';})))throw new Error('ENTRY_INIT_CONTROL_FLOW_UNVERIFIED');
-                if (!initCalls.length)
-                    edits.push({ start: entry.bodyEnd!, end: entry.bodyEnd!, text: `    ${op.init}();${newline}` });
-                after.set(entryKey, editSpans(entrySource, edits));
-            }
+    const args = scriptPlanSchema.parse(input);
+    const schemaHash = (await this.api()).sourceSha256;
+    const extra = args.operations.flatMap((o) =>
+      o.op === "connect" ? [o.file, o.entryFile ?? "MapScript.galaxy"] : [o.file],
+    );
+    const before = await this.snapshot(extra),
+      after = new Map(before.sources),
+      present = new Map(before.exists);
+    const candidateDocuments = new Map(before.docs);
+    let candidateParses = 0,
+      reusedDocumentReads = 0;
+    const candidateDocument = (file: string, source = after.get(file) ?? "") => {
+      const previous = candidateDocuments.get(file);
+      if (previous?.source === source) {
+        reusedDocumentReads++;
+        return previous;
+      }
+      const document = new GalaxyDocument(source);
+      candidateParses++;
+      candidateDocuments.set(file, document);
+      return document;
+    };
+    for (const op of args.operations) {
+      const key = this.key(op.file),
+        source = after.get(key) ?? "",
+        d = candidateDocument(key, source);
+      if (d.diagnostics.some((x) => x.severity === "error"))
+        throw new Error("INVALID_SCRIPT_SOURCE: " + key);
+      if (op.op === "file.create") {
+        if (present.get(key)) throw new Error("SCRIPT_FILE_EXISTS");
+        after.set(key, op.source);
+        present.set(key, true);
+      }
+      if (op.op === "file.replace") {
+        if (!present.get(key)) throw new Error("SCRIPT_FILE_NOT_FOUND");
+        if (hash(source) !== op.expectedSourceSha256)
+          throw new Error("SCRIPT_REPLACE_SOURCE_STALE");
+        after.set(key, op.source);
+      }
+      if (op.op === "function.add") {
+        if (!present.get(key)) throw new Error("SCRIPT_FILE_NOT_FOUND");
+        const add = new GalaxyDocument(op.source);
+        if (
+          add.symbols.length !== 1 ||
+          add.symbols[0]?.kind !== "function" ||
+          add.diagnostics.some((x) => x.severity === "error")
+        )
+          throw new Error("ONE_FUNCTION_REQUIRED");
+        if (
+          [...after].some(([file, s]) =>
+            candidateDocument(file, s).symbols.some((x) => x.name === add.symbols[0]!.name),
+          )
+        )
+          throw new Error("SCRIPT_SYMBOL_COLLISION");
+        after.set(key, source + (source.endsWith("\n") ? "" : "\n") + op.source + "\n");
+      }
+      if (op.op === "function.body") {
+        const fn = d.function(op.name);
+        after.set(
+          key,
+          editSpans(source, [{ start: fn.bodyStart!, end: fn.bodyEnd!, text: op.body }]),
+        );
+      }
+      if (op.op === "function.rename") {
+        d.function(op.name);
+        if (op.newName === op.name) continue;
+        const definitions = [...after].flatMap(([file, s]) =>
+          candidateDocument(file, s)
+            .symbols.filter((x) => x.name === op.name && x.kind === "function")
+            .map(() => file),
+        );
+        if (definitions.length !== 1) throw new Error("AMBIGUOUS_RENAME");
+        for (const [file, s] of after) {
+          const doc = candidateDocument(file, s);
+          if (doc.tokens.some((t) => t.kind === "identifier" && t.value === op.newName))
+            throw new Error("SCRIPT_SYMBOL_COLLISION");
+          for (const token of doc.tokens)
+            if (token.kind === "string" && decodeGalaxyString(token.value) === op.name)
+              throw new Error("DYNAMIC_FUNCTION_REFERENCE: " + file);
+          const edits = doc
+            .functionBindings(op.name)
+            .bound.map((token) => ({ start: token.start, end: token.end, text: op.newName }));
+          after.set(file, editSpans(s, edits));
         }
-        const docs = new Map([...after].map(([f, s]) => [f, new GalaxyDocument(s)]));
-        const result = await this.validation({ sources: after, exists: present, docs, fingerprint: '' });
-        if (!result.valid)
-            throw new Error('SCRIPT_PLAN_INVALID: ' + JSON.stringify(result.diagnostics));
-        const changed = [...after].filter(([f, s]) => s !== before.sources.get(f) || present.get(f) !== before.exists.get(f)).map(([f]) => f);
-        if (changed.length > 64)
-            throw new Error('SCRIPT_TRANSACTION_FILE_LIMIT');
-        if((await this.api()).sourceSha256!==schemaHash)throw new Error('STALE_SCRIPT_SCHEMA');
-        const planId = 'script_' + hash(JSON.stringify([this.workspace.root,schemaHash,before.fingerprint, [...after]])).slice(0, 24);
-        this.plans.set(planId, { before, after, changed,schemaHash });
-        while (this.plans.size > 8 || [...this.plans.values()].reduce((n, p) => n + [...p.before.sources.values(), ...p.after.values()].reduce((m, t) => m + Buffer.byteLength(t), 0), 0) > 128 * 1024 * 1024)
-            this.plans.delete(this.plans.keys().next().value!);
-        if (!this.plans.has(planId))
-            throw new Error('SCRIPT_PLAN_BYTE_LIMIT');
-        return { planId, changedFiles: changed.map(file => ({ file, beforeSha256: hash(before.sources.get(file) ?? ''), afterSha256: hash(after.get(file)!) })), validation: result, generatedMapScriptWarning: 'Editor may regenerate MapScript.galaxy; native save persistence needs target validation', dryRun: true };
+      }
+      if (op.op === "connect") {
+        if (!present.get(key)) throw new Error("SCRIPT_FILE_NOT_FOUND");
+        const init = d.function(op.init);
+        if (init.returnType !== "void" || init.parameters?.length)
+          throw new Error("INIT_MUST_BE_VOID_NO_ARGS");
+        const entryKey = this.key(op.entryFile ?? "MapScript.galaxy");
+        if (key === entryKey) throw new Error("CONNECT_SELF_INCLUDE");
+        const entrySource = after.get(entryKey) ?? "",
+          entryDoc = candidateDocument(entryKey, entrySource),
+          entry = entryDoc.function(op.entry ?? "InitMap");
+        if (entry.returnType !== "void" || entry.parameters?.length)
+          throw new Error("ENTRY_MUST_BE_VOID_NO_ARGS");
+        if (
+          entryDoc.tokens.some(
+            (t) => t.value === "return" && t.start > entry.bodyStart! && t.end < entry.bodyEnd!,
+          )
+        )
+          throw new Error("ENTRY_EARLY_RETURN_UNSUPPORTED");
+        if (
+          [...after].some(
+            ([f, s]) =>
+              f !== key && candidateDocument(f, s).symbols.some((x) => x.name === op.init),
+          )
+        )
+          throw new Error("INIT_SYMBOL_COLLISION");
+        const includePath = path.posix
+          .relative(path.posix.dirname(entryKey), key)
+          .replace(/\.galaxy$/i, "");
+        if (includePath.startsWith("../"))
+          throw new Error("CONNECT_INCLUDE_OUTSIDE_ENTRY_DIRECTORY");
+        const newline = entrySource.includes("\r\n") ? "\r\n" : "\n";
+        const edits = [];
+        if (!entryDoc.includes.some((x) => x.path.replace(/\.galaxy$/i, "") === includePath))
+          edits.push({
+            start: entry.start,
+            end: entry.start,
+            text: `include ${JSON.stringify(includePath)}${newline}`,
+          });
+        const initCalls = entryDoc
+          .calls()
+          .filter(
+            (c) => c.name === op.init && c.offset >= entry.bodyStart! && c.offset < entry.bodyEnd!,
+          );
+        const hasOtherCode = entryDoc.tokens.some(
+          (t) =>
+            t.start >= entry.bodyStart! &&
+            t.end <= entry.bodyEnd! &&
+            ["if", "for", "while", "switch", "do", "break", "continue"].includes(t.value),
+        );
+        if (
+          initCalls.length &&
+          (hasOtherCode ||
+            initCalls.length !== 1 ||
+            initCalls.some((c) => {
+              const i = entryDoc.tokens.findIndex((t) => t.start === c.offset);
+              return (
+                c.member ||
+                !["{", "}", ";"].includes(entryDoc.tokens[i - 1]?.value ?? "") ||
+                entryDoc.tokens[i + 2]?.value !== ")" ||
+                entryDoc.tokens[i + 3]?.value !== ";"
+              );
+            }))
+        )
+          throw new Error("ENTRY_INIT_CONTROL_FLOW_UNVERIFIED");
+        if (!initCalls.length)
+          edits.push({
+            start: entry.bodyEnd!,
+            end: entry.bodyEnd!,
+            text: `    ${op.init}();${newline}`,
+          });
+        after.set(entryKey, editSpans(entrySource, edits));
+      }
     }
+    const docs = new Map([...after].map(([f, s]) => [f, candidateDocument(f, s)]));
+    const result = await this.validation({
+      sources: after,
+      exists: present,
+      docs,
+      fingerprint: "",
+    });
+    if (!result.valid)
+      throw new Error("SCRIPT_PLAN_INVALID: " + JSON.stringify(result.diagnostics));
+    const changed = [...after]
+      .filter(([f, s]) => s !== before.sources.get(f) || present.get(f) !== before.exists.get(f))
+      .map(([f]) => f);
+    if (changed.length > 64) throw new Error("SCRIPT_TRANSACTION_FILE_LIMIT");
+    if ((await this.api()).sourceSha256 !== schemaHash) throw new Error("STALE_SCRIPT_SCHEMA");
+    const planId =
+      "script_" +
+      hash(JSON.stringify([this.workspace.root, schemaHash, before.fingerprint, [...after]])).slice(
+        0,
+        24,
+      );
+    this.plans.set(planId, { before, after, changed, schemaHash });
+    while (
+      this.plans.size > 8 ||
+      [...this.plans.values()].reduce(
+        (n, p) =>
+          n +
+          [...p.before.sources.values(), ...p.after.values()].reduce(
+            (m, t) => m + Buffer.byteLength(t),
+            0,
+          ),
+        0,
+      ) >
+        128 * 1024 * 1024
+    )
+      this.plans.delete(this.plans.keys().next().value!);
+    if (!this.plans.has(planId)) throw new Error("SCRIPT_PLAN_BYTE_LIMIT");
+    return {
+      planId,
+      changedFiles: changed.map((file) => ({
+        file,
+        beforeSha256: hash(before.sources.get(file) ?? ""),
+        afterSha256: hash(after.get(file)!),
+      })),
+      validation: result,
+      efficiency: { candidateParses, reusedDocumentReads, candidateFiles: docs.size },
+      generatedMapScriptWarning:
+        "Editor may regenerate MapScript.galaxy; native save persistence needs target validation",
+      dryRun: true,
+    };
+  }
     async apply(planId: string, dryRun = true) { const p = this.plans.get(planId); if (!p)
         throw new Error('SCRIPT_PLAN_NOT_FOUND');if((await this.api()).sourceSha256!==p.schemaHash)throw new Error('STALE_SCRIPT_SCHEMA'); if (!p.changed.length)
         return { accepted: true, files: [], noChange: true }; const transaction = await this.workspace.applyRawTransaction(this.workspace.coupledDraftFiles(p.changed), async (sources) => { if(hash(await this.workspace.readDependency(this.apiFile))!==p.schemaHash)throw new Error('STALE_SCRIPT_SCHEMA');const current = await this.snapshot([...p.before.sources.keys()]); if (current.fingerprint !== p.before.fingerprint)

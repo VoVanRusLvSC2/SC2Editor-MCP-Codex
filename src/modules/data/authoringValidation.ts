@@ -5,6 +5,7 @@ import {parentClassCompatibility} from './parentClasses.js';
 import {concreteActorCreateConflict} from './actorConstruction.js';
 import {dataDomainFromType} from './domains.js';
 import {nativeClassInstanceFinding} from './nativeClasses.js';
+import {CatalogObjectIndex} from './catalogIndex.js';
 
 interface RecordView { file:string; layer:'workspace'|'dependency'; engineActive?:boolean; document:DataDocument }
 export interface DataAuthoringVerdict {
@@ -29,6 +30,14 @@ function scalarType(type:string|DataXsdType|undefined):DataXsdType|undefined {
 }
 function validateScalar(value:string,type:string|DataXsdType|undefined,file:string,path:string,out:DataDiagnostic[],seen=new Set<string>()):void {
   if(!type||value.includes('##'))return;
+  // Original Editor 5.0.17.98310 exposes Liberty GravitonBeamHeight's
+  // Modification.PlaneDelta as (-1|1). The bundled nonnegative int8 facet loses this
+  // native signed-delta contract; do not rewrite -1 into an unsigned magnitude.
+  if(/^CBehaviorBuff:[^.]+\.Modification\.PlaneDelta\[(?:Ground|Air)\]@value$/.test(path)){
+    if(!/^[-+]?\d+$/.test(value))out.push(diagnostic('DATA_AUTHOR_INTEGER_INVALID',`'${value}' is not an integer`,file,path));
+    else if(BigInt(value)<-128n||BigInt(value)>127n)out.push(diagnostic('DATA_AUTHOR_VALUE_FACET',`'${value}' is outside native signed PlaneDelta range`,file,path));
+    return;
+  }
   const name=typeof type==='string'?type:type.name;
   if(seen.has(name))return;seen.add(name);
   const declared=scalarType(type);
@@ -63,12 +72,12 @@ function validateAttributes(attrs:Record<string,string>,owner:string|DataXsdType
 
 /** Root token overrides are native attributes declared by this entry/parent chain,
  * not arbitrary extensions to the XSD. Keep their catalog-link types for validation. */
-function inheritedTokenTypes(object:DataObject,indexed:DataObject[]):Map<string,string>{
+function inheritedTokenTypes(object:DataObject,indexed:CatalogObjectIndex):Map<string,string>{
  const result=new Map<string,string>(),queue=[object],seen=new Set<string>();
  for(let i=0;i<queue.length;i++){
   const o=queue[i];for(const name of new Set([...Object.keys(o.tokens??{}),...Object.keys(o.tokenTypes??{})]))if(!result.has(name))result.set(name,o.tokenTypes?.[name]??'');
   const parent=o.domain+'\0'+o.parent;if(!o.parent||seen.has(parent))continue;seen.add(parent);
-  queue.push(...indexed.filter(p=>p.domain===o.domain&&p.id===o.parent));
+  queue.push(...indexed.activeMatches(o.domain,o.parent));
  }
  return result;
 }
@@ -90,17 +99,20 @@ function validateFields(fields:DataField[],oldFields:DataField[],owner:string|Da
   }
 }
 
-export function validateDataAuthoring(file:string,before:DataDocument,after:DataDocument,records:RecordView[],coverageIssues:Array<{code:string;reason:string}>,external:ReadonlyMap<string,ReadonlySet<string>>=new Map()):DataAuthoringVerdict {
+export function validateDataAuthoring(file:string,before:DataDocument,after:DataDocument,records:RecordView[],coverageIssues:Array<{code:string;reason:string}>,external:ReadonlyMap<string,ReadonlySet<string>>=new Map(),preparedIndex?:CatalogObjectIndex):DataAuthoringVerdict {
   const diagnostics:DataDiagnostic[]=[];
-  const originals=before.objects(),current=after.objects();
-  const indexed=records.filter(r=>r.engineActive!==false).flatMap(r=>r.document.objects());
+  const indexed=preparedIndex??new CatalogObjectIndex(records);
+  indexed.assertMatches(records);
+  const originals=new Map<string,DataObject>();
+  for(const object of indexed.objectsFor(before))if(!originals.has(key(object)))originals.set(key(object),object);
+  const current=indexed.objectsFor(after);
   const incomplete=coverageIssues.length>0||records.some(r=>r.engineActive===undefined);
   for(const object of current){
-    const old=originals.find(o=>key(o)===key(object));
+    const old=originals.get(key(object));
     if(old&&JSON.stringify({attrs:old.attrs,fields:old.fields})===JSON.stringify({attrs:object.attrs,fields:object.fields}))continue;
     const nativeClassIssue=nativeClassInstanceFinding(object,file);
     if(nativeClassIssue)diagnostics.push(nativeClassIssue);
-    const parents=object.parent?indexed.filter(parent=>parent.id===object.parent&&parent.domain===object.domain):[];
+    const parents=object.parent?indexed.activeMatches(object.domain,object.parent):[];
     if(concreteActorCreateConflict(object,parents))diagnostics.push(diagnostic('DATA_ACTOR_CONCRETE_PARENT_CREATE','Concrete unit actor plus a second UnitBirth Create binding; use recipe.unitActor',file,pathOf(object)+'@parent','L3'));
     if(parents.length&&parents.every(parent=>parentClassCompatibility(object.ctype,parent.ctype)==='incompatible'))diagnostics.push(diagnostic('DATA_PARENT_CLASS_INCOMPATIBLE',`${object.ctype} cannot inherit '${object.parent}' (${parents[0].ctype}); use the native parent's class`,file,pathOf(object)+'@parent','L3'));
     const declared=referenceSchema.describe(object.ctype);
@@ -112,7 +124,7 @@ export function validateDataAuthoring(file:string,before:DataDocument,after:Data
         const value=object.attrs[name],domain=/^C[A-Za-z]+Link$/.test(type)?dataDomainFromType(type):undefined;
         if(!domain||!value||value===old?.attrs[name])continue;
         if(value.includes('##'))diagnostics.push(diagnostic('DATA_AUTHOR_REFERENCE_DYNAMIC',`Cannot resolve authored token '${name}'`,file,pathOf(object)+'@'+name,'L3'));
-        else if(!external.get(domain)?.has(value)&&!indexed.some(o=>o.domain===domain&&o.id===value))diagnostics.push(diagnostic(incomplete?'DATA_AUTHOR_REFERENCE_SCOPE_INCOMPLETE':'DATA_AUTHOR_REFERENCE_MISSING',`Authored ${domain} token '${name}' reference '${value}' does not resolve in the active catalog`,file,pathOf(object)+'@'+name,'L3'));
+        else if(!external.get(domain)?.has(value)&&!indexed.activeMatches(domain,value).length)diagnostics.push(diagnostic(incomplete?'DATA_AUTHOR_REFERENCE_SCOPE_INCOMPLETE':'DATA_AUTHOR_REFERENCE_MISSING',`Authored ${domain} token '${name}' reference '${value}' does not resolve in the active catalog`,file,pathOf(object)+'@'+name,'L3'));
       }
     }
     validateFields(object.fields,old?.fields??[],object.ctype,file,object,diagnostics);
@@ -123,7 +135,7 @@ export function validateDataAuthoring(file:string,before:DataDocument,after:Data
     if(oldRefs.has(`${ref.object}\0${ref.path}\0${ref.carrier}\0${ref.value}`)||!ref.value)continue;
     if(!ref.targetDomain){diagnostics.push(diagnostic('DATA_AUTHOR_REFERENCE_DOMAIN_UNKNOWN',`Authored ${ref.carrier} reference '${ref.value}' has no proven target domain`,file,ref.path,'L3'));continue;}
     if(ref.resolution==='unknown'){diagnostics.push(diagnostic('DATA_AUTHOR_REFERENCE_DYNAMIC',`Cannot resolve authored reference '${ref.rawExpression??ref.value}'`,file,ref.path,'L3'));continue;}
-    if(!external.get(ref.targetDomain)?.has(ref.value)&&!indexed.some(o=>o.id===ref.value&&o.domain===ref.targetDomain))missing.push({...ref,file});
+    if(!external.get(ref.targetDomain)?.has(ref.value)&&!indexed.activeMatches(ref.targetDomain,ref.value).length)missing.push({...ref,file});
   }
   for(const ref of missing)diagnostics.push(diagnostic(incomplete?'DATA_AUTHOR_REFERENCE_SCOPE_INCOMPLETE':'DATA_AUTHOR_REFERENCE_MISSING',`Authored ${ref.targetDomain} reference '${ref.value}' does not resolve in the active catalog${incomplete?' (catalog scope incomplete)':''}`,file,ref.path,'L3'));
   const accepted=diagnostics.length===0;

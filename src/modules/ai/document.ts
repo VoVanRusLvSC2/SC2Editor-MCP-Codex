@@ -33,6 +33,10 @@ function serializeNode(spec: AiNativeNodeSpec, indent: string, newline: string):
 }
 
 export class AiDocument {
+  private irCache = new Map<
+    boolean,
+    { schema: AiSchemaRegistry; schemaIdentity: string; source: string; value: AiDocumentIR }
+  >();
   private parsed = scanXml("");
 
   constructor(public source: string, readonly sourceFile = "CustomAI") { this.reparse(); }
@@ -215,46 +219,148 @@ export class AiDocument {
   }
 
   toIR(schema: AiSchemaRegistry, includeRaw = false): AiDocumentIR {
+    const schemaIdentity = JSON.stringify(schema.data),
+      cached = this.irCache.get(includeRaw);
+    if (
+      cached?.schema === schema &&
+      cached.schemaIdentity === schemaIdentity &&
+      cached.source === this.source
+    )
+      return structuredClone(cached.value);
+    const value = this.buildIR(schema, includeRaw);
+    // Raw subtree strings can repeat large nested sources. Retain the ordinary
+    // compact IR only, with a structural budget in addition to source bytes.
+    if (
+      !includeRaw &&
+      value.nativeNodes.length <= 25000 &&
+      Buffer.byteLength(this.source) <= 2 * 1024 * 1024
+    )
+      this.irCache.set(includeRaw, {
+        schema,
+        schemaIdentity,
+        source: this.source,
+        value: structuredClone(value),
+      });
+    else this.irCache.delete(includeRaw);
+    return value;
+  }
+
+  private buildIR(schema: AiSchemaRegistry, includeRaw: boolean): AiDocumentIR {
     const root = this.root();
     const nativeNodes = this.parsed.nodes.map((node) => ({
-      id: this.publicId(node), nodeId: node.id, nativeType: node.tag,
-      parentId: node.parentId === null ? undefined : this.publicId(this.parsed.nodes[node.parentId]),
-      attrs: { ...node.attrs }, value: this.value(node), children: node.childIds.map((id) => this.publicId(this.parsed.nodes[id])),
-      path: this.pathOf(node), evidence: (schema.node(node.tag)?.evidence ?? schema.property(node.tag)?.evidence ?? "UNKNOWN_NEEDS_RESEARCH") as AiEvidence,
+      id: this.publicId(node),
+      nodeId: node.id,
+      nativeType: node.tag,
+      parentId:
+        node.parentId === null ? undefined : this.publicId(this.parsed.nodes[node.parentId]),
+      attrs: { ...node.attrs },
+      value: this.value(node),
+      children: node.childIds.map((id) => this.publicId(this.parsed.nodes[id])),
+      path: this.pathOf(node),
+      evidence: (schema.node(node.tag)?.evidence ??
+        schema.property(node.tag)?.evidence ??
+        "UNKNOWN_NEEDS_RESEARCH") as AiEvidence,
       rawSource: includeRaw ? this.source.slice(node.start, node.end) : undefined,
     }));
-    const definitions = root.childIds.map((id) => this.parsed.nodes[id]).filter((node) => node.tag === "Definition").map((definition, index) => {
-      const id = definition.attrs.Id ?? definition.attrs.id ?? `__anonymous_${index}`;
-      const children = definition.childIds.map((child) => this.parsed.nodes[child]);
-      const waves = this.descendants(definition).filter((node) => node.tag === "Wave");
-      return {
-        id, nodeId: definition.id,
-        properties: Object.fromEntries(children.filter((child) => child.tag !== "Wave").map((child) => [child.tag, this.value(child)])),
-        waveIds: waves.map((wave, waveIndex) => wave.attrs.Id ?? wave.attrs.id ?? `__anonymous_${waveIndex}`),
-        unknownChildren: children.filter((child) => !schema.node(child.tag) && !schema.property(child.tag)).map((child) => child.tag),
-        rawSource: includeRaw ? this.source.slice(definition.start, definition.end) : undefined,
-      };
-    });
-    const waves = definitions.flatMap((definition) => {
-      const node = this.parsed.nodes[definition.nodeId];
-      return this.descendants(node).filter((candidate) => candidate.tag === "Wave").map((wave, order) => {
-        const id = wave.attrs.Id ?? wave.attrs.id ?? `__anonymous_${order}`;
-        const children = wave.childIds.map((child) => this.parsed.nodes[child]);
-        const composition = this.descendants(wave).filter((child) => /unit/i.test(child.tag) && Boolean(child.attrs.Type ?? child.attrs.type ?? child.attrs.Unit ?? child.attrs.unit ?? child.attrs.Link ?? child.attrs.link)).map((child) => ({
-          unit: child.attrs.Type ?? child.attrs.type ?? child.attrs.Unit ?? child.attrs.unit ?? child.attrs.Link ?? child.attrs.link,
-          quantity: Number.isFinite(Number(child.attrs.Count ?? child.attrs.count ?? child.attrs.Quantity ?? child.attrs.quantity)) ? Number(child.attrs.Count ?? child.attrs.count ?? child.attrs.Quantity ?? child.attrs.quantity) : undefined,
-          nativeType: child.tag, path: this.pathOf(child), evidence: (schema.node(child.tag)?.evidence ?? "UNKNOWN_NEEDS_RESEARCH") as AiEvidence,
-        }));
+    const definitions = root.childIds
+      .map((id) => this.parsed.nodes[id])
+      .filter((node) => node.tag === "Definition")
+      .map((definition, index) => {
+        const id = definition.attrs.Id ?? definition.attrs.id ?? `__anonymous_${index}`;
+        const children = definition.childIds.map((child) => this.parsed.nodes[child]);
+        const waves = this.descendants(definition).filter((node) => node.tag === "Wave");
         return {
-          id, nodeId: wave.id, personalityId: definition.id, order,
-          properties: Object.fromEntries(children.map((child) => [child.tag, this.value(child)])), composition,
-          unknownChildren: children.filter((child) => !schema.node(child.tag) && !schema.property(child.tag)).map((child) => child.tag),
-          rawSource: includeRaw ? this.source.slice(wave.start, wave.end) : undefined,
+          id,
+          nodeId: definition.id,
+          properties: Object.fromEntries(
+            children
+              .filter((child) => child.tag !== "Wave")
+              .map((child) => [child.tag, this.value(child)]),
+          ),
+          waveIds: waves.map(
+            (wave, waveIndex) => wave.attrs.Id ?? wave.attrs.id ?? `__anonymous_${waveIndex}`,
+          ),
+          unknownChildren: children
+            .filter((child) => !schema.node(child.tag) && !schema.property(child.tag))
+            .map((child) => child.tag),
+          rawSource: includeRaw ? this.source.slice(definition.start, definition.end) : undefined,
         };
       });
+    const waves = definitions.flatMap((definition) => {
+      const node = this.parsed.nodes[definition.nodeId];
+      return this.descendants(node)
+        .filter((candidate) => candidate.tag === "Wave")
+        .map((wave, order) => {
+          const id = wave.attrs.Id ?? wave.attrs.id ?? `__anonymous_${order}`;
+          const children = wave.childIds.map((child) => this.parsed.nodes[child]);
+          const composition = this.descendants(wave)
+            .filter(
+              (child) =>
+                /unit/i.test(child.tag) &&
+                Boolean(
+                  child.attrs.Type ??
+                  child.attrs.type ??
+                  child.attrs.Unit ??
+                  child.attrs.unit ??
+                  child.attrs.Link ??
+                  child.attrs.link,
+                ),
+            )
+            .map((child) => ({
+              unit:
+                child.attrs.Type ??
+                child.attrs.type ??
+                child.attrs.Unit ??
+                child.attrs.unit ??
+                child.attrs.Link ??
+                child.attrs.link,
+              quantity: Number.isFinite(
+                Number(
+                  child.attrs.Count ??
+                    child.attrs.count ??
+                    child.attrs.Quantity ??
+                    child.attrs.quantity,
+                ),
+              )
+                ? Number(
+                    child.attrs.Count ??
+                      child.attrs.count ??
+                      child.attrs.Quantity ??
+                      child.attrs.quantity,
+                  )
+                : undefined,
+              nativeType: child.tag,
+              path: this.pathOf(child),
+              evidence: (schema.node(child.tag)?.evidence ??
+                "UNKNOWN_NEEDS_RESEARCH") as AiEvidence,
+            }));
+          return {
+            id,
+            nodeId: wave.id,
+            personalityId: definition.id,
+            order,
+            properties: Object.fromEntries(children.map((child) => [child.tag, this.value(child)])),
+            composition,
+            unknownChildren: children
+              .filter((child) => !schema.node(child.tag) && !schema.property(child.tag))
+              .map((child) => child.tag),
+            rawSource: includeRaw ? this.source.slice(wave.start, wave.end) : undefined,
+          };
+        });
     });
-    const diagnostics = this.parsed.diagnostics.map((entry) => ({ severity: entry.severity, code: "AI_XML_PARSE", message: entry.message, path: `${this.sourceFile}@${entry.offset}` }));
-    if (root.tag !== "AIData") diagnostics.push({ severity: "error", code: "AI_ROOT_INVALID", message: `Expected <AIData>, found <${root.tag}>`, path: this.sourceFile });
+    const diagnostics = this.parsed.diagnostics.map((entry) => ({
+      severity: entry.severity,
+      code: "AI_XML_PARSE",
+      message: entry.message,
+      path: `${this.sourceFile}@${entry.offset}`,
+    }));
+    if (root.tag !== "AIData")
+      diagnostics.push({
+        severity: "error",
+        code: "AI_ROOT_INVALID",
+        message: `Expected <AIData>, found <${root.tag}>`,
+        path: this.sourceFile,
+      });
     return { root: root.tag, definitions, waves, nativeNodes, diagnostics };
   }
 }

@@ -10,6 +10,7 @@ import { scanXml } from "../../core/xmlScanner.js";
 import { DataWorkspace } from "../data/workspace.js";
 import { DataDocument,referenceSchema } from "../data/document.js";
 import {mergeAssetEntries} from './assetIndex.js';
+import { BrowseDefinitionIndexes } from "./definitionIndex.js";
 import type { DataField, DataObject } from "../data/types.js";
 import { StringTableDocument } from "../text/stringTable.js";
 import type {
@@ -135,6 +136,7 @@ function rootForObject(object: { layer: string; provenance: string[] }, roots: R
 }
 
 export class BrowseWorkspace {
+  private readonly definitionIndexes = new BrowseDefinitionIndexes();
   private readonly operationSnapshots=new AsyncLocalStorage<{snapshot?:Promise<BrowseIndexSnapshot>}>();
   withSnapshot<T>(work:()=>Promise<T>):Promise<T>{return this.operationSnapshots.getStore()?work():this.operationSnapshots.run({},work);}
   private snapshot?: BrowseIndexSnapshot;
@@ -403,71 +405,232 @@ export class BrowseWorkspace {
     return { total: scored.length, offset, limit, results: scored.slice(offset, offset + limit) };
   }
 
-  async get(selector: { key?: string; id?: string; catalogType?: string; dependency?: string; includeRaw?: boolean }) {
+  async get(selector: {
+    key?: string;
+    id?: string;
+    catalogType?: string;
+    dependency?: string;
+    includeRaw?: boolean;
+  }) {
     const index = await this.index();
-    const entries = index.entries.filter((entry) =>
-      (!selector.key || entry.key === selector.key) &&
-      (!selector.id || entry.id.toLowerCase() === selector.id.toLowerCase()) &&
-      (!selector.catalogType || entry.catalogType.toLowerCase() === selector.catalogType.toLowerCase() || entry.ctype.toLowerCase() === selector.catalogType.toLowerCase()) &&
-      (!selector.dependency || entry.dependency.toLowerCase() === selector.dependency.toLowerCase()));
-    if (!entries.length) throw new Error(`Browse object not found: ${selector.key ?? `${selector.catalogType ?? "*"}:${selector.id ?? "*"}`}`);
-    const definitions = await Promise.all(entries.map(async (entry) => {
-      let rawDefinition: string | undefined;
-      if (selector.includeRaw) {
-        const root = this.roots.find((candidate) => candidate.dependency === entry.dependency && candidate.sourceLayer === entry.sourceLayer)!;
-        const source = entry.sourceLayer === "workspace" ? (await this.workspace.readRaw(entry.file)).text : await this.workspace.readDependency(path.join(root.path, entry.file));
-        rawDefinition = new DataDocument(source, entry.file).objects(true).find((object) => object.id === entry.id && object.ctype === entry.ctype)?.rawSource;
-      }
-      const own = new Set(flatten(entry.definition.fields).map((field) => field.path));
-      const ancestorPaths = new Set((entry.effective?.templateChain ?? []).slice(0, -1).flatMap((ancestor) => index.entries.filter((candidate) => candidate.id === ancestor.id && candidate.ctype === ancestor.ctype && candidate.file === ancestor.file).flatMap((candidate) => flatten(candidate.definition.fields).map((field) => field.path))));
-      return { ...entry, ...(rawDefinition ? { rawDefinition } : {}),
-        sourceLayers: index.entries.filter((candidate) => candidate.id === entry.id && candidate.catalogType === entry.catalogType).map((candidate) => ({ key: candidate.key, layer: candidate.sourceLayer, dependency: candidate.dependency, file: candidate.file })),
-        fieldProvenance: Object.values(entry.effective?.fields ?? {}).map((field) => ({ path: field.path, declaredBy: field.declaredBy, file: field.file, inherited: !own.has(field.path), overridden: own.has(field.path) && ancestorPaths.has(field.path) })),
-        resolutionLimitations: ["Effective fields use the current Data MCP parent-chain resolver; engine defaults, ambiguous inherited sources and duplicate-ID layer merges are not reconstructed."],
-      };
-    }));
+    const prepared = this.definitionIndexes.read(index);
+    const candidates = selector.key
+      ? (prepared.byKey.get(selector.key) ?? [])
+      : selector.id
+        ? (prepared.byId.get(selector.id.toLowerCase()) ?? [])
+        : index.entries;
+    const entries = candidates.filter(
+      (entry) =>
+        (!selector.key || entry.key === selector.key) &&
+        (!selector.id || entry.id.toLowerCase() === selector.id.toLowerCase()) &&
+        (!selector.catalogType ||
+          entry.catalogType.toLowerCase() === selector.catalogType.toLowerCase() ||
+          entry.ctype.toLowerCase() === selector.catalogType.toLowerCase()) &&
+        (!selector.dependency ||
+          entry.dependency.toLowerCase() === selector.dependency.toLowerCase()),
+    );
+    if (!entries.length)
+      throw new Error(
+        `Browse object not found: ${selector.key ?? `${selector.catalogType ?? "*"}:${selector.id ?? "*"}`}`,
+      );
+    const definitions = await Promise.all(
+      entries.map(async (entry) => {
+        let rawDefinition: string | undefined;
+        if (selector.includeRaw) {
+          const root = this.roots.find(
+            (candidate) =>
+              candidate.dependency === entry.dependency &&
+              candidate.sourceLayer === entry.sourceLayer,
+          )!;
+          const source =
+            entry.sourceLayer === "workspace"
+              ? (await this.workspace.readRaw(entry.file)).text
+              : await this.workspace.readDependency(path.join(root.path, entry.file));
+          rawDefinition = new DataDocument(source, entry.file)
+            .objects(true)
+            .find((object) => object.id === entry.id && object.ctype === entry.ctype)?.rawSource;
+        }
+        const own = new Set(flatten(entry.definition.fields).map((field) => field.path));
+        const ancestorPaths = new Set(
+          (entry.effective?.templateChain ?? [])
+            .slice(0, -1)
+            .flatMap((ancestor) =>
+              (
+                prepared.byDeclaration.get(
+                  this.definitionIndexes.declaration(ancestor.id, ancestor.ctype, ancestor.file),
+                ) ?? []
+              ).flatMap((candidate) =>
+                flatten(candidate.definition.fields).map((field) => field.path),
+              ),
+            ),
+        );
+        return {
+          ...entry,
+          ...(rawDefinition ? { rawDefinition } : {}),
+          sourceLayers: (prepared.byId.get(entry.id.toLowerCase()) ?? [])
+            .filter(
+              (candidate) =>
+                candidate.id === entry.id && candidate.catalogType === entry.catalogType,
+            )
+            .map((candidate) => ({
+              key: candidate.key,
+              layer: candidate.sourceLayer,
+              dependency: candidate.dependency,
+              file: candidate.file,
+            })),
+          fieldProvenance: Object.values(entry.effective?.fields ?? {}).map((field) => ({
+            path: field.path,
+            declaredBy: field.declaredBy,
+            file: field.file,
+            inherited: !own.has(field.path),
+            overridden: own.has(field.path) && ancestorPaths.has(field.path),
+          })),
+          resolutionLimitations: [
+            "Effective fields use the current Data MCP parent-chain resolver; engine defaults, ambiguous inherited sources and duplicate-ID layer merges are not reconstructed.",
+          ],
+        };
+      }),
+    );
     return { ambiguous: entries.length > 1, definitions };
   }
 
-  async resolve(selector: { key?: string; id?: string; catalogType?: string; query?: string; dependency?: string }) {
-    if (!selector.key && !selector.id && !selector.query) throw new Error("browse.resolve requires key, id or query");
+  async resolve(selector: {
+    key?: string;
+    id?: string;
+    catalogType?: string;
+    query?: string;
+    dependency?: string;
+  }) {
+    return this.workspace.withReadSet(() => this.withSnapshot(() => this.resolveTracked(selector)));
+  }
+  private async resolveTracked(selector: {
+    key?: string;
+    id?: string;
+    catalogType?: string;
+    query?: string;
+    dependency?: string;
+  }) {
+    if (!selector.key && !selector.id && !selector.query)
+      throw new Error("browse.resolve requires key, id or query");
     if (!selector.key && !selector.id && selector.query) {
-      const searched = await this.search({ query: selector.query, catalogType: selector.catalogType, dependency: selector.dependency, limit: 10 });
-      const exact = searched.results.filter((entry) => entry.id.toLowerCase() === selector.query!.toLowerCase());
+      const searched = await this.search({
+        query: selector.query,
+        catalogType: selector.catalogType,
+        dependency: selector.dependency,
+        limit: 10,
+      });
+      const exact = searched.results.filter(
+        (entry) => entry.id.toLowerCase() === selector.query!.toLowerCase(),
+      );
       const choices = exact.length ? exact : searched.results;
-      if (choices.length !== 1) return { resolved: false, reason: choices.length ? "AMBIGUOUS_QUERY" : "NO_MATCH", candidates: searched.results };
+      if (choices.length !== 1)
+        return {
+          resolved: false,
+          reason: choices.length ? "AMBIGUOUS_QUERY" : "NO_MATCH",
+          candidates: searched.results,
+        };
       selector = { key: choices[0]!.key };
     }
     const result = await this.get(selector);
-    if (result.definitions.length !== 1) return { resolved: false, reason: "AMBIGUOUS_ID_ACROSS_LAYERS", candidates: result.definitions.map((entry) => ({ key: entry.key, id: entry.id, catalogType: entry.catalogType, dependency: entry.dependency, sourceLayer: entry.sourceLayer })) };
+    if (result.definitions.length !== 1)
+      return {
+        resolved: false,
+        reason: "AMBIGUOUS_ID_ACROSS_LAYERS",
+        candidates: result.definitions.map((entry) => ({
+          key: entry.key,
+          id: entry.id,
+          catalogType: entry.catalogType,
+          dependency: entry.dependency,
+          sourceLayer: entry.sourceLayer,
+        })),
+      };
     const entry = result.definitions[0]!;
-    return { resolved: true, object: entry, placeableRepresentation: entry.placeableRepresentation, dependencyReady: entry.engineActive!==false && (entry.availability === "MAP_LOCAL" || entry.availability === "AVAILABLE_THROUGH_DEPENDENCY"), engineActivityVerified:entry.engineActive===true, warnings: entry.warnings };
+    return {
+      resolved: true,
+      object: entry,
+      placeableRepresentation: entry.placeableRepresentation,
+      dependencyReady:
+        entry.engineActive !== false &&
+        (entry.availability === "MAP_LOCAL" ||
+          entry.availability === "AVAILABLE_THROUGH_DEPENDENCY"),
+      engineActivityVerified: entry.engineActive === true,
+      warnings: entry.warnings,
+    };
   }
 
-  async related(selector: { key?: string; id?: string; catalogType?: string; direction?: "incoming" | "outgoing" | "both"; depth?: number; limit?: number }) {
+  async related(selector: {
+    key?: string;
+    id?: string;
+    catalogType?: string;
+    direction?: "incoming" | "outgoing" | "both";
+    depth?: number;
+    limit?: number;
+  }) {
+    return this.workspace.withReadSet(() => this.withSnapshot(() => this.relatedTracked(selector)));
+  }
+  private async relatedTracked(selector: {
+    key?: string;
+    id?: string;
+    catalogType?: string;
+    direction?: "incoming" | "outgoing" | "both";
+    depth?: number;
+    limit?: number;
+  }) {
     const startResult = await this.get(selector);
     const index = await this.index();
+    const prepared = this.definitionIndexes.read(index);
     const depth = Math.max(1, Math.min(selector.depth ?? 3, 8));
     const limit = Math.max(1, Math.min(selector.limit ?? 100, 500));
     const direction = selector.direction ?? "both";
-    const queue: Array<{ entry: BrowseEntry; depth: number }> = startResult.definitions.slice(0, limit).map((entry) => ({ entry, depth: 0 }));
+    const queue: Array<{ entry: BrowseEntry; depth: number }> = startResult.definitions
+      .slice(0, limit)
+      .map((entry) => ({ entry, depth: 0 }));
     const visited = new Set(queue.map((item) => item.entry.key));
     const nodes = queue.map((item) => item.entry);
     const edges: Array<{ from: string; to: string; field: string; evidence: string }> = [];
     while (queue.length && nodes.length < limit) {
       const current = queue.shift()!;
       if (current.depth >= depth) continue;
-      const refs = [...(direction !== "incoming" ? current.entry.outgoing : []), ...(direction !== "outgoing" ? current.entry.incoming : [])];
+      const refs = [
+        ...(direction !== "incoming" ? current.entry.outgoing : []),
+        ...(direction !== "outgoing" ? current.entry.incoming : []),
+      ];
       for (const ref of refs) {
-        const targets = index.entries.filter((entry) => entry.id.toLowerCase() === ref.id.toLowerCase() && (!ref.catalogType || entry.catalogType.toLowerCase() === ref.catalogType.toLowerCase()));
+        const targets = (prepared.byId.get(ref.id.toLowerCase()) ?? []).filter(
+          (entry) =>
+            !ref.catalogType || entry.catalogType.toLowerCase() === ref.catalogType.toLowerCase(),
+        );
         for (const target of targets) {
-          if (edges.length < limit * 8) edges.push({ from: ref.direction === "incoming" ? target.key : current.entry.key, to: ref.direction === "incoming" ? current.entry.key : target.key, field: ref.field, evidence: ref.evidence });
+          if (edges.length < limit * 8)
+            edges.push({
+              from: ref.direction === "incoming" ? target.key : current.entry.key,
+              to: ref.direction === "incoming" ? current.entry.key : target.key,
+              field: ref.field,
+              evidence: ref.evidence,
+            });
           if (nodes.length >= limit) break;
-          if (!visited.has(target.key)) { visited.add(target.key); nodes.push(target); queue.push({ entry: target, depth: current.depth + 1 }); }
+          if (!visited.has(target.key)) {
+            visited.add(target.key);
+            nodes.push(target);
+            queue.push({ entry: target, depth: current.depth + 1 });
+          }
         }
       }
     }
-    return { roots: startResult.definitions.map((entry) => entry.key), nodes: nodes.map((entry) => ({ key: entry.key, id: entry.id, catalogType: entry.catalogType, ctype: entry.ctype, displayName: entry.displayName, assets: entry.assetPaths, placeable: entry.placeable })), edges, truncated: nodes.length >= limit };
+    return {
+      roots: startResult.definitions.map((entry) => entry.key),
+      nodes: nodes.map((entry) => ({
+        key: entry.key,
+        id: entry.id,
+        catalogType: entry.catalogType,
+        ctype: entry.ctype,
+        displayName: entry.displayName,
+        assets: entry.assetPaths,
+        placeable: entry.placeable,
+      })),
+      edges,
+      truncated: nodes.length >= limit,
+    };
   }
 
   async dependencies() {
@@ -488,28 +651,78 @@ export class BrowseWorkspace {
   }
 
   async usage(selector: { key?: string; id?: string; catalogType?: string }) {
+    return this.workspace.withReadSet(() => this.withSnapshot(() => this.usageTracked(selector)));
+  }
+  private async usageTracked(selector: { key?: string; id?: string; catalogType?: string }) {
     const definitions = (await this.get(selector)).definitions;
     const index = await this.index();
-    return { definitions: definitions.map((entry) => ({ key: entry.key, id: entry.id, catalogType: entry.catalogType, incoming: entry.incoming, files: unique(index.entries.filter((source) => source.outgoing.some((ref) => ref.id === entry.id && (!ref.catalogType || ref.catalogType === entry.catalogType))).map((source) => source.file)), scope: "indexed definitions only; packed maps and Galaxy usage are not scanned" })) };
+    return {
+      definitions: definitions.map((entry) => ({
+        key: entry.key,
+        id: entry.id,
+        catalogType: entry.catalogType,
+        incoming: entry.incoming,
+        files: unique(
+          index.entries
+            .filter((source) =>
+              source.outgoing.some(
+                (ref) =>
+                  ref.id === entry.id &&
+                  (!ref.catalogType || ref.catalogType === entry.catalogType),
+              ),
+            )
+            .map((source) => source.file),
+        ),
+        scope: "indexed definitions only; packed maps and Galaxy usage are not scanned",
+      })),
+    };
   }
 
   async validate() {
     const index = await this.index();
+    const prepared = this.definitionIndexes.read(index);
     const duplicateKeys = new Map<string, BrowseEntry[]>();
     for (const entry of index.entries) {
       const key = `${entry.catalogType}:${entry.id}`.toLowerCase();
       duplicateKeys.set(key, [...(duplicateKeys.get(key) ?? []), entry]);
     }
-    const unresolved = index.entries.flatMap((entry) => entry.outgoing.flatMap((reference) => index.entries.some((candidate) => candidate.id.toLowerCase() === reference.id.toLowerCase() && (!reference.catalogType || candidate.catalogType.toLowerCase() === reference.catalogType.toLowerCase())) ? [] : [{ source: entry.key, field: reference.field, target: `${reference.catalogType ?? "?"}:${reference.id}`, evidence: reference.evidence }]));
+    const unresolved = index.entries.flatMap((entry) =>
+      entry.outgoing.flatMap((reference) =>
+        (prepared.byId.get(reference.id.toLowerCase()) ?? []).some(
+          (candidate) =>
+            !reference.catalogType ||
+            candidate.catalogType.toLowerCase() === reference.catalogType.toLowerCase(),
+        )
+          ? []
+          : [
+              {
+                source: entry.key,
+                field: reference.field,
+                target: `${reference.catalogType ?? "?"}:${reference.id}`,
+                evidence: reference.evidence,
+              },
+            ],
+      ),
+    );
     return {
       valid: true,
       indexFingerprint: index.fingerprint,
       entries: index.entries.length,
-      duplicatesAcrossLayers: [...duplicateKeys.entries()].filter(([, entries]) => entries.length > 1).map(([key, entries]) => ({ key, definitions: entries.map((entry) => ({ sourceLayer: entry.sourceLayer, dependency: entry.dependency, file: entry.file })) })),
+      duplicatesAcrossLayers: [...duplicateKeys.entries()]
+        .filter(([, entries]) => entries.length > 1)
+        .map(([key, entries]) => ({
+          key,
+          definitions: entries.map((entry) => ({
+            sourceLayer: entry.sourceLayer,
+            dependency: entry.dependency,
+            file: entry.file,
+          })),
+        })),
       unresolvedReferences: unresolved.slice(0, 500),
       unresolvedCount: unresolved.length,
       warnings: index.warnings,
-      limitation: "Unresolved typed-field references may include scalar tokens. Runtime availability is not claimed without an editor/game probe.",
+      limitation:
+        "Unresolved typed-field references may include scalar tokens. Runtime availability is not claimed without an editor/game probe.",
     };
   }
 }

@@ -4,6 +4,7 @@ const raw = z.string().max(1024);
 const slot = z.union([z.literal("Global"), z.number().int().min(0).max(15)]);
 const definition = z.object({ id, type: z.enum(["Global", "Player"]), name: raw, access: z.enum(["Host", "Self"]).default("Host"), availability: raw.default("All"), visibility: raw.default("All") }).strict();
 export const settingsOperationSchema = z.discriminatedUnion("op", [
+    z.object({op:z.literal('attributes.ensure'),reason:z.string().trim().min(1).max(1000)}).strict(),
     z.object({op:z.literal('player.create'),playerId:z.number().int().min(1).max(14),control:z.enum(['User','Computer']),aiName:z.string().max(256).default(''),color:z.number().int().min(0).max(16).default(0)}).strict(),
     z.object({op:z.literal('starts.register'),objectIds:z.array(z.number().int().min(1).max(0x7fffffff)).min(1).max(256)}).strict(),
     definition.extend({ op: z.literal("attribute.create") }),

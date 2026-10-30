@@ -1,6 +1,11 @@
 import type { BatchStep, BatchTool } from "./mcpBatch.js";
+import { expandSpellRecipe, type SpellRecipe } from "../modules/data/spellRecipe.js";
 
 const recipes = new Map([
+  ["data.unit.configure", "recipe.unitConfigure"],
+  ["data.spell.configure", "recipe.spellConfigure"],
+  ["data.unit.copy", "recipe.unitCopy"],
+  ["data.spell", "recipe.spell"],
   ["data.ability.instant", "recipe.instantAbility"],
   ["data.ability.target", "recipe.targetAbility"],
   ["data.ability.charges", "recipe.abilityCharges"],
@@ -17,6 +22,7 @@ type Candidate = {
   key: string;
   args: Record<string, unknown>;
   operations: unknown[];
+  expandedOperations: number;
 };
 
 /** Group only schema-verified, adjacent, same-catalog authoring commands. Advanced
@@ -78,7 +84,25 @@ export function coalesceDataAuthoringSteps(
     )
       return;
     const args = { file, dryRun, stage, backup };
-    return { step, save, width: save ? 2 : 1, key: JSON.stringify(args), args, operations };
+    let expandedOperations = 0;
+    try {
+      for (const operation of operations) {
+        const { op, ...body } = operation as Record<string, unknown>;
+        expandedOperations +=
+          op === "recipe.spell" ? expandSpellRecipe(body as SpellRecipe).length : 1;
+      }
+    } catch {
+      return;
+    }
+    return {
+      step,
+      save,
+      width: save ? 2 : 1,
+      key: JSON.stringify(args),
+      args,
+      operations,
+      expandedOperations,
+    };
   };
   const out: BatchStep[] = [];
   for (let index = 0; index < steps.length;) {
@@ -88,13 +112,15 @@ export function coalesceDataAuthoringSteps(
       continue;
     }
     const operations = [...first.operations];
+    let expandedOperations = first.expandedOperations;
     let end = index + first.width,
       members = 1;
     while (end < steps.length) {
       const next = candidate(end);
-      if (!next || next.key !== first.key || operations.length + next.operations.length > 500)
+      if (!next || next.key !== first.key || expandedOperations + next.expandedOperations > 500)
         break;
       operations.push(...next.operations);
+      expandedOperations += next.expandedOperations;
       members++;
       end += next.width;
     }

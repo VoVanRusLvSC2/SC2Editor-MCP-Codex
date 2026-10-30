@@ -8,11 +8,45 @@ import { SchemaRegistry } from "../schema/schemaRegistry.js";
 import { AiDocument } from "../modules/ai/document.js";
 import { AiSchemaRegistry } from "../modules/ai/schemaRegistry.js";
 import { AiWorkspace } from "../modules/ai/workspace.js";
+import { AiReferenceResolver } from "../modules/ai/references.js";
 import { DataWorkspace } from "../modules/data/workspace.js";
 import { BrowseWorkspace } from "../modules/browse/workspace.js";
 import { dispatchGuiApi } from "../gui/api.js";
 import { PlacementWorkspace } from "../modules/placement/workspace.js";
 import { createHash } from "node:crypto";
+
+test("AI references prepare once per guarded scope and notice same-size same-time edits and added files", async (t) => {
+  const f = await fixture();
+  t.after(() => fs.rm(f.root, { recursive: true, force: true }));
+  const file = path.join(f.root, "Units.xml");
+  await fs.writeFile(file, '<Catalog><CUnit id="One"/></Catalog>');
+  const resolver = new AiReferenceResolver(f.root, [], f.core),
+    read = f.core.readRaw.bind(f.core);
+  let reads = 0;
+  f.core.readRaw = async (name) => {
+    if (name === "Units.xml") reads++;
+    return read(name);
+  };
+  const prepared = await f.core.memoizeReads(async () => {
+    for (let i = 0; i < 20; i++) {
+      const found = await resolver.resolve("unit", "One");
+      assert.equal(found.length, 1);
+      found[0].id = "poison";
+    }
+  });
+  assert.equal(reads, 1);
+  assert.equal(await f.core.reuseReads(prepared.memo), true);
+  const stat = await fs.stat(file);
+  await fs.writeFile(file, '<Catalog><CUnit id="Two"/></Catalog>');
+  await fs.utimes(file, stat.atime, stat.mtime);
+  assert.equal(await f.core.reuseReads(prepared.memo), false);
+  assert.equal((await resolver.resolve("unit", "Two")).length, 1);
+  assert.equal((await resolver.resolve("unit", "One")).length, 0);
+  const fresh = await f.core.memoizeReads(() => resolver.resolve("unit", "Two"));
+  await fs.writeFile(path.join(f.root, "Added.xml"), '<Catalog><CUnit id="New"/></Catalog>');
+  assert.equal(await f.core.reuseReads(fresh.memo), false);
+  assert.equal((await resolver.resolve("unit", "New")).length, 1);
+});
 
 async function fixture(customAi?: string) {
   const root = await fs.mkdtemp(path.join(os.tmpdir(), "sc2-ai-"));
@@ -21,6 +55,31 @@ async function fixture(customAi?: string) {
   const core = new Workspace(root, await SchemaRegistry.loadBundled());
   return { root, core, ai: new AiWorkspace(core, await AiSchemaRegistry.load()) };
 }
+
+test("prepared AI IR isolates returned mutations and follows candidate/source and schema changes", async () => {
+  const schema = await AiSchemaRegistry.load(),
+    doc = AiDocument.create();
+  const before = doc.toIR(schema, false);
+  before.nativeNodes.length = 0;
+  before.diagnostics.push({ severity: "error", code: "poison", message: "bad", path: "" });
+  assert.ok(doc.toIR(schema, false).nativeNodes.length > 0);
+  assert.equal(
+    doc.toIR(schema, false).diagnostics.some((d) => d.code === "poison"),
+    false,
+  );
+  doc.addNode(undefined, { nativeType: "Definition", attrs: { Id: "Prepared" } });
+  assert.equal(doc.toIR(schema, false).definitions[0].id, "Prepared");
+  assert.equal(doc.toIR(schema, true).definitions[0].rawSource?.includes("Prepared"), true);
+  const definition = schema.node("Definition")!;
+  definition.evidence =
+    definition.evidence === "UNKNOWN_NEEDS_RESEARCH"
+      ? "EDITOR_OUTPUT_OBSERVED"
+      : "UNKNOWN_NEEDS_RESEARCH";
+  assert.equal(
+    doc.toIR(schema, false).nativeNodes.find((node) => node.nativeType === "Definition")!.evidence,
+    definition.evidence,
+  );
+});
 
 test("CustomAI open/parse is byte-identical and preserves unknown extensions", async () => {
   const source = `<?xml version="1.0" encoding="utf-8"?>\r\n<AIData future="yes">\r\n    <!-- keep -->\r\n    <Definition Id="A"><Future x='1'><Nested opaque="yes"/></Future></Definition>\r\n</AIData>`;

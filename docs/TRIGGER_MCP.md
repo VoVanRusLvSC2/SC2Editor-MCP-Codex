@@ -34,6 +34,16 @@ The importer rejects ScriptCode and Custom Script fallbacks and validates scoped
 references and folder ownership. Save with `trigger.save`. It does not launch
 Trigger Revize or SC2 Editor; native conversion remains an explicit job.
 
+Native reviewed imports accept production GUI graphs up to 64 MiB; the offline
+path retains its 4 MiB limit. For a legacy map that already contains ScriptCode
+or CustomScript owners, explicit `preserveExistingScripts:true` requires a native
+compiler job and preserves every existing script owner by scoped identity and
+canonical content. A root/category `Item Type="CustomScript"` is a graph reference,
+not a second executable owner; it must still resolve to an existing element.
+Adding, changing or removing an existing script owner rejects;
+this option never authorizes new script fallbacks. The original source/runtime
+hashes and native template binding remain mandatory.
+
 The default offline path checks its supported emitted runtime, including
 self-contained inline libraries. References use Library/Type/Id identities;
 same IDs/names in separate libraries are independent. Map-owned declarations get

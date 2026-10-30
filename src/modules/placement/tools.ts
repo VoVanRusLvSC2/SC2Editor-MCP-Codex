@@ -82,19 +82,71 @@ export interface PlacementToolContext {
   workspace: PlacementWorkspace;
 }
 export const addPlacementSchema = z.object(addCommon);
-export function registerPlacementTools(
-  server: McpServer,
-  context: PlacementToolContext,
-): void {
+export function registerPlacementTools(server: McpServer, context: PlacementToolContext): void {
   const placement = context.workspace;
-  server.registerTool('placement.editor_visibility',{description:'Inspect the Windows SC2 Editor global TerrainLayersVisible mask. enableAll=true,dryRun=false backs up this exact preference and enables all layer bits. Does not launch/control Editor or certify model rendering; running instances may cache the preference.',inputSchema:z.object({enableAll:z.boolean().default(false),dryRun:z.boolean().default(true)}).strict()},async a=>textResult(await editorVisibility(placement.workspace,a.enableAll,a.dryRun)));
-  server.registerTool('placement.geometry_check',{description:'Check all object XML forms, bounds, unit ground offsets, absolute doodad heights and catalog radius overlap candidates. Optional CLIF/LFCT route candidate; actual footprints/engine pathing are not simulated.',inputSchema:z.object({objectIds:z.array(z.number().int().positive()).max(5000).default([]),tolerance:z.number().min(0).max(1).default(.01),route:z.object({from:z.object({x:z.number(),y:z.number()}),to:z.object({x:z.number(),y:z.number()})}).optional()}).strict()},async a=>textResult(await checkPlacementGeometry(placement,a.objectIds,a.tolerance,a.route)));
+  server.registerTool(
+    "placement.editor_visibility",
+    {
+      description:
+        "Inspect the Windows SC2 Editor global TerrainLayersVisible mask. enableAll=true,dryRun=false backs up this exact preference and enables all layer bits. Does not launch/control Editor or certify model rendering; running instances may cache the preference.",
+      inputSchema: z
+        .object({ enableAll: z.boolean().default(false), dryRun: z.boolean().default(true) })
+        .strict(),
+    },
+    async (a) => textResult(await editorVisibility(placement.workspace, a.enableAll, a.dryRun)),
+  );
+  server.registerTool(
+    "placement.geometry_check",
+    {
+      description:
+        "Check all object XML forms, bounds, unit ground offsets, absolute doodad heights and catalog radius overlap candidates. Optional CLIF/LFCT route candidate; actual footprints/engine pathing are not simulated.",
+      inputSchema: z
+        .object({
+          objectIds: z.array(z.number().int().positive()).max(5000).default([]),
+          tolerance: z.number().min(0).max(1).default(0.01),
+          route: z
+            .object({
+              from: z.object({ x: z.number(), y: z.number() }),
+              to: z.object({ x: z.number(), y: z.number() }),
+            })
+            .optional(),
+        })
+        .strict(),
+    },
+    async (a) =>
+      textResult(await checkPlacementGeometry(placement, a.objectIds, a.tolerance, a.route)),
+  );
 
-  let pointContext:PointWorkspace|undefined;
-  const points=()=>pointContext ??=new PointWorkspace(placement.workspace);
-  server.registerTool("placement.points.inspect",{description:"Inspect native ObjectPoint entries, preserving all other Objects data.",inputSchema:z.object({directory:z.string().default("")}).strict()},async a=>textResult(await points().inspect(a.directory)));
-  server.registerTool("placement.points.plan",{description:"Plan v27 native points create/update/remove. StartLoc is a point marker; assigning it to a player is separate metadata work.",inputSchema:pointPlanSchema},async a=>textResult(await points().plan(a)));
-  server.registerTool("placement.points.apply",{description:"Stage a point plan and component manifest together; defaults to dry run. Commit with ui.save on the returned Objects file; discard with ui.discard.",inputSchema:z.object({planId:z.string().min(1),dryRun:z.boolean().default(true)}).strict()},async a=>textResult(await points().apply(a.planId,a.dryRun)));
+  let pointContext: PointWorkspace | undefined;
+  const points = () => (pointContext ??= new PointWorkspace(placement.workspace));
+  server.registerTool(
+    "placement.points.inspect",
+    {
+      description: "Inspect native ObjectPoint entries, preserving all other Objects data.",
+      inputSchema: z.object({ directory: z.string().default("") }).strict(),
+    },
+    async (a) => textResult(await points().inspect(a.directory)),
+  );
+  server.registerTool(
+    "placement.points.plan",
+    {
+      description:
+        "Plan v27 native points create/update/remove. StartLoc is a point marker; assigning it to a player is separate metadata work.",
+      inputSchema: pointPlanSchema,
+    },
+    async (a) => textResult(await points().plan(a)),
+  );
+  server.registerTool(
+    "placement.points.apply",
+    {
+      description:
+        "Stage a point plan and component manifest together; defaults to dry run. Commit with ui.save on the returned Objects file; discard with ui.discard.",
+      inputSchema: z
+        .object({ planId: z.string().min(1), dryRun: z.boolean().default(true) })
+        .strict(),
+    },
+    async (a) => textResult(await points().apply(a.planId, a.dryRun)),
+  );
 
   server.registerTool(
     "placement.scatterDoodads",
@@ -179,6 +231,9 @@ export function registerPlacementTools(
               kind: z.enum(["Unit", "Doodad"]),
               ...selector,
               position,
+              snapToTerrain: z.boolean().default(false),
+              terrainDirectory: z.string().optional(),
+              maxSlope: z.number().finite().nonnegative().optional(),
               rotation: z.number().optional(),
               scale: scale.optional(),
               owner: z.number().int().min(0).max(15).optional(),
@@ -191,17 +246,12 @@ export function registerPlacementTools(
       }),
     },
     async (args) =>
-      textResult(
-        await placement.addBatch(
-          args as Parameters<PlacementWorkspace["addBatch"]>[0],
-        ),
-      ),
+      textResult(await placement.addBatch(args as Parameters<PlacementWorkspace["addBatch"]>[0])),
   );
   server.registerTool(
     "placement.move",
     {
-      description:
-        "Create a minimal-diff plan to move one placed object by numeric object Id.",
+      description: "Create a minimal-diff plan to move one placed object by numeric object Id.",
       inputSchema: z.object({
         ...commonFiles,
         objectId: z.number().int().positive(),
@@ -237,8 +287,7 @@ export function registerPlacementTools(
   server.registerTool(
     "placement.scale",
     {
-      description:
-        "Create a minimal-diff plan to set the real three-component Scale attribute.",
+      description: "Create a minimal-diff plan to set the real three-component Scale attribute.",
       inputSchema: z.object({
         ...commonFiles,
         objectId: z.number().int().positive(),
@@ -262,11 +311,46 @@ export function registerPlacementTools(
         objectId: z.number().int().positive(),
       }),
     },
-    async (args) =>
-      textResult(await placement.mutate({ ...args, op: "remove" })),
+    async (args) => textResult(await placement.mutate({ ...args, op: "remove" })),
   );
-  server.registerTool('placement.removeBatch',{description:'Plan atomic removal of 1–5000 exact existing object IDs. No mutation until placement.apply; stale source guards retained. Does not rewrite Trigger/Galaxy references.',inputSchema:z.object({...commonFiles,objectIds:z.array(z.number().int().positive()).min(1).max(5000)}).strict()},async args=>textResult(compactPlacementPlan(await placement.removeBatch(args))));
-  server.registerTool('placement.setVariations',{description:'Plan 1–5000 explicit model-variation assignments on existing Unit/Doodad IDs without recreating objects. Changes only observed Variation attributes; duplicate/missing IDs and invalid integers reject the whole batch. Source-span edits retain position, owner, flags, custom XML and references; one guarded placement transaction applies/saves it. Measure actual available variants separately. XML serialization does not prove a different visible model, unchanged visual bounds or collision. For generated owned groups prefer their member variation in the original intent.',inputSchema:z.object({...commonFiles,assignments:z.array(z.object({objectId:z.number().int().positive(),variation:z.number().int().nonnegative()}).strict()).min(1).max(5000)}).strict()},async args=>textResult(compactPlacementPlan(await placement.setVariations(args))));
+  server.registerTool(
+    "placement.removeBatch",
+    {
+      description:
+        "Plan atomic removal of 1–5000 exact existing object IDs. No mutation until placement.apply; stale source guards retained. Does not rewrite Trigger/Galaxy references.",
+      inputSchema: z
+        .object({
+          ...commonFiles,
+          objectIds: z.array(z.number().int().positive()).min(1).max(5000),
+        })
+        .strict(),
+    },
+    async (args) => textResult(compactPlacementPlan(await placement.removeBatch(args))),
+  );
+  server.registerTool(
+    "placement.setVariations",
+    {
+      description:
+        "Plan 1–5000 explicit model-variation assignments on existing Unit/Doodad IDs without recreating objects. Changes only observed Variation attributes; duplicate/missing IDs and invalid integers reject the whole batch. Source-span edits retain position, owner, flags, custom XML and references; one guarded placement transaction applies/saves it. Measure actual available variants separately. XML serialization does not prove a different visible model, unchanged visual bounds or collision. For generated owned groups prefer their member variation in the original intent.",
+      inputSchema: z
+        .object({
+          ...commonFiles,
+          assignments: z
+            .array(
+              z
+                .object({
+                  objectId: z.number().int().positive(),
+                  variation: z.number().int().nonnegative(),
+                })
+                .strict(),
+            )
+            .min(1)
+            .max(5000),
+        })
+        .strict(),
+    },
+    async (args) => textResult(compactPlacementPlan(await placement.setVariations(args))),
+  );
   server.registerTool(
     "placement.decorate",
     {
@@ -276,13 +360,9 @@ export function registerPlacementTools(
     },
     async (args) => {
       if (args.terrain)
-        throw new Error(
-          "Use placement.createLocation to combine terrain and objects",
-        );
+        throw new Error("Use placement.createLocation to combine terrain and objects");
       return textResult(
-        await placement.decorate(
-          args as Parameters<PlacementWorkspace["decorate"]>[0],
-        ),
+        await placement.decorate(args as Parameters<PlacementWorkspace["decorate"]>[0]),
       );
     },
   );
@@ -295,8 +375,7 @@ export function registerPlacementTools(
     },
     async (args) => {
       if (args.terrain) {
-        if (!placement.terrain)
-          throw new Error("Terrain context is unavailable");
+        if (!placement.terrain) throw new Error("Terrain context is unavailable");
         return textResult(
           await placement.terrain.createLocation({
             ...args,
@@ -305,9 +384,7 @@ export function registerPlacementTools(
         );
       }
       return textResult(
-        await placement.createLocation(
-          args as Parameters<PlacementWorkspace["createLocation"]>[0],
-        ),
+        await placement.createLocation(args as Parameters<PlacementWorkspace["createLocation"]>[0]),
       );
     },
   );
@@ -330,8 +407,7 @@ export function registerPlacementTools(
         objectFile: z.string().default("Objects"),
       }),
     },
-    async ({ planId, objectFile }) =>
-      textResult(await placement.validate(planId, objectFile)),
+    async ({ planId, objectFile }) => textResult(await placement.validate(planId, objectFile)),
   );
   server.registerTool(
     "placement.apply",
@@ -346,8 +422,7 @@ export function registerPlacementTools(
         expectedSha256: z.record(z.string(), z.string()).optional(),
       }),
     },
-    async ({ planId, ...options }) =>
-      textResult(await placement.apply(planId, options)),
+    async ({ planId, ...options }) => textResult(await placement.apply(planId, options)),
   );
   server.registerTool(
     "placement.rollback",
@@ -360,8 +435,6 @@ export function registerPlacementTools(
       }),
     },
     async ({ objectFile, componentListFile, dryRun }) =>
-      textResult(
-        await placement.rollback(objectFile, componentListFile, dryRun),
-      ),
+      textResult(await placement.rollback(objectFile, componentListFile, dryRun)),
   );
 }

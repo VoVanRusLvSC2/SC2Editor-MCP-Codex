@@ -5,6 +5,7 @@ import type {Workspace} from '../../core/workspace.js';
 import {GameStdioClient,type GameClient,type GameResult} from './transport.js';
 import {verifyGameRuntime,type GameRuntimeIdentity} from './runtime.js';
 import {observeActionEvents,type ActionEventsRequest,type EventContinuation} from './actionEvents.js';
+import {gameMpqCompatibilityBootstrap} from './mpqCompatibility.js';
 
 const operations=new Set(['game.status','game.debug.inspect','game.diagnostics','game.units.find','game.units.inspect','game.selection.set','game.camera.set','game.capture','game.order','game.wait','game.events','game.record','game.fixture','game.ui.inspect','game.ui.activate','game.test.run']);
 const sha=(b:Buffer)=>createHash('sha256').update(b).digest('hex');
@@ -72,7 +73,7 @@ export class NativeGameBridge {
       this.runtimeIdentity=await verifyGameRuntime(home,this.env.SC2_GAME_BINARIES,{requiredRelease:this.env.SC2_GAME_REQUIRED_RELEASE});
       await this.prepareExternalWork(home);
       if(!this.externalWorkRoot)await fs.mkdir(this.work,{recursive:true});
-      this.client=new GameStdioClient(this.env.SC2_GAME_PYTHON??'python',[script,'--work',this.work,'--binaries',this.env.SC2_GAME_BINARIES??path.join(home,'bin')],home);
+      this.client=new GameStdioClient(this.env.SC2_GAME_PYTHON??'python',['-c',gameMpqCompatibilityBootstrap,script,'--work',this.work,'--binaries',this.env.SC2_GAME_BINARIES??path.join(home,'bin')],home);
     }else if(this.externalWorkRoot){
       await this.prepareExternalWork(this.env.SC2_GAME_TOOLKIT_HOME?await fs.realpath(this.env.SC2_GAME_TOOLKIT_HOME):undefined);
     }

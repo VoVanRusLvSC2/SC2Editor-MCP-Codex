@@ -1,8 +1,12 @@
 import {scanXml,decodeXmlValue} from '../../core/xmlScanner.js';
 import {organizeTriggerXml} from './organization.js';
 /** Explicit full-GUI import boundary; semantic equivalence still needs verification. */
-export function inspectRevisedGui(xml:string,options:{nativeLibraries?:boolean;localLibraries?:boolean}={}){
- if(Buffer.byteLength(xml)>4*1024*1024)throw new Error('GUI_IMPORT_BYTE_LIMIT');
+export function inspectRevisedGui(xml:string,options:{nativeLibraries?:boolean;localLibraries?:boolean;existingSource?:string}={}){
+ // Recovered production maps can legitimately contain much larger GUI graphs.
+ // Larger imports require the original compiler, rather than widening the
+ // supported offline emitter's resource/semantic boundary.
+ const byteLimit=(options.nativeLibraries?64:4)*1024*1024;
+ if(Buffer.byteLength(xml)>byteLimit)throw new Error('GUI_IMPORT_BYTE_LIMIT');
  const p=scanXml(xml);if(p.diagnostics.some(d=>d.severity==='error'))throw new Error('GUI_IMPORT_XML');
  const libraries=p.nodes.filter(n=>n.tag==='Library');
  if(libraries.length&&!options.nativeLibraries&&!options.localLibraries)throw new Error('GUI_IMPORT_NATIVE_LIBRARY_COMPILER_REQUIRED');
@@ -24,7 +28,30 @@ export function inspectRevisedGui(xml:string,options:{nativeLibraries?:boolean;l
   const sub=children(matches[0]),identifier=sub.find(n=>n.tag==='Identifier');
   return sub.length===2&&sub.filter(n=>n.tag==='Action'&&n.selfClosing).length===1&&!!identifier&&decodeXmlValue(xml.slice(identifier.startTagEnd,identifier.endTagStart))==='actions';
  };
- if(p.nodes.some(n=>['ExpressionText','CustomScript'].includes(n.tag)||n.attrs.Type==='CustomScript')||scripts.some(n=>!declarative(n)))throw new Error('GUI_IMPORT_SCRIPT_FALLBACK');
+ const fallback=(n:typeof p.nodes[number])=>['ExpressionText','CustomScript'].includes(n.tag)||n.tag==='Element'&&n.attrs.Type==='CustomScript'||n.tag==='ScriptCode'&&!declarative(n);
+ const inherited=new Set<number>();
+ if(options.existingSource!==undefined){
+  if(!options.nativeLibraries)throw Error('GUI_IMPORT_PRESERVE_REQUIRES_NATIVE');
+  if(Buffer.byteLength(options.existingSource)>64*1024*1024)throw Error('GUI_IMPORT_BYTE_LIMIT');
+  const previous=scanXml(options.existingSource);
+  if(previous.diagnostics.some(d=>d.severity==='error'))throw Error('GUI_IMPORT_EXISTING_XML');
+  const owners=(parsed:typeof p,source:string)=>{
+   const result=new Map<string,{signature:string;nodes:number[]}>();
+   const canonical=(n:typeof p.nodes[number]):unknown=>[n.tag,Object.entries(n.attrs).sort(([a],[b])=>a.localeCompare(b)),n.childIds.length?n.childIds.map(id=>canonical(parsed.nodes[id])):decodeXmlValue(source.slice(n.startTagEnd,n.endTagStart)).replace(/\r\n/g,'\n')];
+   for(const n of parsed.nodes){
+    if(!['ScriptCode','ExpressionText','CustomScript'].includes(n.tag)&&!(n.tag==='Element'&&n.attrs.Type==='CustomScript'))continue;
+    let owner:typeof n|undefined=n;while(owner&&owner.tag!=='Element')owner=owner.parentId===null?undefined:parsed.nodes[owner.parentId];
+    if(!owner)throw Error('GUI_IMPORT_SCRIPT_OWNER');
+    let library='',parent:typeof n|undefined=owner;while(parent){if(parent.tag==='Library'){library=parent.attrs.Id;break;}parent=parent.parentId===null?undefined:parsed.nodes[parent.parentId];}
+    const key=JSON.stringify([library,owner.attrs.Type,owner.attrs.Id]);
+    const entry=result.get(key)??{signature:JSON.stringify(canonical(owner)),nodes:[]};entry.nodes.push(n.id);result.set(key,entry);
+   }
+   return result;
+  };
+  const before=owners(previous,options.existingSource),after=owners(p,xml);
+  for(const [key,old]of before){const current=after.get(key);if(!current||current.signature!==old.signature)throw Error('GUI_IMPORT_EXISTING_SCRIPT_CHANGED: '+key);for(const id of current.nodes)inherited.add(id);}
+ }
+ if(p.nodes.some(n=>fallback(n)&&!inherited.has(n.id)))throw new Error('GUI_IMPORT_SCRIPT_FALLBACK');
  const container=p.nodes.find(n=>n.tag==='TriggerData'&&n.parentId===null),root=p.nodes.find(n=>n.tag==='Root'&&n.parentId===container?.id),elements=p.nodes.filter(n=>n.tag==='Element');
  if(!root)throw new Error('GUI_IMPORT_ROOT');
  const ids=new Set<string>();for(const l of libraries){if(!l.attrs.Id||ids.has(l.attrs.Id)||l.parentId!==container?.id)throw Error('GUI_IMPORT_LIBRARY_SCOPE');ids.add(l.attrs.Id);}
@@ -42,5 +69,5 @@ export function inspectRevisedGui(xml:string,options:{nativeLibraries?:boolean;l
  const folders=organizeTriggerXml(xml,{}).folders.filter(f=>elements.some(n=>scope(n)===''&&n.attrs.Type==='Category'&&n.attrs.Id===f.id)).map(f=>f.path);
  const libraryFolders=libraries.map(l=>({library:l.attrs.Id,folders:organizeTriggerXml(xml,{library:l.attrs.Id}).folders.filter(f=>elements.some(n=>scope(n)===l.attrs.Id&&n.attrs.Type==='Category'&&n.attrs.Id===f.id)).map(f=>f.path)}));
  const count=(type:string)=>elements.filter(n=>n.attrs.Type===type).length;
- return {folders,libraries:libraryFolders,externalLibraries:[...external].sort(),triggers:count('Trigger'),functions:count('FunctionDef'),variables:count('Variable'),calls:count('FunctionCall'),customScripts:0,declarativeMacros:scripts.length};
+ return {folders,libraries:libraryFolders,externalLibraries:[...external].sort(),triggers:count('Trigger'),functions:count('FunctionDef'),variables:count('Variable'),calls:count('FunctionCall'),customScripts:0,preservedScriptNodes:inherited.size,declarativeMacros:scripts.filter(declarative).length};
 }

@@ -1,6 +1,42 @@
 import test from 'node:test';import assert from 'node:assert/strict';import {promises as fs} from 'node:fs';import os from 'node:os';import path from 'node:path';import sharp from 'sharp';import {alphaChannel,adjust,color,composite,slices} from '../modules/uiPreview/pixels.js';import {definitions,mergeDefinition,PreviewSources} from '../modules/uiPreview/sources.js';import {compileScene} from '../modules/uiPreview/scene.js';import {renderScene} from '../modules/uiPreview/render.js';import {Workspace} from '../core/workspace.js';import {CascWorkspace} from '../modules/casc/workspace.js';import {TextSchemaRegistry} from '../modules/text/schemaRegistry.js';import {UiPreviewWorkspace} from '../modules/uiPreview/workspace.js';
 import {renderNativeLabel} from '../modules/uiPreview/textRender.js';
+import { UiPreviewPreparation } from "../modules/uiPreview/preparation.js";
 import type {SceneFrame} from '../modules/uiPreview/scene.js';
+
+test("retained UI preparation isolates XML definitions and decoded texture pixels while respecting content changes", () => {
+  const prepared = new UiPreviewPreparation(),
+    xml = '<Desc><Frame type="Frame" name="Root"><Width val="100"/></Frame></Desc>';
+  const first = definitions(xml, "Test.SC2Layout", prepared);
+  first.frames[0].attrs.name = "Poison";
+  first.frames[0].properties[0].attrs.val = "Poison";
+  const again = definitions(xml, "Other.SC2Layout", prepared);
+  assert.equal(again.frames[0].name, "Root");
+  assert.equal(again.frames[0].source, "Other.SC2Layout");
+  assert.equal(again.frames[0].properties[0].attrs.val, "100");
+  assert.equal(prepared.stats().xml.parses, 1);
+  assert.equal(
+    definitions(xml.replace("100", "200"), "Test.SC2Layout", prepared).frames[0].properties[0].attrs
+      .val,
+    "200",
+  );
+  const bytes = Buffer.alloc(136);
+  bytes.write("DDS ");
+  bytes.writeUInt32LE(124, 4);
+  bytes.writeUInt32LE(4, 12);
+  bytes.writeUInt32LE(4, 16);
+  bytes.writeUInt32LE(32, 76);
+  bytes.write("DXT1", 84);
+  bytes.writeUInt16LE(0xf800, 128);
+  const texture = prepared.texture(bytes);
+  texture.rgba.fill(0);
+  const cached = prepared.texture(bytes);
+  assert.ok(Buffer.isBuffer(cached.rgba));
+  assert.equal(cached.rgba[0], 255);
+  assert.equal(prepared.stats().decodes, 1);
+  bytes.writeUInt16LE(0x07e0, 128);
+  assert.equal(prepared.texture(bytes).rgba[1], 255);
+  assert.equal(prepared.stats().decodes, 2);
+});
 async function fixture(t:test.TestContext){const root=await fs.mkdtemp(path.join(os.tmpdir(),'sc2-ui-preview-'));t.after(()=>fs.rm(root,{recursive:true,force:true}));const casc={read:async()=>{throw new Error('CASC_PATH_NOT_FOUND')},refreshBuild:async()=>({build:{buildKey:'test'}})} as unknown as CascWorkspace;return {root,casc,sources:new PreviewSources(new Workspace(root),casc,await TextSchemaRegistry.load(),'Terr',['mods/core.sc2mod'])};}
 test('unresolved native color tokens fall back and empty labels render without a Sharp error',async()=>{
   assert.deepEqual(color('#ColorStandardButton',[.25,.5,.75,1]),[.25,.5,.75,1]);

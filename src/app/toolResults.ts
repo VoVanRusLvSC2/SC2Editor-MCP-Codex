@@ -117,6 +117,7 @@ const keys = [
   "staged",
   "saved",
   "unchanged",
+  "nativePlayback",
 ];
 function compactArtifactPaths(value: unknown) {
   if (!value || typeof value !== "object" || Array.isArray(value)) return;
@@ -292,6 +293,53 @@ function compactGeneralResult(value: unknown) {
   const v = value as Record<string, unknown>,
     out: Record<string, unknown> = {};
   for (const key of keys) if (v[key] !== undefined) out[key] = v[key];
+  for (const [key, fields] of [
+    [
+      "efficiency",
+      [
+        "toolCalls",
+        "authoredOperations",
+        "operations",
+        "nativeMutations",
+        "files",
+        "includesValidation",
+      ],
+    ],
+    [
+      "authoring",
+      [
+        "accepted",
+        "status",
+        "completeness",
+        "executionPolicy",
+        "staticValidation",
+        "editor",
+        "runtime",
+        "scope",
+      ],
+    ],
+    [
+      "validation",
+      ["valid", "errors", "warnings", "levels", "validationScope", "semanticCoverage"],
+    ],
+  ] as const) {
+    const item = v[key];
+    if (!item || typeof item !== "object" || Array.isArray(item)) continue;
+    const source = item as Record<string, unknown>;
+    out[key] = Object.fromEntries(
+      fields.filter((k) => source[k] !== undefined).map((k) => [k, source[k]]),
+    );
+    if (Array.isArray(source.diagnostics)) {
+      const receipt = out[key] as Record<string, unknown>;
+      receipt.diagnosticsTotal = source.diagnosticsTotal ?? source.diagnostics.length;
+      receipt.diagnostics = source.diagnostics.slice(0, 4).map((d) => {
+        const raw = JSON.stringify(d);
+        return raw.length <= 4000 ? d : { truncated: true, preview: raw.slice(0, 1000) };
+      });
+      receipt.diagnosticsTruncated = Number(receipt.diagnosticsTotal) > 4;
+      if (source.nextOffset !== undefined) receipt.nextOffset = source.nextOffset;
+    }
+  }
   for (const key of ["plan", "transaction"])
     if (v[key] && typeof v[key] === "object") out[key] = compactResult(v[key]);
   if (Array.isArray(v.diagnostics))

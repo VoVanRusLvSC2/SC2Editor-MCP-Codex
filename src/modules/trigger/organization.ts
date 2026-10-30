@@ -1,6 +1,7 @@
 import {createHash} from 'node:crypto';
 import * as z from 'zod/v4';
-import {scanXml,decodeXmlValue} from '../../core/xmlScanner.js';
+import { decodeXmlValue } from "../../core/xmlScanner.js";
+import { readTriggerXml as scanXml } from "./preparedXml.js";
 import type {XmlNode} from '../../core/types.js';
 
 export const missionFolders=['FUNCTIONS','MAIN','GAMEPLAY','OBJECTIVES','CINEMATICS'] as const;

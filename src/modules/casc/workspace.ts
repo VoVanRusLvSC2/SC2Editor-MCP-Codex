@@ -3,6 +3,7 @@ import path from "node:path";
 import { gzipSync, gunzipSync } from "node:zlib";
 import { GalaxyDocument } from "../script/document.js";
 import { createHash, randomUUID } from "node:crypto";
+import type { Workspace } from "../../core/workspace.js";
 import { NativeCascBackend, bundledCascHelper, type CascBackend, type CascEntry } from "./backend.js";
 export interface CascBuild { version: string; buildKey: string; cdnKey: string; buildInfoSha256: string }
 const sha = (bytes: Uint8Array | string) => createHash("sha256").update(bytes).digest("hex");
@@ -25,7 +26,7 @@ export function safeCascPath(value: string, allowEmpty = false): string {
 interface CacheMetadata extends CascBuild { schemaVersion: 1; path: string; sha256: string; contentKey: string; encodingKey: string; size: number }
 interface MountRecord { registrationOrder?:number;kinds?:CascKind[];locales?:string[];package: string; root: string; build: CascBuild; files: Array<{ logicalPath: string; file: string; sha256: string }> }
 export type CascKind = "catalogs" | "triggers" | "strings" | "schemas" | "layouts";
-export interface CascOptions { install?: string; cacheRoot?: string; backendName?:string;backendFactory?: (install: string) => CascBackend; onMount?: (root: string) => void; onUnmount?: (root: string) => void }
+export interface CascOptions { install?: string; cacheRoot?: string; backendName?:string;backendFactory?: (install: string) => CascBackend; onMount?: (root: string) => void; onUnmount?: (root: string) => void; trackingWorkspace?: Workspace }
 
 /** Read-only game source, build-scoped verified byte cache, and explicit dependency views. */
 export class CascWorkspace {
@@ -46,7 +47,15 @@ export class CascWorkspace {
   }
   configuration() { return { install: this.install, cacheRoot: this.cacheRoot, backend:this.options.backendName??'native CascLib',helperAvailable: existsSync(bundledCascHelper()), localOnly: true, gameWrites: false, initialized: !!this.backend }; }
   private async source() {
-    const raw = await fs.readFile(path.join(this.install, ".build.info"), "utf8").catch(error => { throw new Error("CASC_INSTALL_BUILD_INFO_UNAVAILABLE", { cause: error }); });
+    const file = path.join(this.install, ".build.info");
+    const raw = await (
+      this.options.trackingWorkspace?.trackingReads
+        ? this.options.trackingWorkspace.readDependency(file)
+        : fs.readFile(file, "utf8")
+    ).catch((error) => {
+      if (error instanceof Error && error.message.startsWith("STALE_")) throw error;
+      throw new Error("CASC_INSTALL_BUILD_INFO_UNAVAILABLE", { cause: error });
+    });
     return parseCascBuildInfo(raw);
   }
   private syncBuild(build: CascBuild) {
@@ -223,35 +232,80 @@ export class CascWorkspace {
   }
   restoreMounts() {return this.serializeMounts(()=>this.restoreRegisteredMounts());}
   private async restoreRegisteredMounts() {
-    const build = await this.source(); this.syncBuild(build);
-    const directory = this.cachePath(`${build.buildKey}/mounts`), mounted: string[] = [];
-    const names = await fs.readdir(directory).catch(error => { if ((error as NodeJS.ErrnoException).code === "ENOENT") return []; throw error; });
+    const build = await this.source();
+    this.syncBuild(build);
+    const directory = this.cachePath(`${build.buildKey}/mounts`),
+      mounted: string[] = [];
+    const tracking = this.options.trackingWorkspace?.trackingReads
+      ? this.options.trackingWorkspace
+      : undefined;
+    const names = await (
+      tracking
+        ? tracking
+            .readDirectory(directory, "casc-mounts")
+            .then((entries) => entries.map((entry) => entry.name))
+        : fs.readdir(directory)
+    ).catch((error) => {
+      if ((error as NodeJS.ErrnoException).code === "ENOENT") return [];
+      throw error;
+    });
     if (names.length > 16) throw new Error("CASC_MOUNT_MANIFEST_BUDGET");
-    const records:Array<{file:string;record:MountRecord}>=[],orders=new Set<number>();
-    for (const name of names.filter(name => /^[a-f0-9]{64}\.json$/.test(name)).sort()) {
-      const manifest=this.cachePath(`${build.buildKey}/mounts/${name}`),record = JSON.parse(await fs.readFile(manifest, "utf8")) as MountRecord;
-      const pkg = safeCascPath(record.package), expectedRoot = this.cachePath(`${build.buildKey}/views/${pkg}`);
-      if (record.build.buildKey !== build.buildKey || record.root !== expectedRoot || record.files.length > 2000) throw new Error("CASC_MOUNT_MANIFEST_INVALID");
-      if(record.registrationOrder!==undefined){
-        if(!Number.isSafeInteger(record.registrationOrder)||record.registrationOrder<0||record.registrationOrder>=16||orders.has(record.registrationOrder))throw Error('CASC_MOUNT_ORDER_INVALID');
+    const records: Array<{ file: string; record: MountRecord; source: Buffer }> = [],
+      orders = new Set<number>();
+    for (const name of names.filter((name) => /^[a-f0-9]{64}\.json$/.test(name)).sort()) {
+      const manifest = this.cachePath(`${build.buildKey}/mounts/${name}`),
+        source = await fs.readFile(manifest),
+        record = JSON.parse(source.toString("utf8")) as MountRecord;
+      const pkg = safeCascPath(record.package),
+        expectedRoot = this.cachePath(`${build.buildKey}/views/${pkg}`);
+      if (
+        record.build.buildKey !== build.buildKey ||
+        record.root !== expectedRoot ||
+        record.files.length > 2000
+      )
+        throw new Error("CASC_MOUNT_MANIFEST_INVALID");
+      if (record.registrationOrder !== undefined) {
+        if (
+          !Number.isSafeInteger(record.registrationOrder) ||
+          record.registrationOrder < 0 ||
+          record.registrationOrder >= 16 ||
+          orders.has(record.registrationOrder)
+        )
+          throw Error("CASC_MOUNT_ORDER_INVALID");
         orders.add(record.registrationOrder);
       }
       for (const item of record.files) {
         safeCascPath(item.file);
-        const file = this.cachePath(`${build.buildKey}/views/${pkg}/${item.file}`), bytes = await fs.readFile(file);
+        const file = this.cachePath(`${build.buildKey}/views/${pkg}/${item.file}`),
+          bytes = await (tracking ? tracking.readBinaryDependency(file) : fs.readFile(file));
         if (sha(bytes) !== item.sha256) throw new Error("CASC_MOUNT_VIEW_CORRUPTED");
       }
-      records.push({file:manifest,record});
+      records.push({ file: manifest, record, source });
     }
-    if([...orders].some(order=>order>=records.length))throw Error('CASC_MOUNT_ORDER_INVALID');
+    if ([...orders].some((order) => order >= records.length))
+      throw Error("CASC_MOUNT_ORDER_INVALID");
     // Legacy manifests keep their established filename order. Persist it once;
     // new mounts retain caller order instead of changing identity after restart.
-    for(const entry of records)if(entry.record.registrationOrder===undefined){
-      let order=0;while(orders.has(order))order++;entry.record.registrationOrder=order;orders.add(order);
-      await this.atomic(entry.file,JSON.stringify(entry.record,null,2)+'\n');
-    }
-    for(const {record}of records.sort((a,b)=>a.record.registrationOrder!-b.record.registrationOrder!)){
-      this.registerView(record.root);mounted.push(record.root);
+    for (const entry of records)
+      if (entry.record.registrationOrder === undefined) {
+        let order = 0;
+        while (orders.has(order)) order++;
+        entry.record.registrationOrder = order;
+        orders.add(order);
+        entry.source = Buffer.from(JSON.stringify(entry.record, null, 2) + "\n");
+        await this.atomic(entry.file, entry.source);
+      }
+    // Track after legacy-order migration, which is our own manifest write.
+    // A later edit or a new/deleted manifest still invalidates the transaction.
+    if (tracking)
+      for (const entry of records)
+        if (!(await tracking.readBinaryDependency(entry.file)).equals(entry.source))
+          throw new Error("STALE_CASC_MOUNT_MANIFEST");
+    for (const { record } of records.sort(
+      (a, b) => a.record.registrationOrder! - b.record.registrationOrder!,
+    )) {
+      this.registerView(record.root);
+      mounted.push(record.root);
     }
     return mounted;
   }

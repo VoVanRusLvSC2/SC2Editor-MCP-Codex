@@ -1,6 +1,10 @@
 import type { McpServer } from "@modelcontextprotocol/server";
 import * as z from "zod/v4";
-import { authoringGuide, compileAuthorScript } from "./authoringScript.js";
+import {
+  authoringGuide,
+  compileAuthorScript,
+  type AuthorCompilationReceipt,
+} from "./authoringScript.js";
 import { registerMcpBatch, runMcpBatch } from "./mcpBatch.js";
 import type { ToolRegistry } from "./toolRegistry.js";
 import type { ToolTelemetry } from "./telemetry.js";
@@ -58,17 +62,27 @@ export function registerCommandTools(
     "modkit.author_help",
     {
       description:
-        "Compact syntax and examples for writing map, terrain, objects, Data, Galaxy, GUI, UI, cutscene, text, settings, AI and assets through modkit.author.",
-      inputSchema: z.object({}).strict(),
+        "Compact authoring syntax. section=data gives the short unit/spell recipe guide without the full subsystem catalog; omitted section retains the complete guide.",
+      inputSchema: z.object({ section: z.enum(["data", "all"]).optional() }).strict(),
       annotations: { readOnlyHint: true, destructiveHint: false, openWorldHint: false },
     },
-    async () => textResult(authoringGuide),
+    async ({ section }) =>
+      textResult(
+        section === "data"
+          ? {
+              format: authoringGuide.format,
+              modes: authoringGuide.modes,
+              ...authoringGuide.dataQuickStart,
+              examples: authoringGuide.examples.filter((e) => /^data (unit |spell )/.test(e)),
+            }
+          : authoringGuide,
+      ),
   );
   server.registerTool(
     "modkit.author",
     {
       description:
-        "Write concise line commands across map, terrain, objects, Data, Galaxy, GUI, UI, cutscene, text, settings, assets and CASC. Compatible adjacent same-catalog Data setters/recipes share one atomic apply/save; reads, advanced options and result references preserve boundaries. Galaxy is default; GUI requires explicit gui.*. Plan by default; stage/save only for supported guarded workflows. No source execution or Galaxy-to-GUI conversion.",
+        "Write concise line commands. Prefer data unit/spell recipes and unit.configure/spell.configure updates over raw graphs; see author_help section=data. Compatible adjacent Data, Text, Settings, Terrain and single-object placement commands share candidate validation/save. Reads, references and differing options retain boundaries. Returns compilation call counts and declared scopes; actual changed files stay in module receipts. Plan by default; stage/save retain original guards. No arbitrary source execution.",
       inputSchema: z
         .object({
           script: z.string().min(1).max(65536),
@@ -79,11 +93,19 @@ export function registerCommandTools(
     },
     async (args, context) => {
       try {
-        const steps = compileAuthorScript(args.script, args.mode, registry.batchTools);
+        let compilation: AuthorCompilationReceipt | undefined;
+        const steps = compileAuthorScript(args.script, args.mode, registry.batchTools, (value) => {
+          compilation = value;
+        });
         const result = await runMcpBatch(steps, registry.batchTools, context);
         return {
           isError: !result.ok,
-          ...textResult({ ...result, mode: args.mode, language: "SC2 compact authoring" }),
+          ...textResult({
+            ...result,
+            compilation,
+            mode: args.mode,
+            language: "SC2 compact authoring",
+          }),
         };
       } catch (error) {
         return {

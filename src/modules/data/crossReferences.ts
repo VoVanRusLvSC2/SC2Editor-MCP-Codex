@@ -4,40 +4,190 @@ import type {DataReference} from './types.js';
 export interface CrossReference extends DataReference {rewrite:'galaxyLiteral'|'xmlValue'|'readOnly';rawExpression:string}
 export interface CrossIssue {file:string;targetDomain?:string;code:string;offset:number}
 const calls:Record<string,{argument:number;domain:string}>= {UnitCreate:{argument:1,domain:'Unit'},ActorCreate:{argument:1,domain:'Actor'}};
-export function galaxyReferences(file:string,source:string):{references:CrossReference[];issues:CrossIssue[]} {
- const doc=new GalaxyDocument(source),references:CrossReference[]=[],issues:CrossIssue[]=doc.diagnostics.filter(d=>d.severity==='error').map(d=>({file,code:'GALAXY_PARSE_COVERAGE_UNKNOWN',offset:d.offset}));
- const constants=new Map<string,string>();
- const evaluate=(tokens:Token[]):string|undefined=>{
-  const parts:string[]=[];let expect=true;
-  for(const token of tokens){if(expect){if(token.kind==='string')parts.push(decodeGalaxyString(token.value));else if(token.kind==='identifier'&&constants.has(token.value))parts.push(constants.get(token.value)!);else return undefined;}else if(token.value!=='+')return undefined;expect=!expect;}
-  return expect?undefined:parts.join('');
- };
- for(const symbol of doc.symbols.filter(s=>s.kind==='global'&&/^const\s+string\b/.test(s.signature))){const tokens=doc.tokens.filter(t=>t.start>=symbol.start&&t.end<=symbol.end);const eq=tokens.findIndex(t=>t.value==='=');if(eq>=0){const value=evaluate(tokens.slice(eq+1,-1));if(value!==undefined)constants.set(symbol.name,value);}}
- const shadowsAt=(offset:number)=>{
-  const shadows=new Set<string>();const fn=doc.symbols.find(s=>s.kind==='function'&&s.bodyStart!==undefined&&offset>s.bodyStart&&offset<s.end);
-  if(!fn)return shadows;
-  for(const parameter of fn.parameters??[]){const name=parameter.trim().split(/\s+/).at(-1);if(name)shadows.add(name);}
-  const scopes:Array<{end:number;names:Set<string>}>=[];
-  for(let i=0;i<doc.tokens.length&&doc.tokens[i].start<offset;i++){
-   const token=doc.tokens[i];while(scopes.length&&token.start>=scopes.at(-1)!.end)scopes.pop();
-   if(token.value==='{'){const close=doc.pairs.get(i);if(close!==undefined)scopes.push({end:doc.tokens[close].end,names:new Set<string>()});}
-   if(token.start<=fn.bodyStart!)continue;
-   if(scopes.length&&token.kind==='identifier'&&doc.tokens[i-1]?.kind==='identifier'&&['=',';',',','['].includes(doc.tokens[i+1]?.value??''))scopes.at(-1)!.names.add(token.value);
+export function galaxyReferences(
+  file: string,
+  source: string,
+): { references: CrossReference[]; issues: CrossIssue[] } {
+  const doc = new GalaxyDocument(source),
+    references: CrossReference[] = [],
+    issues: CrossIssue[] = doc.diagnostics
+      .filter((d) => d.severity === "error")
+      .map((d) => ({
+        file,
+        code: "GALAXY_PARSE_COVERAGE_UNKNOWN",
+        offset: d.offset,
+      }));
+  const constants = new Map<string, string>();
+  const evaluate = (tokens: Token[]): string | undefined => {
+    const parts: string[] = [];
+    let expect = true;
+    for (const token of tokens) {
+      if (expect) {
+        if (token.kind === "string")
+          parts.push(decodeGalaxyString(token.value));
+        else if (token.kind === "identifier" && constants.has(token.value))
+          parts.push(constants.get(token.value)!);
+        else return undefined;
+      } else if (token.value !== "+") return undefined;
+      expect = !expect;
+    }
+    return expect ? undefined : parts.join("");
+  };
+  // Tokens, symbols and calls are ordered by source offset. Avoid a full-file
+  // scan for every constant/call in large generated MapScript files.
+  const tokenAtOrAfter = (offset: number) => {
+    let low = 0,
+      high = doc.tokens.length;
+    while (low < high) {
+      const mid = (low + high) >>> 1;
+      if (doc.tokens[mid].start < offset) low = mid + 1;
+      else high = mid;
+    }
+    return low;
+  };
+  for (const symbol of doc.symbols.filter(
+    (s) => s.kind === "global" && /^const\s+string\b/.test(s.signature),
+  )) {
+    const start = tokenAtOrAfter(symbol.start);
+    let end = start;
+    while (end < doc.tokens.length && doc.tokens[end].end <= symbol.end) end++;
+    const tokens = doc.tokens.slice(start, end),
+      eq = tokens.findIndex((t) => t.value === "=");
+    if (eq >= 0) {
+      const value = evaluate(tokens.slice(eq + 1, -1));
+      if (value !== undefined) constants.set(symbol.name, value);
+    }
   }
-  for(const scope of scopes)for(const name of scope.names)shadows.add(name);return shadows;
- };
- for(const call of doc.calls()){
-  let spec=calls[call.name];const index=doc.tokens.findIndex(t=>t.start===call.offset),open=index+1,close=doc.pairs.get(open);if(close===undefined)continue;
-  const args:Token[][]=[];let start=open+1;
-  for(let i=start;i<=close;i++){if(i===close||doc.tokens[i].value===','){args.push(doc.tokens.slice(start,i));start=i+1;}else if(['(','[','{'].includes(doc.tokens[i].value)){const end=doc.pairs.get(i);if(end!==undefined)i=end;}}
-  if(/^Catalog(FieldValue|FieldCount|Entry)/.test(call.name)){const domain=/^c_gameCatalog(.+)$/.exec(args[0]?.[0]?.value??'')?.[1];spec={argument:1,domain:domain??''};}
-  if(!spec)continue;
-  if(call.member||doc.symbols.some(s=>s.name===call.name&&s.kind==='function')){issues.push({file,targetDomain:spec.domain||undefined,code:'GALAXY_CATALOG_SIGNATURE_SHADOWED',offset:call.offset});continue;}
-  const tokens=args[spec.argument]??[],shadowed=shadowsAt(call.offset),value=tokens.some(t=>t.kind==='identifier'&&shadowed.has(t.value))?undefined:evaluate(tokens);
-  if(value===undefined||!spec.domain){issues.push({file,targetDomain:spec.domain||undefined,code:'GALAXY_DYNAMIC_CATALOG_REFERENCE',offset:call.offset});continue;}
-  references.push({file,object:call.name,path:call.name+'@'+call.offset,carrier:'GalaxyArgument',value,targetDomain:spec.domain,evidence:'NATIVE_TYPED_ATTRIBUTE',sourceSpan:{start:tokens[0].start,end:tokens.at(-1)!.end},rewrite:tokens.length===1&&tokens[0].kind==='string'?'galaxyLiteral':'readOnly',rawExpression:source.slice(tokens[0].start,tokens.at(-1)!.end)});
- }
- return {references,issues};
+  const functions = doc.symbols.filter(
+    (s) => s.kind === "function" && s.bodyStart !== undefined,
+  );
+  const functionNames = new Set(functions.map((s) => s.name));
+  let functionCursor = 0,
+    shadowCursor = 0,
+    shadowFunction: (typeof functions)[number] | undefined;
+  const scopes: Array<{ end: number; names: Set<string> }> = [];
+  const shadowsAt = (offset: number) => {
+    while (
+      functionCursor < functions.length &&
+      offset >= functions[functionCursor].end
+    )
+      functionCursor++;
+    const candidate = functions[functionCursor];
+    const fn =
+      candidate && offset > candidate.bodyStart! && offset < candidate.end
+        ? candidate
+        : undefined;
+    const shadows = new Set<string>();
+    if (!fn) return shadows;
+    for (const parameter of fn.parameters ?? []) {
+      const name = parameter.trim().split(/\s+/).at(-1);
+      if (name) shadows.add(name);
+    }
+    if (shadowFunction !== fn) {
+      shadowFunction = fn;
+      scopes.length = 0;
+      shadowCursor = Math.max(0, tokenAtOrAfter(fn.bodyStart!) - 1);
+    }
+    for (
+      ;
+      shadowCursor < doc.tokens.length &&
+      doc.tokens[shadowCursor].start < offset;
+      shadowCursor++
+    ) {
+      const i = shadowCursor;
+      const token = doc.tokens[i];
+      while (scopes.length && token.start >= scopes.at(-1)!.end) scopes.pop();
+      if (token.value === "{") {
+        const close = doc.pairs.get(i);
+        if (close !== undefined)
+          scopes.push({ end: doc.tokens[close].end, names: new Set<string>() });
+      }
+      if (token.start <= fn.bodyStart!) continue;
+      if (
+        scopes.length &&
+        token.kind === "identifier" &&
+        doc.tokens[i - 1]?.kind === "identifier" &&
+        ["=", ";", ",", "["].includes(doc.tokens[i + 1]?.value ?? "")
+      )
+        scopes.at(-1)!.names.add(token.value);
+    }
+    for (const scope of scopes)
+      for (const name of scope.names) shadows.add(name);
+    return shadows;
+  };
+  let tokenCursor = 0;
+  for (const call of doc.calls()) {
+    const catalogCall = /^Catalog(FieldValue|FieldCount|Entry)/.test(call.name);
+    let spec = calls[call.name];
+    if (!spec && !catalogCall) continue;
+    while (
+      tokenCursor < doc.tokens.length &&
+      doc.tokens[tokenCursor].start < call.offset
+    )
+      tokenCursor++;
+    const open = tokenCursor + 1,
+      close = doc.pairs.get(open);
+    if (close === undefined) continue;
+    const args: Token[][] = [];
+    let start = open + 1;
+    for (let i = start; i <= close; i++) {
+      if (i === close || doc.tokens[i].value === ",") {
+        args.push(doc.tokens.slice(start, i));
+        start = i + 1;
+      } else if (["(", "[", "{"].includes(doc.tokens[i].value)) {
+        const end = doc.pairs.get(i);
+        if (end !== undefined) i = end;
+      }
+    }
+    if (catalogCall) {
+      const domain = /^c_gameCatalog(.+)$/.exec(args[0]?.[0]?.value ?? "")?.[1];
+      spec = { argument: 1, domain: domain ?? "" };
+    }
+    if (!spec) continue;
+    if (call.member || functionNames.has(call.name)) {
+      issues.push({
+        file,
+        targetDomain: spec.domain || undefined,
+        code: "GALAXY_CATALOG_SIGNATURE_SHADOWED",
+        offset: call.offset,
+      });
+      continue;
+    }
+    const tokens = args[spec.argument] ?? [],
+      shadowed = tokens.some((t) => t.kind === "identifier")
+        ? shadowsAt(call.offset)
+        : new Set<string>(),
+      value = tokens.some(
+        (t) => t.kind === "identifier" && shadowed.has(t.value),
+      )
+        ? undefined
+        : evaluate(tokens);
+    if (value === undefined || !spec.domain) {
+      issues.push({
+        file,
+        targetDomain: spec.domain || undefined,
+        code: "GALAXY_DYNAMIC_CATALOG_REFERENCE",
+        offset: call.offset,
+      });
+      continue;
+    }
+    references.push({
+      file,
+      object: call.name,
+      path: call.name + "@" + call.offset,
+      carrier: "GalaxyArgument",
+      value,
+      targetDomain: spec.domain,
+      evidence: "NATIVE_TYPED_ATTRIBUTE",
+      sourceSpan: { start: tokens[0].start, end: tokens.at(-1)!.end },
+      rewrite:
+        tokens.length === 1 && tokens[0].kind === "string"
+          ? "galaxyLiteral"
+          : "readOnly",
+      rawExpression: source.slice(tokens[0].start, tokens.at(-1)!.end),
+    });
+  }
+  return { references, issues };
 }
 export function guiReferences(file:string,source:string):{references:CrossReference[];issues:CrossIssue[]} {
  const parsed=scanXml(source),references:CrossReference[]=[],issues:CrossIssue[]=parsed.diagnostics.filter(d=>d.severity==='error').map(d=>({file,code:'GUI_XML_COVERAGE_UNKNOWN',offset:d.offset}));

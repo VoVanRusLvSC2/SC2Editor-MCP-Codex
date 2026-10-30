@@ -9,6 +9,41 @@ import {ScriptWorkspace} from '../modules/script/workspace.js';
 import {GalaxyDocument} from '../modules/script/document.js';
 async function fixture(t:{after(fn:()=>Promise<void>):void}){const root=await fs.mkdtemp(path.join(os.tmpdir(),'sc2-script-'));t.after(()=>fs.rm(root,{recursive:true,force:true}));const w=new Workspace(root);return{root,w,s:new ScriptWorkspace(w)};}
 
+test("multi-file candidate plans reuse unchanged parsed files while retaining final diagnostics and stale guards", async (t) => {
+  const { root, w, s } = await fixture(t);
+  for (let i = 0; i < 12; i++)
+    await fs.writeFile(path.join(root, `f${i}.galaxy`), `void Existing${i} () { }\n`);
+  const plan = await s.plan({
+    operations: [
+      { op: "function.rename", file: "f0.galaxy", name: "Existing0", newName: "Renamed" },
+      { op: "function.add", file: "f0.galaxy", source: "void Added () { Renamed(); }" },
+    ],
+  });
+  assert.deepEqual(
+    plan.changedFiles.map((f) => f.file),
+    ["f0.galaxy"],
+  );
+  assert.equal(plan.validation.valid, true);
+  assert.equal(plan.efficiency.candidateFiles, 12);
+  assert.equal(plan.efficiency.candidateParses, 2);
+  assert.ok(plan.efficiency.reusedDocumentReads >= 24);
+  await s.apply(plan.planId, false);
+  await s.save("f0.galaxy", false);
+  assert.match(await fs.readFile(path.join(root, "f0.galaxy"), "utf8"), /void Renamed/);
+  assert.equal(
+    new GalaxyDocument(await fs.readFile(path.join(root, "f0.galaxy"), "utf8")).diagnostics.length,
+    0,
+  );
+  const next = await s.plan({
+    operations: [
+      { op: "function.body", file: "f0.galaxy", name: "Added", body: " Renamed(); Renamed(); " },
+    ],
+  });
+  await fs.appendFile(path.join(root, "f11.galaxy"), "// manual input edit");
+  await assert.rejects(s.apply(next.planId, false), /STALE_SCRIPT_PLAN/);
+  assert.deepEqual(w.draftFiles(), []);
+});
+
 test('whole-file replacement requires an explicit exact source hash and retains apply-time guards',async t=>{
  const {root,w,s}=await fixture(t),source='void InitMap () {}',sha=(v:string)=>createHash('sha256').update(v).digest('hex');await fs.writeFile(path.join(root,'MapScript.galaxy'),source);
  const op={op:'file.replace' as const,file:'MapScript.galaxy',source:'void Helpers () {}\nvoid InitMap () { Helpers(); }',expectedSourceSha256:sha(source)};

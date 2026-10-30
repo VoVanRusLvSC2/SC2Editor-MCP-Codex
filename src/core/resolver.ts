@@ -1,6 +1,16 @@
 import path from "node:path";
 import { LayoutDocument } from "./layoutDocument.js";
 import { StyleDocument } from "./styleDocument.js";
+import { createHash } from "node:crypto";
+import { PreparedValueCache } from "./preparedValues.js";
+import type { FrameSummary } from "./types.js";
+
+const preparedLayouts = new PreparedValueCache<{ frames: FrameSummary[]; includes: string[] }>(
+  16,
+  8 * 1024 * 1024,
+);
+const preparedStyles = new PreparedValueCache<string[]>(16, 8 * 1024 * 1024);
+const contentKey = (source: string) => createHash("sha256").update(source).digest("hex");
 
 export interface LayoutIndexEntry {
   file: string;
@@ -31,28 +41,57 @@ export class CrossFileResolver {
   ): Promise<CrossFileResolver> {
     const resolver = new CrossFileResolver();
     for (const file of layoutFiles) {
-      const doc = new LayoutDocument(await readText(file));
+      const source = await readText(file),
+        key = contentKey(source);
+      let metadata = preparedLayouts.get(key);
+      if (!metadata) {
+        const doc = new LayoutDocument(source);
+        metadata = { frames: doc.listFrames(), includes: doc.includes() };
+        preparedLayouts.set(
+          key,
+          metadata,
+          Buffer.byteLength(source) + Buffer.byteLength(JSON.stringify(metadata)),
+        );
+      }
+      const { frames } = metadata;
       const entry: LayoutIndexEntry = {
         file,
         descName: descriptorName(file),
-        includes: doc.includes(),
-        templates: new Set(doc.listFrames().filter((frame) => !frame.path.includes("/")).map((frame) => frame.name)),
+        includes: metadata.includes,
+        templates: new Set(
+          frames.filter((frame) => !frame.path.includes("/")).map((frame) => frame.name),
+        ),
         templateFramePaths: new Map(),
-        handles: new Set(doc.listFrames().map((frame) => frame.handle).filter((value): value is string => Boolean(value))),
+        handles: new Set(
+          frames.map((frame) => frame.handle).filter((value): value is string => Boolean(value)),
+        ),
       };
-      for (const template of doc.listFrames().filter((frame) => !frame.path.includes("/"))) {
-        entry.templateFramePaths.set(template.name, new Set(
-          doc.listFrames()
-            .filter((frame) => frame.path.startsWith(`${template.path}/`))
-            .map((frame) => frame.path.slice(template.path.length + 1)),
-        ));
+      for (const template of frames.filter((frame) => !frame.path.includes("/"))) {
+        entry.templateFramePaths.set(
+          template.name,
+          new Set(
+            frames
+              .filter((frame) => frame.path.startsWith(`${template.path}/`))
+              .map((frame) => frame.path.slice(template.path.length + 1)),
+          ),
+        );
       }
       resolver.layouts.set(normalize(file), entry);
       for (const handle of entry.handles) resolver.handles.add(handle);
     }
     for (const file of styleFiles) {
-      const doc = new StyleDocument(await readText(file));
-      for (const style of doc.listStyles()) resolver.styles.add(style.name);
+      const source = await readText(file),
+        key = contentKey(source);
+      let names = preparedStyles.get(key);
+      if (!names) {
+        names = new StyleDocument(source).listStyles().map((style) => style.name);
+        preparedStyles.set(
+          key,
+          names,
+          Buffer.byteLength(source) + Buffer.byteLength(JSON.stringify(names)),
+        );
+      }
+      for (const name of names) resolver.styles.add(name);
     }
     return resolver;
   }

@@ -26,8 +26,9 @@ export function compactDataBatch(value:unknown){
   filesTotal:files.length,files:files.slice(0,MAX_RESPONSE_ITEMS).map(f=>{const row=object(f);return Object.fromEntries(['file','path','sha256','beforeSha256','afterSha256','bytes','changed'].filter(k=>row[k]!==undefined).map(k=>[k,row[k]]));}),
   appliedTotal:applied.length,applied:applied.slice(0,MAX_RESPONSE_ITEMS).map(v=>brief(v)),aliases:report.aliases,
   validation:validation?compactDataValidation(validation):undefined,
+  validationDelta:report.validationDelta?{reason:object(report.validationDelta).reason,retainedErrorsTotal:array(object(report.validationDelta).retainedErrors).length,retainedErrors:array(object(report.validationDelta).retainedErrors).slice(0,MAX_RESPONSE_ITEMS).map(diagnostic),blockingErrorsTotal:array(object(report.validationDelta).blockingErrors).length,blockingErrors:array(object(report.validationDelta).blockingErrors).slice(0,MAX_RESPONSE_ITEMS).map(diagnostic)}:undefined,
   authoringTotal:authoring.length,authoring:authoring.slice(0,MAX_RESPONSE_ITEMS).map(v=>{const row=object(v),a=object(row.authoring);return {file:row.file,accepted:a.accepted,status:a.status,diagnosticsTotal:array(a.diagnostics).length,diagnostics:array(a.diagnostics).slice(0,3).map(diagnostic)};}),
-  editor:report.editor,runtime:report.runtime};
+  editor:report.editor,runtime:report.runtime,timing:report.timing};
 }
 
 /** Content-addressed local snapshots keep giant validation graphs off the MCP wire. */

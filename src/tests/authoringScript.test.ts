@@ -3,6 +3,48 @@ import {test} from 'node:test';
 import {compileAuthorScript} from '../app/authoringScript.js';
 import {compactResult,runMcpBatch,type BatchTool} from '../app/mcpBatch.js';
 
+test("empty document save uses the guarded planner/materializer and player.set preserves omitted fields", () => {
+  const source =
+    "document empty destination=Map width=32 height=32 terrain.enabled=true terrain.tileSet=Agria";
+  const planned = compileAuthorScript(source, "plan");
+  assert.deepEqual(
+    planned.map((step) => step.tool),
+    ["document.plan"],
+  );
+  const saved = compileAuthorScript(source, "save");
+  assert.deepEqual(
+    saved.map((step) => step.tool),
+    ["document.plan", "document.create"],
+  );
+  assert.deepEqual(saved[1].args, {
+    planId: { $from: "s1.id" },
+    dryRun: false,
+    output: "components",
+  });
+  assert.throws(() => compileAuthorScript(source, "stage"), /AUTHOR_DOCUMENT_NO_STAGING/);
+  const player = compileAuthorScript("settings player.set id=1 color=2", "plan")[0];
+  assert.equal(player.tool, "settings.plan");
+  const operation = (player.args.operations as any[])[0];
+  assert.equal(operation.op, "player.set");
+  assert.equal(operation.playerId, 1);
+  assert.deepEqual({ ...operation.patch }, { color: 2 });
+});
+
+test("one compact scene request carries several native tick samples without repeated scene preparation calls", () => {
+  const steps = compileAuthorScript(
+    "cutscene show file=Scene.SC2Cutscene times=0,1000,2500 snapshots=false",
+    "plan",
+  );
+  assert.equal(steps.length, 1);
+  assert.equal(steps[0].tool, "cutscene.preview");
+  assert.deepEqual(steps[0].args.times, [0, 1000, 2500]);
+  assert.equal(steps[0].args.snapshots, false);
+  assert.throws(
+    () => compileAuthorScript("cutscene show file=Scene.SC2Cutscene times=0,,1000", "plan"),
+    /AUTHOR_CUTSCENE_TIMES/,
+  );
+});
+
 test('compact card review stays read-only and rejection receipts preserve bounded diagnostics',()=>{
  const steps=compileAuthorScript('data card.check unit=Hero','save');assert.deepEqual(steps.map(s=>s.tool),['data.card.check']);
  const rejected=compactResult({accepted:false,error:{code:'DATA_CARD_BINDING_REJECTED'},cardReview:{conflictCount:1}}) as any;assert.equal(rejected.cardReview.conflictCount,1);assert.equal(rejected.accepted,false);

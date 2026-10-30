@@ -10,6 +10,8 @@ import { Workspace } from "../core/workspace.js";
 import { DataWorkspace } from "../modules/data/workspace.js";
 import { BrowseWorkspace } from "../modules/browse/workspace.js";
 import { registerCascTools } from "../modules/casc/tools.js";
+import { createProject } from "../app/project.js";
+import { resolveModuleSelection } from "../app/moduleSelection.js";
 import type { McpServer } from "@modelcontextprotocol/server";
 import type { ZodType } from "zod/v4";
 const file = "mods/core.sc2mod/base.sc2data/gamedata/unitdata.xml";
@@ -35,6 +37,122 @@ async function fixture(t: test.TestContext) {
  const casc = new CascWorkspace(workspaceRoot, { install, backendFactory: () => backend, onMount: root => mounted.push(root), onUnmount: root => unmounted.push(root) }); t.after(() => casc.close());
  return { root, install, workspaceRoot, backend, casc, mounted, unmounted };
 }
+
+for (const change of ["view", "manifest", "added", "removed", "build"] as const) {
+  test(`prepared CASC restore still guards ${change} changes before publication`, async (t) => {
+    const f = await fixture(t);
+    await f.casc.mount(["mods/core.sc2mod"], ["catalogs"], [], 12);
+    const workspace = new Workspace(f.workspaceRoot),
+      tracked = new CascWorkspace(f.workspaceRoot, {
+        install: f.install,
+        cacheRoot: f.casc.cacheRoot,
+        trackingWorkspace: workspace,
+      });
+    t.after(() => tracked.close());
+    const mounts = path.join(f.casc.cacheRoot, "a".repeat(32), "mounts"),
+      manifest = path.join(mounts, (await fs.readdir(mounts))[0]);
+    await workspace.withReadSet(async () => {
+      const key = {},
+        prepare = () => tracked.restoreMounts();
+      await workspace.prepareReadScope(key, prepare);
+      if (change === "view") {
+        const view = path.join(
+            f.casc.cacheRoot,
+            "a".repeat(32),
+            "views/mods/core.sc2mod/base.sc2data/gamedata/unitdata.xml",
+          ),
+          stat = await fs.stat(view),
+          source = await fs.readFile(view, "utf8");
+        await fs.writeFile(view, source.replace("Probe", "Other"));
+        await fs.utimes(view, stat.atime, stat.mtime);
+      } else if (change === "manifest") await fs.appendFile(manifest, " ");
+      else if (change === "added")
+        await fs.writeFile(path.join(mounts, "f".repeat(64) + ".json"), "{}");
+      else if (change === "removed") await fs.unlink(manifest);
+      else await fs.writeFile(path.join(f.install, ".build.info"), buildInfo("b".repeat(32)));
+      await workspace.prepareReadScope(key, prepare);
+      await assert.rejects(
+        workspace.applyRawTransaction(
+          ["output.txt"],
+          () => new Map([["output.txt", "candidate"]]),
+          { dryRun: false, stage: true },
+        ),
+        /STALE_/,
+      );
+    });
+    assert.deepEqual(workspace.draftFiles(), []);
+  });
+}
+
+test("tracked CASC legacy-order migration records its final manifest and allows an unchanged save", async (t) => {
+  const f = await fixture(t);
+  await f.casc.mount(["mods/core.sc2mod"], ["catalogs"], [], 12);
+  const mounts = path.join(f.casc.cacheRoot, "a".repeat(32), "mounts"),
+    file = path.join(mounts, (await fs.readdir(mounts))[0]),
+    record = JSON.parse(await fs.readFile(file, "utf8"));
+  delete record.registrationOrder;
+  await fs.writeFile(file, JSON.stringify(record));
+  const workspace = new Workspace(f.workspaceRoot),
+    tracked = new CascWorkspace(f.workspaceRoot, {
+      install: f.install,
+      cacheRoot: f.casc.cacheRoot,
+      trackingWorkspace: workspace,
+    });
+  t.after(() => tracked.close());
+  await workspace.withReadSet(async () => {
+    await tracked.restoreMounts();
+    await workspace.applyRawTransaction(
+      ["output.txt"],
+      () => new Map([["output.txt", "candidate"]]),
+      { dryRun: false, stage: true },
+    );
+  });
+  await workspace.save("output.txt");
+  assert.equal(await fs.readFile(path.join(f.workspaceRoot, "output.txt"), "utf8"), "candidate");
+  assert.equal(JSON.parse(await fs.readFile(file, "utf8")).registrationOrder, 0);
+});
+
+test("project shares CASC preparation across catalogs in one operation and refreshes the next operation", async (t) => {
+  const f = await fixture(t);
+  await f.casc.mount(["mods/core.sc2mod"], ["catalogs"], [], 12);
+  const env = {
+    SC2_CASC_ROOT: f.install,
+    SC2_CASC_CACHE: f.casc.cacheRoot,
+    SC2_CASC_BACKEND: "native",
+    SC2_MODKIT_HOME: path.join(f.root, "absent-runtime"),
+    SC2_ASSET_ROOTS: "",
+  };
+  const saved = Object.fromEntries(Object.keys(env).map((key) => [key, process.env[key]]));
+  Object.assign(process.env, env);
+  t.after(() => {
+    for (const [key, value] of Object.entries(saved)) {
+      if (value === undefined) delete process.env[key];
+      else process.env[key] = value;
+    }
+  });
+  const project = await createProject(f.workspaceRoot, {
+    loadUiSchema: false,
+    selection: resolveModuleSelection({ SC2_MCP_PROFILE: "data" }),
+  });
+  t.after(() => project.close());
+  const restore = project.casc.restoreMounts.bind(project.casc);
+  let calls = 0;
+  project.casc.restoreMounts = () => {
+    calls++;
+    return restore();
+  };
+  await project.workspace.withReadSet(async () => {
+    const first = await project.data.catalog(),
+      second = await project.data.catalog();
+    assert.deepEqual(
+      first.map((r) => r.file),
+      second.map((r) => r.file),
+    );
+  });
+  assert.equal(calls, 1);
+  await project.workspace.withReadSet(() => project.data.catalog());
+  assert.equal(calls, 2);
+});
 
 test("CASC source identity selects one actual active build and omits unrelated build tags", () => {
  const build = parseCascBuildInfo(buildInfo()); assert.equal(build.buildKey, "a".repeat(32)); assert.equal(build.version, "5.0.17.98310");

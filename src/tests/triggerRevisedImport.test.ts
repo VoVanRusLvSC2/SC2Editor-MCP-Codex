@@ -57,3 +57,27 @@ test('revised GUI import pins both sources and stages tree/runtime/labels as one
  await triggers.save(false);assert.equal(await fs.readFile(path.join(root,'Triggers'),'utf8'),tree);assert.match(await fs.readFile(path.join(root,'MapScript.galaxy'),'utf8'),/void InitMap/);
  assert.match(await fs.readFile(path.join(root,'enUS.SC2Data/LocalizedData/TriggerStrings.txt'),'utf8'),/FUNCTIONS/);
 });
+
+test('native reviewed import preserves existing script owners without admitting new or changed code',()=>{
+ const before='<TriggerData><Root><Item Type="FunctionDef" Id="AA"/></Root><Element Type="FunctionDef" Id="AA"><Identifier>LegacyHelper</Identifier><ScriptCode>Call(1);</ScriptCode></Element></TriggerData>';
+ assert.throws(()=>inspectRevisedGui(before,{existingSource:before}),/PRESERVE_REQUIRES_NATIVE/);
+ assert.equal(inspectRevisedGui(before,{nativeLibraries:true,existingSource:before}).preservedScriptNodes,1);
+ for(const changed of [before.replace('Call(1);','Call(2);'),before.replace('LegacyHelper','ChangedOwner'),before.replace('<ScriptCode>Call(1);</ScriptCode>',''),before.replace('</TriggerData>','<Element Type="FunctionDef" Id="BB"><ScriptCode>Injected();</ScriptCode></Element></TriggerData>')])assert.throws(()=>inspectRevisedGui(changed,{nativeLibraries:true,existingSource:before}),/EXISTING_SCRIPT_CHANGED|SCRIPT_FALLBACK/);
+ assert.throws(()=>inspectRevisedGui(before,{nativeLibraries:true,existingSource:'<TriggerData><Root/></TriggerData>'}),/SCRIPT_FALLBACK/);
+ const addition=before.replace('</TriggerData>','<Element Type="Variable" Id="BB"><Identifier>NewGuiState</Identifier></Element></TriggerData>');
+ assert.equal(inspectRevisedGui(addition,{nativeLibraries:true,existingSource:before}).preservedScriptNodes,1);
+});
+
+test('a root CustomScript reference is a GUI edge, while its executable owner stays guarded',()=>{
+ const before='<TriggerData><Root><Item Type="CustomScript" Id="AA"/></Root><Element Type="CustomScript" Id="AA"><Identifier>LegacyGlobalCode</Identifier><ScriptCode>int LegacyValue = 1;</ScriptCode></Element></TriggerData>';
+ assert.equal(inspectRevisedGui(before,{nativeLibraries:true,existingSource:before}).preservedScriptNodes,2);
+ assert.throws(()=>inspectRevisedGui(before,{nativeLibraries:true}),/SCRIPT_FALLBACK/);
+ assert.throws(()=>inspectRevisedGui(before.replace('LegacyValue = 1','LegacyValue = 2'),{nativeLibraries:true,existingSource:before}),/EXISTING_SCRIPT_CHANGED/);
+ assert.throws(()=>inspectRevisedGui(before.replace('<Item Type="CustomScript" Id="AA"/>','<Item Type="CustomScript" Id="MISSING"/>'),{nativeLibraries:true,existingSource:before}),/DANGLING/);
+});
+
+test('production-size GUI requires the original compiler boundary',()=>{
+ const xml=tree.replace('</TriggerData>','<!--'+'x'.repeat(4*1024*1024)+'--></TriggerData>');
+ assert.throws(()=>inspectRevisedGui(xml),/BYTE_LIMIT/);
+ assert.equal(inspectRevisedGui(xml,{nativeLibraries:true}).folders.length,5);
+});

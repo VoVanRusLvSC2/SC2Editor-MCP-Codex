@@ -6,7 +6,7 @@ import { AsyncLocalStorage } from "node:async_hooks";
 import { BinaryTransactions } from "./binaryTransactions.js";
 import { internalWorkspaceDirectory } from "./discoveryPaths.js";
 import { recoverFileJournals } from "./recoveryJournal.js";
-import { TransactionQueue, readSnapshot, decodeUtf8, assertSnapshots, commitFiles, type FileSnapshot } from "./fileTransactions.js";
+import { TransactionQueue, readSnapshot, decodeUtf8, assertSnapshots, changedSnapshot, commitFiles, type FileSnapshot } from "./fileTransactions.js";
 import { LayoutDocument } from "./layoutDocument.js";
 import { StyleDocument } from "./styleDocument.js";
 import { CrossFileResolver } from "./resolver.js";
@@ -59,8 +59,44 @@ export class Workspace {
   private readonly draftEffectiveReads = new Map<string, Map<string, string>>();
   private readonly reads = new AsyncLocalStorage<ReadSet>();
   private readonly readMemos=new WeakMap<WorkspaceReadMemo,ReadSet>();
-  withReadSet<T>(work: () => Promise<T>): Promise<T> { return this.reads.getStore() ? work() : this.reads.run(Object.assign(new Map<string, FileSnapshot>(), { effective: new Map<string, string>(),directories:new Map<string,DirectoryRead>() }), work); }
+  private readonly readPreparations = new WeakMap<ReadSet, Map<object, Promise<unknown>>>();
+  private runReadScope<T>(reads: ReadSet, work: () => Promise<T>): Promise<T> {
+    return this.reads.run(reads, async () => {
+      try {
+        return await work();
+      } finally {
+        this.readPreparations.delete(reads);
+      }
+    });
+  }
+  withReadSet<T>(work: () => Promise<T>): Promise<T> {
+    return this.reads.getStore() ? work() : this.runReadScope(
+      Object.assign(new Map<string, FileSnapshot>(), {
+        effective: new Map<string, string>(), directories: new Map<string, DirectoryRead>(),
+      }), work,
+    );
+  }
   get trackingReads(): boolean { return this.reads.getStore() !== undefined; }
+  /** Share guarded dependency preparation only inside this read scope.
+   * Work must capture its inputs through the tracked readers. Failed work may
+   * retry; independent calls and isolated read memos never share preparation.
+   */
+  prepareReadScope<T>(key: object, work: () => Promise<T>): Promise<T> {
+    const reads = this.reads.getStore();
+    if (!reads) return work();
+    let preparations = this.readPreparations.get(reads);
+    if (!preparations) this.readPreparations.set(reads, (preparations = new Map()));
+    const prior = preparations.get(key);
+    if (prior) return prior as Promise<T>;
+    const prepared = Promise.resolve()
+      .then(work)
+      .catch((error) => {
+        if (preparations.get(key) === prepared) preparations.delete(key);
+        throw error;
+      });
+    preparations.set(key, prepared);
+    return prepared;
+  }
   private mergeReads(reads:ReadSet){
     for(const [file,snapshot]of reads)this.captureRead(file,snapshot);
     for(const [file,text]of reads.effective)this.captureEffective(file,text);
@@ -71,14 +107,14 @@ export class Workspace {
   /** Isolated cache dependencies, replayable into later guarded operations. */
   async memoizeReads<T>(work:()=>Promise<T>):Promise<{value:T;memo:WorkspaceReadMemo}>{
     const reads:ReadSet=Object.assign(new Map<string,FileSnapshot>(),{effective:new Map<string,string>(),directories:new Map<string,DirectoryRead>()});
-    const value=await this.reads.run(reads,work);this.mergeReads(reads);
+    const value=await this.runReadScope(reads,work);this.mergeReads(reads);
     const memo:WorkspaceReadMemo=Object.freeze({kind:'workspace-read-memo'});this.readMemos.set(memo,reads);return {value,memo};
   }
   async reuseReads(memo:WorkspaceReadMemo):Promise<boolean>{
     const reads=this.readMemos.get(memo);if(!reads)throw Error('FOREIGN_READ_MEMO');
     // Compare content, not only timestamps: same-size edits and restored mtimes
     // must invalidate cached interpretation and its eventual transaction guard.
-    for(const [file,expected]of reads){const current=await readSnapshot(file);if(current.exists!==expected.exists||!current.bytes.equals(expected.bytes))return false;}
+    if(await changedSnapshot(file=>file,reads)!==undefined)return false;
     for(const [file,expected]of reads.effective){const key=this.fileKey(file),current=this.drafts.get(key)??decodeUtf8((await this.binary.read(key)).bytes,file);if(current!==expected)return false;}
     for(const directory of reads.directories.values()){
       let entries;try{entries=await fs.readdir(directory.directory,{withFileTypes:true});}catch(e){if((e as NodeJS.ErrnoException).code==='ENOENT')return false;throw e;}

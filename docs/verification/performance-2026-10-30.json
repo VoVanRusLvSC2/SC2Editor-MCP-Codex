@@ -1,0 +1,1051 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-30T15:20:29.190Z",
+  "scope": "Guarded preparation and authoring performance. Static, transport, native compile and gameplay are separate.",
+  "version": "1.1.0-alpha.21",
+  "sourceFingerprintPolicy": "Git-normalized UTF-8 LF for TypeScript source, as specified by .gitattributes",
+  "sourceFingerprints": {
+    "src/app/authoringDataGroups.ts": "eef9e411911bcef068032c60542fd72f332249d4396c84acecd3ffe155535b6f",
+    "src/app/authoringGroups.ts": "1b77b4749a8d0f7039c4acee7eb0b1fa86d8639d6ce8eb60cde5548cea2ccd03",
+    "src/app/authoringScript.ts": "fc856a2dc00e15035201d1c3de4e2d4ee696e4ac6773dd12d50aae23805e25cc",
+    "src/app/commandTools.ts": "d662148cb202121e902a21e7245aafd58202944e35f12f9f379f0ce377a8ae63",
+    "src/app/project.ts": "752f425a33e2a9b8b5fe75a58942e51d1fbf2e31bd8cc9e056be779a12774b83",
+    "src/archive/archiveAdapter.ts": "5897238b24177fa20180da9e99d42122d0f2565049c7734aa2952e80f9079939",
+    "src/core/layoutDocument.ts": "c5f723ab7140d21a01ee44ec45a21c33e440addc63df3134ab100496ee9579c5",
+    "src/core/preparedValues.ts": "5f1b650fd7d64add41b18368680db0a1a79b5f6781d817b69756f05e46e98127",
+    "src/core/resolver.ts": "804087b44458754fa68c1d21763abc16d500db03a140d84b5a8c905bfdf65474",
+    "src/core/verifiedArtifacts.ts": "76e2f51ff7c1f992ac66d79ed9e477d5b042ebfe9a86c041a0814fe47e2a2ff6",
+    "src/core/xmlParseCache.ts": "42fa8f2269a7104716e5d34276419920dfc9a3dcbb0db616a6ae5039227c50eb",
+    "src/integrations/modkit/runtime.ts": "f9858031be9395a144069591cab129808f98dca65b4e954c818f32c9c7541d88",
+    "src/integrations/native/tools.ts": "afde45ec77e8b131155e12dd974c83e3a2efe37a50fb891e1fd65449e3b94a9c",
+    "src/modules/ai/document.ts": "66b279c6beecc04bd034cb08b379226657cdb9f13d25a169fb1d7b1cf6a77b79",
+    "src/modules/ai/references.ts": "27d2c95f0bda52b2b6f456aa555e2bc7c292296e37183fde8bb17658f026010a",
+    "src/modules/ai/workspace.ts": "926bbf56b46fdb729f251293c531c88c74d627ab93b642cf84063293342036a7",
+    "src/modules/assets/measurement.ts": "88f41c98c033bc65086c6a445cf1c48deb8b827a35e3daab2d2fc8e3099a9d68",
+    "src/modules/assets/tools.ts": "274421af0c24604e21cf40243dd02a6c1ca9f8ba7e7f85145f70a050a19f920d",
+    "src/modules/assets/workspace.ts": "5b34d47c5187e607fdb034f2cd1e1a346518b6ed7efcaf4bcddc3726eb44ac0f",
+    "src/modules/browse/definitionIndex.ts": "16c62ee6681d575fa478504cfa735a5e85086a812f1b197209f2227f78fc785e",
+    "src/modules/browse/workspace.ts": "ce5355c9c6147830feb53a5af6c76accbc7113ce6b32ee61786bb472fae9c08d",
+    "src/modules/cutscene/workspace.ts": "776980d5d200c5f0599e12fbe5096583f9d88c75e1ee2f0a27bb9beed12c6fe1",
+    "src/modules/cutscenePreview/workspace.ts": "b88853e4b5a2cb04d37e002661cab8177fa90c0caa6f62b71a507479cad3a7c1",
+    "src/modules/data/abilityRecipes.ts": "f70d746d3683a1c0f9625dbc9d955fd74070f5f32d097e1d8b419c2d5993b333",
+    "src/modules/data/actorRecipes.ts": "de70421322660fd1779573917284fc61689a2d7c206beb784fb622ea1f63c97b",
+    "src/modules/data/cardBindings.ts": "0015f67692a38398eb40295c34a9017e2bb1e3819853cce7f21b256d41b9e2e3",
+    "src/modules/data/catalogRepository.ts": "348c8b0c06487bb1d222345abac170986a830cb4d029de5b1f770caa49389da0",
+    "src/modules/data/configureRecipes.ts": "dedaec265b9bd82812ad22973ec91c124aac45f4067561a18a40ff38565b70f3",
+    "src/modules/data/document.ts": "75c806c7069944fd0844f11865c689d2b2cbca9edb67eefb3fb3029247a4ddc7",
+    "src/modules/data/learnRecipe.ts": "3a4710fc802cfed39ebc97e3320f1a82cb454ac78b5fce4619f3bd74cf22569e",
+    "src/modules/data/projectileRecipe.ts": "ffaa35e9fa69782fd9aca431423b79040d9ae194d05cc6276fe9d8f2824a0544",
+    "src/modules/data/recipePlanner.ts": "01ba1c0adda21922bf2b88b5270a80a7792276bd094eb7287cc85010d6fb84af",
+    "src/modules/data/tools.ts": "b54405810fc390ea08feef483507903d9036ba1c9483dc11f549e75499faa467",
+    "src/modules/data/types.ts": "bb3835b7059b0f0a72597e1cc729dc63dc1359796bf331986b8bfb93cfeeddaa",
+    "src/modules/data/veterancyRecipe.ts": "d4d46c345820a42aced1755cbeb5bea047e7514c265289a165d709d2fb9e6efb",
+    "src/modules/data/workspace.ts": "fb6d8f36ac8bcc1e6a0a825bee501d0d6a1022aa994c6380c435fe0d3908beb0",
+    "src/modules/document/codecs/metadata.ts": "67177869676134fcf84f39f0872863de5896fd5cc3f480e25404e0f80f48bb3f",
+    "src/modules/document/dependencies.ts": "e832d006c6adc9d23f14a11b5f2b0b285cd099d24c62642beb01cfd424faedcf",
+    "src/modules/lighting/catalog.ts": "85a5da795eb03218798f2b7ca8e2dcac0119e77c9468d2e91ddcf1b731b878bb",
+    "src/modules/lighting/workspace.ts": "e44cdfac041e019b08128bc8945c2f83cf41090115f5830178d16fb92ff23a6b",
+    "src/modules/map/preview.ts": "81c81c592315b3a9e25e059638389bd4725c3a7ba5c294cb84f3fd3d9a996317",
+    "src/modules/placement/tools.ts": "58a420730c1cf02a7da38b7d636dc59c1dc75192308baf1d1d1a0bdcc75dd0c4",
+    "src/modules/placement/workspace.ts": "cfac2291e6b8ef08b9dfcdafab25650837bd2024acb144a2293a07a243c40e8c",
+    "src/modules/script/workspace.ts": "67d0bb32e09cc79abb9c0229e70f653b7d32bd09f12c58a9e9eec027e055dbc1",
+    "src/modules/settings/players.ts": "cbe454c226a6aa77c93cc6659445ee7fa1e1dbe6982411e12d9c6d602101a9c2",
+    "src/modules/settings/workspace.ts": "f122b53d9bb2527579d8e3d93e68998ec9ef7d13c931a6eda87f9078c76c26ab",
+    "src/modules/terrain/operations.ts": "e1f71f8304c2cb477ee9ab674f3fd3b89cbb6c908a4b67b05628f7acbda5db4c",
+    "src/modules/terrain/workspace.ts": "8049148f5313a4abf772d9268799d14aa74d02b84ee76d85d6d5a052b7640a17",
+    "src/modules/text/stringTable.ts": "a3727bd8e85c2f03224935ec239b3cc809441f7d96c2dfb1c1a96831d59377e5",
+    "src/modules/text/workspace.ts": "e3140d835361e1fa3e3c83e6c9c67a2953e64e70329bf0f34513f5b1abf19348",
+    "src/modules/trigger/authoring.ts": "f83664767947f2b9d784d9ba3bbb9af66d045b2e89231d78e4b71d21e22385f9",
+    "src/modules/trigger/libraries.ts": "05fc187bf3d6eaee20fe52f92b8bcf63731d6ba55595c8f147498747e90cb493",
+    "src/modules/trigger/nativeProfile.ts": "4c48f750e0bd8f284470079e642bd64519930399690587bc8379caace2a26851",
+    "src/modules/trigger/organization.ts": "fa860832c582ae3f208520466f34483b6fa156547aadbafaf0a211376b394ca6",
+    "src/modules/trigger/preparedXml.ts": "0068df6d299b216a8562a7047e0559e4b0f5af7674c91eb957427363de729b70",
+    "src/modules/trigger/runtimeGraph.ts": "6cb53c3ba054d4b868ead400b8b3bae9e43b9d6bac3c01d3e5517dde2e4dd066",
+    "src/modules/trigger/typeSystem.ts": "7774b2b8b2e3903eb5aea1878cfbbee5a3ea98044ff7b4764f2b0b9c39ea1af7",
+    "src/modules/trigger/workspace.ts": "7a4fafd124748151a261b286bb5b11ad9ef626ac22bbe72dfbeea5132d5cf796",
+    "src/modules/uiPreview/preparation.ts": "d1503c67e16b73b439f148f4ce717b6484d8b1415f7511d5158e48bd47eaf230",
+    "src/modules/uiPreview/sources.ts": "531d9be09da49928e9446ba2f343313bc96c85ff59177c5ca31a7f9e036bd92e",
+    "src/modules/uiPreview/workspace.ts": "464774a2442156ef56f195b0d44a4d9ee55d78c7e02eae9072055f933f8e8a1d",
+    "src/tests/aiModule.test.ts": "4021b0ef4e28e53f22bce9dd0373a170de01b822dc511ead437d2ee617e1b207",
+    "src/tests/archiveManifest.test.ts": "d16b44b036ab53e66a2e14088eccec86da8ed3987f25eb5e741a819570b71648",
+    "src/tests/assets.test.ts": "a7a4a0d4d5800cb085007c5434f6abe4ea5db3b00ea8c869c4b87bfc49dcf7ac",
+    "src/tests/authoringGroups.test.ts": "b65113eddd15b5206e1f1bb88098ea2f3fa8cb3983f0b1a9bdb89f5b571d0a60",
+    "src/tests/authoringScript.test.ts": "af34bd085c82272f1377caa7a9ac867cfa40b2668e492047b8a7e27cd414b788",
+    "src/tests/cutsceneWorkspace.test.ts": "218b8f59717dcaca2aac2761bc0fa82ac4a8bcbd2cb412d38d16615b7b6226a0",
+    "src/tests/dataCardBindings.test.ts": "b9d4b43da89ccd3d8f67820c9fef810a737ce79b38d8a2e84b1eca176b6067ef",
+    "src/tests/dataFieldBatch.test.ts": "4dc2048ecaab7df50fb4521329f1e1a0986c7f118bff96f698671b7175faf03a",
+    "src/tests/dataHighLevelAuthoring.test.ts": "53e77fbc5a451a15490e76e9e414ce8cbbfb7f2eed1fc2b0506ce998b68ec1cb",
+    "src/tests/globalLighting.test.ts": "0c2adac6c9fcfd82ea410fee10324ebf02ff24e79c0d62ea17221653030de525",
+    "src/tests/layoutDocument.test.ts": "3f4b90a7ef71c5b0893c675c074a50bacf15079e86138b635b917219138c9cab",
+    "src/tests/mapModule.test.ts": "dc70b94d796b16576dc591f7d617eff14ba674aaed8e6a28d5513ab9c6ebe52b",
+    "src/tests/modkitIntegration.test.ts": "c476dbc70aa35ddff0d220a5a9320f6a3b7b050ff939621cbac3bacb60cf4936",
+    "src/tests/placementModule.test.ts": "9c9289f649bdefd7037ae721b96261b0d8f6250626a8d90358db571087f7b35b",
+    "src/tests/preparedValues.test.ts": "4a836f16bad0de807dada71020e4a4144ab421d7b3ec763f37db99597126badf",
+    "src/tests/resolverPreparation.test.ts": "93b2d8fbff7778611d439dc40c10666627901c491386c18f62f57e1c18b89ac7",
+    "src/tests/script.test.ts": "49ed9f529175190ed60653cb8555039fb5bd2129fa66c023523606130b6288c2",
+    "src/tests/settings.test.ts": "41ce6b84e612fb74e3d8df6713bf32a095957f8db45fb3bba79e5c5c669eb00d",
+    "src/tests/terrainPerformance.test.ts": "c7461071424a0b38faedb6fbf65bdea204a217ee383c536004b76bb955b2d0b7",
+    "src/tests/triggerLibraryPreparation.test.ts": "bcfc41b51e81dfd3f92988166ffcbe2a000bfd6f472051070d0ba1f8f71b67ae",
+    "src/tests/uiPreview.test.ts": "dae92063384103d35736c872692583afb9c9120301a09069d2293dd48c1bc2d1",
+    "src/tests/xmlParseCache.test.ts": "cd6918883f0c90a55ab2b43ce867f80d21052c8f5914783d4a56292e1ea865e6"
+  },
+  "localBenchmarks": {
+    "text": {
+      "scope": "250 consecutive sets in a 20000-entry string table; pure writer, not whole map authoring",
+      "measurements": [
+        {
+          "run": 0,
+          "beforeMs": 4353,
+          "afterMs": 52,
+          "identical": true,
+          "sha256": "44a3f5f0ef351952f25377a6e58248d5361c0ed0bc97c421249660a6ed1f2f7b"
+        },
+        {
+          "run": 1,
+          "beforeMs": 6505,
+          "afterMs": 75,
+          "identical": true,
+          "sha256": "44a3f5f0ef351952f25377a6e58248d5361c0ed0bc97c421249660a6ed1f2f7b"
+        }
+      ]
+    },
+    "actor": {
+      "scope": "Pure Actor recipe on a 1000-unit catalog with 122 source fields; sequential live baseline recipe vs grouped fields, using the same current document parser. Complete XML bytes match; no new native playback claim.",
+      "baselineActorSourceSha256": "122fc97a62a278ebc02515c5cdd43d1b0cebc8cb19b0a3f759f47443043072b7",
+      "create": {
+        "before": {
+          "ms": 647.688,
+          "sha256": "b1c21d1c8ada647fc85aa15ae851ec4ad0a6d7fa99b1fe48ff3e5594aa40c416"
+        },
+        "after": {
+          "ms": 50.586,
+          "sha256": "b1c21d1c8ada647fc85aa15ae851ec4ad0a6d7fa99b1fe48ff3e5594aa40c416"
+        }
+      },
+      "replace": {
+        "before": {
+          "ms": 2092.827,
+          "sha256": "b1c21d1c8ada647fc85aa15ae851ec4ad0a6d7fa99b1fe48ff3e5594aa40c416"
+        },
+        "after": {
+          "ms": 45.154,
+          "sha256": "b1c21d1c8ada647fc85aa15ae851ec4ad0a6d7fa99b1fe48ff3e5594aa40c416"
+        }
+      }
+    },
+    "preparation": {
+      "scope": "Local deterministic preparation microbenchmarks against the saved live source baseline. Not a native-render or whole-map claim.",
+      "resolver": {
+        "repeats": 5,
+        "files": 2,
+        "before": {
+          "ms": 1447.976,
+          "reads": 10,
+          "sha256": "c97babf0fe400c55288eb3d30122015571f78c2ab532ac1886029d0ea3a6727c"
+        },
+        "after": {
+          "ms": 115.18,
+          "reads": 10,
+          "sha256": "c97babf0fe400c55288eb3d30122015571f78c2ab532ac1886029d0ea3a6727c"
+        }
+      },
+      "layout": {
+        "frames": 3040,
+        "repeats": 60,
+        "before": {
+          "ms": 177.859,
+          "sha256": "38072c01f7bc0f9d25cf2d89a3501643c610a201cd66859fd31fb8f8fce9c5c3"
+        },
+        "after": {
+          "ms": 14.612,
+          "sha256": "38072c01f7bc0f9d25cf2d89a3501643c610a201cd66859fd31fb8f8fce9c5c3"
+        }
+      },
+      "settings": {
+        "operations": 100,
+        "before": {
+          "ms": 19.843,
+          "sha256": "fa6246478fb06d3a6ed69db403c861c613f56948aa441f329d80756ff96fb1a0"
+        },
+        "after": {
+          "ms": 0.927,
+          "sha256": "fa6246478fb06d3a6ed69db403c861c613f56948aa441f329d80756ff96fb1a0"
+        }
+      },
+      "xml": {
+        "nodes": 6081,
+        "repeats": 20,
+        "before": {
+          "ms": 222.568,
+          "sha256": "c7f12b65248a99e2bf25b67f2dfe327740685ac153fade5e636b49721677f913"
+        },
+        "after": {
+          "ms": 13.625,
+          "sha256": "c7f12b65248a99e2bf25b67f2dfe327740685ac153fade5e636b49721677f913"
+        },
+        "cache": {
+          "entries": 1,
+          "sourceBytes": 195133,
+          "hits": 19,
+          "parses": 1,
+          "maxEntries": 3,
+          "maxSourceBytes": 8388608
+        }
+      }
+    },
+    "terrain": {
+      "scope": "Complete component bytes, issue/count receipts and touch order compared with the saved live baseline; no new native claim.",
+      "rows": [
+        {
+          "samples": {
+            "before": [
+              16.719,
+              15.338,
+              5.836,
+              7.013,
+              5.925,
+              6.633,
+              7.972,
+              5.862
+            ],
+            "after": [
+              18.094,
+              16.645,
+              6.804,
+              12.825,
+              14.174,
+              6.186,
+              5.818,
+              4.534
+            ]
+          },
+          "median": {
+            "beforeMs": 7.013,
+            "afterMs": 12.825
+          },
+          "id": "nydus",
+          "width": 33,
+          "height": 33,
+          "operations": [
+            {
+              "op": "height.noise",
+              "area": {
+                "type": "rectangle",
+                "minX": 2,
+                "minY": 2,
+                "maxX": 13,
+                "maxY": 13
+              },
+              "amplitude": 0.2,
+              "wavelength": 2,
+              "seed": 42
+            },
+            {
+              "op": "height.smooth",
+              "area": {
+                "type": "rectangle",
+                "minX": 2,
+                "minY": 2,
+                "maxX": 13,
+                "maxY": 13
+              },
+              "radius": 3,
+              "iterations": 4,
+              "method": "gaussian",
+              "edgeBlend": 1,
+              "protectedAreas": [
+                {
+                  "type": "circle",
+                  "center": {
+                    "x": 7,
+                    "y": 7
+                  },
+                  "radius": 1.5
+                }
+              ]
+            },
+            {
+              "op": "height.smooth",
+              "area": {
+                "type": "rectangle",
+                "minX": 2,
+                "minY": 2,
+                "maxX": 13,
+                "maxY": 13
+              },
+              "radius": 3,
+              "iterations": 4,
+              "method": "edge_preserving",
+              "edgeBlend": 1,
+              "protectedAreas": [
+                {
+                  "type": "circle",
+                  "center": {
+                    "x": 7,
+                    "y": 7
+                  },
+                  "radius": 1.5
+                }
+              ]
+            },
+            {
+              "op": "height.flatten",
+              "area": {
+                "type": "circle",
+                "center": {
+                  "x": 7,
+                  "y": 7
+                },
+                "radius": 2
+              },
+              "height": "currentMedian",
+              "strength": 0.5
+            },
+            {
+              "op": "height.raise",
+              "area": {
+                "type": "rectangle",
+                "minX": 2.2,
+                "minY": 2.2,
+                "maxX": 2.4,
+                "maxY": 2.4
+              },
+              "amount": 0.2
+            }
+          ],
+          "before": {
+            "ms": 23.356,
+            "hashes": {
+              "t3CellFlags": "56d47dee7d3e6c2245a5d69d1421bffa56c4f14ac936574d1ab1e6351c87b55e",
+              "t3FluffDoodad": "3f3f15b8480e7cf37d97bc9c4affe5af1348b352bbc1213a71da32195a88e937",
+              "t3HardTile": "12afa86368acf6158758ce235c2e3879d6edfab41cc2eef6738c939e746b745d",
+              "t3HeightMap": "694d1241dd9dc14e375f6c47c6ca61939a610a5f39e1ee885679b900646b2c54",
+              "t3SyncCliffLevel": "ee6f88f90add90966dc89670499c3120e26d33968a12c26f0ba99d4da7504fd7",
+              "t3SyncHeightMap": "fb12b036913365dbab0f21167b5c1186c81e7fbff19232089657435c3f2f80fa",
+              "t3SyncTextureInfo": "5fdf44defe5df115be5be49de20d822f1dfab785304cfbd228c120aa03f38c0c",
+              "t3Terrain.xml": "1e66a45de6c4c2aa097e6582592c1a8daac504549376c27bb79fa4d11cd832b9",
+              "t3TextureMasks": "901087dbb65e738d774d2517fc694d8508d524c4ca988cc7478efd2e0f48cb99",
+              "t3VertCol": "07e468603720a21465401f31702bea01e69bea5a8aa9606fc672015bcd692a18",
+              "t3Water": "c15e6e4da91564e9349a449302114f4248dfe1f2cebee1a29526cb5f41db5af5"
+            },
+            "result": {
+              "issues": [
+                {
+                  "severity": "warning",
+                  "code": "SYNC_DELTA_REFERENCE_SUPPORTED",
+                  "message": "Sync heights retain native residuals and receive the quantized height delta. Editor save/reopen and runtime movement have not been executed."
+                }
+              ],
+              "changedVertices": 144,
+              "changedTexturePixels": 0
+            },
+            "visitsSha256": "8f68e6aa1c2a9b46541ca06e0a47c7c4583cdbefc8b59ff29653ea021e50ed5d",
+            "visits": 885
+          },
+          "after": {
+            "ms": 22.919,
+            "hashes": {
+              "t3CellFlags": "56d47dee7d3e6c2245a5d69d1421bffa56c4f14ac936574d1ab1e6351c87b55e",
+              "t3FluffDoodad": "3f3f15b8480e7cf37d97bc9c4affe5af1348b352bbc1213a71da32195a88e937",
+              "t3HardTile": "12afa86368acf6158758ce235c2e3879d6edfab41cc2eef6738c939e746b745d",
+              "t3HeightMap": "694d1241dd9dc14e375f6c47c6ca61939a610a5f39e1ee885679b900646b2c54",
+              "t3SyncCliffLevel": "ee6f88f90add90966dc89670499c3120e26d33968a12c26f0ba99d4da7504fd7",
+              "t3SyncHeightMap": "fb12b036913365dbab0f21167b5c1186c81e7fbff19232089657435c3f2f80fa",
+              "t3SyncTextureInfo": "5fdf44defe5df115be5be49de20d822f1dfab785304cfbd228c120aa03f38c0c",
+              "t3Terrain.xml": "1e66a45de6c4c2aa097e6582592c1a8daac504549376c27bb79fa4d11cd832b9",
+              "t3TextureMasks": "901087dbb65e738d774d2517fc694d8508d524c4ca988cc7478efd2e0f48cb99",
+              "t3VertCol": "07e468603720a21465401f31702bea01e69bea5a8aa9606fc672015bcd692a18",
+              "t3Water": "c15e6e4da91564e9349a449302114f4248dfe1f2cebee1a29526cb5f41db5af5"
+            },
+            "result": {
+              "issues": [
+                {
+                  "severity": "warning",
+                  "code": "SYNC_DELTA_REFERENCE_SUPPORTED",
+                  "message": "Sync heights retain native residuals and receive the quantized height delta. Editor save/reopen and runtime movement have not been executed."
+                }
+              ],
+              "changedVertices": 144,
+              "changedTexturePixels": 0
+            },
+            "visitsSha256": "8f68e6aa1c2a9b46541ca06e0a47c7c4583cdbefc8b59ff29653ea021e50ed5d",
+            "visits": 885
+          }
+        },
+        {
+          "samples": {
+            "before": [
+              69.735,
+              60.021,
+              60.624,
+              64.883,
+              59.028,
+              57.274,
+              59.362,
+              57.524
+            ],
+            "after": [
+              43.923,
+              43.318,
+              56.529,
+              40.781,
+              45.575,
+              38.749,
+              44.399,
+              49.1
+            ]
+          },
+          "median": {
+            "beforeMs": 60.021,
+            "afterMs": 44.399
+          },
+          "id": "city",
+          "width": 145,
+          "height": 217,
+          "operations": [
+            {
+              "op": "height.noise",
+              "area": {
+                "type": "rectangle",
+                "minX": 2,
+                "minY": 2,
+                "maxX": 13,
+                "maxY": 13
+              },
+              "amplitude": 0.2,
+              "wavelength": 2,
+              "seed": 42
+            },
+            {
+              "op": "height.smooth",
+              "area": {
+                "type": "rectangle",
+                "minX": 2,
+                "minY": 2,
+                "maxX": 13,
+                "maxY": 13
+              },
+              "radius": 3,
+              "iterations": 4,
+              "method": "gaussian",
+              "edgeBlend": 1,
+              "protectedAreas": [
+                {
+                  "type": "circle",
+                  "center": {
+                    "x": 7,
+                    "y": 7
+                  },
+                  "radius": 1.5
+                }
+              ]
+            },
+            {
+              "op": "height.smooth",
+              "area": {
+                "type": "rectangle",
+                "minX": 2,
+                "minY": 2,
+                "maxX": 13,
+                "maxY": 13
+              },
+              "radius": 3,
+              "iterations": 4,
+              "method": "edge_preserving",
+              "edgeBlend": 1,
+              "protectedAreas": [
+                {
+                  "type": "circle",
+                  "center": {
+                    "x": 7,
+                    "y": 7
+                  },
+                  "radius": 1.5
+                }
+              ]
+            },
+            {
+              "op": "height.flatten",
+              "area": {
+                "type": "circle",
+                "center": {
+                  "x": 7,
+                  "y": 7
+                },
+                "radius": 2
+              },
+              "height": "currentMedian",
+              "strength": 0.5
+            },
+            {
+              "op": "height.raise",
+              "area": {
+                "type": "rectangle",
+                "minX": 2.2,
+                "minY": 2.2,
+                "maxX": 2.4,
+                "maxY": 2.4
+              },
+              "amount": 0.2
+            }
+          ],
+          "before": {
+            "ms": 75.033,
+            "hashes": {
+              "t3CellFlags": "eec492cc02eed46b89fbf8ead1131ac3c205806805d591bf458f02549880e62c",
+              "t3FluffDoodad": "e9184f4c24a4ec2d12881e922de667c1aec2ec8ea206302204097eb345891c74",
+              "t3HardTile": "12afa86368acf6158758ce235c2e3879d6edfab41cc2eef6738c939e746b745d",
+              "t3HeightMap": "5a5684623b003fe56cfd3d09c91bc8bab8a589f6a21b1ae5364119595098cbfd",
+              "t3SyncCliffLevel": "94714de3de157e6549faa22e04ae87fe3733cbab5cb648e7955390d249f34424",
+              "t3SyncHeightMap": "cdb4939722fbfd7af428b76bc8be5bf416d59d34fc342bdf52573740379cd1ff",
+              "t3SyncTextureInfo": "86edb70aa98c5fc26242e163a561c39e5689c0f3c26facea5e8238ec6af45b4f",
+              "t3Terrain.xml": "358911394cc79e570590791e860c252739430cba05fc3054de96f16adc962efc",
+              "t3TextureMasks": "dd0ab1468e401c4caa5149f8a874e081b01d2377a0371f2a01da75dbed77b308",
+              "t3VertCol": "3fbedb2df2d3c2d504e35533d81b9b2eba39635d4f410605b2d764b176de1a68",
+              "t3Water": "5fbe1e42bad7a0dccaa536c9bc1076b14a83fccb632b9de6fec0d3d3097f63af"
+            },
+            "result": {
+              "issues": [
+                {
+                  "severity": "warning",
+                  "code": "SYNC_DELTA_REFERENCE_SUPPORTED",
+                  "message": "Sync heights retain native residuals and receive the quantized height delta. Editor save/reopen and runtime movement have not been executed."
+                }
+              ],
+              "changedVertices": 144,
+              "changedTexturePixels": 0
+            },
+            "visitsSha256": "8f68e6aa1c2a9b46541ca06e0a47c7c4583cdbefc8b59ff29653ea021e50ed5d",
+            "visits": 885
+          },
+          "after": {
+            "ms": 51.874,
+            "hashes": {
+              "t3CellFlags": "eec492cc02eed46b89fbf8ead1131ac3c205806805d591bf458f02549880e62c",
+              "t3FluffDoodad": "e9184f4c24a4ec2d12881e922de667c1aec2ec8ea206302204097eb345891c74",
+              "t3HardTile": "12afa86368acf6158758ce235c2e3879d6edfab41cc2eef6738c939e746b745d",
+              "t3HeightMap": "5a5684623b003fe56cfd3d09c91bc8bab8a589f6a21b1ae5364119595098cbfd",
+              "t3SyncCliffLevel": "94714de3de157e6549faa22e04ae87fe3733cbab5cb648e7955390d249f34424",
+              "t3SyncHeightMap": "cdb4939722fbfd7af428b76bc8be5bf416d59d34fc342bdf52573740379cd1ff",
+              "t3SyncTextureInfo": "86edb70aa98c5fc26242e163a561c39e5689c0f3c26facea5e8238ec6af45b4f",
+              "t3Terrain.xml": "358911394cc79e570590791e860c252739430cba05fc3054de96f16adc962efc",
+              "t3TextureMasks": "dd0ab1468e401c4caa5149f8a874e081b01d2377a0371f2a01da75dbed77b308",
+              "t3VertCol": "3fbedb2df2d3c2d504e35533d81b9b2eba39635d4f410605b2d764b176de1a68",
+              "t3Water": "5fbe1e42bad7a0dccaa536c9bc1076b14a83fccb632b9de6fec0d3d3097f63af"
+            },
+            "result": {
+              "issues": [
+                {
+                  "severity": "warning",
+                  "code": "SYNC_DELTA_REFERENCE_SUPPORTED",
+                  "message": "Sync heights retain native residuals and receive the quantized height delta. Editor save/reopen and runtime movement have not been executed."
+                }
+              ],
+              "changedVertices": 144,
+              "changedTexturePixels": 0
+            },
+            "visitsSha256": "8f68e6aa1c2a9b46541ca06e0a47c7c4583cdbefc8b59ff29653ea021e50ed5d",
+            "visits": 885
+          }
+        },
+        {
+          "samples": {
+            "before": [
+              27.098,
+              27.585,
+              28.351,
+              30.815,
+              26.41,
+              36.245,
+              29.227,
+              27.972
+            ],
+            "after": [
+              9.986,
+              10.841,
+              9.636,
+              8.956,
+              11.146,
+              10.796,
+              12.646,
+              9.421
+            ]
+          },
+          "median": {
+            "beforeMs": 28.351,
+            "afterMs": 10.796
+          },
+          "id": "ant",
+          "width": 137,
+          "height": 137,
+          "operations": [
+            {
+              "op": "height.noise",
+              "area": {
+                "type": "rectangle",
+                "minX": 2,
+                "minY": 2,
+                "maxX": 13,
+                "maxY": 13
+              },
+              "amplitude": 0.2,
+              "wavelength": 2,
+              "seed": 42
+            },
+            {
+              "op": "height.smooth",
+              "area": {
+                "type": "rectangle",
+                "minX": 2,
+                "minY": 2,
+                "maxX": 13,
+                "maxY": 13
+              },
+              "radius": 3,
+              "iterations": 4,
+              "method": "gaussian",
+              "edgeBlend": 1,
+              "protectedAreas": [
+                {
+                  "type": "circle",
+                  "center": {
+                    "x": 7,
+                    "y": 7
+                  },
+                  "radius": 1.5
+                }
+              ]
+            },
+            {
+              "op": "height.smooth",
+              "area": {
+                "type": "rectangle",
+                "minX": 2,
+                "minY": 2,
+                "maxX": 13,
+                "maxY": 13
+              },
+              "radius": 3,
+              "iterations": 4,
+              "method": "edge_preserving",
+              "edgeBlend": 1,
+              "protectedAreas": [
+                {
+                  "type": "circle",
+                  "center": {
+                    "x": 7,
+                    "y": 7
+                  },
+                  "radius": 1.5
+                }
+              ]
+            },
+            {
+              "op": "height.flatten",
+              "area": {
+                "type": "circle",
+                "center": {
+                  "x": 7,
+                  "y": 7
+                },
+                "radius": 2
+              },
+              "height": "currentMedian",
+              "strength": 0.5
+            },
+            {
+              "op": "height.raise",
+              "area": {
+                "type": "rectangle",
+                "minX": 2.2,
+                "minY": 2.2,
+                "maxX": 2.4,
+                "maxY": 2.4
+              },
+              "amount": 0.2
+            }
+          ],
+          "before": {
+            "ms": 29.329,
+            "hashes": {
+              "t3CellFlags": "44a3918d67c4b5f354060ff752780d3a4591d14b82f3afee24e2020ec88ebfb1",
+              "t3FluffDoodad": "3f3f15b8480e7cf37d97bc9c4affe5af1348b352bbc1213a71da32195a88e937",
+              "t3HardTile": "12afa86368acf6158758ce235c2e3879d6edfab41cc2eef6738c939e746b745d",
+              "t3HeightMap": "a16fd6855d2678eeccf6e7f5fa95aa76367f4d61fde30f675ab04555ffeff905",
+              "t3SyncCliffLevel": "8918e598e1af03f60fdfc270fb2dc4bc4bdf1b0e27f7ac7b29a8e41cb550009b",
+              "t3SyncHeightMap": "f82dccb596dac8845df6026ac4e6cee94bebeedb458f7986cfca6598bdb63141",
+              "t3SyncTextureInfo": "b3188849f7847bc6b24f123ac0e435abaf872997c0f15e11b13a46e66905bcd1",
+              "t3Terrain.xml": "6902a7e0f401e9c654c754b783d1add0cecd044592e223610a8dab188cb55edd",
+              "t3TextureMasks": "d86f67d356d990b1e82199f90f4e8f14929f2a841429fbd02d411c2a15c8ed0a",
+              "t3VertCol": "99b4d3ae49d9d368b0f29bf73af9ef3162bf9b09d58e5be0e77201f9b5ba1a0a",
+              "t3Water": "c15e6e4da91564e9349a449302114f4248dfe1f2cebee1a29526cb5f41db5af5"
+            },
+            "result": {
+              "issues": [
+                {
+                  "severity": "warning",
+                  "code": "SYNC_DELTA_REFERENCE_SUPPORTED",
+                  "message": "Sync heights retain native residuals and receive the quantized height delta. Editor save/reopen and runtime movement have not been executed."
+                }
+              ],
+              "changedVertices": 144,
+              "changedTexturePixels": 0
+            },
+            "visitsSha256": "8f68e6aa1c2a9b46541ca06e0a47c7c4583cdbefc8b59ff29653ea021e50ed5d",
+            "visits": 885
+          },
+          "after": {
+            "ms": 13.346,
+            "hashes": {
+              "t3CellFlags": "44a3918d67c4b5f354060ff752780d3a4591d14b82f3afee24e2020ec88ebfb1",
+              "t3FluffDoodad": "3f3f15b8480e7cf37d97bc9c4affe5af1348b352bbc1213a71da32195a88e937",
+              "t3HardTile": "12afa86368acf6158758ce235c2e3879d6edfab41cc2eef6738c939e746b745d",
+              "t3HeightMap": "a16fd6855d2678eeccf6e7f5fa95aa76367f4d61fde30f675ab04555ffeff905",
+              "t3SyncCliffLevel": "8918e598e1af03f60fdfc270fb2dc4bc4bdf1b0e27f7ac7b29a8e41cb550009b",
+              "t3SyncHeightMap": "f82dccb596dac8845df6026ac4e6cee94bebeedb458f7986cfca6598bdb63141",
+              "t3SyncTextureInfo": "b3188849f7847bc6b24f123ac0e435abaf872997c0f15e11b13a46e66905bcd1",
+              "t3Terrain.xml": "6902a7e0f401e9c654c754b783d1add0cecd044592e223610a8dab188cb55edd",
+              "t3TextureMasks": "d86f67d356d990b1e82199f90f4e8f14929f2a841429fbd02d411c2a15c8ed0a",
+              "t3VertCol": "99b4d3ae49d9d368b0f29bf73af9ef3162bf9b09d58e5be0e77201f9b5ba1a0a",
+              "t3Water": "c15e6e4da91564e9349a449302114f4248dfe1f2cebee1a29526cb5f41db5af5"
+            },
+            "result": {
+              "issues": [
+                {
+                  "severity": "warning",
+                  "code": "SYNC_DELTA_REFERENCE_SUPPORTED",
+                  "message": "Sync heights retain native residuals and receive the quantized height delta. Editor save/reopen and runtime movement have not been executed."
+                }
+              ],
+              "changedVertices": 144,
+              "changedTexturePixels": 0
+            },
+            "visitsSha256": "8f68e6aa1c2a9b46541ca06e0a47c7c4583cdbefc8b59ff29653ea021e50ed5d",
+            "visits": 885
+          }
+        },
+        {
+          "samples": {
+            "before": [
+              38.363,
+              39.755,
+              39.603,
+              39.076,
+              36.184,
+              41.767,
+              50.148,
+              38.078
+            ],
+            "after": [
+              7.117,
+              6.421,
+              6.261,
+              6.065,
+              6.967,
+              6.385,
+              6.992,
+              6.076
+            ]
+          },
+          "median": {
+            "beforeMs": 39.603,
+            "afterMs": 6.421
+          },
+          "id": "warships",
+          "width": 257,
+          "height": 257,
+          "operations": [
+            {
+              "op": "height.noise",
+              "area": {
+                "type": "rectangle",
+                "minX": 1,
+                "minY": 1,
+                "maxX": 12,
+                "maxY": 12
+              },
+              "amplitude": 0.2,
+              "wavelength": 2,
+              "seed": 42
+            },
+            {
+              "op": "height.smooth",
+              "area": {
+                "type": "rectangle",
+                "minX": 1,
+                "minY": 1,
+                "maxX": 12,
+                "maxY": 12
+              },
+              "radius": 3,
+              "iterations": 4,
+              "method": "gaussian",
+              "edgeBlend": 1,
+              "protectedAreas": [
+                {
+                  "type": "circle",
+                  "center": {
+                    "x": 6,
+                    "y": 6
+                  },
+                  "radius": 1.5
+                }
+              ]
+            },
+            {
+              "op": "height.smooth",
+              "area": {
+                "type": "rectangle",
+                "minX": 1,
+                "minY": 1,
+                "maxX": 12,
+                "maxY": 12
+              },
+              "radius": 3,
+              "iterations": 4,
+              "method": "edge_preserving",
+              "edgeBlend": 1,
+              "protectedAreas": [
+                {
+                  "type": "circle",
+                  "center": {
+                    "x": 6,
+                    "y": 6
+                  },
+                  "radius": 1.5
+                }
+              ]
+            },
+            {
+              "op": "height.raise",
+              "area": {
+                "type": "rectangle",
+                "minX": 1.2,
+                "minY": 1.2,
+                "maxX": 1.4,
+                "maxY": 1.4
+              },
+              "amount": 0.2
+            }
+          ],
+          "before": {
+            "ms": 38.26,
+            "hashes": {
+              "t3CellFlags": "b78880886e7800bfb8db84414e81b3d434080695269ca78650b7dd1bd3820faf",
+              "t3FluffDoodad": "3f3f15b8480e7cf37d97bc9c4affe5af1348b352bbc1213a71da32195a88e937",
+              "t3HardTile": "12afa86368acf6158758ce235c2e3879d6edfab41cc2eef6738c939e746b745d",
+              "t3HeightMap": "c154b51e7adb9910179759b3ec76fe5fc8fde1ab9d06887fb19a8a03290a1249",
+              "t3SyncCliffLevel": "c6e80d25183942af89a7445a0f5b7a56cdc75b07cef001dcfbd8f4ada59027ba",
+              "t3SyncHeightMap": "10ccd3b497a93c5e10a8da85d0fefc1434c165af51a0da8e8ffce92ce368a2c1",
+              "t3SyncTextureInfo": "cd739c7e6962224f8fdea4eb76ab9f8b24632d6f55436c9afb8deeb2669c505b",
+              "t3Terrain.xml": "a7bdaec1f974e643f2c88997d40fe23b2ca4da85a14447b4a6f9f15b4c7fe58e",
+              "t3TextureMasks": "b65aa53fb16722af36e9b9d8e5ffc6a3c8da5ea1381dbeb9c3219477fe2dd776",
+              "t3VertCol": "e7256bf3c75668d7d871ef499bf03d6b0533f3ac72b1ec0e2f0b70d84b92f079",
+              "t3Water": "c15e6e4da91564e9349a449302114f4248dfe1f2cebee1a29526cb5f41db5af5"
+            },
+            "result": {
+              "issues": [
+                {
+                  "severity": "warning",
+                  "code": "PROTECTED_NATIVE_GEOMETRY",
+                  "message": "Skipped 872 brush visits near holes, cliff boundaries or ramps."
+                },
+                {
+                  "severity": "warning",
+                  "code": "SYNC_DELTA_REFERENCE_SUPPORTED",
+                  "message": "Sync heights retain native residuals and receive the quantized height delta. Editor save/reopen and runtime movement have not been executed."
+                }
+              ],
+              "changedVertices": 0,
+              "changedTexturePixels": 0
+            },
+            "visitsSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "visits": 0
+          },
+          "after": {
+            "ms": 6.349,
+            "hashes": {
+              "t3CellFlags": "b78880886e7800bfb8db84414e81b3d434080695269ca78650b7dd1bd3820faf",
+              "t3FluffDoodad": "3f3f15b8480e7cf37d97bc9c4affe5af1348b352bbc1213a71da32195a88e937",
+              "t3HardTile": "12afa86368acf6158758ce235c2e3879d6edfab41cc2eef6738c939e746b745d",
+              "t3HeightMap": "c154b51e7adb9910179759b3ec76fe5fc8fde1ab9d06887fb19a8a03290a1249",
+              "t3SyncCliffLevel": "c6e80d25183942af89a7445a0f5b7a56cdc75b07cef001dcfbd8f4ada59027ba",
+              "t3SyncHeightMap": "10ccd3b497a93c5e10a8da85d0fefc1434c165af51a0da8e8ffce92ce368a2c1",
+              "t3SyncTextureInfo": "cd739c7e6962224f8fdea4eb76ab9f8b24632d6f55436c9afb8deeb2669c505b",
+              "t3Terrain.xml": "a7bdaec1f974e643f2c88997d40fe23b2ca4da85a14447b4a6f9f15b4c7fe58e",
+              "t3TextureMasks": "b65aa53fb16722af36e9b9d8e5ffc6a3c8da5ea1381dbeb9c3219477fe2dd776",
+              "t3VertCol": "e7256bf3c75668d7d871ef499bf03d6b0533f3ac72b1ec0e2f0b70d84b92f079",
+              "t3Water": "c15e6e4da91564e9349a449302114f4248dfe1f2cebee1a29526cb5f41db5af5"
+            },
+            "result": {
+              "issues": [
+                {
+                  "severity": "warning",
+                  "code": "PROTECTED_NATIVE_GEOMETRY",
+                  "message": "Skipped 872 brush visits near holes, cliff boundaries or ramps."
+                },
+                {
+                  "severity": "warning",
+                  "code": "SYNC_DELTA_REFERENCE_SUPPORTED",
+                  "message": "Sync heights retain native residuals and receive the quantized height delta. Editor save/reopen and runtime movement have not been executed."
+                }
+              ],
+              "changedVertices": 0,
+              "changedTexturePixels": 0
+            },
+            "visitsSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "visits": 0
+          }
+        }
+      ]
+    }
+  },
+  "composite": {
+    "transport": "Public MCP stdio; all map contents authored through tools",
+    "mapSize": [
+      32,
+      32
+    ],
+    "creation": "One compact document command; separate bootstrap process is required to change workspace root",
+    "featureCalls": [
+      {
+        "label": "place-group",
+        "milliseconds": 4543,
+        "compilation": {
+          "commands": 4,
+          "expandedCalls": 12,
+          "groupedCalls": 3,
+          "avoidedCalls": 9,
+          "declaredFiles": [
+            "ComponentList.SC2Components",
+            "Objects"
+          ],
+          "declaredDirectories": [],
+          "validationTools": [
+            "placement.apply"
+          ]
+        },
+        "ok": true
+      },
+      {
+        "label": "terrain-ui",
+        "milliseconds": 660,
+        "ok": true
+      },
+      {
+        "label": "nested-gui",
+        "milliseconds": 85739,
+        "ok": true
+      },
+      {
+        "label": "ui-preview",
+        "milliseconds": 1045,
+        "ok": true
+      },
+      {
+        "label": "generate-runtime",
+        "milliseconds": 7986,
+        "ok": true
+      },
+      {
+        "label": "assign-gui-folders",
+        "milliseconds": 273,
+        "ok": true
+      }
+    ],
+    "preview": [
+      {
+        "label": "preview-overview",
+        "milliseconds": 34048,
+        "preparedWorldHit": false,
+        "artifactHits": {
+          "png": false
+        }
+      },
+      {
+        "label": "preview-overview-repeat",
+        "milliseconds": 4394,
+        "preparedWorldHit": true,
+        "artifactHits": {
+          "png": true
+        }
+      },
+      {
+        "label": "preview-gameplay",
+        "milliseconds": 4410,
+        "preparedWorldHit": true,
+        "artifactHits": {
+          "png": false
+        }
+      }
+    ],
+    "export": {
+      "milliseconds": 903,
+      "files": 41,
+      "reopened": true,
+      "performance": {
+        "elapsedMilliseconds": 726,
+        "stagesMilliseconds": {
+          "inputManifest": 19.566,
+          "privateCopy": 58.215,
+          "snapshotManifest": 24.337,
+          "adapterPack": 255.341,
+          "reopenVerification": 285.47,
+          "finalSourceManifest": 25.261,
+          "callerFreshness": 50.02,
+          "publication": 1.004
+        },
+        "inputFiles": 41,
+        "inputBytes": 402293,
+        "scope": "Archive pack only; includes publication callbacks, excludes caller preparation and final temporary-directory cleanup. Stages are sequential measured work, not a sum of all filesystem activity."
+      }
+    },
+    "preparedGuiPlan": {
+      "milliseconds": 57847,
+      "nativeCompilerUsed": false
+    }
+  },
+  "native": {
+    "archiveSha256": "aa9b73896aec20b3f14a7a03b0536c6b63b21fb13b3627df68bf9fa518d14268",
+    "sourceUnchanged": true,
+    "loadVerified": true,
+    "loadDataVerified": true,
+    "loadDiagnostics": {
+      "newErrorsClear": true,
+      "inspectionComplete": true,
+      "newErrorCount": 0,
+      "newWarningCount": 0,
+      "knownNewErrorCount": 0,
+      "newErrors": [],
+      "newWarnings": [],
+      "compilerErrors": null
+    },
+    "compileVerified": true,
+    "originalGuiGeneration": true,
+    "compilerErrors": [],
+    "postCompileDiagnostics": {
+      "newErrorsClear": true,
+      "inspectionComplete": true,
+      "newErrorCount": 0,
+      "newWarningCount": 0,
+      "knownNewErrorCount": 0,
+      "newErrors": [],
+      "newWarnings": [],
+      "compilerErrors": null
+    },
+    "exportedGalaxy": {
+      "bytes": 15944,
+      "sha256": "862cc83aa9e8906b91b2414c8e86888847e8714500a0309b10fabc125504b158"
+    },
+    "visibleEditorWindows": 0,
+    "gameplayVerified": false
+  },
+  "limits": [
+    "Microbenchmarks are scoped to their deterministic inputs; overlapping regression counts must not be added as independent cases.",
+    "Cold/warm preview times compare cache states, not baseline/current implementations. Topdown PNG was flat gray and is not visual-quality acceptance; rendered camera views were inspected separately.",
+    "No model billing/token speedup measured; compile receipts count calls and declarations.",
+    "Native generation first refused an invented context label; a deliberate corrected MAIN context compiled. Long default native path was refused before execution; an explicit short private work root was used.",
+    "Complete map balance, effects playback, all terrain topology variants and gameplay are not certified by this performance check.",
+    "Private map files, native DLL/source/runtime packages, screenshots and raw local traces are excluded from this record."
+  ]
+}

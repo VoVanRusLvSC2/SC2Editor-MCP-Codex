@@ -89,8 +89,10 @@ export async function createProject(
     scope = new ResourceScope();
   await workspace.recover();
   let initialCatalog: Promise<void> | undefined;
-  const initializeCatalog = () =>
-    (initialCatalog ??= (async () => {
+  let catalogInitialized = false;
+  const initializeCatalog = () => {
+    if (catalogInitialized) return Promise.resolve();
+    return (initialCatalog ??= (async () => {
       try {
         await services.casc.restoreMounts();
       } catch (error) {
@@ -101,18 +103,29 @@ export async function createProject(
         services.data.nativeCatalogFiles = new Set(
           await (await services.modkit.port()).catalogFiles(),
         );
-    })().catch((error) => {
-      initialCatalog = undefined;
-      throw error;
-    }));
-  const refreshCasc = async () => {
-    await initializeCatalog();
-    const { data, casc } = services;
-    if (!data.extraRoots.some((root) => root.startsWith(casc.cacheRoot + path.sep))) return;
-    await workspace.readDependency(path.join(casc.install, ".build.info"));
-    await casc.refreshBuild();
-    await casc.restoreMounts();
+    })().then(
+      () => {
+        catalogInitialized = true;
+        initialCatalog = undefined;
+      },
+      (error) => {
+        initialCatalog = undefined;
+        throw error;
+      },
+    ));
   };
+  const cascPreparation = {};
+  const refreshCasc = () =>
+    workspace.prepareReadScope(cascPreparation, async () => {
+      const initializing = !catalogInitialized && initialCatalog === undefined;
+      await initializeCatalog();
+      const { data, casc } = services;
+      if (!data.extraRoots.some((root) => root.startsWith(casc.cacheRoot + path.sep))) return;
+      await workspace.readDependency(path.join(casc.install, ".build.info"));
+      await casc.refreshBuild();
+      // Initialization restored these views in this same scope already.
+      if (!initializing) await casc.restoreMounts();
+    });
   const container: ModuleContainer<ProjectServices> = new ModuleContainer<ProjectServices>({
     nativeGate: () => new NativeWorkflowGate(),
     nativeEditor: () => scope.own("Editor bridge", new NativeEditorBridge(workspace)),
@@ -143,6 +156,7 @@ export async function createProject(
       return scope.own(
         "CASC",
         new CascWorkspace(workspace.root, {
+          trackingWorkspace: workspace,
           ...(modkit
             ? { backendName: "ModKit", backendFactory: () => new ModkitCascBackend(modkit) }
             : {}),
@@ -204,7 +218,13 @@ export async function createProject(
     cutsceneAssets: () => new CutsceneAssetIndex(workspace.root),
     script: () => new ScriptWorkspace(workspace),
     trigger: () => {
-      const trigger = new TriggerWorkspace(workspace, undefined, services.data, services.casc);
+      const trigger = new TriggerWorkspace(
+        workspace,
+        undefined,
+        services.data,
+        services.casc,
+        services.script,
+      );
       trigger.nativeGuiArtifact = (id) =>
         services.nativeGate.protect(services.nativeEditor).guiArtifact(id);
       return trigger;

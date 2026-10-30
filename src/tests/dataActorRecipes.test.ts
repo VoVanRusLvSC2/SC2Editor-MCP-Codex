@@ -12,6 +12,18 @@ test('normal Data validation reports the observed duplicate-primary-actor constr
 });
 
 const native=new DataDocument('<Catalog><CActorUnit default="1" id="GenericUnitBase"><On Terms="UnitBirth.##unitName##" Send="Create"/></CActorUnit><CActorUnit id="Marine" parent="GenericUnitBase" unitName="Marine"><PortraitModel value="MarinePortrait"/><On Terms="UnitDeath.Marine; AnimPlaying Cover" Target="_DeathModel" Send="AnimClear Cover"/><Macros value="UnloadDropAnim"/></CActorUnit></Catalog>');
+test('review duplicated actor movement timing and unindexed inherited event collisions',()=>{
+ const dependency=new DataDocument('<Catalog><CActorUnit id="GenericUnitBase"><On Terms="UnitBirth.*" Send="Create"/></CActorUnit><CActorUnit id="Odin" parent="GenericUnitBase"><WalkAnimMoveSpeed value="1.75"/></CActorUnit></Catalog>');
+ const map=new DataDocument('<Catalog><CActorUnit id="Hero" parent="GenericUnitBase"><Model value="Odin"/><On Terms="WeaponStart.Odin.AttackStart" Send="AnimBracketStart Attack Attack"/></CActorUnit></Catalog>');
+ const validate=()=>validateDataDocuments('map.xml',[{file:'base.xml',layer:'dependency',document:dependency},{file:'map.xml',layer:'workspace',document:map}]);
+ assert.ok(validate().diagnostics.some(d=>d.code==='DATA_ACTOR_WALK_SPEED_REVIEW'));
+ assert.ok(validate().diagnostics.some(d=>d.code==='DATA_ACTOR_EVENT_MERGE_REVIEW'));
+ const sparse=new DataDocument('<Catalog><CActorUnit id="Hero" parent="GenericUnitBase"><Model value="Odin"/><On index="128" Terms="WeaponStart.Odin.AttackStart" Send="AnimBracketStart Attack Attack"/></CActorUnit></Catalog>');
+ assert.ok(validateDataDocuments('map.xml',[{file:'base.xml',layer:'dependency',document:dependency},{file:'map.xml',layer:'workspace',document:sparse}]).diagnostics.some(d=>d.code==='DATA_ACTOR_EVENT_SPARSE_REVIEW'));
+ const fixed=new DataDocument('<Catalog><CActorUnit id="Hero" parent="GenericUnitBase"><Model value="Odin"/><WalkAnimMoveSpeed value="1.75"/><On index="1" Terms="WeaponStart.Odin.AttackStart" Send="AnimBracketStart Attack Attack"/></CActorUnit></Catalog>');
+ const findings=validateDataDocuments('map.xml',[{file:'base.xml',layer:'dependency',document:dependency},{file:'map.xml',layer:'workspace',document:fixed}]).diagnostics;
+ assert.ok(!findings.some(d=>['DATA_ACTOR_WALK_SPEED_REVIEW','DATA_ACTOR_EVENT_MERGE_REVIEW'].includes(d.code)));
+});
 test('concrete actor duplication is blocked; rebuilding preserves presentation and one inherited primary Create',()=>{
  const d=new DataDocument('<Catalog><CActorUnit id="HeroActor" parent="Marine" unitName="Hero"><On Terms="UnitBirth.Hero" Send="Create"/><On Terms="UnitDeath.Hero" Send="Destroy"/></CActorUnit></Catalog>');
  const source=native.objects().find(o=>o.id==='Marine')!;

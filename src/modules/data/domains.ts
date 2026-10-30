@@ -19,9 +19,18 @@ export const DATA_CATALOG_DOMAINS = [
 ] as const;
 
 const domains = [...DATA_CATALOG_DOMAINS].sort((left, right) => right.length - left.length);
+// Native subclasses omit "Node" from their names, although their catalog is
+// RequirementNode. Keep them separate from the owning CRequirement catalog.
+const requirementNodes = new Set([
+  'AllowAbil', 'AllowBehavior', 'AllowUnit', 'AllowUpgrade', 'And', 'Const',
+  'CountAbil', 'CountBehavior', 'CountEffect', 'CountUnit', 'CountUpgrade',
+  'Div', 'Eq', 'GT', 'GTE', 'LT', 'LTE', 'Mod', 'Mul', 'NE', 'Node',
+  'Not', 'Odd', 'Or', 'Sum', 'Xor',
+].map(suffix => 'CRequirement' + suffix));
 
 export function dataDomainFromType(ctype: string): string | undefined {
   if (!/^C[A-Z]/.test(ctype)) return undefined;
+  if (requirementNodes.has(ctype)) return 'RequirementNode';
   const body = ctype.slice(1);
   return domains.find((domain) => body.startsWith(domain));
 }

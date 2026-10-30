@@ -177,108 +177,250 @@ export class TextWorkspace {
 
   async apply(request: TextApplyRequest) {
     if (!request.operations.length) throw new Error("text.apply requires at least one operation");
-    if (request.operations.length > 250) throw new Error("text.apply accepts at most 250 operations");
+    if (request.operations.length > 250)
+      throw new Error("text.apply accepts at most 250 operations");
     const hasFontImport = request.operations.some((entry) => entry.op === "font.import");
-    if (hasFontImport && request.operations.length !== 1) throw new Error("font.import is isolated so binary import cannot partially commit with text/style edits");
-    if (hasFontImport) return this.importFont(request.operations[0] as Extract<TextOperation, { op: "font.import" }>, request);
+    if (hasFontImport && request.operations.length !== 1)
+      throw new Error(
+        "font.import is isolated so binary import cannot partially commit with text/style edits",
+      );
+    if (hasFontImport)
+      return this.importFont(
+        request.operations[0] as Extract<TextOperation, { op: "font.import" }>,
+        request,
+      );
 
     const required = new Set<string>();
-    if (request.operations.some((entry) => entry.op.startsWith("style.") || entry.op.startsWith("constant.") || entry.op === "fontGroup.set")) {
+    if (
+      request.operations.some(
+        (entry) =>
+          entry.op.startsWith("style.") ||
+          entry.op.startsWith("constant.") ||
+          entry.op === "fontGroup.set",
+      )
+    ) {
       if (!request.styleFile) throw new Error("Style operation requires styleFile");
       required.add(request.styleFile);
     }
-    if (request.operations.some((entry) => entry.op === "style.rename" || entry.op === "style.delete")) {
+    if (
+      request.operations.some((entry) => entry.op === "style.rename" || entry.op === "style.delete")
+    ) {
       for (const file of Object.values(request.stringFiles ?? {})) required.add(file);
     }
     for (const operation of request.operations) {
       if (operation.op.startsWith("text.") || operation.op.startsWith("richText.")) {
-        if (operation.op === "text.setLocalized") for (const locale of Object.keys(operation.values)) {
-          const file = request.stringFiles?.[locale];
-          if (!file) throw new Error(`No string-table file configured for locale ${locale}`);
-          required.add(file);
-        } else required.add(this.stringFileFor(operation, request.stringFiles ?? {}));
+        if (operation.op === "text.setLocalized")
+          for (const locale of Object.keys(operation.values)) {
+            const file = request.stringFiles?.[locale];
+            if (!file) throw new Error(`No string-table file configured for locale ${locale}`);
+            required.add(file);
+          }
+        else required.add(this.stringFileFor(operation, request.stringFiles ?? {}));
       }
     }
 
     let validation: ReturnType<typeof validateTextSources> | undefined;
-    const transaction = await this.workspace.applyRawTransaction([...required], async (sources) => {
-      const next = new Map(sources);
-      const style = request.styleFile ? new StyleDocument(next.get(request.styleFile) || `<?xml version="1.0" encoding="utf-8" standalone="yes"?>\n<StyleFile>\n</StyleFile>\n`) : undefined;
-      const table = (file: string) => new StringTableDocument(next.get(file) ?? "");
-      for (const operation of request.operations) {
-        switch (operation.op) {
-          case "style.add":
-            if (style!.getStyle(operation.id)) throw new Error(`Style already exists: ${operation.id}`);
-            style!.upsertStyle(operation.id, { ...(operation.template ? { template: operation.template } : {}), ...nativeStyleValues(operation.values) });
-            break;
-          case "style.set": style!.upsertStyle(operation.id, { ...(operation.template ? { template: operation.template } : {}), ...nativeStyleValues(operation.values) }); break;
-          case "style.clone": style!.cloneStyle(operation.source, operation.id); break;
-          case "style.setTemplate": style!.upsertStyle(operation.id, { template: operation.template }); break;
-          case "style.rename": {
-            style!.renameStyle(operation.id, operation.newId);
-            for (const [locale, file] of Object.entries(request.stringFiles ?? {})) {
-              void locale;
-              const document = table(file);
-              for (const entry of document.list(undefined, Number.MAX_SAFE_INTEGER)) {
-                const changed = entry.value.replace(new RegExp(`(<s\\b[^>]*\\bval\\s*=\\s*["'])${operation.id.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}(["'])`, "gi"), `$1${operation.newId}$2`);
-                if (changed !== entry.value) document.set(entry.key, changed);
+    const transaction = await this.workspace.applyRawTransaction(
+      [...required],
+      async (sources) => {
+        const next = new Map(sources);
+        const style = request.styleFile
+          ? new StyleDocument(
+              next.get(request.styleFile) ||
+                `<?xml version="1.0" encoding="utf-8" standalone="yes"?>\n<StyleFile>\n</StyleFile>\n`,
+            )
+          : undefined;
+        const tables = new Map<string, StringTableDocument>();
+        const table = (file: string) => {
+          const source = next.get(file) ?? "",
+            cached = tables.get(file);
+          if (cached?.source === source) return cached;
+          const document = new StringTableDocument(source);
+          tables.set(file, document);
+          return document;
+        };
+        for (let index = 0; index < request.operations.length; index++) {
+          const operation = request.operations[index];
+          if (operation.op === "text.set" || operation.op === "text.setLocalized") {
+            const pending = new Map<string, Array<{ key: string; value: string }>>();
+            let end = index;
+            for (; end < request.operations.length; end++) {
+              const current = request.operations[end];
+              if (current.op !== "text.set" && current.op !== "text.setLocalized") break;
+              const values =
+                current.op === "text.set"
+                  ? [[this.stringFileFor(current, request.stringFiles ?? {}), current.value]]
+                  : Object.entries(current.values).map(([locale, value]) => [
+                      request.stringFiles![locale],
+                      value,
+                    ]);
+              for (const [file, value] of values) {
+                const changes = pending.get(file) ?? [];
+                changes.push({ key: current.key, value });
+                pending.set(file, changes);
               }
+            }
+            for (const [file, changes] of pending) {
+              const document = table(file);
+              document.setMany(changes);
               next.set(file, document.source);
             }
-            break;
+            index = end - 1;
+            continue;
           }
-          case "style.delete": {
-            for (const file of Object.values(request.stringFiles ?? {})) {
+          switch (operation.op) {
+            case "style.add":
+              if (style!.getStyle(operation.id))
+                throw new Error(`Style already exists: ${operation.id}`);
+              style!.upsertStyle(operation.id, {
+                ...(operation.template ? { template: operation.template } : {}),
+                ...nativeStyleValues(operation.values),
+              });
+              break;
+            case "style.set":
+              style!.upsertStyle(operation.id, {
+                ...(operation.template ? { template: operation.template } : {}),
+                ...nativeStyleValues(operation.values),
+              });
+              break;
+            case "style.clone":
+              style!.cloneStyle(operation.source, operation.id);
+              break;
+            case "style.setTemplate":
+              style!.upsertStyle(operation.id, { template: operation.template });
+              break;
+            case "style.rename": {
+              style!.renameStyle(operation.id, operation.newId);
+              for (const [locale, file] of Object.entries(request.stringFiles ?? {})) {
+                void locale;
+                const document = table(file);
+                const changes: Array<{ key: string; value: string }> = [];
+                for (const entry of document.list(undefined, Number.MAX_SAFE_INTEGER)) {
+                  const changed = entry.value.replace(
+                    new RegExp(
+                      `(<s\\b[^>]*\\bval\\s*=\\s*["'])${operation.id.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}(["'])`,
+                      "gi",
+                    ),
+                    `$1${operation.newId}$2`,
+                  );
+                  if (changed !== entry.value) changes.push({ key: entry.key, value: changed });
+                }
+                document.setMany(changes);
+                next.set(file, document.source);
+              }
+              break;
+            }
+            case "style.delete": {
+              for (const file of Object.values(request.stringFiles ?? {})) {
+                const document = table(file);
+                if (
+                  document
+                    .list(undefined, Number.MAX_SAFE_INTEGER)
+                    .some((entry) =>
+                      new RegExp(
+                        `<s\\b[^>]*\\bval\\s*=\\s*["']${operation.id.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}["']`,
+                        "i",
+                      ).test(entry.value),
+                    )
+                )
+                  throw new Error(`Style '${operation.id}' is referenced by ${file}`);
+              }
+              style!.deleteStyle(operation.id);
+              break;
+            }
+            case "constant.add":
+              if (style!.getConstant(operation.id))
+                throw new Error(`Constant already exists: ${operation.id}`);
+              style!.upsertConstant(operation.id, operation.value);
+              break;
+            case "constant.set":
+              style!.upsertConstant(operation.id, operation.value);
+              break;
+            case "constant.remove":
+              style!.deleteConstant(operation.id);
+              break;
+            case "fontGroup.set":
+              style!.upsertFontGroup(
+                operation.id,
+                operation.fonts.map((font) => ({ font })),
+                operation.requiredToLoad ? { requiredtoload: operation.requiredToLoad } : {},
+              );
+              break;
+            case "text.remove": {
+              const file = this.stringFileFor(operation, request.stringFiles ?? {});
               const document = table(file);
-              if (document.list(undefined, Number.MAX_SAFE_INTEGER).some((entry) => new RegExp(`<s\\b[^>]*\\bval\\s*=\\s*["']${operation.id.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}["']`, "i").test(entry.value))) throw new Error(`Style '${operation.id}' is referenced by ${file}`);
+              document.remove(operation.key);
+              next.set(file, document.source);
+              break;
             }
-            style!.deleteStyle(operation.id);
-            break;
-          }
-          case "constant.add":
-            if (style!.getConstant(operation.id)) throw new Error(`Constant already exists: ${operation.id}`);
-            style!.upsertConstant(operation.id, operation.value);
-            break;
-          case "constant.set": style!.upsertConstant(operation.id, operation.value); break;
-          case "constant.remove": style!.deleteConstant(operation.id); break;
-          case "fontGroup.set": style!.upsertFontGroup(operation.id, operation.fonts.map((font) => ({ font })), operation.requiredToLoad ? { requiredtoload: operation.requiredToLoad } : {}); break;
-          case "text.set": {
-            const file = this.stringFileFor(operation, request.stringFiles ?? {});
-            const document = table(file); document.set(operation.key, operation.value); next.set(file, document.source); break;
-          }
-          case "text.setLocalized":
-            for (const [locale, value] of Object.entries(operation.values)) {
-              const file = request.stringFiles![locale]; const document = table(file); document.set(operation.key, value); next.set(file, document.source);
+            case "richText.style":
+            case "richText.color":
+            case "richText.noWrap": {
+              const file = this.stringFileFor(operation, request.stringFiles ?? {});
+              const document = table(file);
+              const entry = document.get(operation.key);
+              if (!entry) throw new Error(`Text key not found: ${operation.key}`);
+              const tag =
+                operation.op === "richText.style"
+                  ? "s"
+                  : operation.op === "richText.color"
+                    ? "c"
+                    : "w";
+              const value =
+                operation.op === "richText.style"
+                  ? operation.style
+                  : operation.op === "richText.color"
+                    ? operation.color
+                    : undefined;
+              document.set(
+                operation.key,
+                wrapRichTextRange(entry.value, operation.start, operation.end, tag, value),
+              );
+              next.set(file, document.source);
+              break;
             }
-            break;
-          case "text.remove": {
-            const file = this.stringFileFor(operation, request.stringFiles ?? {}); const document = table(file); document.remove(operation.key); next.set(file, document.source); break;
+            case "richText.newLine": {
+              const file = this.stringFileFor(operation, request.stringFiles ?? {});
+              const document = table(file);
+              const entry = document.get(operation.key);
+              if (!entry || operation.offset < 0 || operation.offset > entry.value.length)
+                throw new Error(`Invalid new-line offset for ${operation.key}`);
+              document.set(
+                operation.key,
+                entry.value.slice(0, operation.offset) +
+                  "<n/>" +
+                  entry.value.slice(operation.offset),
+              );
+              next.set(file, document.source);
+              break;
+            }
+            case "font.import":
+              throw new Error("Unexpected font.import in text transaction");
           }
-          case "richText.style":
-          case "richText.color":
-          case "richText.noWrap": {
-            const file = this.stringFileFor(operation, request.stringFiles ?? {}); const document = table(file); const entry = document.get(operation.key);
-            if (!entry) throw new Error(`Text key not found: ${operation.key}`);
-            const tag = operation.op === "richText.style" ? "s" : operation.op === "richText.color" ? "c" : "w";
-            const value = operation.op === "richText.style" ? operation.style : operation.op === "richText.color" ? operation.color : undefined;
-            document.set(operation.key, wrapRichTextRange(entry.value, operation.start, operation.end, tag, value)); next.set(file, document.source); break;
-          }
-          case "richText.newLine": {
-            const file = this.stringFileFor(operation, request.stringFiles ?? {}); const document = table(file); const entry = document.get(operation.key);
-            if (!entry || operation.offset < 0 || operation.offset > entry.value.length) throw new Error(`Invalid new-line offset for ${operation.key}`);
-            document.set(operation.key, entry.value.slice(0, operation.offset) + "<n/>" + entry.value.slice(operation.offset)); next.set(file, document.source); break;
-          }
-          case "font.import": throw new Error("Unexpected font.import in text transaction");
         }
-      }
-      if (style && request.styleFile && required.has(request.styleFile)) next.set(request.styleFile, style.source);
-      const styleSources = new Map([...next].filter(([file]) => /\.SC2Style$/i.test(file)));
-      const stringSources = new Map([...next].filter(([file]) => /Strings\.txt$/i.test(file)));
-      validation = validateTextSources(styleSources, stringSources, this.schema);
-      if ((request.validate ?? true) && !validation.valid && !request.allowInvalid) throw new Error(`Text transaction validation failed: ${validation.errors} error(s)`);
-      return next;
-    }, request);
-    return { ...transaction, validation, operations: request.operations.map((entry, index) => ({ index, op: entry.op })), efficiency: { toolCalls: 1, operations: request.operations.length, files: transaction.files.length, includesValidation: request.validate ?? true, includesDiff: true } };
+        if (style && request.styleFile && required.has(request.styleFile))
+          next.set(request.styleFile, style.source);
+        const styleSources = new Map([...next].filter(([file]) => /\.SC2Style$/i.test(file)));
+        const stringSources = new Map([...next].filter(([file]) => /Strings\.txt$/i.test(file)));
+        validation = validateTextSources(styleSources, stringSources, this.schema);
+        if ((request.validate ?? true) && !validation.valid && !request.allowInvalid)
+          throw new Error(`Text transaction validation failed: ${validation.errors} error(s)`);
+        return next;
+      },
+      request,
+    );
+    return {
+      ...transaction,
+      validation,
+      operations: request.operations.map((entry, index) => ({ index, op: entry.op })),
+      efficiency: {
+        toolCalls: 1,
+        operations: request.operations.length,
+        files: transaction.files.length,
+        includesValidation: request.validate ?? true,
+        includesDiff: true,
+      },
+    };
   }
 
   private async importFont(operation: Extract<TextOperation, { op: "font.import" }>, request: TextApplyRequest) {

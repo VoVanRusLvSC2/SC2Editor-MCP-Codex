@@ -407,47 +407,70 @@ export class TerrainWorkspace {
     if (!resolved?.available) throw new Error(`WATER_DEPENDENCY_UNAVAILABLE: ${id}`);
     ready.add(id);
   }
-  async plan(request: TerrainPlanRequest, foundation?:Map<string,Buffer>,touches?:TerrainTouches): Promise<TerrainPlanSummary> {
+  async plan(
+    request: TerrainPlanRequest,
+    foundation?: Map<string, Buffer>,
+    touches?: TerrainTouches,
+  ): Promise<TerrainPlanSummary> {
+    return this.workspace.withReadSet(() =>
+      this.browse
+        ? this.browse.withSnapshot(() => this.planTracked(request, foundation, touches))
+        : this.planTracked(request, foundation, touches),
+    );
+  }
+  private async planTracked(
+    request: TerrainPlanRequest,
+    foundation?: Map<string, Buffer>,
+    touches?: TerrainTouches,
+  ): Promise<TerrainPlanSummary> {
     request = terrainPlanSchema.parse(request) as TerrainPlanRequest;
     if (request.operations.length > 100)
       throw new Error("Terrain plan accepts at most 100 operations");
-    if(request.operations.some(op=>op.op==='load.repair')&&request.operations.length!==1)throw Error('TERRAIN_LOAD_REPAIR_MUST_BE_STANDALONE');
+    if (request.operations.some((op) => op.op === "load.repair") && request.operations.length !== 1)
+      throw Error("TERRAIN_LOAD_REPAIR_MUST_BE_STANDALONE");
     const directory = request.directory ?? "",
       data = await this.load(directory);
     const before = new Map(
-      [...data.sources].map(([n, b]) => [
-        this.file(directory, n),
-        Buffer.from(b),
-      ]),
+      [...data.sources].map(([n, b]) => [this.file(directory, n), Buffer.from(b)]),
     );
     let sources: Map<string, Buffer> = new Map(
-      [...(foundation??data.sources)].map(([n, b]) => [n, Buffer.from(b)]),
+      [...(foundation ?? data.sources)].map(([n, b]) => [n, Buffer.from(b)]),
     );
     const initial = parseState(sources);
-    const integrity = inspectNativeIntegrity(sources, initial.descriptor.width - 1, initial.descriptor.height - 1);
-    if (!integrity.valid) throw new Error("INVALID_TERRAIN_NATIVE_COMPONENTS: " + JSON.stringify(integrity.issues));
-    const load=inspectTerrainLoadContract(sources);
-    if(load.issues.some(i=>i.severity==='error')&&!(request.operations.length===1&&['load.repair','stamp.apply'].includes(request.operations[0].op)))throw Error('INVALID_TERRAIN_LOAD_CONTRACT: '+JSON.stringify(load.issues)+'; inspect terrain.load.repair before ordinary terrain edits');
+    const integrity = inspectNativeIntegrity(
+      sources,
+      initial.descriptor.width - 1,
+      initial.descriptor.height - 1,
+    );
+    if (!integrity.valid)
+      throw new Error("INVALID_TERRAIN_NATIVE_COMPONENTS: " + JSON.stringify(integrity.issues));
+    const load = inspectTerrainLoadContract(sources);
+    if (
+      load.issues.some((i) => i.severity === "error") &&
+      !(
+        request.operations.length === 1 &&
+        ["load.repair", "stamp.apply"].includes(request.operations[0].op)
+      )
+    )
+      throw Error(
+        "INVALID_TERRAIN_LOAD_CONTRACT: " +
+          JSON.stringify(load.issues) +
+          "; inspect terrain.load.repair before ordinary terrain edits",
+      );
     if (
       !request.operations.every((op) => op.op === "stamp.apply") &&
       initial.descriptor.scale.some((v) => v !== 1)
     )
       throw new Error("NONUNIT_TERRAIN_WRITE_TRANSFORM_UNVERIFIED");
     if (![114, 115].includes(initial.descriptor.version))
-      throw new Error(
-        `TERRAIN_XML_WRITER_VERSION_UNSUPPORTED: ${initial.descriptor.version}`,
-      );
+      throw new Error(`TERRAIN_XML_WRITER_VERSION_UNSUPPORTED: ${initial.descriptor.version}`);
     const dependencyHashes: Record<string, string> = {};
     let issues: TerrainIssue[] = [];
     let result = { changedVertices: 0, changedTexturePixels: 0 };
     const stamps = request.operations.filter((o) => o.op === "stamp.apply");
     if (stamps.length) {
-      if (request.operations.length !== 1)
-        throw new Error("WHOLE_MAP_STAMP_MUST_BE_STANDALONE");
-      const op = stamps[0] as Extract<
-        (typeof request.operations)[number],
-        { op: "stamp.apply" }
-      >;
+      if (request.operations.length !== 1) throw new Error("WHOLE_MAP_STAMP_MUST_BE_STANDALONE");
+      const op = stamps[0] as Extract<(typeof request.operations)[number], { op: "stamp.apply" }>;
       const donor = await this.load(op.donorDirectory);
       const donorState = parseState(donor.sources);
       if (![114, 115].includes(donorState.descriptor.version))
@@ -457,8 +480,7 @@ export class TerrainWorkspace {
         initial.descriptor.height !== donorState.descriptor.height ||
         JSON.stringify(initial.descriptor.offset) !==
           JSON.stringify(donorState.descriptor.offset) ||
-        JSON.stringify(initial.descriptor.scale) !==
-          JSON.stringify(donorState.descriptor.scale)
+        JSON.stringify(initial.descriptor.scale) !== JSON.stringify(donorState.descriptor.scale)
       )
         throw new Error("STAMP_DIMENSIONS_OR_TRANSFORM_MISMATCH");
       if (
@@ -470,9 +492,15 @@ export class TerrainWorkspace {
           JSON.stringify(donorState.descriptor.cliffSets)
       )
         throw new Error("STAMP_TILESET_OR_CLIFF_DEPENDENCY_UNVERIFIED");
-      const authoringFiles = ["Base.SC2Data/GameData/LightData.xml","Base.SC2Data/GameData/TerrainData.xml","Base.SC2Data/GameData/WaterData.xml","Base.SC2Data/GameData.xml","ComponentList.SC2Components"];
+      const authoringFiles = [
+        "Base.SC2Data/GameData/LightData.xml",
+        "Base.SC2Data/GameData/TerrainData.xml",
+        "Base.SC2Data/GameData/WaterData.xml",
+        "Base.SC2Data/GameData.xml",
+        "ComponentList.SC2Components",
+      ];
       for (const [name, bytes] of donor.sources) {
-        if(authoringFiles.includes(name)) continue;
+        if (authoringFiles.includes(name)) continue;
         if (!bytes.length && sources.get(name)?.length)
           throw new Error(`STAMP_COMPONENT_REMOVAL_UNSUPPORTED: ${name}`);
         dependencyHashes[this.file(op.donorDirectory, name)] =
@@ -481,15 +509,12 @@ export class TerrainWorkspace {
       for (const t of donorState.descriptor.textures.filter((t) => t.id))
         await this.readyTexture(t.id, initial);
       for (const donorWater of donorState.water?.list().entries ?? [])
-        if (
-          !initial.water
-            ?.list()
-            .entries.some((w) => w.template === donorWater.template)
-        )
-          throw new Error(
-            `STAMP_WATER_DEPENDENCY_UNVERIFIED: ${donorWater.template}`,
-          );
-      sources = new Map([...donor.sources,...authoringFiles.map(name => [name,data.sources.get(name)!] as [string,Buffer])]);
+        if (!initial.water?.list().entries.some((w) => w.template === donorWater.template))
+          throw new Error(`STAMP_WATER_DEPENDENCY_UNVERIFIED: ${donorWater.template}`);
+      sources = new Map([
+        ...donor.sources,
+        ...authoringFiles.map((name) => [name, data.sources.get(name)!] as [string, Buffer]),
+      ]);
       issues.push({
         severity: "warning",
         code: "WHOLE_MAP_STAMP",
@@ -500,46 +525,58 @@ export class TerrainWorkspace {
       // Resolve new palette assets before the isolated transformation.
       for (const op of request.operations)
         if (op.op === "palette.update")
-          for (const r of op.replacements)
-            await this.readyTexture(r.texture, initial);
-      const lightReady=new Set<string>();
-      const lightSource=initial.sources.get("Base.SC2Data/GameData/LightData.xml");
-      const lights=request.operations.some(o=>o.op.startsWith("lighting.")) ? new LightingCatalog(lightSource?.length ? lightSource.toString("utf8") : "<Catalog/>","CLight") : undefined;
-      const resolveLight=async (id:string,visiting=new Set<string>()):Promise<void> => {
-        if(lightReady.has(id))return;
-        if(visiting.has(id))throw new Error(`LIGHTING_PARENT_CYCLE: ${id}`);
-        const local=lights?.list().find(l=>l.id===id);
-        if(local){visiting.add(id);if(local.parent)await resolveLight(local.parent,visiting);visiting.delete(id);}
-        else {const resolved=await this.browse?.data.metadataEntry('Light',id);if(!resolved?.available)throw new Error(`LIGHTING_DEPENDENCY_UNAVAILABLE: ${id}`);}
+          for (const r of op.replacements) await this.readyTexture(r.texture, initial);
+      const lightReady = new Set<string>();
+      const lightSource = initial.sources.get("Base.SC2Data/GameData/LightData.xml");
+      const lights = request.operations.some((o) => o.op.startsWith("lighting."))
+        ? new LightingCatalog(
+            lightSource?.length ? lightSource.toString("utf8") : "<Catalog/>",
+            "CLight",
+          )
+        : undefined;
+      const resolveLight = async (id: string, visiting = new Set<string>()): Promise<void> => {
+        if (lightReady.has(id)) return;
+        if (visiting.has(id)) throw new Error(`LIGHTING_PARENT_CYCLE: ${id}`);
+        const local = lights?.list().find((l) => l.id === id);
+        if (local) {
+          visiting.add(id);
+          if (local.parent) await resolveLight(local.parent, visiting);
+          visiting.delete(id);
+        } else {
+          const resolved = await this.browse?.data.metadataEntry("Light", id);
+          if (!resolved?.available) throw new Error(`LIGHTING_DEPENDENCY_UNAVAILABLE: ${id}`);
+        }
         lightReady.add(id);
       };
-      for(const op of request.operations) {
-        if(op.op === "lighting.preset") {await resolveLight(op.parent ?? op.id);lightReady.add(op.id);}
-        if(op.op === "lighting.assign") await resolveLight(op.id);
+      for (const op of request.operations) {
+        if (op.op === "lighting.preset") {
+          await resolveLight(op.parent ?? op.id);
+          lightReady.add(op.id);
+        }
+        if (op.op === "lighting.assign") await resolveLight(op.id);
       }
       const ready = new Set<string>();
       for (const op of request.operations) {
         if (op.op === "water.material") {
-          if(op.parent) await this.readyWater(op.parent,initial,ready);
-          else await this.readyWater(op.id,initial,ready);
+          if (op.parent) await this.readyWater(op.parent, initial, ready);
+          else await this.readyWater(op.id, initial, ready);
           ready.add(op.id);
-        } else if((op.op === "water.create" || op.op === "water.update") && op.template) await this.readyWater(op.template,initial,ready);
+        } else if ((op.op === "water.create" || op.op === "water.update") && op.template)
+          await this.readyWater(op.template, initial, ready);
       }
-      const applied = applyOperations(
-        parseState(sources),
-        request.operations,
-        request.maxSlope,
-        touches,
-      );
+      const applied = applyOperations(initial, request.operations, request.maxSlope, touches);
       issues = applied.issues;
       result = applied;
     }
-    const nextLoad=inspectTerrainLoadContract(sources);
-    if(nextLoad.issues.some(i=>i.severity==='error'))throw Error('INVALID_PLANNED_TERRAIN_LOAD_CONTRACT: '+JSON.stringify(nextLoad.issues));
-    const waterDependencies = request.operations.some(op => op.op.startsWith("water.") || op.op.startsWith("lighting.")) ? await this.waterDependencySnapshot(directory) : undefined;
-    const next = new Map(
-      [...sources].map(([n, b]) => [this.file(directory, n), Buffer.from(b)]),
-    );
+    const nextLoad = inspectTerrainLoadContract(sources);
+    if (nextLoad.issues.some((i) => i.severity === "error"))
+      throw Error("INVALID_PLANNED_TERRAIN_LOAD_CONTRACT: " + JSON.stringify(nextLoad.issues));
+    const waterDependencies = request.operations.some(
+      (op) => op.op.startsWith("water.") || op.op.startsWith("lighting."),
+    )
+      ? await this.waterDependencySnapshot(directory)
+      : undefined;
+    const next = new Map([...sources].map(([n, b]) => [this.file(directory, n), Buffer.from(b)]));
     const summary = this.remember(
       directory,
       request.operations,
@@ -554,13 +591,10 @@ export class TerrainWorkspace {
     );
     if (
       this.browse &&
-      !request.operations.some(op => op.op === "water.material") && request.operations.some(
-        (op) => op.op === "palette.update" || op.op === "stamp.apply",
-      )
+      !request.operations.some((op) => op.op === "water.material") &&
+      request.operations.some((op) => op.op === "palette.update" || op.op === "stamp.apply")
     )
-      this.plans.get(summary.id)!.browseFingerprint = (
-        await this.browse.index()
-      ).fingerprint;
+      this.plans.get(summary.id)!.browseFingerprint = (await this.browse.index()).fingerprint;
     this.plans.get(summary.id)!.waterDependencySnapshot = waterDependencies;
     return summary;
   }

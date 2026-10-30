@@ -223,345 +223,418 @@ export function applyOperations(
     pendingHeightBounds = undefined;
   };
   for (const op of operations) {
-    if(op.op==='load.repair'){
-      if(operations.length!==1)throw Error('TERRAIN_LOAD_REPAIR_MUST_BE_STANDALONE');
-      const repair=repairLegacyTerrainLoadContract(state);
-      if(repair.changed.length)issues.push({severity:'warning',code:'TERRAIN_LOAD_REPAIR_NATIVE_CHECK_REQUIRED',message:'Diagnosed legacy load fields repaired; surface heights/textures/cliff levels preserved. Validate the exact archive in the native engine.'});
-      continue;
-    }
-    if ("area" in op && op.area) bounded(op.area, state);
-    if (op.op === "surface.hide" || op.op === "surface.show") {
-      const visibility = state.visibility;
-      if (!visibility) throw new Error("VISIBILITY_COMPONENT_UNSUPPORTED: requires dimension-matched LFCT v102");
-      const hidden = op.op === "surface.hide";
-      if (op.cells) {
-        for (const cell of op.cells) visibility.setHidden(cell.x, cell.y, hidden);
-      } else if (op.area) {
-        const bounds = brushBounds(op.area, state);
-        // Cell centers, rather than height vertices, define the boolean visibility brush.
-        const b = areaBounds(op.area), d = state.descriptor;
-        const minX = Math.max(0, Math.floor((b.minX - d.offset[0]) / d.scale[0]));
-        const minY = Math.max(0, Math.floor((b.minY - d.offset[1]) / d.scale[1]));
-        for (let y = minY; y <= Math.min(visibility.height - 1, bounds.maxY); y++)
-          for (let x = minX; x <= Math.min(visibility.width - 1, bounds.maxX); x++) {
-            const point = { x: d.offset[0] + (x + 0.5) * d.scale[0], y: d.offset[1] + (y + 0.5) * d.scale[1] };
-            if (areaWeight(op.area, point) > 0) visibility.setHidden(x, y, hidden);
-          }
-      }
-      protection.fill(0);
-      continue;
-    }
-    if (op.op === "stamp.apply")
-      throw new Error("STAMP_REQUIRES_WORKSPACE_RESOLUTION");
-    if (op.op==='cliff.paint'||op.op==='cliff.repair'||op.op==='ramp.create'||op.op==='ramp.remove'||op.op==='ramp.repair') {
-      flushHeightSync();
-      editNativeGeometry(state,op,touches?.nativeGeometry?.bind(touches));
-      nativeGeometryTouched = true;
-      if(!issues.some(i=>i.code==='NATIVE_NAVIGATION_NOT_REBUILT'))issues.push({severity:'warning',code:'NATIVE_NAVIGATION_NOT_REBUILT',message:'Native geometry components changed; engine navigation/collision caches were not rebuilt. CellAttribute paint alone does not prove valid placement or traversal. Run exact-archive ground tests before accepting this terrain.'});
-      protection.fill(0);continue;
-    }
-    if (op.op==='pathing.paint')throw new Error('NATIVE_TERRAIN_OPERATION_UNAVAILABLE: use terrain.pathing.paint or terrain.modkit.plan for CellAttribute masks');
-    if (op.op === "palette.update") {
-      if (!state.syncTextures)
-        throw new Error("SYNC_TEXTURE_COMPONENT_REQUIRED");
-      const source = state.descriptor.replaceTextures(op.replacements);
-      state.sources.set("t3Terrain.xml", Buffer.from(source));
-      state.sources.set(
-        "t3SyncTextureInfo",
-        state.syncTextures.rename(op.replacements),
-      );
-      state.descriptor = new TerrainDescriptor(source);
-      state.heights = new HeightMap(state.heights.bytes, state.descriptor);
-      state.syncTextures = new SyncTextureInfo(
-        state.sources.get("t3SyncTextureInfo")!,
-      );
-      continue;
-    }
-    if (op.op === "lighting.assign" || op.op === "lighting.preset") {
-      const name=op.op === "lighting.assign" ? "TerrainData.xml":"LightData.xml";
-      const file=`Base.SC2Data/GameData/${name}`;
-      const catalog=new LightingCatalog(new TextDecoder("utf-8",{fatal:true}).decode(state.sources.get(file)?.length ? state.sources.get(file)! : Buffer.from('<Catalog></Catalog>')),op.op === "lighting.assign" ? "CTerrain":"CLight");
-      const tileSet=state.descriptor.heightMap.attrs.tileSet;
-      if(op.op === "lighting.assign" && !tileSet) throw new Error("MAP_TILESET_REQUIRED");
-      if(op.op === "lighting.assign" && state.sources.get("Base.SC2Data/GameData/LightData.xml")?.length)
-        state.sources.set("Base.SC2Data/GameData.xml",Buffer.from(gameDataIndexWithCatalog(state.sources.get("Base.SC2Data/GameData.xml")?.toString("utf8") ?? "","GameData/LightData.xml")));
-      const next=op.op === "lighting.assign" ? catalog.bind(tileSet,op.id):catalog.patch(op);
-      state.sources.set(file,Buffer.from(next));
-      state.sources.set("Base.SC2Data/GameData.xml",Buffer.from(gameDataIndexWithCatalog(state.sources.get("Base.SC2Data/GameData.xml")?.toString("utf8") ?? "",`GameData/${name}`)));
-      state.sources.set("ComponentList.SC2Components",Buffer.from(componentListWithGameData(state.sources.get("ComponentList.SC2Components")?.toString("utf8") ?? "")));
-      issues.push({severity:"warning",code:"LIGHTING_EDITOR_NOT_RUN",message:"Native catalog lighting binding edited; Editor/game visual acceptance has not been run. Preset edits affect every reference to that id."});
-      continue;
-    }
-    if (op.op === "water.material") {
-      const source = state.waterCatalog?.source ?? '<?xml version="1.0" encoding="utf-8"?>\n<Catalog></Catalog>\n';
-      const next = new WaterCatalog(source).patch(op,true);
-      state.waterCatalog = new WaterCatalog(next);
-      state.sources.set("Base.SC2Data/GameData/WaterData.xml",Buffer.from(next));
-      state.sources.set("Base.SC2Data/GameData.xml",Buffer.from(gameDataIndexWithCatalog(state.sources.get("Base.SC2Data/GameData.xml")?.toString("utf8") ?? "","GameData/WaterData.xml")));
-      state.sources.set("ComponentList.SC2Components",Buffer.from(componentListWithGameData(state.sources.get("ComponentList.SC2Components")?.toString("utf8") ?? "")));
-      issues.push({severity:"warning",code:"WATER_MATERIAL_SHARED",message:`CWater ${op.id} settings affect all rectangles using this template; use a new id with parent for isolated settings.`});
-      continue;
-    }
-    if (
-      op.op === "water.create" ||
-      op.op === "water.update" ||
-      op.op === "water.remove"
-    ) {
-      if (!state.water) {
-        if(op.op !== "water.create" || !op.template) throw new Error("WATER_COMPONENT_REQUIRED");
-        const empty = Buffer.alloc(32);empty.write("WATR");empty.writeUInt32LE(110,4);state.water = new WaterEntries(empty);
-      }
-      const bytes =
-        op.op === "water.remove"
-          ? state.water.edit("remove", op.index)
-          : op.op === "water.create"
-            ? state.water.edit("create", op.sourceIndex ?? 0, op.area, op.template)
-            : state.water.edit("update", op.index, op.area, op.template);
-      state.sources.set("t3Water", bytes);
-      state.water = new WaterEntries(bytes);
-      if(op.op !== "water.remove" && state.sources.get("Base.SC2Data/GameData/WaterData.xml")?.length) {
-        state.sources.set("Base.SC2Data/GameData.xml",Buffer.from(gameDataIndexWithCatalog(state.sources.get("Base.SC2Data/GameData.xml")?.toString("utf8") ?? "","GameData/WaterData.xml")));
-        state.sources.set("ComponentList.SC2Components",Buffer.from(componentListWithGameData(state.sources.get("ComponentList.SC2Components")?.toString("utf8") ?? "")));
-      }
+  if (op.op === "load.repair") {
+    if (operations.length !== 1) throw Error("TERRAIN_LOAD_REPAIR_MUST_BE_STANDALONE");
+    const repair = repairLegacyTerrainLoadContract(state);
+    if (repair.changed.length)
       issues.push({
         severity: "warning",
-        code: "WATER_TEMPLATE_LEVEL",
+        code: "TERRAIN_LOAD_REPAIR_NATIVE_CHECK_REQUIRED",
         message:
-          "Water inherits all settings and level from its existing template; custom liquid height is not decoded.",
+          "Diagnosed legacy load fields repaired; surface heights/textures/cliff levels preserved. Validate the exact archive in the native engine.",
       });
-      continue;
-    }
-    if (op.op.startsWith("height.")) {
-      const operation = op as Extract<
-          TerrainOperation,
-          { op: `height.${string}` }
-        >,
-        hm = state.heights;
-      if (!state.sync) throw new Error("SYNC_HEIGHT_COMPONENT_REQUIRED");
-      pendingHeightBaseline ??= new HeightMap(Buffer.from(state.heights.bytes),state.descriptor);
-      heightTouched = true;
-      const bounds = brushBounds(operation.area, state);
-      heightBounds = unionBounds(heightBounds, bounds);
-      pendingHeightBounds = unionBounds(pendingHeightBounds, bounds);
-      const read = Float64Array.from({ length: hm.width * hm.height }, (_, i) =>
-        hm.z(i % hm.width, Math.floor(i / hm.width)),
-      );
-      const values: number[] = [];
-      if (
-        (operation.op === "height.flatten" || operation.op === "height.set") &&
-        operation.height === "currentMedian"
-      )
-        for (let y = bounds.minY; y <= bounds.maxY; y++)
-          for (let x = bounds.minX; x <= bounds.maxX; x++)
-            if (
-              operationWeight(operation, hm.point(x, y)) > 0 &&
-              !isProtected(x, y)
-            )
-              values.push(read[y * hm.width + x]);
-      const target =
-        operation.op === "height.flatten" || operation.op === "height.set"
-          ? operation.height === "currentMedian"
-            ? median(values)
-            : operation.height
-          : undefined;
-      const iterations =
-        operation.op === "height.smooth" ? (operation.iterations ?? 1) : 1;
-      let input = read;
-      for (let iteration = 0; iteration < iterations; iteration++) {
-        const output = Float64Array.from(input);
-        for (let y = bounds.minY; y <= bounds.maxY; y++)
-          for (let x = bounds.minX; x <= bounds.maxX; x++) {
-            const p = hm.point(x, y),
-              w = operationWeight(operation, p);
-            if (!w) continue;
-            if (isProtected(x, y)) {
-              protectedCount++;
-              continue;
-            }
-            const i = y * hm.width + x,
-              old = input[i];
-            touches?.height(x,y);
-            let next = old;
-            if (
-              operation.op === "height.raise" ||
-              operation.op === "height.lower"
-            )
-              next =
-                old +
-                operation.amount * (operation.op === "height.lower" ? -1 : 1);
-            else if (
-              operation.op === "height.set" ||
-              operation.op === "height.flatten"
-            )
-              next = target!;
-            else if (operation.op === "height.noise")
-              next =
-                old +
-                valueNoise(
-                  p.x / (operation.wavelength ?? 8),
-                  p.y / (operation.wavelength ?? 8),
-                  operation.seed ?? 1,
-                ) *
-                  operation.amplitude;
-            else if (operation.op === "height.slope") {
-              const dx = operation.to.x - operation.from.x,
-                dy = operation.to.y - operation.from.y,
-                n = dx * dx + dy * dy;
-              if (!n) throw new Error("SLOPE_ENDPOINTS_COINCIDE");
-              const t = Math.max(
-                0,
-                Math.min(
-                  1,
-                  ((p.x - operation.from.x) * dx +
-                    (p.y - operation.from.y) * dy) /
-                    n,
-                ),
-              );
-              next =
-                operation.fromHeight +
-                (operation.toHeight - operation.fromHeight) * t;
-            } else if (operation.op === "height.smooth") {
-              const radius = operation.radius ?? 2;
-              let sum = 0,
-                total = 0;
-              for (let dy = -radius; dy <= radius; dy++)
-                for (let dx = -radius; dx <= radius; dx++) {
-                  const nx = x + dx,
-                    ny = y + dy;
-                  if (
-                    nx < 0 ||
-                    ny < 0 ||
-                    nx >= hm.width ||
-                    ny >= hm.height ||
-                    hm.mask(nx, ny) !== hm.mask(x, y) ||
-                    isProtected(nx, ny)
-                  )
-                    continue;
-                  const value = input[ny * hm.width + nx];
-                  let weight = Math.exp(
-                    -(dx * dx + dy * dy) / (2 * Math.max(0.5, radius / 2) ** 2),
-                  );
-                  if (operation.method !== "gaussian")
-                    weight *= Math.exp(
-                      -(
-                        ((value - old) / (operation.edgeThreshold ?? 0.5)) **
-                        2
-                      ) / 2,
-                    );
-                  sum += value * weight;
-                  total += weight;
-                }
-              next = total ? sum / total : old;
-            }
-            output[i] = old + (next - old) * w;
-          }
-        input = output;
-      }
-      for (let y = bounds.minY; y <= bounds.maxY; y++)
-        for (let x = bounds.minX; x <= bounds.maxX; x++) {
-          const i = y * hm.width + x;
-          if (input[i] !== read[i]) hm.setZ(x, y, input[i]);
-        }
-      continue;
-    }
-    if (op.op.startsWith("texture.")) {
-      const operation = op as Extract<
-        TerrainOperation,
-        { op: `texture.${string}` }
-      >;
-      const masks = state.masks;
-      if (!masks || !state.syncTextures)
-        throw new Error("TEXTURE_COMPONENTS_REQUIRED");
-      textureTouched = true;
-      const bounds = brushBounds(operation.area, state, true);
-      textureBounds = unionBounds(textureBounds, bounds);
-      const slots = new Map(
-        state.descriptor.textures
-          .filter((t) => t.id)
-          .map((t) => [`${Math.floor(t.slot / 8)}:${t.id}`, t.slot]),
-      );
-      const previous =
-        operation.op === "texture.smooth"
-          ? new TextureMasks(Buffer.from(masks.bytes))
-          : undefined;
-      for (let y = bounds.minY; y <= bounds.maxY; y++)
-        for (let x = bounds.minX; x <= bounds.maxX; x++) {
-          const gx = (x + 0.5) / 8,
-            gy = (y + 0.5) / 8;
-          const p = {
-            x: gx * state.descriptor.scale[0] + state.descriptor.offset[0],
-            y: gy * state.descriptor.scale[1] + state.descriptor.offset[1],
-          };
-          let weight = operationWeight(operation.op === "texture.blend" && operation.strength === undefined ? { ...operation, strength: 0.5 } : operation, p);
-          if('pattern' in operation&&operation.pattern)weight*=materialPatternWeight(p,operation.pattern);
-          if (!weight) continue;
-          const sample = state.heights.sample(p);
-          if (sample.mask === 0 || state.visibility?.atGrid((p.x - state.descriptor.offset[0]) / state.descriptor.scale[0], (p.y - state.descriptor.offset[1]) / state.descriptor.scale[1])) continue;
-          touches?.texture(x,y);
-          const set = state.descriptor.blockSet(gx, gy);
-          if (
-            !Number.isInteger(set) ||
-            set < 0 ||
-            set >= state.syncTextures.setCount
-          )
-            throw new Error("INVALID_BLOCK_TEXTURE_SET");
-          if (operation.op === "texture.smooth") {
-            const radius = operation.radius ?? 2;
-            const smoothed: number[] = [];
-            for (let layer = 0; layer < 8; layer++) {
-              let sum = 0,
-                n = 0;
-              for (let dy = -radius; dy <= radius; dy++)
-                for (let dx = -radius; dx <= radius; dx++) {
-                  const nx = x + dx,
-                    ny = y + dy;
-                  if (
-                    nx < 0 ||
-                    ny < 0 ||
-                    nx >= masks.width ||
-                    ny >= masks.height ||
-                    state.descriptor.blockSet(
-                      (nx + 0.5) / 8,
-                      (ny + 0.5) / 8,
-                    ) !== set
-                  )
-                    continue;
-                  sum += previous!.get(nx, ny, layer);
-                  n++;
-                }
-              smoothed.push(
-                previous!.get(x, y, layer) * (1 - weight) + (sum / n) * weight,
-              );
-            }
-            masks.setWeights(x, y, smoothed);
-            continue;
-          }
-          let texture: string | undefined;
-          if (operation.op === "texture.paint_rules")
-            texture = operation.rules.find(
-              (r) =>
-                (r.minHeight === undefined || sample.height >= r.minHeight) &&
-                (r.maxHeight === undefined || sample.height <= r.maxHeight) &&
-                (r.minSlope === undefined || sample.slope >= r.minSlope) &&
-                (r.maxSlope === undefined || sample.slope <= r.maxSlope),
-            )?.texture;
-          else texture = operation.texture;
-          if (!texture) continue;
-          const slot = slots.get(`${set}:${texture}`);
-          if (slot === undefined)
-            throw new Error(
-              `TEXTURE_NOT_IN_ACTIVE_PALETTE: ${texture} in texture set ${set}`,
-            );
-          if (operation.op === "texture.replace") {
-            const oldSlot = slots.get(`${set}:${operation.fromTexture}`);
-            if (oldSlot === undefined) continue;
-            masks.replace(x, y, oldSlot % 8, slot % 8, weight);
-            continue;
-          }
-          masks.paint(x, y, slot % 8, weight);
-        }
-    }
+    continue;
   }
+  if ("area" in op && op.area) bounded(op.area, state);
+  if (op.op === "surface.hide" || op.op === "surface.show") {
+    const visibility = state.visibility;
+    if (!visibility)
+      throw new Error("VISIBILITY_COMPONENT_UNSUPPORTED: requires dimension-matched LFCT v102");
+    const hidden = op.op === "surface.hide";
+    if (op.cells) {
+      for (const cell of op.cells) visibility.setHidden(cell.x, cell.y, hidden);
+    } else if (op.area) {
+      const bounds = brushBounds(op.area, state);
+      // Cell centers, rather than height vertices, define the boolean visibility brush.
+      const b = areaBounds(op.area),
+        d = state.descriptor;
+      const minX = Math.max(0, Math.floor((b.minX - d.offset[0]) / d.scale[0]));
+      const minY = Math.max(0, Math.floor((b.minY - d.offset[1]) / d.scale[1]));
+      for (let y = minY; y <= Math.min(visibility.height - 1, bounds.maxY); y++)
+        for (let x = minX; x <= Math.min(visibility.width - 1, bounds.maxX); x++) {
+          const point = {
+            x: d.offset[0] + (x + 0.5) * d.scale[0],
+            y: d.offset[1] + (y + 0.5) * d.scale[1],
+          };
+          if (areaWeight(op.area, point) > 0) visibility.setHidden(x, y, hidden);
+        }
+    }
+    protection.fill(0);
+    continue;
+  }
+  if (op.op === "stamp.apply") throw new Error("STAMP_REQUIRES_WORKSPACE_RESOLUTION");
+  if (
+    op.op === "cliff.paint" ||
+    op.op === "cliff.repair" ||
+    op.op === "ramp.create" ||
+    op.op === "ramp.remove" ||
+    op.op === "ramp.repair"
+  ) {
+    flushHeightSync();
+    editNativeGeometry(state, op, touches?.nativeGeometry?.bind(touches));
+    nativeGeometryTouched = true;
+    if (!issues.some((i) => i.code === "NATIVE_NAVIGATION_NOT_REBUILT"))
+      issues.push({
+        severity: "warning",
+        code: "NATIVE_NAVIGATION_NOT_REBUILT",
+        message:
+          "Native geometry components changed; engine navigation/collision caches were not rebuilt. CellAttribute paint alone does not prove valid placement or traversal. Run exact-archive ground tests before accepting this terrain.",
+      });
+    protection.fill(0);
+    continue;
+  }
+  if (op.op === "pathing.paint")
+    throw new Error(
+      "NATIVE_TERRAIN_OPERATION_UNAVAILABLE: use terrain.pathing.paint or terrain.modkit.plan for CellAttribute masks",
+    );
+  if (op.op === "palette.update") {
+    if (!state.syncTextures) throw new Error("SYNC_TEXTURE_COMPONENT_REQUIRED");
+    const source = state.descriptor.replaceTextures(op.replacements);
+    state.sources.set("t3Terrain.xml", Buffer.from(source));
+    state.sources.set("t3SyncTextureInfo", state.syncTextures.rename(op.replacements));
+    state.descriptor = new TerrainDescriptor(source);
+    state.heights = new HeightMap(state.heights.bytes, state.descriptor);
+    state.syncTextures = new SyncTextureInfo(state.sources.get("t3SyncTextureInfo")!);
+    continue;
+  }
+  if (op.op === "lighting.assign" || op.op === "lighting.preset") {
+    const name = op.op === "lighting.assign" ? "TerrainData.xml" : "LightData.xml";
+    const file = `Base.SC2Data/GameData/${name}`;
+    const catalog = new LightingCatalog(
+      new TextDecoder("utf-8", { fatal: true }).decode(
+        state.sources.get(file)?.length
+          ? state.sources.get(file)!
+          : Buffer.from("<Catalog></Catalog>"),
+      ),
+      op.op === "lighting.assign" ? "CTerrain" : "CLight",
+    );
+    const tileSet = state.descriptor.heightMap.attrs.tileSet;
+    if (op.op === "lighting.assign" && !tileSet) throw new Error("MAP_TILESET_REQUIRED");
+    if (
+      op.op === "lighting.assign" &&
+      state.sources.get("Base.SC2Data/GameData/LightData.xml")?.length
+    )
+      state.sources.set(
+        "Base.SC2Data/GameData.xml",
+        Buffer.from(
+          gameDataIndexWithCatalog(
+            state.sources.get("Base.SC2Data/GameData.xml")?.toString("utf8") ?? "",
+            "GameData/LightData.xml",
+          ),
+        ),
+      );
+    const next = op.op === "lighting.assign" ? catalog.bind(tileSet, op.id) : catalog.patch(op);
+    state.sources.set(file, Buffer.from(next));
+    state.sources.set(
+      "Base.SC2Data/GameData.xml",
+      Buffer.from(
+        gameDataIndexWithCatalog(
+          state.sources.get("Base.SC2Data/GameData.xml")?.toString("utf8") ?? "",
+          `GameData/${name}`,
+        ),
+      ),
+    );
+    state.sources.set(
+      "ComponentList.SC2Components",
+      Buffer.from(
+        componentListWithGameData(
+          state.sources.get("ComponentList.SC2Components")?.toString("utf8") ?? "",
+        ),
+      ),
+    );
+    issues.push({
+      severity: "warning",
+      code: "LIGHTING_EDITOR_NOT_RUN",
+      message:
+        "Native catalog lighting binding edited; Editor/game visual acceptance has not been run. Preset edits affect every reference to that id.",
+    });
+    continue;
+  }
+  if (op.op === "water.material") {
+    const source =
+      state.waterCatalog?.source ?? '<?xml version="1.0" encoding="utf-8"?>\n<Catalog></Catalog>\n';
+    const next = new WaterCatalog(source).patch(op, true);
+    state.waterCatalog = new WaterCatalog(next);
+    state.sources.set("Base.SC2Data/GameData/WaterData.xml", Buffer.from(next));
+    state.sources.set(
+      "Base.SC2Data/GameData.xml",
+      Buffer.from(
+        gameDataIndexWithCatalog(
+          state.sources.get("Base.SC2Data/GameData.xml")?.toString("utf8") ?? "",
+          "GameData/WaterData.xml",
+        ),
+      ),
+    );
+    state.sources.set(
+      "ComponentList.SC2Components",
+      Buffer.from(
+        componentListWithGameData(
+          state.sources.get("ComponentList.SC2Components")?.toString("utf8") ?? "",
+        ),
+      ),
+    );
+    issues.push({
+      severity: "warning",
+      code: "WATER_MATERIAL_SHARED",
+      message: `CWater ${op.id} settings affect all rectangles using this template; use a new id with parent for isolated settings.`,
+    });
+    continue;
+  }
+  if (op.op === "water.create" || op.op === "water.update" || op.op === "water.remove") {
+    if (!state.water) {
+      if (op.op !== "water.create" || !op.template) throw new Error("WATER_COMPONENT_REQUIRED");
+      const empty = Buffer.alloc(32);
+      empty.write("WATR");
+      empty.writeUInt32LE(110, 4);
+      state.water = new WaterEntries(empty);
+    }
+    const bytes =
+      op.op === "water.remove"
+        ? state.water.edit("remove", op.index)
+        : op.op === "water.create"
+          ? state.water.edit("create", op.sourceIndex ?? 0, op.area, op.template)
+          : state.water.edit("update", op.index, op.area, op.template);
+    state.sources.set("t3Water", bytes);
+    state.water = new WaterEntries(bytes);
+    if (
+      op.op !== "water.remove" &&
+      state.sources.get("Base.SC2Data/GameData/WaterData.xml")?.length
+    ) {
+      state.sources.set(
+        "Base.SC2Data/GameData.xml",
+        Buffer.from(
+          gameDataIndexWithCatalog(
+            state.sources.get("Base.SC2Data/GameData.xml")?.toString("utf8") ?? "",
+            "GameData/WaterData.xml",
+          ),
+        ),
+      );
+      state.sources.set(
+        "ComponentList.SC2Components",
+        Buffer.from(
+          componentListWithGameData(
+            state.sources.get("ComponentList.SC2Components")?.toString("utf8") ?? "",
+          ),
+        ),
+      );
+    }
+    issues.push({
+      severity: "warning",
+      code: "WATER_TEMPLATE_LEVEL",
+      message:
+        "Water inherits all settings and level from its existing template; custom liquid height is not decoded.",
+    });
+    continue;
+  }
+  if (op.op.startsWith("height.")) {
+    const operation = op as Extract<TerrainOperation, { op: `height.${string}` }>,
+      hm = state.heights;
+    if (!state.sync) throw new Error("SYNC_HEIGHT_COMPONENT_REQUIRED");
+    pendingHeightBaseline ??= new HeightMap(Buffer.from(state.heights.bytes), state.descriptor);
+    heightTouched = true;
+    const bounds = brushBounds(operation.area, state);
+    heightBounds = unionBounds(heightBounds, bounds);
+    pendingHeightBounds = unionBounds(pendingHeightBounds, bounds);
+    // Only the brush and its sampling halo are read. Smooth iterations change
+    // the brush itself; the surrounding halo stays fixed, so one radius is
+    // sufficient even for multiple iterations and protected cells.
+    const halo = operation.op === "height.smooth" ? (operation.radius ?? 2) : 0;
+    const readMinX = Math.max(0, bounds.minX - halo),
+      readMinY = Math.max(0, bounds.minY - halo);
+    const readWidth = Math.max(0, Math.min(hm.width - 1, bounds.maxX + halo) - readMinX + 1);
+    const readHeight = Math.max(0, Math.min(hm.height - 1, bounds.maxY + halo) - readMinY + 1);
+    const readOffset = readMinY * readWidth + readMinX;
+    const read = Float64Array.from({ length: readWidth * readHeight }, (_, i) =>
+      hm.z(readMinX + (i % readWidth), readMinY + Math.floor(i / readWidth)),
+    );
+    const values: number[] = [];
+    if (
+      (operation.op === "height.flatten" || operation.op === "height.set") &&
+      operation.height === "currentMedian"
+    )
+      for (let y = bounds.minY; y <= bounds.maxY; y++)
+        for (let x = bounds.minX; x <= bounds.maxX; x++)
+          if (operationWeight(operation, hm.point(x, y)) > 0 && !isProtected(x, y))
+            values.push(read[y * readWidth + x - readOffset]);
+    const target =
+      operation.op === "height.flatten" || operation.op === "height.set"
+        ? operation.height === "currentMedian"
+          ? median(values)
+          : operation.height
+        : undefined;
+    const iterations = operation.op === "height.smooth" ? (operation.iterations ?? 1) : 1;
+    let input = read;
+    for (let iteration = 0; iteration < iterations; iteration++) {
+      const output = Float64Array.from(input);
+      for (let y = bounds.minY; y <= bounds.maxY; y++)
+        for (let x = bounds.minX; x <= bounds.maxX; x++) {
+          const p = hm.point(x, y),
+            w = operationWeight(operation, p);
+          if (!w) continue;
+          if (isProtected(x, y)) {
+            protectedCount++;
+            continue;
+          }
+          const i = y * readWidth + x - readOffset,
+            old = input[i];
+          touches?.height(x, y);
+          let next = old;
+          if (operation.op === "height.raise" || operation.op === "height.lower")
+            next = old + operation.amount * (operation.op === "height.lower" ? -1 : 1);
+          else if (operation.op === "height.set" || operation.op === "height.flatten")
+            next = target!;
+          else if (operation.op === "height.noise")
+            next =
+              old +
+              valueNoise(
+                p.x / (operation.wavelength ?? 8),
+                p.y / (operation.wavelength ?? 8),
+                operation.seed ?? 1,
+              ) *
+                operation.amplitude;
+          else if (operation.op === "height.slope") {
+            const dx = operation.to.x - operation.from.x,
+              dy = operation.to.y - operation.from.y,
+              n = dx * dx + dy * dy;
+            if (!n) throw new Error("SLOPE_ENDPOINTS_COINCIDE");
+            const t = Math.max(
+              0,
+              Math.min(1, ((p.x - operation.from.x) * dx + (p.y - operation.from.y) * dy) / n),
+            );
+            next = operation.fromHeight + (operation.toHeight - operation.fromHeight) * t;
+          } else if (operation.op === "height.smooth") {
+            const radius = operation.radius ?? 2;
+            let sum = 0,
+              total = 0;
+            for (let dy = -radius; dy <= radius; dy++)
+              for (let dx = -radius; dx <= radius; dx++) {
+                const nx = x + dx,
+                  ny = y + dy;
+                if (
+                  nx < 0 ||
+                  ny < 0 ||
+                  nx >= hm.width ||
+                  ny >= hm.height ||
+                  hm.mask(nx, ny) !== hm.mask(x, y) ||
+                  isProtected(nx, ny)
+                )
+                  continue;
+                const value = input[ny * readWidth + nx - readOffset];
+                let weight = Math.exp(-(dx * dx + dy * dy) / (2 * Math.max(0.5, radius / 2) ** 2));
+                if (operation.method !== "gaussian")
+                  weight *= Math.exp(
+                    -(((value - old) / (operation.edgeThreshold ?? 0.5)) ** 2) / 2,
+                  );
+                sum += value * weight;
+                total += weight;
+              }
+            next = total ? sum / total : old;
+          }
+          output[i] = old + (next - old) * w;
+        }
+      input = output;
+    }
+    for (let y = bounds.minY; y <= bounds.maxY; y++)
+      for (let x = bounds.minX; x <= bounds.maxX; x++) {
+        const i = y * readWidth + x - readOffset;
+        if (input[i] !== read[i]) hm.setZ(x, y, input[i]);
+      }
+    continue;
+  }
+  if (op.op.startsWith("texture.")) {
+    const operation = op as Extract<TerrainOperation, { op: `texture.${string}` }>;
+    const masks = state.masks;
+    if (!masks || !state.syncTextures) throw new Error("TEXTURE_COMPONENTS_REQUIRED");
+    textureTouched = true;
+    const bounds = brushBounds(operation.area, state, true);
+    textureBounds = unionBounds(textureBounds, bounds);
+    const slots = new Map(
+      state.descriptor.textures
+        .filter((t) => t.id)
+        .map((t) => [`${Math.floor(t.slot / 8)}:${t.id}`, t.slot]),
+    );
+    const previous =
+      operation.op === "texture.smooth" ? new TextureMasks(Buffer.from(masks.bytes)) : undefined;
+    for (let y = bounds.minY; y <= bounds.maxY; y++)
+      for (let x = bounds.minX; x <= bounds.maxX; x++) {
+        const gx = (x + 0.5) / 8,
+          gy = (y + 0.5) / 8;
+        const p = {
+          x: gx * state.descriptor.scale[0] + state.descriptor.offset[0],
+          y: gy * state.descriptor.scale[1] + state.descriptor.offset[1],
+        };
+        let weight = operationWeight(
+          operation.op === "texture.blend" && operation.strength === undefined
+            ? { ...operation, strength: 0.5 }
+            : operation,
+          p,
+        );
+        if ("pattern" in operation && operation.pattern)
+          weight *= materialPatternWeight(p, operation.pattern);
+        if (!weight) continue;
+        const sample = state.heights.sample(p);
+        if (
+          sample.mask === 0 ||
+          state.visibility?.atGrid(
+            (p.x - state.descriptor.offset[0]) / state.descriptor.scale[0],
+            (p.y - state.descriptor.offset[1]) / state.descriptor.scale[1],
+          )
+        )
+          continue;
+        touches?.texture(x, y);
+        const set = state.descriptor.blockSet(gx, gy);
+        if (!Number.isInteger(set) || set < 0 || set >= state.syncTextures.setCount)
+          throw new Error("INVALID_BLOCK_TEXTURE_SET");
+        if (operation.op === "texture.smooth") {
+          const radius = operation.radius ?? 2;
+          const smoothed: number[] = [];
+          for (let layer = 0; layer < 8; layer++) {
+            let sum = 0,
+              n = 0;
+            for (let dy = -radius; dy <= radius; dy++)
+              for (let dx = -radius; dx <= radius; dx++) {
+                const nx = x + dx,
+                  ny = y + dy;
+                if (
+                  nx < 0 ||
+                  ny < 0 ||
+                  nx >= masks.width ||
+                  ny >= masks.height ||
+                  state.descriptor.blockSet((nx + 0.5) / 8, (ny + 0.5) / 8) !== set
+                )
+                  continue;
+                sum += previous!.get(nx, ny, layer);
+                n++;
+              }
+            smoothed.push(previous!.get(x, y, layer) * (1 - weight) + (sum / n) * weight);
+          }
+          masks.setWeights(x, y, smoothed);
+          continue;
+        }
+        let texture: string | undefined;
+        if (operation.op === "texture.paint_rules")
+          texture = operation.rules.find(
+            (r) =>
+              (r.minHeight === undefined || sample.height >= r.minHeight) &&
+              (r.maxHeight === undefined || sample.height <= r.maxHeight) &&
+              (r.minSlope === undefined || sample.slope >= r.minSlope) &&
+              (r.maxSlope === undefined || sample.slope <= r.maxSlope),
+          )?.texture;
+        else texture = operation.texture;
+        if (!texture) continue;
+        const slot = slots.get(`${set}:${texture}`);
+        if (slot === undefined)
+          throw new Error(`TEXTURE_NOT_IN_ACTIVE_PALETTE: ${texture} in texture set ${set}`);
+        if (operation.op === "texture.replace") {
+          const oldSlot = slots.get(`${set}:${operation.fromTexture}`);
+          if (oldSlot === undefined) continue;
+          masks.replace(x, y, oldSlot % 8, slot % 8, weight);
+          continue;
+        }
+        masks.paint(x, y, slot % 8, weight);
+      }
+  }
+}
   flushHeightSync();
   let changedVertices = 0,
     changedTexturePixels = 0;

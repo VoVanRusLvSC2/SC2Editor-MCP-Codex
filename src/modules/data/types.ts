@@ -92,17 +92,54 @@ export interface DataTextureVitalLayerSpec {
 export type DataObjectSelector = string | { id: string; ctype?: string; domain?: string };
 
 export type DataOperation =
-  | ({op:'recipe.unitAbilityAnimation'} & import('./unitAnimations.js').UnitAbilityAnimationRecipe)
-  | ({op:'recipe.veterancy'} & import('./veterancyRecipe.js').VeterancyRecipe)
-  | ({op:'recipe.xpSearch'} & import('./xpSearchRecipe.js').XPSearchRecipe)
-  | ({op:'recipe.learn'} & import('./learnRecipe.js').LearnRecipe)
-  | ({op:'recipe.instantAbility'} & import('./abilityRecipes.js').InstantAbilityRecipe)
-  | ({op:'recipe.targetAbility'} & import('./abilityRecipes.js').TargetAbilityRecipe)
-  | ({op:'recipe.projectileEffect'} & import('./projectileRecipe.js').ProjectileEffectRecipe)
-  | ({op:'recipe.abilityCharges'} & import('./abilityCharges.js').AbilityChargesRecipe)
-  | { op:"recipe.unitActor"; id:string; unit:string; sourceActor:string; model:string; replace?:boolean; scale?:number }
-  | { op:"recipe.effectModel"; id:string; effect:string; model:string; at?:"Caster"|"Target"|"Effect"|"Source"; event?:"Start"|"Stop"; stopEffect?:string; stopEvent?:"Start"|"Stop"; orphanPolicy?:"keep"|"stop"; host?:"_Selectable"; inheritScale?:boolean; scale?:number; siteOp?:string; replace?:boolean }
-  | { op: "object.create"; as?: string; ctype: string; id: string; parent?: string; attrs?: Record<string, DataScalar>; fields?: DataNativeFieldSpec[] }
+  | ({ op: "recipe.unitConfigure" } & import("./configureRecipes.js").UnitConfigureRecipe)
+  | ({ op: "recipe.spellConfigure" } & import("./configureRecipes.js").SpellConfigureRecipe)
+  | ({ op: "recipe.spell" } & import("./spellRecipe.js").SpellRecipe)
+  | ({ op: "recipe.unitCopy" } & import("./unitCopyRecipe.js").UnitCopyRecipe)
+  | ({
+      op: "recipe.unitAbilityAnimation";
+    } & import("./unitAnimations.js").UnitAbilityAnimationRecipe)
+  | ({ op: "recipe.veterancy" } & import("./veterancyRecipe.js").VeterancyRecipe)
+  | ({ op: "recipe.xpSearch" } & import("./xpSearchRecipe.js").XPSearchRecipe)
+  | ({ op: "recipe.learn" } & import("./learnRecipe.js").LearnRecipe)
+  | ({ op: "recipe.instantAbility" } & import("./abilityRecipes.js").InstantAbilityRecipe)
+  | ({ op: "recipe.targetAbility" } & import("./abilityRecipes.js").TargetAbilityRecipe)
+  | ({ op: "recipe.projectileEffect" } & import("./projectileRecipe.js").ProjectileEffectRecipe)
+  | ({ op: "recipe.abilityCharges" } & import("./abilityCharges.js").AbilityChargesRecipe)
+  | {
+      op: "recipe.unitActor";
+      id: string;
+      unit: string;
+      sourceActor: string;
+      model: string;
+      replace?: boolean;
+      scale?: number;
+    }
+  | {
+      op: "recipe.effectModel";
+      id: string;
+      effect: string;
+      model: string;
+      at?: "Caster" | "Target" | "Effect" | "Source";
+      event?: "Start" | "Stop";
+      stopEffect?: string;
+      stopEvent?: "Start" | "Stop";
+      orphanPolicy?: "keep" | "stop";
+      host?: "_Selectable";
+      inheritScale?: boolean;
+      scale?: number;
+      siteOp?: string;
+      replace?: boolean;
+    }
+  | {
+      op: "object.create";
+      as?: string;
+      ctype: string;
+      id: string;
+      parent?: string;
+      attrs?: Record<string, DataScalar>;
+      fields?: DataNativeFieldSpec[];
+    }
   | { op: "object.clone"; as?: string; object: DataObjectSelector; id: string; parent?: string }
   | { op: "object.rename"; object: DataObjectSelector; newId: string; updateReferences?: boolean }
   | { op: "object.delete"; object: DataObjectSelector; force?: boolean }
@@ -112,10 +149,52 @@ export type DataOperation =
   | { op: "object.removeAttribute"; object: DataObjectSelector; attribute: string }
   | { op: "field.set"; object: DataObjectSelector; path: string; value: DataScalar }
   | { op: "field.setLink"; object: DataObjectSelector; path: string; link: string }
-  | { op: "field.setAttribute"; object: DataObjectSelector; path: string; attribute: string; value: DataScalar }
+  | {
+      op: "field.setAttribute";
+      object: DataObjectSelector;
+      path: string;
+      attribute: string;
+      value: DataScalar;
+    }
   | { op: "field.removeAttribute"; object: DataObjectSelector; path: string; attribute: string }
   | { op: "field.remove"; object: DataObjectSelector; path: string }
-  | { op: "array.append"; object: DataObjectSelector; path: string; value?: DataScalar; link?: string; attrs?: Record<string, DataScalar> }
-  | { op: "native.add"; object: DataObjectSelector; parentPath?: string; field: DataNativeFieldSpec }
-  | { op: "recipe.weaponBurn"; as?: string; id: string; carrierEffect: string; carrierCtype?: string; carrierPath?: string; impactEffect: string; duration: number; period: number; periodicDamage: number; visualModel: string; attachSite?: string; damageKind?: string; alignment?: string; editorCategories?: string }
-  | { op: "recipe.unitTextureByVital"; as?: string; id: string; unit: string; threshold: number; textures: DataTextureVitalLayerSpec[]; pollInterval?: number };
+  | {
+      op: "array.append";
+      object: DataObjectSelector;
+      path: string;
+      value?: DataScalar;
+      link?: string;
+      attrs?: Record<string, DataScalar>;
+    }
+  | {
+      op: "native.add";
+      object: DataObjectSelector;
+      parentPath?: string;
+      field: DataNativeFieldSpec;
+    }
+  | {
+      op: "recipe.weaponBurn";
+      as?: string;
+      id: string;
+      carrierEffect: string;
+      carrierCtype?: string;
+      carrierPath?: string;
+      impactEffect: string;
+      duration: number;
+      period: number;
+      periodicDamage: number;
+      visualModel: string;
+      attachSite?: string;
+      damageKind?: string;
+      alignment?: string;
+      editorCategories?: string;
+    }
+  | {
+      op: "recipe.unitTextureByVital";
+      as?: string;
+      id: string;
+      unit: string;
+      threshold: number;
+      textures: DataTextureVitalLayerSpec[];
+      pollInterval?: number;
+    };

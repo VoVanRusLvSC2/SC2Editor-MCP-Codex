@@ -16,6 +16,7 @@ import type { GenerateArgs } from "../terrain/recipes.js";
 import { commitFiles } from "../../core/fileTransactions.js";
 import {editorLoadFiles,prepareEditorLoad} from './editorLoad.js';
 import { inspectModExport } from "./modExport.js";
+import { preserveOpaqueFoundation, type PreservedFoundation } from './opaqueFoundation.js';
 
 const blueprintRegistry = ".sc2mcp-blueprints.json";
 const blueprintTerrainFiles = ["t3Terrain.xml", "t3HeightMap", "t3TextureMasks", "t3SyncHeightMap", "t3SyncCliffLevel", "t3SyncTextureInfo", "t3CellFlags", "t3HardTile", "t3FluffDoodad", "t3VertCol", "t3Water"];
@@ -74,7 +75,11 @@ export class MapWorkspace {
           }
           for(const type of ["info","mapi","terr"]) if(!components.some(c => c.type === type)) issues.push({ severity:"error",code:"COMPONENT_ROOT_MISSING",message:type });
           for(const c of components.filter(c => ["info","mapi","terr"].includes(c.type))) {
-            if(!filenames.has(c.root)) issues.push({ severity:"error",code:"DECLARED_COMPONENT_MISSING",message:`${c.type}: ${c.root}` });
+            // The native Editor also stores the terrain's logical root without
+            // its .xml suffix. Keep that declaration; do not guess extensions
+            // for arbitrary component types or root names.
+            const nativeTerrainRoot=c.type==='terr'&&c.root==='t3Terrain'&&filenames.has('t3Terrain.xml');
+            if(!filenames.has(c.root)&&!nativeTerrainRoot) issues.push({ severity:"error",code:"DECLARED_COMPONENT_MISSING",message:`${c.type}: ${c.root}` });
           }
           for(const c of components.filter(c => !["info","mapi","terr"].includes(c.type))) {
             if(!filenames.has(c.root)) issues.push({ severity:"warning",code:"LOGICAL_COMPONENT_ROOT_UNRESOLVED",message:`${c.type}: ${c.root}; logical/optimized roots are preserved without guessing a direct file binding` });
@@ -268,7 +273,7 @@ export class MapWorkspace {
     if(JSON.stringify(await directoryManifest(destination)) !== JSON.stringify(files)) throw new Error("STALE_MAP_SNAPSHOT");
     return metadata;
   }
-  async export(directory: string, archive: string, dryRun = true, backup = true) {
+  async export(directory: string, archive: string, dryRun = true, backup = true, preserveUnsupportedFoundation?: PreservedFoundation) {
     const source = this.root(directory), target = this.root(archive);
     if(!/\.(SC2Map|SC2Mod)$/i.test(target)) throw new Error("INVALID_MAP_ARCHIVE_EXTENSION");
     // Root workspaces export into a reserved output tree excluded from components.
@@ -282,13 +287,19 @@ export class MapWorkspace {
         throw new Error("DOCUMENT_EXPORT_KIND_MISMATCH: a mod requires .SC2Mod");
     }
     const inspection = kind === "mod" ? await inspectModExport(source,await directoryManifest(source)) : await this.inspect(directory);
-    if(!inspection.valid) throw new Error("INVALID_MAP_FOUNDATION: " + JSON.stringify("issues" in inspection ? inspection.issues : []));
+    let preservedFoundation: ReturnType<typeof preserveOpaqueFoundation> | undefined;
+    if(!inspection.valid) {
+      if(kind === 'map' && preserveUnsupportedFoundation && 'issues' in inspection)
+        preservedFoundation = preserveOpaqueFoundation(inspection.files, (inspection as Awaited<ReturnType<MapWorkspace['inspect']>>).issues, preserveUnsupportedFoundation);
+      else throw new Error("INVALID_MAP_FOUNDATION: " + JSON.stringify("issues" in inspection ? inspection.issues : []));
+    } else if(preserveUnsupportedFoundation) throw Error('OPAQUE_FOUNDATION_NOT_REQUIRED');
     const prepareLoad = async (root: string) => {
       if(kind === "mod") return { changed:[] as string[],objects:0,addedPreloads:0,rendering:"NOT_APPLICABLE_MOD",next:new Map<string,Buffer>() };
+      if(preservedFoundation) return { changed:[] as string[],objects:0,addedPreloads:0,rendering:"NOT_VERIFIED_LEGACY_LOAD_COMPONENTS_PRESERVED",next:new Map<string,Buffer>() };
       const inputs = new Map(await Promise.all(editorLoadFiles.map(async file => [file,await fs.readFile(path.join(root,file)).catch(e => { if(e.code !== "ENOENT") throw e; return Buffer.alloc(0); })] as const)));
       return prepareEditorLoad(inputs);
     };
-    if(dryRun){const load=await prepareLoad(source);return {dryRun:true,directory,archive,kind,entryCount:inspection.files.length,validation:inspection.validationScope,editorLoad:{changed:load.changed,objects:load.objects,addedPreloads:load.addedPreloads,rendering:load.rendering}};}
+    if(dryRun){const load=await prepareLoad(source);return {dryRun:true,directory,archive,kind,entryCount:inspection.files.length,validation:inspection.validationScope,preservedFoundation,editorLoad:{changed:load.changed,objects:load.objects,addedPreloads:load.addedPreloads,rendering:load.rendering}};}
     return this.workspace.transactions.run(async () => {
       this.assertNoDrafts(directory);
       const staging = await fs.mkdtemp(path.join(os.tmpdir(),"sc2mcp-map-export-"));
@@ -301,7 +312,7 @@ export class MapWorkspace {
           if(JSON.stringify(await directoryManifest(source)) !== JSON.stringify(inspection.files)) throw new Error("STALE_MAP_EXPORT");
           await assertSnapshots(file => file,new Map([[path.join(source,archiveMetadataFile),meta]]));
         } });
-        return { ...result,componentDirectory:source,dryRun:false,kind,validation:inspection.validationScope,editorLoad:{changed:load.changed,objects:load.objects,addedPreloads:load.addedPreloads,rendering:load.rendering},editorValidation:"NOT_EXECUTED",runtimeValidation:"NOT_EXECUTED" };
+        return { ...result,componentDirectory:source,dryRun:false,kind,validation:inspection.validationScope,preservedFoundation,editorLoad:{changed:load.changed,objects:load.objects,addedPreloads:load.addedPreloads,rendering:load.rendering},editorValidation:"NOT_EXECUTED",runtimeValidation:"NOT_EXECUTED" };
       } finally { await fs.rm(staging,{ recursive:true,force:true }); }
     });
   }

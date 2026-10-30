@@ -24,6 +24,23 @@ test("lists and reads frames", () => {
   assert.equal(doc.getFrame("RootPanel").properties.Width, "500");
 });
 
+test("prepared frame paths and summaries follow every edit and cannot be changed by returned lists", () => {
+  const doc = new LayoutDocument(base),
+    list = doc.listFrames();
+  list[0].name = "Poison";
+  list.length = 0;
+  assert.equal(doc.listFrames()[0].name, "RootPanel");
+  doc.createFrame({ type: "Frame", name: "Child", parentPath: "RootPanel" });
+  assert.deepEqual(
+    doc.listFrames().map((frame) => frame.path),
+    ["RootPanel", "RootPanel/Child"],
+  );
+  doc.setSimpleProperty("RootPanel/Child", "Handle", "ChildHandle");
+  assert.equal(doc.listFrames()[1].handle, "ChildHandle");
+  doc.deleteFrame("RootPanel/Child");
+  assert.equal(doc.listFrames().length, 1);
+});
+
 test("creates button without rewriting unrelated XML", () => {
   const doc = new LayoutDocument(base);
   doc.createButton({

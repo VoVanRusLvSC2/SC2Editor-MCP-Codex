@@ -15,6 +15,9 @@ compatible; the historical source and license attribution are retained.
 
 Current agent workflow: [Authoring protocol](docs/AUTHORING_PROTOCOL.md), [compact commands](docs/MCP_AUTHORING_SCRIPT.md), and [trigger organization](docs/TRIGGER_ORGANIZATION_PROTOCOL.md). Galaxy is the default logic language. Terrain profiles and reference palettes are available through `terrain.catalog`, `terrain.style`, and `terrain.compose`. Maintained documentation is English.
 
+For grouped balance edits, bounded asset inspection and verified preparation reuse,
+see [authoring performance](docs/PERFORMANCE.md).
+
 The source includes the [authoring reference catalog](resources/authoring-catalog/README.md),
 [measured decor workflow](docs/DECOR_VISUAL_WORKFLOW.md), portable [agent rules](AGENTS.md)
 and three scoped [project skills](.agents/skills/README.md). These are runtime and

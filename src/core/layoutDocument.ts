@@ -100,6 +100,11 @@ function attrsToObject(attrs: XmlAttrs): XmlAttrs {
 
 export class LayoutDocument {
   private parsed: ParsedXml;
+  private preparedFrames?: {
+    parsed: ParsedXml;
+    paths: Map<string, XmlNode>;
+    summaries?: FrameSummary[];
+  };
 
   constructor(private sourceText: string) {
     this.parsed = scanXml(sourceText);
@@ -192,6 +197,7 @@ export class LayoutDocument {
   }
 
   private framePathMap(): Map<string, XmlNode> {
+    if (this.preparedFrames?.parsed === this.parsed) return this.preparedFrames.paths;
     const map = new Map<string, XmlNode>();
     const walk = (node: XmlNode, prefix: string) => {
       const name = this.frameName(node);
@@ -201,6 +207,7 @@ export class LayoutDocument {
       for (const child of this.frameChildren(node)) walk(child, path);
     };
     for (const frame of this.topFrames()) walk(frame, "");
+    this.preparedFrames = { parsed: this.parsed, paths: map };
     return map;
   }
 
@@ -228,7 +235,8 @@ export class LayoutDocument {
 
   listFrames(): FrameSummary[] {
     const map = this.framePathMap();
-    return [...map.entries()].map(([path, node]) => ({
+    const prepared = this.preparedFrames!;
+    prepared.summaries ??= [...map.entries()].map(([path, node]) => ({
       path,
       name: node.attrs.name ?? "",
       type: node.attrs.type ?? "Frame",
@@ -237,6 +245,7 @@ export class LayoutDocument {
       handle: this.simpleProperty(node, "Handle")?.val,
       children: this.frameChildren(node).length,
     }));
+    return prepared.summaries.map((frame) => ({ ...frame }));
   }
 
   queryFrames(query: {

@@ -91,7 +91,8 @@ export class ModkitIntegration {
       }
     };
     for(const root of this.dependencies())await dependency(root);
-    const revision=sha(JSON.stringify(entries.map(e=>[e.relative,sha(e.bytes)]))+sha(build)+JSON.stringify(dependencyState));
+    const contentManifest=entries.map(entry=>({relative:entry.relative,sha256:sha(entry.bytes)}));
+    const revision=sha(JSON.stringify(contentManifest.map(entry=>[entry.relative,entry.sha256]))+sha(build)+JSON.stringify(dependencyState));
     const packed=st.isFile(),map=packed?/\.SC2Map$/i.test(absolute):entries.some(e=>e.relative.toLowerCase()==='mapinfo');
     const target=this.workspace.resolveUserPath(path.join('.sc2mcp-modkit-cache','snapshots',revision,`Document.SC2${map?'Map':'Mod'}`));
     if(!existsSync(target)){
@@ -105,7 +106,7 @@ export class ModkitIntegration {
       }
     }
     // Never trust a previous partial/tampered cache as an immutable source snapshot.
-    for(const entry of entries){const file=this.workspace.resolveUserPath(packed?target:path.join(target,entry.relative));if(sha(await fs.readFile(file))!==sha(entry.bytes))throw Error('MODKIT_SNAPSHOT_INTEGRITY_MISMATCH');}
+    for(const entry of contentManifest){const file=this.workspace.resolveUserPath(packed?target:path.join(target,entry.relative));if(sha(await fs.readFile(file))!==entry.sha256)throw Error('MODKIT_SNAPSHOT_INTEGRITY_MISMATCH');}
     return {target,revision,source:absolute,files:entries.length,inputBytes:entries.reduce((n,e)=>n+e.bytes.length,0)};
   }
   async dataQuery(request:{directory:string;view:'entities'|'authoring'|'ids'|'exists';refs?:{namespace:string;entityId:string}[];namespace?:string;fields?:string[];offset:number;limit:number;locales:string[]}):Promise<JsonRecord>{

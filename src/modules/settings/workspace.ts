@@ -48,66 +48,154 @@ export class SettingsWorkspace {
     async list(directory: string, kind: "attributes" | "variants", offset = 0, limit = 50) { const doc = await this.attributes(directory), all = doc?.inspect()[kind] ?? []; return { directory, total: all.length, offset, items: all.slice(offset, offset + limit), nextOffset: offset + limit < all.length ? offset + limit : null }; }
     async get(directory: string, kind: "attribute" | "variant", id: number) { const doc = await this.attributes(directory); if (!doc)
         throw new Error("ATTRIBUTES_MISSING"); return kind === "attribute" ? doc.attributeDetails(id) : doc.variantDetails(id); }
-    async plan(request: {
-        directory?: string;
-        operations: SettingsOperation[];
-    }) {
-        const { directory, operations } = settingsPlanSchema.parse(request);
-        this.noDrafts(directory);
-        const root = this.workspace.resolveUserPath(directory), manifest = await directoryManifest(root), mapFile = this.file(directory, "MapInfo"), attributeFile = this.file(directory, "Attributes"), componentFile = this.file(directory, "ComponentList.SC2Components");
-        const initial = new Map<string, Buffer>();
-        for (const file of [mapFile, attributeFile, componentFile])
-            initial.set(file, (await this.workspace.binary.read(file, false)).bytes);
-        let map = initial.get(mapFile)!, attributes = initial.get(attributeFile)!;
-        new PlayersDocument(map);
-        for (const op of operations) {
-            if(op.op==='player.create')map=new PlayersDocument(map).createPlayer(op);
-            else if(op.op==='starts.register'){
-                const objectFile=this.file(directory,'Objects'),objects=await this.workspace.binary.read(objectFile,false);
-                const {scanXml}=await import('../../core/xmlScanner.js');
-                const tree=scanXml(objects.bytes.toString('utf8'));
-                for(const id of op.objectIds)if(!tree.nodes.some(n=>n.tag==='ObjectPoint'&&Number(n.attrs.Id)===id&&n.attrs.Type==='StartLoc'))throw new Error('START_LOCATION_OBJECT_MISSING: '+id);
-                map=new PlayersDocument(map).registerStarts(op.objectIds);
-            }
-            else if (op.op === "player.set" || op.op === "options.set")
-                map = new PlayersDocument(map).patch(op);
-            else {
-                if (!attributes.length) {
-                    if (op.op !== "attribute.create")
-                        throw new Error("ATTRIBUTES_MISSING");
-                    attributes = Buffer.from('<?xml version="1.0" encoding="utf-8"?>\r\n<Attributes>\r\n    <DefaultVariants Value="0"/>\r\n</Attributes>');
-                }
-                attributes = Buffer.from(new AttributesDocument(decodeUtf8(attributes, "Attributes")).patch(op));
-            }
+    async plan(request: { directory?: string; operations: SettingsOperation[] }) {
+    const { directory, operations } = settingsPlanSchema.parse(request);
+    this.noDrafts(directory);
+    const root = this.workspace.resolveUserPath(directory),
+      manifest = await directoryManifest(root),
+      mapFile = this.file(directory, "MapInfo"),
+      attributeFile = this.file(directory, "Attributes"),
+      componentFile = this.file(directory, "ComponentList.SC2Components");
+    const initial = new Map<string, Buffer>();
+    for (const file of [mapFile, attributeFile, componentFile])
+      initial.set(file, (await this.workspace.binary.read(file, false)).bytes);
+    let map = initial.get(mapFile)!,
+      attributes = initial.get(attributeFile)!;
+    const editsMapInfo = operations.some(
+      (op) => op.op.startsWith("player.") || op.op === "starts.register" || op.op === "options.set",
+    );
+    if (editsMapInfo) new PlayersDocument(map);
+    for (let index = 0; index < operations.length; index++) {
+      const op = operations[index];
+      if (op.op === "player.create") map = new PlayersDocument(map).createPlayer(op);
+      else if (op.op === "starts.register") {
+        const objectFile = this.file(directory, "Objects"),
+          objects = await this.workspace.binary.read(objectFile, false);
+        const { scanXml } = await import("../../core/xmlScanner.js");
+        const tree = scanXml(objects.bytes.toString("utf8"));
+        for (const id of op.objectIds)
+          if (
+            !tree.nodes.some(
+              (n) =>
+                n.tag === "ObjectPoint" && Number(n.attrs.Id) === id && n.attrs.Type === "StartLoc",
+            )
+          )
+            throw new Error("START_LOCATION_OBJECT_MISSING: " + id);
+        map = new PlayersDocument(map).registerStarts(op.objectIds);
+      } else if (op.op === "player.set" || op.op === "options.set") {
+        const patches: Array<Extract<SettingsOperation, { op: "player.set" | "options.set" }>> = [
+          op,
+        ];
+        while (
+          operations[index + 1]?.op === "player.set" ||
+          operations[index + 1]?.op === "options.set"
+        )
+          patches.push(operations[++index] as typeof op);
+        map = new PlayersDocument(map).patchMany(patches);
+      } else {
+        if (op.op === "attributes.ensure") {
+          if (!attributes.length)
+            attributes = Buffer.from(
+              '<?xml version="1.0" encoding="utf-8"?>\r\n<Attributes><DefaultVariants Value="0"/></Attributes>\r\n',
+            );
+          new AttributesDocument(decodeUtf8(attributes, "Attributes"));
+          continue;
         }
-        const next = new Map<string, Buffer>();
-        if (!map.equals(initial.get(mapFile)!))
-            next.set(mapFile, map);
-        if (!attributes.equals(initial.get(attributeFile)!)) {
-            const doc = new AttributesDocument(decodeUtf8(attributes, "Attributes"));
-            for (const op of operations.filter((op): op is Extract<SettingsOperation, {
-                op: "attribute.create";
-            }> => op.op === "attribute.create"))
-                if (!doc.attributeDetails(op.id).values.length)
-                    throw new Error("NEW_ATTRIBUTE_REQUIRES_VALUES_IN_PLAN");
-            next.set(attributeFile, attributes);
-            const original = decodeUtf8(initial.get(componentFile)!, "ComponentList.SC2Components"), component = new SettingsXml(original, "Components"), declared = component.children(component.root).filter(n => n.attrs.Type === "attr");
-            if (declared.length > 1)
-                throw new Error("AMBIGUOUS_ATTRIBUTE_COMPONENT");
-            if (declared.length && original.slice(declared[0].startTagEnd, declared[0].endTagStart).trim() !== "Attributes")
-                throw new Error("CUSTOM_ATTRIBUTE_COMPONENT_PRESERVE_ONLY");
-            if (!declared.length)
-                next.set(componentFile, Buffer.from(component.insert(component.root, '<DataComponent Type="attr">Attributes</DataComponent>')));
+        if (!attributes.length) {
+          if (op.op !== "attribute.create") throw new Error("ATTRIBUTES_MISSING");
+          attributes = Buffer.from(
+            '<?xml version="1.0" encoding="utf-8"?>\r\n<Attributes>\r\n    <DefaultVariants Value="0"/>\r\n</Attributes>',
+          );
         }
-        const source = Object.fromEntries([...next.keys()].map(file => [file, bytesHash(initial.get(file)!)]));
-        if (JSON.stringify(await directoryManifest(root)) !== JSON.stringify(manifest))
-            throw new Error("STALE_SETTINGS_PLAN");
-        const id = "settings_" + bytesHash(Buffer.from(JSON.stringify({ directory, operations, manifest, after: [...next].map(([file, b]) => [file, bytesHash(b)]) }))).slice(0, 24);
-        this.plans.set(id, { id, directory, manifest, next, source, operations: structuredClone(operations) });
-        while (this.plans.size > 16)
-            this.plans.delete(this.plans.keys().next().value!);
-        return { id, directory, valid: true, operations, files: [...next].map(([file, b]) => ({ file, beforeSha256: source[file], afterSha256: bytesHash(b), bytes: b.length })), after: { players: new PlayersDocument(map).inspect(), attributes: attributes.length ? new AttributesDocument(decodeUtf8(attributes, "Attributes")).inspect() : undefined }, editorValidation: "NOT_EXECUTED" };
+        attributes = Buffer.from(
+          new AttributesDocument(decodeUtf8(attributes, "Attributes")).patch(op),
+        );
+      }
     }
+    const next = new Map<string, Buffer>();
+    if (!map.equals(initial.get(mapFile)!)) next.set(mapFile, map);
+    if (!attributes.equals(initial.get(attributeFile)!)) {
+      const doc = new AttributesDocument(decodeUtf8(attributes, "Attributes"));
+      for (const op of operations.filter(
+        (
+          op,
+        ): op is Extract<
+          SettingsOperation,
+          {
+            op: "attribute.create";
+          }
+        > => op.op === "attribute.create",
+      ))
+        if (!doc.attributeDetails(op.id).values.length)
+          throw new Error("NEW_ATTRIBUTE_REQUIRES_VALUES_IN_PLAN");
+      next.set(attributeFile, attributes);
+      const original = decodeUtf8(initial.get(componentFile)!, "ComponentList.SC2Components"),
+        component = new SettingsXml(original, "Components"),
+        declared = component.children(component.root).filter((n) => n.attrs.Type === "attr");
+      if (declared.length > 1) throw new Error("AMBIGUOUS_ATTRIBUTE_COMPONENT");
+      if (
+        declared.length &&
+        original.slice(declared[0].startTagEnd, declared[0].endTagStart).trim() !== "Attributes"
+      )
+        throw new Error("CUSTOM_ATTRIBUTE_COMPONENT_PRESERVE_ONLY");
+      if (!declared.length)
+        next.set(
+          componentFile,
+          Buffer.from(
+            component.insert(
+              component.root,
+              '<DataComponent Type="attr">Attributes</DataComponent>',
+            ),
+          ),
+        );
+    }
+    const source = Object.fromEntries(
+      [...next.keys()].map((file) => [file, bytesHash(initial.get(file)!)]),
+    );
+    if (JSON.stringify(await directoryManifest(root)) !== JSON.stringify(manifest))
+      throw new Error("STALE_SETTINGS_PLAN");
+    const id =
+      "settings_" +
+      bytesHash(
+        Buffer.from(
+          JSON.stringify({
+            directory,
+            operations,
+            manifest,
+            after: [...next].map(([file, b]) => [file, bytesHash(b)]),
+          }),
+        ),
+      ).slice(0, 24);
+    this.plans.set(id, {
+      id,
+      directory,
+      manifest,
+      next,
+      source,
+      operations: structuredClone(operations),
+    });
+    while (this.plans.size > 16) this.plans.delete(this.plans.keys().next().value!);
+    return {
+      id,
+      directory,
+      valid: true,
+      operations,
+      files: [...next].map(([file, b]) => ({
+        file,
+        beforeSha256: source[file],
+        afterSha256: bytesHash(b),
+        bytes: b.length,
+      })),
+      after: {
+        players: editsMapInfo ? new PlayersDocument(map).inspect() : undefined,
+        mapInfo: editsMapInfo ? "PARSED_AND_EDITED" : "UNCHANGED_NOT_PARSED",
+        attributes: attributes.length
+          ? new AttributesDocument(decodeUtf8(attributes, "Attributes")).inspect()
+          : undefined,
+      },
+      editorValidation: "NOT_EXECUTED",
+    };
+  }
     async apply(planId: string, options: ByteOptions = {}) {
         const plan = this.plans.get(planId);
         if (!plan)

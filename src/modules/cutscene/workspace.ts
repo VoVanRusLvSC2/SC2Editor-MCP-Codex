@@ -1,5 +1,4 @@
 import { internalWorkspaceDirectory } from "../../core/discoveryPaths.js";
-import { promises as fs } from "node:fs";
 import path from "node:path";
 import { createHash } from "node:crypto";
 import { CutsceneDocument } from "./document.js";
@@ -25,6 +24,7 @@ function composeNativeTime(value: string): string | undefined {
 }
 
 export class CutsceneWorkspace {
+  private readonly sceneListScope = {};
   readonly root: string;
   readonly workspace: Workspace;
   constructor(root: string | Workspace, readonly schema: CutsceneSchemaRegistry) {
@@ -38,17 +38,37 @@ export class CutsceneWorkspace {
   }
 
   async listFiles(): Promise<string[]> {
-    const files: string[] = [];
-    const walk = async (directory: string): Promise<void> => {
-      for (const entry of await fs.readdir(directory, { withFileTypes: true })) {
-        if (entry.name === "node_modules" || entry.name === "dist" || entry.name === "release" || internalWorkspaceDirectory(entry.name)) continue;
-        const full = path.join(directory, entry.name);
-        if (entry.isDirectory()) await walk(full);
-        else if (/\.(?:SC2Cutscene|StormCutscene)$/i.test(entry.name)) files.push(path.relative(this.root, full).replaceAll("\\", "/"));
-      }
-    };
-    await walk(this.root);
-    for (const file of this.workspace.draftFiles()) if (/\.(?:SC2Cutscene|StormCutscene)$/i.test(file) && !files.includes(file)) files.push(file);
+    const diskFiles = await this.workspace.prepareReadScope(this.sceneListScope, async () => {
+      const files: string[] = [];
+      const walk = async (directory: string): Promise<void> => {
+        const relevant = (entry: import("node:fs").Dirent) =>
+          !["node_modules", "dist", "release"].includes(entry.name) &&
+          !internalWorkspaceDirectory(entry.name) &&
+          (entry.isDirectory() || /\.(?:SC2Cutscene|StormCutscene)$/i.test(entry.name));
+        for (const entry of await this.workspace.readDirectory(
+          directory,
+          "cutscene-files",
+          relevant,
+        )) {
+          if (
+            entry.name === "node_modules" ||
+            entry.name === "dist" ||
+            entry.name === "release" ||
+            internalWorkspaceDirectory(entry.name)
+          )
+            continue;
+          const full = path.join(directory, entry.name);
+          if (entry.isDirectory()) await walk(full);
+          else if (/\.(?:SC2Cutscene|StormCutscene)$/i.test(entry.name))
+            files.push(path.relative(this.root, full).replaceAll("\\", "/"));
+        }
+      };
+      await walk(this.root);
+      return files;
+    });
+    const files = [...diskFiles];
+    for (const file of this.workspace.draftFiles())
+      if (/\.(?:SC2Cutscene|StormCutscene)$/i.test(file) && !files.includes(file)) files.push(file);
     return files.sort();
   }
 

@@ -1,10 +1,13 @@
 import type { DataNativeFieldSpec } from "./types.js";
+import { expandSpellRecipe, spellPreloads } from "./spellRecipe.js";
 import { visualRecipePreloads } from "./actorRecipes.js";
 import type { CatalogPreload } from "./projectileRecipe.js";
 import { reviewCardBinding, cardReviewSummary } from "./cardBindings.js";
 import { applyDataRecipe } from "./recipePlanner.js";
 import { DataCatalogRepository } from "./catalogRepository.js";
 import { DataReferenceGraph } from "./referenceGraph.js";
+import { CatalogObjectIndex } from "./catalogIndex.js";
+import { DataTiming } from "./timing.js";
 import { flattenDataFields, resolveEffectiveData } from "./effectiveData.js";
 import {
   normalizeCatalogPath as normalize,
@@ -23,6 +26,7 @@ import { scanXml } from "../../core/xmlScanner.js";
 import { DataDocument, referenceSchema } from "./document.js";
 import { DataSchemaRegistry } from "./schemaRegistry.js";
 import { validateDataDocuments } from "./validator.js";
+import { partitionExistingDataErrors } from "./validationBaseline.js";
 import { nativeClassObservations } from "./nativeClasses.js";
 import { unitAbilityAnimationRecipe } from "./unitAnimations.js";
 import type {
@@ -84,11 +88,15 @@ export class DataWorkspace {
   private referenceTokenResolver(objects: DataObject[]) {
     return this.referenceGraph.referenceTokenResolver(objects);
   }
-  private actorIssues(records: CatalogRecord[]) {
-    return this.referenceGraph.actorIssues(records);
+  private actorIssues(records: CatalogRecord[], preparedIndex?: CatalogObjectIndex) {
+    return this.referenceGraph.actorIssues(records, preparedIndex);
   }
-  references(records: CatalogRecord[], scope: "all" | "workspace" = "all") {
-    return this.referenceGraph.references(records, scope);
+  references(
+    records: CatalogRecord[],
+    scope: "all" | "workspace" = "all",
+    preparedIndex?: CatalogObjectIndex,
+  ) {
+    return this.referenceGraph.references(records, scope, preparedIndex);
   }
   private crossReferences() {
     return this.referenceGraph.crossReferences();
@@ -461,6 +469,10 @@ export class DataWorkspace {
         coverage: this.schema.coverage(),
       },
       operations: [
+        "recipe.unitConfigure",
+        "recipe.spellConfigure",
+        "recipe.unitCopy",
+        "recipe.spell",
         "object.create",
         "object.clone",
         "object.rename",
@@ -490,6 +502,36 @@ export class DataWorkspace {
         "recipe.unitAbilityAnimation",
       ],
       recipes: {
+        "recipe.unitConfigure": {
+          tool: "data.unit.configure",
+          updates: ["local Unit scalar fields", "optional local main Actor scale"],
+          limits:
+            "Explicit changes only; shared mechanics and animations preserved. Does not create missing units or Actors.",
+        },
+        "recipe.spellConfigure": {
+          tool: "data.spell.configure",
+          updates: ["compact spell damage/cost/cooldown/range", "burn timing"],
+          limits:
+            "Explicit local recipe graph and private cooldown required. Does not replace shape, targeting, cards or presentation.",
+        },
+        "recipe.unitCopy": {
+          tool: "data.unit.copy",
+          creates: ["derived CUnit", "independent main CActorUnit", "visual preloads"],
+          limits:
+            "Unique GenericUnit source profile only. Existing weapons/abilities/morphs remain shared. Creation-only; native playback untested.",
+        },
+        "recipe.spell": {
+          tool: "data.spell",
+          creates: [
+            "native damage/pulse/line/ring/burn graph",
+            "ability",
+            "derived Button",
+            "Model/Sound Actors",
+            "preloads",
+          ],
+          limits:
+            "Creation-only, exact active Model/Button IDs. Delay requires warningModel. Existing targeting/card/reference guards remain. Static validation is not native playback.",
+        },
         "recipe.learn": {
           tool: "data.hero.learn",
           requires:
@@ -808,11 +850,13 @@ export class DataWorkspace {
     stage?: boolean;
     backup?: boolean;
     expectedSha256?: Record<string, string>;
+    preserveExistingErrors?: { reason: string };
   }) {
+    const timing = new DataTiming();
     return this.workspace.withReadSet(async () => {
       if (!request.changes.length || request.changes.length > 48)
         throw new Error("DATA_BATCH_FILE_LIMIT");
-      if (request.changes.reduce((n, c) => n + c.operations.length, 0) > 500)
+      if (request.changes.reduce((n, c) => n + c.operations.length, 0) > 1000)
         throw new Error("DATA_BATCH_OPERATION_LIMIT");
       const targets = request.changes.map((c) => normalize(c.file));
       for (const target of targets) {
@@ -842,6 +886,13 @@ export class DataWorkspace {
           }
       let verdicts: Array<{ file: string; authoring: DataAuthoringVerdict }> = [],
         validation: DataValidationReport | undefined;
+      let validationDelta:
+        | {
+            reason: string;
+            retainedErrors: DataValidationReport["diagnostics"];
+            blockingErrors: DataValidationReport["diagnostics"];
+          }
+        | undefined;
       const transaction = await this.workspace.applyRawTransaction(
         files,
         async (sources) => {
@@ -1000,7 +1051,7 @@ export class DataWorkspace {
           let include = next.get(index) ?? "";
           for (const file of targets) include = gameDataIndexWithCatalog(include, file);
           next.set(index, include);
-          const records = await this.catalog(next);
+          const records = await timing.measure("catalog", () => this.catalog(next));
           for (const file of targets)
             if (!records.some((r) => r.layer === "workspace" && r.file === file))
               records.push({
@@ -1010,32 +1061,102 @@ export class DataWorkspace {
                 provenance: ["workspace"],
                 document: docs.get(file)!,
               });
-          const external = await this.externalStringReferences();
-          validation = validateDataDocuments(
-            targets[0],
-            records,
-            this.schema,
-            this.references(records, "workspace"),
-            external,
+          const objectIndex = timing.run("index", () => new CatalogObjectIndex(records));
+          const external = await timing.measure("externalStrings", () =>
+            this.externalStringReferences(),
           );
-          verdicts = targets.map((file) => ({
-            file,
-            authoring: validateDataAuthoring(
-              file,
-              original.get(file)!,
-              docs.get(file)!,
-              records,
-              records.issues,
+          const checked = referenceSchema.withPinnedReads(() => {
+            const references = timing.run("references", () =>
+              this.references(records, "workspace", objectIndex),
+            );
+            const validation = timing.run("validation", () =>
+              validateDataDocuments(
+                targets[0],
+                records,
+                this.schema,
+                references,
+                external,
+                objectIndex,
+              ),
+            );
+            const verdicts = timing.run("authoring", () =>
+              targets.map((file) => ({
+                file,
+                authoring: validateDataAuthoring(
+                  file,
+                  original.get(file)!,
+                  docs.get(file)!,
+                  records,
+                  records.issues,
+                  external,
+                  objectIndex,
+                ),
+              })),
+            );
+            return { validation, verdicts };
+          });
+          validation = checked.validation;
+          verdicts = checked.verdicts;
+          await timing.measure("schemaGuards", async () => {
+            for (const source of referenceSchema.sources()) {
+              const text = await this.workspace.readDependency(source.file);
+              if (createHash("sha256").update(text).digest("hex") !== source.sha256)
+                throw new Error("STALE_DATA_BATCH_SCHEMA");
+            }
+          });
+          const rejected = verdicts.filter((v) => !v.authoring.accepted);
+          if (rejected.length) {
+            // Every catalog has already been checked. Retain all findings so a
+            // connected graph can be corrected in one review instead of exposing
+            // a different failing catalog after each expensive retry.
+            const incomplete = rejected.some((v) => v.authoring.completeness === "INCOMPLETE");
+            const failed = rejected.some((v) => v.authoring.status === "REJECTED");
+            throw new DataAuthoringError({
+              ...rejected[0].authoring,
+              completeness: incomplete ? "INCOMPLETE" : "COMPLETE",
+              status: failed ? "REJECTED" : "INCOMPLETE",
+              staticValidation: failed ? "FAIL" : "INCOMPLETE",
+              diagnostics: rejected.flatMap((v) => v.authoring.diagnostics),
+              scope:
+                "All authored catalogs in the atomic Data batch; Editor and runtime not executed",
+            });
+          }
+          let blockingErrors = validation.diagnostics.filter((d) => d.severity === "error");
+          if (blockingErrors.length && request.preserveExistingErrors) {
+            const beforeRecords = await this.catalog();
+            const before = validateDataDocuments(
+              targets[0],
+              beforeRecords,
+              this.schema,
+              this.references(beforeRecords, "workspace"),
               external,
-            ),
-          }));
-          const rejected = verdicts.find((v) => !v.authoring.accepted);
-          if (rejected) throw new DataAuthoringError(rejected.authoring);
-          if (!validation.valid)
+            );
+            const unchanged = new Set(
+              beforeRecords
+                .filter(
+                  (r) =>
+                    !targets.includes(r.file) &&
+                    records.some(
+                      (after) =>
+                        after.file === r.file &&
+                        after.layer === r.layer &&
+                        after.document.source === r.document.source,
+                    ),
+                )
+                .map((r) => r.file),
+            );
+            const delta = partitionExistingDataErrors(before, validation, unchanged);
+            blockingErrors = delta.blocking;
+            validationDelta = {
+              reason: request.preserveExistingErrors.reason,
+              retainedErrors: delta.retained,
+              blockingErrors,
+            };
+          }
+          if (blockingErrors.length)
             throw new Error(
               "DATA_BATCH_VALIDATION_FAILED: " +
-                validation.diagnostics
-                  .filter((d) => d.severity === "error")
+                blockingErrors
                   .slice(0, 5)
                   .map((d) => d.code + " " + d.path)
                   .join("; "),
@@ -1059,9 +1180,11 @@ export class DataWorkspace {
         aliases: Object.fromEntries([...aliases].map(([name, v]) => ["@" + name, v])),
         applied,
         validation,
+        validationDelta,
         authoring: verdicts,
         editor: "NOT_RUN",
         runtime: "NOT_RUN",
+        timing: timing.report(),
       };
     });
   }
@@ -1173,6 +1296,21 @@ export class DataWorkspace {
     expectedSha256?: Record<string, string>;
     authoringPolicy?: "strict" | "compatibility";
   }) {
+    const timing = new DataTiming();
+    const authoredOperationCount = request.operations.length;
+    const spells = request.operations.filter(
+      (o): o is Extract<DataOperation, { op: "recipe.spell" }> => o.op === "recipe.spell",
+    );
+    const bundlePreloads = spells.flatMap(spellPreloads);
+    request = {
+      ...request,
+      operations: request.operations.flatMap((o) => {
+        if (o.op !== "recipe.spell") return [o];
+        const { op: _op, ...spell } = o;
+        void _op;
+        return expandSpellRecipe(spell);
+      }),
+    };
     const target = this.workspace.resolveUserPath(
       request.file ?? "Base.SC2Data/GameData/UnitData.xml",
     );
@@ -1184,7 +1322,8 @@ export class DataWorkspace {
     const targetFile = normalize(request.file ?? "Base.SC2Data/GameData/UnitData.xml");
     const componentFile = normalize(request.componentListFile ?? "ComponentList.SC2Components");
     const indexFile = normalize(request.gameDataIndexFile ?? "Base.SC2Data/GameData.xml");
-    const records = await this.catalog();
+    const records = await timing.measure("catalogBefore", () => this.catalog());
+    const initialIndex = timing.run("indexBefore", () => new CatalogObjectIndex(records));
     const actorRecipeObjects = request.operations.some(
       (o) =>
         o.op === "recipe.unitActor" ||
@@ -1193,11 +1332,27 @@ export class DataWorkspace {
         o.op === "recipe.targetAbility" ||
         o.op === "recipe.veterancy",
     )
-      ? records.filter((r) => r.engineActive !== false).flatMap((r) => r.document.objects())
+      ? records
+          .filter((r) => r.engineActive !== false)
+          .flatMap((r) => initialIndex.objectsFor(r.document))
       : [];
-    const cross = await this.crossReferences();
-    cross.issues.push(...this.actorIssues(records));
-    const allReferences = [...this.references(records), ...cross.references];
+    const cross = await timing.measure("consumerReferences", () => this.crossReferences());
+    // Incoming-reference preflight is consumed only by rename/delete below.
+    // Keep consumer reads/guards for every operation and full final validation.
+    const hasReferenceEdits = request.operations.some(
+      (operation) => operation.op === "object.rename" || operation.op === "object.delete",
+    );
+    cross.issues.push(
+      ...timing.run("actorCoverage", () =>
+        hasReferenceEdits ? this.actorIssues(records, initialIndex) : [],
+      ),
+    );
+    const allReferences = [
+      ...timing.run("referencesBefore", () =>
+        hasReferenceEdits ? this.references(records, "all", initialIndex) : [],
+      ),
+      ...cross.references,
+    ];
     for (const schema of referenceSchema.sources()) {
       const source = await this.workspace.readDependency(schema.file);
       if (createHash("sha256").update(source).digest("hex") !== schema.sha256)
@@ -1277,13 +1432,14 @@ export class DataWorkspace {
         o.op === "recipe.effectModel",
     );
     const hasProjectiles = request.operations.some((o) => o.op === "recipe.projectileEffect");
+    const hasUnitCopies = request.operations.some((o) => o.op === "recipe.unitCopy");
     const preloadFile = path.posix.join(path.posix.dirname(componentFile), "Preload.xml");
     const files = this.workspace.coupledDraftFiles([
       targetFile,
       componentFile,
       indexFile,
       ...referenceFiles,
-      ...(visualRecipes.length || hasProjectiles ? [preloadFile] : []),
+      ...(visualRecipes.length || hasProjectiles || hasUnitCopies ? [preloadFile] : []),
     ]);
     if (files.length > 64)
       throw new Error(
@@ -1309,7 +1465,7 @@ export class DataWorkspace {
       files,
       async (sources) => {
         const next = new Map(sources);
-        const projectilePreloads: CatalogPreload[] = [];
+        const projectilePreloads: CatalogPreload[] = [...bundlePreloads];
         const originalDocument = sources.get(targetFile)
           ? new DataDocument(sources.get(targetFile)!, targetFile)
           : DataDocument.create(targetFile);
@@ -1807,7 +1963,7 @@ export class DataWorkspace {
         next.set(componentFile, componentListWithGameData(next.get(componentFile) ?? ""));
         next.set(indexFile, gameDataIndexWithCatalog(next.get(indexFile) ?? "", targetFile));
         if ((request.validate ?? true) || request.authoringPolicy !== "compatibility") {
-          const validationRecords = await this.catalog(next);
+          const validationRecords = await timing.measure("catalogAfter", () => this.catalog(next));
           if (
             !validationRecords.some(
               (record) => record.layer === "workspace" && record.file === targetFile,
@@ -1820,20 +1976,42 @@ export class DataWorkspace {
               provenance: ["workspace"],
               document,
             });
-          validation = validateDataDocuments(
-            targetFile,
-            validationRecords,
-            this.schema,
-            this.references(validationRecords, "workspace"),
+          const external = await timing.measure("externalStrings", () =>
+            this.externalStringReferences(),
           );
-          authoring = validateDataAuthoring(
-            targetFile,
-            originalDocument,
-            document,
-            validationRecords,
-            validationRecords.issues,
-            await this.externalStringReferences(),
-          );
+          const checked = referenceSchema.withPinnedReads(() => {
+            const index = timing.run(
+              "indexAfter",
+              () => new CatalogObjectIndex(validationRecords, initialIndex),
+            );
+            const refs = timing.run("referencesAfter", () =>
+              this.references(validationRecords, "workspace", index),
+            );
+            const validation = timing.run("validation", () =>
+              validateDataDocuments(
+                targetFile,
+                validationRecords,
+                this.schema,
+                refs,
+                new Map(),
+                index,
+              ),
+            );
+            const authoring = timing.run("authoring", () =>
+              validateDataAuthoring(
+                targetFile,
+                originalDocument,
+                document,
+                validationRecords,
+                validationRecords.issues,
+                external,
+                index,
+              ),
+            );
+            return { validation, authoring };
+          });
+          validation = checked.validation;
+          authoring = checked.authoring;
           if (request.authoringPolicy !== "compatibility" && !authoring.accepted)
             throw new DataAuthoringError(authoring);
           if (!validation.valid && !request.allowInvalid)
@@ -1909,12 +2087,14 @@ export class DataWorkspace {
             scope: "Authoring validation disabled",
           },
       authoringPolicy: request.authoringPolicy ?? "strict",
+      timing: timing.report(),
       referenceCoverage: "PARTIAL",
       referenceScope:
         "Declared XSD XML carriers, supported actor selectors/messages, GUI gamelinks, Objects v27 and supported native Galaxy arguments within configured roots",
       excludedScope: ["Unknown free-text/custom carriers", "Unconfigured external consumers"],
       efficiency: {
         toolCalls: 1,
+        authoredOperations: authoredOperationCount,
         operations: request.operations.length,
         nativeMutations,
         files: transaction.files.length,

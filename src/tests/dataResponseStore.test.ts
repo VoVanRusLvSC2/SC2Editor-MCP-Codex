@@ -23,6 +23,15 @@ test('Data batch summary omits full diffs and validation graph',()=>{
  const compact=compactDataBatch(report);assert.equal(compact.filesTotal,1);assert.equal(compact.validation?.diagnosticsTotal,500);assert.ok(JSON.stringify(compact).length<10000);
 });
 
+test('retained baseline errors stay explicit and bounded in a compact batch response',()=>{
+ const retainedErrors=Array.from({length:100},(_,i)=>({severity:'error',code:'OLD_ERROR',message:'Existing error '+i,file:'ActorData.xml',path:'Actor:'+i}));
+ const compact=compactDataBatch({accepted:true,validation:{valid:false,errors:100,diagnostics:retainedErrors},validationDelta:{reason:'Keep untouched imported actors',retainedErrors,blockingErrors:[]}});
+ assert.equal(compact.validation?.valid,false);
+ assert.equal(compact.validationDelta?.retainedErrorsTotal,100);
+ assert.equal(compact.validationDelta?.retainedErrors.length,8);
+ assert.equal(compact.validationDelta?.blockingErrorsTotal,0);
+});
+
 test('MCP telemetry skips tokenizing over-budget payloads but keeps byte and time counts',async t=>{
  const root=await fs.mkdtemp(path.join(os.tmpdir(),'sc2-token-budget-'));t.after(()=>fs.rm(root,{recursive:true,force:true}));
  const telemetry=new ToolTelemetry(root);telemetry.record('huge',{}, {content:[{type:'text',text:'x'.repeat(1100000)}]},12);const result=await telemetry.summary();assert.equal(result.calls,1);assert.equal(result.overBudgetTokenCounts,1);assert.equal(result.outputTextTokens,0);assert.equal(result.tools[0].durationMs,12);

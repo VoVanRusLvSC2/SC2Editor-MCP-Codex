@@ -137,7 +137,13 @@ export class AiWorkspace {
     return { definitions: args.kind && args.kind !== "definitions" ? undefined : definitions, waves: args.kind && args.kind !== "waves" ? undefined : await Promise.all(waves.map(async (wave) => ({ ...wave, graph: await this.waveGraph(wave) }))), references: args.kind === "references" ? await this.references.search(args.text ?? "", undefined, limit) : undefined, triggerBindings: args.kind === "triggerBindings" ? (await this.references.triggerBindings()).slice(0, limit) : undefined, diagnostics: validation?.diagnostics.slice(0, limit) };
   }
 
-  async apply(request: Parameters<AiWorkspace["applyTracked"]>[0]) { return this.workspace.withReadSet(() => this.applyTracked(request)); }
+  async apply(request: Parameters<AiWorkspace["applyTracked"]>[0]) {
+    return this.workspace.withReadSet(() =>
+      this.browse
+        ? this.browse.withSnapshot(() => this.applyTracked(request))
+        : this.applyTracked(request),
+    );
+  }
   private async applyTracked(request: { file?: string; componentListFile?: string; operations: AiOperation[]; dryRun?: boolean; stage?: boolean; backup?: boolean; expectedSha256?: Record<string, string>; expectedSourceSha256?: Record<string, string>; validate?: boolean; allowInvalid?: boolean }) {
     if (!request.operations.length) throw new Error("ai.apply requires at least one operation");
     if (request.operations.length > 250) throw new Error("ai.apply accepts at most 250 operations");

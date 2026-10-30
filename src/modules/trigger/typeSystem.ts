@@ -1,4 +1,5 @@
-import {scanXml,decodeXmlValue} from '../../core/xmlScanner.js';
+import { decodeXmlValue } from "../../core/xmlScanner.js";
+import { readTriggerXml as scanXml } from "./preparedXml.js";
 import type {XmlNode} from '../../core/types.js';
 import type {GuiType,Registry} from './authoring.js';
 import type {PresetJson,PresetValueJson,StructureJson,VariableJson,ElementRefJson} from './ast/types.js';

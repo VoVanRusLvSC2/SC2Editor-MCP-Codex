@@ -72,7 +72,46 @@ export class DataCardBindingError extends Error {
  readonly code='DATA_CARD_BINDING_REJECTED';
  constructor(readonly review:ReturnType<typeof reviewCardBinding>){super('DATA_CARD_BINDING_REJECTED: '+[...review.unresolved,...review.conflicts].map(c=>c.code).join(', '));}
 }
-export function cardReviewSummary(review:ReturnType<typeof reviewCardBinding>){
- const {bindings,lineage,conflicts,warnings,unresolved,...rest}=review;
- return {...rest,lineage:lineage.slice(0,16),bindingCount:bindings.length,conflictCount:conflicts.length,warningCount:warnings.length,unresolvedCount:unresolved.length,conflicts:conflicts.slice(0,16),warnings:warnings.slice(0,8),unresolved:unresolved.slice(0,8)};
+export function cardReviewSummary(review: ReturnType<typeof reviewCardBinding>) {
+  const { bindings, lineage, conflicts, warnings, unresolved, ...rest } = review;
+  const pages = [...new Set([0, ...bindings.map((binding) => binding.page)])]
+    .filter((page) => page >= 0 && page < 8)
+    .sort((a, b) => a - b);
+  const compactSlotSuggestions = review.layoutResolved
+    ? pages.flatMap((page) => {
+        const existing = bindings.filter((binding) => binding.page === page);
+        if (
+          existing.some(
+            (binding) =>
+              numeric(binding.attrs.Row) === undefined ||
+              numeric(binding.attrs.Column) === undefined,
+          )
+        )
+          return [];
+        const slots = Array.from({ length: 15 }, (_, slot) => slot).filter(
+          (slot) =>
+            !existing.some(
+              (binding) =>
+                binding.slot === slot ||
+                (Number(binding.attrs.Row) === Math.floor(slot / 5) &&
+                  Number(binding.attrs.Column) === slot % 5),
+            ),
+        );
+        return [{ page, slots }];
+      })
+    : [];
+  return {
+    ...rest,
+    lineage: lineage.slice(0, 16),
+    bindingCount: bindings.length,
+    conflictCount: conflicts.length,
+    warningCount: warnings.length,
+    unresolvedCount: unresolved.length,
+    conflicts: conflicts.slice(0, 16),
+    warnings: warnings.slice(0, 8),
+    unresolved: unresolved.slice(0, 8),
+    compactSlotSuggestions,
+    slotSuggestionScope:
+      "Unbound explicit slot indices and visible cells only; native availability and hotkeys remain unchecked",
+  };
 }

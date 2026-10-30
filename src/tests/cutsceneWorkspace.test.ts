@@ -16,6 +16,23 @@ async function setup() {
   return { root, file, workspace };
 }
 
+test("scene file enumeration shares a tracked operation scope and notices later file additions", async (t) => {
+  const { root, file, workspace } = await setup();
+  t.after(() => fs.rm(root, { recursive: true, force: true }));
+  const first = await workspace.workspace.memoizeReads(async () => {
+    const a = await workspace.listFiles(),
+      b = await workspace.listFiles();
+    assert.deepEqual(a, b);
+    return a;
+  });
+  assert.deepEqual(first.value, [file]);
+  assert.equal(await workspace.workspace.reuseReads(first.memo), true);
+  const added = "Cutscenes/Added.SC2Cutscene";
+  await fs.writeFile(path.join(root, added), "<CutsceneState/>");
+  assert.equal(await workspace.workspace.reuseReads(first.memo), false);
+  assert.deepEqual(await workspace.listFiles(), [added, file]);
+});
+
 test("cutscene.apply is atomic when a later operation fails", async () => {
   const { root, file, workspace } = await setup();
   const before = await fs.readFile(path.join(root, file), "utf8");

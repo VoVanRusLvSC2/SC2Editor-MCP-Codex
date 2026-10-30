@@ -4,7 +4,11 @@ import fs from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import {DataDocument} from '../modules/data/document.js';
-import {reviewCardBinding,unitCardState} from '../modules/data/cardBindings.js';
+import {
+  cardReviewSummary,
+  reviewCardBinding,
+  unitCardState,
+} from "../modules/data/cardBindings.js";
 import {DataWorkspace} from '../modules/data/workspace.js';
 import {Workspace} from '../core/workspace.js';
 import {registerDataTools} from '../modules/data/tools.js';
@@ -12,6 +16,26 @@ const objects=(xml:string)=>new DataDocument('<Catalog>'+xml+'</Catalog>').objec
 const root='<CUnit id="Base"><CardLayouts><LayoutButtons Face="Move" Type="AbilCmd" AbilCmd="move,Move" Row="0" Column="0"/><LayoutButtons Face="Shared" Type="AbilCmd" AbilCmd="Old,Execute" Row="2" Column="0"/></CardLayouts></CUnit>';
 const child='<CUnit id="Hero" parent="Base"><CardLayouts index="0"><LayoutButtons index="8" Face="Other" Type="AbilCmd" AbilCmd="Other,Execute" Row="2" Column="1"/></CardLayouts></CUnit>';
 const proposal={ability:'New',button:'NewButton',page:0,slot:9,row:2,column:2};
+
+test("compact suggestions respect inherited array slots and visible cells independently", () => {
+  const marine =
+    '<CUnit id="Marine"><CardLayouts index="0"><LayoutButtons index="5" Face="Stimpack" Type="AbilCmd" AbilCmd="Stimpack,Execute" Row="2" Column="0"/></CardLayouts></CUnit>';
+  const all = objects(marine + '<CUnit id="Hero" parent="Marine"/>');
+  const review = reviewCardBinding(all, "Hero", { ...proposal, slot: 10, row: 2, column: 0 });
+  assert.equal(review.accepted, false);
+  const summary = cardReviewSummary(review),
+    slots = summary.compactSlotSuggestions[0].slots;
+  assert.equal(slots.includes(5), false);
+  assert.equal(slots.includes(10), false);
+  assert.equal(slots.includes(11), true);
+  assert.equal(slots.includes(12), true);
+  assert.equal(summary.nativePresentation, "not_checked");
+  const unknown = marine.replace(' Row="2"', "");
+  assert.deepEqual(
+    cardReviewSummary(reviewCardBinding(objects(unknown), "Marine")).compactSlotSuggestions,
+    [],
+  );
+});
 test('card review resolves implicit fresh root ordinals and indexed inherited overlays',()=>{
  const r=unitCardState(objects(root+child),'Hero');assert.equal(r.layoutResolved,true);assert.deepEqual(r.lineage,['Hero','Base']);assert.deepEqual(r.bindings.map(b=>[b.page,b.slot,b.attrs.Face,b.declaredBy]),[[0,0,'Move','Base'],[0,1,'Shared','Base'],[0,8,'Other','Hero']]);
  assert.equal(reviewCardBinding(objects(root+child),'Hero',proposal).accepted,true);

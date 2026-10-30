@@ -8,7 +8,87 @@ and configure supported cast/channel/interruption/completion animation for custo
 abilities. Existing parent events and an impact model alone do not prove those
 animations work; model-sequence and native playback review remain separate.
 
+For a custom ranged weapon, an impact Actor alone is incomplete presentation.
+Bind a visible native projectile or an Action Actor with a beam between the
+caster's supported launch attachment and the target, as well as the main unit's
+supported firing animation. A model with no Attack sequence needs an explicitly
+verified model-appropriate alternative such as Spell or a channel sequence. Check
+the rendered form as well: a valid Spell sequence can temporarily shrink or morph
+the model instead of showing the intended attack gesture. A protective behavior should have a visible
+state cue tied to its actual On/Off lifecycle, with death/orphan cleanup; do not
+describe damage reduction as invulnerability. Verify these cues in normal gameplay
+framing, including their disappearance, instead of inferring them from Actor counts.
+An inherited attack Action can require target attachment volumes. A target's
+Ref_Center attachment does not prove it has a matching volume; for a simple beam
+that does not need volume placement, explicitly use a volume-free impact site
+operation and check the console on actual target models.
+For that volume-free profile, set the Action's ShieldFlashType explicitly to
+Full or None; the inherited Header mode requires a compatible attach volume.
+
 ## Public tools
+
+### Discovery and performance
+
+`data.query` and `data.context` reject unknown parameters before catalog access.
+Use `text` and `domains` (an array), not `query` and `domain`. A typo must not
+silently become an unfiltered catalog search. Existing defaults and explicit
+unfiltered queries remain supported.
+
+`data.batch` and `data.apply` return `timing.elapsedMs` and named `stagesMs` for
+catalog discovery, indexing, references and validation. Batch summaries retain
+these measurements. Stage times are nested within the tool duration; do not add
+them to parent spans or interpret them as token billing.
+
+Validation shares one operation-local object index and a synchronous pinned XSD
+read window. The index refuses changed source, record order, layer or activation.
+Consumed schema hashes still join the transaction read guards before publication;
+full static validation, dependency coverage and native uncertainty remain intact.
+The index is not a persistent cache that can certify an edited catalog.
+Within one apply, the final index can reuse objects from the initial index only
+when both the full source and source filename match. Record order, file bindings,
+layer and activation are rebuilt. Public document object reads remain independent
+mutable snapshots. Replacing document source invalidates parsed field ordinals.
+Discovery and object reads share the document's parsed XML instead of parsing each
+catalog twice. Repeated unindexed fields retain their source-order ordinals.
+
+Incoming-reference preflight runs for object rename/delete operations, where its
+result is consumed. Scalar edits and creation recipes retain consumer read guards
+and full final reference/authoring validation without constructing an unused
+pre-edit incoming-reference graph. Rename/delete still check dynamic consumers,
+incoming links, inherited tokens and manual changes before publication.
+
+GUI/Galaxy/Object consumer parsing is retained within the MCP workspace using
+tracked read memos. Reuse rechecks actual file contents, directory membership and
+effective drafts, and replays dependencies into the next transaction. A new draft
+consumer invalidates the memo. Returned results are isolated from callers that
+append coverage findings. Keep one MCP process alive to benefit from this cache.
+The first Galaxy parse also uses ordered token/function cursors rather than
+searching every token for every call. Constants, lexical shadows, dynamic-reference
+findings and exact rewrite spans retain the same representation. On the same map,
+a local cold consumer-only comparison changed from 49.7s to 2.2s, with identical
+serialized output (2895 references and110 findings). This narrower measurement
+does not establish the latency of a complete apply or an Editor/game operation.
+
+Dependency preparation is scoped to a logical read operation. Data's initial and
+final catalog passes share verified CASC preparation and prepared dependency
+documents; workspace candidates and activation/order metadata remain separate.
+Reusing a dependency document checks actual file bytes and directory membership,
+including optional activation inputs. Source or native activation changes cannot
+silently reuse a previous interpretation. Preparation is released when the read
+scope ends and is not shared across independent requests or isolated read memos.
+
+CASC build identity, mount manifests and verified view bytes join the existing
+transaction read guards when preparation runs in a tracked operation. Legacy mount
+order migration records the final manifest. Final disk/draft checks and grouped
+publication remain enabled. Independent snapshot comparisons read at most four
+files concurrently, drain all started reads and retain the first mismatch/error
+in input order; writes remain serialized.
+
+A local 2026-10-30 comparison on the Narud map used the same single-field dry-run
+through public MCP: the first call changed from 131.6s to 20.7s and a repeated call
+from 104.7s to 15.7s. Complete validation and authoring reports, including 6555
+diagnostics, matched exactly. These are two observations on one map, not a general
+latency guarantee or a measurement of the complete visual-authoring workflow.
 
 ### Catalog class changes
 
@@ -388,6 +468,16 @@ native Actor recipes without globally allowing arbitrary XSD extensions.
 
 Fields use SC2-shaped paths such as `LifeMax`, `FlagArray[ArmySelect]`, `WeaponArray[0]`, or `CardLayouts[0].LayoutButtons[3]`. Unknown elements, attributes, comments, formatting and extension trees are retained. A clone is a byte copy with only the requested identity/parent change.
 
+Rejected multi-catalog batches retain authoring diagnostics from every checked
+catalog in the returned verdict. The brief error message is only a sample; review
+the complete diagnostics before retrying a connected graph. Rejection still
+writes no part of the batch and does not establish Editor/runtime acceptance.
+
+The original Editor on build98310 exposes stock `GravitonBeamHeight` with
+`Modification.PlaneDelta` values `Ground=-1`, `Air=1`. Authoring accepts signed
+int8 deltas only on those two Buff modification fields; the bundled generic int8
+facet is nonnegative. Other numeric fields retain their declared restrictions.
+
 ### Native Actor class and parent checks
 
 Read the native Actor's `ctype` using `data.peek` or bounded `data.context`
@@ -445,3 +535,96 @@ The health path is based on native corpus evidence: `CValidatorUnitCompareVital`
 ## Pre-Editor coverage gate
 
 Run `npm run schema:audit:data`. The gate requires zero parse/round-trip failures, exact registry accounting for all observed types/fields, at least 1,000 Editor class candidates and at least 600 exact Editor field descriptors. The current snapshot is 529 XML C-types, 10,509 exact typed field paths and 1,277,381 field instances across 165,161 objects. This is 100% coverage of the audited structural corpus; L5 Editor acceptance and L6 runtime behavior are deliberately separate claims.
+
+Atomic `data.batch` requests allow up to 1,000 operations across at most 48
+catalogs. `preserveExistingErrors: {reason: "..."}` is an explicit exception for
+unfinished imported maps: only identical baseline errors on untouched catalog
+files may be retained. Errors on edited catalogs and newly introduced errors
+still reject the complete transaction. The response keeps `validation.valid`
+false and reports `validationDelta.retainedErrors` separately from blocking
+errors. Acceptance does not claim a clean map, native compilation or gameplay.
+
+Atomic batches retain the 500-operation per-catalog input limit. This accommodates
+a connected private hero/technology graph without publishing half its links.
+Dry runs, whole-group stale guards and compact report paging remain unchanged.
+Native requirement subclasses such as `CRequirementCountUnit`, `CRequirementLT`
+and `CRequirementAnd` belong to `RequirementNode`, separately from `CRequirement`.
+Use that catalog when selecting/remapping their typed links.
+
+## Compact compound recipes
+
+Existing local graphs can be tuned without reconstructing them:
+
+```text
+data unit.configure id=Hero life=800 shields=100 speed=3 scale=1.4
+data spell.configure id=Pulse damage=50 energy=20 cooldown=8
+data spell.configure id=Burn damage=3 duration=240 period=2
+```
+
+These explicit updates share the normal guarded transaction and compatible
+same-catalog grouping. Unit changes support life/shields/energy maximum and start,
+speed, heroic and optional unique local main Actor scale. Spell changes support
+damage, energy, private cooldown, target range and burn timing on an explicit
+local compact-recipe graph. Omitted values, graph shape, targeting, command cards,
+Actor animations, unknown XML and manual fields remain unchanged. Ambiguous,
+inherited-only or unsupported graphs reject. Creation tools remain creation-only;
+configure tools neither create missing objects nor silently replace a graph.
+
+Use `modkit.author_help` with `section=data` for the short guide. The MCP envelope
+remains structured JSON, but the author writes a command string rather than
+nested XML/operation JSON. Existing detailed tools remain available.
+
+For example, send these lines in one `modkit.author` call with `mode=plan`,
+`stage` or `save`:
+
+```text
+data unit id=Hero from=Marine life=600 scale=1.2 heroic=true
+data spell id=Pulse kind=pulse unit=Hero slot=11 damage=40 radius=4 model=ImpactModel face=EMP energy=25 cooldown=5
+data spell id=Rift kind=line unit=Hero slot=11 damage=48 count=9 model=ImpactModel face=EMP delay=1.4 warningModel=WarningModel
+```
+
+`ImpactModel` and `WarningModel` are placeholders for exact existing Model IDs;
+`face` is an existing Button ID. Mount the map's declared native dependencies
+first. Optional `file` selects a common local catalog; recipes bind the local Unit
+in that same catalog. Compatible adjacent commands share one strict `data.apply`
+and one save of the entire catalog/registration/preload transaction. A later
+collision or unresolved reference rejects the whole group before staging. Distinct
+groups in one author script remain sequential rather than globally rolled back.
+
+`data.unit.copy` is also available as a typed tool and `recipe.unitCopy` as a
+`data.apply` operation. It derives a Unit from `from`, detects a unique native
+main Actor on a GenericUnit parent, pins source asset identities, and retains
+movement/attack/death presentation fields. Optional life, shields, energy, speed,
+scale and heroic are scalar overrides. Existing weapons, abilities, upgrades and
+morph forms are **shared**, not recursively duplicated. Ambiguous declarations,
+unsupported concrete Actor layers and existing target identities reject.
+
+`data.spell` / `recipe.spell` supports:
+
+| Kind | Native mechanics | Additional scalar parameters |
+| --- | --- | --- |
+| `damage` | One targeted spell hit and attached impact Model | `range` |
+| `pulse` | Caster-centered enemy-ground search | `radius` |
+| `line` | Aimed cells with one delayed search per cell | `count`, `spacing`, cell `radius` |
+| `ring` | Aimed ring with an open sector | `count`, ring `radius`, `gap` in degrees |
+| `burn` | Single refreshable native buff with periodic damage | `duration`, `period`; `damage` is per tick |
+
+Area cells use a short spell-owned overlap lock. A positive `delay` requires
+`warningModel`; warnings end with a native Actor timer. Impact actors use the
+existing effect-model lifecycle and preload writer. Optional `sound` is an exact
+Sound ID with a native cast Actor and preload entries. No new main unit Actor is
+created by spells. Optional `unit` plus `slot=0..14` binds a 3x5 command card;
+`page` defaults to0. Known inherited cell/face conflicts still reject.
+
+Execution templates default to `Stimpack` for pulse, `EMP` for line/ring and
+`Snipe` for damage/burn. `sourceAbility` explicitly changes the native template;
+its target filters, validators and cursor behavior remain inherited. Changing a
+template is a gameplay decision, not a generic unit/point coercion. Labels, icon
+and hotkey inherit `face`; use the text/Data tools for distinct localized UI when
+mechanics differ. Main-unit cast/channel animation remains an explicit
+`data actor.ability_animation` step with inspected real sequences.
+
+These are creation-only presets. Detailed tools author nonstandard graphs or
+modify existing entries. Up to500 **expanded** native operations may share a
+Data apply. Missing dependencies and unsupported profiles remain errors. Static
+checks do not certify native playback, targeting, art quality or balance.

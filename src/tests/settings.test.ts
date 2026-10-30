@@ -15,6 +15,38 @@ import { AttributesDocument } from "../modules/settings/attributes.js";
 import { SettingsWorkspace } from "../modules/settings/workspace.js";
 import { settingsPlanSchema } from "../modules/settings/schemas.js";
 const native = (id: string, file: string) => fs.readFile(`src/tests/fixtures/map-native/${id}/${file}.gz`).then(gunzipSync);
+
+test("batched player and flag patches match sequential bytes with repeated strings, IDs and option toggles", async () => {
+  const bytes = await native("city", "MapInfo"),
+    initial = new PlayersDocument(bytes),
+    id = initial.players[0].id;
+  const operations = settingsPlanSchema.parse({
+    operations: Array.from({ length: 100 }, (_, i) =>
+      i % 3 === 0
+        ? { op: "options.set", patch: { disableReplay: i % 2 === 0, showCountdown: i % 4 === 0 } }
+        : { op: "player.set", playerId: id, patch: { aiName: "Name " + i, color: i % 16 } },
+    ),
+  }).operations as Array<
+    Extract<
+      import("../modules/settings/schemas.js").SettingsOperation,
+      { op: "player.set" | "options.set" }
+    >
+  >;
+  let sequential: Buffer = bytes;
+  for (const operation of operations) sequential = new PlayersDocument(sequential).patch(operation);
+  const grouped = initial.patchMany(operations);
+  assert.deepEqual(grouped, sequential);
+  assert.deepEqual(bytes, await native("city", "MapInfo"));
+  assert.equal(
+    new PlayersDocument(grouped).core.integrityHash,
+    new PlayersDocument(grouped).core.computeIntegrityHash(),
+  );
+  assert.throws(
+    () =>
+      initial.patchMany([...operations, { op: "player.set", playerId: 16, patch: { color: 1 } }]),
+    /PLAYER_NOT_FOUND/,
+  );
+});
 async function fixture(t: {
     after(fn: () => Promise<unknown>): void;
 }) { const root = await fs.mkdtemp(path.join(os.tmpdir(), "sc2-settings-")); t.after(() => fs.rm(root, { recursive: true, force: true })); for (const file of ["MapInfo", "Attributes", "ComponentList.SC2Components"])

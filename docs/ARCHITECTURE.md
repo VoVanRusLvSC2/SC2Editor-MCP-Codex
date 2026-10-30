@@ -14,6 +14,12 @@ or game. Small bundled registries still load at project creation.
 
 Data/Browse defer CASC mounts and native catalog initialization to their dependency
 refresh hook, preserving tracked reads and build/dependency invalidation.
+`Workspace.prepareReadScope` shares guarded dependency preparation only within a
+logical read scope. Its prepared values are released on scope completion; isolated
+read memos and later operations prepare independently. Data dependency discovery
+reuses documents after byte/directory checks and clones activation/order metadata.
+Independent snapshot comparisons use four bounded reads with ordered failures;
+publication and recovery remain serialized.
 [ResourceScope](../src/core/resourceScope.ts) closes initialized resources in reverse
 dependency order and collects errors without skipping later cleanup.
 Project.close() is idempotent and shared by MCP and GUI. Test workflows drain

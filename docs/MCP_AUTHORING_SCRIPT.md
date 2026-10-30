@@ -1,5 +1,11 @@
 # Compact commands for AI
 
+The bounded Galaxy checker accepts nullable strings and string/text `+=`
+concatenation. Array/member selection and unsupported bitwise expressions retain
+an `INCOMPLETE` verdict; it does not infer a selected field's type from its
+container. Known enclosing call arity and supported operand types are still
+checked. Native compilation remains separate.
+
 `modkit.author` accepts a `script` string with one command per line:
 `section verb name=value`. Quote values containing spaces. Use dotted keys for
 nested fields, such as `position.x=25`; complex arrays can use quoted JSON or an
@@ -28,6 +34,25 @@ advanced low-level operations preserve their boundaries. Groups execute
 sequentially: if a later group fails, earlier saved groups remain committed.
 Original schemas/defaults, dependency checks, stale guards and backup behavior
 apply. Read-only commands should use plan mode.
+
+Compatible adjacent Text, Settings, Terrain and single-object placements also
+share candidates and saves. The `compilation` receipt reports expanded/grouped
+call counts and declared scopes; it does not measure model billing.
+Use `settings player.set id=1 color=2` to patch an existing player;
+`settings player` creates a new player and rejects an existing ID.
+For units, `player=1` is a compact alias of `owner=1`; supplying both rejects.
+Exact native IDs can occur in several dependencies: select the verified
+`browse.search` key rather than guessing a layer. Keep unknown availability
+explicit. A compact spell slot maps to a visible cell but inherited native
+button indices can differ from visible coordinates. Inspect card conflicts and
+their `compactSlotSuggestions`; these suggestions do not certify native hotkeys.
+
+`document empty ...` in save mode plans and creates one component document.
+It has no draft lifecycle, so stage mode rejects. To select models without
+rendering every image, use `assets inspect_many files=Path/A.m3,Path/B.m3`
+(up to 24 exact paths). For a multi-time scene preview, use
+`cutscene show file=Scene.SC2Cutscene times=0,1000,2500`; times are native ticks.
+See [performance contracts and measurements](PERFORMANCE.md).
 
 **Galaxy is the default logic language.** Literal source blocks preserve code:
 

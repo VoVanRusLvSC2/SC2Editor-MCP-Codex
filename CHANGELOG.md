@@ -1,5 +1,22 @@
 # Changelog
 
+## 2026-10-30 — Guarded authoring performance, alpha.21
+
+- Coalesce compatible Text, Settings, Terrain and Placement commands alongside
+  Data recipes. Report underlying call counts and preserve ordered transaction
+  boundaries, schema defaults and rollback within each group.
+- Add compact scalar unit/spell updates, bounded multi-model inspection and
+  multi-time scene requests. Preserve omitted/manual fields and main Actor graphs.
+- Reuse guarded dependency preparation, candidate Script documents, immutable
+  GUI XML/graphs, GUI library contexts and exact-content Browse/UI/AI indexes.
+- Batch native Data fields and string-table spans; bound Terrain brush regions
+  and archive reads. Retain source hashes, stale guards and reopened verification.
+- Share M3/texture/light preparation and verify preview artifacts before reuse.
+  Keep cold/warm, local preparation, native compile and gameplay evidence distinct.
+- Fix Settings lifecycle result references and add inherited command-card repair
+  suggestions without overriding existing buttons or claiming native visibility.
+- See [performance contracts](docs/PERFORMANCE.md) for measurement scope and limits.
+
 ## 2026-10-28 — Editor Toolkit 1.1 release candidate
 
 - Pin the complete SHA-verified1.1.0-rc.1 package/native protocol16; preserve the

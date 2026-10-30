@@ -1,4 +1,5 @@
-import {scanXml,decodeXmlValue} from '../../core/xmlScanner.js';
+import { decodeXmlValue } from "../../core/xmlScanner.js";
+import { readTriggerXml as scanXml } from "./preparedXml.js";
 import type {XmlNode} from '../../core/types.js';
 
 /** Map-owned GUI scopes only. Dependency signatures are not executable source. */

@@ -3,6 +3,7 @@ import { promises as fs } from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import test from "node:test";
+import { createHash } from "node:crypto";
 import { Workspace } from "../core/workspace.js";
 import { BrowseWorkspace } from "../modules/browse/workspace.js";
 import { DataSchemaRegistry } from "../modules/data/schemaRegistry.js";
@@ -20,6 +21,88 @@ async function fixture() {
   const browse = new BrowseWorkspace(workspace, new DataWorkspace(workspace, new DataSchemaRegistry()));
   return { root, workspace, placement: new PlacementWorkspace(workspace, browse) };
 }
+
+test("mixed batches sample terrain once per directory, retain distinct Z semantics and guard terrain changes", async () => {
+  const f = await fixture();
+  try {
+    const terrainFile = path.join(f.root, "terrain-test.bin");
+    await fs.writeFile(terrainFile, "original");
+    const hash = createHash("sha256").update("original").digest("hex"),
+      calls: Array<{ count: number; directory: string }> = [];
+    f.placement.terrain = {
+      sample: async (points: any[], directory: string) => {
+        calls.push({ count: points.length, directory });
+        return {
+          samples: points.map((p) => ({ height: 10 + p.x, slope: 0.1, mask: 1, hidden: false })),
+          sourceSha256: { "terrain-test.bin": hash },
+          diskSha256: { "terrain-test.bin": hash },
+        };
+      },
+    } as any;
+    const objects = [
+      { kind: "Unit" as const, id: "Marine", position: { x: 3, y: 4, z: 99 }, snapToTerrain: true },
+      {
+        kind: "Doodad" as const,
+        id: "AgriaTree",
+        position: { x: 5, y: 6, z: 99 },
+        snapToTerrain: true,
+        flags: { Future: "keep" },
+      },
+      { kind: "Doodad" as const, id: "AgriaTree", position: { x: 7, y: 8, z: 9 } },
+    ];
+    const plan = await f.placement.addBatch({ objects });
+    assert.deepEqual(calls, [{ count: 2, directory: "" }]);
+    const placed = plan.operations.filter(
+      (o): o is Extract<typeof o, { op: "add" }> => o.op === "add",
+    );
+    assert.deepEqual(
+      placed.map((o) => o.object.position.z),
+      [0, 15, 9],
+    );
+    assert.deepEqual(placed[1].object.flags, { Future: "keep", HeightAbsolute: "1" });
+    assert.equal(objects[1].position.z, 99);
+    assert.equal(plan.sourceSha256["terrain-test.bin"], hash);
+    await fs.writeFile(terrainFile, "modified");
+    await assert.rejects(
+      f.placement.apply(plan.id, { dryRun: false, stage: true }),
+      /STALE|changed/i,
+    );
+    assert.deepEqual(f.workspace.draftFiles(), []);
+  } finally {
+    await fs.rm(f.root, { recursive: true, force: true });
+  }
+});
+
+test("mixed batch terrain filtering rejects a hidden cell or excessive per-object slope before staging", async () => {
+  const f = await fixture();
+  try {
+    for (const point of [
+      { height: 1, slope: 0, mask: 1, hidden: true },
+      { height: 1, slope: 2, mask: 1, hidden: false },
+    ]) {
+      f.placement.terrain = {
+        sample: async () => ({ samples: [point], sourceSha256: {}, diskSha256: {} }),
+      } as any;
+      await assert.rejects(
+        f.placement.addBatch({
+          objects: [
+            {
+              kind: "Unit",
+              id: "Marine",
+              position: { x: 1, y: 1, z: 0 },
+              snapToTerrain: true,
+              maxSlope: 1,
+            },
+          ],
+        }),
+        /hole or excessive slope/,
+      );
+      assert.deepEqual(f.workspace.draftFiles(), []);
+    }
+  } finally {
+    await fs.rm(f.root, { recursive: true, force: true });
+  }
+});
 
 test("PlacementDocument adds Unit and Doodad using their real distinct type attributes", () => {
   const document = PlacementDocument.create();

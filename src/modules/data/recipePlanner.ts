@@ -9,6 +9,8 @@ import { projectileEffectRecipe, type CatalogPreload } from "./projectileRecipe.
 import { veterancyRecipe } from "./veterancyRecipe.js";
 import { xpSearchRecipe } from "./xpSearchRecipe.js";
 import { learnRecipe } from "./learnRecipe.js";
+import { unitCopyRecipe } from "./unitCopyRecipe.js";
+import { configureUnit, configureSpell } from "./configureRecipes.js";
 import { reviewCardBinding, cardReviewSummary, DataCardBindingError } from "./cardBindings.js";
 interface RecipeContext {
   workspace: Workspace;
@@ -38,6 +40,36 @@ export function applyDataRecipe(
   } = context;
   let target: string | undefined;
   switch (operation.op) {
+    case "recipe.unitConfigure": {
+      const { op: _op, ...args } = operation;
+      void _op;
+      target = configureUnit(document, args);
+      break;
+    }
+    case "recipe.spellConfigure": {
+      const { op: _op, ...args } = operation;
+      void _op;
+      target = configureSpell(document, args);
+      break;
+    }
+    case "recipe.unitCopy": {
+      const available = [
+        ...records
+          .filter(
+            (r) =>
+              r.engineActive !== false &&
+              !(r.layer === "workspace" && r.absolute === workspace.resolveUserPath(targetFile)),
+          )
+          .flatMap((r) => r.document.objects()),
+        ...document.objects(),
+      ];
+      const { op: _op, ...copyRequest } = operation;
+      void _op;
+      const copy = unitCopyRecipe(document, available, copyRequest);
+      projectilePreloads.push(...copy.preloads);
+      target = copy.target;
+      break;
+    }
     case "recipe.veterancy": {
       const available = [
         ...records

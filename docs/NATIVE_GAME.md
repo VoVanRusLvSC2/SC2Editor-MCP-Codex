@@ -10,6 +10,12 @@ is experimental `0.1.0-dev`; the pinned release is `v0.1.0-dev.12` and the
 observed game build is `5.0.17.98310`. A matching
 frontend version is a contract check, not a binary provenance or stability claim.
 
+The public MCP launcher normalizes entry separators only for the upstream
+`mpqcli read` command. Standard MPQ entries use backslashes; nested Galaxy
+includes written with forward slashes otherwise failed before game launch.
+Archive/script bytes and the separately verified private Toolkit/DLL package
+remain unchanged. This small launcher contains no private Toolkit source.
+
 ## Configuration
 
 Keep the private toolkit outside tracked source and portable packages. Configure

@@ -10,6 +10,36 @@ Use a persistent MCP session. Start with `modkit.author_help`, then send compact
 commands through `modkit.author`. Query only the needed catalog page or function
 signature. Batch related work, validate once per logical change, and request full
 evidence only when investigating a failure. Full catalog dumps are unnecessary.
+The reusable `scripts/mcp-session.mjs --root <components-directory>` client keeps
+one workflow process alive for sequential requests. Do not start a fresh process
+for each small edit. Use Data timing stages to diagnose slow calls; keep parent
+and nested durations separate. Discovery parameters are `text` and `domains`;
+unknown query/context parameters reject instead of dropping filters.
+
+For common Data work request `modkit.author_help` with `section=data` once. Prefer
+`data unit` (derived Unit plus independent main Actor) and `data spell`
+(damage/pulse/line/ring/burn with effects, presentation, optional command card and
+preloads) over hand-written operation arrays. Put compatible same-catalog commands
+in one call so they share final-graph validation and one grouped save. Creation
+does not overwrite existing IDs. Unit copies intentionally share native mechanics;
+spell Button labels/icons/hotkeys inherit the chosen face. Author custom text,
+main-unit cast animations and unsupported mechanics explicitly. See the compound
+recipes in [Data MCP](DATA_MCP.md#compact-compound-recipes).
+
+Use `data unit.configure` and `data spell.configure` for subsequent supported
+scalar balance edits. Omitted parameters and manual fields remain unchanged.
+Compatible adjacent Text, Settings, Terrain and single-object Placement commands
+also share candidates and saves. Reads, external result references, differing
+options/files and advanced guards preserve boundaries. The `compilation` receipt
+counts commands, expanded/grouped calls and declared scopes; actual file changes
+and validation results remain in the module receipts. This is call accounting,
+not a measurement of model tokens or a guarantee of whole-map elapsed time.
+
+Keep map authoring in the public MCP tools. Reserve Editor DLL calls for final
+acceptance of a complete authoring batch unless the user explicitly requests a
+native inspection. Prepare Data and editable GUI changes through MCP first;
+do not use repeated Editor DLL calls as the authoring loop. A failed final test
+returns to an MCP correction and a targeted final retest of the changed scope.
 
 Galaxy is the default logic language. `logic file/function/body` use guarded
 `script.plan` workflows. GUI authoring requires an explicit `gui plan` or
@@ -43,6 +73,10 @@ Expose hero abilities through native Data command cards. Do not duplicate them
 with trigger Dialog buttons, automatic targeting or periodic cooldown displays
 unless the user explicitly requests a separate ability interface.
 
+Use an ASCII Galaxy identifier for every explicit GUI `Identifier`; keep the
+localized display label separate. A trigger-valued Param uses `ValueType` plus
+`ValueElement Type="Trigger"`, rather than a standalone `Trigger` child.
+
 Use explicit level indices when overriding inherited per-level ability arrays.
 For example, the instant/target recipe's `castIntroTime`, `castOutroTime` and
 `finishTime` write the corresponding native timing at index0; an unindexed child
@@ -75,6 +109,46 @@ cast/channel/recovery animation where the model supports it, with appropriate
 start, interruption and completion behavior. A separate impact or area Model is
 not unit animation. Verify available model sequences and actual playback instead
 of guessing animation names or creating a second primary unit actor for a spell.
+
+When duplicating a connected unit graph, remap actual owned references and Actor
+tokens such as `unitName`, `effectAttack` and `effectImpact`. Include
+the matching Action Actors even when their only effect binding is a root
+`effectAttack` token rather than an explicit `On Terms="Effect..."` event.
+Otherwise the copied weapon may deal damage without its native attack feedback.
+Explicitly preserve
+shared Model/Sound assets whose native defaults derive from `##id##`; a renamed
+Action Actor must not invent missing launch/impact assets. A guard's references
+to foreign abilities or state markers do not mean that those foreign systems
+should be duplicated. Keep them shared unless the owned mechanics create them.
+Include morph/merge forms in ownership, XP routing and pooled count limits; a
+Gateway/WarpGate or transport/phasing transition must not bypass a build/army cap.
+Private command faces retain standard icons and correct localized hotkey links;
+rebind tooltip Data references when the duplicated objects have different stats.
+
+When rebuilding a concrete Actor on a generic parent, compare effective movement
+animation fields with the original, including `WalkAnimMoveSpeed`. A different
+inherited value can slow the walk cycle even when unit speed is unchanged. Review
+the effective `On` array indices, Terms, Send and Target together: unindexed entries
+can merge with inherited events and retain an unrelated Target. Clear custom cast
+animations on completion and interruption so they do not mask walking or attacks.
+Append contiguously after the actual effective inherited range: sparse high
+indices can create empty events and repeated native engine warnings. The bounded
+`DATA_ACTOR_WALK_SPEED_REVIEW`, `DATA_ACTOR_EVENT_MERGE_REVIEW` and
+`DATA_ACTOR_EVENT_SPARSE_REVIEW`
+findings depend on available source declarations; silence is not proof of
+equivalence. Compare the original and duplicate in recorded game playback.
+
+When duplicating a unit and its Data graph, first inventory the Unit, Actor,
+weapons, abilities, effects, behaviors, models and upgrades. Establish an
+explicit old-to-new ID map for each component that is actually duplicated,
+then update the links and Actor event terms that point to those copies, including
+weapon events, upgrade effects and ability phases. Audit backlinks and inherited
+references after the transaction. Preserve deliberately shared native dependencies
+and their IDs; changing every string or cloning every referenced asset can break
+shared effects, models, abilities and upgrades. A single `object.clone` only
+copies one entry and does not remap its dependency graph. Verify the live Actor
+and actual ability phases, including opening and closing animation, in the game;
+damage and a weapon's own animation do not prove the unit's transformation played.
 
 Before adding an ability button, inspect the inherited card as well as local
 entries with `data.card.check`. Instant/target recipes enforce known inherited

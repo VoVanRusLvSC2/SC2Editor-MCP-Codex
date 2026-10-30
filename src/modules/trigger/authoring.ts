@@ -1,7 +1,8 @@
 import { readFileSync, statSync } from "node:fs";
 import { createHash } from "node:crypto";
 import { projectPath } from "../../app/paths.js";
-import { scanXml, decodeXmlValue } from "../../core/xmlScanner.js";
+import { decodeXmlValue } from "../../core/xmlScanner.js";
+import { readTriggerXml as scanXml } from "./preparedXml.js";
 import { checkRegistrationSignature } from "./registration.js";
 import { typeElementFragment, encode, localRef } from "./xmlFragments.js";
 export { encode, localRef } from "./xmlFragments.js";

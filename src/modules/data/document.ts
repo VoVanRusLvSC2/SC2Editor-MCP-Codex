@@ -41,7 +41,18 @@ export interface DocumentReference { object: string; path: string; carrier: stri
 
 export class DataDocument {
   private parsedCache?:ReturnType<typeof scanXml>;
-  private get parsed(){return this.parsedCache??=scanXml(this.source);}
+  private parsedSource?: string;
+  private readonly fieldOrdinals = new Map<number, number>();
+  private readonly indexedParents = new Set<number>();
+  private get parsed() {
+    if (!this.parsedCache || this.parsedSource !== this.source) {
+      this.parsedCache = scanXml(this.source);
+      this.parsedSource = this.source;
+      this.fieldOrdinals.clear();
+      this.indexedParents.clear();
+    }
+    return this.parsedCache;
+  }
 
   constructor(public source: string, readonly sourceFile = "Base.SC2Data/GameData/UnitData.xml") { this.reparse(); }
 
@@ -88,10 +99,34 @@ export class DataDocument {
 
   private children(node: XmlNode): XmlNode[] { return node.childIds.map((id) => this.parsed.nodes[id]); }
 
-  private fieldSegment(node:XmlNode):DataFieldPathSegment {
-    const index=node.attrs.index??node.attrs.Index;
-    const peers=node.parentId===null?[]:this.children(this.parsed.nodes[node.parentId]).filter(n=>n.tag===node.tag&&n.attrs.index===undefined&&n.attrs.Index===undefined);
-    return {name:node.tag,index,ordinal:index===undefined&&peers.length>1?peers.findIndex(n=>n.id===node.id):undefined};
+  private fieldSegment(node: XmlNode): DataFieldPathSegment {
+    const index = node.attrs.index ?? node.attrs.Index;
+    const parsed = this.parsed;
+    if (
+      index === undefined &&
+      node.parentId !== null &&
+      !this.indexedParents.has(node.parentId)
+    ) {
+      const peers = new Map<string, number[]>();
+      for (const id of parsed.nodes[node.parentId].childIds) {
+        const child = parsed.nodes[id];
+        if (child.attrs.index !== undefined || child.attrs.Index !== undefined)
+          continue;
+        const list = peers.get(child.tag);
+        if (list) list.push(id);
+        else peers.set(child.tag, [id]);
+      }
+      for (const ids of peers.values())
+        if (ids.length > 1)
+          ids.forEach((id, ordinal) => this.fieldOrdinals.set(id, ordinal));
+      this.indexedParents.add(node.parentId);
+    }
+    return {
+      name: node.tag,
+      index,
+      ordinal:
+        index === undefined ? this.fieldOrdinals.get(node.id) : undefined,
+    };
   }
   private selectField(parent:XmlNode,segment:DataFieldPathSegment):XmlNode|undefined {
     const candidates=this.children(parent).filter(node=>node.tag===segment.name&&(node.attrs.index??node.attrs.Index)===segment.index);
@@ -220,8 +255,13 @@ export class DataDocument {
 
   /** Repair the class while retaining catalog identity, comments and opaque fields. */
   setType(selector: DataObjectSelector, ctype: string): XmlNode {
-    const node = this.resolve(selector), domain = dataDomainFromType(node.tag);
-    if (!/^C[A-Z][A-Za-z0-9_]*$/.test(ctype) || !domain || dataDomainFromType(ctype) !== domain)
+    const node = this.resolve(selector),
+      domain = dataDomainFromType(node.tag);
+    if (
+      !/^C[A-Z][A-Za-z0-9_]*$/.test(ctype) ||
+      !domain ||
+      dataDomainFromType(ctype) !== domain
+    )
       throw new Error("DATA_CLASS_CHANGE_DOMAIN_MISMATCH");
     const id = node.attrs.id;
     if (!id) throw new Error("DATA_CLASS_CHANGE_ID_REQUIRED");
@@ -231,11 +271,13 @@ export class DataDocument {
     let raw = this.source.slice(node.start, node.end);
     if (!node.selfClosing) {
       const closing = node.endTagStart - node.start;
-      raw = raw.slice(0, closing) + raw.slice(closing).replace(/^<\/[^\s>]+/, '</' + ctype);
+      raw =
+        raw.slice(0, closing) +
+        raw.slice(closing).replace(/^<\/[^\s>]+/, "</" + ctype);
     }
-    raw = raw.replace(/^<[^\s/>]+/, '<' + ctype);
+    raw = raw.replace(/^<[^\s/>]+/, "<" + ctype);
     this.replace(node.start, node.end, raw);
-    return this.resolve({id, ctype});
+    return this.resolve({ id, ctype });
   }
 
   setObjectAttribute(selector: DataObjectSelector, name: string, value: DataScalar): void {
@@ -262,7 +304,12 @@ export class DataDocument {
     this.replace(start, end, "");
   }
 
-  setField(selector: DataObjectSelector, path: string, carrier: "value" | "Link" | string, value: DataScalar): void {
+  setField(
+    selector: DataObjectSelector,
+    path: string,
+    carrier: "value" | "Link" | string,
+    value: DataScalar,
+  ): void {
     const segments = parseDataFieldPath(path);
     const entry = this.resolve(selector);
     const field = this.fieldNode(entry, path);
@@ -270,12 +317,22 @@ export class DataDocument {
       const holderSegments = segments.slice(0, -1);
       const holder = this.ensureParent(selector, holderSegments);
       const last = segments[segments.length - 1];
-      if(last.ordinal!==undefined)throw new Error("DATA_ORDINAL_FIELD_MISSING");
+      if (last.ordinal !== undefined)
+        throw new Error("DATA_ORDINAL_FIELD_MISSING");
       // An indexed selector addresses index="...", not the ordinal position of
       // repeated unindexed nodes. Refuse the likely typo instead of silently
       // appending a second On event that cannot replace the original event.
-      if(last.index!==undefined&&this.children(holder).some(node=>node.tag===last.name&&(node.attrs.index??node.attrs.Index)===undefined))
-        throw new Error(`DATA_FIELD_INDEX_UNMATCHED: ${path}; use [#ordinal] for unindexed ${last.name} fields`);
+      if (
+        last.index !== undefined &&
+        this.children(holder).some(
+          (node) =>
+            node.tag === last.name &&
+            (node.attrs.index ?? node.attrs.Index) === undefined,
+        )
+      )
+        throw new Error(
+          `DATA_FIELD_INDEX_UNMATCHED: ${path}; use [#ordinal] for unindexed ${last.name} fields`,
+        );
       const spec: DataNativeFieldSpec = { name: last.name, index: last.index };
       if (carrier === "value") spec.value = value;
       else if (carrier === "Link") spec.link = scalar(value);
@@ -308,10 +365,59 @@ export class DataDocument {
     return `${formatDataFieldPath(segments.slice(0, -1))}${segments.length > 1 ? "." : ""}${last.name}[${index}]`;
   }
 
-  addNative(selector: DataObjectSelector, parentPath: string | undefined, field: DataNativeFieldSpec): void {
-    const parent = parentPath ? this.fieldNode(this.resolve(selector), parentPath) : this.resolve(selector);
+  addNative(
+    selector: DataObjectSelector,
+    parentPath: string | undefined,
+    field: DataNativeFieldSpec,
+  ): void {
+    this.addNativeMany(selector, parentPath, [field]);
+  }
+
+  /** Append a coherent field group with the same rendering as sequential adds. */
+  addNativeMany(
+    selector: DataObjectSelector,
+    parentPath: string | undefined,
+    fields: DataNativeFieldSpec[],
+  ): void {
+    if (!fields.length) return;
+    const parent = parentPath
+      ? this.fieldNode(this.resolve(selector), parentPath)
+      : this.resolve(selector);
     if (!parent) throw new Error(`Native parent field not found: ${parentPath}`);
-    this.appendTo(parent, renderField(field, "", newlineOf(this.source)));
+    const newline = newlineOf(this.source);
+    this.appendTo(parent, fields.map((field) => renderField(field, "", newline)).join(newline));
+  }
+
+  /** Explicit replacement recipes own these element fields, but keep comments,
+   * processing instructions and other non-element source bytes. */
+  clearFields(selector: DataObjectSelector): void {
+    const fields = this.children(this.resolve(selector));
+    if (!fields.length) return;
+    if (this.diagnostics.some((d) => d.severity === "error"))
+      throw Error("INVALID_XML_SOURCE: cannot edit malformed GameData");
+    const newline = newlineOf(this.source),
+      ranges = fields
+        .map((node) => {
+          let start = node.start,
+            end = node.end;
+          if (this.source.slice(end, end + newline.length) === newline) end += newline.length;
+          else {
+            const lineStart = this.source.lastIndexOf("\n", Math.max(0, start - 1)) + 1;
+            if (/^\s*$/.test(this.source.slice(lineStart, start))) start = lineStart;
+          }
+          return { start, end };
+        })
+        .sort((a, b) => a.start - b.start);
+    const parts: string[] = [];
+    let cursor = 0;
+    for (const range of ranges) {
+      if (range.start < cursor) throw Error("OVERLAPPING_DATA_FIELD_REMOVAL");
+      parts.push(this.source.slice(cursor, range.start));
+      cursor = range.end;
+    }
+    parts.push(this.source.slice(cursor));
+    this.source = parts.join("");
+    this.reparse();
   }
 
   references(tokenResolver?: (entry:XmlNode)=>Record<string,string>): DocumentReference[] {

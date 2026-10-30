@@ -1,4 +1,4 @@
-import {scanXml} from '../../core/xmlScanner.js';
+import { readTriggerXml as scanXml } from "./preparedXml.js";
 
 /** Known original-generator risks, separate from XML validity and local emission. */
 export function nativeGuiProfile(xml:string,parsed=scanXml(xml)){

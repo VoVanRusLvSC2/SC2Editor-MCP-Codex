@@ -4,10 +4,12 @@ import type { DataDiagnostic, DataReference, DataObject, DataValidationReport } 
 import { parentClassCompatibility } from "./parentClasses.js";
 import {concreteActorCreateConflict} from './actorConstruction.js';
 import {nativeClassInstanceFinding} from './nativeClasses.js';
+import type {CatalogObjectIndex} from './catalogIndex.js';
 
 export interface IndexedDataObject extends DataObject { file: string; layer: "workspace" | "dependency" }
 
-export function validateDataDocuments(primaryFile: string, documents: Array<{ file: string; document: DataDocument; layer: "workspace" | "dependency" }>, schema?: DataSchemaRegistry,referenceEdges?:DataReference[],external:ReadonlyMap<string,ReadonlySet<string>>=new Map()): DataValidationReport {
+export function validateDataDocuments(primaryFile: string, documents: Array<{ file: string; document: DataDocument; layer: "workspace" | "dependency" }>, schema?: DataSchemaRegistry,referenceEdges?:DataReference[],external:ReadonlyMap<string,ReadonlySet<string>>=new Map(),preparedIndex?:CatalogObjectIndex): DataValidationReport {
+  preparedIndex?.assertMatches(documents);
   const diagnostics: DataDiagnostic[] = [];
   const objects: IndexedDataObject[] = [];
   for (const record of documents) {
@@ -21,7 +23,7 @@ export function validateDataDocuments(primaryFile: string, documents: Array<{ fi
       continue;
     }
     if (root.tag !== "Catalog") diagnostics.push({ level: "L1", severity: "error", code: "DATA_ROOT_INVALID", message: `Expected <Catalog>, found <${root.tag}>`, file: record.file, path: record.file });
-    for (const object of record.document.objects()) objects.push({ ...object, file: record.file, layer: record.layer });
+    for (const object of preparedIndex?.objectsFor(record.document)??record.document.objects()) objects.push({ ...object, file: record.file, layer: record.layer });
   }
 
   const byDomainId = new Map<string, IndexedDataObject[]>();
@@ -44,6 +46,16 @@ export function validateDataDocuments(primaryFile: string, documents: Array<{ fi
   for (const object of objects.filter((entry) => entry.layer === "workspace")) {
     const nativeClassIssue=nativeClassInstanceFinding(object,object.file);
     if(nativeClassIssue)diagnostics.push(nativeClassIssue);
+    if(object.ctype==='CActorUnit'&&object.parent?.startsWith('GenericUnit')){
+      const model=object.fields.find(f=>f.name==='Model')?.value;
+      const source=model&&model!==object.id?byDomainId.get(`Actor\0${model}`):undefined;
+      const sourceSpeeds=[...new Set((source??[]).flatMap(s=>s.fields.filter(f=>f.name==='WalkAnimMoveSpeed'&&f.value!==undefined).map(f=>f.value)))];
+      if(sourceSpeeds.length===1&&!object.fields.some(f=>f.name==='WalkAnimMoveSpeed'))diagnostics.push({level:'L3',severity:'warning',code:'DATA_ACTOR_WALK_SPEED_REVIEW',message:`The Actor matching model '${model}' declares WalkAnimMoveSpeed=${sourceSpeeds[0]}; this generic-parent actor does not declare it. Compare effective animation timing with the intended source and native playback.`,file:object.file,path:`${object.ctype}:${object.id}.WalkAnimMoveSpeed`});
+      const parent=byDomainId.get(`Actor\0${object.parent}`)??[];
+      if(object.fields.some(f=>f.name==='On'&&f.index===undefined)&&parent.some(p=>p.fields.some(f=>f.name==='On')))diagnostics.push({level:'L3',severity:'warning',code:'DATA_ACTOR_EVENT_MERGE_REVIEW',message:'Unindexed On events may merge by position with inherited events and retain inherited attributes. Inspect effective event terms, targets and lifecycle in the original catalog; use explicit non-conflicting indices when appending.',file:object.file,path:`${object.ctype}:${object.id}.On`});
+      const indices=object.fields.filter(f=>f.name==='On'&&f.index!==undefined&&/^\d+$/.test(f.index)).map(f=>Number(f.index));
+      if(indices.length&&Math.max(...indices)>Math.max(64,indices.length+32))diagnostics.push({level:'L3',severity:'warning',code:'DATA_ACTOR_EVENT_SPARSE_REVIEW',message:'High Actor On indices can create empty event slots and repeated runtime warnings. Check the effective inherited array and append contiguously; native engine validation is required.',file:object.file,path:`${object.ctype}:${object.id}.On`});
+    }
     if (object.parent) {
       const key = `${object.domain ?? object.ctype}\0${object.parent}`;
       if (!(byDomainId.get(key)?.length)) diagnostics.push({ level: "L3", severity: "warning", code: "DATA_PARENT_UNRESOLVED", message: `Parent '${object.parent}' was not found in domain ${object.domain ?? object.ctype}`, file: object.file, path: `${object.ctype}:${object.id ?? "<default>"}@parent`, reference: { kind: object.domain ?? object.ctype, value: object.parent } });

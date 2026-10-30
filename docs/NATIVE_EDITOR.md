@@ -518,3 +518,24 @@ original Messages/Console and graceful owned closure. Its actual fields query
 uses an unknown report and correctly returns NOT_FOUND. Positive new field-value
 queries/comparisons remain untested here; no new full audit or gameplay claim is
 derived from the adapter fixtures.
+
+## Exporting unchanged legacy foundations
+
+`map.export` normally requires parsed foundation validation. For an imported
+legacy map rejected only because its MapInfo or RTXT version is unsupported,
+`preserveUnsupportedFoundation` accepts a reason and `componentSha256` containing
+every original MapInfo, root terrain, Objects, Preload and component-list hash. Use hashes retained from
+`map.import`; changed, added, removed or omitted foundation components reject.
+Original placement/load components stay byte-identical; automatic load-metadata
+preparation is skipped for this preservation mode. Malformed metadata, missing
+roots and other validation errors still reject. The
+export retains `parsed:false` and requires separate native acceptance; this mode
+does not upgrade metadata or authorize terrain edits. Archive entry verification
+and stale-source guards still apply.
+
+For a declared but absent `Attributes` component, `settings.plan` supports an
+explicit `attributes.ensure` operation with a reason. It creates only the empty
+native default container, never invents lost custom lobby definitions, and leaves
+existing valid Attributes untouched. Attribute-only plans do not parse or edit
+MapInfo; player and game-option operations still require their supported layout.
+Complete manifest/stale guards and native acceptance remain required.

@@ -18,8 +18,18 @@ export interface ArchiveManifest {
 export interface ArchiveOptions { adapter?: string; timeoutMs?: number; backup?: boolean; beforePublish?: () => Promise<void> }
 export interface ArchiveOperationResult {
   operation: "extract" | "pack";
-  archive: string; componentDirectory: string; backup?: string; adapter: string;
+  archive: string;
+  componentDirectory: string;
+  backup?: string;
+  adapter: string;
   verification: { entryCount: number; contentSha256: Record<string, string>; reopened: boolean };
+  performance?: {
+    elapsedMilliseconds: number;
+    stagesMilliseconds: Record<string, number>;
+    inputFiles: number;
+    inputBytes: number;
+    scope: string;
+  };
 }
 export interface DirectoryEntry { file: string; size: number; sha256: string }
 const hash = (bytes: Buffer) => createHash("sha256").update(bytes).digest("hex");
@@ -103,28 +113,75 @@ export async function readArchiveEntry(archive:string,name:string,options:Archiv
 }
 /** Hashes and pins the complete eligible tree, excluding only known tool/internal files. */
 export async function directoryManifest(root: string): Promise<DirectoryEntry[]> {
-  const result: DirectoryEntry[] = [], seen = new Set<string>(); let total = 0;
-  if(!(await fs.lstat(root)).isDirectory()) throw new Error("COMPONENT_ROOT_NOT_DIRECTORY");
-  const walk = async (relative: string) => {
-    const entries = await fs.readdir(path.join(root, relative), { withFileTypes: true });
-    for(const e of entries.sort((a,b) => a.name.localeCompare(b.name))) {
-      const file = relative ? `${relative}/${e.name}` : e.name;
-      if(toolFile(file) || ["(listfile)", "(attributes)", "(signature)"].includes(file)) continue;
-      safeArchivePath(file);
-      const stat = await fs.lstat(path.join(root, file));
-      if(stat.isSymbolicLink()) throw new Error(`ARCHIVE_SYMLINK: ${file}`);
-      if(stat.isDirectory()) await walk(file);
-      else if(stat.isFile()) {
-        total += stat.size;
-        if(stat.size > 512 * 1024 * 1024 || total > 4 * 1024 * 1024 * 1024 || result.length >= 100000) throw new Error("ARCHIVE_SIZE_LIMIT");
-        const key = file.toLowerCase(); if(seen.has(key)) throw new Error("ARCHIVE_NAME_COLLISION"); seen.add(key);
+  const result: DirectoryEntry[] = [],
+    seen = new Set<string>();
+  let total = 0;
+  // Small reads run in bounded batches. Large files stay serial to keep peak
+  // allocation bounded; every started read settles before the first error wins.
+  const pending: Array<{ file: string; size: number }> = [];
+  const flush = async () => {
+    const batch = pending.splice(0);
+    const settled = await Promise.allSettled(
+      batch.map(async ({ file, size }) => {
         const bytes = await fs.readFile(path.join(root, file));
-        if(bytes.length !== stat.size) throw new Error(`STALE_ARCHIVE_SOURCE: ${file}`);
-        result.push({ file, size: bytes.length, sha256: hash(bytes) });
-      } else throw new Error(`ARCHIVE_SPECIAL_FILE: ${file}`);
+        if (bytes.length !== size) throw new Error(`STALE_ARCHIVE_SOURCE: ${file}`);
+        return { file, size: bytes.length, sha256: hash(bytes) };
+      }),
+    );
+    for (const entry of settled) {
+      if (entry.status === "rejected") throw entry.reason;
+      result.push(entry.value);
     }
   };
-  await walk(""); return result.sort((a,b) => a.file.localeCompare(b.file));
+  if (!(await fs.lstat(root)).isDirectory()) throw new Error("COMPONENT_ROOT_NOT_DIRECTORY");
+  const walk = async (relative: string) => {
+    const entries = await fs.readdir(path.join(root, relative), { withFileTypes: true });
+    for (const e of entries.sort((a, b) => a.name.localeCompare(b.name))) {
+      const file = relative ? `${relative}/${e.name}` : e.name;
+      if (toolFile(file) || ["(listfile)", "(attributes)", "(signature)"].includes(file)) continue;
+      let stat;
+      try {
+        safeArchivePath(file);
+        stat = await fs.lstat(path.join(root, file));
+      } catch (error) {
+        await flush();
+        throw error;
+      }
+      if (stat.isSymbolicLink()) {
+        await flush();
+        throw new Error(`ARCHIVE_SYMLINK: ${file}`);
+      }
+      if (stat.isDirectory()) {
+        await flush();
+        await walk(file);
+      } else if (stat.isFile()) {
+        total += stat.size;
+        if (
+          stat.size > 512 * 1024 * 1024 ||
+          total > 4 * 1024 * 1024 * 1024 ||
+          result.length + pending.length >= 100000
+        ) {
+          await flush();
+          throw new Error("ARCHIVE_SIZE_LIMIT");
+        }
+        const key = file.toLowerCase();
+        if (seen.has(key)) {
+          await flush();
+          throw new Error("ARCHIVE_NAME_COLLISION");
+        }
+        seen.add(key);
+        if (stat.size > 8 * 1024 * 1024) await flush();
+        pending.push({ file, size: stat.size });
+        if (pending.length >= 4 || stat.size > 8 * 1024 * 1024) await flush();
+      } else {
+        await flush();
+        throw new Error(`ARCHIVE_SPECIAL_FILE: ${file}`);
+      }
+    }
+    await flush();
+  };
+  await walk("");
+  return result.sort((a, b) => a.file.localeCompare(b.file));
 }
 function assertManifestEqual(a: DirectoryEntry[], b: DirectoryEntry[], code: string) {
   if(JSON.stringify(a) !== JSON.stringify(b)) throw new Error(code);
@@ -163,50 +220,149 @@ export async function extractArchive(archive: string, componentDirectory: string
       verification: { entryCount: files.length, contentSha256: Object.fromEntries(files.map(f => [f.file,f.sha256])), reopened: false } };
   } finally { await fs.rm(temporary, { recursive: true, force: true }); }
 }
-export async function packArchive(componentDirectory: string, archive: string, options: ArchiveOptions = {}): Promise<ArchiveOperationResult> {
-  const source = path.resolve(componentDirectory), destination = path.resolve(archive), adapter = resolveArchiveAdapter(options.adapter);
+export async function packArchive(
+  componentDirectory: string,
+  archive: string,
+  options: ArchiveOptions = {},
+): Promise<ArchiveOperationResult> {
+  const started = performance.now(),
+    stages: Record<string, number> = {};
+  const phase = async <T>(name: string, work: () => Promise<T>): Promise<T> => {
+    const start = performance.now();
+    try {
+      return await work();
+    } finally {
+      stages[name] = (stages[name] ?? 0) + performance.now() - start;
+    }
+  };
+  const source = path.resolve(componentDirectory),
+    destination = path.resolve(archive),
+    adapter = resolveArchiveAdapter(options.adapter);
   assertArchive(destination);
   const relative = path.relative(source, destination);
-  if(relative === "" || (!relative.startsWith(`..${path.sep}`) && relative !== ".." && !path.isAbsolute(relative))) throw new Error("ARCHIVE_OUTPUT_INSIDE_SOURCE");
-  const files = await directoryManifest(source), meta = await metadata(source);
-  if(!files.length) throw new Error("EMPTY_COMPONENT_DIRECTORY");
+  if (
+    relative === "" ||
+    (!relative.startsWith(`..${path.sep}`) && relative !== ".." && !path.isAbsolute(relative))
+  )
+    throw new Error("ARCHIVE_OUTPUT_INSIDE_SOURCE");
+  const files = await phase("inputManifest", () => directoryManifest(source)),
+    meta = await metadata(source);
+  if (!files.length) throw new Error("EMPTY_COMPONENT_DIRECTORY");
   await requireCutsceneDocumentRegistration(source, files);
-  if(!adapter.native && files.some(f => f.file.startsWith(".sc2mcp-locales/"))) throw new Error("LOCALE_PACK_REQUIRES_NATIVE_BACKEND");
-  const metadataIndex = new Map(meta.manifest?.entries.filter(e => !e.internal).map(e => [e.localPath,e]));
-  const records = files.map(f => {
+  if (!adapter.native && files.some((f) => f.file.startsWith(".sc2mcp-locales/")))
+    throw new Error("LOCALE_PACK_REQUIRES_NATIVE_BACKEND");
+  const metadataIndex = new Map(
+    meta.manifest?.entries.filter((e) => !e.internal).map((e) => [e.localPath, e]),
+  );
+  const records = files.map((f) => {
     const known = metadataIndex.get(f.file);
-    if(f.file.startsWith(".sc2mcp-locales/") && !known) throw new Error("UNTRACKED_ARCHIVE_LOCALE_ENTRY");
-    return { ...f, name: known?.name ?? f.file, locale: known?.locale ?? 0, flags: known?.flags ?? 0, time: known?.fileTime ?? "0" };
+    if (f.file.startsWith(".sc2mcp-locales/") && !known)
+      throw new Error("UNTRACKED_ARCHIVE_LOCALE_ENTRY");
+    return {
+      ...f,
+      name: known?.name ?? f.file,
+      locale: known?.locale ?? 0,
+      flags: known?.flags ?? 0,
+      time: known?.fileTime ?? "0",
+    };
   });
   const original = await readSnapshot(destination);
-  if(original.exists && !(await fs.lstat(destination)).isFile()) throw new Error("ARCHIVE_DESTINATION_NOT_FILE");
+  if (original.exists && !(await fs.lstat(destination)).isFile())
+    throw new Error("ARCHIVE_DESTINATION_NOT_FILE");
   await fs.mkdir(path.dirname(destination), { recursive: true });
   const outputRoot = await fs.mkdtemp(path.join(path.dirname(destination), ".sc2mcp-export-"));
   const staging = await fs.mkdtemp(path.join(os.tmpdir(), "sc2mcp-pack-"));
-  const packed = path.join(outputRoot, "result.SC2Map"), snapshot = path.join(staging,"source"), reopened = path.join(staging,"reopened");
+  const packed = path.join(outputRoot, "result.SC2Map"),
+    snapshot = path.join(staging, "source"),
+    reopened = path.join(staging, "reopened");
   let backup: string | undefined;
   try {
-    await fs.mkdir(snapshot); await fs.mkdir(reopened);
-    for(const f of files) { await fs.mkdir(path.dirname(path.join(snapshot,f.file)), { recursive: true }); await fs.copyFile(path.join(source,f.file),path.join(snapshot,f.file)); }
-    assertManifestEqual(files, await directoryManifest(snapshot), "STALE_ARCHIVE_SOURCE_DURING_SNAPSHOT");
-    const plan = path.join(staging,"entries.tsv");
-    await fs.writeFile(plan, records.map(f => [f.name,f.file,f.locale,f.flags,f.time].join("\t")).join("\n") + "\n");
-    await runAdapter(adapter.path, ["pack",snapshot,packed,...(adapter.native ? [plan] : [])], options.timeoutMs);
-    if(!(await fs.stat(packed)).isFile() || !(await fs.stat(packed)).size) throw new Error("EMPTY_PACKED_ARCHIVE");
-    const verified = await extractTo(adapter,packed,reopened,options.timeoutMs);
-    assertManifestEqual(files,verified.files,"ARCHIVE_CONTENT_VERIFICATION_FAILED");
-    if(verified.manifest) {
-      const identities = new Set(verified.manifest.entries.filter(e => !e.internal).map(e => `${safeArchivePath(e.name).toLowerCase()}:${e.locale}`));
-      if(records.some(r => !identities.has(`${safeArchivePath(r.name).toLowerCase()}:${r.locale}`))) throw new Error("ARCHIVE_ENTRY_IDENTITY_CHANGED");
+    await fs.mkdir(snapshot);
+    await fs.mkdir(reopened);
+    await phase("privateCopy", async () => {
+      for (const f of files) {
+        await fs.mkdir(path.dirname(path.join(snapshot, f.file)), { recursive: true });
+        await fs.copyFile(path.join(source, f.file), path.join(snapshot, f.file));
+      }
+    });
+    assertManifestEqual(
+      files,
+      await phase("snapshotManifest", () => directoryManifest(snapshot)),
+      "STALE_ARCHIVE_SOURCE_DURING_SNAPSHOT",
+    );
+    const plan = path.join(staging, "entries.tsv");
+    await fs.writeFile(
+      plan,
+      records.map((f) => [f.name, f.file, f.locale, f.flags, f.time].join("\t")).join("\n") + "\n",
+    );
+    await phase("adapterPack", () =>
+      runAdapter(
+        adapter.path,
+        ["pack", snapshot, packed, ...(adapter.native ? [plan] : [])],
+        options.timeoutMs,
+      ),
+    );
+    if (!(await fs.stat(packed)).isFile() || !(await fs.stat(packed)).size)
+      throw new Error("EMPTY_PACKED_ARCHIVE");
+    const verified = await phase("reopenVerification", () =>
+      extractTo(adapter, packed, reopened, options.timeoutMs),
+    );
+    assertManifestEqual(files, verified.files, "ARCHIVE_CONTENT_VERIFICATION_FAILED");
+    if (verified.manifest) {
+      const identities = new Set(
+        verified.manifest.entries
+          .filter((e) => !e.internal)
+          .map((e) => `${safeArchivePath(e.name).toLowerCase()}:${e.locale}`),
+      );
+      if (
+        records.some((r) => !identities.has(`${safeArchivePath(r.name).toLowerCase()}:${r.locale}`))
+      )
+        throw new Error("ARCHIVE_ENTRY_IDENTITY_CHANGED");
     }
-    assertManifestEqual(files,await directoryManifest(source),"STALE_ARCHIVE_SOURCE");
-    await assertSnapshots(file => file,new Map([[destination,original],[path.join(source,archiveMetadataFile),meta.snapshot]]));
-    await options.beforePublish?.();
-    if(original.exists && (options.backup ?? true)) { backup = `${destination}.sc2uimcp.bak`; await fs.writeFile(backup,original.bytes); }
-    await assertSnapshots(file => file,new Map([[destination,original]]));
-    await options.beforePublish?.();
-    await fs.rename(packed,destination);
-    return { operation: "pack",archive: destination,componentDirectory: source,adapter: adapter.path,backup,
-      verification: { entryCount: files.length,contentSha256: Object.fromEntries(files.map(f => [f.file,f.sha256])),reopened: true } };
-  } finally { await fs.rm(staging,{ recursive:true,force:true }); await fs.rm(outputRoot,{ recursive:true,force:true }); }
+    assertManifestEqual(
+      files,
+      await phase("finalSourceManifest", () => directoryManifest(source)),
+      "STALE_ARCHIVE_SOURCE",
+    );
+    await assertSnapshots(
+      (file) => file,
+      new Map([
+        [destination, original],
+        [path.join(source, archiveMetadataFile), meta.snapshot],
+      ]),
+    );
+    if (options.beforePublish) await phase("callerFreshness", options.beforePublish);
+    if (original.exists && (options.backup ?? true)) {
+      backup = `${destination}.sc2uimcp.bak`;
+      await fs.writeFile(backup, original.bytes);
+    }
+    await assertSnapshots((file) => file, new Map([[destination, original]]));
+    if (options.beforePublish) await phase("callerFreshness", options.beforePublish);
+    await phase("publication", () => fs.rename(packed, destination));
+    return {
+      operation: "pack",
+      archive: destination,
+      componentDirectory: source,
+      adapter: adapter.path,
+      backup,
+      verification: {
+        entryCount: files.length,
+        contentSha256: Object.fromEntries(files.map((f) => [f.file, f.sha256])),
+        reopened: true,
+      },
+      performance: {
+        elapsedMilliseconds: Math.round(performance.now() - started),
+        stagesMilliseconds: Object.fromEntries(
+          Object.entries(stages).map(([name, ms]) => [name, Math.round(ms * 1000) / 1000]),
+        ),
+        inputFiles: files.length,
+        inputBytes: files.reduce((total, file) => total + file.size, 0),
+        scope:
+          "Archive pack only; includes publication callbacks, excludes caller preparation and final temporary-directory cleanup. Stages are sequential measured work, not a sum of all filesystem activity.",
+      },
+    };
+  } finally {
+    await fs.rm(staging, { recursive: true, force: true });
+    await fs.rm(outputRoot, { recursive: true, force: true });
+  }
 }
