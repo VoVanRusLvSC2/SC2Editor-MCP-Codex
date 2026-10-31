@@ -20,6 +20,7 @@ import {
   decorPaletteSchema,
 } from "../modules/placement/decorPalette.js";
 import { DecorPrefabs, prefabSchema, assembleSchema } from "../modules/placement/decorPrefabs.js";
+import { siteSchema, siteZone } from "../modules/placement/sitePlanner.js";
 const result = (value: unknown) => ({
   content: [{ type: "text" as const, text: JSON.stringify(value) }],
 });
@@ -117,10 +118,51 @@ export function registerAuthoringTools(
       async (a) => visual(() => palette.palette(a), a.includeImage),
     );
     server.registerTool(
+      "terrain.site.plan",
+      {
+        description:
+          "Plan a finished checkpoint or forest_clearing using measured asymmetric anchors, secondary groups, a reserved road and coordinated floor/accent textures. Scalar slots and textures replace member JSON. Extends the existing owned landscape transaction: terrain + Objects + ownership; manual changes and stale sources reject, height is preserved. Returns the usual terrain plan ID for apply/save and geometry previews. Native appearance, pathing and balance remain separate checks.",
+        inputSchema: siteSchema,
+      },
+      async (args) =>
+        result(
+          await project.workspace.withReadSet(() =>
+            project.browse.withSnapshot(async () => {
+              const prefab = await prefabs.plan(
+                prefabSchema.parse(
+                  Object.fromEntries(
+                    Object.entries(args).filter(([key]) => key in prefabSchema.shape),
+                  ),
+                ),
+              );
+              const zone = siteZone(args, prefab),
+                plan = await project.terrain.ownedLandscape({ zones: [zone] });
+              return {
+                ...plan,
+                site: {
+                  zone: args.zone,
+                  recipe: args.recipe,
+                  purpose: zone.purpose,
+                  memberCount: prefab.members.length,
+                  reservedWorld: prefab.reservedWorld,
+                  baseTexture: args.baseTexture,
+                  pathTexture: args.pathTexture,
+                  accentTexture: args.accentTexture,
+                  slots: prefab.slots,
+                  pngFile: prefab.pngFile,
+                  topPngFile: prefab.topPngFile,
+                  visualAcceptance: "not_checked",
+                },
+              };
+            }),
+          ),
+        ),
+    );
+    server.registerTool(
       "terrain.prefab",
       {
         description:
-          "Preview a measured base_entrance, service_yard, landing_pad, forest_edge or asymmetric supply_cluster with an open service apron. Optional fence/light/prop/secondaryProp/tree IDs override target-verified candidates. Returns top/isometric PNGs, reserved corridor, geometric fence joins and composeArgs. No map writes.",
+          "Preview a measured base_entrance, service_yard, landing_pad, forest_edge, supply_cluster, checkpoint or forest_clearing. Asymmetric groups reserve an open corridor. Optional fence/light/prop/secondaryProp/tree IDs override target-verified candidates. Returns top/isometric PNGs, reserved corridor, geometric fence joins and composeArgs. terrain.site.plan combines supported finished sites with owned materials/road. No map writes.",
         inputSchema: prefabSchema,
       },
       async (a) => visual(() => prefabs.plan(a), a.includeImage),

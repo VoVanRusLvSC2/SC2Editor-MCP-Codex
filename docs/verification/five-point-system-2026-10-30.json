@@ -1,0 +1,563 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-30T21:41:07.096Z",
+  "scope": "All five reusable map-quality features implemented, with bounded native examples. No universal map, balance, library, art or sound-quality certification.",
+  "sourceFingerprintPolicy": "Git-normalized UTF-8 LF",
+  "sourceFingerprints": {
+    "src/modules/placement/decorPrefabs.ts": "a908a0cd91562d0111c06c89e6f931e4b0243877f93f2d6dc139ccf385104efe",
+    "src/modules/placement/sitePlanner.ts": "6310d4b615b736e3472c4b7080c295ec6de08a97b065057daa0bb288d9e48332",
+    "src/modules/browse/workspace.ts": "9f4dec5340829e8931c446d2c617c68f45f56da9a17fe8aaa1fc0b4199cd593c",
+    "src/modules/trigger/recipes/heroSelection.ts": "1041d550e9375817606583d9d01e2f8a64c79daf4a9f1641031dc0e561256806",
+    "src/modules/trigger/runtime.ts": "27ed42186134ad0ea19277a196d5e155448fc7f7de875d0830ebc392f1c764ae",
+    "src/modules/trigger/workspace.ts": "495e7852de84ba34cf8954ddbdca7ac65afc57551e54d65f4c574d08aeede0ca",
+    "src/modules/trigger/tools.ts": "a48eac914b649fb7b1e5092883bfadae7d8439c8cbb5785da690bb22a8e46e8b",
+    "src/modules/data/spellRecipe.ts": "2c2b55f07d39bb8c5c2991c1f0f553a3a33f35442aa38e8ef6b8edacd1bb5b28",
+    "src/modules/data/unitCopyRecipe.ts": "49ebb5ee1c82e3b7b433ca6be65653b54511574b99eee435e64dc52e7dcf9771",
+    "src/modules/data/projectileRecipe.ts": "ffaa35e9fa69782fd9aca431423b79040d9ae194d05cc6276fe9d8f2824a0544",
+    "src/modules/data/unitPresentation.ts": "1cb834e1de7f0941a440c8fb4b0441e4258d5fbc3efcd33399f02343043f57ad",
+    "src/modules/data/presentation.ts": "86e23696294066253f47c9c43ee957d62af17614fda7e59402d07503f9f8dfb4",
+    "src/modules/testing/combatChecks.ts": "cc73f513e6b42475f2778df7b9ac6a12ce20cd4ac32a97506cac53756eed39e8",
+    "src/modules/testing/combatPlan.ts": "84c18726961cabbb7e9246dd311d0a689e27a6dd108c86780e337712caa98154",
+    "src/modules/testing/presentationChecks.ts": "2f0cb051d0bd46d6cd1cb9c5db45e06867b8cb792093d71dd761a0c22153e7e2",
+    "src/modules/testing/actionChecks.ts": "f5fe0a3cfb9caf9618f823fde5b295312639ec4b76022555b991ccf352aa800e",
+    "src/modules/testing/movementClock.ts": "e45b4b132df4bd7946f73fdaa5873a37bf11c8102974d89b9b070a87c670f1bb",
+    "src/modules/testing/schemas.ts": "455b306394eb115adbc77156810376c4112f0bbc9b1eb4c580da5c46ccb3bd75",
+    "src/modules/testing/storagePreflight.ts": "788087dd60d99732b1491b4db2d7cfdf5cc3530ebdb02541dc92ec7f3411a2bc",
+    "src/modules/testing/playableBounds.ts": "0b4c4d9402b5cedea011f1d34e935cc2e22e66bf4ca0cc5a4f2f1ccd4ec1d449",
+    "src/modules/testing/visualReview.ts": "076c1012d3980eb651889f8ece353130fcfde4aef532a53123ddeb3be1f7a498",
+    "src/modules/testing/workspace.ts": "7ff2b576b55b2f8a8af470229ee113d5db21c0da00c8bd04487d5839f22289b0",
+    "src/modules/testing/tools.ts": "bd90c7de907b752c22345902f7e679227417dc6de086b16b5f93394ec92d8560",
+    "src/integrations/game/bridge.ts": "fbe41d7168ceb60932f5cd7a12318728411a3ea651e72cac2a3a0da9593453b0",
+    "src/integrations/game/actionEvents.ts": "ead392dca2ff7498aa5915e7291bb651cbfb494570e3921722bbadeebcec227b",
+    "src/app/authoringScript.ts": "a7651574b08616d47d1d2652221e1d099d1cb9872ea71f86ddf9fc849c712b4b",
+    "src/app/authoringTools.ts": "8cb05ca16a83f6a192300a0189391b8fbdf031a158f7f66855234fb3bb5cbda1",
+    "AGENTS.md": "2d3aa00fd8103061d72cebb41f15049068ba9eb0d4c14b50a51bf0e4f602fd11",
+    "docs/FIVE_POINT_QUALITY_SYSTEM.md": "5f4719e722b67d81d7bc5fb1d172246296360787cacccbb59f3fd5dfe07c8671",
+    "docs/AUTHORING_PROTOCOL.md": "bcdd81532cb5b2bcf2c13bc5dd7e7fa4f5b28a173ee21ccfb7416f7731a8c3c8",
+    "docs/PROJECT_TESTS.md": "4e8bc7dab13cbbcd69a799ab8f3d62d55db74bdebfffa3b82c738a5a4f69bc76",
+    "docs/TRIGGER_MCP.md": "a098836e4617a854fa5d548ed50a4864aa3495c29498057dd571b607c958e9f5",
+    "docs/DECOR_VISUAL_WORKFLOW.md": "d84eb6d104ddf3f07edaf27228800acd4e00188fdce3d678598a41422fedbc8b",
+    ".agents/skills/sc2-data-trigger-systems/SKILL.md": "d0ce40d46e84bb6fec4260f1e0d86a46df8b3e06f87dcaec6030313db6c67e26",
+    ".agents/skills/sc2-terrain-composition/SKILL.md": "deea1406fce4048f3d68366b1c2eafbd72d190bfa17768fbf8653b2b53a8a930"
+  },
+  "implementation": [
+    "Atomic unit/spell main-Actor presentation and native projectile templates",
+    "Measured asymmetric site plus owned materials and reserved road",
+    "Hash-bound native recording/review/observation/before-after comparison",
+    "Retained native-time combat fixture scenarios and honest invalid-corpse handling",
+    "Editable native GUI hero preview, confirmation, per-player state and cleanup"
+  ],
+  "transport": {
+    "mapAuthoring": "Public persistent MCP stdio only",
+    "native": "Retained owned hidden Editor/Game bridges, used sequentially",
+    "serverDevelopment": "Local source edits, builds and tests",
+    "finalCompactAuthoringMs": 50514,
+    "privateRuntimeSourcePublished": false,
+    "finalSourceExportContainsPrivateInstrumentation": false
+  },
+  "regression": {
+    "tests": 154,
+    "passed": 154,
+    "failed": 0,
+    "log": "work/new-system-five/final-affected-tests-k.log",
+    "temporaryVolume": "K:",
+    "earlierHostFailure": "An earlier run failed with ENOSPC on C: while a native worker was live. No user files were deleted; the final regression run used task-local K: temporary files.",
+    "build": "passed",
+    "releaseBuild": "passed",
+    "architecture": "passed; 425 files, no static value-import cycles/violations",
+    "maintainedLanguage": "passed; 123 files",
+    "newModuleLint": "passed"
+  },
+  "fixes": [
+    "First-use Browse refresh precedes dependency enumeration",
+    "Measured fence AABBs keep positive margin from reserved road",
+    "Compact players=1 normalizes to an array",
+    "Typed null handles emit null instead of a quoted string",
+    "Any-player native UI events use the inspected c_playerAny=16",
+    "Preview camera uses an inspected Core camera; longer names fit wider roster buttons",
+    "Removed corpses require same-stream post-order death evidence; terminal vitals are unavailable, not invented",
+    "Early suite exits retain console evidence before cleanup"
+  ],
+  "native": {
+    "build": "5.0.17.98310",
+    "gameRuntime": {
+      "provenance": "pinned_release",
+      "releaseTag": "v0.1.0-dev.12",
+      "archiveSha256": "618d9a2bab1126135e022dd5142dacc525c0f55eb800d02b1a4ed51d18d165ef",
+      "verifiedFiles": 121,
+      "binaryOverride": false
+    },
+    "finalArchiveSha256": "bd5c6ea890cd5a692e6b56e3ebdf9451d5034d50ead3ef0e8748c0c59d0efdd5",
+    "combat": {
+      "jobId": "dcc849ef-6437-449d-b671-fdc401352558",
+      "sourceSha256": "4fa6894cf403bf90c956fd85f309c1225e44a4bc5759dd3f90566e462c8a1bef",
+      "overallOutcome": "failed",
+      "checks": [
+        {
+          "id": "combat:short-survival",
+          "status": "passed",
+          "required": true,
+          "evidence": {
+            "metrics": {
+              "elapsedGameSeconds": 2.375,
+              "attackerNetVitalLoss": 15,
+              "defenderNetVitalLoss": 20,
+              "defenderNetVitalLossPerGameSecond": 8.421052631578947,
+              "deathBracket": null,
+              "attackerAlive": true,
+              "defenderAlive": true
+            },
+            "sampleCount": 6,
+            "report": "K:\\SC2_MAP_Workspace\\SC2Editor-MCP-Codex\\work\\new-system-five\\Map\\.sc2mcp-output\\project-tests\\dcc849ef-6437-449d-b671-fdc401352558\\combat_short-survival_samples.json",
+            "nativeClock": {
+              "quality": "verified",
+              "clockSource": "response.gameTime",
+              "identitySource": "response.session/runtimeEpoch/mapLoadSerial",
+              "observations": 14,
+              "nativeObservations": 14,
+              "issues": [],
+              "wallElapsedMs": 2270,
+              "gameElapsedSeconds": 2.25,
+              "gameSecondsPerWallSecond": 0.9911894273127754,
+              "scope": "Read-only timestamps from the same returned operations. Complete monotonic same-session clocks are required for the ratio. This is observed simulation progress, not an FPS, configured game-speed, obstruction or load diagnosis; it never extends the wall deadline."
+            },
+            "firstOrderGameTime": 2.875,
+            "scope": "Controlled ordinary attack orders and sampled life+shield loss, including any regeneration/healing/interference. Sequential reads; sampled death bracket, not exact kill time or isolated damage attribution. Automatic target acquisition remains native; counterattack=false omits only the explicit defender order. No universal balance or visual certification."
+          }
+        },
+        {
+          "id": "combat:short-survival:cleanup",
+          "status": "passed",
+          "required": true
+        },
+        {
+          "id": "combat:death-bracket",
+          "status": "passed",
+          "required": true,
+          "evidence": {
+            "metrics": {
+              "elapsedGameSeconds": 6.625,
+              "attackerNetVitalLoss": 40,
+              "defenderNetVitalLoss": null,
+              "defenderNetVitalLossPerGameSecond": null,
+              "terminalVitals": "unavailable_after_correlated_death",
+              "deathEvidence": "same-stream post-order unit_died; carried values are last-known, not terminal",
+              "deathBracket": {
+                "lastObservedAlive": 6.125,
+                "firstObservedDead": 6.625
+              },
+              "attackerAlive": true,
+              "defenderAlive": false
+            },
+            "sampleCount": 15,
+            "report": "K:\\SC2_MAP_Workspace\\SC2Editor-MCP-Codex\\work\\new-system-five\\Map\\.sc2mcp-output\\project-tests\\dcc849ef-6437-449d-b671-fdc401352558\\combat_death-bracket_samples.json",
+            "nativeClock": {
+              "quality": "verified",
+              "clockSource": "response.gameTime",
+              "identitySource": "response.session/runtimeEpoch/mapLoadSerial",
+              "observations": 32,
+              "nativeObservations": 32,
+              "issues": [],
+              "wallElapsedMs": 6511,
+              "gameElapsedSeconds": 6.5,
+              "gameSecondsPerWallSecond": 0.9983105513745968,
+              "scope": "Read-only timestamps from the same returned operations. Complete monotonic same-session clocks are required for the ratio. This is observed simulation progress, not an FPS, configured game-speed, obstruction or load diagnosis; it never extends the wall deadline."
+            },
+            "firstOrderGameTime": 6.25,
+            "scope": "Controlled ordinary attack orders and sampled life+shield loss, including any regeneration/healing/interference. Sequential reads; sampled death bracket, not exact kill time or isolated damage attribution. Automatic target acquisition remains native; counterattack=false omits only the explicit defender order. No universal balance or visual certification."
+          }
+        },
+        {
+          "id": "combat:death-bracket:cleanup",
+          "status": "passed",
+          "required": true
+        }
+      ]
+    },
+    "selector": {
+      "jobId": "9035fab9-11ca-4f80-a13e-a41fee84af32",
+      "sourceSha256": "534afbbcf130023f44912cacd2d9e31b1d7e65e8f93b21c271ed0ec82a25dadf",
+      "overallOutcome": "inconclusive",
+      "checks": [
+        {
+          "id": "scenario:selector-native-callbacks",
+          "status": "passed",
+          "required": true,
+          "evidence": {
+            "report": "K:\\SC2_MAP_Workspace\\SC2Editor-MCP-Codex\\work\\new-system-five\\MapFinal\\.sc2mcp-output\\project-tests\\9035fab9-11ca-4f80-a13e-a41fee84af32\\scenario_selector-native-callbacks.json"
+          }
+        },
+        {
+          "id": "presentation:bolt",
+          "status": "passed",
+          "required": true,
+          "evidence": {
+            "actionSubmitted": true,
+            "recordingFile": "K:\\SC2_MAP_Workspace\\SC2Editor-MCP-Codex\\work\\new-system-five\\MapFinal\\.sc2mcp-output\\project-tests\\9035fab9-11ca-4f80-a13e-a41fee84af32\\presentation_bolt_recording.json",
+            "visualAcceptance": "not_checked",
+            "scope": "One recorded normal action, exact post-order event matching and selected real frames. Review actual motion/impact/sound separately."
+          }
+        },
+        {
+          "id": "game.cleanup",
+          "status": "passed",
+          "required": true,
+          "evidence": {
+            "stopped": true,
+            "sourceUnchanged": true
+          }
+        }
+      ]
+    },
+    "attack": {
+      "jobId": "c56090e8-afbc-4f35-ab15-2e1afae76e4d",
+      "sourceSha256": "bd5c6ea890cd5a692e6b56e3ebdf9451d5034d50ead3ef0e8748c0c59d0efdd5",
+      "overallOutcome": "passed",
+      "checks": [
+        {
+          "id": "presentation:walk-attack-death",
+          "status": "passed",
+          "required": true,
+          "evidence": {
+            "actionSubmitted": true,
+            "recordingFile": "K:\\SC2_MAP_Workspace\\SC2Editor-MCP-Codex\\work\\new-system-five\\MapFinal\\.sc2mcp-output\\project-tests\\c56090e8-afbc-4f35-ab15-2e1afae76e4d\\presentation_walk-attack-death_recording.json",
+            "visualAcceptance": "not_checked",
+            "scope": "One recorded normal action, exact post-order event matching and selected real frames. Review actual motion/impact/sound separately."
+          }
+        },
+        {
+          "id": "view:action",
+          "status": "passed",
+          "required": true,
+          "evidence": {
+            "requested": {
+              "x": 36,
+              "y": 34,
+              "distance": 24,
+              "pitch": 60,
+              "yaw": 90
+            },
+            "observed": {
+              "target": {
+                "x": 36,
+                "y": 34
+              },
+              "pitch": 59.9414,
+              "yaw": 90,
+              "distance": 24
+            },
+            "includeUI": false,
+            "visualReview": "not_checked",
+            "scope": "Camera readback and native PNG capture; framing and art quality require image review",
+            "file": "K:\\SC2_MAP_Workspace\\SC2Editor-MCP-Codex\\work\\new-system-five\\MapFinal\\.sc2mcp-output\\project-tests\\c56090e8-afbc-4f35-ab15-2e1afae76e4d\\View_action.png",
+            "sha256": "651861e83405efdfba9485dc6f5aa78f2f8a136e0b1c58b5e232a0a9a5a00794"
+          }
+        },
+        {
+          "id": "view:checkpoint",
+          "status": "passed",
+          "required": true,
+          "evidence": {
+            "requested": {
+              "x": 32,
+              "y": 22,
+              "distance": 28,
+              "pitch": 60,
+              "yaw": 0
+            },
+            "observed": {
+              "target": {
+                "x": 32,
+                "y": 22
+              },
+              "pitch": 59.9414,
+              "yaw": 0,
+              "distance": 28
+            },
+            "includeUI": true,
+            "visualReview": "not_checked",
+            "scope": "Camera readback and native PNG capture; framing and art quality require image review",
+            "file": "K:\\SC2_MAP_Workspace\\SC2Editor-MCP-Codex\\work\\new-system-five\\MapFinal\\.sc2mcp-output\\project-tests\\c56090e8-afbc-4f35-ab15-2e1afae76e4d\\View_checkpoint.png",
+            "sha256": "9af421801aaad9704da9da70065488c941255c95d94a14d995c3dcb1d581813c"
+          }
+        },
+        {
+          "id": "game.diagnostics",
+          "status": "inconclusive",
+          "required": false,
+          "reason": "No unexpected errors observed in available sources; diagnostic coverage is partial",
+          "evidence": {
+            "unexpected": [],
+            "sources": [
+              {
+                "source": "OutputDebugString",
+                "access": "partial",
+                "clear": null,
+                "dropped": false,
+                "coverage": "OutputDebugString only; engine diagnostics require logs"
+              },
+              {
+                "source": "EngineLog",
+                "access": "partial",
+                "scope": "process",
+                "clear": null,
+                "cursor": 0,
+                "hasMore": false,
+                "dropped": false,
+                "reset": false,
+                "retainedEntries": 0,
+                "coverage": "original native engine log strings; UI-thread snapshot, independent of file flush and visibility filters; not every engine subsystem emits here",
+                "reason": null
+              },
+              {
+                "source": "TriggerDebugger",
+                "access": "partial",
+                "characterCursor": 10103,
+                "hasMore": false,
+                "clear": null
+              },
+              {
+                "source": "2026-10-30 23.32.16 SystemInfo.txt",
+                "access": "partial",
+                "bytes": 5545,
+                "clear": null
+              },
+              {
+                "source": "2026-10-30 23.32.20 Graphics.txt",
+                "access": "partial",
+                "bytes": 2947,
+                "clear": null
+              },
+              {
+                "source": "Galaxy",
+                "access": "partial",
+                "clear": null,
+                "reason": "Engine log coverage is not guaranteed; absence of messages is not proof of absence of errors"
+              },
+              {
+                "source": "Data",
+                "access": "partial",
+                "clear": null,
+                "reason": "Engine log coverage is not guaranteed; absence of messages is not proof of absence of errors"
+              },
+              {
+                "source": "actors",
+                "access": "partial",
+                "clear": null,
+                "reason": "Engine log coverage is not guaranteed; absence of messages is not proof of absence of errors"
+              },
+              {
+                "source": "models",
+                "access": "partial",
+                "clear": null,
+                "reason": "Engine log coverage is not guaranteed; absence of messages is not proof of absence of errors"
+              },
+              {
+                "source": "textures",
+                "access": "partial",
+                "clear": null,
+                "reason": "Engine log coverage is not guaranteed; absence of messages is not proof of absence of errors"
+              },
+              {
+                "source": "sounds",
+                "access": "partial",
+                "clear": null,
+                "reason": "Engine log coverage is not guaranteed; absence of messages is not proof of absence of errors"
+              },
+              {
+                "source": "SoundDecoder",
+                "access": "partial",
+                "clear": null,
+                "scope": "process",
+                "cursor": 0,
+                "hasMore": false,
+                "dropped": false,
+                "versionHex": 279632,
+                "binaryVersionHex": 279632,
+                "objectObservationArmed": true,
+                "openStateCalls": 382,
+                "preexistingSoundsCovered": false,
+                "coverage": "Actual SoundI.getOpenState return results through observed live FMOD 4 objects; sounds loaded before observation are not covered; numeric failures have no original diagnostic text.",
+                "reason": null
+              }
+            ]
+          }
+        },
+        {
+          "id": "game.cleanup",
+          "status": "passed",
+          "required": true,
+          "evidence": {
+            "stopped": true,
+            "sourceUnchanged": true
+          }
+        },
+        {
+          "id": "artifact.unchanged",
+          "status": "passed",
+          "required": true,
+          "evidence": {
+            "sha256": "bd5c6ea890cd5a692e6b56e3ebdf9451d5034d50ead3ef0e8748c0c59d0efdd5",
+            "origin": "source"
+          }
+        },
+        {
+          "id": "source.unchanged",
+          "status": "passed",
+          "required": true
+        }
+      ]
+    },
+    "editor": {
+      "jobId": "83a68a10-682f-4a68-b959-75e2d004359b",
+      "sourceSha256": "d7327cdf23ea4460fb1ef63950ea8c7284f5b5d5114ea56f753a625138e49cf3",
+      "overallOutcome": "inconclusive",
+      "checks": [
+        {
+          "id": "editor",
+          "status": "passed",
+          "required": true,
+          "evidence": {
+            "nativeJobId": "69cf62de-e866-41cf-a807-d7e64c269d5c",
+            "report": "K:\\SC2Sys5NE1030\\jobs\\69cf62de-e866-41cf-a807-d7e64c269d5c\\result.json",
+            "expected": "passed"
+          }
+        }
+      ]
+    },
+    "sceneCaptures": [
+      {
+        "id": "02404191-c2dd-426f-958d-0c4bcf0cc5c5",
+        "sourceSha256": "bd5c6ea890cd5a692e6b56e3ebdf9451d5034d50ead3ef0e8748c0c59d0efdd5",
+        "sourceUnchanged": true,
+        "status": "MAP_IMAGE_EXPORTED",
+        "sha256": "f84b2590d8235aea463de0a3856753a587ff13c91430f16635b16aef3db68326",
+        "desktopObservation": {
+          "samples": 9222,
+          "visibleWindowsOnUserDesktopPeak": 0,
+          "editorForegroundSamples": 0,
+          "inputDesktopChanges": 0,
+          "inputInjectionUsed": false,
+          "desktopSwitchApiUsed": false
+        }
+      },
+      {
+        "id": "4773894a-ad00-42bd-9fc8-04ef9a8b6cea",
+        "sourceSha256": "bd5c6ea890cd5a692e6b56e3ebdf9451d5034d50ead3ef0e8748c0c59d0efdd5",
+        "sourceUnchanged": true,
+        "status": "TERRAIN_FRAME_CAPTURED",
+        "sha256": "50c330c76cf846d11d87a3093f830f7c5b3d2c55844cbeecddd9553321b55337",
+        "desktopObservation": {
+          "samples": 10180,
+          "visibleWindowsOnUserDesktopPeak": 0,
+          "editorForegroundSamples": 0,
+          "inputDesktopChanges": 0,
+          "inputInjectionUsed": false,
+          "desktopSwitchApiUsed": false
+        }
+      }
+    ],
+    "spellPresentation": {
+      "events": [
+        {
+          "sequence": 13,
+          "gameTime": 8.125,
+          "kind": "ability",
+          "unit": "3c3d39c745cc75430d551af1f72f9cf6:u:1",
+          "unitType": "SystemsMarine",
+          "unitMetadataCurrent": true,
+          "owner": 1,
+          "position": {
+            "x": 32,
+            "y": 34
+          },
+          "unitMetadataGameTime": 8.125,
+          "ability": "SystemsBolt",
+          "stage": -6,
+          "stageName": "complete",
+          "source": "galaxy"
+        },
+        {
+          "sequence": 14,
+          "gameTime": 8.4375,
+          "kind": "damage",
+          "unit": "3c3d39c745cc75430d551af1f72f9cf6:u:2",
+          "unitType": "SystemsTarget",
+          "unitMetadataCurrent": true,
+          "owner": 15,
+          "position": {
+            "x": 40,
+            "y": 34
+          },
+          "unitMetadataGameTime": 8.4375,
+          "amount": 30,
+          "sourceUnit": "3c3d39c745cc75430d551af1f72f9cf6:u:1",
+          "source": "galaxy"
+        }
+      ],
+      "actorLifecycle": [
+        {
+          "kind": "actor_created",
+          "actorDataId": "SystemsBoltAction",
+          "gameTime": 8.0625
+        },
+        {
+          "kind": "actor_created",
+          "actorDataId": "GhostEMPAttackMissile",
+          "gameTime": 8.0625
+        },
+        {
+          "kind": "actor_destroyed",
+          "actorDataId": "SystemsBoltAction",
+          "gameTime": 8.5
+        },
+        {
+          "kind": "actor_destroyed",
+          "actorDataId": "GhostEMPAttackMissile",
+          "gameTime": 8.5
+        }
+      ],
+      "soundAssets": [
+        "assets\\sounds\\terran\\ghost\\ghost_empattacklaunch.wav",
+        "assets\\sounds\\terran\\ghost\\ghost_empattackimpact0.wav"
+      ],
+      "audio": {
+        "status": "ok",
+        "nonzero": 342719,
+        "frames": 173094,
+        "sha256": "1e0efd861a61744e99970e96495a4f95fafad8dc0b34a07db02b4fc7632036ea"
+      }
+    },
+    "comparison": {
+      "baselineJobId": "1d6372c9-b917-48b4-9aec-7a9fd8be3f8b",
+      "candidateJobId": "4ec39e2c-67bc-4b3a-a73e-d37ec6507ded",
+      "baselineSourceSha256": "2e63f54acd253f09d24dd5582da5cc04a7cf8886a5afc02e6bf11753c86bc776",
+      "candidateSourceSha256": "4fa6894cf403bf90c956fd85f309c1225e44a4bc5759dd3f90566e462c8a1bef",
+      "sourceChanged": true,
+      "pairs": [
+        {
+          "id": "view:hero-preview",
+          "baselineSha256": "8d5c570e9eceaf8f91819ffbfbc788bb03fad879a4885da75b5edeee197fddcf",
+          "candidateSha256": "0db6d96f55fbd5d3cefa0914ca5d9f6c6c06fd8564721bdde241b7973d93392b",
+          "imageBytesChanged": true
+        }
+      ],
+      "sheetSha256": "367cae8f45a69c4d9f73b57aa66b28ce67287d867c25ec13d44129ac9ee6d94f"
+    }
+  },
+  "visualReview": {
+    "origin": "agent observation of actual pixels and timing",
+    "humanApproval": false,
+    "scope": "Representative Marine/Marauder, EMP-derived projectile and one checkpoint. Native overview and gameplay-scale images inspected. No beauty score assigned."
+  },
+  "limitations": [
+    "Native cases retain their exact tested revisions. Later target life/response changes do not rewrite earlier job evidence. Final attack setup independently confirmed 30 spell damage on the current map.",
+    "The final original Editor compile preceded the last target-life-only adjustment; the same GUI/runtime then compiled and ran in the final game.",
+    "The early-exit diagnostic-only addition was covered by current runner regressions; successful native runs used the ordinary console path.",
+    "UnitModel framing is roster-dependent; previewCamera is explicit. Wider roster/other unit sizes still require native review.",
+    "Sound bindings, FMOD events and nonzero captured audio do not prove isolated audibility or mixing quality.",
+    "A finite recording may miss a phase. Unmatched events stay inconclusive; the stationary target was fitted to the recording window instead of upgrading old failures.",
+    "Combat results include native regeneration, target acquisition and map interference. A removed corpse has no fabricated final vitals.",
+    "Five folders remain a recommendation. No unrelated cutscene, every third-party GUI library, cliff topology or universal navigation acceptance is claimed."
+  ]
+}

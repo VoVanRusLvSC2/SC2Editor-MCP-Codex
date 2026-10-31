@@ -1,5 +1,28 @@
 # Reusable map tests through MCP
 
+## Combat, timed presentation and visual correction
+
+`project.test.combat.plan` plans ordinary fixture combat with compact Unit IDs,
+center coordinates, repeat count and explicit outcome/time bounds. Detailed
+`game.combats` manifests add per-side net life/shield loss ranges and a capture
+view. Native game-time samples produce last-alive/first-dead brackets; missing
+clocks, invalid handles and unconfirmed cleanup do not pass. This measures the
+declared matchups, not universal balance.
+
+`game.presentations` reuses one retained `game.record` call per declared action.
+Use setup/readback queries with local `$from` links, an ordinary order, expected
+events, a `viewId`, `beforeSeconds`, `afterSeconds` and `fps`. Total recording is
+bounded to six real seconds. Source-bound post-order events and immutable PNG/MP4
+artifacts establish observation, not visual or audible quality. Output-volume
+budgets include native frames, selected copies and videos.
+
+Inspect `project.test.review`, then use `project.test.observe` for image-bound
+findings and concrete corrections. After normal authoring and an affected-case
+retest, `project.test.compare` takes `baselineJobId` and `candidateJobId`. Historical
+baseline artifact/image hashes must still match; the candidate must also match
+current source/dependencies. It does not replay tests or infer human approval.
+See [five-point workflow](FIVE_POINT_QUALITY_SYSTEM.md).
+
 ## Current release evidence gate
 
 This is a developer gate for a complete repository/source checkout. Run
@@ -750,3 +773,28 @@ The user also reported on 2026-10-21 that movement worked on all three previousl
 authored maps they tested. This is positive user-observed evidence; exact map
 revisions, tested routes and build identities were not supplied with that
 statement, so keep it separate from the automated fixture.
+
+## Review existing native frames
+
+After a completed job, `project.test.review` accepts `jobId`, optional `offset`
+and `limit` (1–8). It verifies current source/tested-artifact identity and hashes
+of passed native PNG evidence, then creates a labeled contact sheet. It reuses
+the existing frames without launching another game or acquiring another bridge.
+Dark/flat-image signals are review prompts, not visual quality scores. No
+confirmed PNG means no visual evidence; declare the needed views in the test
+manifest instead of substituting logs or Actor counts.
+
+Inspect the actual pixels before calling `project.test.observe`. Pass selected
+image IDs and SHA-256 values, plus observations with subject, aspect, state and
+detail. A `needs_change` finding requires a concrete `nextChange`. Notes are
+saved as immutable job-local `ReviewNotes_<uuid>.json` with fixed origin
+`agent_observation`, `humanApproval=false` and `visualAcceptance=not_certified`.
+Stale source/artifact/image identities reject. Notes do not upgrade the original
+test verdict or imply user approval. Apply repairs through normal authoring
+tools and repeat only the affected case. Still frames establish neither motion
+timing nor audible sound; capture the relevant phases separately.
+
+The [2026-10-30 presentation workflow record](verification/presentation-workflow-2026-10-30.json)
+retains the failed edge-camera request and its camera-only correction, one native
+projectile action, a review contact sheet and image-bound agent notes. The first
+run's camera failure is not relabeled passed by the later independent view.

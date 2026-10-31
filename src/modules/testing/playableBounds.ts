@@ -14,7 +14,8 @@ export function routeBoundsCheck(manifest:TestManifest,bytes:Buffer):TestCheck{
  const info=new MapInfoDocument(bytes),bounds=info.playableBounds;
  const formations=manifest.game?.formations??[];
  const padNames=[...(manifest.game?.pads??[]).map(p=>p.at),...pathingPointNames(manifest.game?.pathing??[]),...(manifest.game?.padProbe?[manifest.game.padProbe.origin]:[]),...(manifest.game?.nativeProbe?[manifest.game.nativeProbe.origin]:[])];
- const names=[...new Set([...[...(manifest.game?.routes??[]),...formations].flatMap(route=>[route.from,route.to]),...padNames])];
+ const combatPoints=(manifest.game?.combats??[]).flatMap(combat=>[combat.attacker.at,combat.defender.at]);
+ const names=[...new Set([...[...(manifest.game?.routes??[]),...formations].flatMap(route=>[route.from,route.to]),...padNames,...combatPoints])];
  const outside=names.filter(name=>{const p=manifest.game!.points[name];return p.x<bounds.left||p.x>=bounds.right||p.y<bounds.bottom||p.y>=bounds.top;});
  const checkedFormationPoints=formations.flatMap(f=>f.offsets.flatMap((offset,index)=>[f.from,f.to].map(anchor=>({formation:f.id,index,anchor,x:manifest.game!.points[anchor].x+offset.x,y:manifest.game!.points[anchor].y+offset.y}))));
  const outsideFormationPoints=checkedFormationPoints.filter(p=>p.x<bounds.left||p.x>=bounds.right||p.y<bounds.bottom||p.y>=bounds.top);

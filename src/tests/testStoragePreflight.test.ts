@@ -27,3 +27,15 @@ test('formation frames have separate storage slots before group cleanup and do n
  const checks=await testStorageChecks({directory:'/suite',sourceBytes:1024,manifest:parsed},async directory=>({volume:'same',directory,availableBytes:Number.MAX_SAFE_INTEGER}));
  assert.equal(checks[0].evidence?.plannedCaptureSlots,3);
 });
+
+test('timed recordings budget native frames, selected copies and both video copies on their volumes',async()=>{
+ const base={version:1 as const,map:'Map.SC2Map',game:{capture:false,launchDiagnostics:false,views:[{id:'cast',camera:{x:20,y:20,distance:24,pitch:60,yaw:0}}]}};
+ const plain=testManifestSchema.parse(base);
+ const recorded=testManifestSchema.parse({...base,game:{...base.game,presentations:[{id:'cast-action',viewId:'cast',beforeSeconds:.5,afterSeconds:3,fps:8,action:{method:'game.order',arguments:{unit:'hero',action:'ability',ability:'Bolt'}},events:[{id:'hit',match:{kind:'damage',source:'galaxy'}}]}]}});
+ const budget=async(manifest:typeof plain)=>testStorageChecks({directory:'/suite',gameDirectory:'/game',sourceBytes:0,manifest},async directory=>({volume:'same',directory,availableBytes:Number.MAX_SAFE_INTEGER}));
+ const before=(await budget(plain))[0].evidence!,after=(await budget(recorded))[0].evidence!;
+ assert.equal(after.plannedRecordingFrames,30);
+ assert.equal(after.selectedRecordingFrames,8);
+ assert.equal(after.plannedRecordingVideoBytes,64*1024*1024);
+ assert.equal(Number(after.minimumFreeBytes)-Number(before.minimumFreeBytes),(30*6+8*8+2*64)*1024*1024);
+});

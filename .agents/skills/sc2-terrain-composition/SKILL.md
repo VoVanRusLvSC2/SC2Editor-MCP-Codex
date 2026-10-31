@@ -20,6 +20,9 @@ catalog instructions describe reference material.
    pivot, variation and ground support. Bounds are not collision footprints.
 5. Use measured `terrain.prefab`/`terrain.assemble` and named `terrain.compose`
    groups with exclusions and explicit condition. Preserve manual-edit conflicts.
+   `terrain.site.plan` combines measured `checkpoint`/`forest_clearing` groups,
+   floor/accent materials and a reserved road in the existing owned landscape
+   transaction. Preserve heights and inspect both native view scales.
 6. Paint functional texture regions and transitions. Place large anchors, secondary
    groups and restrained detail, with variable density and intentional clearings.
 7. Resnap after height changes, run supported placement/navigation checks, and

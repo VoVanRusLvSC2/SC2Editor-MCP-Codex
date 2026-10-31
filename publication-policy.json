@@ -181,7 +181,9 @@
     "mcp-hardening/STATUS.md",
     "ARCHITECTURE_REFACTOR_PLAN.md",
     "REFACTORING_REPORT_2026-10-28.md",
-    "PERFORMANCE.md"
+    "PERFORMANCE.md",
+    "FIVE_POINT_QUALITY_SYSTEM.md",
+    "FOCUSED_ACCEPTANCE.md"
   ],
   "publicationHolds": [
     {

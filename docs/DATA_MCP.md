@@ -608,6 +608,7 @@ unsupported concrete Actor layers and existing target identities reject.
 | `line` | Aimed cells with one delayed search per cell | `count`, `spacing`, cell `radius` |
 | `ring` | Aimed ring with an open sector | `count`, ring `radius`, `gap` in degrees |
 | `burn` | Single refreshable native buff with periodic damage | `duration`, `period`; `damage` is per tick |
+| `projectile` | Native missile travel, impact damage and presentation | Required exact `sourceEffect`, `sourceActor` templates |
 
 Area cells use a short spell-owned overlap lock. A positive `delay` requires
 `warningModel`; warnings end with a native Actor timer. Impact actors use the
@@ -617,14 +618,46 @@ created by spells. Optional `unit` plus `slot=0..14` binds a 3x5 command card;
 `page` defaults to0. Known inherited cell/face conflicts still reject.
 
 Execution templates default to `Stimpack` for pulse, `EMP` for line/ring and
-`Snipe` for damage/burn. `sourceAbility` explicitly changes the native template;
-its target filters, validators and cursor behavior remain inherited. Changing a
+`Snipe` for damage/burn/projectile. `sourceAbility` explicitly changes the native
+template; its target filters, validators and cursor behavior remain inherited. Changing a
 template is a gameplay decision, not a generic unit/point coercion. Labels, icon
 and hotkey inherit `face`; use the text/Data tools for distinct localized UI when
-mechanics differ. Main-unit cast/channel animation remains an explicit
-`data actor.ability_animation` step with inspected real sequences.
+mechanics differ. Optional `cast`, `channel` and `finish` use inspected real
+sequence strings on the bound unit's existing main Actor, in the same atomic
+spell transaction. `actor` explicitly selects it when needed; `loopCast` defaults
+to false. These options require `unit`; a missing sequence rejects the complete
+group, including the spell, card and preloads. The separate
+`data actor.ability_animation` tool remains available for existing abilities.
+
+For projectile spells, inspect an exact `CEffectLaunchMissile` and its matching
+`GenericAttack` Action Actor first. The supported profile keeps native ammo,
+mover, missile Actor/Model and inherited sounds, and rebinds launch, impact and
+damage events to the new IDs. Unsupported/ambiguous profiles reject; the command
+does not guess a projectile from a Model filename. The compact projectile is
+unit-targeted and explicitly sets launch `ImpactLocation=TargetUnit` for its
+direct damage. Source validators remain inherited and may restrict valid targets.
+Use the detailed projectile/area recipes for point-impact searches. For example,
+with inspected catalog and M3 identities:
+
+```text
+data spell id=Bolt kind=projectile unit=Hero slot=12 damage=40 model=ImpactModel face=Snipe sourceEffect=NativeLaunch sourceActor=NativeAction cast=Attack
+data.unit.presentation unit=Hero
+```
+
+The identifiers above are placeholders. `data.unit.presentation` returns a
+bounded repair shortlist for explicit primary Actor/Model, inherited weapons,
+stale `WeaponStart` animation selectors and common effect execution links.
+`data.presentation.check` inspects selected effects, including explicit
+GenericAttack selectors and named missile/beam Model links. Both are declared
+profile audits: a resolved link does not prove model loading, animation, sound
+or visible impact. Native frames and timed gameplay observations remain required.
 
 These are creation-only presets. Detailed tools author nonstandard graphs or
 modify existing entries. Up to500 **expanded** native operations may share a
 Data apply. Missing dependencies and unsupported profiles remain errors. Static
 checks do not certify native playback, targeting, art quality or balance.
+
+The [2026-10-30 scoped presentation workflow record](verification/presentation-workflow-2026-10-30.json)
+contains public-MCP authoring, native Editor load/compile, one observed projectile
+hit and separate frame-review evidence. Timed animation/VFX and audible sound
+remain unverified by its camera-only still.

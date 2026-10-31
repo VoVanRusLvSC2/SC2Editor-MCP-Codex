@@ -18,12 +18,13 @@ unknown query/context parameters reject instead of dropping filters.
 
 For common Data work request `modkit.author_help` with `section=data` once. Prefer
 `data unit` (derived Unit plus independent main Actor) and `data spell`
-(damage/pulse/line/ring/burn with effects, presentation, optional command card and
+(damage/pulse/line/ring/burn/projectile with effects, presentation, optional command card and
 preloads) over hand-written operation arrays. Put compatible same-catalog commands
 in one call so they share final-graph validation and one grouped save. Creation
 does not overwrite existing IDs. Unit copies intentionally share native mechanics;
-spell Button labels/icons/hotkeys inherit the chosen face. Author custom text,
-main-unit cast animations and unsupported mechanics explicitly. See the compound
+spell Button labels/icons/hotkeys inherit the chosen face. Use inspected real
+`cast`, `channel` and `finish` sequences in the same recipe for main-unit animation.
+Author custom text and unsupported mechanics explicitly. See the compound
 recipes in [Data MCP](DATA_MCP.md#compact-compound-recipes).
 
 Use `data unit.configure` and `data spell.configure` for subsequent supported
@@ -359,3 +360,12 @@ placement and unit arrival distinct. An occupied endpoint may remain connected
 while not passable. A native false result is not a timeout, a diagnosis of its
 cause or a unit-footprint test. The private query pass closes before ordinary
 gameplay, so its state is not silently combined with later movement evidence.
+
+For supported compact spells, commit inspected main-unit `cast`/`channel`/`finish`
+sequences with mechanics, effect Actors, command card and preloads in one
+`data spell` group. Use `data.unit.presentation` to shortlist unresolved main
+Actors/Models and stale weapon selectors; declared links remain separate from
+asset and native playback evidence. After native tests, `project.test.review`
+reuses hash-confirmed frames without replay. Inspect the actual pixels and record
+concrete image-bound findings with `project.test.observe`. These agent notes do
+not constitute human approval, visual certification or an automatic repair.

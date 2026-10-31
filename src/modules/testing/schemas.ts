@@ -1,5 +1,7 @@
 import * as z from 'zod/v4';
 import {actionCheckSchema} from './actionChecks.js';
+import {combatSchema} from './combatChecks.js';
+import {presentationSchema} from './presentationChecks.js';
 import {padSchema,padProbeSchema,pathingSchema,pathingPointNames} from './padQueries.js';
 
 const name=z.string().regex(/^[A-Za-z][A-Za-z0-9_-]{0,63}$/);
@@ -27,6 +29,8 @@ export const testManifestSchema=z.object({
   pathing:z.array(pathingSchema).max(32).default([]),nativeProbe:padProbeSchema.optional(),
   routes:z.array(z.object({id:name,from:name,to:name,type:z.string().min(1),owner:z.number().int().min(0).max(15).default(1),mobility:z.literal('ground'),expected:z.enum(['arrive','blocked']).default('arrive'),timeout:z.number().int().min(1).max(120).default(20),tolerance:z.number().min(0.1).max(3).default(0.75),maxDeviation:z.number().finite().min(0.1).max(4096).optional(),bidirectional:z.boolean().default(true),required:z.boolean().default(true)}).strict()).max(16).default([]),
   formations:z.array(formationSchema).max(8).default([]),
+  combats:z.array(combatSchema).max(8).default([]),
+  presentations:z.array(presentationSchema).max(4).default([]),
   scenarios:z.array(z.object({id:name,required:z.boolean().default(true),steps:z.array(step).min(1).max(32)}).strict()).max(16).default([]),
   actions:z.array(actionCheckSchema).max(16).default([]),
   views:z.array(view).max(8).default([]),
@@ -61,7 +65,13 @@ export const testManifestSchema=z.object({
   if(ids.has(f.id))c.addIssue({code:'custom',message:'Duplicate check ID: '+f.id});ids.add(f.id);
  }
  for(const s of m.game?.scenarios??[]){if(ids.has(s.id))c.addIssue({code:'custom',message:'Duplicate check ID: '+s.id});ids.add(s.id);}
+ for(const combat of game?.combats??[]){
+  if(ids.has(combat.id))c.addIssue({code:'custom',message:'Duplicate check ID: '+combat.id});ids.add(combat.id);
+  for(const participant of [combat.attacker,combat.defender])if(!game!.points[participant.at])c.addIssue({code:'custom',message:'Combat point missing: '+participant.at});
+  if(combat.viewId&&!game!.views.some(v=>v.id===combat.viewId))c.addIssue({code:'custom',message:'Combat view missing: '+combat.viewId});
+ }
  for(const a of m.game?.actions??[]){if(ids.has(a.id))c.addIssue({code:'custom',message:'Duplicate check ID: '+a.id});ids.add(a.id);}
+ for(const p of game?.presentations??[]){if(ids.has(p.id))c.addIssue({code:'custom',message:'Duplicate check ID: '+p.id});ids.add(p.id);if(!game!.views.some(v=>v.id===p.viewId))c.addIssue({code:'custom',message:'Presentation view missing: '+p.viewId});}
  for(const v of m.game?.views??[]){if(ids.has(v.id))c.addIssue({code:'custom',message:'Duplicate check ID: '+v.id});ids.add(v.id);}
 });
 export type TestManifest=z.infer<typeof testManifestSchema>;

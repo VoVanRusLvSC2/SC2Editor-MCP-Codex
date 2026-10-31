@@ -15,10 +15,14 @@ import {observeStartupEvents} from './startupEvents.js';
 import {runActionCheck} from './actionChecks.js';
 import {testStorageChecks,type StorageProbe} from './storagePreflight.js';
 import {runFormationCheck} from './formationChecks.js';
+import {runCombatCheck} from './combatChecks.js';
+import {runPresentationCheck,readOwnedRecordingMedia} from './presentationChecks.js';
 import {runRouteCheck} from './routeChecks.js';
 import {preparePadProbe} from './padPreparation.js';
 import {observePadQueries} from './padChecks.js';
 import {planQuality,qualityPlanSchema} from './qualityPlan.js';
+import {prepareVisualReview,recordVisualObservations,visualReviewSchema,visualObservationSchema,type VisualReviewContext} from './visualReview.js';
+import {compareVisualReviews,visualCompareSchema} from './visualReview.js';
 
 type Game=Pick<NativeGameBridge,'configuration'|'status'|'attach'|'call'|'detach'> & Partial<Pick<NativeGameBridge,'action'>>;
 type Editor=Pick<NativeEditorBridge,'status'|'check'|'job'|'readWorkerArtifact'>;
@@ -50,6 +54,33 @@ export function gameLaunchCheck(r:GameResult,required:boolean):TestCheck {
 
 /** Reusable map suites lease the project's retained bridges and use private archives. */
 export class ProjectTestWorkspace {
+ private visualContext(id: string, historical = false): VisualReviewContext {
+  const job = this.jobs.get(id);
+  if (!job) throw Error('TEST_JOB_UNKNOWN');
+  return {
+   id: job.id,
+   state: job.state,
+   directory: job.directory,
+   sourceSha256: job.plan.source.sha256,
+   testedSha256: job.testedArtifact?.sha256 ?? job.plan.source.sha256,
+   checks: job.checks,
+   unchanged: async () => {
+    if(historical&&!job.testedArtifact)throw Error('VISUAL_COMPARE_HISTORICAL_ARTIFACT_REQUIRED');
+    if(!historical)await this.unchanged(job.plan);
+    if (job.testedArtifact && (await this.identity(job.testedArtifact.file)).sha256 !== job.testedArtifact.sha256)
+     throw Error('VISUAL_REVIEW_TESTED_ARTIFACT_STALE');
+   },
+  };
+ }
+ review(input: z.input<typeof visualReviewSchema>) {
+  const args = visualReviewSchema.parse(input);
+  return prepareVisualReview(this.workspace, this.visualContext(args.jobId), args);
+ }
+ observe(input: z.input<typeof visualObservationSchema>) {
+  const args = visualObservationSchema.parse(input);
+  return recordVisualObservations(this.workspace, this.visualContext(args.jobId), args);
+ }
+ compare(input:z.input<typeof visualCompareSchema>){const args=visualCompareSchema.parse(input);return compareVisualReviews(this.workspace,this.visualContext(args.baselineJobId,true),this.visualContext(args.candidateJobId),args);}
  qualityPlan(args:z.input<typeof qualityPlanSchema>){return planQuality(this.workspace,args);}
  private plans=new Map<string,Plan>();private jobs=new Map<string,Job>();private tail:Promise<void>=Promise.resolve();private closing=false;
  private mapInfoCache=new Map<string,Buffer>();
@@ -78,7 +109,7 @@ export class ProjectTestWorkspace {
   this.terrainLoadCache.set(source.sha256,check);return check;
  }
  private async playableBoundsCheck(manifest:TestManifest,artifact:Identity):Promise<TestCheck|undefined>{
-  if(!manifest.game||!(manifest.game.routes.length||manifest.game.formations.length||manifest.game.pads.length||manifest.game.pathing.length))return;
+  if(!manifest.game||!(manifest.game.routes.length||manifest.game.formations.length||manifest.game.combats.length||manifest.game.pads.length||manifest.game.pathing.length))return;
   try{
    if((await this.identity(artifact.file)).sha256!==artifact.sha256)throw Error('TEST_EXECUTED_ARTIFACT_CHANGED');
    let bytes=this.mapInfoCache.get(artifact.sha256);
@@ -102,7 +133,7 @@ export class ProjectTestWorkspace {
   if(manifest.game?.routes.some(r=>r.expected==='blocked'))issues.push({id:'navigation.authoritative_query',status:'unsupported',required:false,reason:'Movement non-arrival cannot prove an obstruction. Explicit game.pathing checks report separate native point predicates; they do not certify this unit footprint or the later movement Game state'});
   const p:Plan={id:randomUUID(),manifest,manifestSha256:digest(JSON.stringify(manifest)),source,dependencies,issues,capabilities:{game,groundMobility:'Declared by the test author; runtime inspection does not expose the movement plane',dependencyScope:'Explicit file digests plus native load and observed runtime build; installed transitive dependencies are not fully pinned'}};
   if(this.plans.size>=32)this.plans.delete(this.plans.keys().next().value!);this.plans.set(p.id,p);
-  return {planId:p.id,map:manifest.map,sourceSha256:source.sha256,manifestSha256:p.manifestSha256,dependencies:dependencies.map(d=>({id:d.id,sha256:d.sha256})),issues,storage,capabilities:p.capabilities,suites:{editor:manifest.editor?.checks??[],routes:manifest.game?.routes.length??0,formations:manifest.game?.formations.length??0,...(manifest.game?.pads.length?{pads:manifest.game.pads.length}:{}),...(manifest.game?.pathing.length?{pathing:manifest.game.pathing.length}:{}),scenarios:manifest.game?.scenarios.length??0,actions:manifest.game?.actions.length??0,views:manifest.game?.views.length??0},ready:!issues.some(c=>c.required&&c.status!=='passed')};
+  return {planId:p.id,map:manifest.map,sourceSha256:source.sha256,manifestSha256:p.manifestSha256,dependencies:dependencies.map(d=>({id:d.id,sha256:d.sha256})),issues,storage,capabilities:p.capabilities,suites:{editor:manifest.editor?.checks??[],routes:manifest.game?.routes.length??0,formations:manifest.game?.formations.length??0,combats:manifest.game?.combats.length??0,presentations:manifest.game?.presentations.length??0,...(manifest.game?.pads.length?{pads:manifest.game.pads.length}:{}),...(manifest.game?.pathing.length?{pathing:manifest.game.pathing.length}:{}),scenarios:manifest.game?.scenarios.length??0,actions:manifest.game?.actions.length??0,views:manifest.game?.views.length??0},ready:!issues.some(c=>c.required&&c.status!=='passed')};
  }
  async planFile(file:string){const source=await this.identity(file),bytes=await fs.readFile(source.file);if(bytes.length>256*1024)throw Error('TEST_MANIFEST_SIZE_LIMIT');if(digest(bytes)!==source.sha256)throw Error('TEST_MANIFEST_STALE');const result=await this.plan(JSON.parse(bytes.toString('utf8')));this.plans.get(result.planId)!.manifestFile=source;return {...result,manifestFileSha256:source.sha256};}
  async run(planId:string){
@@ -191,12 +222,12 @@ export class ProjectTestWorkspace {
     }
    }
    if(j.testedArtifact){const load=await this.terrainLoadCheck(j.testedArtifact);if(load){j.checks.push(load);if(load.status==='failed')return;}}
-   if(m.game&&(m.game.routes.length||m.game.formations.length||m.game.pads.length||m.game.pathing.length)){
+   if(m.game&&(m.game.routes.length||m.game.formations.length||m.game.combats.length||m.game.pads.length||m.game.pathing.length)){
     this.checkCancel(j);j.phase='map.playable_bounds';const check=(await this.playableBoundsCheck(m,j.testedArtifact!))!;
     j.checks.push(check);if(check.status!=='passed')return;
    }
    if(m.game&&(m.game.pads.length||m.game.pathing.length)&&!await this.pads(j,runtime))return;
-   const mainGame=m.game&&(!(m.game.pads.length||m.game.pathing.length)||m.game.ready||m.game.startupEvents.length||m.game.routes.length||m.game.formations.length||m.game.scenarios.length||m.game.actions.length||m.game.views.length||m.game.capture||m.game.diagnostics.required);
+   const mainGame=m.game&&(!(m.game.pads.length||m.game.pathing.length)||m.game.ready||m.game.startupEvents.length||m.game.routes.length||m.game.formations.length||m.game.combats.length||m.game.scenarios.length||m.game.actions.length||m.game.presentations.length||m.game.views.length||m.game.capture||m.game.diagnostics.required);
    if(m.game&&mainGame){this.checkCancel(j);j.phase='launch';const config=runtime.game.configuration();if(!config.configured||!config.launchEnabled){j.checks.push({id:'game.launch',status:'unsupported',required:m.game.required,reason:'Game runtime or explicit launch configuration unavailable'});return;}attemptedAttach=true;const attached=await runtime.game.attach(privateArchive,m.game.timeout,m.game.renderBackend);j.gameRuntime=runtime.game.configuration().runtimeIdentity;await this.record(j,'launch',attached);
     j.checks.push(gameLaunchCheck(attached,m.game.required));
     if(j.checks.at(-1)!.status!=='passed'){
@@ -253,6 +284,16 @@ export class ProjectTestWorkspace {
      });
      j.checks.push(...result.checks);if(!result.continueSuite)return;
     }
+    for(const combat of m.game.combats){
+     this.checkCancel(j);j.phase='combat:'+combat.id;
+     const selected=combat.viewId?m.game.views.find(v=>v.id===combat.viewId):undefined;
+     const result=await runCombatCheck(combat,m.game.points,{
+      call:(method,args)=>runtime!.game.call(method,args),body:testBody,state:responseState,checkCancel:()=>this.checkCancel(j),pollMs:this.options.pollMs,
+      record:async(name,value)=>{const stem='combat_'+combat.id+'_'+name;await this.record(j,stem,value);return path.join(j.directory,stem+'.json');},
+      ...(selected?{capture:()=>this.view(j,runtime!.game,selected,{id:'combat:'+combat.id+':frame',file:'Combat_'+combat.id+'.png'})}:{})
+     });
+     j.checks.push(...result.checks);if(!result.continueSuite)return;
+    }
     for(const s of m.game.scenarios){this.checkCancel(j);j.phase='scenario:'+s.id;const r=await runtime.game.call('game.test.run',{steps:s.steps});await this.record(j,'scenario_'+s.id,r);j.checks.push({id:'scenario:'+s.id,status:responseState(r),required:s.required,evidence:{report:path.join(j.directory,'scenario_'+s.id+'.json')}});}
     let actionBlocked=false;
     for(const action of m.game.actions){
@@ -261,6 +302,17 @@ export class ProjectTestWorkspace {
      const observed=await runActionCheck(action,{call:(method,args)=>runtime!.game.call(method,args),action:runtime.game.action?args=>runtime!.game.action!(args):undefined,checkCancel:()=>this.checkCancel(j),record:(name,value)=>this.record(j,'action_'+action.id+'_'+name,value)});
      j.checks.push({id:'action:'+action.id,status:observed.status,required:action.required,reason:observed.reason,evidence:{report:path.join(j.directory,'action_'+action.id+'_result.json'),actionSubmitted:observed.actionSubmitted,matchedEvents:observed.observation?.events.filter(e=>e.matched).length??0,scope:observed.scope}});
      actionBlocked=observed.status!=='passed';
+    }
+    for(const presentation of m.game.presentations){
+     this.checkCancel(j);j.phase='presentation:'+presentation.id;
+     const selected=m.game.views.find(v=>v.id===presentation.viewId)!;
+     const result=await runPresentationCheck(presentation,{
+      call:(method,args)=>runtime!.game.call(method,args),body:testBody,state:responseState,checkCancel:()=>this.checkCancel(j),
+      camera:()=>this.view(j,runtime!.game,selected,{id:'presentation:'+presentation.id+':before',file:'Presentation_'+presentation.id+'_before.png'}),
+      record:async(name,value)=>{const stem='presentation_'+presentation.id+'_'+name;await this.record(j,stem,value);return path.join(j.directory,stem+'.json');},
+      media:async(file,hash,kind,name)=>{const root=runtime!.game.configuration().work;if(!root)throw Error('PRESENTATION_OWNED_RUNTIME_ROOT_UNAVAILABLE');const bytes=await readOwnedRecordingMedia(root,file,hash,kind),target=this.workspace.resolveUserPath(path.join(j.directory,'Presentation_'+presentation.id+'_'+name));await fs.writeFile(target,bytes);return {file:target,sha256:hash};},
+     });
+     j.checks.push(...result.checks);if(!result.continueSuite)return;
     }
     for(const view of m.game.views){this.checkCancel(j);j.phase='view:'+view.id;j.checks.push(await this.view(j,runtime.game,view));}
     j.phase='diagnostics';const after=await runtime.game.call('game.diagnostics',{...(testBody(before).cursor?{cursor:testBody(before).cursor}:{}),limit:128});await this.record(j,'diagnostics_after',after);
@@ -271,6 +323,16 @@ export class ProjectTestWorkspace {
   }catch(e){const reason=e instanceof Error?e.message:String(e);if(reason!=='TEST_CANCEL_REQUESTED')j.checks.push({id:j.phase||'runner',status:'failed',required:true,reason});}
   finally{
    j.phase='cleanup';
+   // Preserve console evidence even when an uncertain combat/action stops the suite early.
+   if(runtime&&m.game&&attemptedAttach&&j.checks.some(c=>c.id==='game.launch'&&c.status==='passed')&&!j.checks.some(c=>c.id==='game.diagnostics')){
+    try{
+     const response=await runtime.game.call('game.diagnostics',{});await this.record(j,'diagnostics_early_exit',response);
+     const body=testBody(response),build=String(j.checks.find(c=>c.id==='game.build')?.evidence?.observed??'unknown');
+     const messages=Array.isArray(body.messages)?body.messages:[];
+     const unexpected=messages.filter((d:any)=>d.severity==='error'&&!m.game!.diagnostics.expected.some(e=>e.source===d.source&&e.text===(d.text??d.message)&&e.build===build));
+     j.checks.push({id:'game.diagnostics',status:unexpected.length?'failed':'inconclusive',required:m.game.diagnostics.required,reason:unexpected.length?'Observed unexpected runtime errors before early cleanup':'Early-exit console snapshot; absence and diagnostic coverage remain partial',evidence:{unexpected:unexpected.slice(0,16),sources:body.sources??null,scope:'Owned runtime snapshot before cleanup; no complete-suite or absence claim'}});
+    }catch{j.checks.push({id:'game.diagnostics',status:'inconclusive',required:m.game.diagnostics.required,reason:'Early-exit console evidence unavailable'});}
+   }
    if(runtime){try{if(attemptedAttach){const d=await runtime.game.detach();await this.record(j,'detach',d);j.checks.push({id:'game.cleanup',status:d.stopped&&d.sourceUnchanged===true?'passed':'failed',required:true,evidence:{stopped:d.stopped,sourceUnchanged:d.sourceUnchanged}});}}catch(e){j.checks.push({id:'game.cleanup',status:'failed',required:true,reason:String(e)});}}
    release?.();
    if(j.testedArtifact)try{const valid=(await this.identity(j.testedArtifact.file)).sha256===j.testedArtifact.sha256;j.checks.push({id:'artifact.unchanged',status:valid?'passed':'failed',required:true,reason:valid?undefined:'TEST_EXECUTED_ARTIFACT_CHANGED',evidence:{sha256:j.testedArtifact.sha256,origin:j.testedArtifact.origin}});}catch(e){j.checks.push({id:'artifact.unchanged',status:'failed',required:true,reason:String(e)});}

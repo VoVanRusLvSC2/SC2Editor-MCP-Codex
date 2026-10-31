@@ -34,6 +34,11 @@ original Editor checks. Inspect actual tool schemas before using recipes.
    event registration, explicit trigger targets, reference/callback semantics and
    localized `TriggerStrings`. Native compilation alone is not equivalence proof.
 5. Handle initialization, transitions, duplicate input, death, cleanup and restart.
+   For common hero selection, prefer `trigger.recipe_hero_select` with existing
+   Data Unit IDs; inspect its native UnitModel preview and confirm callback.
+   Use `project.test.combat.plan` for declared matchups and `game.presentations`
+   for timed native observation. Review and compare actual frames after repairs;
+   generated graphs, recorded bytes and event matches do not judge art quality.
    Keep UI state per player where needed. Use native command cards unless a
    separate ability interface is explicitly requested.
    For locked UI features, read `docs/BLIZZARD_TEMPLATES_AND_CLIPPING.md`. Prefer
@@ -50,3 +55,17 @@ evidence. Valid XML and successful compilation do not prove visible effects or
 correct gameplay; identify the exact remaining test when it cannot be performed.
 Use the [shared regression review](../../../docs/AUTHORING_PROTOCOL.md#regression-review-before-delivery)
 for changed scope before delivery; reuse accepted evidence instead of repeating it.
+
+## Complete presentation before acceptance
+
+For supported new spells, prefer `data.spell` with inspected `cast`, `channel`
+and `finish` sequences so mechanics, command card, effect Actors, preloads and
+main-unit animation commit together. Use `kind=projectile` only with an inspected
+supported native launch/Action template; retain its missile/mover presentation.
+Never invent an animation inventory or replace the main Actor with a second one.
+Use `data.unit.presentation` for a bounded repair shortlist, then inspect exact
+Actor events/effect links. A declared Model is not evidence of visible playback.
+Review actual native frames with `project.test.review`; record concrete,
+image-bound agent observations through `project.test.observe` without treating
+them as human approval. Reuse unchanged passing evidence; rerun the affected
+cast/travel/impact/cleanup phases when presentation changes.

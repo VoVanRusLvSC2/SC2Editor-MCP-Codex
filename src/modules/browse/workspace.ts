@@ -242,6 +242,9 @@ export class BrowseWorkspace {
     this.snapshotReads=captured.memo;return captured.value;
   }
   private async buildCapturedIndex(force=false):Promise<BrowseIndexSnapshot>{
+    // Lazy native metadata may register Data/Browse roots. Prepare it before
+    // enumerating files and assigning availability, not halfway through context.
+    await this.data.dependencyRefresh?.();
     this.indexedData.nativeCatalogFiles=this.data.nativeCatalogFiles;
     const files = await this.files();
     const draftHashes = await Promise.all(files.filter((file) => file.sourceLayer === "workspace" && this.workspace.hasDraft(normalized(path.relative(this.workspace.root, file.path)))).map(async (file) => (await this.workspace.diff(normalized(path.relative(this.workspace.root, file.path)))).afterSha256));

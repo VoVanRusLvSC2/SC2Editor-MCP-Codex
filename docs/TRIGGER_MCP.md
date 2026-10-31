@@ -1,5 +1,19 @@
 # MCP GUI Triggers and the AST Model
 
+## Complete hero selection
+
+`trigger.recipe_hero_select` plans native editable elements in
+`GAMEPLAY/HERO_SELECTION`. Supply `prefix`, 2–20 existing Unit IDs in `heroes`,
+allowed `players` and `spawn:{x,y}`. Compact authoring accepts
+`trigger recipe_hero_select prefix=Roster heroes=Vanguard,Bulwark players=1,2 at=32,34`.
+Apply/save the complete group, then generate runtime from the same GUI graph.
+The recipe includes UnitModel preview, Data-localized names, confirmation and
+per-player state. `<prefix>Hero[player]` holds the created unit; a lock prevents
+duplicate confirmation, and failed creation releases it. The dialog is destroyed
+when all allowed players confirm. Unit abilities and progression remain Data.
+Inspect native preview/callbacks before acceptance. Existing IDs reject.
+See [five-point workflow](FIVE_POINT_QUALITY_SYSTEM.md).
+
 ## Native generator risk review
 
 `trigger.plan` and `trigger.validate` return `nativeProfile`, also retained in

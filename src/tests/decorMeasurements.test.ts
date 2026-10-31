@@ -17,6 +17,9 @@ import {DataWorkspace} from '../modules/data/workspace.js';
 import {DataSchemaRegistry} from '../modules/data/schemaRegistry.js';
 import type {CascWorkspace} from '../modules/casc/workspace.js';
 import {compileAuthorScript} from '../app/authoringScript.js';
+import {siteZone} from '../modules/placement/sitePlanner.js';
+import {corridorWithinArea} from '../modules/terrain/geometry.js';
+import {checkGroupClearance} from '../modules/placement/groupClearance.js';
 
 function m3(){const b=Buffer.alloc(600),sections=[['MODL',24,1,23],['U8__',160,96,0],['DIV_',256,1,2],['U16_',308,3,0],['REGN',320,1,3]] as const;const tag=(s:string,at:number)=>b.write(s.split('').reverse().join(''),at);tag('MD34',0);b.writeUInt32LE(512,4);b.writeUInt32LE(sections.length,8);const ref=(at:number,n:number,index:number)=>{b.writeUInt32LE(n,at);b.writeUInt32LE(index,at+4);};ref(12,1,0);b.writeUInt32LE(0x182007d,120);ref(124,96,1);ref(136,1,2);ref(256,3,3);ref(268,1,4);b.writeFloatLE(1,192);b.writeFloatLE(1,228);b.writeUInt16LE(1,310);b.writeUInt16LE(2,312);b.writeUInt32LE(3,332);b.writeUInt32LE(3,340);sections.forEach(([s,off,n,v],i)=>{const at=512+i*16;tag(s,at);b.writeUInt32LE(off,at+4);b.writeUInt32LE(n,at+8);b.writeUInt32LE(v,at+12);});return b;}
 function box(width:number,depth:number,height:number,offset=[0,0,0]):MeasuredModel{
@@ -26,6 +29,26 @@ function box(width:number,depth:number,height:number,offset=[0,0,0]):MeasuredMod
  return {file:'box.m3',sha256:createHash('sha256').update(JSON.stringify(positions)).digest('hex'),build:'test',geometry,transform:{},measurement:measureGeometry(geometry),attachmentNames:[],cacheHit:false};
 }
 function slots():Slot[]{return [['fence',box(4,.5,2,[3,-2,-.3])],['light',box(.5,.5,4)],['prop',box(1.5,2,2)],['tree',box(3,4,7)]] .map(([name,measured])=>({name:name as string,decor:{actor:{id:name+'Actor',key:'Actor:'+name},measured,variation:0,scales:{combined:[1,1,1]}} as DecorModel}));}
+
+test('finished checkpoint and clearing layouts use asymmetric measured groups and a protected route',()=>{
+ const roles=[...slots(),{name:'secondaryProp',decor:{actor:{id:'Rock',key:'Actor:Rock'},measured:box(1.1,.8,.7),variation:0,scales:{combined:[1,1,1]}} as DecorModel}];
+ for(const recipe of ['checkpoint','forest_clearing'] as const){
+  const first=layoutPrefab(recipe,roles,6,42),again=layoutPrefab(recipe,roles,6,42);
+  assert.deepEqual(first.members,again.members);assert.ok(first.connections.length);
+  assert.ok(first.bounds.every(b=>!overlaps(b,first.reserved[0])));
+  assert.ok(first.bounds.every((b,i)=>!first.bounds.slice(i+1).some(other=>overlaps(b,other))));
+  const zone=siteZone({zone:'north',tileset:'Agria',recipe,anchor:{x:50,y:50},angle:.6,baseTexture:'Soil',pathTexture:'Road',accentTexture:'Grass'}, {members:first.members,reservedLocal:first.reserved});
+  assert.equal(zone.config.objectCount,0);assert.equal(zone.config.terrain.heightMode,'preserve');assert.equal(zone.config.groups[0].members.length,first.members.length);
+  assert.equal(zone.config.terrain.materials?.base,'Soil');assert.equal(zone.config.terrain.materials?.patches?.[0].texture,'Grass');
+  const area=zone.config.area;assert.equal(area.type,'polygon');if(area.type!=='polygon')throw Error('Expected polygon');
+  const route=zone.config.terrain.routes[0];assert.equal(corridorWithinArea({type:'polygon',points:area.points},route.points,route.width),true);
+  for(const member of zone.config.groups[0].members)assert.doesNotThrow(()=>checkGroupClearance(measuredMemberGeometry(zone.config.groups[0].anchor,zone.config.groups[0].angle,member),{type:'polygon',points:area.points},[route],[]));
+  const script=compileAuthorScript(`terrain site.plan zone=north recipe=${recipe} tileset=Agria at=50,50 baseTexture=Soil pathTexture=Road`,'save');
+  assert.deepEqual(script.map(s=>s.tool),['terrain.site.plan','terrain.apply','terrain.save']);
+ }
+ const trees=layoutPrefab('forest_clearing',roles,6,42).members.filter(m=>m.id==='treeActor');assert.equal(trees.filter(m=>m.offset.x<0).length,4);assert.equal(trees.filter(m=>m.offset.x>0).length,3);
+ assert.notDeepEqual(layoutPrefab('forest_clearing',roles,6,43).members,layoutPrefab('forest_clearing',roles,6,42).members);
+});
 
 test('geometry dimensions use referenced vertices and full nonuniform rotated transform, preserving source',()=>{
  const g=box(2,3,4,[1,-2,-1]).geometry;g.positions.push(999,999,999);const before=JSON.stringify(g),m=measureGeometry(g,{scale:[2,3,4],rotation:Math.PI/2,position:[10,20,30]});

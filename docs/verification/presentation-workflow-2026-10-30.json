@@ -1,0 +1,155 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-30T16:50:08.667Z",
+  "scope": "Compact spell presentation authoring, bounded declared unit/effect audits and reuse of existing native frames. Not universal art or animation acceptance.",
+  "sourceFingerprintPolicy": "Git-normalized UTF-8 LF",
+  "sourceFingerprints": {
+    "src/modules/data/spellRecipe.ts": "2c2b55f07d39bb8c5c2991c1f0f553a3a33f35442aa38e8ef6b8edacd1bb5b28",
+    "src/modules/data/presentation.ts": "86e23696294066253f47c9c43ee957d62af17614fda7e59402d07503f9f8dfb4",
+    "src/modules/data/unitPresentation.ts": "1cb834e1de7f0941a440c8fb4b0441e4258d5fbc3efcd33399f02343043f57ad",
+    "src/modules/data/tools.ts": "6838679940c2e0afc1b8ddbde4ccc91168a7a28f7cd2761807235848843c6829",
+    "src/modules/testing/visualReview.ts": "784a5bfbff6028396268d410c5b3ed00372388fa8498cd1c92de3393a1766176",
+    "src/modules/testing/workspace.ts": "1e826ff26e9fb49f4ba1aa31dd463296ddf5888671fe213ab738d571805cdc69",
+    "src/modules/testing/tools.ts": "78b78e0d55663270df7fab1fc3bb846a790a32e1c1464b11dcbd5e6c9dad35c6",
+    "src/integrations/native/frameAssessment.ts": "502554bdcbec933a95a1896f05f23607ef16fd60fc37d128b17921149748aea1",
+    "src/app/authoringScript.ts": "c43fdb39d0cadfe6b93ee6ba4a19403d2c11dcc94b12124a2fc90cd34d3ddf28"
+  },
+  "changes": {
+    "spell": "Optional verified main-Actor cast/channel/finish in the same atomic spell group; projectile profile reuses a checked native launch/Action template and explicitly impacts TargetUnit.",
+    "unitAudit": "data.unit.presentation: bounded primary Actor/Model, inherited weapons, stale WeaponStart selectors and common explicit effect links.",
+    "effectAudit": "Explicit GenericAttack/ActionDamage and named Missile/Beam Model links; removed fields and inactive catalogs no longer establish a visual declaration.",
+    "visualReview": "project.test.review creates a contact sheet from current confirmed native PNG evidence without native replay. project.test.observe saves hash-bound agent notes; no human approval or verdict upgrade."
+  },
+  "regression": {
+    "tests": 127,
+    "passed": 127,
+    "failed": 0,
+    "build": "passed",
+    "releaseBuild": "passed",
+    "scopedLint": "passed",
+    "architecture": "passed: no cycles/violations",
+    "maintainedDocumentationLanguage": "passed"
+  },
+  "transport": {
+    "kind": "Public MCP stdio",
+    "mapAuthoring": "All source Data, placement and archive writes used MCP tools. Shell used for server development, assertions and evidence only.",
+    "atomicHeroSpell": {
+      "tool": "modkit.author",
+      "ms": 17229,
+      "completed": 2
+    },
+    "frameReviewMs": 165,
+    "modelBillingMeasured": false
+  },
+  "modelInventory": {
+    "resource": "mods/liberty.sc2mod/base.sc2assets/Assets/Units/Terran/Marine/Marine.m3",
+    "sha256": "56fc0f53681f12bafe7b4239aa4fe9117786dd0029eb1517d53af6b883bf7e13",
+    "selectedSequences": [
+      "Spell",
+      "Attack"
+    ],
+    "sequenceNamesFrom": "Installed CASC M3 inspection; Workspace independently resolves assets before transaction"
+  },
+  "native": {
+    "sourceArchiveSha256": "f56acb0964689506abfdd775f61dc5c25323b95a2edc9194a611b4387332d37e",
+    "build": "5.0.17.98310",
+    "editor": "passed",
+    "abilityAction": "passed",
+    "damage": 30,
+    "targetLifeBefore": 45,
+    "targetLifeAfter": 15,
+    "completionEvent": true,
+    "firstRunOutcome": "failed",
+    "firstRunCamera": {
+      "id": "view:hero_and_target",
+      "status": "failed",
+      "required": true,
+      "reason": "Native camera did not reach the requested viewpoint within 0.5 world units/degrees",
+      "evidence": {
+        "requested": {
+          "x": 18,
+          "y": 21,
+          "distance": 24,
+          "pitch": 60,
+          "yaw": 0
+        },
+        "observed": {
+          "target": {
+            "x": 17,
+            "y": 20
+          },
+          "pitch": 59.9414,
+          "yaw": 0,
+          "distance": 24
+        },
+        "includeUI": false,
+        "visualReview": "not_checked",
+        "scope": "Camera readback and native PNG capture; framing and art quality require image review"
+      }
+    },
+    "cameraOnlyOutcome": "passed",
+    "correctedCamera": {
+      "requested": {
+        "x": 17,
+        "y": 20,
+        "distance": 24,
+        "pitch": 60,
+        "yaw": 0
+      },
+      "observed": {
+        "target": {
+          "x": 17,
+          "y": 20
+        },
+        "pitch": 59.9414,
+        "yaw": 0,
+        "distance": 24
+      },
+      "includeUI": false,
+      "visualReview": "not_checked",
+      "scope": "Camera readback and native PNG capture; framing and art quality require image review",
+      "file": "K:\\SC2_MAP_Workspace\\SC2Editor-MCP-Codex\\work\\performance-rollout-20261030\\scenario\\Map\\.sc2mcp-output\\project-tests\\fadc2ec6-3464-457e-840d-718e3a2b7412\\View_hero_and_target.png",
+      "sha256": "5a036f591c47e33b71e7aa9dcd49d985288ec09195d184bb4035555de185a089"
+    },
+    "diagnostics": "inconclusive",
+    "gameRuntime": {
+      "provenance": "pinned_release",
+      "releaseTag": "v0.1.0-dev.12",
+      "archiveSha256": "618d9a2bab1126135e022dd5142dacc525c0f55eb800d02b1a4ed51d18d165ef",
+      "verifiedFiles": 121,
+      "binaryOverride": false
+    },
+    "ordinarySourcePreserved": "passed"
+  },
+  "review": {
+    "frameSha256": "5a036f591c47e33b71e7aa9dcd49d985288ec09195d184bb4035555de185a089",
+    "contactSheetSha256": "596c3a6ede14e9cadae9988c3315231a3348eeeb2d78f6aeecf9b029fca12828",
+    "origin": "agent_observation",
+    "humanApproval": false,
+    "visualAcceptance": "not_certified",
+    "observations": [
+      {
+        "imageId": "view:hero_and_target",
+        "subject": "Marine-based units and terrain",
+        "aspect": "other",
+        "state": "observed",
+        "detail": "The native frame contains visible Marine models, a SupplyDepot model and textured terrain. This still alone does not identify every Marine by its catalog ID."
+      },
+      {
+        "imageId": "view:hero_and_target",
+        "subject": "QualityLance presentation",
+        "aspect": "travel",
+        "state": "not_observed",
+        "detail": "This camera-only run did not cast QualityLance; the still cannot establish missile travel, body animation timing or impact playback."
+      }
+    ]
+  },
+  "limits": [
+    "The first native run passed Editor and ability checks but failed the requested edge camera because actual target was clamped from (18,21) to (17,20). The unchanged archive was reopened for camera-only evidence; Editor and damage checks were not repeated.",
+    "The camera-only still shows unit models and terrain. Missile/body animation timing, impact appearance and audible sound were not observed in that still; these remain separate tests.",
+    "Runtime diagnostics remain partial; no unexpected errors in accessible sources is not a complete all-clear.",
+    "Static audits cover explicit supported declarations, not every macro, default layer, turret, alias or imported graph. Findings are repair questions rather than proof of missing visuals.",
+    "This developer fixture is not a finished decorated map or a 7/10 quality certification.",
+    "Private maps, M3 assets, native DLL sources/runtimes, raw game instrumentation and screenshots are excluded from the public evidence record."
+  ]
+}

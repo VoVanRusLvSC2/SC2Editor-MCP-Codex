@@ -25,8 +25,12 @@ export async function testStorageChecks(input:{directory:string;gameDirectory?:s
  if(!Number.isSafeInteger(input.sourceBytes)||input.sourceBytes<0)throw Error('TEST_STORAGE_INVALID_SOURCE_SIZE');
  const game=input.manifest.game;
  const captures=game?game.views.length+(game.capture?1+game.routes.reduce((sum,r)=>sum+(r.bidirectional?2:1),0):0)+game.formations.reduce((sum,f)=>sum+(f.viewId?(f.bidirectional?2:1):0),0)+(game.launchDiagnostics?1:0)+game.scenarios.reduce((sum,s)=>sum+s.steps.filter(s=>s.method==='game.capture').length,0):0;
- const targets=[{role:'suite',directory:input.directory,budget:64*MiB+input.sourceBytes*((input.manifest.editor?.gameArtifact==='native_saved'?6:2)+(game&&(game.pads.length||game.pathing.length)?6:0))+captures*8*MiB},
-  ...(game?[{role:'game',directory:input.gameDirectory??path.join(input.directory,'../native-game'),budget:input.sourceBytes*2+captures*6*MiB}]:[])];
+ const combatCaptures=game?.combats.filter(c=>c.viewId).length??0;
+ const recordingFrames=game?.presentations.reduce((sum,p)=>sum+Math.ceil((p.beforeSeconds+p.afterSeconds)*p.fps)+2,0)??0,
+   selectedFrames=game?.presentations.length?game.presentations.length*8:0,
+   videoBytes=(game?.presentations.length??0)*64*MiB;
+ const targets=[{role:'suite',directory:input.directory,budget:64*MiB+input.sourceBytes*((input.manifest.editor?.gameArtifact==='native_saved'?6:2)+(game&&(game.pads.length||game.pathing.length)?6:0))+(captures+combatCaptures+selectedFrames)*8*MiB+videoBytes},
+  ...(game?[{role:'game',directory:input.gameDirectory??path.join(input.directory,'../native-game'),budget:input.sourceBytes*2+(captures+combatCaptures+recordingFrames)*6*MiB+videoBytes}]:[])];
  const volumes=new Map<string,{directories:string[];roles:string[];available:number;budget:number}>(),failures:TestCheck[]=[];
  for(const target of targets){
   try{
@@ -39,6 +43,6 @@ export async function testStorageChecks(input:{directory:string;gameDirectory?:s
  const measuredAt=new Date().toISOString();
  return [...volumes.values()].map((v,index):TestCheck=>{
   const minimumFreeBytes=reserve+v.budget,passed=v.available>=minimumFreeBytes;
-  return {id:'storage:'+index,status:passed?'passed':'failed',required:true,reason:passed?undefined:`TEST_STORAGE_INSUFFICIENT: ${v.available} bytes available; ${minimumFreeBytes} bytes required by the planned free-space budget`,evidence:{measuredAt,directories:v.directories,roles:v.roles,availableBytes:v.available,minimumFreeBytes,reserveBytes:reserve,plannedCaptureSlots:captures,scope}};
+  return {id:'storage:'+index,status:passed?'passed':'failed',required:true,reason:passed?undefined:`TEST_STORAGE_INSUFFICIENT: ${v.available} bytes available; ${minimumFreeBytes} bytes required by the planned free-space budget`,evidence:{measuredAt,directories:v.directories,roles:v.roles,availableBytes:v.available,minimumFreeBytes,reserveBytes:reserve,plannedCaptureSlots:captures+combatCaptures,plannedRecordingFrames:recordingFrames,selectedRecordingFrames:selectedFrames,plannedRecordingVideoBytes:videoBytes,scope}};
  }).concat(failures);
 }

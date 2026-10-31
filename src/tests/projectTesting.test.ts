@@ -14,6 +14,7 @@ import {createMapInfo} from '../modules/document/codecs/mapInfoFactory.js';
 import {routeDeviation} from '../modules/testing/routeGeometry.js';
 import type {readArchiveTerrainLoadContract} from '../archive/terrainLoadContract.js';
 import {NativeStorage} from '../integrations/native/storage.js';
+import sharp from 'sharp';
 
 const ok=(body:Record<string,unknown>):GameResult=>({content:[{type:'text',text:JSON.stringify({status:'ok',...body})}]});
 test('launch checks preserve bounded upstream reasons and distinguish unconfirmed maps from explicit errors',()=>{
@@ -46,7 +47,9 @@ async function fixture(t:test.TestContext,options:{blocked?:boolean;detour?:bool
   if(method==='game.test.run')return ok({status:'passed'});return ok({});
  },detach:async()=>{calls.push({method:'detach',args:{}});owned=false;return {stopped:!options.detachFailure,sourceUnchanged:true};},close:async()=>{owned=false;closes++;}},editor:{status:async()=>({jobs:[]}),check:async()=>({id:'native'} as any),job:()=>({state:'completed',report:'native.json',result:{outcome:options.compileFailure?'failed':'passed',checks:options.compileFailure?{compile:{nativeCompilePassed:false,error:'Expected syntax error'}}:{}}} as any),close:async()=>{closes++;}}});
  let mapInfo:Buffer=createMapInfo(64,64,'Bounds fixture',6,0),mapInfoReads=0;
- const ws=new Workspace(root),runtime=factory(ws),gate=new NativeWorkflowGate(),tests=new ProjectTestWorkspace(ws,{runtime:runtime as any,gate,inspect:async()=>({entries:[]}),mapInfo:async()=>{mapInfoReads++;return mapInfo;},terrainLoad:options.terrainLoad,storageProbe:options.storageProbe,pollMs:1});t.after(()=>tests.close());
+ // Control-flow tests isolate host disk space; explicit storage cases inject
+ // their own probe. Native acceptance still checks the real filesystem.
+ const ws=new Workspace(root),runtime=factory(ws),gate=new NativeWorkflowGate(),tests=new ProjectTestWorkspace(ws,{runtime:runtime as any,gate,inspect:async()=>({entries:[]}),mapInfo:async()=>{mapInfoReads++;return mapInfo;},terrainLoad:options.terrainLoad,storageProbe:options.storageProbe??(async directory=>({volume:'fixture',directory,availableBytes:Number.MAX_SAFE_INTEGER})),pollMs:1});t.after(()=>tests.close());
  return {root,ws,tests,calls,runtime,gate,owned:()=>owned,closes:()=>closes,mapInfoReads:()=>mapInfoReads,setMapInfo:(bytes:Buffer)=>{mapInfo=bytes;}};
 }
 const manifest={version:1,map:'Map.SC2Map',expectedGameBuild:'5.0.17.98310',game:{capture:false,points:{start:{x:12,y:20},end:{x:19,y:22}},routes:[{id:'gate',from:'start',to:'end',type:'Marine',mobility:'ground',timeout:1}]}};
@@ -126,11 +129,11 @@ test('map suite checks retained startup events and then executes independent cal
  assert.equal(f.calls.some(c=>c.method==='game.wait'),false);assert.equal(f.owned(),false);
 });
 const nativePng=Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+aG7sAAAAASUVORK5CYII=','base64');
-function viewRuntime(f:Awaited<ReturnType<typeof fixture>>,options:{mismatch?:boolean;missing?:boolean}={}){
+function viewRuntime(f:Awaited<ReturnType<typeof fixture>>,options:{mismatch?:boolean;missing?:boolean;image?:Buffer}={}){
  const call=f.runtime.game.call;
  f.runtime.game.call=async(method,args)=>{
   if(method==='game.camera.set'){f.calls.push({method,args});return ok({camera:{target:{x:args.x+(options.mismatch?1:0),y:args.y},distance:args.distance,pitch:args.pitch-0.15,yaw:args.yaw-360}});}
-  if(method==='game.capture'){f.calls.push({method,args});return {...ok({}),content:[...ok({}).content,...options.missing?[]:[{type:'image' as const,mimeType:'image/png',data:nativePng.toString('base64')}]]};}
+  if(method==='game.capture'){f.calls.push({method,args});return {...ok({}),content:[...ok({}).content,...options.missing?[]:[{type:'image' as const,mimeType:'image/png',data:(options.image??nativePng).toString('base64')}]]};}
   return call(method,args);
  };
 }
@@ -147,6 +150,20 @@ test('named native views verify camera readback, capture UI-free PNGs and guard 
  assert.equal(f.owned(),false);
 });
 
+test('visual review packages existing confirmed frames and binds observations to current source and image hashes without replaying a game',async t=>{
+ const f=await fixture(t);viewRuntime(f,{image:await sharp({create:{width:64,height:64,channels:3,background:'#202020'}}).png().toBuffer()});
+ const p=await f.tests.plan({version:1,map:'Map.SC2Map',game:{capture:false,views:[overview]}});
+ const job=await f.tests.run(p.planId);await finished(f.tests,job.jobId);
+ const calls=f.calls.length,review=await f.tests.review({jobId:job.jobId});
+ assert.equal(f.calls.length,calls);assert.equal(review.images.length,1);assert.ok(review.contactSheet);assert.equal(review.humanApproval,false);
+ assert.equal(review.images[0].contentAssessment.status,'needs_review');assert.equal(review.visualAcceptance,'not_checked');
+ const note={jobId:job.jobId,images:review.images.map(image=>({id:image.id,sha256:String(image.sha256)})),observations:[{imageId:review.images[0].id,subject:'Hero',aspect:'attack' as const,state:'needs_change' as const,detail:'Attack is not visible in this selected still',nextChange:'Capture the declared attack-start phase before changing Data'}]};
+ const recorded=await f.tests.observe(note);assert.equal(recorded.origin,'agent_observation');assert.equal(recorded.needsChanges,true);assert.equal(recorded.humanApproval,false);
+ assert.equal(f.calls.length,calls);
+ await fs.appendFile(review.images[0].file,'edited');await assert.rejects(f.tests.observe(note),/IMAGE_STALE/);
+ await fs.appendFile(path.join(f.root,'Map.SC2Map'),'changed');await assert.rejects(f.tests.review({jobId:job.jobId}),/STALE/);
+});
+
 test('viewpoint mismatch and missing native PNG cannot pass a required view',async t=>{
  for(const options of [{mismatch:true},{missing:true}]){
   const f=await fixture(t);viewRuntime(f,options);const p=await f.tests.plan({version:1,map:'Map.SC2Map',game:{capture:false,views:[overview]}}),j=await f.tests.run(p.planId),r=await finished(f.tests,j.jobId);
@@ -156,6 +173,21 @@ test('viewpoint mismatch and missing native PNG cannot pass a required view',asy
  }
  assert.throws(()=>testManifestSchema.parse({version:1,map:'Map.SC2Map',game:{views:[overview,overview]}}));
  assert.throws(()=>testManifestSchema.parse({version:1,map:'Map.SC2Map',game:{views:[{...overview,id:'../outside'}]}}));
+});
+
+test('visual comparison pins historical artifact evidence while requiring the candidate to be current, without replay',async t=>{
+ const f=await fixture(t),image=async(background:string)=>sharp({create:{width:64,height:64,channels:3,background}}).png().toBuffer();
+ viewRuntime(f,{image:await image('#202020')});
+ const request={version:1,map:'Map.SC2Map',game:{capture:false,views:[overview]}};
+ const first=await f.tests.run((await f.tests.plan(request)).planId);await finished(f.tests,first.jobId);
+ await fs.writeFile(path.join(f.root,'Map.SC2Map'),'changed saved map');
+ viewRuntime(f,{image:await image('#205020')});
+ const second=await f.tests.run((await f.tests.plan(request)).planId);await finished(f.tests,second.jobId);
+ await assert.rejects(f.tests.review({jobId:first.jobId}),/STALE/);
+ const calls=f.calls.length,comparison=await f.tests.compare({baselineJobId:first.jobId,candidateJobId:second.jobId});
+ assert.equal(f.calls.length,calls);assert.equal(comparison.baselineHistorical,true);assert.equal(comparison.candidateCurrent,true);assert.equal(comparison.sourceChanged,true);assert.equal(comparison.pairs[0].imageBytesChanged,true);assert.ok(comparison.contactSheet);assert.equal(comparison.humanApproval,false);
+ const artifact=f.tests.status(first.jobId).testedArtifact!.file;await fs.appendFile(artifact,'tampered');
+ await assert.rejects(f.tests.compare({baselineJobId:first.jobId,candidateJobId:second.jobId}),/ARTIFACT_STALE/);
 });
 
 test('map test manifest rejects unknown endpoints, unsafe operations and flight substitution',()=>{
@@ -242,6 +274,8 @@ test('unobserved concurrent movement stops later groups and scenarios without re
  const f=await fixture(t),p=await f.tests.plan({version:1,map:'Map.SC2Map',game:{capture:false,points:manifest.game.points,formations:[{...formation,viewId:undefined},{...formation,id:'later',viewId:undefined}],scenarios:[{id:'after',steps:[{method:'game.status'}]}]}});
  const r=await finished(f.tests,(await f.tests.run(p.planId)).jobId);assert.equal(r.outcome,'inconclusive');assert.equal(r.checks.find(c=>c.id==='formation:squad:forward')?.status,'inconclusive');
  assert.equal(f.calls.filter(c=>c.method==='game.order').length,2);assert.equal(f.calls.some(c=>c.method==='game.test.run'),false);assert.equal(f.calls.filter(c=>c.method==='detach').length,1);assert.equal(f.owned(),false);
+ assert.ok(r.checks.some(c=>c.id==='game.diagnostics'));
+ assert.ok(f.calls.map(c=>c.method).lastIndexOf('game.diagnostics')<f.calls.findIndex(c=>c.method==='detach'));
 });
 
 test('MapInfo cache follows exact archive identity across retained runs',async t=>{

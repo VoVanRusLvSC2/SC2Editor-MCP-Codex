@@ -33,6 +33,10 @@ localization, resource IDs and original catalog source annotations.
   imported graphs; neither is silently normalized.
 - About five main trigger folders is a recommendation, not a fixed count or limit.
   Use fewer or more meaningful systems as needed; preserve coherent existing trees.
+- Prefer complete recipes for common systems: `trigger.recipe_hero_select` creates
+  real GUI selection/preview/confirmation and per-player state. `terrain.site.plan`
+  composes measured asymmetric decor with materials and a reserved road. Inspect
+  actual native output; recipes do not establish art or balance acceptance.
 - For GUI conversion, read `docs/TRIGGER_MCP.md#conversion-preservation-requirements`.
   Keep runtime event registration's explicit target trigger and call timing, plus
   the matching localized TriggerStrings. Native compile and semantic equivalence
@@ -50,6 +54,11 @@ localization, resource IDs and original catalog source annotations.
   not invent animation names or add a second primary unit actor for a spell.
   Use `data.presentation.check` for a bounded declared-event/model review; retain
   inherited/asset/native-playback uncertainty and explicit invisible exceptions.
+  Prefer atomic `data spell` cast/channel/finish options for supported recipes;
+  use `data.unit.presentation` to find stale weapon animation selectors and
+  unresolved presentation links before native tests. Review existing confirmed
+  frames through `project.test.review` and save image-bound agent findings with
+  `project.test.observe`; these notes never imply human art approval.
 - For locked UI features, inherit an existing Core container through `type="Frame"`
   and override its existing named typed child through Frame. Generic Frame accepts
   any known template; specialized types retain their class checks. Root properties
@@ -88,6 +97,10 @@ localization, resource IDs and original catalog source annotations.
   and `editor.stop`. Toolkit owns a hidden Editor and private copies. Never attach
   to the user's visible Editor or force-kill active native handlers. Game tests
   require their own authorization. A region crop is not a controlled close-up.
+- Reuse one retained service Editor. Count existing Editor processes before a
+  launch and keep at most two total, including the user's visible Editor. Close
+  this task's idle workers through `editor.stop` after the checks; preserve
+  unsaved user documents and active workers owned by other chats.
 - For authorized local game checks use the optional external `game` module:
   `game.status`, `game.tools`, `game.attach`, `game.call`, `game.detach`. Consult
   `docs/NATIVE_GAME.md`. Keep private Toolkit sources and instrumented copies out

@@ -7,16 +7,22 @@ const id = z
   .regex(/^[A-Za-z_][A-Za-z0-9_]*$/)
   .max(96);
 const scalar = z.number().nonnegative().lt(524288);
+const sequence = z
+  .string()
+  .regex(/^[A-Za-z][A-Za-z0-9]*(?: [A-Za-z0-9]+)*$/)
+  .max(128);
 
 /** Opinionated native graphs, not a free-form XML or trigger escape hatch. */
 export const spellRecipeSchema = z
   .object({
     id,
-    kind: z.enum(["damage", "pulse", "line", "ring", "burn"]),
+    kind: z.enum(["damage", "pulse", "line", "ring", "burn", "projectile"]),
     damage: scalar,
     model: id,
     face: id,
     sourceAbility: id.optional(),
+    sourceEffect: id.optional(),
+    sourceActor: id.optional(),
     unit: id.optional(),
     slot: z.number().int().min(0).max(14).optional(),
     page: z.number().int().min(0).max(7).default(0),
@@ -32,6 +38,11 @@ export const spellRecipeSchema = z
     duration: z.number().positive().max(3600).optional(),
     period: z.number().positive().max(60).optional(),
     sound: id.optional(),
+    actor: id.optional(),
+    cast: sequence.optional(),
+    channel: sequence.optional(),
+    finish: sequence.optional(),
+    loopCast: z.boolean().optional(),
   })
   .strict()
   .superRefine((a, ctx) => {
@@ -40,7 +51,7 @@ export const spellRecipeSchema = z
       issue("SPELL_UNIT_AND_SLOT_REQUIRED_TOGETHER");
     if (a.delay > 0 && !a.warningModel) issue("SPELL_DELAY_REQUIRES_WARNING_MODEL");
     if (a.warningModel && !a.delay) issue("SPELL_WARNING_REQUIRES_DELAY");
-    if (["damage", "burn"].includes(a.kind) && a.delay)
+    if (["damage", "burn", "projectile"].includes(a.kind) && a.delay)
       issue("SPELL_UNIT_TARGET_DELAY_UNSUPPORTED");
     if (a.kind !== "burn" && (a.duration !== undefined || a.period !== undefined))
       issue("SPELL_BURN_TIMING_ONLY");
@@ -48,10 +59,18 @@ export const spellRecipeSchema = z
       issue("SPELL_PATTERN_COUNT_ONLY");
     if (a.kind !== "line" && a.spacing !== undefined) issue("SPELL_LINE_SPACING_ONLY");
     if (a.kind !== "ring" && a.gap !== undefined) issue("SPELL_RING_GAP_ONLY");
-    if (["damage", "burn"].includes(a.kind) && a.radius !== undefined)
+    if (["damage", "burn", "projectile"].includes(a.kind) && a.radius !== undefined)
       issue("SPELL_AREA_RADIUS_ONLY");
     if (a.kind === "burn" && (a.period ?? 1) > (a.duration ?? 10))
       issue("SPELL_PERIOD_EXCEEDS_DURATION");
+    const motion = a.cast !== undefined || a.channel !== undefined || a.finish !== undefined;
+    if (motion && !a.unit) issue("SPELL_ANIMATION_REQUIRES_UNIT");
+    if (a.actor && !motion) issue("SPELL_ACTOR_REQUIRES_ANIMATION");
+    if (a.loopCast !== undefined && !a.cast) issue("SPELL_LOOP_REQUIRES_CAST");
+    if (a.kind === "projectile" && (!a.sourceEffect || !a.sourceActor))
+      issue("SPELL_PROJECTILE_TEMPLATES_REQUIRED");
+    if (a.kind !== "projectile" && (a.sourceEffect || a.sourceActor))
+      issue("SPELL_PROJECTILE_TEMPLATES_ONLY");
   });
 
 export type SpellRecipe = z.infer<typeof spellRecipeSchema>;
@@ -90,7 +109,26 @@ export function expandSpellRecipe(input: SpellRecipe): DataOperation[] {
       model: a.model,
       ...(target ? { at: "Target", siteOp: "SOpAttachCenter" } : { siteOp: "SOpShadow" }),
     });
-  if (a.kind === "burn") {
+  if (a.kind === "projectile") {
+    effect = prefix + "Launch";
+    out.push({
+      op: "recipe.projectileEffect",
+      id: effect,
+      sourceEffect: a.sourceEffect!,
+      sourceActor: a.sourceActor!,
+      impactEffect: damage,
+      damageEffect: damage,
+      impactModel: a.model,
+      actor: prefix + "Action",
+    });
+    // This compact profile targets a unit. A native point-impact template must
+    // not silently execute the direct Damage effect without a target unit.
+    out.push({
+      op: "native.add",
+      object: { domain: "Effect", id: effect },
+      field: { name: "ImpactLocation", attrs: { Value: "TargetUnit" } },
+    });
+  } else if (a.kind === "burn") {
     const behavior = prefix + "Burn";
     out.push(
       create("CBehaviorBuff", behavior, [
@@ -230,7 +268,8 @@ export function expandSpellRecipe(input: SpellRecipe): DataOperation[] {
     out.push({
       op: "recipe.targetAbility",
       ...common,
-      sourceAbility: a.sourceAbility ?? (["damage", "burn"].includes(a.kind) ? "Snipe" : "EMP"),
+      sourceAbility:
+        a.sourceAbility ?? (["damage", "burn", "projectile"].includes(a.kind) ? "Snipe" : "EMP"),
       range: a.range,
     });
   if (a.sound)
@@ -245,6 +284,17 @@ export function expandSpellRecipe(input: SpellRecipe): DataOperation[] {
         "SoundOneShot",
       ),
     );
+  if (a.cast !== undefined || a.channel !== undefined || a.finish !== undefined)
+    out.push({
+      op: "recipe.unitAbilityAnimation",
+      id: prefix + "Motion",
+      actor: a.actor ?? a.unit!,
+      unit: a.unit!,
+      ability: a.id,
+      ...(a.cast === undefined ? {} : { cast: a.cast, loopCast: a.loopCast ?? false }),
+      ...(a.channel === undefined ? {} : { channel: a.channel }),
+      ...(a.finish === undefined ? {} : { finish: a.finish }),
+    });
   return out;
 }
 

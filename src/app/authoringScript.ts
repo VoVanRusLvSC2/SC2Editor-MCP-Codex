@@ -27,10 +27,10 @@ export const authoringGuide = {
     preferred:
       "Use data unit and data spell before low-level XML/JSON. Send multiple adjacent commands in one modkit.author call. mode=plan previews; mode=save stages and saves the complete Data group once.",
     spells:
-      "kind=damage|pulse|line|ring|burn. Required id/kind/damage/model/face; Model and Button face are existing exact catalog IDs. Optional unit+slot(0..14) binds a 3x5 command card; slot selects row and column. A positive delay requires warningModel. duration/period apply only to burn, damage is per tick. Sound is optional. Target templates are Stimpack for caster pulse, EMP for line/ring and Snipe for unit damage/burn; sourceAbility overrides explicitly. Area spells hit enemy ground units.",
+      "kind=damage|pulse|line|ring|burn|projectile. Required id/kind/damage/model/face. Projectile additionally requires sourceEffect/sourceActor native launch templates and retains their ammo/mover/travel model. Optional unit+slot binds a 3x5 card. cast/channel/finish use actual main-model sequence names in the same transaction; actor defaults to unit ID for derived units. A positive area delay requires warningModel. Burn damage is per tick. Sound optional; target templates and sourceAbility remain explicit.",
     unit: "data unit id=Hero from=Marine life=600 scale=1.2 heroic=true creates a derived Unit and independent main Actor, retaining the source movement/attack/death presentation. Existing weapons, abilities and morph forms remain shared. Unsupported layered actors or ambiguous templates reject; no recursive graph duplication or silent replacement.",
     limits:
-      "Button text/icon/hotkey inherit face; author distinct localized labels/hotkeys separately when needed. Cast/channel animations use data actor.ability_animation with real sequences. Static validation and model links do not prove native playback or balance. Creation bundles reject existing IDs; explicit configure commands update supported scalar fields of local graphs.",
+      "Button text/icon/hotkey inherit face. Spell cast/channel/finish and standalone data actor.ability_animation verify real model sequences; invented sequences reject the whole transaction. data unit.presentation unit=Hero reviews declared primary Actor, weapon animation selectors and effect links. Static links do not prove native playback or balance. Creation rejects existing IDs; configure commands preserve omitted fields.",
     updates:
       "data unit.configure id=Hero life=800 speed=3 scale=1.4 changes explicit local Unit values and optional main Actor scale. data spell.configure id=Pulse damage=50 energy=20 cooldown=8 tunes an existing compact spell; target range and burn duration/period are supported where applicable. Omitted values, shape, cards, presentation and manual fields remain unchanged. No graph replacement or implicit creation.",
   },
@@ -152,6 +152,9 @@ const aliases: Record<string, string> = {
 const directCommands = new Set([
   "project.quality.plan",
   "project.test.plan",
+  "project.test.combat.plan",
+  "project.test.review",
+  "project.test.observe",
   "project.test.run",
   "project.test.status",
   "project.test.report",
@@ -165,9 +168,11 @@ const directCommands = new Set([
   "terrain.measure",
   "terrain.palette_preview",
   "terrain.prefab",
+  "terrain.site.plan",
   "terrain.assemble",
   "assets.measure",
   "data.presentation.check",
+  "data.unit.presentation",
   "map.inspect",
   "map.validate",
   "map.create",
@@ -242,6 +247,7 @@ const directCommands = new Set([
   "trigger.validate",
   "trigger.plan_file",
   "trigger.plan",
+  "trigger.recipe_hero_select",
   "trigger.custom_script",
   "trigger.search_functions",
   "trigger.describe_functions",
@@ -448,11 +454,21 @@ function shorthand(
     const target = area(args);
     if (target) args.area = target;
   }
-  if (["terrain.prefab", "terrain.assemble"].includes(name)) {
+  if (["terrain.prefab", "terrain.assemble", "terrain.site.plan"].includes(name)) {
     const at = take(args, "at");
     if (at !== undefined) {
       const [x, y] = point(at, 2, "AT");
       args.anchor = { x, y };
+    }
+  }
+  if (name === "trigger.recipe_hero_select") {
+    if (typeof args.heroes === "string") args.heroes = args.heroes.split(",");
+    if (typeof args.players === "string") args.players = args.players.split(",").map(Number);
+    else if (typeof args.players === "number") args.players = [args.players];
+    const at = take(args, "at");
+    if (at !== undefined) {
+      const [x, y] = point(at, 2, "AT");
+      args.spawn = { x, y };
     }
   }
   if (name === "terrain.ramp.place" || name === "terrain.ramp.fit") {
@@ -779,7 +795,8 @@ function lifecycle(
   } else if (
     command.tool === "trigger.plan_file" ||
     command.tool === "trigger.plan" ||
-    command.tool === "trigger.recipe_skirmish"
+    command.tool === "trigger.recipe_skirmish" ||
+    command.tool === "trigger.recipe_hero_select"
   ) {
     apply = {
       id: base + "_apply",
@@ -789,6 +806,7 @@ function lifecycle(
     if (mode === "save") save = { id: base + "_save", tool: "trigger.save", args: {} };
   } else if (
     command.tool === "terrain.plan" ||
+    command.tool === "terrain.site.plan" ||
     command.tool === "terrain.plan_file" ||
     command.tool === "terrain.landscape.plan" ||
     command.tool === "terrain.landscape.plan_file" ||

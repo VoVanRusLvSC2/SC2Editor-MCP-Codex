@@ -1,6 +1,8 @@
 import {organizeTriggerXml,ensureTriggerFolder,organizationSchema,type OrganizationArgs} from './organization.js';
 import {dataDomainFromType} from '../data/domains.js';
 import {skirmishRecipe,type SkirmishOptions} from './recipes/skirmish.js';
+import {heroSelectionRecipe,heroSelectionSchema} from './recipes/heroSelection.js';
+import type * as z from 'zod/v4';
 import {ScriptWorkspace} from '../script/workspace.js';
 import {emitGuiGalaxy} from './runtime.js';
 import {TriggerLibraries} from './libraries.js';
@@ -349,6 +351,10 @@ export class TriggerWorkspace {
     };
   }
   recipeSkirmish(options:SkirmishOptions){return this.planBatch(skirmishRecipe(options));}
+  async recipeHeroSelection(input:z.input<typeof heroSelectionSchema>){
+    const args=heroSelectionSchema.parse(input),plan=await this.planBatch(heroSelectionRecipe(args));
+    return {...plan,system:{kind:'hero_selection',heroes:args.heroes,players:args.players,preview:'native_UnitModel_control',folder:'GAMEPLAY/HERO_SELECTION',selectedUnitVariable:args.prefix+'Hero',confirmedVariable:args.prefix+'Locked',stateScope:'Arrays indexed by player 0..15; only declared players may confirm; normal Unit creation and Data mechanics',nativePlayback:'not_checked'}};
+  }
   async importRevised(args: {
     file: string;
     stringsFile?: string;

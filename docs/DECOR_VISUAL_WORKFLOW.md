@@ -1,5 +1,13 @@
 # Measured decor and visual palettes
 
+For a coordinated measured location, use `terrain.site.plan` (compact
+`terrain site.plan`) with `recipe=checkpoint` or `recipe=forest_clearing`, `zone`,
+tileset, center and base/path/accent texture IDs. The existing owned landscape
+transaction preserves heights and unrelated/manual objects while reconciling
+the zone's material regions, reserved road and asymmetric prefab group. Inspect
+native overview and gameplay scale before acceptance; a valid plan is not an
+art verdict. See [five-point workflow](FIVE_POINT_QUALITY_SYSTEM.md).
+
 The decor workflow extends `terrain.catalog` and its tileset packs. It does not introduce a second asset catalogue. All map authoring runs through MCP; the previews are derived files and require neither the SC2 Editor nor the game.
 
 ## Short commands
@@ -17,7 +25,7 @@ terrain prefab tileset=Agria recipe=supply_cluster prop=SupplyTanks secondaryPro
 `plan` is the default mode. `stage` stages the owned group; `save` invokes the existing complete-group save with stale guards. Reusing the zone replaces its recorded objects rather than adding duplicates. Manual changes to owned objects block replacement. Existing unrelated objects are preserved.
 
 The ready groups are `base_entrance`, `service_yard`, `landing_pad`, `forest_edge`,
-and `supply_cluster`. Override automatic tileset choices with scalar `fence`,
+`supply_cluster`, `checkpoint` and `forest_clearing`. Override automatic tileset choices with scalar `fence`,
 `light`, `prop`, `secondaryProp`, or `tree` Actor IDs. Set `anchor.x` / `anchor.y`,
 or use `at=x,y` in short commands. Angles are radians. A seed makes the forest
 layout repeatable. An explicit measured Actor can come from the declared target

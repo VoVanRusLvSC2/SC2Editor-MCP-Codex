@@ -85,6 +85,136 @@ async function fixture(t: test.TestContext, beforeCleanup?: () => Promise<void> 
 }
 const command = (body: string) => `data spell file=${file} ${body} model=Impact face=Face`;
 
+test("compact spell animation participates in the same verified-asset transaction and invalid sequences roll everything back", async (t) => {
+  const f = await fixture(t);
+  f.data.animationModelReader = async (resources) => ({
+    file: resources[0],
+    sha256: "a".repeat(64),
+    revision: "b".repeat(64),
+    animations: ["Attack", "Stand"],
+    assets: [{ resource: resources[0], file: resources[0], sha256: "a".repeat(64) }],
+    warnings: [],
+    supplementalCoverage: "resolved",
+  });
+  const create =
+    `data unit file=${file} id=Hero from=Marine\n` +
+    command("id=Pulse kind=pulse damage=25 radius=3 unit=Hero slot=11 cast=Attack finish=Stand");
+  const result = await runMcpBatch(compileAuthorScript(create, "save", f.tools), f.tools, {});
+  assert.equal(result.ok, true, JSON.stringify(result));
+  const before = await fs.readFile(path.join(f.root, file), "utf8");
+  assert.match(before, /Abil\.Pulse\.SourceCastStart/);
+  assert.match(before, /AnimPlay MCP_PulseMotion_cast Attack/);
+  assert.match(before, /WeaponStart\.\*\.AttackStart/);
+  const bad = await runMcpBatch(
+    compileAuthorScript(
+      command("id=Bad kind=pulse damage=25 radius=3 unit=Hero slot=12 cast=Invented"),
+      "save",
+      f.tools,
+    ),
+    f.tools,
+    {},
+  );
+  assert.equal(bad.ok, false);
+  assert.equal(await fs.readFile(path.join(f.root, file), "utf8"), before);
+  assert.deepEqual(f.workspace.draftFiles(), []);
+});
+
+test("projectile spell expands native travel and impact presentation with explicit source templates", () => {
+  const ops = expandSpellRecipe(
+    spellRecipeSchema.parse({
+      id: "Bolt",
+      kind: "projectile",
+      damage: 40,
+      model: "Impact",
+      face: "Face",
+      sourceEffect: "NativeLaunch",
+      sourceActor: "NativeAction",
+    }),
+  );
+  const projectile = ops.find((o) => o.op === "recipe.projectileEffect");
+  assert.equal(projectile?.sourceEffect, "NativeLaunch");
+  assert.equal(projectile?.damageEffect, "BoltDamage");
+  const ability = ops.find((o) => o.op === "recipe.targetAbility");
+  assert.equal(ability?.effect, "BoltLaunch");
+  assert.equal(ability?.sourceAbility, "Snipe");
+  assert.throws(
+    () =>
+      spellRecipeSchema.parse({
+        id: "Bolt",
+        kind: "projectile",
+        damage: 40,
+        model: "Impact",
+        face: "Face",
+      }),
+    /PROJECTILE_TEMPLATES_REQUIRED/,
+  );
+  assert.throws(
+    () =>
+      spellRecipeSchema.parse({
+        id: "Bolt",
+        kind: "pulse",
+        damage: 40,
+        model: "Impact",
+        face: "Face",
+        cast: "Attack",
+      }),
+    /ANIMATION_REQUIRES_UNIT/,
+  );
+});
+
+test("compact projectile saves launch, native missile, impact and unit card atomically and rejects an incompatible template", async (t) => {
+  const f = await fixture(t),
+    source = original.replace(
+      "</Catalog>",
+      `<CEffectDamage id="NativeDamage"/>
+<CEffectLaunchMissile id="NativeLaunch"><AmmoUnit value="NativeAmmo"/><ImpactEffect value="NativeDamage"/><ImpactLocation Value="TargetPoint"/></CEffectLaunchMissile>
+<CUnit id="NativeAmmo"/>
+<CModel id="NativeAmmo"><Model value="Assets/Missiles/NativeAmmo.m3"/></CModel>
+<CActorMissile id="GenericAttackMissile" default="1"><Model value="##unitName##"/></CActorMissile>
+<CActorMissile id="NativeMissile" parent="GenericAttackMissile" unitName="NativeAmmo"/>
+<CActorAction id="GenericAttack" default="1"><?token id="effectLaunch" type="CEffectLink"?><?token id="effectImpact" type="CEffectLink"?></CActorAction>
+<CActorAction id="NativeAction" parent="GenericAttack" effectLaunch="NativeLaunch" effectImpact="NativeDamage"><On Terms="Effect.NativeDamage.Start; At Caster" Send="ActionDamage"/></CActorAction>
+</Catalog>`,
+    );
+  await fs.writeFile(path.join(f.root, file), source);
+  const script =
+    `data unit file=${file} id=Hero from=Marine\n` +
+    command(
+      "id=Bolt kind=projectile damage=40 sourceEffect=NativeLaunch sourceActor=NativeAction unit=Hero slot=11",
+    );
+  const result = await runMcpBatch(compileAuthorScript(script, "save", f.tools), f.tools, {});
+  assert.equal(result.ok, true, JSON.stringify(result));
+  const saved = await fs.readFile(path.join(f.root, file), "utf8"),
+    document = new DataDocument(saved),
+    objects = document.objects();
+  const launch = objects.find((o) => o.domain === "Effect" && o.id === "BoltLaunch")!;
+  assert.equal(launch.parent, "NativeLaunch");
+  assert.equal(launch.fields.find((f) => f.name === "ImpactEffect")?.value, "BoltDamage");
+  assert.equal(launch.fields.find((f) => f.name === "ImpactLocation")?.attrs.Value, "TargetUnit");
+  const action = objects.find((o) => o.domain === "Actor" && o.id === "BoltAction")!;
+  assert.equal(action.attrs.effectLaunch, "BoltLaunch");
+  assert.equal(action.fields.find((f) => f.name === "Missile")?.value, "NativeMissile");
+  assert.ok(action.fields.some((f) => f.attrs.Terms === "Effect.BoltDamage.Start; At Caster"));
+  const preload = await fs.readFile(path.join(f.root, "Preload.xml"), "utf8");
+  assert.match(preload, /<Actor id="NativeMissile"/);
+  assert.match(preload, /<Unit id="NativeAmmo"/);
+  const bad = await runMcpBatch(
+    compileAuthorScript(
+      command(
+        "id=BadBolt kind=projectile damage=40 sourceEffect=NativeDamage sourceActor=NativeAction",
+      ),
+      "save",
+      f.tools,
+    ),
+    f.tools,
+    {},
+  );
+  assert.equal(bad.ok, false);
+  assert.equal(await fs.readFile(path.join(f.root, file), "utf8"), saved);
+  assert.equal(await fs.readFile(path.join(f.root, "Preload.xml"), "utf8"), preload);
+  assert.deepEqual(f.workspace.draftFiles(), []);
+});
+
 test("compound spell groups respect expanded operation budgets before execution", async (t) => {
   const f = await fixture(t),
     source = Array.from({ length: 150 }, (_, i) =>
