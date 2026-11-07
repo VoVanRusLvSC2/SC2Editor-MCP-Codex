@@ -77,12 +77,31 @@ export class LiveWorkspace {
       sourceOverwrite: false,
       dllInjection: false,
       startsEditor: false,
+      routing: {
+        connectivityTest: {
+          tools: ["live.windows", "live.memory.capabilities"],
+          requiresSave: false,
+          requiresConnect: false,
+        },
+        memory: {
+          tools: ["live.memory.read", "live.memory.set"],
+          permitsUnsavedValues: true,
+          requiresConnect: false,
+          scope: "Existing map-local Unit numeric fields only; select the matching Data window",
+        },
+        checkpoint: { tool: "live.connect", requiresSavedDocument: true, importsPrivateCopy: true },
+        unavailableTools:
+          "If live.memory.* has no discovery matches, report the connection/profile limitation and reconnect to the updated server. Saving does not load new tools.",
+      },
       handoff:
         "One normal file-open request to the explicitly bound visible Editor; native save/dependency dialogs remain user-owned",
       refreshVerification:
         "Exact window/process identity, full or qualified abbreviated title path and archive hash; title matching is not an authoritative in-memory document path or visual proof",
       commands: [
         "live.windows",
+        "live.memory.capabilities",
+        "live.memory.read",
+        "live.memory.set",
         "live.connect",
         "live.status",
         "live.author",
@@ -221,7 +240,9 @@ export class LiveWorkspace {
       const window = windows[0];
       if (!window.enabled) throw Error("LIVE_EDITOR_DIALOG_OPEN");
       if (documentDirty(window))
-        throw Error("LIVE_SAVE_REQUIRED: save the open map before connecting");
+        throw Error(
+          "LIVE_SAVE_REQUIRED: saved-checkpoint import requires a saved map. Connectivity inspection and live.memory.read/set do not require live.connect or a save.",
+        );
       if ([...this.sessions.values()].some((s) => s.window.windowId === window.windowId))
         throw Error("LIVE_WINDOW_ALREADY_BOUND");
       const id = randomUUID(),

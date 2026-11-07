@@ -6,6 +6,11 @@ localization. Historical evidence is retained under `work/`; it is not agent pol
 
 ## Entry points and cost
 
+For visible Editor connectivity tests, first inspect `live.windows` and
+`live.capabilities` or `live.memory.capabilities`. No `live.connect`, save or field
+mutation is needed for this check; unsaved work does not prevent inspection.
+If discovery returns no `live.memory.*`, report an unavailable connection/profile
+and reload the MCP connection rather than asking for a save to unlock memory edits.
 For explicitly requested visible Editor collaboration, see [Live Editor](LIVE_EDITOR.md).
 `live.author` reuses the compact commands in a persistent session project;
 `live.publish` exports a separate checkpoint and can request opening it in the

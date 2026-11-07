@@ -14,6 +14,19 @@ archive. The pinned hidden-test Toolkit is not repurposed for this mode.
 
 ## Setup
 
+For a connectivity-only test, call read-only `live.windows` and
+`live.memory.capabilities` (or `live.capabilities`). Do not import a checkpoint,
+open an inline field, change a value or request a save just to test the connection.
+In focused profiles, use `modkit.tools` with `query="live.memory"` to discover the
+direct-memory tools. Other profiles such as `live` already expose their schemas
+directly and do not register `modkit.tools`; inspect their exposed tools instead.
+Zero matches means they are unavailable in this connection/profile; reconnect
+the MCP frontend to the updated server before concluding the feature is absent.
+The AI panel's active window may be Terrain. For an actual memory edit, select
+the matching Data window from the same process/document returned by `live.windows`.
+`live.connect` is only for the separately selected saved-checkpoint workflow;
+it is not a prerequisite for memory capabilities, inspection or memory edits.
+
 On Windows, build the source and small standalone handoff helper:
 
 ```powershell

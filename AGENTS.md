@@ -7,17 +7,21 @@ localization, resource IDs and original catalog source annotations.
 
 ## Working defaults
 
-- Explicit visible-editor collaboration uses the separate `live` module. Ask the
-  user to save before `live.connect`, author with `live.author`/`live.call`, and
-  publish a new checkpoint. Never overwrite an open source archive, dismiss a
-  save dialog, inject the test DLL or treat a file-open request as rendered proof.
-  Use `live.pull` for newly saved user changes; unresolved local edits must refuse.
-  For explicitly requested in-memory editing, use `live.memory.read/set` instead:
+- For visible-editor connectivity tests, start with read-only `live.windows` and
+  `live.capabilities`/`live.memory.capabilities`. These do not require a save or
+  `live.connect`. An unsaved marker is context, not a connectivity failure. If
+  `live.memory.*` is absent, report the connection/profile limitation and reload
+  the MCP connection before claiming the current server lacks that implementation.
+  For explicitly requested in-memory editing, use `live.memory.read/set` directly:
   this separate opt-in adapter edits existing map-local Unit scalar fields through
   the original visible Data controls. It does not reopen/save the map or inject
   the hidden test DLL. Preserve token-bound editors, manual input, snapshots and
   unknown outcomes. Do not describe this bounded backend as live Terrain/trigger
   authoring. Read `docs/LIVE_EDITOR.md#direct-in-memory-data-editing`.
+  Only the separate saved-checkpoint workflow requires saving before
+  `live.connect`, followed by `live.author`/`live.call`, publish and `live.pull`.
+  Never overwrite an open source archive, dismiss save dialogs, inject the test
+  DLL or treat a file-open request as rendered proof. Preserve unresolved drafts.
 
 - Author map content through MCP, preferably compact `modkit.author` commands in
   one persistent workflow session. Use detailed module tools when needed. Shell

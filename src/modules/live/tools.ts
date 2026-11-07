@@ -19,7 +19,7 @@ export function registerLiveTools(
     "live.capabilities",
     {
       description:
-        "Visible Editor collaboration: saved-checkpoint backend plus a separate opt-in live.memory backend for guarded in-memory Unit scalar edits. Hidden native test workers remain separate. No source overwrite or general live Terrain editing.",
+        "Read-only connectivity/routing check; no save or live.connect required, including unsaved documents. Reports saved-checkpoint and separate opt-in live.memory scope. Memory edits support existing Unit numeric fields only, not general live Terrain authoring.",
       inputSchema: z.object({}).strict(),
       annotations: { readOnlyHint: true },
     },
@@ -29,7 +29,7 @@ export function registerLiveTools(
     "live.windows",
     {
       description:
-        "List existing visible SC2 Editor windows with process identity, full title and normal file-drop availability. Does not start or inject an Editor.",
+        "Read-only connectivity/window inspection, including unsaved documents; no save or live.connect required. Lists existing Editor window/process identities, titles and file-drop availability. For live.memory edits select the matching Data window, even if the panel belongs to Terrain. Does not start or inject Editor.",
       inputSchema: z.object({}).strict(),
       annotations: { readOnlyHint: true },
     },
@@ -39,7 +39,7 @@ export function registerLiveTools(
     "live.connect",
     {
       description:
-        "Bind an explicitly selected saved SC2Map/SC2Mod and its exact visible Editor window. Imports a private authoring copy. Save unsaved Editor changes first. Explicit archive may be outside SC2_UI_ROOT; only that file is read, never overwritten.",
+        "Saved-checkpoint workflow ONLY: import an explicitly selected saved SC2Map/SC2Mod into a private authoring copy. This is not a connectivity test or prerequisite for live.memory edits. Only this workflow requires saving unsaved Editor changes first. Exact window/title guards apply; the source archive is never overwritten.",
       inputSchema: z
         .object({
           archive: z.string().min(1).max(4096),

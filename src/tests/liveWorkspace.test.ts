@@ -134,6 +134,21 @@ test("live binding requires the exact clean visible document and rejects duplica
   assert.equal(await fs.readFile(f.source, "utf8"), "original map");
 });
 
+test("connectivity inspection accepts dirty documents without importing a checkpoint", async (t) => {
+  const f = await fixture(t);
+  f.window.title = f.window.title.replace("]", "*]");
+  const windows = await f.live.windows();
+  assert.match(windows[0].title, /\*\]/);
+  const routes = f.live.capabilities().routing;
+  assert.equal(routes.connectivityTest.requiresSave, false);
+  assert.equal(routes.connectivityTest.requiresConnect, false);
+  assert.equal(routes.memory.requiresConnect, false);
+  assert.equal(routes.memory.permitsUnsavedValues, true);
+  assert.equal(routes.checkpoint.requiresSavedDocument, true);
+  assert.equal(f.runtimes.length, 0);
+  assert.equal(await fs.readFile(f.source, "utf8"), "original map");
+});
+
 test("compact plan mode cannot accidentally publish or present a visible checkpoint", () => {
   for (const verb of ["connect", "publish", "present", "pull", "disconnect"])
     assert.throws(

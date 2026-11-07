@@ -1,0 +1,30 @@
+{
+  "date": "2026-11-07",
+  "scope": "Read-only visible Editor connectivity routing",
+  "observedTransport": "Fresh MCP stdio, workflow profile",
+  "observations": {
+    "memoryToolsDiscovered": ["live.memory.capabilities", "live.memory.read", "live.memory.set"],
+    "dirtyWindowsInspected": true,
+    "saveRequiredForConnectivity": false,
+    "checkpointImported": false,
+    "nativeMemoryEditAttempted": false
+  },
+  "regression": "liveWorkspace.test.ts: connectivity inspection accepts dirty documents without importing a checkpoint",
+  "publicationChecks": {
+    "liveTestsPassed": 28,
+    "liveTestsFailed": 0,
+    "build": "passed",
+    "releaseBuild": "passed",
+    "scopedLint": "passed",
+    "documentationLanguage": "passed",
+    "runtimeCatalogIntegrity": "passed",
+    "nativeMutationRerun": false
+  },
+  "limits": [
+    "This evidence covers discovery, routing and window inspection, not rendering or gameplay.",
+    "Focused profiles expose modkit.tools and modkit.enable_tools; direct live profiles expose tools directly.",
+    "An already running MCP connection may retain its previous tool registry until reconnected.",
+    "An already running AI panel bridge must reload its script to use changed prompt routing.",
+    "Native memory mutation qualification remains separately recorded in live-memory-data-2026-11-07.json."
+  ]
+}

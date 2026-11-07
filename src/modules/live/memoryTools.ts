@@ -10,7 +10,7 @@ export function registerMemoryTools(server: McpServer, memory: LiveMemory) {
     "live.memory.capabilities",
     {
       description:
-        "Scope and build requirements for direct in-memory edits in an existing visible Editor. Separate adapter, no hidden test worker or map reopen. Currently existing map-local Unit numeric fields only.",
+        "Read-only first check for direct-memory scope/build requirements; no save, live.connect or DLL load. Existing map-local Unit numeric fields only. Unsaved values are supported by read/set. Missing discovery matches indicate this connection/profile has not exposed the new tools; saving cannot fix that.",
       inputSchema: z.object({}).strict(),
       annotations: { readOnlyHint: true },
     },
