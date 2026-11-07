@@ -6,6 +6,15 @@ import { ToolRegistry } from "./toolRegistry.js";
 import { ToolVisibilityPolicy } from "./toolPolicy.js";
 import { registerCommandTools } from "./commandTools.js";
 
+const registries = new WeakMap<McpServer, ToolRegistry>();
+
+/** Internal composition access; scoped callers still use the original tool schema/executor. */
+export function projectToolRegistry(server: McpServer): ToolRegistry {
+  const registry = registries.get(server);
+  if (!registry) throw Error("PROJECT_TOOL_REGISTRY_UNAVAILABLE");
+  return registry;
+}
+
 /** Compose dispatch explicitly; telemetry no longer changes MCP registration. */
 export function createToolServer(
   raw: McpServer,
@@ -19,6 +28,7 @@ export function createToolServer(
     new ToolVisibilityPolicy(selection),
   );
   const server = registry.bind(raw);
+  registries.set(server, registry);
   if (exposeCommands) registerCommandTools(server, registry, telemetry);
   return server;
 }

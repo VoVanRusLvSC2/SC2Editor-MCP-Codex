@@ -11,6 +11,7 @@
   "type": "module",
   "description": "MCP bridge for StarCraft II map authoring, native terrain, local CASC resources and lossless lobby/player settings, with existing UI, data, script and scene modules.",
   "scripts": {
+    "live:build": "node scripts/build-live-editor.mjs",
     "publication:audit": "node scripts/audit-publication.mjs",
     "publication:prepare": "node scripts/prepare-publication.mjs",
     "project:audit": "node --import tsx scripts/audit-project.ts",

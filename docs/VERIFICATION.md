@@ -1,5 +1,13 @@
 # SC2EditorToolkit: verified scope
 
+- The separate [visible Editor checkpoint module](verification/live-editor-checkpoints-2026-11-07.json)
+  has 39 passing scoped regressions and an actual public-MCP handoff to the same
+  visible Editor process. Placed units were inspected in its 3D viewport. A manual
+  camera edit blocked dirty publication; the original native save was detected
+  and explicitly pulled into a fresh authoring revision. Original archives stayed
+  unchanged. This is saved-checkpoint collaboration, not direct in-memory editing,
+  private DLL attachment or a renewal of all compiler/gameplay acceptance.
+
 - Native handle local declarations now reject reserved type names and check
   known handle uses before staging. Frozen public MCP reproduces the old
   acceptance and new refusal, with real corrected probe sources unchanged.

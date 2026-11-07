@@ -17,10 +17,12 @@ export const publicModules = [
   "lighting",
   "editor",
   "game",
+  "live",
 ] as const;
 export type PublicModule = (typeof publicModules)[number];
 
 const profiles: Record<string, PublicModule[]> = {
+  live: ["ui", "live"],
   game: ["game"],
   editor: ["ui", "editor"],
   "cutscene-preview": ["ui", "cutscene", "cutscene-preview", "casc", "assets", "data", "lighting"],

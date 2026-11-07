@@ -39,9 +39,11 @@ import { AiWorkspace } from "../modules/ai/workspace.js";
 
 import { ResourceScope } from "../core/resourceScope.js";
 import { ModuleContainer } from "./moduleContainer.js";
+import { LiveWorkspace } from "../modules/live/workspace.js";
 import { resolveModuleSelection, type ModuleSelection } from "./moduleSelection.js";
 
 interface ProjectServices {
+  live: LiveWorkspace;
   nativeGate: NativeWorkflowGate;
   testing: ProjectTestWorkspace;
   nativeGame: NativeGameBridge;
@@ -73,7 +75,7 @@ interface ProjectServices {
 /** Shared composition; providers are initialized by actual consumers, not hidden tool count. */
 export async function createProject(
   root: string,
-  options: { loadUiSchema?: boolean; selection?: ModuleSelection } = {},
+  options: { loadUiSchema?: boolean; selection?: ModuleSelection; cascCacheRoot?: string } = {},
 ) {
   const selection = options.selection ?? resolveModuleSelection();
   const [schema, cutsceneSchema, textSchema, dataSchema, aiSchema] = await Promise.all([
@@ -127,6 +129,7 @@ export async function createProject(
       if (!initializing) await casc.restoreMounts();
     });
   const container: ModuleContainer<ProjectServices> = new ModuleContainer<ProjectServices>({
+    live: () => scope.own("live collaboration", new LiveWorkspace(workspace)),
     nativeGate: () => new NativeWorkflowGate(),
     nativeEditor: () => scope.own("Editor bridge", new NativeEditorBridge(workspace)),
     nativeGame: () => scope.own("Game bridge", new NativeGameBridge(workspace)),
@@ -156,6 +159,7 @@ export async function createProject(
       return scope.own(
         "CASC",
         new CascWorkspace(workspace.root, {
+          cacheRoot: options.cascCacheRoot,
           trackingWorkspace: workspace,
           ...(modkit
             ? { backendName: "ModKit", backendFactory: () => new ModkitCascBackend(modkit) }

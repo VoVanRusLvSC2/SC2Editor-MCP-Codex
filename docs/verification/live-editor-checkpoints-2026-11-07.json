@@ -1,0 +1,95 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-07T10:57:56.066Z",
+  "scope": "Separate saved-checkpoint visible Editor collaboration. No direct in-memory document mutation, hidden worker startup or universal native acceptance.",
+  "sourceFingerprintPolicy": "Current Git-normalized UTF-8 LF. Native observations precede only the final added minimap-worker refusal and capability metadata, separately regression-checked; no whole-package native renewal is claimed.",
+  "sourceFingerprints": {
+    "src/modules/live/desktop.ts": "fe2195c6ae20def3602b333882e675f6df8dc38a0ff78e2d061b2bec94caa378",
+    "src/modules/live/tools.ts": "de5e841f6dda6ac559d60bbb348e7a6773bf69eefe2dff37bffce228817ccab8",
+    "src/modules/live/workspace.ts": "e6358a9ced4bc6397001e712ab85b0f3a1b388cef6aa9762637dc798601ce6b0",
+    "src/app/project.ts": "e695e04fb06143c61338fafffad699c241c4df7c57f190d235461dfa0a88ddbb",
+    "src/app/server.ts": "8213dacceabd53e5e2f2ddc749f51317bdbcdcadf005061255d1146d2b4ea2e8",
+    "src/app/moduleSelection.ts": "1a48ff56cbe55b4eec5a7ca2e11b33b67f30c6a8a69cca892cd09ed50b39f766",
+    "src/app/toolServer.ts": "28187af68f5100155ae4b7944095a7fe74a2fac88e1367a7b965cdbf1ed04ba4",
+    "src/app/authoringScript.ts": "dfc01966799e461653a521e99d485472b0dab46fca4bf51a226884396321b7a8",
+    "src/tests/liveWorkspace.test.ts": "c57edaf1dbb9a84d452cf7e0e08bf8c29e27d785397296aec2b0d326f965b43e",
+    "native/live-editor/Program.cs": "fde1162afa7fbbfc4ed60c08fd1b62fe4345dcd0a861b1fab192a5b54943f4ee",
+    "scripts/build-live-editor.mjs": "3bde95014b6a87dcaab19e088e97c5ae260cf5fb47a3b450ce05f8dc92624cf4"
+  },
+  "implementation": {
+    "profile": "live",
+    "tools": 10,
+    "authoring": "Existing public tool schemas and executor in a persistent scoped child project",
+    "handoff": "One ordinary WM_DROPFILES request to an existing explicitly bound visible Editor",
+    "sourceOverwrite": false,
+    "processInjection": false,
+    "gameToolkitBundled": false,
+    "checkpointNames": "Session identity and revision prevent abbreviated-caption aliases"
+  },
+  "regression": {
+    "tests": 39,
+    "passed": 39,
+    "failed": 0,
+    "build": "passed",
+    "releaseBuild": "passed",
+    "scopedLint": "passed",
+    "architecture": {
+      "ok": true,
+      "files": 428,
+      "cycles": [],
+      "violations": [],
+      "scope": "Static relative value imports/re-exports after TypeScript type erasure; excludes dynamic imports and external runtimes."
+    },
+    "documentationLanguage": "passed"
+  },
+  "native": {
+    "editorBuild": "5.0.17.98310",
+    "transport": "Actual outer MCP stdio -> live authoring tool executor -> verified archive exporter -> standard Windows file-drop -> existing visible Editor",
+    "sameWindowAndProcess": true,
+    "documentObserved": true,
+    "sourceUnchanged": true,
+    "originalInputSha256": "6459a056d5d2083f9fa7774d33d250c67f4faebb56ad3ac5668b5ba1bb2935fb",
+    "checkpointAtPublicationSha256": "7c04a6967c646f4988726951be1fef233cc29d23ffb531da7b1aa70f01adffd8",
+    "checkpointAfterNativeSaveSha256": "c416952519542f2db68c7edf619b3856be3553415d57283595829d0d508b3a9f",
+    "unsavedManualCameraEditDetected": true,
+    "publicationWhileDirtyRefused": true,
+    "nativeUserSaveDetected": true,
+    "savedUserVersionPulled": true,
+    "cleanAfterPull": true,
+    "ownedSessionDisconnected": true,
+    "visibleEditorClosed": false,
+    "addedPlacements": "Two map-local ArenaPilot Units in the first handoff and one in the final handoff; inspected actual 3D viewport",
+    "camera": "Camera001 created using ordinary visible Editor UI, saved normally, then imported through live.pull",
+    "manualCameraFoundInImportedObjects": true,
+    "initialOdinSourceUnchanged": true
+  },
+  "evidence": {
+    "nativeMcp": {
+      "file": "work/live-editor-20261107/native-mcp.json",
+      "sha256": "509fccaa2ed9f088dce069f699089b56eddfe78aa27a486f4d8186c43e0ccc0f"
+    },
+    "viewport": {
+      "file": "work/live-editor-20261107/visible-checkpoint.jpg",
+      "sha256": "701ed8af6a8c3d065fe697553b6cce56ea06d9167d6f520ae3eb8bddc9155306"
+    },
+    "focusedTests": {
+      "file": "work/live-editor-20261107/final-tests.log",
+      "sha256": "62e24690f9f8b4111c3daf97e4648d148421fab9d3e1617677aaf196e27ca561"
+    }
+  },
+  "retainedFindings": [
+    "Initial placement correctly refused absent/undeclared Marine catalog dependencies; final test selected the map-local ArenaPilot rather than changing dependencies to bypass the guard.",
+    "The first real handoff returned while the normal load Activity was still open; a later actual viewport confirmed delivery.",
+    "Editor abbreviates long paths in GetWindowText itself. A repeated generic checkpoint basename produced an invalid early caption match during a harness attempt. Session-unique checkpoint basenames fixed it; the final handoff submitted normally and its different title was observed.",
+    "One new compact lifecycle regression initially failed because the live namespace lacked stage dispatch. The implementation was corrected and all39 final scoped tests passed."
+  ],
+  "limits": [
+    "Direct object-by-object in-memory editing and native Undo grouping are not implemented.",
+    "Initial document binding uses an explicit saved archive plus exact window/process identity and a full or qualified abbreviated title; it is not an authoritative DLL document-path API. Original archives are never overwritten.",
+    "A file-open submission is not native load, compiler or visual proof. Unsupported file-drop windows return a manual-open path.",
+    "The actual visual check covers this Terrain viewport and map. This does not renew all Data, GUI, multiplayer, dependency, locale or gameplay acceptance.",
+    "Native save uses the original Editor serializer; known inactive-locale preservation findings remain.",
+    "Visible native diagnostics/CompileAll were not separately read or executed in this pass. Existing available diagnostic coverage is not upgraded.",
+    "Already-running MCP frontends need reconnection to expose the new module. Other chats' Editor workers were not attached to or stopped."
+  ]
+}

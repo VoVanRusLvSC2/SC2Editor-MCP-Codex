@@ -17,11 +17,13 @@ import { projectPreflight } from "./preflight.js";
 import { registerScriptTools } from "../modules/script/tools.js";
 import { registerTriggerTools } from "../modules/trigger/tools.js";
 import { createUiServer } from "../mcp/uiServer.js";
-import type { Project } from "./project.js";
+import { createProject, type Project } from "./project.js";
+import { registerLiveTools } from "../modules/live/tools.js";
+import { projectToolRegistry } from "./toolServer.js";
 import * as z from "zod/v4";
 import { projectCoverage } from "./coverage.js";
 import { registerMapTools } from "../modules/map/tools.js";
-import { moduleProfiles, publicModules } from "./moduleSelection.js";
+import { moduleProfiles, publicModules, resolveModuleSelection } from "./moduleSelection.js";
 
 export function createProjectServer(project: Project) {
   const selection = project.selection;
@@ -64,6 +66,40 @@ export function createProjectServer(project: Project) {
     registerPreviewBatch(server, project.dialogPreview);
   }
   if (enabled("map")) registerMapTools(server, project.map);
+  if (enabled("live"))
+    registerLiveTools(server, project.live, async (root) => {
+      const child = await createProject(root, {
+        cascCacheRoot: project.casc.cacheRoot,
+        selection: resolveModuleSelection({
+          SC2_MCP_MODULES: publicModules
+            .filter((name) => !["live", "editor", "game"].includes(name))
+            .join(","),
+        }),
+      });
+      try {
+        const childServer = createProjectServer(child),
+          registry = projectToolRegistry(childServer);
+        return {
+          workspace: child.workspace,
+          call: async (name, args, context) => {
+            const tool = registry.batchTools.get(name);
+            if (!tool) throw Error("LIVE_AUTHORING_TOOL_UNAVAILABLE: " + name);
+            return tool.invoke(tool.schema.parse(args), context ?? {});
+          },
+          export: (archive) => child.map.export("", archive, false, true),
+          close: async () => {
+            try {
+              await childServer.close();
+            } finally {
+              await child.close();
+            }
+          },
+        };
+      } catch (error) {
+        await child.close();
+        throw error;
+      }
+    });
   if (enabled("editor"))
     registerNativeEditorTools(server, project.nativeGate.protect(project.nativeEditor));
   if (enabled("game"))
@@ -148,7 +184,7 @@ export function createProjectServer(project: Project) {
               profiles: moduleProfiles(),
               configure: {
                 profile:
-                  "Set SC2_MCP_PROFILE to workflow, map-builder, editor, game, minimal, focused-data, focused-script, focused-authoring, ui, cutscene, cutscene-preview, data, terrain, casc, assets, settings, landscape, document, script, authoring or all",
+                  "Set SC2_MCP_PROFILE to workflow, map-builder, live, editor, game, minimal, focused-data, focused-script, focused-authoring, ui, cutscene, cutscene-preview, data, terrain, casc, assets, settings, landscape, document, script, authoring or all",
                 custom:
                   "Set SC2_MCP_MODULES to a comma-separated module list; ui is always included",
               },
@@ -156,6 +192,7 @@ export function createProjectServer(project: Project) {
               modkitRuntime: project.modkit.status(),
               nativeEditor: project.nativeEditor.configuration(),
               nativeGame: project.nativeGame.configuration(),
+              liveCollaboration: enabled("live") ? project.live.capabilities() : { enabled: false },
               projectTesting: {
                 enabled: enabled("game") || enabled("editor"),
                 entry: "project.test.plan",

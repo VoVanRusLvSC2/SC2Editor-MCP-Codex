@@ -7,6 +7,12 @@ localization, resource IDs and original catalog source annotations.
 
 ## Working defaults
 
+- Explicit visible-editor collaboration uses the separate `live` module. Ask the
+  user to save before `live.connect`, author with `live.author`/`live.call`, and
+  publish a new checkpoint. Never overwrite an open source archive, dismiss a
+  save dialog, inject the test DLL or treat a file-open request as rendered proof.
+  Use `live.pull` for newly saved user changes; unresolved local edits must refuse.
+
 - Author map content through MCP, preferably compact `modkit.author` commands in
   one persistent workflow session. Use detailed module tools when needed. Shell
   is appropriate for server development/tests/packaging, not a parallel map writer.

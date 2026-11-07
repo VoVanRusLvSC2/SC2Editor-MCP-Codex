@@ -25,6 +25,7 @@
     ".prettierrc.json"
   ],
   "sourceDirectories": [
+    "native/live-editor/",
     "src/",
     "scripts/",
     "windows/",
@@ -183,7 +184,8 @@
     "REFACTORING_REPORT_2026-10-28.md",
     "PERFORMANCE.md",
     "FIVE_POINT_QUALITY_SYSTEM.md",
-    "FOCUSED_ACCEPTANCE.md"
+    "FOCUSED_ACCEPTANCE.md",
+    "LIVE_EDITOR.md"
   ],
   "publicationHolds": [
     {

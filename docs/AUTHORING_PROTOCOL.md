@@ -6,6 +6,14 @@ localization. Historical evidence is retained under `work/`; it is not agent pol
 
 ## Entry points and cost
 
+For explicitly requested visible Editor collaboration, see [Live Editor](LIVE_EDITOR.md).
+`live.author` reuses the compact commands in a persistent session project;
+`live.publish` exports a separate checkpoint and can request opening it in the
+same visible window. This saved-checkpoint backend is distinct from direct
+in-memory edits and from the private hidden native acceptance bridge. Preserve
+the user's unsaved work, exact document/process identity and both conflicting
+versions. Never automatically answer the Editor's save or dependency dialogs.
+
 Use a persistent MCP session. Start with `modkit.author_help`, then send compact
 commands through `modkit.author`. Query only the needed catalog page or function
 signature. Batch related work, validate once per logical change, and request full

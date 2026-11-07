@@ -1,0 +1,121 @@
+{
+  "verifiedAt": "2026-11-07T11:06:41.597372+00:00",
+  "scope": "Visible Editor saved-checkpoint collaboration; public MCP stdio transport",
+  "publicMethodsExercised": [
+    "live.author",
+    "live.call",
+    "live.capabilities",
+    "live.connect",
+    "live.disconnect",
+    "live.present",
+    "live.publish",
+    "live.pull",
+    "live.status",
+    "live.windows"
+  ],
+  "sameEditorWindow": true,
+  "sameEditorProcessId": 27008,
+  "sourceUnchangedAfterTest": true,
+  "manualCameraFoundInPulledObjects": true,
+  "mcpPlacedUnitFoundInPulledObjects": true,
+  "unitTests": {
+    "passed": 14,
+    "failed": 0,
+    "log": "work/live-editor-acceptance-20261107/unit-tests.log"
+  },
+  "nativeEvidence": "work/live-editor-acceptance-20261107/native-mcp.json",
+  "observedUI": "Checkpoint title, rendered unit models, Camera 002 and removal of unsaved marker after native save inspected through Windows Computer Use. A separate existing AI panel partly covered the viewport; it was left unchanged.",
+  "limits": [
+    "Saved-checkpoint reopening, not direct in-memory mutation",
+    "No Galaxy compilation, console audit or gameplay run in this live-module test",
+    "One map fixture; not every map or dependency combination"
+  ],
+  "callsMs": [
+    {
+      "name": "live.capabilities",
+      "ms": 9
+    },
+    {
+      "name": "live.windows",
+      "ms": 569
+    },
+    {
+      "name": "live.connect",
+      "ms": 2288
+    },
+    {
+      "name": "live.call",
+      "ms": 2840
+    },
+    {
+      "name": "live.author",
+      "ms": 757
+    },
+    {
+      "name": "live.publish",
+      "ms": 2295
+    },
+    {
+      "name": "live.present",
+      "ms": 1318
+    },
+    {
+      "name": "live.status",
+      "ms": 1024
+    },
+    {
+      "name": "live.status",
+      "ms": 987
+    },
+    {
+      "name": "live.status",
+      "ms": 1001
+    },
+    {
+      "name": "live.status",
+      "ms": 1077
+    },
+    {
+      "name": "live.status",
+      "ms": 897
+    },
+    {
+      "name": "live.status",
+      "ms": 919
+    },
+    {
+      "name": "live.status",
+      "ms": 810
+    },
+    {
+      "name": "live.pull",
+      "ms": 2656
+    },
+    {
+      "name": "live.status",
+      "ms": 829
+    },
+    {
+      "name": "live.disconnect",
+      "ms": 3
+    }
+  ],
+  "sourceFingerprints": {
+    "src/modules/live/workspace.ts": "e6358a9ced4bc6397001e712ab85b0f3a1b388cef6aa9762637dc798601ce6b0",
+    "src/modules/live/desktop.ts": "fe2195c6ae20def3602b333882e675f6df8dc38a0ff78e2d061b2bec94caa378",
+    "src/modules/live/tools.ts": "de5e841f6dda6ac559d60bbb348e7a6773bf69eefe2dff37bffce228817ccab8",
+    "native/live-editor/Program.cs": "fde1162afa7fbbfc4ed60c08fd1b62fe4345dcd0a861b1fab192a5b54943f4ee",
+    "src/tests/liveWorkspace.test.ts": "c57edaf1dbb9a84d452cf7e0e08bf8c29e27d785397296aec2b0d326f965b43e"
+  },
+  "sourceFingerprintPolicy": "SHA-256 of UTF-8 source with CRLF normalized to LF, matching Git blobs.",
+  "evidence": {
+    "native-mcp.json": {
+      "path": "work/live-editor-acceptance-20261107/native-mcp.json",
+      "sha256": "c64d98f2173bee5c011f27c0c280d5188cead213f5e88a1debc0acf6481fc5f4"
+    },
+    "unit-tests.log": {
+      "path": "work/live-editor-acceptance-20261107/unit-tests.log",
+      "sha256": "65c16c7fde2a74d90667454e079c199aa5a204e2c87fd86b77cac83c1b991c2b"
+    }
+  }
+}

@@ -4,6 +4,8 @@ import { coalesceAuthoringSteps } from "./authoringGroups.js";
 
 export type AuthorMode = "plan" | "stage" | "save";
 export const authoringGuide = {
+  livePolicy:
+    "Visible Editor collaboration uses live.windows/connect, live.author and live.publish present=true. It exports a new saved checkpoint through the existing authoring tools and requests opening it in the same visible window; direct in-memory editing is not implemented. Save user edits and live.pull before continuing. No original archive overwrite, save-dialog dismissal or private DLL injection.",
   nativeEditorPolicy:
     "Optional pinned SC2NativeToolkit: editor.status reports connection without Editor startup; editor.check queues native load/Data, compile and save/reopen checks on a saved archive; editor.data.audit submits a full original effective-Data audit with separate native status/cancel and explicit coverage limits; editor.job polls compact results; editor.capture queues native images; editor.stop closes the owned hidden Editor. map.preview remains the fast ModKit renderer. Unknown diagnostics and native images do not certify gameplay.",
   testPolicy:
@@ -150,6 +152,14 @@ const aliases: Record<string, string> = {
   "lighting.status": "lighting.inspect",
 };
 const directCommands = new Set([
+  "live.windows",
+  "live.connect",
+  "live.status",
+  "live.author",
+  "live.publish",
+  "live.present",
+  "live.pull",
+  "live.disconnect",
   "project.quality.plan",
   "project.test.plan",
   "project.test.combat.plan",
@@ -754,11 +764,16 @@ function lifecycle(
   }
   if (command.tool === "data.card.check") return [first];
   if (mode === "plan") {
+    if (command.tool.startsWith("live.") && !["live.windows", "live.status"].includes(command.tool))
+      throw new Error(
+        "AUTHOR_LIVE_REQUIRES_STAGE: live session mutations require explicit stage/save mode",
+      );
     if (command.tool === "project.test.run" || command.tool === "project.test.cancel")
       throw new Error("AUTHOR_LIVE_REQUIRES_STAGE: test run/cancel is explicit; use stage mode");
     if (command.args.dryRun === false) throw new Error("AUTHOR_PLAN_REQUIRES_DRY_RUN");
     return [first];
   }
+  if (command.tool.startsWith("live.")) return [first];
   const from = (field: string) => ({ $from: `${base}.${field}` });
   let apply: BatchStep | undefined, save: BatchStep | undefined;
   if (command.tool === "script.plan") {
