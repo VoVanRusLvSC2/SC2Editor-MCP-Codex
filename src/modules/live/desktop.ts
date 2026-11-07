@@ -21,18 +21,18 @@ export interface LiveDesktop {
 
 /** Public Windows file-drop handoff only. No injection, keyboard input or worker launch. */
 export class WindowsLiveDesktop implements LiveDesktop {
-  private readonly executable =
+  protected readonly executable =
     process.env.SC2_LIVE_BRIDGE ??
     fileURLToPath(new URL("../../../native/bin/windows-x64/sc2-mcp-live.exe", import.meta.url));
 
-  private run(args: string[]): Promise<unknown> {
+  protected run(args: string[], timeout = 15000): Promise<unknown> {
     if (process.platform !== "win32") throw Error("LIVE_WINDOWS_REQUIRED");
     if (!existsSync(this.executable)) throw Error("LIVE_BRIDGE_NOT_BUILT: npm run live:build");
     return new Promise((resolve, reject) => {
       execFile(
         this.executable,
         args,
-        { windowsHide: true, timeout: 15000, maxBuffer: 256 * 1024 },
+        { windowsHide: true, timeout, maxBuffer: 256 * 1024 },
         (error, stdout) => {
           if (error) return reject(new Error("LIVE_DESKTOP_FAILED: " + error.message));
           try {

@@ -1,6 +1,7 @@
 import { promises as fs } from "node:fs";
 import path from "node:path";
 import { createHash, randomUUID } from "node:crypto";
+import { LiveMemory } from "./memory.js";
 import { Workspace } from "../../core/workspace.js";
 import { directoryManifest, extractArchive } from "../../archive/archiveAdapter.js";
 import {
@@ -42,6 +43,7 @@ const allowedTool =
 
 /** Saved checkpoint collaboration, independent of the hidden native acceptance bridge. */
 export class LiveWorkspace {
+  readonly memory: LiveMemory;
   private readonly sessions = new Map<string, Session>();
   private connecting = false;
   private closing = false;
@@ -56,12 +58,21 @@ export class LiveWorkspace {
       archive: string,
       directory: string,
     ) => Promise<unknown> = extractArchive,
-  ) {}
+  ) {
+    this.memory = new LiveMemory(
+      workspace.root,
+      undefined,
+      () => this.closing || this.connecting || this.sessions.size > 0,
+    );
+  }
 
   capabilities() {
     return {
       module: "live",
       backend: "saved_checkpoint",
+      capabilityScope:
+        "Saved-checkpoint defaults; memory describes the separate explicit in-memory backend",
+      memory: this.memory.capabilities(),
       directInMemoryMutation: false,
       sourceOverwrite: false,
       dllInjection: false,
@@ -189,7 +200,7 @@ export class LiveWorkspace {
   }
 
   async connect(archive: string, windowId?: string) {
-    if (this.closing || this.connecting) throw Error("LIVE_CONNECT_BUSY");
+    if (this.closing || this.connecting || this.memory.busy) throw Error("LIVE_CONNECT_BUSY");
     this.connecting = true;
     let release!: () => void;
     const done = new Promise<void>((resolve) => {
@@ -461,6 +472,7 @@ export class LiveWorkspace {
 
   private async closeImpl() {
     this.closing = true;
+    await this.memory.close();
     await Promise.all([...this.inflight]);
     const results = await Promise.allSettled(
       [...this.sessions.values()].map((s) => s.runtime.close()),

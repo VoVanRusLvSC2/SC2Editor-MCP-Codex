@@ -1,0 +1,158 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-07T16:17:33.012Z",
+  "scope": "Direct in-memory existing map-local Unit.LifeMax through the original visible Data inline editor. This is separate from saved-checkpoint authoring and hidden native tests.",
+  "sourceFingerprintPolicy": "Current Git-normalized UTF-8 LF; final native qualification used this runtime and source.",
+  "sourceFingerprints": {
+    "src/modules/live/memory.ts": "0af88866f550cd1bdd42ece216ee1fff2968e3207c3d2cdc97a67cf4c5e1f7d7",
+    "src/modules/live/memoryDesktop.ts": "6999d5a3bcb4344988eda06689d94cce9a28af77ef437f04d8a0b262ceaf2619",
+    "src/modules/live/memoryTools.ts": "5f3bdb4f35fe2739c189e1e836402ad4c44cda08a4c8f08a8ccbc898b9181ed1",
+    "src/modules/live/desktop.ts": "d1d5a3c01a00492e7ab51b00f75a1ca250f7ee29e3cdb8ab682d6a696fad1ce4",
+    "src/modules/live/workspace.ts": "29a3a173f6bc73a3b89b6aea3f9280e0fbc521de79845279843158812714219b",
+    "src/modules/live/tools.ts": "9fe82b2475bf05999c6e73fa9b0c8b63086d24060e62ea14c9618523cbdf898a",
+    "src/app/authoringScript.ts": "7413e628d5ca5d6858069fd3e39799e70181a4d5365ad5967a166928bd3a441d",
+    "src/tests/liveMemory.test.ts": "804014cda219072b7948fdaa54e46825ffd1a4e5302d78973f8109dfd93b6bd6",
+    "native/live-editor/Program.cs": "56d2b4cae447d02a7fe675de03e61e78409ca11187b4b2e21835ebe94c092a45",
+    "native/live-editor/MemoryData.cs": "f7207770e7ee3de04647a7ad394dd27fc44940bf7f861e94e44a147b0b10c988",
+    "native/live-editor/memory.cpp": "85a456b6a13d841a2d64dd10b40cd530d0a16ff6a3bdacad005d86c950486fff",
+    "native/live-editor/memory_loader.cpp": "7dce8ff327caf6750264d6384832e826a43851f91524b79329a309639e1d8bb6",
+    "native/live-editor/memory_protocol.h": "be1850754b2b2f5ab39240d2fbc5f91a8f78994b4ea996ea7f68d873d85b52d3",
+    "native/live-editor/CMakeLists.txt": "e5ec66fc57edbfff56ec39a64b20c9d2bd90917d6ba3180fcdb5c7a9bd031b0c",
+    "scripts/build-live-editor.mjs": "33a0935544263093226971605f64909468f70174dbe0e85f62b8aeb8a0aaaca7",
+    "scripts/build-live-memory.mjs": "a7466823180e5c55011db6ecfe53201e7945d6c1ebf18c4aac61a669d499f3df"
+  },
+  "implementation": {
+    "tools": [
+      "live.memory.capabilities",
+      "live.memory.read",
+      "live.memory.set"
+    ],
+    "compactCommands": true,
+    "existingMapLocalUnitFields": 8,
+    "dll": "Original project-owned optional visible Data adapter, not a private Toolkit DLL",
+    "nativeBuildTag": "live-memory/e1835b79a371b50c",
+    "readback": "Complete inline value, not clipped ListView cells",
+    "directInMemoryMutation": true,
+    "startsEditor": false,
+    "reopensMap": false,
+    "savesMap": false,
+    "singleUseSnapshotSeconds": 90
+  },
+  "regression": {
+    "tests": 27,
+    "passed": 27,
+    "failed": 0,
+    "scope": "13 new memory/compact command cases and 14 existing checkpoint cases",
+    "build": "passed",
+    "releaseBuild": "passed",
+    "nativeBuild": "passed",
+    "scopedLint": "passed",
+    "documentationLanguage": "passed",
+    "architecture": {
+      "ok": true,
+      "files": 432,
+      "cycles": [],
+      "violations": []
+    }
+  },
+  "native": {
+    "at": "2026-11-07T16:14:35.617Z",
+    "transport": "MCP stdio",
+    "nativeWriteTest": true,
+    "archiveSha256": "856f9d2532f80bdb308fb1ef0f45bf4e6b66ac32b55e0a72b795d431a8846255",
+    "archiveUnchanged": true,
+    "editorProcessId": 27008,
+    "processStart": "639296443312472720",
+    "finalValue": 1200,
+    "undoVerified": false,
+    "scope": "Existing map-local Unit.LifeMax; other fields, rendering, terrain and triggers are not accepted by this record",
+    "sequence": [
+      1200,
+      1234,
+      1200
+    ],
+    "sameWindowAndProcess": true,
+    "writeReceipts": [
+      {
+        "ms": 2883,
+        "status": "applied",
+        "application": "in_memory",
+        "unit": "ArenaPilot",
+        "field": "LifeMax",
+        "before": 1200,
+        "after": 1234,
+        "requested": 1234,
+        "windowId": "8588086",
+        "documentDirty": true,
+        "archiveUnchanged": true,
+        "savesMap": false,
+        "reopensMap": false,
+        "retryMutation": false
+      },
+      {
+        "ms": 2889,
+        "status": "applied",
+        "application": "in_memory",
+        "unit": "ArenaPilot",
+        "field": "LifeMax",
+        "before": 1234,
+        "after": 1200,
+        "requested": 1200,
+        "windowId": "8588086",
+        "documentDirty": true,
+        "archiveUnchanged": true,
+        "savesMap": false,
+        "reopensMap": false,
+        "retryMutation": false
+      }
+    ],
+    "nativeUndoVerified": false,
+    "gameplayVerified": false,
+    "renderedAppearanceVerified": false
+  },
+  "evidence": {
+    "MCP_MEMORY.json": {
+      "file": "work/live-memory-20261107/MCP_MEMORY.json",
+      "sha256": "e11ed651362d8d6aea020b7e99c3441efaadd78a75f5fedb668fb26d5e7fa8a4"
+    },
+    "MEMORY_VERIFICATION.json": {
+      "file": "work/live-memory-20261107/MEMORY_VERIFICATION.json",
+      "sha256": "4780fec16403a0cb4d2984e1c3acace31997cc079cab54057101367b47774b49"
+    }
+  },
+  "retainedFindings": [
+    "Original Data fields are split into name and value ListViews; displayed cells are clipped. The complete value is read from the original inline editor.",
+    "Cross-process hooks failed with Win32 126. A separate original project loader and GUI-thread WndProc dispatch worked; no private hidden-test DLL was attached to the visible Editor.",
+    "Native Modify Value opens an inline editor, not necessarily a modal dialog. Failed prototypes did not establish a successful write.",
+    "The first MCP close verification incorrectly included hidden inline controls. Visibility checks fixed that failure.",
+    "Repeated selection/filter notifications could refresh away an inline editor on a fast retained connection. Unchanged views now avoid those notifications; changed views wait before editing.",
+    "The final complete MCP sequence read 1200, applied/read back 1234, restored/read back 1200. The original packed archive SHA-256 stayed unchanged."
+  ],
+  "limits": [
+    "Only Unit.LifeMax was qualified end to end in the visible Editor. The other allowed scalar fields retain per-call readback and failure guards, without independent native acceptance here.",
+    "Terrain, placements, triggers, arbitrary Data graphs and object creation have no direct-memory implementation in this backend.",
+    "Inspection can mark the document dirty. The helper never clears that marker or silently saves.",
+    "Native Undo, original save/reopen persistence, rendered appearance, gameplay, other Editor builds/locales and arbitrary-field compatibility are not certified by this record.",
+    "Initial identity uses an explicit archive and qualified window title, not an authoritative internal SC2 document-path API.",
+    "Already-running MCP frontends need reconnection to expose the newly registered tools. The plugin remains resident until Editor exits."
+  ],
+  "publication": {
+    "baseCommit": "f51bbf7",
+    "scope": "Memory backend only; pending unit-presentation repair remains outside this commit",
+    "candidateAuthoringScriptSha256": "ca2908b9fcebf37f266dedfc674549a3f6b21115fa87108947fb4113aa2805b9",
+    "nativeEvidenceReuse": "All native memory adapter, helper and live memory service sources match the qualified working source. Compact authoring guide differs only by excluded unrelated unit-presentation commands; exact candidate regressions/builds are checked separately.",
+    "candidateChecks": {
+      "build": "passed",
+      "releaseBuild": "passed",
+      "tests": {
+        "passed": 27,
+        "failed": 0
+      },
+      "scopedLint": "passed",
+      "documentationLanguage": "passed",
+      "whitespace": "passed",
+      "nativeRerun": false,
+      "nativeReuse": "Matching source fingerprints; unchanged native behavior was not replayed for publication"
+    }
+  }
+}

@@ -12,6 +12,12 @@ localization, resource IDs and original catalog source annotations.
   publish a new checkpoint. Never overwrite an open source archive, dismiss a
   save dialog, inject the test DLL or treat a file-open request as rendered proof.
   Use `live.pull` for newly saved user changes; unresolved local edits must refuse.
+  For explicitly requested in-memory editing, use `live.memory.read/set` instead:
+  this separate opt-in adapter edits existing map-local Unit scalar fields through
+  the original visible Data controls. It does not reopen/save the map or inject
+  the hidden test DLL. Preserve token-bound editors, manual input, snapshots and
+  unknown outcomes. Do not describe this bounded backend as live Terrain/trigger
+  authoring. Read `docs/LIVE_EDITOR.md#direct-in-memory-data-editing`.
 
 - Author map content through MCP, preferably compact `modkit.author` commands in
   one persistent workflow session. Use detailed module tools when needed. Shell

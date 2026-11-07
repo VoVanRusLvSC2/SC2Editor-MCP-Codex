@@ -14,6 +14,15 @@ in-memory edits and from the private hidden native acceptance bridge. Preserve
 the user's unsaved work, exact document/process identity and both conflicting
 versions. Never automatically answer the Editor's save or dependency dialogs.
 
+Explicit direct-memory authoring uses `live.memory.read` followed by
+`live.memory.set`, separately from checkpoint sessions. This opt-in visible
+Data adapter currently supports existing map-local Unit numeric fields only.
+It operates on the current document, including unsaved values, without archive
+replacement. Complete native inline values, process/document/source identity and
+single-use snapshots guard writes. Native control inspection can mark a document
+dirty; never clear that flag manually or silently save. Unknown commits require
+fresh inspection, not replay. See the live guide for the supported scope.
+
 Use a persistent MCP session. Start with `modkit.author_help`, then send compact
 commands through `modkit.author`. Query only the needed catalog page or function
 signature. Batch related work, validate once per logical change, and request full

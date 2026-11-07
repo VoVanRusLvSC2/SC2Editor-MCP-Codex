@@ -1,16 +1,16 @@
 # Visible Editor collaboration
 
-The separate `live` module implements **saved-checkpoint collaboration** with an
+The separate `live` module provides two explicit backends. **Saved-checkpoint collaboration** works with an
 already-open SC2 Editor. Existing authoring tools edit a persistent imported
 component project. `live.publish` exports a new verified archive and optionally
 requests that the same visible Editor open it through a normal Windows file-drop
 message. The user's original archive is never replaced. No test DLL is injected,
 no hidden Editor/game is started, and no save/dependency dialog is dismissed.
 
-This is batch-by-batch visible collaboration, **not direct in-memory editing**.
-The current pinned Toolkit has no supported visible-document mutation API.
-Continuous object-by-object updates can be added behind a future explicit native
-backend without weakening the checkpoint backend's ownership or stale guards.
+**Direct in-memory Data editing** uses `live.memory.read/set` and a separate
+project-owned visible adapter. It changes a bounded numeric field in the current
+document through the original Editor controls, without exporting/reopening an
+archive. The pinned hidden-test Toolkit is not repurposed for this mode.
 
 ## Setup
 
@@ -24,13 +24,74 @@ $env:SC2_MCP_PROFILE = 'live'
 node dist/index.js
 ```
 
-The helper uses the installed .NET Framework compiler and ordinary Windows window
+For checkpoint operations, the helper uses the installed .NET Framework compiler and ordinary Windows window
 enumeration/file-drop APIs. Its source is in `native/live-editor/Program.cs`;
 compiled binaries remain local. `SC2_LIVE_BRIDGE` can select an explicitly built
 helper. There is no network listener, shell-command input, installation patch,
-process-memory access or automatic Editor launcher.
+process-memory access or automatic Editor launcher in the checkpoint path.
 
-## Workflow
+## Direct in-memory Data editing
+
+Build the optional adapter with `npm run live:memory:build`. It requires Windows
+x64, Visual Studio C++ tools and CMake (or explicit `SC2_LIVE_CMAKE`). The supported
+Editor build is 5.0.17.98310 with English Data controls. Keep a map already open
+in the visible Editor's Data module; no additional Editor is launched.
+
+1. Select its exact Data `windowId` from `live.windows`.
+2. Call `live.memory.read` with `archive`, `windowId`, `unit` and `field`.
+   The packed archive identifies the open document and is hashed, not extracted
+   or rewritten. Unsaved document values are read from the original inline
+   editor; clipped on-screen list text is never used as the numeric value.
+3. Call `live.memory.set` with the returned `snapshotId` and numeric `value`.
+   Snapshots expire after 90 seconds and are consumed once, including failures.
+   Native field ownership, the current complete value, PID/start time, HWND,
+   document title and saved archive hash are checked again. A dirty-marker
+   transition is allowed; replacing the document is refused.
+4. `status=applied` requires fresh native value readback. The result includes
+   `before`, `after`, `documentDirty` and `archiveUnchanged`. Save normally in
+   Editor when desired. No global undo, Save or Discard command is exposed.
+
+Supported fields on existing map-local **Unit** objects are `LifeMax`, `LifeStart`,
+`ShieldsMax`, `ShieldsStart`, `EnergyMax`, `EnergyStart`, `Speed` and `LifeArmor`.
+Values must be finite, nonnegative and below 524288. Native numeric normalization
+that differs from the requested value returns `verification_failed`, not success.
+This backend does not yet create objects or edit Terrain, placements, triggers,
+arbitrary XML, arrays or Actor graphs. Field changes are request-driven; this
+is not continuous background file synchronization.
+
+Example tool arguments:
+
+```json
+{"archive":"D:/Maps/Current.SC2Map","windowId":"123456","unit":"MyMarine","field":"LifeMax"}
+```
+
+Then call `live.memory.set` with `{"snapshotId":"<returned UUID>","value":250}`.
+Disconnect saved-checkpoint sessions before using the memory backend. Requests
+are serialized across clients by exact Editor process identity; an abandoned
+lease refuses rather than being stolen automatically. Preserve/review a leftover
+lease before removing it after confirming no native operation is active.
+
+Only an explicit memory read/set starts the retained local helper and loads
+`sc2-mcp-live-data.dll` into the selected visible Editor. The loader checks the
+exact process/build and immutable sibling binary hashes. The adapter subclasses
+the selected Data window, dispatches on its GUI thread and invokes the original
+Modify Value/inline control. It uses no game DLL, private Toolkit source,
+SC2 address offsets, physical input or arbitrary DLL path. The plugin remains
+resident until Editor exits; MCP shutdown closes its helper, not Editor.
+Compiled binaries and versioned runtime manifests stay local and ignored.
+
+Inspection opens and cancels a native inline editor and **may mark the document
+dirty without changing the value**. Do not manually clear this flag. Cancellation
+requires the call's token, owned control generation and unchanged inline text;
+manual typed input is preserved. A 30-second guard cancels only unchanged owned
+inline input. Unknown commit results never trigger a replay or automatic
+restoration. Read the current field again before deciding on another edit.
+
+The module pins full or qualified abbreviated title paths; it does not claim an
+authoritative SC2 internal document-path API. Readback proves a Data value, not
+3D appearance, native Undo, game balance or compatibility with every field/build.
+
+## Saved-checkpoint workflow
 
 1. Open a packed `.SC2Map` or `.SC2Mod` in the visible Editor and save it.
 2. `live.windows` lists exact window/process identities. `live.connect` accepts
@@ -76,7 +137,7 @@ All source edits use the existing public authoring tool executor; there is no
 second map-content writer. Abilities, XP and combat stay in native Data, and GUI
 organization follows the same project protocol.
 
-## Conflicts and evidence
+## Saved-checkpoint conflicts and evidence
 
 - An unsaved `*]` document title or disabled/modal Editor requires user action.
   Authoring does not race the unsaved visible document.
@@ -107,6 +168,14 @@ The `live` profile exposes the module independently; `all`, `workflow` and
 reconnected to load these newly registered tools.
 
 ## Recorded verification
+
+The [2026-11-07 memory record](verification/live-memory-data-2026-11-07.json)
+retains 27 scoped passing regressions and an actual outer-MCP native sequence:
+`ArenaPilot.LifeMax` 1200 → 1234 → 1200 in the same visible Editor window/process,
+with fresh complete native readback and unchanged packed archive SHA-256.
+The two final write calls took approximately 2.9 seconds each, including readback.
+This qualifies that field and build, not every allowed field, rendered appearance,
+native Undo, save/reopen persistence, terrain, triggers or gameplay.
 
 The [2026-11-07 checkpoint record](verification/live-editor-checkpoints-2026-11-07.json)
 contains 39 passing scoped regressions and actual outer-MCP/visible-Editor

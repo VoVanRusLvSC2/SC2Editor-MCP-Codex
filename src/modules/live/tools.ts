@@ -1,6 +1,7 @@
 import type { McpServer } from "@modelcontextprotocol/server";
 import * as z from "zod/v4";
 import type { LiveRuntimeFactory, LiveWorkspace } from "./workspace.js";
+import { registerMemoryTools } from "./memoryTools.js";
 
 const sessionId = z.string().uuid();
 const result = (value: unknown) => ({
@@ -13,11 +14,12 @@ export function registerLiveTools(
   factory: LiveRuntimeFactory,
 ) {
   live.runtimeFactory = factory;
+  registerMemoryTools(server, live.memory);
   server.registerTool(
     "live.capabilities",
     {
       description:
-        "Saved-checkpoint collaboration with a visible Editor, separate from hidden native test workers. No direct in-memory Data/Terrain edits or source overwrite.",
+        "Visible Editor collaboration: saved-checkpoint backend plus a separate opt-in live.memory backend for guarded in-memory Unit scalar edits. Hidden native test workers remain separate. No source overwrite or general live Terrain editing.",
       inputSchema: z.object({}).strict(),
       annotations: { readOnlyHint: true },
     },

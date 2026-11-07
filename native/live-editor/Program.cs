@@ -1,5 +1,5 @@
-// Standard Windows file-drop delivery to an existing visible SC2 Editor.
-// No process injection, editor memory access, input injection or DLL dependency.
+// Inventory/file-drop does not load a DLL. Explicit memory-* commands use our
+// separate opt-in visible Data adapter, never the hidden native test worker.
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -42,6 +42,12 @@ internal static class LiveEditor {
     }
   }
   private static object Run(string[] args) {
+    if((args.Length==5&&args[0]=="memory-inspect")||(args.Length==11&&args[0]=="memory-command")){
+      uint operation=args.Length==5?0:UInt32.Parse(args[5]);
+      IntPtr hwnd=new IntPtr(Int64.Parse(args[1]));Window w=Read(hwnd);
+      if(w==null||w.processId.ToString()!=args[2]||w.processStart!=args[3]||w.title.Replace("*]","]")!=args[4].Replace("*]","]")||(!w.enabled&&(operation<4||operation>6))||!w.title.StartsWith("Data - ["))throw new Exception("LIVE_MEMORY_EXACT_DATA_WINDOW_REQUIRED");
+      return args.Length==5?MemoryData.Inspect(hwnd):MemoryData.Call(hwnd,operation,args[6],args[7],args[8],args[9],args[10]);
+    }
     if (args.Length == 1 && args[0] == "list") {
       List<Window> result = new List<Window>();
       EnumWindows(delegate(IntPtr hwnd, IntPtr unused) { try { Window w=Read(hwnd); if(w!=null) result.Add(w); } catch { } return true; },IntPtr.Zero);
@@ -70,7 +76,20 @@ internal static class LiveEditor {
     } finally { if(!transferred) GlobalFree(block); }
   }
   public static void Main(string[] args) {
+    Console.InputEncoding=new UTF8Encoding(false);
     Console.OutputEncoding=new UTF8Encoding(false);
+    if(args.Length==1&&args[0]=="memory-stdio"){
+      string line;
+      while((line=Console.ReadLine())!=null){
+        try {
+          if(line.Length>16384)throw new Exception("LIVE_MEMORY_REQUEST_BOUND");
+          var request=Json.Deserialize<string[]>(line);
+          if(request==null||!((request.Length==11&&request[0]=="memory-command")||(request.Length==1&&request[0]=="list")))throw new Exception("LIVE_MEMORY_REQUEST_INVALID");
+          Console.WriteLine(Json.Serialize(Run(request)));
+        }catch(Exception error){Console.WriteLine(Json.Serialize(new {error=error.Message}));}
+      }
+      return;
+    }
     try { Console.WriteLine(Json.Serialize(Run(args))); }
     catch(Exception error) { Console.WriteLine(Json.Serialize(new { error=error.Message })); }
   }

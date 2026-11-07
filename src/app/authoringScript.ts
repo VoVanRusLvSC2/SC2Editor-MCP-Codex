@@ -5,7 +5,7 @@ import { coalesceAuthoringSteps } from "./authoringGroups.js";
 export type AuthorMode = "plan" | "stage" | "save";
 export const authoringGuide = {
   livePolicy:
-    "Visible Editor collaboration uses live.windows/connect, live.author and live.publish present=true. It exports a new saved checkpoint through the existing authoring tools and requests opening it in the same visible window; direct in-memory editing is not implemented. Save user edits and live.pull before continuing. No original archive overwrite, save-dialog dismissal or private DLL injection.",
+    "Visible Editor has separate backends. live.windows/connect, live.author and live.publish export/open new saved checkpoints; save user edits and live.pull before continuing. For explicitly requested direct in-memory Unit scalar edits, use live memory.read archive=... windowId=... unit=... field=LifeMax then live memory.set snapshotId=... value=250 in stage/save mode. This loads our separate visible Data adapter, preserves unsaved values and does not save/reopen the map. Existing map-local Unit numeric fields only; no live Terrain/trigger support. Unknown commits must not replay. No original archive overwrite, save-dialog dismissal or hidden test DLL injection.",
   nativeEditorPolicy:
     "Optional pinned SC2NativeToolkit: editor.status reports connection without Editor startup; editor.check queues native load/Data, compile and save/reopen checks on a saved archive; editor.data.audit submits a full original effective-Data audit with separate native status/cancel and explicit coverage limits; editor.job polls compact results; editor.capture queues native images; editor.stop closes the owned hidden Editor. map.preview remains the fast ModKit renderer. Unknown diagnostics and native images do not certify gameplay.",
   testPolicy:
@@ -153,6 +153,9 @@ const aliases: Record<string, string> = {
 };
 const directCommands = new Set([
   "live.windows",
+  "live.memory.capabilities",
+  "live.memory.read",
+  "live.memory.set",
   "live.connect",
   "live.status",
   "live.author",
@@ -764,7 +767,10 @@ function lifecycle(
   }
   if (command.tool === "data.card.check") return [first];
   if (mode === "plan") {
-    if (command.tool.startsWith("live.") && !["live.windows", "live.status"].includes(command.tool))
+    if (
+      command.tool.startsWith("live.") &&
+      !["live.windows", "live.status", "live.memory.capabilities"].includes(command.tool)
+    )
       throw new Error(
         "AUTHOR_LIVE_REQUIRES_STAGE: live session mutations require explicit stage/save mode",
       );
