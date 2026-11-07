@@ -6,7 +6,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 if (process.platform !== "win32") throw Error("LIVE_WINDOWS_REQUIRED");
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const sources = ["memory.cpp", "memory_protocol.h", "memory_loader.cpp", "CMakeLists.txt"];
+const sources = ["memory.cpp", "document.inc", "memory_protocol.h", "memory_loader.cpp", "CMakeLists.txt"];
 const hash = createHash("sha256");
 for (const f of sources)
   hash.update(f + "\0").update(readFileSync(path.join(root, "native/live-editor", f)));

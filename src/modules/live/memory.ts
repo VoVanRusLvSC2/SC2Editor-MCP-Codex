@@ -1,8 +1,8 @@
 import { promises as fs } from "node:fs";
 import path from "node:path";
-import os from "node:os";
 import { createHash, randomUUID } from "node:crypto";
 import * as z from "zod/v4";
+import { withEditorLease } from "./editorLease.js";
 import { documentDirty, documentMatches, type EditorWindow } from "./desktop.js";
 import { WindowsMemoryDesktop, type MemoryDesktop } from "./memoryDesktop.js";
 
@@ -160,10 +160,29 @@ export class LiveMemory {
   private async open(context: Context, token: string, expected = "", value = "0") {
     const prepared = await this.command(context, 1, context);
     if (prepared.refreshRequired !== false) await this.pause(650);
+    let unitReady = false;
+    for (let i = 0; i < 20; i++) {
+      if ((await this.command(context, 0, context)).unitReady === true) {
+        unitReady = true;
+        break;
+      }
+      await this.pause(150);
+    }
+    if (!unitReady) throw Error("LIVE_MEMORY_UNIT_NOT_READY");
     const selection = selectedSchema.parse(await this.command(context, 2, context));
     if (selection.source !== path.basename(context.archive))
       throw Error("LIVE_MEMORY_MAP_LOCAL_OBJECT_REQUIRED");
     if (selection.refreshRequired !== false) await this.pause(650);
+    let ready = false;
+    for (let i = 0; i < 20; i++) {
+      const state = await this.command(context, 0, context);
+      if (state.fieldReady === true) {
+        ready = true;
+        break;
+      }
+      await this.pause(150);
+    }
+    if (!ready) throw Error("LIVE_MEMORY_FIELD_NOT_READY");
     const opened = await this.command(context, 3, { ...context, token, expected, value });
     if (opened.editOpened !== true && opened.status !== "pending")
       throw Error("LIVE_MEMORY_EDIT_NOT_OPENED");
@@ -219,27 +238,7 @@ export class LiveMemory {
   }
 
   private async lease<T>(context: Context, work: () => Promise<T>) {
-    const directory = path.join(os.tmpdir(), "SC2EditorToolkit-live-memory");
-    await fs.mkdir(directory, { recursive: true });
-    const file = path.join(
-      directory,
-      `${context.window.processId}-${context.window.processStart}.lock`,
-    );
-    const owner = randomUUID();
-    let handle;
-    try {
-      handle = await fs.open(file, "wx");
-    } catch {
-      throw Error("LIVE_MEMORY_EDITOR_LEASE_BUSY: " + file);
-    }
-    try {
-      await handle.writeFile(owner);
-      return await work();
-    } finally {
-      await handle.close();
-      if ((await fs.readFile(file, "utf8").catch(() => "")) === owner)
-        await fs.unlink(file).catch(() => {});
-    }
+    return withEditorLease(context.window, work);
   }
 
   async read(input: Target) {

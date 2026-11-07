@@ -6,10 +6,12 @@
 #include <vector>
 #include <algorithm>
 #include <cmath>
+#include <map>
 #pragma comment(lib, "user32.lib")
 #pragma comment(lib, "comctl32.lib")
 static HWND boundWindow = nullptr;
 static WNDPROC previousProcedure = nullptr;
+static std::map<HWND, WNDPROC> windowProcedures;
 static LiveDataRequest editStorage{};
 static LiveDataRequest *activeEdit = nullptr;
 static HWND ownInline = nullptr;
@@ -180,6 +182,7 @@ static bool Fail(LiveDataRequest *b, const wchar_t *code) {
   Result(b, L"{\"error\":" + Quote(code) + L"}");
   return false;
 }
+#include "document.inc"
 static int UnitRow(HWND root, const wchar_t *unit) {
   auto list = Control(root, 1025, L"SysListView32");
   if (!list)
@@ -243,7 +246,7 @@ static HWND OwnDialog() {
       auto owner = GetWindow(h, GW_OWNER);
       bool ours = false;
       for (int i = 0; owner && i < 16; i++, owner = GetWindow(owner, GW_OWNER))
-        if (owner == boundWindow)
+        if (owner == (activeEdit ? reinterpret_cast<HWND>(activeEdit->window) : boundWindow))
           ours = true;
       if (ours) {
         if (found)
@@ -301,6 +304,11 @@ static void CALLBACK EditDeadline(HWND, UINT, UINT_PTR, DWORD) {
   }
 }
 static void Execute(LiveDataRequest *b, HWND root) {
+  if (b->operation == 24) {
+    if (activeEdit) { Fail(b, L"LIVE_MEMORY_EDIT_BUSY"); return; }
+    DocumentExecute(b, root);
+    return;
+  }
   if (activeEdit && !OwnDialog() &&
       (!ownInline || !IsWindow(ownInline) || !IsWindowVisible(ownInline))) {
     if (ownInline &&
@@ -319,6 +327,9 @@ static void Execute(LiveDataRequest *b, HWND root) {
     return;
   }
   if (b->operation == 0) {
+    int readyColumn = 0;
+    bool fieldReady = b->unit[0] && b->field[0] && Selected(root, b->unit) &&
+      LocalSource(root, b->unit) && FieldRow(root, b->field, readyColumn) >= 0;
     std::wstring j = L"{\"title\":" + Quote(Text(root)) + L",\"controls\":[";
     bool comma = false;
     for (HWND h : Children(root)) {
@@ -335,10 +346,15 @@ static void Execute(LiveDataRequest *b, HWND root) {
     Result(b, j + L"],\"objects\":" + Table(Control(root, 1025, L"SysListView32"), 5) +
                   L",\"fields\":" + Table(Control(root, 2025, L"SysListView32"), 10) +
                   L",\"fieldValues\":" + Table(Control(root, 2026, L"SysListView32"), 10) +
+                  L",\"unitReady\":" + std::wstring(UnitRow(root, b->unit) >= 0 ? L"true" : L"false") +
+                  L",\"fieldReady\":" + std::wstring(fieldReady ? L"true" : L"false") +
                   L",\"mapMutation\":false}");
     return;
   }
   if (b->operation == 1) {
+    // MFC menu updates use this GUI thread's active frame. This does not
+    // SetForegroundWindow or inject input into the foreground application.
+    SetActiveWindow(root);
     bool refresh = false;
     auto type = Control(root, 21, L"ComboBox");
     if (((!type || Text(type) != L"Unit") && !Invoke(root, L"Units", false, &refresh)) ||
@@ -593,13 +609,16 @@ static LRESULT CALLBACK LiveDataWindow(HWND window, UINT message, WPARAM wp, LPA
     Dispatch(window, wp);
     return 0;
   }
-  auto result = CallWindowProcW(previousProcedure, window, message, wp, lp);
+  auto found = windowProcedures.find(window);
+  if (found == windowProcedures.end()) return DefWindowProcW(window, message, wp, lp);
+  auto result = CallWindowProcW(found->second, window, message, wp, lp);
   if (message == WM_NCDESTROY) {
     if (deadlineTimer)
       KillTimer(window, deadlineTimer);
     RemovePropW(window, kLiveMemoryMessage);
     boundWindow = nullptr;
     previousProcedure = nullptr;
+    windowProcedures.erase(window);
   }
   return result;
 }
@@ -612,17 +631,16 @@ extern "C" __declspec(dllexport) DWORD WINAPI LiveDataStart(void *argument) {
   auto name = wcsrchr(path, L'\\');
   name = name ? name + 1 : path;
   if (pid != GetCurrentProcessId() || _wcsicmp(name, L"SC2Editor_x64.exe") ||
-      Text(target).rfind(L"Data - [", 0) != 0)
+      (Text(target).rfind(L"Data - [", 0) != 0 && Text(target).rfind(L"Terrain - [", 0) != 0))
     return ERROR_INVALID_PARAMETER;
-  if (boundWindow && boundWindow != target)
-    return ERROR_BUSY;
-  if (!previousProcedure) {
+  if (!windowProcedures.count(target)) {
     boundWindow = target;
     SetLastError(0);
     previousProcedure = reinterpret_cast<WNDPROC>(
         SetWindowLongPtrW(target, GWLP_WNDPROC, reinterpret_cast<LONG_PTR>(LiveDataWindow)));
     if (!previousProcedure)
       return GetLastError();
+    windowProcedures[target] = previousProcedure;
     deadlineTimer = SetTimer(target, 0, 1000, EditDeadline);
   }
   SetPropW(target, kLiveMemoryMessage, reinterpret_cast<HANDLE>(1));

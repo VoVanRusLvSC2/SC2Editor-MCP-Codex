@@ -11,15 +11,19 @@ SC2GameToolkit/SC2EditorToolkit sources or replace the hidden acceptance bridge.
   the immutable sibling plugin. No arbitrary DLL path or game process target.
 - `memory.cpp`: GUI-thread dispatch through a chained Data-window procedure and
   the original Modify Value/inline editor. No SC2 address offsets or archive I/O.
+- `document.inc`: native Terrain File > Save on the same selected document.
+  The adapter does not implement Save As, archive replacement or object placement.
 - `memory_protocol.h`: fixed versioned request layout. Operations 0–6 are inspect,
   prepare view, select field, open owned edit, read owned edit, commit, cancel.
+  Operation 24 requests native File > Save; pending requests are observed, never
+  automatically repeated. Data field readiness is checked before opening an edit.
 
 `npm run live:memory:build` requires Visual Studio 2022 C++ tools and CMake. The
 source fingerprint selects an immutable output directory. The ignored manifest
 contains exact binary SHA-256 values; the helper verifies them before loading.
 The tested Editor version is 5.0.17.98310 with English Data controls.
 
-Use the public `live.memory.read/set` MCP tools, not raw native commands, for
+Use the public `live.memory.read/set` and `live.document.status/save` MCP tools, not raw native commands, for
 authoring. TypeScript owns archive/document identity, snapshots, cross-client
 leases, final readback and uncertain outcomes. The native adapter also validates
 its selected source, unit, exact raw field filter and complete inline value.

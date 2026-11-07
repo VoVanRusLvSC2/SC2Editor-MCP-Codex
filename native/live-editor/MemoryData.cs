@@ -87,7 +87,7 @@ internal static class MemoryData {
     uint thread = GetWindowThreadProcessId(hwnd, out pid);
     var title = new StringBuilder(1024);
     GetWindowText(hwnd, title, 1024);
-    if (operation > 6 || title.Length >= 1023 || unit.Length >= 128 || field.Length >= 128 ||
+    if ((operation > 6 && operation != 24) || title.Length >= 1023 || unit.Length >= 128 || field.Length >= 128 ||
         expected.Length >= 128 || value.Length >= 128 || token.Length >= 64)
       throw new Exception("LIVE_MEMORY_REQUEST_INVALID");
     var request =
@@ -150,6 +150,8 @@ internal static class MemoryData {
           Thread.Sleep(20);
           view.ReadArray(0, bytes, 0, bytes.Length);
           request = Decode(bytes);
+          if (operation == 24 && request.state == 1 && i >= 9)
+            return new { status = "save_pending", saveRequested = true, retryMutation = false };
           if (operation == 3 && request.state == 1 && i >= 9)
             return new { status = "pending", token = request.token, nativeState = request.state,
                          commitRequested = false };

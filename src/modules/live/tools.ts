@@ -2,6 +2,7 @@ import type { McpServer } from "@modelcontextprotocol/server";
 import * as z from "zod/v4";
 import type { LiveRuntimeFactory, LiveWorkspace } from "./workspace.js";
 import { registerMemoryTools } from "./memoryTools.js";
+import { documentTargetSchema, documentSaveSchema } from "./document.js";
 
 const sessionId = z.string().uuid();
 const result = (value: unknown) => ({
@@ -16,10 +17,29 @@ export function registerLiveTools(
   live.runtimeFactory = factory;
   registerMemoryTools(server, live.memory);
   server.registerTool(
+    "live.document.status",
+    {
+      description:
+        "Read the selected current Terrain document identity, dirty/dialog flags and saved archive SHA-256. No map copy, save, DLL load or checkpoint import. Use the returned hash for live.document.save.",
+      inputSchema: documentTargetSchema,
+      annotations: { readOnlyHint: true },
+    },
+    async (a) => result(await live.document.status(a)),
+  );
+  server.registerTool(
+    "live.document.save",
+    {
+      description:
+        "Save the explicitly selected current open map with native File > Save, never Save As or checkpoint export. Requires a fresh same-archive SHA-256 from live.document.status. Includes current unsaved user edits. Verifies unchanged document identity, clean title and stable same-file disk readback. Dialogs and unknown outcomes are never dismissed or retried. Does not add objects or expand memory editing scope.",
+      inputSchema: documentSaveSchema,
+    },
+    async (a) => result(await live.document.save(a)),
+  );
+  server.registerTool(
     "live.capabilities",
     {
       description:
-        "Read-only connectivity/routing check; no save or live.connect required, including unsaved documents. Reports saved-checkpoint and separate opt-in live.memory scope. Memory edits support existing Unit numeric fields only, not general live Terrain authoring.",
+        "Read-only API version/connectivity/routing check; no save or live.connect required. Current-document editing and native same-file Save are the default, with no map copy. Unit memory edits remain scalar-only; Terrain/object placement is not implemented in memory. Checkpoints require explicit user selection.",
       inputSchema: z.object({}).strict(),
       annotations: { readOnlyHint: true },
     },
@@ -39,11 +59,12 @@ export function registerLiveTools(
     "live.connect",
     {
       description:
-        "Saved-checkpoint workflow ONLY: import an explicitly selected saved SC2Map/SC2Mod into a private authoring copy. This is not a connectivity test or prerequisite for live.memory edits. Only this workflow requires saving unsaved Editor changes first. Exact window/title guards apply; the source archive is never overwritten.",
+        "Explicit user-selected saved-checkpoint workflow ONLY. Required workflow=saved_checkpoint acknowledges creating a private copy. Never use this as the default current-document workflow or as a fallback for unsupported live operations. This is not a connectivity test or prerequisite for memory/save tools. Exact window/title guards apply; the source archive is never overwritten.",
       inputSchema: z
         .object({
           archive: z.string().min(1).max(4096),
           windowId: z.string().regex(/^\d+$/).optional(),
+          workflow: z.literal("saved_checkpoint"),
         })
         .strict(),
     },

@@ -6,6 +6,12 @@ localization. Historical evidence is retained under `work/`; it is not agent pol
 
 ## Entry points and cost
 
+Visible Editor work defaults to the current document with no new map copy. Use
+`live.document.status` and explicit `live.document.save` for native same-file
+saving after authorized changes. Never substitute checkpoint authoring for an
+unsupported direct-memory operation; report the actual scope. Checkpoints require
+explicit user selection. Native saving includes all current unsaved user edits.
+
 For visible Editor connectivity tests, first inspect `live.windows` and
 `live.capabilities` or `live.memory.capabilities`. No `live.connect`, save or field
 mutation is needed for this check; unsaved work does not prevent inspection.

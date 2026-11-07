@@ -1,0 +1,80 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-07T18:36:37.898Z",
+  "scope": "Current-document Unit scalar edits and native same-file Save; no generalized live placements",
+  "native": {
+    "at": "2026-11-07T18:31:58.590Z",
+    "transport": "MCP stdio",
+    "apiVersion": "live-2026-11-07-document-save",
+    "currentDocumentSaveVerified": true,
+    "scalarInspectionValue": 1250,
+    "scalarSetAttempted": true,
+    "scalarRestored": true,
+    "windowId": "3934182",
+    "processId": 27008,
+    "beforeSha256": "a303c6451add848e5746e72339e66e804fceadb8f05cd079cf5b0d3b35232263",
+    "afterSha256": "8086345a7b0cc23de2017d7425bdd219e08a21e5d549d1bfad9058c1eeccb7a0",
+    "copiesCreated": 0,
+    "reopenedMap": false,
+    "afterDirty": false,
+    "visualVerified": false,
+    "placementImplemented": false
+  },
+  "nativeRuntime": {
+    "protocol": 1,
+    "home": "live-memory/0085d878367030be",
+    "message": "SC2EditorToolkit.LiveData.v1.0085d878367030be",
+    "files": {
+      "sc2-mcp-live-data.dll": "3174baf3f4b24537ec901c3a2af7a645410fb3044b3f6ec31e595913eb1c00c8",
+      "sc2-mcp-live-loader.exe": "9f5e754854c3e1e82de783a904911972d53c62e8460df3d80976e3d7d087265c"
+    }
+  },
+  "sourceFingerprints": {
+    "native/live-editor/memory.cpp": "3992239380a642f5a3310eab9ee7cb9af764101e13d000dbc3542dc2d2f25dbe",
+    "native/live-editor/document.inc": "fc99971c97fc72b66d21c70dcac0b710bf3ed0eee151483c12753c004f7c5bc7",
+    "native/live-editor/memory_protocol.h": "be1850754b2b2f5ab39240d2fbc5f91a8f78994b4ea996ea7f68d873d85b52d3",
+    "native/live-editor/memory_loader.cpp": "7dce8ff327caf6750264d6384832e826a43851f91524b79329a309639e1d8bb6",
+    "native/live-editor/MemoryData.cs": "f88951464cf1ad6e3019a8d3effe153234c95c4be91d0f7306dab1738d6b1f54",
+    "native/live-editor/Program.cs": "d90a3316820d04595571141d8ea79a899f369fea2241707de6fc7e75a56c9dea",
+    "src/modules/live/document.ts": "cb32b85bf0079e94e17357e732ea540ed89809fbbfaf91120d163e819738b55d",
+    "src/modules/live/editorLease.ts": "3224db9c2ca007ad783c09d51200911a83a30cf84737d3caf63ef27a35b1a330",
+    "src/modules/live/memory.ts": "a77b4f0f9c6e08bebebcd1d96acc0fea0474428ff0700f45ef7da71c3970052e",
+    "src/modules/live/memoryDesktop.ts": "6999d5a3bcb4344988eda06689d94cce9a28af77ef437f04d8a0b262ceaf2619"
+  },
+  "regression": {
+    "testsPassed": 37,
+    "failed": 0,
+    "scope": "Live memory, saved-checkpoint preservation and current document save"
+  },
+  "limits": [
+    "The map was already named Checkpoint-c50269c3-1 before this test; this test did not create or reopen it.",
+    "ArenaPilot.LifeMax was changed from 1250 to 1251 and restored to 1250 before saving.",
+    "A prior read-only inspection did not dirty the document, so it was not accepted as a native Save test.",
+    "Earlier adapter attempts encountered asynchronous Data view/field readiness failures. The final adapter activates the Data frame on its own GUI thread and observes Unit/field readiness before opening an edit.",
+    "Direct addition/removal/movement of placements, Terrain or trigger graphs remains unimplemented.",
+    "Title/disk readback is separate from rendering, gameplay and native Undo acceptance.",
+    "Updated panel scripts require one bridge restart; an acknowledgement of MCP config reload does not prove every loaded thread has refreshed tools."
+  ],
+  "routing": {
+    "at": "2026-11-07T18:39:42.458Z",
+    "apiVersion": "live-2026-11-07-document-save",
+    "defaultWorkflow": {
+      "mode": "current_document",
+      "copies": false,
+      "save": "live.document.save",
+      "unsupportedOperation": "Report the missing operation; never silently substitute a checkpoint copy"
+    },
+    "checkpointWithoutExplicitWorkflowRefused": true,
+    "saveToolExposed": true,
+    "readOnly": true,
+    "checkpointImported": false,
+    "nativeMutationAttempted": false
+  },
+  "panel": {
+    "regressionTestsPassed": 4,
+    "bridgeIntegration": "passed",
+    "actualAppServerReloadMethod": "accepted, no inference or thread creation",
+    "installed": "Updated scripts in installed 0.27.0-alpha bridge directory",
+    "runningProcessReloadedByThisTask": false
+  }
+}

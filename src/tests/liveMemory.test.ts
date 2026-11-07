@@ -22,6 +22,7 @@ async function fixture(t: test.TestContext) {
     uncertain: false,
     cancelFails: false,
     wrongIdentity: false,
+    fieldReady: true,
     active: undefined as Parameters<MemoryDesktop["command"]>[2],
     window: {
       windowId: "123",
@@ -48,7 +49,7 @@ async function fixture(t: test.TestContext) {
       }
       if (operation === 0) {
         if (state.active) throw Error("LIVE_MEMORY_EDIT_BUSY");
-        return { controls: [] };
+        return { controls: [], unitReady: true, fieldReady: state.fieldReady };
       }
       if (state.active?.token !== args?.token) throw Error("LIVE_MEMORY_OWNED_EDIT_REQUIRED");
       if (operation === 4)
@@ -83,6 +84,25 @@ async function fixture(t: test.TestContext) {
   const target = { archive, windowId: "123", unit: "Pilot", field: "LifeMax" as const };
   return { memory, state, target, desktop, root };
 }
+
+test("delayed native field refresh is observed before opening an editor", async (t) => {
+  const { memory, target, state } = await fixture(t);
+  state.fieldReady = false;
+  let observations = 0;
+  state.hook = async (operation) => {
+    if (operation === 0 && ++observations === 3) state.fieldReady = true;
+  };
+  assert.equal((await memory.read(target)).value, 1200);
+  assert.ok(state.calls.indexOf(3) > state.calls.indexOf(0));
+});
+
+test("unresolved native field cannot open or commit another field", async (t) => {
+  const { memory, target, state } = await fixture(t);
+  state.fieldReady = false;
+  await assert.rejects(memory.read(target), /FIELD_NOT_READY/);
+  assert.ok(!state.calls.includes(3));
+  assert.ok(!state.calls.includes(5));
+});
 
 test("memory edits the native field, reads it back and leaves archive bytes unchanged", async (t) => {
   const { memory, target, state } = await fixture(t);

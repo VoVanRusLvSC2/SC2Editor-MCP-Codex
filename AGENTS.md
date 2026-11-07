@@ -7,6 +7,13 @@ localization, resource IDs and original catalog source annotations.
 
 ## Working defaults
 
+- Visible-editor authoring defaults to the current open document. Never create or
+  open a checkpoint/Save As copy unless the user explicitly chooses that workflow.
+  Unsupported placement/terrain/trigger edits must be reported as missing; do not
+  substitute another map. For requested saving use `live.document.status` then
+  `live.document.save` with the returned archive hash. It calls native File > Save
+  and verifies the same archive and clean document. Unknown saves never replay.
+
 - For visible-editor connectivity tests, start with read-only `live.windows` and
   `live.capabilities`/`live.memory.capabilities`. These do not require a save or
   `live.connect`. An unsaved marker is context, not a connectivity failure. If
@@ -20,8 +27,9 @@ localization, resource IDs and original catalog source annotations.
   authoring. Read `docs/LIVE_EDITOR.md#direct-in-memory-data-editing`.
   Only the separate saved-checkpoint workflow requires saving before
   `live.connect`, followed by `live.author`/`live.call`, publish and `live.pull`.
-  Never overwrite an open source archive, dismiss save dialogs, inject the test
-  DLL or treat a file-open request as rendered proof. Preserve unresolved drafts.
+  Never replace an open archive using offline export or checkpoint writes. Explicit
+  `live.document.save` uses the original native File > Save instead. Do not dismiss
+  save dialogs, inject the test DLL or treat file-open as rendered proof. Preserve drafts.
 
 - Author map content through MCP, preferably compact `modkit.author` commands in
   one persistent workflow session. Use detailed module tools when needed. Shell

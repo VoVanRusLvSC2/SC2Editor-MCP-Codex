@@ -5,7 +5,7 @@ import { coalesceAuthoringSteps } from "./authoringGroups.js";
 export type AuthorMode = "plan" | "stage" | "save";
 export const authoringGuide = {
   livePolicy:
-    "For connectivity tests use read-only live.windows and live.memory.capabilities (or live.capabilities); no save or live.connect is needed. Missing live.memory discovery matches mean an unavailable/stale connection or profile, not a save requirement. For direct in-memory Unit scalar edits select the same document's Data window and use live memory.read archive=... windowId=... unit=... field=LifeMax then live memory.set snapshotId=... value=250 in stage/save mode. Unsaved values are supported; this separate visible Data adapter does not save/reopen the map. Only the separate saved-checkpoint workflow uses live.connect, live.author/publish and saved-file pull. Existing map-local Unit numeric fields only; no live Terrain/trigger support. Never replay unknown commits, overwrite the source, dismiss save dialogs or attach the hidden test DLL.",
+    "Default to the current document, no new checkpoint or Save As copy unless explicitly requested. Native same-file saving is live document.status followed by live document.save archive=... windowId=... expectedSha256=... in stage mode. Unsupported live object/terrain/trigger edits are a capability gap, never a reason to silently switch maps. For connectivity tests use read-only live.windows and live.memory.capabilities (or live.capabilities); no save or live.connect is needed. Missing live.memory discovery matches mean an unavailable/stale connection or profile, not a save requirement. For direct in-memory Unit scalar edits select the same document's Data window and use live memory.read archive=... windowId=... unit=... field=LifeMax then live memory.set snapshotId=... value=250 in stage/save mode. Unsaved values are supported; this separate visible Data adapter does not save/reopen the map. Only the separate saved-checkpoint workflow uses live.connect, live.author/publish and saved-file pull. Existing map-local Unit numeric fields only; no live Terrain/trigger support. Never replay unknown commits, replace the archive with an offline writer, dismiss save dialogs or attach the hidden test DLL.",
   nativeEditorPolicy:
     "Optional pinned SC2NativeToolkit: editor.status reports connection without Editor startup; editor.check queues native load/Data, compile and save/reopen checks on a saved archive; editor.data.audit submits a full original effective-Data audit with separate native status/cancel and explicit coverage limits; editor.job polls compact results; editor.capture queues native images; editor.stop closes the owned hidden Editor. map.preview remains the fast ModKit renderer. Unknown diagnostics and native images do not certify gameplay.",
   testPolicy:
@@ -153,6 +153,8 @@ const aliases: Record<string, string> = {
 };
 const directCommands = new Set([
   "live.windows",
+  "live.document.status",
+  "live.document.save",
   "live.memory.capabilities",
   "live.memory.read",
   "live.memory.set",
@@ -769,7 +771,9 @@ function lifecycle(
   if (mode === "plan") {
     if (
       command.tool.startsWith("live.") &&
-      !["live.windows", "live.status", "live.memory.capabilities"].includes(command.tool)
+      !["live.windows", "live.status", "live.document.status", "live.memory.capabilities"].includes(
+        command.tool,
+      )
     )
       throw new Error(
         "AUTHOR_LIVE_REQUIRES_STAGE: live session mutations require explicit stage/save mode",

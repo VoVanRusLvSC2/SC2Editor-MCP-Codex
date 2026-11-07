@@ -56,16 +56,15 @@ Installed SC2 resources can now be read directly through `casc.*`, with a verifi
 
 ## Modules
 
-The optional [Live Editor module](docs/LIVE_EDITOR.md) collaborates with an
-already-open visible Editor using saved checkpoints. Existing MCP recipes edit
-a persistent private component project; a new archive can be handed to the same
-window through normal Windows file opening. Unsaved user work requires saving
-and explicit pull. It does not inject the private DLL or implement direct
-in-memory terrain/Data changes. Select `SC2_MCP_PROFILE=live` for its focused tools.
+The optional [Live Editor module](docs/LIVE_EDITOR.md) defaults to the current
+open document: bounded existing Unit numeric edits and native same-file Save,
+without exporting or reopening a map copy. Saved-checkpoint collaboration is
+an explicitly selected alternative. Direct in-memory Terrain, placement and
+trigger edits remain unimplemented. Select `SC2_MCP_PROFILE=live` for focused tools.
 
 | Module | Scope | Documentation |
 | --- | --- | --- |
-| Live | Saved checkpoints in an existing visible Editor, save/pull guards and normal file-open handoff | [Live Editor](docs/LIVE_EDITOR.md) |
+| Live | Current-document Unit scalar edits, native same-file Save and explicit checkpoint workflows | [Live Editor](docs/LIVE_EDITOR.md) |
 | UI | Layout frames, properties, anchors, states, animations | [UI guide](docs/CODEX_GUIDE.md) |
 | Text | Localization, Font Styles and rich text | [Text](docs/TEXT_MCP.md) |
 | Cutscene | Scenes, cameras, shots and animation tracks | [Cutscene](docs/CUTSCENE_MCP.md) |

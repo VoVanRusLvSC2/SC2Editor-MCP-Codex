@@ -45,7 +45,8 @@ internal static class LiveEditor {
     if((args.Length==5&&args[0]=="memory-inspect")||(args.Length==11&&args[0]=="memory-command")){
       uint operation=args.Length==5?0:UInt32.Parse(args[5]);
       IntPtr hwnd=new IntPtr(Int64.Parse(args[1]));Window w=Read(hwnd);
-      if(w==null||w.processId.ToString()!=args[2]||w.processStart!=args[3]||w.title.Replace("*]","]")!=args[4].Replace("*]","]")||(!w.enabled&&(operation<4||operation>6))||!w.title.StartsWith("Data - ["))throw new Exception("LIVE_MEMORY_EXACT_DATA_WINDOW_REQUIRED");
+      bool terrain=operation==24;
+      if(w==null||w.processId.ToString()!=args[2]||w.processStart!=args[3]||w.title.Replace("*]","]")!=args[4].Replace("*]","]")||(!w.enabled&&(operation<4||operation>6))||!w.title.StartsWith(terrain?"Terrain - [":"Data - ["))throw new Exception(terrain?"LIVE_EXACT_TERRAIN_WINDOW_REQUIRED":"LIVE_MEMORY_EXACT_DATA_WINDOW_REQUIRED");
       return args.Length==5?MemoryData.Inspect(hwnd):MemoryData.Call(hwnd,operation,args[6],args[7],args[8],args[9],args[10]);
     }
     if (args.Length == 1 && args[0] == "list") {

@@ -1,6 +1,8 @@
 # Visible Editor collaboration
 
-The separate `live` module provides two explicit backends. **Saved-checkpoint collaboration** works with an
+The separate `live` module defaults to the current open document. Native same-file
+saving is available through `live.document.save`; supported memory changes use
+`live.memory.read/set`. The alternative checkpoint workflow is explicit. **Saved-checkpoint collaboration** works with an
 already-open SC2 Editor. Existing authoring tools edit a persistent imported
 component project. `live.publish` exports a new verified archive and optionally
 requests that the same visible Editor open it through a normal Windows file-drop
@@ -11,6 +13,24 @@ no hidden Editor/game is started, and no save/dependency dialog is dismissed.
 project-owned visible adapter. It changes a bounded numeric field in the current
 document through the original Editor controls, without exporting/reopening an
 archive. The pinned hidden-test Toolkit is not repurposed for this mode.
+
+## Current-document default
+
+The default is the currently open document, without a new map copy. Checkpoint
+authoring below is an explicitly selected alternative, never an automatic fallback.
+Direct memory writes still cover only the declared existing Unit scalar fields;
+placements, arbitrary Terrain and GUI graph edits are not implemented in memory.
+
+`live.document.status archive=... windowId=...` reads the exact Terrain window
+and existing saved archive SHA-256 without loading a DLL. For an explicitly
+requested save, pass that hash to `live.document.save` in stage/save mode. It
+invokes the original File > Save command, preserving the same open document.
+It never invokes Save As, overwrites the archive from an offline writer or reopens
+a map. Save includes the user's current unsaved edits. A clean document is a no-op.
+The receipt requires a clean same-document title plus two stable same-archive
+reads with a changed disk fingerprint or modification time. Unknown outcomes
+require inspection; never blindly repeat Save or dismiss native dialogs.
+Native title/disk checks are distinct from visual or gameplay acceptance.
 
 ## Setup
 
@@ -62,7 +82,8 @@ in the visible Editor's Data module; no additional Editor is launched.
    transition is allowed; replacing the document is refused.
 4. `status=applied` requires fresh native value readback. The result includes
    `before`, `after`, `documentDirty` and `archiveUnchanged`. Save normally in
-   Editor when desired. No global undo, Save or Discard command is exposed.
+   Editor when desired, or explicitly use `live.document.status/save`. No global
+   Undo or Discard command is exposed.
 
 Supported fields on existing map-local **Unit** objects are `LifeMax`, `LifeStart`,
 `ShieldsMax`, `ShieldsStart`, `EnergyMax`, `EnergyStart`, `Speed` and `LifeArmor`.
@@ -84,10 +105,10 @@ are serialized across clients by exact Editor process identity; an abandoned
 lease refuses rather than being stolen automatically. Preserve/review a leftover
 lease before removing it after confirming no native operation is active.
 
-Only an explicit memory read/set starts the retained local helper and loads
+Only an explicit memory read/set or document Save starts the retained local helper and loads
 `sc2-mcp-live-data.dll` into the selected visible Editor. The loader checks the
 exact process/build and immutable sibling binary hashes. The adapter subclasses
-the selected Data window, dispatches on its GUI thread and invokes the original
+the selected Data/Terrain windows, dispatches on their GUI thread and invokes the original
 Modify Value/inline control. It uses no game DLL, private Toolkit source,
 SC2 address offsets, physical input or arbitrary DLL path. The plugin remains
 resident until Editor exits; MCP shutdown closes its helper, not Editor.
@@ -108,7 +129,8 @@ authoritative SC2 internal document-path API. Readback proves a Data value, not
 
 1. Open a packed `.SC2Map` or `.SC2Mod` in the visible Editor and save it.
 2. `live.windows` lists exact window/process identities. `live.connect` accepts
-   `archive` and optional `windowId`; the document title must match the selected
+   `archive`, required `workflow="saved_checkpoint"` and optional `windowId`;
+   omitting the workflow refuses before importing any map copy. The document title must match the selected
    saved path under the following rules.
    SC2 abbreviates long title paths itself. Such titles require the matching drive
    and at least two named suffix directories, with exactly one selected matching
@@ -181,6 +203,13 @@ The `live` profile exposes the module independently; `all`, `workflow` and
 reconnected to load these newly registered tools.
 
 ## Recorded verification
+
+The [current-document record](verification/live-current-document-2026-11-07.json)
+qualifies native same-file Save after an MCP Unit scalar change/restoration in the
+same open window/process, with zero copies and no reopen. It retains 37 scoped
+regressions and the refusal of checkpoint import without explicit workflow.
+Direct placement, Terrain/trigger edits, visual appearance and gameplay are not
+qualified by this record.
 
 The [2026-11-07 memory record](verification/live-memory-data-2026-11-07.json)
 retains 27 scoped passing regressions and an actual outer-MCP native sequence:

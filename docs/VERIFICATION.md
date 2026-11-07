@@ -1,5 +1,12 @@
 # SC2EditorToolkit: verified scope
 
+- The [current-document record](verification/live-current-document-2026-11-07.json)
+  qualifies native same-file Save after an MCP Unit scalar change/restoration in the
+  same open window/process, with zero copies and no reopen. It retains 37 scoped
+  regressions and the refusal of checkpoint import without explicit workflow.
+  Direct placement, Terrain/trigger edits, visual appearance and gameplay are not
+  qualified by this record.
+
 - The separate [visible Editor checkpoint module](verification/live-editor-checkpoints-2026-11-07.json)
   has 39 passing scoped regressions and an actual public-MCP handoff to the same
   visible Editor process. Placed units were inspected in its 3D viewport. A manual
