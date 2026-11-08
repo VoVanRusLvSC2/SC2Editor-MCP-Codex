@@ -1,0 +1,147 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-08T08:52:40.500Z",
+  "scope": "Current map-local UI layout creation, XML authoring and same-file native Save, with the existing typed UI compiler; not full current-document coverage",
+  "module": {
+    "name": "editor-live",
+    "apiVersion": "editor-live-2026-11-08-ui",
+    "tools": [
+      "live.ui.create",
+      "live.ui.read",
+      "live.ui.author",
+      "live.ui.release"
+    ],
+    "generatorsReused": [
+      "ui.apply",
+      "modkit.save",
+      "LayoutDocument"
+    ],
+    "compactCommands": [
+      "ui frame",
+      "ui property",
+      "ui anchor",
+      "ui template",
+      "ui remove",
+      "ui.apply"
+    ],
+    "newMapArchiveCopies": 0,
+    "applicationReopens": 0
+  },
+  "native": {
+    "editorBuild": "5.0.17.98310 English x64",
+    "transport": "Public MCP stdio",
+    "initialOperations": 7,
+    "furtherOperations": 50,
+    "atomicUiGroupsForFifty": 1,
+    "compilerCallsForFifty": 2,
+    "frameNodes": 52,
+    "nativeTreeNodes": 53,
+    "markerNodes": 50,
+    "layoutXmlVerified": true,
+    "descIndexRegistered": true,
+    "originalUiMessages": "Success: Layout LiveUIQualification saved with no errors",
+    "sameFileSaved": true,
+    "savedArchiveSha256": "3a21bf73ea616639949ba93e5a9f1bd6bb8834a1c1ad1a220e77adeac5426b8d",
+    "objectsByteEquivalent": true,
+    "triggersByteEquivalent": true,
+    "originalUserArchiveUnchanged": true,
+    "originalUserArchiveSha256": "b2050d012c03164d4b5a870507916c066e5853623d48b3c3e76f961c7f2e07cd",
+    "editorProcesses": 1,
+    "documentDirty": false,
+    "renderedVerified": false,
+    "gameplayVerified": false,
+    "galaxyCompilerVerified": false,
+    "diagnostics": {
+      "sourceCoverage": "visible_original_Messages_window_only",
+      "retainedStockUiWarnings": [
+        "Missing CustomGamesTemplates/BattleUserInputTooltip",
+        "Missing Core glue layout includes"
+      ],
+      "customLayoutSaveSuccessObserved": true,
+      "allClear": false
+    }
+  },
+  "developmentRecovery": {
+    "osRestartConfirmed": "2026-11-08 10:15:34 Europe/Riga",
+    "savedFixtureUnchangedAfterRestart": true,
+    "ownedDevelopmentEditorsStarted": 1,
+    "applicationTimeEditorStarts": 0,
+    "firstDeferredDialogProbe": "Native Add Layout returned before its name dialog opened; no filename/content was submitted",
+    "recovery": "Cancelled only the unchanged blank dialog created by this probe after exact owner/process/control/text checks",
+    "fixed": "Deferred modal ownership and input guard remain active across message turns; early manual input and expired ownership refuse"
+  },
+  "runtimeScopes": {
+    "nativeCreateAndWrite": {
+      "home": "live-memory/45191f1be1e53441-31dc7114",
+      "sourceSha256": "45191f1be1e53441497904a9845591fa8ba8b733c47a49d656342b371291db19"
+    },
+    "activeNative": {
+      "home": "live-memory/4e2f68ce2a0817f3-8fe9a667",
+      "sourceSha256": "4e2f68ce2a0817f3b12668a51168137ffa92a2c4430262fcb0ebb9d9e43e4fdd",
+      "qualification": "Current XML/native tree readback after final deferred-not-ready guard change; fifty writes were not replayed"
+    },
+    "helper": {
+      "home": "live-bridge/f629a9c5d1331414-6b2190a4",
+      "sourceSha256": "f629a9c5d1331414484e5ce8aa4da3dcac4acdcac8741eab6db3a3305bb7a816"
+    }
+  },
+  "architecture": {
+    "provider": "Separate LiveUi behind shared current-document provider list and lifecycle gate",
+    "sharedNativeTransport": "Bounded UTF-8 XML buffer helpers reused by Data and UI",
+    "sharedDialogs": "ComponentTransfer uses one owned modal submission path for GUI libraries and UI layouts",
+    "writerFix": "Self-closing native Desc/Frame containers expand by their own span only; unrelated source is preserved",
+    "transactionGrouping": "Adjacent compatible UI commands coalesce; alias/source-guard/reference boundaries remain",
+    "unknownPolicy": "Native writes consume snapshots; no mutation replay or cancellation after unknown submission"
+  },
+  "checks": {
+    "build": true,
+    "releaseBuild": true,
+    "changedScopeEslint": true,
+    "regressionsPassed": 84,
+    "panelTestsPassed": 8,
+    "architecture": {
+      "files": 454,
+      "cycles": 0,
+      "violations": 0
+    },
+    "maintainedEnglishDocs": {
+      "files": 125,
+      "violations": 0
+    }
+  },
+  "sourceSha256": {
+    "src/modules/editorLive/ui.ts": "457693c59ac30bb250b027644aa353c3fd35625efda17128a3f77cb2036d5a4b",
+    "src/modules/editorLive/layoutXml.ts": "c8ede879c7ed30f40c80a8d1b6cb36eb76a22b68cd19c1894f77451bd54d46b1",
+    "src/modules/editorLive/identity.ts": "7214895510a9ff35b7b3d8a27ce7040f5d87c0940ff349af4e79b7112b5f2487",
+    "src/modules/editorLive/componentTransfer.ts": "13ccf06e2fe560878f5daf1ba62c702a5e9fc88c4536153114db575bc3e263bd",
+    "src/modules/editorLive/workspace.ts": "53fc470109685531dd6a1e66d6da914e66f33e0b904eb120ba41b8ce19bfba81",
+    "src/modules/editorLive/tools.ts": "4bc321822a55efb597517eced74ac061beec02275766e2c7ba5156b3de67fdc8",
+    "src/modules/editorLive/runtime.ts": "d683056d7cee87031bafe5987a13e9c810d40d89e39885dd26a53235ea09a17b",
+    "src/core/layoutDocument.ts": "2c2bccebc1f6f340276003d5abe894d5f95f046855ca7888e8e4ad83dd86a1cb",
+    "src/app/server.ts": "2a50b38f2244dcfb28f6b7e92db603995bb47acbbbd943472b0f66a5e1567b95",
+    "src/app/authoringScript.ts": "3a377011938d88bb1468c685fe103301e6d1a096bc9bb0cb25267f1e2493eaf6",
+    "src/app/authoringGroups.ts": "a7e2dddc52b6ef4ce8d1d9bc7e711f47a4a94e00d1b29dde7b0f1711c3ec0cee",
+    "native/live-editor/xml_buffer.inc": "fa85bb6e15258154988e1ea9b4ee904edda8b8e1f8f93a2578c65b224251526a",
+    "native/live-editor/ui_xml.inc": "442490048f3dbf5b0d5c95746728d800e0535b8453e6a0ba10faf944e87a104e",
+    "native/live-editor/file_dialog.inc": "70d05bf76e54e5824b86a8d230f2f6ef4d7ca0a35606817a35c234381bd2e30b",
+    "native/live-editor/module_inspection.inc": "6ba84561ef30b665bab33de15548a6f8c70c601c54fb630407719869238d9390",
+    "native/live-editor/data_xml.inc": "aa4cd999e9236fecd33aafe831c5b9a759af6087a7b8d8776c1cddb77007a8e1",
+    "native/live-editor/memory.cpp": "c1f9b867469a81491ebba180ee2a62ce01122b22000c057c489749af97194902",
+    "native/live-editor/MemoryData.cs": "b3084e50d073f9060d9a6cf84eb30dfbedbe4d5e5400f6671fb6f2fea68accd7",
+    "native/live-editor/Program.cs": "9886e68d2fec4886cc11b62c8acc58b752f0f4a91aa5e41fc4434c293cdf317e",
+    "scripts/build-live-memory.mjs": "85af92c96e868fd29a251f325259f36636c9a593351fb0dfa21fd829724955a4"
+  },
+  "localArtifacts": [
+    "work/live-placement-20261107/NATIVE_UI_QUALIFICATION.json",
+    "work/live-placement-20261107/NATIVE_UI_FIFTY.json",
+    "work/live-placement-20261107/NATIVE_UI_FINAL.json",
+    "work/live-placement-20261107/NATIVE_UI_FIFTY_SAVED.SC2Layout"
+  ],
+  "remaining": [
+    "Current-document Terrain geometry/material/cliff/ramp application",
+    "Existing GUI graph editing/replacement and arbitrary localized trigger content",
+    "Current-document Text, imports, styles, map/player settings and lighting",
+    "First local Data Unit/additional dataspaces and full placed-object CRUD",
+    "Authoritative native document/component revisions and undo grouping"
+  ]
+}

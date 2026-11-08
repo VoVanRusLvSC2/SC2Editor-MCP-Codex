@@ -1,3 +1,5 @@
+import { refreshAuthoringAllowed } from "../modules/editorLive/refreshPolicy.js";
+import { registerLiveCompileTools } from "./liveCompileTools.js";
 import { registerAuthoringTools } from "./authoringTools.js";
 import { registerNativeEditorTools } from "../integrations/native/tools.js";
 import { registerNativeGameTools } from "../integrations/game/tools.js";
@@ -24,6 +26,8 @@ import * as z from "zod/v4";
 import { projectCoverage } from "./coverage.js";
 import { registerMapTools } from "../modules/map/tools.js";
 import { moduleProfiles, publicModules, resolveModuleSelection } from "./moduleSelection.js";
+import { compileAuthorScript } from "./authoringScript.js";
+import { runMcpBatch } from "./mcpBatch.js";
 
 export function createProjectServer(project: Project) {
   const selection = project.selection;
@@ -66,40 +70,129 @@ export function createProjectServer(project: Project) {
     registerPreviewBatch(server, project.dialogPreview);
   }
   if (enabled("map")) registerMapTools(server, project.map);
-  if (enabled("live"))
-    registerLiveTools(server, project.live, async (root) => {
-      const child = await createProject(root, {
-        cascCacheRoot: project.casc.cacheRoot,
-        selection: resolveModuleSelection({
-          SC2_MCP_MODULES: publicModules
-            .filter((name) => !["live", "editor", "game"].includes(name))
-            .join(","),
-        }),
-      });
-      try {
-        const childServer = createProjectServer(child),
-          registry = projectToolRegistry(childServer);
-        return {
-          workspace: child.workspace,
-          call: async (name, args, context) => {
-            const tool = registry.batchTools.get(name);
-            if (!tool) throw Error("LIVE_AUTHORING_TOOL_UNAVAILABLE: " + name);
-            return tool.invoke(tool.schema.parse(args), context ?? {});
-          },
-          export: (archive) => child.map.export("", archive, false, true),
-          close: async () => {
-            try {
-              await childServer.close();
-            } finally {
-              await child.close();
-            }
-          },
-        };
-      } catch (error) {
-        await child.close();
-        throw error;
-      }
-    });
+  if (enabled("live") || enabled("editor-live"))
+    project.live.current.refresh.nativeCompiled = (id) =>
+      project.nativeGate.protect(project.nativeEditor).compiledGalaxy(id);
+  if (enabled("live") || enabled("editor-live"))
+    registerLiveTools(
+      server,
+      project.live,
+      async (root) => {
+        const child = await createProject(root, {
+          cascCacheRoot: project.casc.cacheRoot,
+          selection: resolveModuleSelection({
+            SC2_MCP_MODULES: publicModules
+              .filter((name) => !["live", "editor-live", "editor", "game"].includes(name))
+              .join(","),
+          }),
+        });
+        try {
+          for (const dependency of project.data.extraRoots) {
+            child.data.addDependencyRoot(dependency, project.data.nativePackageProfile(dependency));
+            child.browse.addDependencyRoot(dependency);
+          }
+          const childServer = createProjectServer(child),
+            registry = projectToolRegistry(childServer);
+          return {
+            workspace: child.workspace,
+            call: async (name, args, context) => {
+              const tool = registry.batchTools.get(name);
+              if (!tool) throw Error("LIVE_AUTHORING_TOOL_UNAVAILABLE: " + name);
+              return tool.invoke(tool.schema.parse(args), context ?? {});
+            },
+            export: (archive) => child.map.export("", archive, false, true),
+            author: async (script) => {
+              const tools = new Map(
+                [...registry.batchTools].filter(
+                  ([name]) => refreshAuthoringAllowed(name) || name === "map.minimap.rebuild",
+                ),
+              );
+              const steps = compileAuthorScript(script, "save", tools);
+              for (const step of steps)
+                if (!refreshAuthoringAllowed(step.tool, step.args))
+                  throw Error("LIVE_REFRESH_AUTHORING_ONLY");
+              return runMcpBatch(steps, tools, {});
+            },
+            authorData: async (script, file) => {
+              const tools = new Map(
+                [...registry.batchTools].filter(
+                  ([name]) => name.startsWith("data.") || name === "modkit.save",
+                ),
+              );
+              const steps = compileAuthorScript(script, "save", tools, undefined, {
+                dataFile: file,
+              });
+              for (const step of steps) {
+                if (step.tool === "modkit.save" && step.args.file !== file)
+                  throw Error("LIVE_DATA_SINGLE_DATASPACE_REQUIRED");
+                if (step.args.file !== undefined && step.args.file !== file)
+                  throw Error("LIVE_DATA_SINGLE_DATASPACE_REQUIRED");
+              }
+              return runMcpBatch(steps, tools, {});
+            },
+            authorUi: async (script, file) => {
+              const tools = new Map(
+                [...registry.batchTools].filter(
+                  ([name]) => name === "ui.apply" || name === "modkit.save",
+                ),
+              );
+              const steps = compileAuthorScript(script, "save", tools, undefined, { uiFile: file });
+              for (const step of steps)
+                if (step.args.file !== file) throw Error("LIVE_UI_SINGLE_LAYOUT_REQUIRED");
+              return runMcpBatch(steps, tools, {});
+            },
+            authorText: async (script, locale) => {
+              const tools = new Map(
+                [...registry.batchTools].filter(
+                  ([name]) => name === "text.apply" || name === "modkit.save",
+                ),
+              );
+              const steps = compileAuthorScript(script, "save", tools, undefined, {
+                textLocale: locale,
+              });
+              const local = (file: unknown) =>
+                typeof file === "string" &&
+                new RegExp(`^${locale}\\.SC2Data/LocalizedData/[A-Za-z][A-Za-z0-9_]*\\.txt$`).test(
+                  file,
+                );
+              for (const step of steps) {
+                if (step.tool === "modkit.save") {
+                  if (!local(step.args.file)) throw Error("LIVE_TEXT_COMPONENT_UNSUPPORTED");
+                } else {
+                  if (
+                    step.args.styleFile !== undefined ||
+                    !step.args.stringFiles ||
+                    Object.entries(step.args.stringFiles as Record<string, unknown>).some(
+                      ([key, file]) => key !== locale || !local(file),
+                    ) ||
+                    !(step.args.operations as Array<{ op: string; locale?: string }>).every(
+                      (op) =>
+                        /^(text\.|richText\.)/.test(op.op) &&
+                        (op.locale === undefined || op.locale === locale) &&
+                        op.op !== "text.setLocalized",
+                    )
+                  )
+                    throw Error("LIVE_TEXT_COMPONENT_UNSUPPORTED");
+                }
+              }
+              return runMcpBatch(steps, tools, {});
+            },
+            close: async () => {
+              try {
+                await childServer.close();
+              } finally {
+                await child.close();
+              }
+            },
+          };
+        } catch (error) {
+          await child.close();
+          throw error;
+        }
+      },
+      enabled("live"),
+    );
+  if (enabled("live") || enabled("editor-live")) registerLiveCompileTools(server, project);
   if (enabled("editor"))
     registerNativeEditorTools(server, project.nativeGate.protect(project.nativeEditor));
   if (enabled("game"))
@@ -192,7 +285,10 @@ export function createProjectServer(project: Project) {
               modkitRuntime: project.modkit.status(),
               nativeEditor: project.nativeEditor.configuration(),
               nativeGame: project.nativeGame.configuration(),
-              liveCollaboration: enabled("live") ? project.live.capabilities() : { enabled: false },
+              liveCollaboration:
+                enabled("live") || enabled("editor-live")
+                  ? project.live.current.capabilities()
+                  : { enabled: false },
               projectTesting: {
                 enabled: enabled("game") || enabled("editor"),
                 entry: "project.test.plan",

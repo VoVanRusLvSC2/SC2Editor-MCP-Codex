@@ -1,0 +1,151 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-08T12:34:25.913Z",
+  "status": "partial_native_acceptance",
+  "scope": "User-accepted same-file refresh; public mixed component package and separate native UI/Data readback",
+  "apiVersion": "editor-live-2026-11-08-refresh",
+  "transport": "Public MCP SDK stdio; original native Close and same-path file-drop Open",
+  "package": {
+    "authorCommandCount": 55,
+    "uiFrameCount": 50,
+    "health": 1475,
+    "heightAmount": 0.5,
+    "localizedName": true,
+    "addedMarine": {
+      "position": [
+        8,
+        12
+      ],
+      "owner": 1
+    },
+    "settingsCommand": "No-op; no settings model acceptance claimed"
+  },
+  "native": {
+    "sameProcessAndFrame": true,
+    "reopensSamePath": true,
+    "newWorkingMapCopies": 0,
+    "resetsNativeUndo": true,
+    "sourceSha256": "b4e93a52cabeeac2326f5147accc5525b3a3cd0a87600862b55590bbd59c05b0",
+    "sourceUnchangedSinceApply": true,
+    "originalRollbackSha256": "dddef63dd4d81d3136daecd696c609b23eb3ac5bd7c3c47fee3ca6155ff8f2a8",
+    "uiModelVerified": true,
+    "uiNativeSha256": "f6d7b85dc506cf5a0bb6d622cc620c65ee40013dc43aa66bf0e308f7dd17e982",
+    "healthVerified": true,
+    "sceneVerified": false,
+    "terrainModelVerified": false,
+    "visualVerified": false,
+    "gameplayVerified": false
+  },
+  "savedFile": {
+    "addedUnitCount": 1,
+    "addedUnitType": "Marine",
+    "priorUnitNodesBytePreserved": true,
+    "unchangedTriggers": true,
+    "localizedNamePresent": true,
+    "changedComponents": [
+      "Base.SC2Data/GameData/UnitData.xml",
+      "Base.SC2Data/UI/Layout/LiveUIQualification.SC2Layout",
+      "enUS.SC2Data/LocalizedData/GameStrings.txt",
+      "MapInfo",
+      "Objects",
+      "Preload.xml",
+      "t3HeightMap",
+      "t3SyncHeightMap",
+      "Base.SC2Data/GameData.xml"
+    ]
+  },
+  "failure": {
+    "postRefreshSceneInspection": "LIVE_MEMORY_NATIVE_TIMEOUT",
+    "editorProcessLaterMissing": true,
+    "terminationCauseEstablished": false,
+    "graphicsLog": "DirectX call failed, code -2005530520",
+    "freshOwnedReadOnlyLaunch": "Graphics device is not available at this time",
+    "failedStartupDialogPreserved": true,
+    "applicationRepeated": false,
+    "otherGameProcessesStopped": false
+  },
+  "checks": {
+    "typescriptBuild": "passed",
+    "focusedRegressionTests": {
+      "passed": 37,
+      "failed": 0,
+      "suites": [
+        "liveRefresh",
+        "livePendingComponent",
+        "editorLiveModule",
+        "liveDocument",
+        "liveRuntimeBuild",
+        "liveText",
+        "liveImports"
+      ]
+    },
+    "scopedEslint": "passed",
+    "scopedPrettier": "passed",
+    "panelBridgeSyntax": {
+      "files": 3,
+      "status": "passed"
+    },
+    "architecture": {
+      "productionFiles": 464,
+      "relativeValueImportCycles": 0,
+      "boundaryViolations": 0,
+      "scope": "Static relative value imports after TypeScript erasure; dynamic/external runtime dependencies excluded"
+    }
+  },
+  "runtime": {
+    "nativeManifest": {
+      "protocol": 1,
+      "sourceSha256": "81e499f369f83f6f407a133f35fcbfee5f74d904bc7d41a05126133cbd2efcec",
+      "sourceFiles": {
+        "memory.cpp": "ca79501df9bbf0d55fb1eb9a74e07829c7bacb41441e8b2ffb785bd8eb3ac18f",
+        "document.inc": "a811e8ea87f4b452c73ca8ad3c0d9e57980c8d76cc55ccb90ac39a73ee4e2ca7",
+        "placement.inc": "19024949dc11e7fe122ee0f0813b6838bcb86908a25fea89c3a6741a54e4957c",
+        "palette.inc": "a648ba887812ea87e68c061426402ad3c274016fbb3dc30eb16d4385a7a23310",
+        "terrain_brush.inc": "aeebe7ee65dc1b14cab2990c0e0eb410c9b3b0968fdb8ba2e72287d6b0ecd6d7",
+        "xml_buffer.inc": "fa85bb6e15258154988e1ea9b4ee904edda8b8e1f8f93a2578c65b224251526a",
+        "ui_xml.inc": "442490048f3dbf5b0d5c95746728d800e0535b8453e6a0ba10faf944e87a104e",
+        "file_dialog.inc": "e6dc1c2d2b92cc08f62d1b0ab4bd5115d1ad0c0e35db9f5cf50f51dba5c268e5",
+        "import_dialog.inc": "661249799033bc245e884df99f72d8e5a746ee8a4afdc9c210bb6c800af9d13b",
+        "module_inspection.inc": "7bd885c0eef915590c42f6036a36a770e53eaf5f240bb143d8fd86a0187ce8c3",
+        "data_xml.inc": "aa4cd999e9236fecd33aafe831c5b9a759af6087a7b8d8776c1cddb77007a8e1",
+        "memory_protocol.h": "be1850754b2b2f5ab39240d2fbc5f91a8f78994b4ea996ea7f68d873d85b52d3",
+        "memory_loader.cpp": "7dce8ff327caf6750264d6384832e826a43851f91524b79329a309639e1d8bb6",
+        "CMakeLists.txt": "e5ec66fc57edbfff56ec39a64b20c9d2bd90917d6ba3180fcdb5c7a9bd031b0c"
+      },
+      "home": "live-memory/81e499f369f83f6f-b3373274",
+      "message": "SC2EditorToolkit.LiveData.v1.81e499f369f83f6f-b3373274",
+      "files": {
+        "sc2-mcp-live-data.dll": "a06fc980462a45b02891206d19750c95a1fe175477b97be13ffdc43707d5e15b",
+        "sc2-mcp-live-loader.exe": "23372aa1d4c5674549e4b83bd2fff423a4fab90e2109e851ba25baa0ef61c6ab"
+      }
+    },
+    "bridgeManifest": {
+      "protocol": 1,
+      "sourceSha256": "087adf4ca48f94c0c780888f58a3cee417a85648772e5e15b9184b36bfd60c2f",
+      "home": "live-bridge/087adf4ca48f94c0-80416fe2",
+      "sourceFiles": {
+        "Program.cs": "ae7cf4c7fd0ce7fad27edfb04670fb27c2e51472768b82f7bc6f72a6d58862c7",
+        "MemoryData.cs": "1016eb71a43ead30c03652af750c0ac6aaf48e85834bd03e115baea77bbae302"
+      },
+      "files": {
+        "sc2-mcp-live.exe": "b5cf1196977b40649060dfe817f8488786019624e9ec545510caeb9cb1699391"
+      }
+    },
+    "freshMcpContract": "editor-live-2026-11-08-refresh",
+    "existingConnectionHotReloaded": false,
+    "attachedOlderConnectionObserved": "editor-live-2026-11-08-gui-library"
+  },
+  "provenance": {
+    "nativeRun": "work/live-placement-20261107/NATIVE_REFRESH_ACCEPTANCE.json",
+    "retainedReadback": "work/live-placement-20261107/REFRESH_RETAINED_READBACK.json",
+    "graphicsBlocker": "work/live-placement-20261107/REFRESH_GRAPHICS_BLOCKER.json",
+    "contract": "work/live-placement-20261107/REFRESH_CURRENT_CONTRACT.json",
+    "note": "Native application source hashes were not captured for TypeScript. Subsequent journal-size, contained-path, error-cause and capability/panel guidance changes passed the listed regressions; this record does not relabel them as a new native application run."
+  },
+  "remaining": [
+    "Native scene/terrain diagnostics and rendered acceptance when graphics becomes available",
+    "Native dirty/pending-buffer refusal qualification",
+    "Broader component-by-component preservation/readback cases without repeating this applied package"
+  ],
+  "fullCurrentDocumentAuthoringComplete": false
+}

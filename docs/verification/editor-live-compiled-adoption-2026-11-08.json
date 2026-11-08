@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-08T18:17:14.7591636Z",
+  "scope": "One existing GUI trigger action, native full-map compile, guarded adoption and same-file refresh on owned fixture",
+  "sourceSha256": {
+    "src/modules/editorLive/refresh.ts": "cf44e5af9bf1c381ddfbd398ea22c8361e312e2dcd2fc4a22984a2667ac7489f",
+    "src/modules/editorLive/refreshPackage.ts": "15df8080fa5c24dee421dcd4af99480d51a9ffca08801c350f3d71b0cc5154a9",
+    "src/modules/editorLive/tools.ts": "e2e85f817f0c9f410618ec758d1002b71b6bcd30c2a5d858f6d88bc0bd50a053",
+    "src/integrations/native/bridge.ts": "8a8ed2afae25177aa545b0ff8a473f80326a3da88a44b683114c6a5c67a5c4c1",
+    "src/app/server.ts": "eccdd83aa49b015f9cd3329cc2726a7bc87b86ccaf0752b9c647f7c2f3a5f79b",
+    "src/tests/liveRefresh.test.ts": "07825a9febc1bcaff3a36776b5b6d3b658979d84508584606617665286932e53",
+    "src/tests/nativeEditor.test.ts": "501db67fe0e329534021a9ca4255b0469e7900101cb94ac94f7f01879ac8a4ae"
+  },
+  "native": {
+    "samePath": true,
+    "sameFrame": true,
+    "sameProcess": true,
+    "actionsBefore": 1,
+    "actionsAfter": 2,
+    "originalActionPreserved": true,
+    "compiledOriginalAndNewAssignments": true,
+    "objectsByteIdentical": true,
+    "compileJob": "4d0eb243-ae47-4b71-b1dd-9118dabcb9db",
+    "compileSnapshotSha256": "f41c89e64f15c7abb08d74c3a50d29f323bcf0cf28833a4fce2859318d1e1e24",
+    "runtimeSha256": "543e53eb253195e35537ee78126c9840c96ceeeaa0c56171d76dad4d49d09204",
+    "finalArchiveSha256": "249c5b6d37ccf20b20c3c72bada9ac5da0623bf8aa5df372311c5d8f15fc0037",
+    "userDesktopInput": false,
+    "newWorkingCopies": 0,
+    "gameplayVerified": false,
+    "actionTreeVerified": false
+  },
+  "diagnostics": [
+    "c1c3be88-d72a-414d-8039-656e4cd71318",
+    "6840fd97-e1e3-4fdd-a8dc-7b9e34cf558d"
+  ],
+  "artifacts": [
+    "work/live-placement-20261107/COMPILED_ADOPTION_NATIVE.json",
+    "work/live-placement-20261107/COMPILED_ADOPTION_DISABLED_ATTEMPT.json"
+  ],
+  "regressionTests": 55,
+  "limitations": [
+    "Compile diagnostics snapshot was incomplete in the native compiler result.",
+    "Saved source and runtime were inspected; visual trigger action tree and gameplay were not.",
+    "The initial test attempt stopped before mutation because workflow-profile tools were disabled."
+  ],
+  "fullGoalComplete": false
+}

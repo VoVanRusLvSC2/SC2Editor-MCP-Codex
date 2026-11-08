@@ -2,6 +2,59 @@ import assert from 'node:assert/strict';
 import {test} from 'node:test';
 import {compileAuthorScript} from '../app/authoringScript.js';
 import {compactResult,runMcpBatch,type BatchTool} from '../app/mcpBatch.js';
+import {refreshBeginSchema} from '../modules/editorLive/refreshBegin.js';
+import {refreshResourcesSchema} from '../modules/editorLive/refreshResources.js';
+
+test('compact object removal uses exact component IDs and guarded plan/apply/save',()=>{
+ const steps=compileAuthorScript('objects remove ids=101,102','save');
+ assert.deepEqual(steps.map(s=>s.tool),['placement.removeBatch','placement.apply','modkit.save']);
+ assert.deepEqual(steps[0].args.objectIds,[101,102]);
+ assert.equal(steps[2].args.file,'Objects');
+ for(const invalid of ['0','1,1','1,','1.5','9007199254740992']) assert.throws(()=>compileAuthorScript(`objects remove ids=${invalid}`,'save'),/AUTHOR_OBJECT_IDS_INVALID/);
+ assert.throws(()=>compileAuthorScript('objects remove objectKey=101','save'),/AUTHOR_OBJECT_IDS_REQUIRED/);
+ const wrapped=['live refresh.author sessionId=d1d044cb-c1c0-46a6-a243-0c1dbb44967a <<EDITS','objects remove ids=101,102','EDITS'].join('\n');
+ assert.equal(compileAuthorScript(wrapped,'stage')[0].tool,'live.refresh.author');
+});
+
+test('same-file refresh and one resource change use compact commands with explicit mutation mode',()=>{
+ const begin='live refresh.begin archive=Current.SC2Map windowId=123 mode=same_file_refresh saveIfDirty=true';
+ assert.throws(()=>compileAuthorScript(begin,'plan'),/AUTHOR_LIVE_REQUIRES_STAGE/);
+ const step=compileAuthorScript(begin,'stage')[0];assert.equal(step.tool,'live.refresh.begin');assert.equal(step.args.windowId,'123');assert.equal(step.args.saveIfDirty,true);
+ assert.equal(refreshBeginSchema.parse(step.args).saveIfDirty,true);
+ const resource=compileAuthorScript('live refresh.resource sessionId=abc action=add path=Assets/Art/New.dds source=Textures/New.dds','stage')[0];
+ assert.equal(resource.tool,'live.refresh.resources');assert.equal(resource.args.sessionId,'abc');assert.deepEqual({...((resource.args.changes as any[])[0])},{action:'add',path:'Assets/Art/New.dds',source:'Textures/New.dds'});
+ resource.args.sessionId='d1d044cb-c1c0-46a6-a243-0c1dbb44967a';assert.equal(refreshResourcesSchema.parse(resource.args).changes[0].action,'add');
+ assert.throws(()=>compileAuthorScript('live refresh.resource sessionId=abc action=remove path=Assets/Art/Old.dds','plan'),/AUTHOR_LIVE_REQUIRES_STAGE/);
+});
+
+test('a compact refresh batch binds a previous session without JSON and preserves its nested commands',()=>{
+ const source=['live refresh.begin archive=Current.SC2Map windowId=123 mode=same_file_refresh saveIfDirty=true','live refresh.author sessionId=@s1.sessionId <<EDITS','terrain paint texture=AgriaDirt at=20,30 radius=8 strength=0.4','text set key=Mission/Title value="Defend the base"','EDITS','live refresh.apply sessionId=@s1.sessionId'].join('\n');
+ const steps=compileAuthorScript(source,'stage');assert.deepEqual(steps.map(s=>s.tool),['live.refresh.begin','live.refresh.author','live.refresh.apply']);
+ assert.deepEqual(steps[1].args.sessionId,{$from:'s1.sessionId'});assert.deepEqual(steps[2].args.sessionId,{$from:'s1.sessionId'});assert.equal(steps[1].args.script,'terrain paint texture=AgriaDirt at=20,30 radius=8 strength=0.4\ntext set key=Mission/Title value="Defend the base"');
+ assert.throws(()=>compileAuthorScript('live refresh.apply sessionId=@s1.sessionId','stage'),/AUTHOR_REFRESH_SESSION_REFERENCE_INVALID/);
+ assert.throws(()=>compileAuthorScript(source.replaceAll('@s1.sessionId','@s1.__proto__'),'stage'),/AUTHOR_REFRESH_SESSION_REFERENCE_INVALID/);
+ assert.throws(()=>compileAuthorScript(source.replaceAll('@s1.sessionId',"'{\"$from\":\"s1.__proto__\"}'"),'stage'),/AUTHOR_REFRESH_SESSION_REFERENCE_INVALID/);
+ assert.throws(()=>compileAuthorScript(source.replaceAll('@s1.sessionId',"'{\"$from\":\"s1.sessionId\",\"extra\":true}'"),'stage'),/AUTHOR_REFRESH_SESSION_REFERENCE_INVALID/);
+ assert.throws(()=>compileAuthorScript(source.replace('sessionId=@s1.sessionId <<EDITS','sessionId=@s1.sessionId script=duplicate <<EDITS'),'stage'),/AUTHOR_REFRESH_SCRIPT_CONFLICT/);
+ assert.throws(()=>compileAuthorScript(source,'plan'),/AUTHOR_LIVE_REQUIRES_STAGE/);
+});
+
+test('refresh author syntax is checked before begin without applying the public batch limit to ungrouped nested edits',()=>{
+ const wrap=(body:string)=>['live refresh.begin archive=Current.SC2Map windowId=123 mode=same_file_refresh saveIfDirty=true','live refresh.author sessionId=@s1.sessionId <<EDITS',body,'EDITS','live refresh.apply sessionId=@s1.sessionId'].join('\n');
+ const many=Array.from({length:50},(_,i)=>`text set key=Mission/Item${i} value=ok`).join('\n');
+ assert.equal(compileAuthorScript(wrap(many),'stage').length,3);
+ assert.throws(()=>compileAuthorScript(wrap('notacommand thing'),'stage'),/AUTHOR_COMMAND_UNSUPPORTED/);
+ assert.throws(()=>compileAuthorScript(wrap('live document.save archive=Current.SC2Map windowId=123'),'stage'),/LIVE_REFRESH_AUTHORING_ONLY/);
+ assert.throws(()=>compileAuthorScript(wrap('live refresh.author sessionId=x script=x'),'stage'),/LIVE_REFRESH_AUTHORING_ONLY/);
+});
+
+test('compact current GUI commands preserve window identity and never imply checkpoint/save stages',()=>{
+ const steps=compileAuthorScript('live.trigger.prepare archive=Current.SC2Map windowId=199256 name="Round system" planFile=plans/rounds.json','stage');
+ assert.deepEqual(steps.map(s=>s.tool),['live.trigger.prepare']);
+ assert.equal(steps[0].args.windowId,'199256');
+ assert.deepEqual(compileAuthorScript('live.trigger.inspect archive=Current.SC2Map windowId=199256','plan').map(s=>s.tool),['live.trigger.inspect']);
+ assert.throws(()=>compileAuthorScript('live.trigger.apply planId=one','plan'),/AUTHOR_LIVE_REQUIRES_STAGE/);
+});
 
 test("empty document save uses the guarded planner/materializer and player.set preserves omitted fields", () => {
   const source =

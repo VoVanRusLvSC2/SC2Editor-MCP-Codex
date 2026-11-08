@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-08T18:34:23.6879098Z",
+  "scope": "Compact compile begin/finish and same-file apply on resumed owned fixture",
+  "sourceSha256": {
+    "src/modules/editorLive/refresh.ts": "1bf99699cd1dfe618c20ac47da260a535a5635e0988c574cb84bae8ca661051c",
+    "src/modules/editorLive/refreshCompile.ts": "996d27af1b4a2299dd1dc6f94abf6cf44c018667500155a2469ff4a6cf36f95d",
+    "src/app/liveCompileTools.ts": "3f045cfc8522f8b7fb2a0dba6a92b41380ea043f93ad81f975e2642126179a8a",
+    "src/integrations/native/bridge.ts": "8a8ed2afae25177aa545b0ff8a473f80326a3da88a44b683114c6a5c67a5c4c1",
+    "src/tests/liveRefreshCompile.test.ts": "57f26c4874370905a1f04e9a6ca9b518332bc4adf4adcb93e82eb9ca7276b456",
+    "src/tests/liveRefresh.test.ts": "34dd44bb84a5296a9cb6e05149120b480f6a8438dfec1bfc291b02cfb73ab1ef"
+  },
+  "native": {
+    "firstJob": "cbb1dcaa-ee81-44b8-bb0b-f78fec45a0af",
+    "firstFailure": "Native compile passed; export job failed before output with Windows access denied persisting SDK job history",
+    "preparedSessionResumed": true,
+    "triggerNotRecreated": true,
+    "successfulJob": "1eb4240c-76d9-4601-a998-0a6045cbc051",
+    "duplicateBeginSameJob": true,
+    "duplicateFinishSameReceipt": true,
+    "samePath": true,
+    "sameWindow": true,
+    "sameProcess": true,
+    "actionsBefore": 1,
+    "actionsAfter": 2,
+    "runtimeContainsBoth": true,
+    "objectsPreserved": true,
+    "userDesktopInput": false,
+    "newWorkingCopies": 0,
+    "gameplayVerified": false,
+    "visualActionTreeVerified": false,
+    "nativeConsoleInspection": "Unavailable: SDK history persistence failure and owned-document state cleared"
+  },
+  "artifacts": [
+    "work/live-placement-20261107/COMPILE_SHORTCUT_NATIVE.json",
+    "work/live-placement-20261107/COMPILE_SHORTCUT_RESUME_NATIVE.json"
+  ],
+  "limitations": [
+    "No gameplay or visual action-tree readback for this resumed fixture.",
+    "The in-session compiled attestation is lost on reconnect.",
+    "Native diagnostics for the source Editor were unavailable in this attempt."
+  ],
+  "fullGoalComplete": false
+}

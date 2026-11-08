@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-08T19:23:11.531Z",
+  "scope": "Confirmed native compilation failure followed by explicit retry in one prepared same-file session on an owned test map",
+  "fixture": "An existing native Custom Script was deliberately edited only in the prepared test components to call an undefined function; the test restored it before creating a valid GUI action through MCP.",
+  "failedJob": "3b3625be-5b3b-4c11-b685-b86d55a6452c",
+  "nativeGenerationVerified": true,
+  "nativeCompilerErrorCount": 1,
+  "failedCompileReported": true,
+  "implicitRetry": false,
+  "retryJob": "4e41004b-a2e5-4fb0-98d4-bd1be92a94b3",
+  "retryCompilePassed": true,
+  "samePath": true,
+  "sameFrame": true,
+  "sameProcess": true,
+  "guiActions": 2,
+  "originalActionPreserved": true,
+  "validActionInGalaxy": true,
+  "objectsPreserved": true,
+  "userDesktopInput": false,
+  "gameplayVerified": false,
+  "visualActionTreeVerified": false,
+  "artifacts": [
+    "work/live-retry-20261108/FAILURE_RETRY_FORMATTED_NATIVE.json",
+    "work/live-retry-20261108/qualify-native-failure-retry.mjs",
+    "work/live-retry-20261108/.sc2mcp-output/ne/jobs/3b3625be-5b3b-4c11-b685-b86d55a6452c/result.json"
+  ],
+  "fullGoalComplete": false
+}

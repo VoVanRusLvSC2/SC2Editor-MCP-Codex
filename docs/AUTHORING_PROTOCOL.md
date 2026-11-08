@@ -6,11 +6,83 @@ localization. Historical evidence is retained under `work/`; it is not agent pol
 
 ## Entry points and cost
 
+Current-document application belongs to the separate `editorLive` module and
+`editor-live` MCP profile. Reuse existing generators through its supported
+providers. See [Editor live module](EDITOR_LIVE.md); its native API extension
+requirements are not completed capabilities. Existing-template Unit duplication
+and movement use the same bounded placement provider as Doodads.
+Self-contained new GUI libraries now use the existing typed generator and the
+original current-document Import Library path. Use `live.trigger.prepare/apply`;
+use `live.trigger.verify` to recover graph verification without replaying import.
+This does not qualify existing-graph editing or arbitrary localized trigger text.
+Current map-local UI layouts use `live.ui.create/read/author`. Their current XML
+buffers, including pending manual content, feed the existing typed UI operations.
+Compatible `ui frame/property/anchor/remove/template` commands group atomically;
+omit file= in a live snapshot. Native buffer readback precedes separate same-file
+Save, saved-model and rendering acceptance. Text/style/import dependencies remain
+separate unsupported live components, never silently dropped from a batch.
+
+Use `live.import.prepare/apply` for add-only resource files in the current Import
+window. Stage workspace resources under `Assets/<folder>/`, preserve the shared
+pendingId, request native same-file Save separately, then `live.import.verify`
+checks exact saved bytes. This direct Import Files provider is add-only and bounded;
+larger or linked groups can use the accepted same-file refresh path below. Never
+replay unknown imports.
+
 Visible Editor work defaults to the current document with no new map copy. Use
 `live.document.status` and explicit `live.document.save` for native same-file
 saving after authorized changes. Never substitute checkpoint authoring for an
 unsupported direct-memory operation; report the actual scope. Checkpoints require
 explicit user selection. Native saving includes all current unsaved user edits.
+
+When the user accepts refreshing the same file (including an Editor OK step),
+if the user requested saving, use `live.refresh.begin mode=same_file_refresh
+saveIfDirty=true`; it saves existing manual changes once if needed and prepares
+the confirmed same document. Otherwise use `live.refresh.prepare` on a clean
+document. Send compact `live.refresh.author` or detailed `live.refresh.call`
+operations, then `live.refresh.apply`. Preserve pending input, dialogs and
+unknown Save outcomes without replay.
+To issue that sequence as one `modkit.author` stage request, use a
+`live refresh.author sessionId=@s1.sessionId <<TAG` block after the initial
+begin step and refer to `@s1.sessionId` again for apply. The reference must
+identify an earlier begin/prepare/resume result; nested compact authoring and
+the final native refresh keep their own existing validation and recovery guards.
+Existing generators prepare complete component groups before original Close,
+atomic same-path publication and original Open in the same Editor/frame. This
+requires one clean document, resets native Undo and retains an internal rollback
+archive, without another working map. Native dialogs/manual buffers are protected.
+Use `live.refresh.resources` in that session to add, replace or remove a group of
+workspace resource files under `Assets/<folder>/`; then apply the combined batch
+once. Groups use the existing journalled file transaction and guard both source
+and prepared target bytes. Linked references, native resource loading, visual
+appearance and gameplay still need their own checks.
+Resume preserved preparation after reconnect; recover uncertain native application
+with pendingId instead of repeating authoring, close, publication or opening.
+Same-file loading is not proof of every component's native model or appearance.
+
+Existing Doodads or Units use `live.placement.prepare` to select the original layer
+(`layer=Units` for Units), then
+`live.placement.inspect` and `live.placement.duplicate/move`. Keys belong to one
+short-lived scene snapshot, not permanent map tags. Complete before/after
+properties and native coordinate readback guard this bounded workflow. Preserve
+ambiguous/partial creation; never compensate with another placement, arbitrary
+row, global Undo or a checkpoint copy.
+
+For new types use `live.placement.catalog` on that snapshot, then
+`live.placement.create` with the exact palette row/display type/hash and explicit
+Unit owner. Original UI filters apply. Native footprint/grid adjustments must
+remain failed coordinate verification until the same instance is inspected;
+never replay creation to compensate. Full current-document component coverage
+remains the target; missing providers are unfinished work.
+
+For broader live Data changes use `live.data.read/author`: existing compact Data
+commands prepare one catalog, then original Commit XML Changes applies it to the
+current document. Omit file= inside this authoring scope. Snapshot the complete
+current XML, including pending typed changes, and keep archive/process/buffer
+guards. Other component changes refuse before application. Full native XML is
+not rendered/model/gameplay proof. Save separately in the same file. Scalar
+reads additionally require the value-panel header to match the requested Unit;
+an object-list selection with stale fields must refuse. See the live guide.
 
 For visible Editor connectivity tests, first inspect `live.windows` and
 `live.capabilities` or `live.memory.capabilities`. No `live.connect`, save or field
@@ -397,3 +469,23 @@ asset and native playback evidence. After native tests, `project.test.review`
 reuses hash-confirmed frames without replay. Inspect the actual pixels and record
 concrete image-bound findings with `project.test.observe`. These agent notes do
 not constitute human approval, visual certification or an automatic repair.
+
+## Standard unit presentation
+
+A model assignment alone does not copy the native unit panel or attack events.
+For derived player-facing units, use `data unit` with its native source Actor;
+retain UnitIcon, HeroIcon, GroupIcon, Wireframe, LifeArmorIcon and applicable shield
+icons along with the main Actor's attack, movement and death presentation. Keep
+source asset identity tokens bound to the source; remap only the actual duplicated
+catalog identities. A custom unit must not acquire an invented texture path.
+
+Inspect `data unit.presentation unit=Hero` and resolve selection/armor/attack
+review findings before delivery. Ordinary Data validation also warns about a
+narrow generic-parent clone missing presentation declared by its native source.
+Existing stripped Actors can be repaired explicitly with
+`data unit.presentation.repair unit=Hero actor=HeroActor sourceActor=Marine`.
+The selected native UI groups are replaced; missing native attack handlers are
+added while custom spell events, models, scales and attached modules remain.
+Intentional custom icons or invisible helpers are explicit exceptions. Existing
+conflicting manual attack handlers and unsupported source layers require review;
+static Data restoration does not prove native animation playback.

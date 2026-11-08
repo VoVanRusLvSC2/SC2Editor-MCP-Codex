@@ -4,6 +4,7 @@ import { expandSpellRecipe, type SpellRecipe } from "../modules/data/spellRecipe
 const recipes = new Map([
   ["data.unit.configure", "recipe.unitConfigure"],
   ["data.spell.configure", "recipe.spellConfigure"],
+  ["data.unit.presentation.repair", "recipe.unitPresentationRepair"],
   ["data.unit.copy", "recipe.unitCopy"],
   ["data.spell", "recipe.spell"],
   ["data.ability.instant", "recipe.instantAbility"],

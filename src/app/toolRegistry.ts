@@ -47,9 +47,19 @@ export class ToolRegistry {
       return registered;
     };
     // Keep SDK instance/private-field receivers intact without changing its methods.
+    let closing: Promise<void> | undefined;
+    const close = () =>
+      (closing ??= (async () => {
+        try {
+          await server.close();
+        } finally {
+          await this.executor.drain();
+        }
+      })());
     return new Proxy(server, {
       get(target, key) {
         if (key === "registerTool") return registerTool;
+        if (key === "close") return close;
         const value = Reflect.get(target, key, target);
         return typeof value === "function" ? value.bind(target) : value;
       },

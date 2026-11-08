@@ -1,11 +1,34 @@
 import type { BatchStep, BatchTool } from "./mcpBatch.js";
 import { coalesceDataAuthoringSteps } from "./authoringDataGroups.js";
 import { coalesceAuthoringSteps } from "./authoringGroups.js";
+import { refreshAuthoringAllowed } from "../modules/editorLive/refreshPolicy.js";
 
 export type AuthorMode = "plan" | "stage" | "save";
 export const authoringGuide = {
+  liveQuickStart: {
+    section: "live",
+    scope:
+      "Edit the current document with supported direct live tools, or prepare existing generators and refresh the same saved path when reload is accepted. A refresh closes and reopens the map in the same Editor and resets native Undo.",
+    format:
+      "Use one compact command per line with modkit.author; mode=plan previews, while mode=stage performs supported live operations. Obtain the actual sessionId from the begin receipt; @s1.sessionId only references a prior step inside the same author request.",
+    examples: [
+      "Inspect live.windows and live.capabilities first; do not save or dismiss dialogs just to inspect.",
+      "live refresh.begin archive=Current.SC2Map windowId=123 mode=same_file_refresh saveIfDirty=true",
+      "live refresh.author sessionId=<sessionId> <<EDITS\n<compact component commands>\nEDITS",
+      "If GUI Triggers changed: live refresh.compile_begin sessionId=<sessionId>; then live refresh.compile_finish sessionId=<sessionId>.",
+      "When preparation is complete and Save was requested: live refresh.apply sessionId=<sessionId>.",
+      "Alternatively after compile_begin, when Save was requested: live refresh.compile_apply sessionId=<sessionId> combines finish and guarded apply.",
+    ],
+    limitations: [
+      "Use saveIfDirty=true only when the user requested saving their current edits; otherwise do not overwrite unsaved work.",
+      "compile_pending means observe the same job with compile_finish again; compile_stale requires compile_begin after edits. After confirmed compile_failed, fix the issue and call compile_begin retryFailed=true. Unknown submission or adoption requires inspection, never blind retry.",
+      "Native compilation is not a visual or gameplay test. Reconnect an outdated MCP; job bindings are process-local.",
+    ],
+  },
+  liveCompilePolicy:
+    "When a prepared same-file refresh changes GUI triggers, run live refresh.compile_begin sessionId=... once, then poll live refresh.compile_finish sessionId=... until prepared. Pending means observe the same job, never restart it. Finish adopts only the exact compiled snapshot; apply separately after the user requested saving. Unknown submission or adoption requires inspection, not replay. Reconnect loses this shortcut's in-memory job binding. Native compilation does not establish gameplay.",
   livePolicy:
-    "Default to the current document, no new checkpoint or Save As copy unless explicitly requested. Native same-file saving is live document.status followed by live document.save archive=... windowId=... expectedSha256=... in stage mode. Unsupported live object/terrain/trigger edits are a capability gap, never a reason to silently switch maps. For connectivity tests use read-only live.windows and live.memory.capabilities (or live.capabilities); no save or live.connect is needed. Missing live.memory discovery matches mean an unavailable/stale connection or profile, not a save requirement. For direct in-memory Unit scalar edits select the same document's Data window and use live memory.read archive=... windowId=... unit=... field=LifeMax then live memory.set snapshotId=... value=250 in stage/save mode. Unsaved values are supported; this separate visible Data adapter does not save/reopen the map. Only the separate saved-checkpoint workflow uses live.connect, live.author/publish and saved-file pull. Existing map-local Unit numeric fields only; no live Terrain/trigger support. Never replay unknown commits, replace the archive with an offline writer, dismiss save dialogs or attach the hidden test DLL.",
+    "Full current-document authoring is the target; do not mark the live mode complete while component providers are missing. Use live document.status/save for native same-file Save. Existing Doodads/Units use live placement.prepare/inspect/duplicate/move. New palette types use live placement.catalog/create with a fresh scene snapshot, exact palette row/type/hash and explicit Unit owner; native footprint/grid snapping can fail exact coordinate verification. Inspect that same instance instead of recreating it. Data batches use live data.read/author with existing compact Data recipes, omitted file= and explicit apply=true; one current XML dataspace, pending XML and stale guards are preserved. Full XML is distinct from model/rendered proof. Scalar fields require the requested Unit's value-panel header, not just its selected row. New self-contained GUI libraries use live.trigger.prepare/apply and native graph verification; current layouts use live.ui.create/read/author. Localized Text uses live.text.read/author, then requested native Save and live.text.verify: its original exporter is cached until Save, and the shared pending guard must not be bypassed. New resource files use live.import.prepare/apply in the matching Import window under Assets/<folder>/ with no overwrites (16 files, 1 MiB each); requested native Save then live.import.verify confirms saved bytes. Direct Terrain and existing GUI-graph replacement remain unfinished. When same-file refresh is accepted, use live refresh.begin with mode=same_file_refresh and saveIfDirty=true only if the user requested saving; author through live.refresh.author/call, then apply once. Existing generators can prepare Terrain, GUI and linked components. live refresh.resource accepts one add/replace/remove with sessionId, action, path and source; live.refresh.resources accepts a grouped changes array. Refresh reloads the same path, resets native Undo and protects pending buffers; never substitute another map. Connectivity uses live.windows/capabilities without save or live.connect. A stale connection may need reconnecting. Checkpoint copies require explicit user selection. Never replay unknown native commits, replace an open archive with an offline writer, dismiss user dialogs or repurpose the hidden test DLL.",
   nativeEditorPolicy:
     "Optional pinned SC2NativeToolkit: editor.status reports connection without Editor startup; editor.check queues native load/Data, compile and save/reopen checks on a saved archive; editor.data.audit submits a full original effective-Data audit with separate native status/cancel and explicit coverage limits; editor.job polls compact results; editor.capture queues native images; editor.stop closes the owned hidden Editor. map.preview remains the fast ModKit renderer. Unknown diagnostics and native images do not certify gameplay.",
   testPolicy:
@@ -17,7 +40,7 @@ export const authoringGuide = {
   presentationPolicy:
     "Player-facing abilities/effects normally include native Actor/Model feedback for cast, movement/travel and impact/area, plus sound when appropriate. Invisible helper effects/passives are explicit exceptions. Use native event/host/site-op/lifecycle bindings and visual preloads; mechanics or a Model ID alone do not prove visible playback.",
   format:
-    "One command per line: section verb key=value. Quote values containing spaces. Use dotted keys for nested arguments and JSON only for complex arrays. A <<TAG block preserves Galaxy source verbatim.",
+    "One command per line: section verb key=value. Quote values containing spaces. Use dotted keys for nested arguments and JSON only for complex arrays. A <<TAG block preserves Galaxy source or a live refresh authoring batch verbatim. In the same command script, sessionId=@s1.sessionId refers to the earlier refresh begin/prepare/resume step s1.",
   modes: {
     plan: "Read or preview only; module tools keep their dry-run defaults.",
     stage: "For supported recipes, apply to staged workspace files without saving.",
@@ -32,11 +55,12 @@ export const authoringGuide = {
       "kind=damage|pulse|line|ring|burn|projectile. Required id/kind/damage/model/face. Projectile additionally requires sourceEffect/sourceActor native launch templates and retains their ammo/mover/travel model. Optional unit+slot binds a 3x5 card. cast/channel/finish use actual main-model sequence names in the same transaction; actor defaults to unit ID for derived units. A positive area delay requires warningModel. Burn damage is per tick. Sound optional; target templates and sourceAbility remain explicit.",
     unit: "data unit id=Hero from=Marine life=600 scale=1.2 heroic=true creates a derived Unit and independent main Actor, retaining the source movement/attack/death presentation. Existing weapons, abilities and morph forms remain shared. Unsupported layered actors or ambiguous templates reject; no recursive graph duplication or silent replacement.",
     limits:
-      "Button text/icon/hotkey inherit face. Spell cast/channel/finish and standalone data actor.ability_animation verify real model sequences; invented sequences reject the whole transaction. data unit.presentation unit=Hero reviews declared primary Actor, weapon animation selectors and effect links. Static links do not prove native playback or balance. Creation rejects existing IDs; configure commands preserve omitted fields.",
+      "Button text/icon/hotkey inherit face. Spell cast/channel/finish and standalone data actor.ability_animation verify real model sequences; invented sequences reject the whole transaction. data unit.presentation unit=Hero reviews standard icons, armor, primary Actor, weapon animation selectors and effect links. data unit.presentation.repair unit=Hero actor=HeroActor sourceActor=Marine restores native selection/armor/attack groups while preserving custom spell events and modules. Static links do not prove native playback or balance. Creation rejects existing IDs; configure commands preserve omitted fields.",
     updates:
       "data unit.configure id=Hero life=800 speed=3 scale=1.4 changes explicit local Unit values and optional main Actor scale. data spell.configure id=Pulse damage=50 energy=20 cooldown=8 tunes an existing compact spell; target range and burn duration/period are supported where applicable. Omitted values, shape, cards, presentation and manual fields remain unchanged. No graph replacement or implicit creation.",
   },
   examples: [
+    "live refresh.begin archive=Current.SC2Map windowId=123 mode=same_file_refresh saveIfDirty=true",
     "project organize genre=mission",
     "terrain catalog tileset=Agria section=vegetation limit=8",
     "terrain style tileset=Agria profile=forest",
@@ -50,6 +74,7 @@ export const authoringGuide = {
     "terrain paint texture=AgriaDirt at=20,30 radius=8 strength=0.4",
     "terrain pathing rect=10,10,20,20 layer=noBuilding mode=block",
     "objects unit id=Marine at=25,31 owner=1 count=3",
+    "objects remove ids=101,102",
     "data set id=MyMarine path=LifeMax value=600",
     "data card.check unit=Hero",
     "data unit id=Hero from=Marine life=600 scale=1.2 heroic=true",
@@ -88,11 +113,11 @@ export const authoringGuide = {
     document: "empty/status",
     terrain:
       "status/check/paint/blend/raise/lower/flatten/pathing/nav/decorate/cliff/cliff.repair/ramp/ramp.place/landscape/landscape.inspect/landscape.zone/catalog/style/compose/measure/palette_preview/prefab/assemble",
-    objects: "status/check/unit/doodad",
+    objects: "status/check/unit/doodad/remove",
     data: "unit/unit.configure/spell/spell.configure/find/check/set/ability.instant/ability.target/ability.charges/hero.veterancy/hero.learn/actor.ability_animation",
     logic: "status/check/symbols/file/function/body (Galaxy)",
     gui: "status/check/plan (explicit)",
-    ui: "status/timer",
+    ui: "status/timer/frame/property/anchor/remove/template",
     cutscene: "status/show/create/compose",
     text: "check/set",
     settings: "status/players/player/player.set",
@@ -123,6 +148,7 @@ const aliases: Record<string, string> = {
   "objects.check": "placement.validate",
   "objects.unit": "placement.addUnit",
   "objects.doodad": "placement.addDoodad",
+  "objects.remove": "placement.removeBatch",
   "objects.variants": "placement.setVariations",
   "data.find": "data.peek",
   "data.unit": "data.unit.copy",
@@ -153,6 +179,48 @@ const aliases: Record<string, string> = {
 };
 const directCommands = new Set([
   "live.windows",
+  "live.placement.inspect",
+  "live.placement.catalog",
+  "live.placement.create",
+  "live.placement.prepare",
+  "live.placement.duplicate",
+  "live.placement.move",
+  "live.placement.delete",
+  "live.data.read",
+  "live.data.author",
+  "live.data.release",
+  "live.trigger.inspect",
+  "live.trigger.prepare",
+  "live.trigger.apply",
+  "live.trigger.verify",
+  "live.trigger.release",
+  "live.ui.create",
+  "live.ui.read",
+  "live.ui.author",
+  "live.ui.release",
+  "live.text.read",
+  "live.text.author",
+  "live.text.verify",
+  "live.text.release",
+  "live.import.prepare",
+  "live.import.apply",
+  "live.import.verify",
+  "live.import.release",
+  "live.refresh.prepare",
+  "live.refresh.begin",
+  "live.refresh.resume",
+  "live.refresh.author",
+  "live.refresh.call",
+  "live.refresh.resources",
+  "live.refresh.compile_snapshot",
+  "live.refresh.adopt_compiled",
+  "live.refresh.compile_begin",
+  "live.refresh.compile_finish",
+  "live.refresh.compile_apply",
+  "live.refresh.apply",
+  "live.refresh.recover",
+  "live.refresh.release",
+  "ui.apply",
   "live.document.status",
   "live.document.save",
   "live.memory.capabilities",
@@ -232,6 +300,7 @@ const directCommands = new Set([
   "placement.addUnit",
   "placement.addDoodad",
   "placement.addBatch",
+  "placement.removeBatch",
   "placement.scatterDoodads",
   "placement.snapToTerrain",
   "placement.setVariations",
@@ -244,6 +313,7 @@ const directCommands = new Set([
   "data.set",
   "data.unit.copy",
   "data.unit.configure",
+  "data.unit.presentation.repair",
   "data.spell.configure",
   "data.spell",
   "data.ability.instant",
@@ -390,12 +460,25 @@ function assign(args: Args, key: string, value: unknown) {
   if (Object.hasOwn(target, last)) throw new Error("AUTHOR_ARG_DUPLICATE: " + key);
   target[last] = value;
 }
-function argumentsOf(tokens: string[]): Args {
+function argumentsOf(tokens: string[], tool = ""): Args {
   const args: Args = Object.create(null);
   for (const token of tokens) {
     const at = token.indexOf("=");
     if (at < 1) throw new Error("AUTHOR_EXPECT_KEY_VALUE: " + token);
-    assign(args, token.slice(0, at), scalar(token.slice(at + 1)));
+    const key = token.slice(0, at),
+      value = token.slice(at + 1);
+    let parsed: unknown;
+    if (tool.startsWith("live.refresh.") && key === "sessionId" && value.startsWith("@")) {
+      if (!/^@s[1-9]\d{0,3}\.sessionId$/.test(value))
+        throw Error("AUTHOR_REFRESH_SESSION_REFERENCE_INVALID: " + value);
+      parsed = { $from: value.slice(1) };
+    } else
+      parsed =
+        tool.startsWith("live.") &&
+        ["windowId", "objectKey", "catalogHash", "expectedId"].includes(key)
+          ? value
+          : scalar(value);
+    assign(args, key, parsed);
   }
   return args;
 }
@@ -432,6 +515,87 @@ function shorthand(
   args: Args,
   block?: string,
 ): { tool: string; args: Args; saveFile?: string } {
+  if (name === "objects.remove") {
+    const raw = take(args, "ids");
+    if (raw === undefined || args.objectIds !== undefined)
+      throw Error("AUTHOR_OBJECT_IDS_REQUIRED");
+    const values = String(raw).split(",");
+    const ids = values.map((value) => Number(value));
+    if (
+      values.some((value) => !/^[1-9]\d*$/.test(value)) ||
+      ids.some((id) => !Number.isSafeInteger(id)) ||
+      new Set(ids).size !== ids.length ||
+      ids.length > 5000
+    )
+      throw Error("AUTHOR_OBJECT_IDS_INVALID");
+    args.objectIds = ids;
+    return { tool: "placement.removeBatch", args };
+  }
+  if (name === "live.refresh.author" && block !== undefined) {
+    if (args.script !== undefined) throw Error("AUTHOR_REFRESH_SCRIPT_CONFLICT");
+    args.script = block;
+  }
+  if (name === "live.refresh.resource") {
+    const sessionId = take(args, "sessionId");
+    return { tool: "live.refresh.resources", args: { sessionId, changes: [args] } };
+  }
+  if (name === "ui.apply")
+    return { tool: name, args, saveFile: typeof args.file === "string" ? args.file : undefined };
+  if (["ui.frame", "ui.property", "ui.anchor", "ui.remove", "ui.template"].includes(name)) {
+    const file = take(args, "file"),
+      common: Args = {};
+    for (const key of ["dryRun", "stage", "expectedSha256", "validate", "allowInvalid", "backup"]) {
+      const value = take(args, key);
+      if (value !== undefined) common[key] = value;
+    }
+    let operation: Args;
+    if (name === "ui.frame") {
+      const width = take(args, "width"),
+        height = take(args, "height"),
+        left = take(args, "left"),
+        top = take(args, "top");
+      if (args.properties !== undefined && !Array.isArray(args.properties))
+        throw Error("AUTHOR_UI_PROPERTIES_ARRAY_REQUIRED");
+      if (args.anchors !== undefined && !Array.isArray(args.anchors))
+        throw Error("AUTHOR_UI_ANCHORS_ARRAY_REQUIRED");
+      const properties = Array.isArray(args.properties) ? [...args.properties] : [];
+      const anchors = Array.isArray(args.anchors) ? [...args.anchors] : [];
+      if (width !== undefined) properties.push({ tag: "Width", attrs: { val: width } });
+      if (height !== undefined) properties.push({ tag: "Height", attrs: { val: height } });
+      for (const [side, offset] of [
+        ["Left", left],
+        ["Top", top],
+      ] as const)
+        if (offset !== undefined) {
+          if (anchors.some((a) => a && typeof a === "object" && a.side === side))
+            throw Error("AUTHOR_UI_ANCHOR_CONFLICT");
+          anchors.push({ side, relative: "$parent", pos: "Min", offset });
+        }
+      operation = {
+        op: "create_frame",
+        ...args,
+        ...(properties.length ? { properties } : {}),
+        ...(anchors.length ? { anchors } : {}),
+      };
+    } else if (name === "ui.anchor") {
+      const framePath = take(args, "framePath");
+      operation = { op: "set_anchor", framePath, anchor: args };
+    } else
+      operation = {
+        op:
+          name === "ui.property"
+            ? "set_property"
+            : name === "ui.remove"
+              ? "delete_frame"
+              : "apply_template",
+        ...args,
+      };
+    return {
+      tool: "ui.apply",
+      args: { file, ...common, operations: [operation] },
+      saveFile: typeof file === "string" ? file : undefined,
+    };
+  }
   if (["logic.file", "logic.function", "logic.body"].includes(name))
     name = "galaxy." + name.slice(6);
   if (name.startsWith("galaxy.") && ["file", "function", "body"].includes(name.slice(7))) {
@@ -594,6 +758,7 @@ function shorthand(
     name === "data.unit" ||
     name === "data.unit.copy" ||
     name === "data.unit.configure" ||
+    name === "data.unit.presentation.repair" ||
     name === "data.spell.configure" ||
     name === "data.spell" ||
     name === "data.ability.instant" ||
@@ -673,15 +838,18 @@ function shorthand(
   if (name === "text.set") {
     const key = take(args, "key"),
       value = take(args, "value"),
+      table = take(args, "table") ?? "GameStrings",
       locale = take(args, "locale") ?? "enUS";
     if (
       typeof key !== "string" ||
       value === undefined ||
       typeof locale !== "string" ||
+      typeof table !== "string" ||
+      !/^[A-Za-z][A-Za-z0-9_]*$/.test(table) ||
       Object.keys(args).length
     )
       throw new Error("AUTHOR_TEXT_SET_ARGS");
-    const file = `${locale}.SC2Data/LocalizedData/GameStrings.txt`;
+    const file = `${locale}.SC2Data/LocalizedData/${table}.txt`;
     return {
       tool: "text.apply",
       args: {
@@ -771,9 +939,18 @@ function lifecycle(
   if (mode === "plan") {
     if (
       command.tool.startsWith("live.") &&
-      !["live.windows", "live.status", "live.document.status", "live.memory.capabilities"].includes(
-        command.tool,
-      )
+      ![
+        "live.windows",
+        "live.status",
+        "live.document.status",
+        "live.memory.capabilities",
+        "live.placement.inspect",
+        "live.trigger.inspect",
+        "live.ui.read",
+        "live.text.read",
+        "live.text.verify",
+        "live.import.verify",
+      ].includes(command.tool)
     )
       throw new Error(
         "AUTHOR_LIVE_REQUIRES_STAGE: live session mutations require explicit stage/save mode",
@@ -869,6 +1046,7 @@ function lifecycle(
     command.tool === "placement.addUnit" ||
     command.tool === "placement.addDoodad" ||
     command.tool === "placement.addBatch" ||
+    command.tool === "placement.removeBatch" ||
     command.tool === "placement.scatterDoodads" ||
     command.tool === "placement.setVariations"
   ) {
@@ -892,6 +1070,7 @@ function lifecycle(
     command.tool === "data.apply" ||
     command.tool === "data.unit.copy" ||
     command.tool === "data.unit.configure" ||
+    command.tool === "data.unit.presentation.repair" ||
     command.tool === "data.spell.configure" ||
     command.tool === "data.spell" ||
     command.tool === "data.ability.instant" ||
@@ -902,7 +1081,8 @@ function lifecycle(
     command.tool === "data.xp.search" ||
     command.tool === "data.hero.learn" ||
     command.tool === "data.actor.ability_animation" ||
-    command.tool === "text.apply"
+    command.tool === "text.apply" ||
+    command.tool === "ui.apply"
   ) {
     first.args = { ...first.args, dryRun: false, stage: true };
     if (mode === "save") {
@@ -969,6 +1149,8 @@ export function compileAuthorScript(
   mode: AuthorMode,
   tools?: ReadonlyMap<string, BatchTool>,
   receipt?: (value: AuthorCompilationReceipt) => void,
+  defaults?: { dataFile?: string; uiFile?: string; textLocale?: string },
+  refreshPreflight = false,
 ): BatchStep[] {
   if (Buffer.byteLength(source) > 65536) throw new Error("AUTHOR_SOURCE_LIMIT");
   const lines = source.replaceAll("\r\n", "\n").split("\n"),
@@ -986,6 +1168,8 @@ export function compileAuthorScript(
       name += "." + tokens.shift();
     }
     if (!/^[A-Za-z][\w.-]*$/.test(name)) throw new Error("AUTHOR_COMMAND: " + name);
+    if (refreshPreflight && name === "live.refresh.author")
+      throw new Error("LIVE_REFRESH_AUTHORING_ONLY");
     let block: string | undefined;
     if (match[2]) {
       const start = line + 1;
@@ -999,10 +1183,66 @@ export function compileAuthorScript(
       block !== undefined &&
       !name.startsWith("galaxy.") &&
       !name.startsWith("logic.") &&
-      name !== "gui.script"
+      name !== "gui.script" &&
+      name !== "live.refresh.author"
     )
-      throw new Error("AUTHOR_BLOCK_ONLY_GALAXY");
-    const command = shorthand(name, argumentsOf(tokens), block);
+      throw new Error("AUTHOR_BLOCK_ONLY_GALAXY_OR_REFRESH");
+    const args = argumentsOf(tokens, name);
+    const sessionReference = args.sessionId;
+    if (
+      name.startsWith("live.refresh.") &&
+      sessionReference &&
+      typeof sessionReference === "object"
+    ) {
+      if (
+        Array.isArray(sessionReference) ||
+        Object.keys(sessionReference).length !== 1 ||
+        !("$from" in sessionReference) ||
+        typeof sessionReference.$from !== "string" ||
+        !/^s[1-9]\d{0,3}\.sessionId$/.test(sessionReference.$from)
+      )
+        throw Error("AUTHOR_REFRESH_SESSION_REFERENCE_INVALID");
+      const reference = sessionReference.$from;
+      const referencedId = reference.split(".")[0];
+      const referenced = steps.find((step) => step.id === referencedId);
+      if (
+        !referenced ||
+        !["live.refresh.begin", "live.refresh.prepare", "live.refresh.resume"].includes(
+          referenced.tool,
+        )
+      )
+        throw Error("AUTHOR_REFRESH_SESSION_REFERENCE_INVALID: " + reference);
+    }
+    if (defaults?.textLocale && name === "text.set") {
+      if (args.locale !== undefined && args.locale !== defaults.textLocale)
+        throw Error("AUTHOR_TEXT_LOCALE_SCOPE_MISMATCH");
+      args.locale = defaults.textLocale;
+    }
+    if (defaults?.dataFile && name.startsWith("data.")) {
+      if (args.file !== undefined && args.file !== defaults.dataFile)
+        throw Error("LIVE_DATA_SINGLE_DATASPACE_REQUIRED");
+      args.file = defaults.dataFile;
+    }
+    if (defaults?.uiFile && name.startsWith("ui.")) {
+      if (args.file !== undefined && args.file !== defaults.uiFile)
+        throw Error("LIVE_UI_SINGLE_LAYOUT_REQUIRED");
+      args.file = defaults.uiFile;
+    }
+    const command = shorthand(name, args, block);
+    if (name === "live.refresh.author" && typeof command.args.script === "string") {
+      // Compile the nested syntax before begin can save the current document.
+      // The real child registry still validates schemas and performs grouping.
+      const nested = compileAuthorScript(
+        command.args.script,
+        "save",
+        undefined,
+        undefined,
+        undefined,
+        true,
+      );
+      if (nested.some((step) => !refreshAuthoringAllowed(step.tool, step.args)))
+        throw new Error("LIVE_REFRESH_AUTHORING_ONLY");
+    }
     commands++;
     if (tools && !tools.has(command.tool))
       throw new Error("AUTHOR_TOOL_UNAVAILABLE: " + command.tool);
@@ -1017,7 +1257,7 @@ export function compileAuthorScript(
     mode,
     tools,
   );
-  if (grouped.length > 20) throw new Error("AUTHOR_STEP_LIMIT");
+  if (!refreshPreflight && grouped.length > 20) throw new Error("AUTHOR_STEP_LIMIT");
   const strings = (keys: string[]) =>
     [
       ...new Set(

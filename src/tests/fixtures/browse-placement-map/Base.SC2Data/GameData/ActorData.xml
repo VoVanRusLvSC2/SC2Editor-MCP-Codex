@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Catalog>
+    <CActorUnit id="Marine" parent="GenericUnitBase" unitName="Marine">
+        <UnitName value="Marine"/>
+        <Model value="MarineModel"/>
+    </CActorUnit>
+    <CActorDoodad id="AgriaTree">
+        <Model value="AgriaTreeModel"/>
+    </CActorDoodad>
+    <CActorDoodad id="CharDuneRock">
+        <Model value="CharDuneRockModel"/>
+    </CActorDoodad>
+    <CActorDoodad id="CityStreetLight">
+        <Model value="CityStreetLightModel"/>
+    </CActorDoodad>
+</Catalog>

@@ -10,6 +10,46 @@ const keys = [
   "responseTruncated",
   "limitations",
   "jobId",
+  "sessionId",
+  "snapshotId",
+  "pendingId",
+  "windowId",
+  "processId",
+  "processStart",
+  "preparedDirectory",
+  "componentDirectory",
+  "retryMutation",
+  "saveAttempted",
+  "prepared",
+  "savedMap",
+  "mapMutation",
+  "copiesCreated",
+  "reopensMap",
+  "nativeModelVerified",
+  "nativeCompilePassed",
+  "gameplayVerified",
+  "nativeMutationAttempted",
+  "internalTestArtifact",
+  "runtimeVerified",
+  "adopted",
+  "triggerRuntime",
+  "visualVerified",
+  "documentDirty",
+  "dirtinessScope",
+  "pendingInput",
+  "pendingXmlBuffers",
+  "dialogPresent",
+  "reason",
+  "recovery",
+  "sourcePublished",
+  "newWorkingMapCopies",
+  "reopensSamePath",
+  "resetsNativeUndo",
+  "editorChanged",
+  "sha256",
+  "size",
+  "mtimeMs",
+  "savedUiBufferError",
   "ready",
   "state",
   "phase",
@@ -56,6 +96,7 @@ const keys = [
   "total",
   "nextOffset",
   "version",
+  "apiVersion",
   "pagination",
   "coverage",
   "coverageIssueCount",
@@ -79,6 +120,7 @@ const keys = [
   "transactionId",
   "reportId",
   "reportFile",
+  "compilerErrors",
   "reportBytes",
   "diagnosticsTotal",
   "errors",
@@ -292,7 +334,71 @@ function compactGeneralResult(value: unknown) {
     };
   const v = value as Record<string, unknown>,
     out: Record<string, unknown> = {};
+  if (typeof v.name === "string" && /^sc2_[a-z0-9_]+$/.test(v.name) && v.schemaTruncated === true)
+    return { name: v.name, schemaTruncated: true, schemaBytes: v.schemaBytes, reason: v.reason };
+  if (
+    typeof v.name === "string" &&
+    /^sc2_[a-z0-9_]+$/.test(v.name) &&
+    v.inputSchema &&
+    typeof v.inputSchema === "object" &&
+    !Array.isArray(v.inputSchema)
+  ) {
+    const schemaBytes = Buffer.byteLength(JSON.stringify(v.inputSchema));
+    return {
+      name: v.name,
+      ...(typeof v.description === "string" && { description: v.description.slice(0, 2000) }),
+      ...(schemaBytes <= 65536
+        ? { inputSchema: v.inputSchema }
+        : {
+            schemaTruncated: true,
+            schemaBytes,
+            reason: "Schema exceeds compact response limit; call editor.tools directly.",
+          }),
+    };
+  }
   for (const key of keys) if (v[key] !== undefined) out[key] = v[key];
+  if (v.module === "editor-live" || v.module === "live") {
+    const current =
+      v.module === "live" &&
+      v.currentDocument &&
+      typeof v.currentDocument === "object" &&
+      !Array.isArray(v.currentDocument)
+        ? (v.currentDocument as Record<string, unknown>)
+        : v;
+    for (const key of [
+      "module",
+      "directInMemoryMutation",
+      "capabilityScope",
+      "unsupportedScope",
+      "fallback",
+    ])
+      if (current[key] !== undefined) out[key] = current[key];
+    if (Array.isArray(current.unsupported)) out.unsupported = current.unsupported.slice(0, 12);
+    if (current.refresh && typeof current.refresh === "object" && !Array.isArray(current.refresh)) {
+      const refresh = current.refresh as Record<string, unknown>;
+      out.refresh = Object.fromEntries(
+        ["backend", "tools", "scope", "reopensSamePath", "resetsNativeUndo", "requires", "evidence"]
+          .filter((key) => refresh[key] !== undefined)
+          .map((key) => [key, refresh[key]]),
+      );
+    }
+  }
+  if (v.status === "preparation_failed" && v.result && typeof v.result === "object") {
+    const nested = v.result as Record<string, unknown>;
+    const failedStep = Array.isArray(nested.steps)
+      ? nested.steps.find(
+          (step: unknown) =>
+            step && typeof step === "object" && (step as Record<string, unknown>).ok === false,
+        )
+      : undefined;
+    const step = failedStep as Record<string, unknown> | undefined;
+    out.preparation = {
+      ...(typeof nested.failed === "string" && { failed: nested.failed.slice(0, 128) }),
+      ...(typeof nested.completed === "number" && { completed: nested.completed }),
+      ...(typeof step?.tool === "string" && { tool: step.tool.slice(0, 128) }),
+      ...(typeof step?.error === "string" && { error: step.error.slice(0, 1000) }),
+    };
+  }
   for (const [key, fields] of [
     [
       "efficiency",
@@ -322,6 +428,25 @@ function compactGeneralResult(value: unknown) {
       "validation",
       ["valid", "errors", "warnings", "levels", "validationScope", "semanticCoverage"],
     ],
+    [
+      "save",
+      ["status", "saved", "sha256", "error", "savedUiBufferError", "retryMutation", "recovery"],
+    ],
+    [
+      "document",
+      [
+        "archive",
+        "sha256",
+        "windowId",
+        "processId",
+        "processStart",
+        "documentDirty",
+        "pendingInput",
+        "pendingXmlBuffers",
+        "dialogPresent",
+      ],
+    ],
+    ["recoveryContext", ["token", "windowId", "mode", "componentFile"]],
   ] as const) {
     const item = v[key];
     if (!item || typeof item !== "object" || Array.isArray(item)) continue;
@@ -342,6 +467,11 @@ function compactGeneralResult(value: unknown) {
   }
   for (const key of ["plan", "transaction"])
     if (v[key] && typeof v[key] === "object") out[key] = compactResult(v[key]);
+  if (Array.isArray(v.changed) && v.changed.every((item) => typeof item === "string")) {
+    out.changed = v.changed.slice(0, 16).map((item: string) => item.slice(0, 1024));
+    out.changedTotal = v.changed.length;
+    if (v.changed.length > 16) out.changedTruncated = true;
+  }
   if (Array.isArray(v.diagnostics))
     out.diagnostics = v.diagnostics.slice(0, 8).map((item) => {
       const text = JSON.stringify(item);
@@ -358,12 +488,14 @@ function compactGeneralResult(value: unknown) {
             ? Object.fromEntries(
                 Object.entries(item).filter(
                   ([key, val]) =>
-                    ["file", "path", "name", "sha256", "bytes", "changed"].includes(key) &&
-                    typeof val !== "object",
+                    ["file", "path", "name", "action", "sha256", "bytes", "changed"].includes(
+                      key,
+                    ) && typeof val !== "object",
                 ),
               )
             : item,
       );
+    if (v.files.length > 8) out.filesTruncated = true;
   }
   if (Array.isArray(v.variants)) out.variants = v.variants.slice(0, 8).map(compactResult);
   if (Array.isArray(v.items))
@@ -378,6 +510,10 @@ function compactGeneralResult(value: unknown) {
       return raw.length <= 3000 ? item : { truncated: true, preview: raw.slice(0, 1000) };
     });
   if (Array.isArray(v.items) && v.items.length > 8 && typeof v.offset === "number") {
+    out.nextOffset = v.offset + 8;
+    out.responseTruncated = true;
+  }
+  if (Array.isArray(v.objects) && v.objects.length > 8 && typeof v.offset === "number") {
     out.nextOffset = v.offset + 8;
     out.responseTruncated = true;
   }

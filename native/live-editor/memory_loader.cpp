@@ -6,6 +6,7 @@
 #include <filesystem>
 #include <string>
 #include <cstdio>
+#include "desktop_context.h"
 #pragma comment(lib, "version.lib")
 static uintptr_t Module(DWORD pid, const wchar_t *path, bool full) {
   HANDLE snapshot = CreateToolhelp32Snapshot(TH32CS_SNAPMODULE | TH32CS_SNAPMODULE32, pid);
@@ -39,6 +40,11 @@ static bool Remote(HANDLE process, uintptr_t address, void *value, DWORD &result
 int wmain(int argc, wchar_t **argv) {
   if (argc != 4)
     return 2;
+  int desktop=AttachOwnedSdkDesktop();
+  if(desktop) {
+    std::printf("{\"error\":\"LIVE_DESKTOP_CONTEXT_FAILED\",\"stage\":%d}\n",desktop);
+    return desktop;
+  }
   DWORD pid = wcstoul(argv[1], nullptr, 10);
   auto ticks = _wcstoui64(argv[2], nullptr, 10);
   HWND window = reinterpret_cast<HWND>(_wcstoui64(argv[3], nullptr, 10));

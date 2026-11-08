@@ -1,0 +1,183 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-08T17:09:55.877Z",
+  "status": "bounded_native_acceptance",
+  "scope": "Grouped resource add/replace/remove with same-file native reload and complete prepared-component package checks",
+  "sourceSha256": {
+    "src/modules/editorLive/refresh.ts": "de9e6c5a803db9afb7c24ea225708bab0a6498a01a3f38b284c4ddbb74affbeb",
+    "src/modules/editorLive/refreshPackage.ts": "11ac831728bd4dfee6e0896bc70b7060da82abb949ccc4759d7cb07c6bc2d7b6",
+    "src/modules/editorLive/refreshResources.ts": "46bc4d9ae7df8e4c1a3669d9080990b6c90bdb3c9381ba633200fd4b0edf6d73",
+    "src/modules/editorLive/resourcePolicy.ts": "ef7e842f732375b1ce4798ceb253b5de70a60cd750c3db22185f4b5ed1c1c9f5",
+    "src/modules/editorLive/imports.ts": "946e710d5daef58d1980c9f730e540cb54c4334d3b96597e4c2c23aa21aa7961",
+    "src/modules/editorLive/tools.ts": "0e2446f6d67b7266fee32f7a7afc5745d7d49a0d795bab1744c5e233815e9b00",
+    "src/modules/editorLive/workspace.ts": "1e0446640215e400a4c75d8ba75bd9e4bb76c4ee6e6e4ceb8eeba27a863ecf12",
+    "src/tests/liveRefresh.test.ts": "1d70fbbf3c004369f2d6ee69aafe29a5b2df9fd47f2a2ed0cdb67662c43c7797",
+    "src/tests/liveRefreshResources.test.ts": "0092d03847342d2ab8f893b9d0d2fc77375a1cc86689fa4183615e956906a0e0",
+    "src/tests/liveRefreshPackage.test.ts": "f22f2000e86893434740aa15c85b804457b0b3eec1fc9a98089cb1f537fa6a1a",
+    "src/tests/editorLiveModule.test.ts": "ed6e00fc48bd95368f3b4846fb8ad7cefbc7d6b91faf903674390c26d1e7407a"
+  },
+  "architecture": {
+    "resourceBoundary": "refreshResources.ts",
+    "resourcePolicy": "resourcePolicy.ts",
+    "transaction": "Existing workspace-locked journalled multi-file commit",
+    "packageBoundary": "refreshPackage.ts",
+    "components": 471,
+    "valueImportCycles": 0,
+    "violations": 0
+  },
+  "native": {
+    "existingResourceCase": {
+      "sameFrame": true,
+      "sameProcess": true,
+      "nativeReady": true,
+      "openDocuments": 1,
+      "removedWasVisible": true,
+      "removedAbsentFromArchive": true,
+      "removedAbsentFromNativeTree": true,
+      "replacedExact": true,
+      "addedExact": true,
+      "addedVisible": true,
+      "newWorkingCopies": 0,
+      "userDesktopInput": false,
+      "rendered": false,
+      "gameplay": false
+    },
+    "linkedTextAndResourceCase": {
+      "samePath": true,
+      "sameFrame": true,
+      "sameProcess": true,
+      "nativeReady": true,
+      "openDocuments": 1,
+      "newWorkingCopies": 0,
+      "replacedExact": true,
+      "addedExact": true,
+      "transientRemoved": true,
+      "linkedText": true,
+      "archiveSha256": "86cf563d13bb84ff79ed286bb81e0e3853300d13f2ab6cd580a6a169e7373a0c",
+      "editorImportTreeVerified": false,
+      "rendered": false,
+      "gameplay": false,
+      "userDesktopInput": false
+    },
+    "nativeImportTree": {
+      "existing": true,
+      "added": true,
+      "removed": true,
+      "sameProcess": true,
+      "userDesktopInput": false
+    },
+    "ownedWorkersStopped": true,
+    "diagnostic": {
+      "inspectionComplete": true,
+      "newErrorsDuringDiagnostic": 0,
+      "baselineErrorCount": 8,
+      "baselineWarningCount": 1,
+      "uiErrors": "Eight UI template/include errors were already observed in earlier retained native reports and timestamped before preparation in this run.",
+      "warning": "A Cutscenes invalid-data warning was timestamped during refresh; cause and relation to the tested change are unconfirmed.",
+      "baselineTakenAfterRefresh": true,
+      "report": "work/live-placement-20261107/.sc2mcp-output/ne/jobs/a90f7150-7463-4449-88a8-8981f7733ee7/result.json"
+    },
+    "nativeCompilerVerified": false,
+    "renderingVerified": false,
+    "gameplayVerified": false
+  },
+  "verification": {
+    "typescriptBuild": true,
+    "focusedSuite": {
+      "tests": 34,
+      "failures": 0
+    },
+    "sourceRaceRegression": {
+      "tests": 4,
+      "failures": 0
+    },
+    "scopedLint": true,
+    "prettier": true,
+    "architectureCheck": true,
+    "panelRefreshTests": 2,
+    "panelSyntaxChecks": 3,
+    "offlineReopenManifest": {
+      "at": "2026-11-08T16:55:02.398Z",
+      "componentCount": 45,
+      "reopened": true,
+      "sourceSha256": "71b772c7999038a01ba38716f585f5d90c66c83c934b35d8c8c5d97e40379632",
+      "sourceUnchanged": true,
+      "editorUsed": false,
+      "syntheticBaseline": true,
+      "packageSha256": "b0f8c22cca228e547e7cbbd81dd69da411fac7e02174e08ca8ef683f421132b8",
+      "changed": [
+        "Assets/LiveImportQualification/NativeResource.txt"
+      ]
+    }
+  },
+  "deployment": {
+    "fresh": {
+      "at": "2026-11-08T17:06:40.704Z",
+      "configuredEntry": "K:\\SC2_MAP_Workspace\\SC2Editor-MCP-Codex\\dist\\index.js",
+      "result": {
+        "ok": true,
+        "completed": 1,
+        "steps": [
+          {
+            "id": "version",
+            "tool": "live.capabilities",
+            "ok": true,
+            "ms": 4,
+            "result": {
+              "module": "live",
+              "apiVersion": "editor-live-2026-11-08-resource-refresh",
+              "refresh": {
+                "backend": "same_file_refresh",
+                "requiresExplicitMode": true,
+                "tools": [
+                  "live.refresh.prepare",
+                  "live.refresh.resume",
+                  "live.refresh.call",
+                  "live.refresh.author",
+                  "live.refresh.resources",
+                  "live.refresh.apply",
+                  "live.refresh.recover",
+                  "live.refresh.release"
+                ],
+                "scope": "Existing component authoring generators, validated same-file publication and original native document reload",
+                "createsNewWorkingMap": false,
+                "reopensSamePath": true,
+                "startsEditor": false,
+                "resetsNativeUndo": true,
+                "requires": "Clean current Terrain document, no pending XML/inline buffers; explicit same_file_refresh workflow",
+                "recovery": "Shared journal before close, internal rollback archive, preserved components and one-shot open marker",
+                "evidence": "Native load/title and saved-file checks do not establish every component's model, rendering or gameplay",
+                "resources": "Add, replace or remove Assets files in one guarded prepared group; 32 files, 64 MiB each, 128 MiB total source and original bytes"
+              },
+              "componentTransfer": {
+                "tempRoot": "Process-reported per-user physical staging store outside MSIX AppData redirection",
+                "legacyDialogPaths": "Bounded short paths shared by the packaged client and original Editor",
+                "longFilePaths": true,
+                "persistedUiBuffer": "Native savepoint only after exact stable-archive byte equality; mismatched pending source is preserved"
+              }
+            }
+          }
+        ]
+      },
+      "noEditorStarted": true,
+      "noMapWrite": true
+    },
+    "previouslyAttachedChatApiVersion": "editor-live-2026-11-08-gui-library",
+    "attachedChatHotReloaded": false,
+    "panelFingerprintIncludesNewModules": true
+  },
+  "evidence": [
+    "work/live-placement-20261107/RESOURCE_REFRESH_NATIVE.json",
+    "work/live-placement-20261107/RESOURCE_REFRESH_TREE.json",
+    "work/live-placement-20261107/EXISTING_RESOURCE_REFRESH_NATIVE.json",
+    "work/live-placement-20261107/NATIVE_IMPORT_FINAL.json"
+  ],
+  "limitations": [
+    "Native model/rendering and gameplay of imported assets are not certified",
+    "Resource editing is limited to 32 paths under Assets/<folder>/, 64 MiB per file and 128 MiB total source/original bytes",
+    "References to removed or replaced assets require separate validation",
+    "The Cutscenes warning needs investigation",
+    "The already attached chat server still requires its own reconnection"
+  ],
+  "fullGoalComplete": false
+}

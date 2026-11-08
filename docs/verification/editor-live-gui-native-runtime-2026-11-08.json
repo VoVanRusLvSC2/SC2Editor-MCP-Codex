@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-08T18:02:18.4618483Z",
+  "scope": "Existing GUI trigger edited on an owned fixture; separate native compile/export on a private copy",
+  "localEmitter": {
+    "dryRun": true,
+    "result": "GUI_RUNTIME_LIBRARY_ROOT",
+    "sourceMutated": false
+  },
+  "native": {
+    "job": "f263e164-09fe-452f-9291-19ac5c96fd64",
+    "nativeGenerationVerified": true,
+    "compilePassed": true,
+    "artifact": "work/live-placement-20261107/.sc2mcp-output/ne/jobs/f263e164-09fe-452f-9291-19ac5c96fd64/Native.galaxy",
+    "artifactSha256": "543e53eb253195e35537ee78126c9840c96ceeeaa0c56171d76dad4d49d09204",
+    "sourceArchiveUnchanged": true,
+    "oldAssignmentPresent": true,
+    "newAssignmentPresent": true,
+    "diagnosticInspectionComplete": null,
+    "userDesktopInput": false,
+    "automaticAdoptionVerified": false,
+    "gameplayVerified": false
+  },
+  "fullGoalComplete": false
+}

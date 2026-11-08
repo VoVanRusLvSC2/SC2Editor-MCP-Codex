@@ -32,7 +32,8 @@ export function xmlEscape(value: string): string {
     .replaceAll("&", "&amp;")
     .replaceAll('"', "&quot;")
     .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;").replaceAll("'", "&apos;");
+    .replaceAll(">", "&gt;")
+    .replaceAll("'", "&apos;");
 }
 
 function scalarText(value: ScalarValue): string {
@@ -40,7 +41,9 @@ function scalarText(value: ScalarValue): string {
 }
 
 function renderAttrs(attrs?: Record<string, ScalarValue>): string {
-  return Object.entries(attrs ?? {}).map(([name, value]) => ` ${name}="${xmlEscape(scalarText(value))}"`).join("");
+  return Object.entries(attrs ?? {})
+    .map(([name, value]) => ` ${name}="${xmlEscape(scalarText(value))}"`)
+    .join("");
 }
 
 export function renderElement(spec: ElementSpec, indent = "", unit = "    ", nl = "\n"): string {
@@ -129,7 +132,12 @@ export class LayoutDocument {
   nodes(tag?: string): XmlNode[] {
     return this.parsed.nodes
       .filter((node) => !tag || node.tag === tag)
-      .map((node) => ({ ...node, attrs: { ...node.attrs }, attrSpans: [...node.attrSpans], childIds: [...node.childIds] }));
+      .map((node) => ({
+        ...node,
+        attrs: { ...node.attrs },
+        attrSpans: [...node.attrSpans],
+        childIds: [...node.childIds],
+      }));
   }
 
   sourceOf(node: XmlNode): string {
@@ -148,8 +156,9 @@ export class LayoutDocument {
       throw new Error("Include path must point to an SC2Layout or StormLayout file");
     }
     const desc = this.descNode();
-    const existing = directChildren(this.parsed, desc, "Include")
-      .some((node) => node.attrs.path?.replaceAll("\\", "/").toLowerCase() === value.toLowerCase());
+    const existing = directChildren(this.parsed, desc, "Include").some(
+      (node) => node.attrs.path?.replaceAll("\\", "/").toLowerCase() === value.toLowerCase(),
+    );
     if (existing) return;
     const firstFrame = directChildren(this.parsed, desc).find((node) => node.tag === "Frame");
     this.insertElement(desc, { tag: "Include", attrs: { path: value } }, firstFrame);
@@ -158,9 +167,11 @@ export class LayoutDocument {
   removeInclude(includePath: string): void {
     const value = includePath.replaceAll("\\", "/").toLowerCase();
     const desc = this.descNode();
-    const matches = directChildren(this.parsed, desc, "Include")
-      .filter((node) => node.attrs.path?.replaceAll("\\", "/").toLowerCase() === value);
-    if (matches.length !== 1) throw new Error(`Expected exactly one Include '${includePath}'; found ${matches.length}`);
+    const matches = directChildren(this.parsed, desc, "Include").filter(
+      (node) => node.attrs.path?.replaceAll("\\", "/").toLowerCase() === value,
+    );
+    if (matches.length !== 1)
+      throw new Error(`Expected exactly one Include '${includePath}'; found ${matches.length}`);
     this.deleteNode(matches[0]);
   }
 
@@ -220,14 +231,20 @@ export class LayoutDocument {
     const rawNameMatches = [...map.entries()].filter(([, node]) => node.attrs.name === normalized);
     if (rawNameMatches.length === 1) return rawNameMatches[0][1];
     if (rawNameMatches.length > 1) {
-      throw new Error(`Frame name '${normalized}' is ambiguous; use escaped full path. Matches: ${rawNameMatches.map(([p]) => p).join(", ")}`);
+      throw new Error(
+        `Frame name '${normalized}' is ambiguous; use escaped full path. Matches: ${rawNameMatches.map(([p]) => p).join(", ")}`,
+      );
     }
 
     if (!normalized.includes("/")) {
-      const matches = [...map.entries()].filter(([p]) => p === normalized || p.endsWith(`/${normalized}`));
+      const matches = [...map.entries()].filter(
+        ([p]) => p === normalized || p.endsWith(`/${normalized}`),
+      );
       if (matches.length === 1) return matches[0][1];
       if (matches.length > 1) {
-        throw new Error(`Frame name '${normalized}' is ambiguous; use full path. Matches: ${matches.map(([p]) => p).join(", ")}`);
+        throw new Error(
+          `Frame name '${normalized}' is ambiguous; use full path. Matches: ${matches.map(([p]) => p).join(", ")}`,
+        );
       }
     }
     throw new Error(`Frame not found: ${path}`);
@@ -248,28 +265,43 @@ export class LayoutDocument {
     return prepared.summaries.map((frame) => ({ ...frame }));
   }
 
-  queryFrames(query: {
-    name?: string;
-    type?: string;
-    template?: string;
-    property?: string;
-    handle?: string;
-    under?: string;
-    limit?: number;
-  } = {}): FrameSummary[] {
+  queryFrames(
+    query: {
+      name?: string;
+      type?: string;
+      template?: string;
+      property?: string;
+      handle?: string;
+      under?: string;
+      limit?: number;
+    } = {},
+  ): FrameSummary[] {
     const contains = (value: string | undefined, wanted: string | undefined) =>
       !wanted || Boolean(value?.toLowerCase().includes(wanted.toLowerCase()));
     const limit = Math.min(Math.max(query.limit ?? 200, 1), 2000);
-    return this.listFrames().filter((frame) => {
-      if (!contains(frame.name, query.name) || !contains(frame.type, query.type) || !contains(frame.template, query.template)) return false;
-      if (query.handle && frame.handle !== query.handle) return false;
-      if (query.under && frame.path !== query.under && !frame.path.startsWith(`${query.under}/`)) return false;
-      if (query.property) {
-        const node = this.resolveFrame(frame.path);
-        if (!directChildren(this.parsed, node).some((child) => child.tag.toLowerCase() === query.property!.toLowerCase())) return false;
-      }
-      return true;
-    }).slice(0, limit);
+    return this.listFrames()
+      .filter((frame) => {
+        if (
+          !contains(frame.name, query.name) ||
+          !contains(frame.type, query.type) ||
+          !contains(frame.template, query.template)
+        )
+          return false;
+        if (query.handle && frame.handle !== query.handle) return false;
+        if (query.under && frame.path !== query.under && !frame.path.startsWith(`${query.under}/`))
+          return false;
+        if (query.property) {
+          const node = this.resolveFrame(frame.path);
+          if (
+            !directChildren(this.parsed, node).some(
+              (child) => child.tag.toLowerCase() === query.property!.toLowerCase(),
+            )
+          )
+            return false;
+        }
+        return true;
+      })
+      .slice(0, limit);
   }
 
   private simpleProperty(node: XmlNode, property: string): XmlAttrs | undefined {
@@ -298,9 +330,10 @@ export class LayoutDocument {
         }
         continue;
       }
-      const value: string | XmlAttrs = Object.keys(child.attrs).length === 1 && "val" in child.attrs
-        ? child.attrs.val
-        : attrsToObject(child.attrs);
+      const value: string | XmlAttrs =
+        Object.keys(child.attrs).length === 1 && "val" in child.attrs
+          ? child.attrs.val
+          : attrsToObject(child.attrs);
       const existing = propertyBag[child.tag];
       if (existing === undefined) propertyBag[child.tag] = value;
       else if (Array.isArray(existing)) existing.push(value);
@@ -309,8 +342,9 @@ export class LayoutDocument {
 
     const pathMap = this.framePathMap();
     const nodePath = [...pathMap.entries()].find(([, n]) => n.id === node.id)?.[0] ?? path;
-    const childPaths = this.frameChildren(node).map((child) =>
-      [...pathMap.entries()].find(([, n]) => n.id === child.id)?.[0] ?? child.attrs.name ?? ""
+    const childPaths = this.frameChildren(node).map(
+      (child) =>
+        [...pathMap.entries()].find(([, n]) => n.id === child.id)?.[0] ?? child.attrs.name ?? "",
     );
 
     return {
@@ -329,11 +363,46 @@ export class LayoutDocument {
     };
   }
 
-  private insertionPoint(parent?: XmlNode): { offset: number; indent: string } {
+  private insertionPoint(parent?: XmlNode): {
+    offset: number;
+    indent: string;
+    compactHost?: XmlNode;
+  } {
     const host = parent ?? this.descNode();
-    if (host.selfClosing || host.endTagStart < 0) throw new Error(`Cannot insert into <${host.tag}>`);
+    if (host.selfClosing)
+      return {
+        offset: host.end,
+        indent: indentAt(this.sourceText, host.start) + inferIndentUnit(this.sourceText),
+        compactHost: host,
+      };
+    if (host.endTagStart < 0) throw new Error(`Cannot insert into <${host.tag}>`);
     const offset = insertionOffset(this.sourceText, host.endTagStart);
-    return { offset, indent: indentAt(this.sourceText, host.endTagStart) + inferIndentUnit(this.sourceText) };
+    return {
+      offset,
+      indent: indentAt(this.sourceText, host.endTagStart) + inferIndentUnit(this.sourceText),
+    };
+  }
+  private insertFragment(
+    point: { offset: number; indent: string; compactHost?: XmlNode },
+    fragment: string,
+  ): void {
+    const host = point.compactHost;
+    if (!host) {
+      this.rebuild(
+        this.sourceText.slice(0, point.offset) + fragment + this.sourceText.slice(point.offset),
+      );
+      return;
+    }
+    const opening = this.sourceText.slice(host.start, host.startTagEnd).replace(/\/>$/, ">");
+    const replacement =
+      opening +
+      newlineOf(this.sourceText) +
+      fragment +
+      indentAt(this.sourceText, host.start) +
+      `</${host.tag}>`;
+    this.rebuild(
+      this.sourceText.slice(0, host.start) + replacement + this.sourceText.slice(host.end),
+    );
   }
 
   private directFrameByName(parent: XmlNode | undefined, name: string): XmlNode | undefined {
@@ -355,11 +424,16 @@ export class LayoutDocument {
   }): void {
     if (!/^[A-Za-z_][\w.-]*$/.test(args.type)) throw new Error("Invalid frame type");
     if (!/^[A-Za-z_][\w./-]*$/.test(args.name)) throw new Error("Invalid frame name");
-    if (args.name.includes("/") && !args.frameFile) throw new Error("Frame names containing '/' require frameFile (SC2 cross-file descriptor override)");
+    if (args.name.includes("/") && !args.frameFile)
+      throw new Error(
+        "Frame names containing '/' require frameFile (SC2 cross-file descriptor override)",
+      );
     const parent = args.parentPath ? this.resolveFrame(args.parentPath) : undefined;
-    if (this.directFrameByName(parent, args.name)) throw new Error(`Sibling frame '${args.name}' already exists`);
+    if (this.directFrameByName(parent, args.name))
+      throw new Error(`Sibling frame '${args.name}' already exists`);
 
-    const { offset, indent } = this.insertionPoint(parent);
+    const point = this.insertionPoint(parent),
+      { indent } = point;
     const unit = inferIndentUnit(this.sourceText);
     const nl = newlineOf(this.sourceText);
     const attrs = [`type="${xmlEscape(args.type)}"`, `name="${xmlEscape(args.name)}"`];
@@ -371,7 +445,8 @@ export class LayoutDocument {
     }
     if (args.width !== undefined) lines.push(`${indent}${unit}<Width val="${args.width}"/>`);
     if (args.height !== undefined) lines.push(`${indent}${unit}<Height val="${args.height}"/>`);
-    if (args.text !== undefined) lines.push(`${indent}${unit}<Text val="${xmlEscape(args.text)}"/>`);
+    if (args.text !== undefined)
+      lines.push(`${indent}${unit}<Text val="${xmlEscape(args.text)}"/>`);
     for (const a of args.anchors ?? []) {
       if (!ANCHOR_SIDES.has(a.side)) throw new Error(`Invalid anchor side: ${a.side}`);
       const aa = [`side="${a.side}"`, `relative="${xmlEscape(a.relative)}"`];
@@ -381,7 +456,7 @@ export class LayoutDocument {
     }
     lines.push(`${indent}</Frame>`);
     const insertion = lines.join(nl) + nl;
-    this.rebuild(this.sourceText.slice(0, offset) + insertion + this.sourceText.slice(offset));
+    this.insertFragment(point, insertion);
   }
 
   createButton(args: {
@@ -405,13 +480,16 @@ export class LayoutDocument {
       width: args.viewportWidth,
       height: args.viewportHeight,
     });
-    const parent = args.parentPath ? `${args.parentPath}/${encodePathSegment(args.name)}` : encodePathSegment(args.name);
+    const parent = args.parentPath
+      ? `${args.parentPath}/${encodePathSegment(args.name)}`
+      : encodePathSegment(args.name);
     const layer = args.layer ?? args.textureCoords?.layer ?? 0;
     const properties: ElementSpec[] = [
       { tag: "Unclipped", value: false },
       { tag: "Texture", attrs: { val: args.texture, layer } },
     ];
-    if (args.textureType) properties.push({ tag: "TextureType", attrs: { val: args.textureType, layer } });
+    if (args.textureType)
+      properties.push({ tag: "TextureType", attrs: { val: args.textureType, layer } });
     if (args.textureCoords) {
       properties.push({
         tag: "TextureCoords",
@@ -444,8 +522,11 @@ export class LayoutDocument {
     if (selector.layer !== undefined) wanted.layer = selector.layer;
     let matches = directChildren(this.parsed, node)
       .filter((child) => child.tag.toLowerCase() === tag.toLowerCase())
-      .filter((child) => Object.entries(wanted).every(([name, value]) => child.attrs[name] === scalarText(value)));
-    if (selector.occurrence !== undefined) matches = matches.slice(selector.occurrence, selector.occurrence + 1);
+      .filter((child) =>
+        Object.entries(wanted).every(([name, value]) => child.attrs[name] === scalarText(value)),
+      );
+    if (selector.occurrence !== undefined)
+      matches = matches.slice(selector.occurrence, selector.occurrence + 1);
     return matches;
   }
 
@@ -453,8 +534,15 @@ export class LayoutDocument {
     const patches: Array<{ start: number; end: number; text: string }> = [];
     const additions: Array<[string, ScalarValue]> = [];
     for (const [name, value] of Object.entries(attrs)) {
-      const span = node.attrSpans.find((candidate) => candidate.name.toLowerCase() === name.toLowerCase());
-      if (span) patches.push({ start: span.valueStart, end: span.valueEnd, text: xmlEscape(scalarText(value)) });
+      const span = node.attrSpans.find(
+        (candidate) => candidate.name.toLowerCase() === name.toLowerCase(),
+      );
+      if (span)
+        patches.push({
+          start: span.valueStart,
+          end: span.valueEnd,
+          text: xmlEscape(scalarText(value)),
+        });
       else additions.push([name, value]);
     }
     if (additions.length) {
@@ -464,7 +552,9 @@ export class LayoutDocument {
       patches.push({
         start: offset,
         end: offset,
-        text: additions.map(([name, value]) => ` ${name}="${xmlEscape(scalarText(value))}"`).join(""),
+        text: additions
+          .map(([name, value]) => ` ${name}="${xmlEscape(scalarText(value))}"`)
+          .join(""),
       });
     }
     let next = this.sourceText;
@@ -475,7 +565,20 @@ export class LayoutDocument {
   }
 
   private insertElement(node: XmlNode, spec: ElementSpec, before?: XmlNode): void {
-    if (node.selfClosing || node.endTagStart < 0) throw new Error(`Cannot insert into <${node.tag}>`);
+    if (node.selfClosing) {
+      const point = this.insertionPoint(node);
+      this.insertFragment(
+        point,
+        renderElement(
+          spec,
+          point.indent,
+          inferIndentUnit(this.sourceText),
+          newlineOf(this.sourceText),
+        ) + newlineOf(this.sourceText),
+      );
+      return;
+    }
+    if (node.endTagStart < 0) throw new Error(`Cannot insert into <${node.tag}>`);
     const nl = newlineOf(this.sourceText);
     const unit = inferIndentUnit(this.sourceText);
     const offset = insertionOffset(this.sourceText, before?.start ?? node.endTagStart);
@@ -497,7 +600,11 @@ export class LayoutDocument {
       const replacement = renderElement(spec, prefix, unit, nl) + (end > node.end ? nl : "");
       this.rebuild(this.sourceText.slice(0, start) + replacement + this.sourceText.slice(end));
     } else {
-      this.rebuild(this.sourceText.slice(0, node.start) + renderElement(spec, "", unit, nl) + this.sourceText.slice(node.end));
+      this.rebuild(
+        this.sourceText.slice(0, node.start) +
+          renderElement(spec, "", unit, nl) +
+          this.sourceText.slice(node.end),
+      );
     }
   }
 
@@ -517,19 +624,25 @@ export class LayoutDocument {
   }
 
   getProperty(path: string, property: string, selector: PropertySelector = {}): ElementDetails[] {
-    return this.selectChildren(this.resolveFrame(path), property, selector)
-      .map((node) => this.elementDetails(node));
+    return this.selectChildren(this.resolveFrame(path), property, selector).map((node) =>
+      this.elementDetails(node),
+    );
   }
 
-  setProperty(path: string, property: string, args: {
-    value?: ScalarValue;
-    attrs?: Record<string, ScalarValue>;
-    selector?: PropertySelector;
-    children?: ElementSpec[];
-    replace?: boolean;
-  }): void {
+  setProperty(
+    path: string,
+    property: string,
+    args: {
+      value?: ScalarValue;
+      attrs?: Record<string, ScalarValue>;
+      selector?: PropertySelector;
+      children?: ElementSpec[];
+      replace?: boolean;
+    },
+  ): void {
     if (!/^[A-Za-z_][\w.-]*$/.test(property)) throw new Error("Invalid property name");
-    if (STRUCTURAL_CHILDREN.has(property)) throw new Error(`Use the dedicated operation for ${property}`);
+    if (STRUCTURAL_CHILDREN.has(property))
+      throw new Error(`Use the dedicated operation for ${property}`);
     const frame = this.resolveFrame(path);
     const selector = args.selector ?? {};
     const matches = this.selectChildren(frame, property, selector);
@@ -555,7 +668,9 @@ export class LayoutDocument {
       }
       return;
     }
-    const before = directChildren(this.parsed, frame).find((child) => STRUCTURAL_CHILDREN.has(child.tag));
+    const before = directChildren(this.parsed, frame).find((child) =>
+      STRUCTURAL_CHILDREN.has(child.tag),
+    );
     this.insertElement(frame, { tag: property, attrs, children: args.children }, before);
   }
 
@@ -568,10 +683,13 @@ export class LayoutDocument {
   }
 
   setAnchor(path: string, anchor: AnchorSpec): void {
-    if (anchor.side !== "All" && !ANCHOR_SIDES.has(anchor.side)) throw new Error(`Invalid anchor side: ${anchor.side}`);
+    if (anchor.side !== "All" && !ANCHOR_SIDES.has(anchor.side))
+      throw new Error(`Invalid anchor side: ${anchor.side}`);
     const node = this.resolveFrame(path);
     const anchors = directChildren(this.parsed, node, "Anchor");
-    const existing = anchors.find((item) => anchor.side === "All" ? !item.attrs.side : item.attrs.side === anchor.side);
+    const existing = anchors.find((item) =>
+      anchor.side === "All" ? !item.attrs.side : item.attrs.side === anchor.side,
+    );
     const attrs: Record<string, ScalarValue> = { relative: anchor.relative };
     if (anchor.side !== "All") attrs.side = anchor.side;
     if (anchor.pos !== undefined) attrs.pos = anchor.pos;
@@ -586,10 +704,12 @@ export class LayoutDocument {
   cloneFrame(sourcePath: string, args: { parentPath?: string; name: string }): void {
     if (!/^[A-Za-z_][\w.-]*$/.test(args.name)) throw new Error("Invalid frame name");
     const sourceNode = this.resolveFrame(sourcePath);
-    const sourceParent = sourceNode.parentId === null ? this.descNode() : this.parsed.nodes[sourceNode.parentId];
+    const sourceParent =
+      sourceNode.parentId === null ? this.descNode() : this.parsed.nodes[sourceNode.parentId];
     const host = args.parentPath ? this.resolveFrame(args.parentPath) : sourceParent;
     const siblingParent = host.tag === "Frame" ? host : undefined;
-    if (this.directFrameByName(siblingParent, args.name)) throw new Error(`Sibling frame '${args.name}' already exists`);
+    if (this.directFrameByName(siblingParent, args.name))
+      throw new Error(`Sibling frame '${args.name}' already exists`);
     const nameSpan = sourceNode.attrSpans.find((span) => span.name === "name");
     if (!nameSpan) throw new Error("Source frame has no name attribute");
     let fragment = this.sourceText.slice(sourceNode.start, sourceNode.end);
@@ -600,11 +720,12 @@ export class LayoutDocument {
     const sourceIndent = indentAt(this.sourceText, sourceNode.start);
     const nl = newlineOf(this.sourceText);
     const lines = fragment.split(/\r?\n/).map((line, index) => {
-      const relative = index > 0 && line.startsWith(sourceIndent) ? line.slice(sourceIndent.length) : line;
+      const relative =
+        index > 0 && line.startsWith(sourceIndent) ? line.slice(sourceIndent.length) : line;
       return point.indent + relative;
     });
     const insertion = lines.join(nl) + nl;
-    this.rebuild(this.sourceText.slice(0, point.offset) + insertion + this.sourceText.slice(point.offset));
+    this.insertFragment(point, insertion);
   }
 
   applyTemplate(path: string, template: string): void {
@@ -612,7 +733,11 @@ export class LayoutDocument {
     this.patchAttributes(this.resolveFrame(path), { template });
   }
 
-  private namedDescriptor(framePath: string, tag: "StateGroup" | "Animation", name: string): XmlNode | undefined {
+  private namedDescriptor(
+    framePath: string,
+    tag: "StateGroup" | "Animation",
+    name: string,
+  ): XmlNode | undefined {
     const frame = this.resolveFrame(framePath);
     return directChildren(this.parsed, frame, tag).find((node) => node.attrs.name === name);
   }
@@ -744,8 +869,12 @@ export class LayoutDocument {
   }
 
   validateBasic(): { errors: string[]; warnings: string[] } {
-    const errors = this.parsed.diagnostics.filter((d) => d.severity === "error").map((d) => `${d.offset}: ${d.message}`);
-    const warnings = this.parsed.diagnostics.filter((d) => d.severity === "warning").map((d) => `${d.offset}: ${d.message}`);
+    const errors = this.parsed.diagnostics
+      .filter((d) => d.severity === "error")
+      .map((d) => `${d.offset}: ${d.message}`);
+    const warnings = this.parsed.diagnostics
+      .filter((d) => d.severity === "warning")
+      .map((d) => `${d.offset}: ${d.message}`);
 
     try {
       this.descNode();
@@ -759,10 +888,16 @@ export class LayoutDocument {
         const name = f.attrs.name;
         const type = f.attrs.type;
         if (!name) errors.push(`Frame under '${parentPath || "<Desc>"}' is missing name`);
-        if (!type) warnings.push(`Frame '${name || "<unnamed>"}' is missing type; engine/default behavior may apply`);
-        if (name && seen.has(name)) warnings.push(`Duplicate sibling frame name '${name}' under '${parentPath || "<Desc>"}'`);
+        if (!type)
+          warnings.push(
+            `Frame '${name || "<unnamed>"}' is missing type; engine/default behavior may apply`,
+          );
+        if (name && seen.has(name))
+          warnings.push(`Duplicate sibling frame name '${name}' under '${parentPath || "<Desc>"}'`);
         if (name) seen.add(name);
-        const childPath = parentPath ? `${parentPath}/${name ?? "<unnamed>"}` : name ?? "<unnamed>";
+        const childPath = parentPath
+          ? `${parentPath}/${name ?? "<unnamed>"}`
+          : (name ?? "<unnamed>");
         siblingCheck(this.frameChildren(f), childPath);
       }
     };

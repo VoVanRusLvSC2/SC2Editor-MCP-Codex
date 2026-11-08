@@ -77,10 +77,26 @@ export async function runMcpBatch(
       throw new Error("MCP_BATCH_PREFLIGHT: " + s.id + " " + s.tool);
     ids.add(s.id);
   }
-  for (const s of steps)
-    if (!hasBatchReference(s.args)) {
+  for (const s of steps) {
+    // A refresh session handle is always a UUID. Validate every other static
+    // field before the preceding begin can save the user's dirty document.
+    const session = s.args.sessionId;
+    const onlySessionReference =
+      s.tool.startsWith("live.refresh.") &&
+      session &&
+      typeof session === "object" &&
+      !Array.isArray(session) &&
+      Object.keys(session).length === 1 &&
+      typeof (session as Record<string, unknown>).$from === "string" &&
+      !hasBatchReference(
+        Object.fromEntries(Object.entries(s.args).filter(([k]) => k !== "sessionId")),
+      );
+    const staticArgs = onlySessionReference
+      ? { ...s.args, sessionId: "00000000-0000-4000-8000-000000000000" }
+      : s.args;
+    if (!hasBatchReference(staticArgs)) {
       try {
-        tools.get(s.tool)!.schema.parse(s.args);
+        tools.get(s.tool)!.schema.parse(staticArgs);
       } catch (error) {
         return {
           ok: false,
@@ -99,6 +115,7 @@ export async function runMcpBatch(
         };
       }
     }
+  }
   const results = new Map<string, unknown>(),
     rows: Array<Record<string, unknown>> = [];
   for (const s of steps) {
@@ -112,7 +129,29 @@ export async function runMcpBatch(
         (result as { isError?: boolean })?.isError ||
         (json as { valid?: boolean; ok?: boolean })?.valid === false ||
         (json as { ok?: boolean })?.ok === false ||
-        (json as { accepted?: boolean })?.accepted === false
+        (json as { accepted?: boolean })?.accepted === false ||
+        (s.tool.startsWith("live.") &&
+          [
+            "unknown",
+            "save_unconfirmed",
+            "save_confirmed_prepare_blocked",
+            "prepare_failed",
+            "compile_pending",
+            "compile_stale",
+            "compile_failed",
+            "adopting",
+            "adoption_unknown",
+            "preparation_failed",
+            "attention_required",
+            "save_required",
+            "recovery_required",
+            "pending_native",
+            "pending_open",
+            "not_published",
+            "context_changed",
+            "conflict",
+            "verification_failed",
+          ].includes(String((json as { status?: unknown })?.status)))
       ) {
         rows.push({
           id: s.id,

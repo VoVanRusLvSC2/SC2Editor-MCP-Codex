@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-08T19:03:23.724Z",
+  "scope": "Two successive GUI edits and native compiles in one prepared refresh session on an owned test map",
+  "firstJob": "447b5e4b-872a-4268-8d83-1145b67e8af5",
+  "secondJob": "b53e332a-604f-4345-8fff-3d4b46e1bc63",
+  "staleCompileBlocked": true,
+  "samePath": true,
+  "sameFrame": true,
+  "sameProcess": true,
+  "nativeReady": true,
+  "guiActions": 3,
+  "originalActionPreserved": true,
+  "bothCompiledActionsPresent": true,
+  "objectsPreserved": true,
+  "userDesktopInput": false,
+  "gameplayVerified": false,
+  "visualActionTreeVerified": false,
+  "diagnosticsCoverage": "not checked in this run",
+  "artifacts": [
+    "work/live-placement-20261107/REPEATED_COMPILE_NATIVE.json",
+    "work/live-placement-20261107/qualify-repeated-compile.mjs"
+  ],
+  "fullGoalComplete": false
+}

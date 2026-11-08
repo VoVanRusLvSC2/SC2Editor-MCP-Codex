@@ -1,0 +1,113 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-08T17:31:18.142Z",
+  "status": "verified_compact_transport",
+  "scope": "Compact same-file begin/resource commands, retained live receipts and stop-on-uncertain batch behavior",
+  "sourceSha256": {
+    "src/app/authoringScript.ts": "fe969db7d5799926fd1f924fe98cbe9e86b5c7f5279f734d3dddfad553d222e8",
+    "src/app/mcpBatch.ts": "20f0023d07e54dd7d5c767084735c32725dc265a94b3c5c7daf98a1df5dc2694",
+    "src/app/toolResults.ts": "3cef2e76b72b0e04df581d0f1a4d0dfa6dacecba996aff7d939608b42a593d3f",
+    "src/modules/editorLive/refreshBegin.ts": "ff1971eb53be0be24667d3ae93874bfa547a13c43b1520a20f2a34467cbfa59e",
+    "src/modules/editorLive/workspace.ts": "b35252fc07eb22c3e97e4d7ca23acb185537d416de857f99692f04412dcace47",
+    "src/tests/authoringScript.test.ts": "1f6e10f3baf730ac73f0d09b3bcd9fc9c1f4608cdb21ac75c3a39d487523f9cc",
+    "src/tests/mcpBatch.test.ts": "b52165cc12d0efebae040e8fb50338452dd7abeedb0a7a97929873828433963e",
+    "src/tests/editorLiveModule.test.ts": "1705dfa6320e67db677a124243579184acd3a5e7f0d6d4ef5cb6e9e69ac46f42",
+    "src/tests/liveRefreshBegin.test.ts": "4a929dbe4ff8272cba3b9007b3a9fa9f4dbb46376539dfc18123248a97c8307d"
+  },
+  "implementation": {
+    "commands": [
+      "live refresh.begin",
+      "live refresh.resource"
+    ],
+    "detailedAtomicResourceGroup": "live.refresh.resources",
+    "receiptFields": [
+      "sessionId",
+      "snapshotId",
+      "pendingId",
+      "retryMutation",
+      "save",
+      "document",
+      "recoveryContext"
+    ],
+    "batchStop": "Unknown, blocked, conflict, pending and verification-failed live outcomes stop later batch operations"
+  },
+  "verification": {
+    "typescriptBuild": true,
+    "focusedTests": 41,
+    "failures": 0,
+    "scopedLint": true,
+    "scopedFormatting": true,
+    "architecture": {
+      "productionFiles": 472,
+      "valueImportCycles": 0,
+      "violations": 0
+    },
+    "panelRefreshTests": 2,
+    "panelSyntaxChecks": 3,
+    "registryIntegration": "modkit.author returned sessionId and stopped on uncertain Save"
+  },
+  "native": "The prior refresh-begin record covers the native successful Save/refresh before this compact transport change. The transport change was tested through the real in-process MCP registry; no native run was replayed.",
+  "deployment": {
+    "fresh": {
+      "at": "2026-11-08T17:31:02.647Z",
+      "configuredEntry": "K:\\SC2_MAP_Workspace\\SC2Editor-MCP-Codex\\dist\\index.js",
+      "result": {
+        "ok": true,
+        "completed": 1,
+        "steps": [
+          {
+            "id": "version",
+            "tool": "live.capabilities",
+            "ok": true,
+            "ms": 3,
+            "result": {
+              "module": "live",
+              "apiVersion": "editor-live-2026-11-08-compact-live",
+              "refresh": {
+                "backend": "same_file_refresh",
+                "requiresExplicitMode": true,
+                "tools": [
+                  "live.refresh.prepare",
+                  "live.refresh.begin",
+                  "live.refresh.resume",
+                  "live.refresh.call",
+                  "live.refresh.author",
+                  "live.refresh.resources",
+                  "live.refresh.apply",
+                  "live.refresh.recover",
+                  "live.refresh.release"
+                ],
+                "scope": "Existing component authoring generators, validated same-file publication and original native document reload",
+                "createsNewWorkingMap": false,
+                "reopensSamePath": true,
+                "startsEditor": false,
+                "resetsNativeUndo": true,
+                "requires": "Clean current Terrain document, no pending XML/inline buffers; explicit same_file_refresh workflow",
+                "recovery": "Shared journal before close, internal rollback archive, preserved components and one-shot open marker",
+                "evidence": "Native load/title and saved-file checks do not establish every component's model, rendering or gameplay",
+                "resources": "Add, replace or remove Assets files in one guarded prepared group; 32 files, 64 MiB each, 128 MiB total source and original bytes"
+              },
+              "componentTransfer": {
+                "tempRoot": "Process-reported per-user physical staging store outside MSIX AppData redirection",
+                "legacyDialogPaths": "Bounded short paths shared by the packaged client and original Editor",
+                "longFilePaths": true,
+                "persistedUiBuffer": "Native savepoint only after exact stable-archive byte equality; mismatched pending source is preserved"
+              }
+            }
+          }
+        ]
+      },
+      "noEditorStarted": true,
+      "noMapWrite": true
+    },
+    "attachedChatHotReloaded": false,
+    "panelAutoRefreshTracks": [
+      "refreshBegin.js",
+      "authoringScript.js",
+      "mcpBatch.js",
+      "toolResults.js"
+    ]
+  },
+  "previousEvidence": "editor-live-refresh-begin-2026-11-08.json",
+  "fullGoalComplete": false
+}

@@ -1,0 +1,4 @@
+Unit/Name/Marine=Морпех
+Actor/Name/AgriaTree=Дерево Агрии
+Actor/Name/CharDuneRock=Пустынный камень Чара
+Actor/Name/CityStreetLight=Городской фонарь

@@ -60,11 +60,22 @@ export function coalesceAuthoringSteps(
       values: unknown[],
       apply: string | undefined,
       planField = "planId";
-    if (tool === "text.apply") {
-      if (parsed.operations.some((o: Args) => o.op === "font.import") || parsed.expectedSha256)
+    if (tool === "text.apply" || tool === "ui.apply") {
+      if (
+        parsed.expectedSha256 ||
+        (tool === "text.apply" && parsed.operations.some((o: Args) => o.op === "font.import")) ||
+        (tool === "ui.apply" &&
+          parsed.operations.some(
+            (o: Args) =>
+              o.as ||
+              [o.framePath, o.parentPath, o.sourcePath].some(
+                (p) => typeof p === "string" && p.startsWith("@"),
+              ),
+          ))
+      )
         return;
       ({ operations: values, ...args } = parsed);
-      limit = 250;
+      limit = tool === "ui.apply" ? 100 : 250;
     } else if (tool === "settings.plan") {
       ({ operations: values, ...args } = parsed);
       limit = 100;
@@ -145,7 +156,11 @@ export function coalesceAuthoringSteps(
       if (!apply || apply === "placement.apply") {
         if (Object.keys(save.args).some((k) => k !== "file")) return;
         const files =
-          tool === "text.apply" ? Object.values(args.stringFiles ?? {}) : [args.objectFile];
+          tool === "text.apply"
+            ? Object.values(args.stringFiles ?? {})
+            : tool === "ui.apply"
+              ? [args.file]
+              : [args.objectFile];
         if (typeof save.args.file !== "string" || !files.includes(save.args.file)) return;
       } else {
         const expected =

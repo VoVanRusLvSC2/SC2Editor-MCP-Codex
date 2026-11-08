@@ -62,13 +62,15 @@ export function registerCommandTools(
     "modkit.author_help",
     {
       description:
-        "Compact authoring syntax. section=data gives the short unit/spell recipe guide without the full subsystem catalog; omitted section retains the complete guide.",
-      inputSchema: z.object({ section: z.enum(["data", "all"]).optional() }).strict(),
+        "Compact authoring syntax. section=data gives unit/spell recipes; section=live gives the current-map workflow and its safeguards. Omitted section retains the complete guide.",
+      inputSchema: z.object({ section: z.enum(["data", "live", "all"]).optional() }).strict(),
       annotations: { readOnlyHint: true, destructiveHint: false, openWorldHint: false },
     },
     async ({ section }) =>
       textResult(
-        section === "data"
+        section === "live"
+          ? authoringGuide.liveQuickStart
+          : section === "data"
           ? {
               format: authoringGuide.format,
               modes: authoringGuide.modes,

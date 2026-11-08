@@ -1,0 +1,133 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-07T22:57:15.333Z",
+  "scope": "New self-contained GUI libraries in an already-open visible document; not full current-document component coverage",
+  "module": {
+    "name": "editor-live",
+    "apiVersion": "editor-live-2026-11-08-gui-library",
+    "generator": "Existing trigger.plan_file/apply/save and typed graph authoring",
+    "backend": "Original Import Library and Export Library",
+    "tools": [
+      "live.trigger.inspect",
+      "live.trigger.prepare",
+      "live.trigger.apply",
+      "live.trigger.verify",
+      "live.trigger.release"
+    ]
+  },
+  "native": {
+    "editorBuild": "5.0.17.98310 English x64",
+    "transport": "Public MCP stdio",
+    "copiesCreated": 0,
+    "reopenedMap": false,
+    "editorProcessesStarted": 0,
+    "fixtureAlreadyOpen": true,
+    "newFunctionalLibraries": 1,
+    "ownedEmptyDevelopmentLibraries": 1,
+    "content": {
+      "triggers": 2,
+      "sharedVariables": 1,
+      "folders": [
+        "MAIN",
+        "GAMEPLAY"
+      ],
+      "events": [
+        "TriggerAddEventMapInit",
+        "TriggerAddEventTimePeriodic"
+      ],
+      "actions": [
+        "SetVariable",
+        "ArithmeticInt"
+      ],
+      "newCustomScriptNodes": 0
+    },
+    "initialReceipt": "verification_failed",
+    "reason": "Native serialization reordered element definitions and unique scalar metadata",
+    "recovery": "Corrected semantic comparison and used live.trigger.verify on the same imported library; import not replayed",
+    "graphReadbackVerified": true,
+    "existingRootGraphPreserved": true,
+    "placedObjectsByteEquivalent": true,
+    "sameFileNativeSave": true,
+    "savedArchiveSha256": "2a3a2a04208dda5af63ca0f7c0b88995bd386bf86e1319f2304fbfb3c2cc0387",
+    "originalDocumentRestored": true,
+    "nativeCompileVerified": false,
+    "renderedVerified": false,
+    "gameplayVerified": false,
+    "diagnostics": {
+      "sourceCoverage": "Visible original Messages window only",
+      "retainedEarlierWarning": "2026-11-07 CWeaponLegacy could not find parent Marine",
+      "cleared": false,
+      "completeAllClear": false
+    }
+  },
+  "runtimes": {
+    "nativeImportAndSave": {
+      "home": "live-memory/fa6f6c684fd23ece-ef4b1ac4",
+      "sourceSha256": "fa6f6c684fd23ece4abc1d5521505126ae30c0415eb9c038268ff195118069f0"
+    },
+    "activeNative": {
+      "home": "live-memory/544b7919ebc5f72d-50d52d55",
+      "sourceSha256": "544b7919ebc5f72d9a2e9ece536b8fb904177a344beba810df8a6aad366c4a21",
+      "change": "Fail before invoking a native dialog if its input/timer guard cannot be installed",
+      "qualified": "Original re-export of the same library; no repeated import"
+    },
+    "helper": {
+      "home": "live-bridge/04d6c73d3caac958-e26d5879",
+      "sourceSha256": "04d6c73d3caac958a75048e467ceab9e5eabeb93d297fc199577f8f53efd4af8",
+      "lockedLegacyExePreserved": true
+    }
+  },
+  "checks": {
+    "build": true,
+    "releaseBuild": true,
+    "eslintChangedScope": true,
+    "regressions": {
+      "compiledSuitesPassed": 58,
+      "additionalSourceGuardTestsPassed": 2,
+      "total": 60
+    },
+    "panelPromptAndRefreshTests": 8,
+    "architecture": {
+      "files": 451,
+      "cycles": 0,
+      "violations": 0
+    },
+    "maintainedEnglishDocs": {
+      "files": 125,
+      "violations": 0
+    }
+  },
+  "sourceSha256": {
+    "src/modules/editorLive/workspace.ts": "b921e376f8e67acdebe4aa8dd82f4eeacb021a87b0fd78121926634f8d4c8ec9",
+    "src/modules/editorLive/triggers.ts": "83bd3b5805a3e8c407e3c85c566596e5ea06dcbde65d0e3cbe5a8f5881680369",
+    "src/modules/editorLive/triggerLibrary.ts": "2132042f4b76e695c441b92ef80071c49ce47b4bab9fc035036a01be43e57ba4",
+    "src/modules/editorLive/componentTransfer.ts": "7822b22de716df8b3e476f041046bd31f1e3d6d1f6b7375f5eff39e8f79a362b",
+    "src/modules/editorLive/tools.ts": "d410f278b12b9b49acd5ed155bfc5b91e362aa7b1b875091e2046b11642ae20f",
+    "src/modules/editorLive/bridgeRuntime.ts": "7d44b7c3c1fd49992cd85a76b873eae8e4a73ae7e428b43067fe88f4c0e095a0",
+    "src/modules/editorLive/desktop.ts": "cc27f69ea0a1eebb24cafbc0947670eb9940dcb8ed35412fe54b5c5fbf9c7409",
+    "src/app/authoringScript.ts": "d779676583e08dce34d6d546baeba2c2a207390b1ab5f5c503ace079d7890c74",
+    "native/live-editor/file_dialog.inc": "adcebbdf75f9a6a7dece48152be9b79856d6f34c7309488c79d5da7de2936eb8",
+    "native/live-editor/module_inspection.inc": "b31f99d1fa723d759c12e696b38f157a3a8aa5c6d579733c5c14f8e49c04aa7a",
+    "native/live-editor/memory.cpp": "9700a209edd224c98b42732ffc4d62150531b4a8768af8c63302925c9274a03b",
+    "native/live-editor/MemoryData.cs": "ec431d8e70a4958683ac5adc7cfaeabbd20167a359b98d13a27e2908722e43dc",
+    "native/live-editor/Program.cs": "ecea47dc6a47f4dd27b8a77502b5857c16ac132d63f9187170e9e015e95eac68",
+    "scripts/build-live-editor.mjs": "16d7be90ef7ac738af62e9f78a455e76c37d1928ff3161735a1e60420d012ff0",
+    "scripts/live-runtime-cache.mjs": "9c927f1bae6ec38903032348edb8034b54761890b30423028eca024dfe5517e7",
+    "scripts/live-runtime-package.mjs": "c9e2ea3ccdadc00ee42ee52a353d462085fc782274670fcf7895718272a8859c"
+  },
+  "localArtifacts": [
+    "work/live-placement-20261107/NATIVE_GUI_LIBRARY_QUALIFICATION.json",
+    "work/live-placement-20261107/NATIVE_GUI_LIBRARY_RECOVERY.json",
+    "work/live-placement-20261107/NATIVE_GUI_LIBRARY_FINAL.json",
+    "work/live-placement-20261107/GUI_RESTORE_ORIGINAL.json"
+  ],
+  "remaining": [
+    "Terrain component application and native geometry/navigation refresh",
+    "Editing/replacing existing GUI graphs, arbitrary libraries and localized trigger content",
+    "Current-document UI layouts, Text and imports",
+    "Map/player settings and lighting",
+    "Broader Data dataspaces/first local Unit and full object CRUD",
+    "Authoritative native document revision/component snapshots and undo grouping"
+  ],
+  "connection": "Fresh public MCP connections used the new module. The currently configured long-running chat server still reported the old tool schema; source updates alone do not establish reconnection."
+}

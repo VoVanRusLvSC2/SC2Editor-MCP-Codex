@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-08T18:41:24.3732068Z",
+  "scope": "Native same-file GUI refresh after MCP reconnection with durable compiled attestation",
+  "sourceSha256": {
+    "src/modules/editorLive/refresh.ts": "463c62f620fad3a2ce40affa2fc06e57dc0ba727912ba52a1fd686b2fa8ae762",
+    "src/modules/editorLive/refreshProject.ts": "551f814d385fba5693264aac05018699de069dbdc0cc2856d14e3b22ae97415e",
+    "src/tests/liveRefresh.test.ts": "5647e58fe7251e40846c3bdea9e9652fe1bf898065c1aadfd01194b3a7a5dcf5"
+  },
+  "native": {
+    "compiledJob": "ed19a942-17da-465d-b265-d8e5f17cf8de",
+    "reconnectedMcp": true,
+    "attestationRecordCount": 1,
+    "testFixtureChanged": true,
+    "staleApplyBlocked": true,
+    "fixtureRestoredByteExact": true,
+    "samePath": true,
+    "sameFrame": true,
+    "sameProcess": true,
+    "guiActions": 2,
+    "oldAndNewRuntimeAssignments": true,
+    "objectsPreserved": true,
+    "userDesktopInput": false,
+    "newWorkingCopies": 0,
+    "gameplayVerified": false,
+    "actionTreeVerified": false
+  },
+  "diagnostics": {
+    "beforeJob": "92ea919c-6b80-4f72-8e01-f7fad5004bf4",
+    "afterJob": "8964966c-32f9-4b3f-ab77-8a9359b16601",
+    "beforeMessages": 0,
+    "newWarning": "Cutscenes: Command was thrown out due to data being invalid",
+    "cause": "unestablished"
+  },
+  "artifacts": [
+    "work/live-placement-20261107/DURABLE_ATTESTATION_NATIVE.json",
+    "work/live-placement-20261107/qualify-durable-attestation.mjs"
+  ],
+  "limitations": [
+    "One owned fixture; no game or visual action tree inspection.",
+    "Cutscenes warning arose during interval; cause not established.",
+    "A partial newest record is covered by unit test, not simulated native process crash."
+  ],
+  "fullGoalComplete": false
+}

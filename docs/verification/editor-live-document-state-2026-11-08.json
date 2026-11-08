@@ -1,0 +1,143 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-08T16:50:47.433Z",
+  "status": "partial_native_acceptance",
+  "scope": "Related-module document state and same-file Save; library dialog initialization readiness",
+  "architecture": {
+    "observationBoundary": "documentState.ts",
+    "sourceSha256": {
+      "src/modules/editorLive/documentState.ts": "44dee290890d79ce765a17c6d07a7907b38c72b8409d43b0f6f4be3833f3796b",
+      "src/modules/editorLive/document.ts": "097e48a434896c7bab5520cd3048caf1fddbe0245cd134245acfa62e5ab78d32",
+      "src/modules/editorLive/memoryDesktop.ts": "a5fc3258070dc44f0920e3321f47cfe27bdd91655404b02b61e2e3ddca75616f",
+      "src/modules/editorLive/workspace.ts": "39332d11a8d0b36f66129d654dc9f3127e8f992098eb81d2c48b0a1075c8e697",
+      "src/modules/editorLive/refreshPolicy.ts": "44e35e1065abf8f595991dde27b06cfb9074352ce95e0087077c82c7c8e535e5",
+      "src/tests/liveDocument.test.ts": "5ee0a5b2060ef112bbed3903388914ce9c4c006f6a8c0349f4a57e07ee041f49",
+      "src/tests/liveTriggers.test.ts": "97cb2335705bbcb9105f9e00352c1ad1c44e8dfecf7c204f6cbc17b9cb941d78",
+      "src/tests/liveRefresh.test.ts": "0932dce78a1d990458801231de458b37f4ccd96596ca011a45313cd59f0b298e",
+      "native/live-editor/document.inc": "5912b1d3ee8ea3171eadc27ebbf44503caaf72d9efa3083405a08b0f8502953c",
+      "native/live-editor/file_dialog.inc": "317fa93056905d44681ac35f068d6c07c1f295a51b2d4b1415788c1e3b1e1805"
+    },
+    "nativeRuntime": "live-memory/a36c1af5ef7a7255-4c1e275b",
+    "productionFiles": 469,
+    "valueImportCycles": 0,
+    "violations": 0
+  },
+  "native": {
+    "archive": "K:\\SC2_MAP_Workspace\\SC2Editor-MCP-Codex\\work\\live-placement-20261107\\.sc2mcp-output\\ne\\w\\02536085fa234bffbe455e1718911383\\workers\\6e91b57e62d54b609a9ed945f61b6856\\Seed.SC2Map",
+    "processId": 22352,
+    "windowId": "2099372",
+    "samePath": true,
+    "sameProcess": true,
+    "sameFrame": true,
+    "newWorkingMapCopies": 0,
+    "saved": "saved",
+    "sha256": "71b772c7999038a01ba38716f585f5d90c66c83c934b35d8c8c5d97e40379632",
+    "relatedModuleInitiallyDirty": true,
+    "terrainInitiallyClean": false,
+    "cleanRelatedModules": true,
+    "pendingXmlBuffers": 0,
+    "pendingInput": false,
+    "dialogs": 0,
+    "guiReexport": {
+      "status": "verified",
+      "nativeLibraryVerified": true,
+      "file": "C:\\Users\\Vladimir\\.sc2mcp\\transfer\\SC2EditorToolkit-live-components\\f94e8986-3252-4a81-b150-d4f6aa669d30.SC2Lib",
+      "name": "Related Save probe",
+      "nativeCompileVerified": false,
+      "mapMutation": false,
+      "saved": false,
+      "copiesCreated": 0,
+      "retryMutation": false
+    },
+    "ownedWorkerStopped": true,
+    "userDesktopInput": false,
+    "renderingVerified": false,
+    "gameplayVerified": false,
+    "consoleCoverage": "Not captured in this bounded Save fixture; no native diagnostic all-clear claim"
+  },
+  "failureRetained": {
+    "beforeFix": "work/live-placement-20261107/RELATED_MODULE_SAVE.json",
+    "reason": "Matching library dialog could be visible before its initialization timer; disabled root was misclassified as changed context",
+    "originalPreSubmissionDialog": "work/live-placement-20261107/RELATED_IMPORT_RECOVERY_STATE.json",
+    "cancellation": "work/live-placement-20261107/RELATED_IMPORT_CANCELLATION.json",
+    "cleanReadback": "work/live-placement-20261107/RELATED_IMPORT_CANCELLED_STATE.json",
+    "importReplay": false
+  },
+  "verification": {
+    "typescriptBuild": true,
+    "nativeBuild": true,
+    "scopedTests": 191,
+    "failures": 0,
+    "scopedLint": true,
+    "scopedFormatting": true,
+    "architectureCheck": true,
+    "panelRefreshTests": 2,
+    "panelSyntaxChecks": 3,
+    "gitDiffCheck": true,
+    "cleanTerrainDirtyRelatedCase": "Adapter regression; native import dirtied Terrain too"
+  },
+  "deployment": {
+    "fresh": {
+      "at": "2026-11-08T16:49:51.321Z",
+      "configuredEntry": "K:\\SC2_MAP_Workspace\\SC2Editor-MCP-Codex\\dist\\index.js",
+      "result": {
+        "ok": true,
+        "completed": 1,
+        "steps": [
+          {
+            "id": "version",
+            "tool": "live.capabilities",
+            "ok": true,
+            "ms": 3,
+            "result": {
+              "module": "live",
+              "apiVersion": "editor-live-2026-11-08-document-state",
+              "refresh": {
+                "backend": "same_file_refresh",
+                "requiresExplicitMode": true,
+                "tools": [
+                  "live.refresh.prepare",
+                  "live.refresh.resume",
+                  "live.refresh.call",
+                  "live.refresh.author",
+                  "live.refresh.apply",
+                  "live.refresh.recover",
+                  "live.refresh.release"
+                ],
+                "scope": "Existing component authoring generators, validated same-file publication and original native document reload",
+                "createsNewWorkingMap": false,
+                "reopensSamePath": true,
+                "startsEditor": false,
+                "resetsNativeUndo": true,
+                "requires": "Clean current Terrain document, no pending XML/inline buffers; explicit same_file_refresh workflow",
+                "recovery": "Shared journal before close, internal rollback archive, preserved components and one-shot open marker",
+                "evidence": "Native load/title and saved-file checks do not establish every component's model, rendering or gameplay"
+              },
+              "componentTransfer": {
+                "tempRoot": "Process-reported per-user physical staging store outside MSIX AppData redirection",
+                "legacyDialogPaths": "Bounded short paths shared by the packaged client and original Editor",
+                "longFilePaths": true,
+                "persistedUiBuffer": "Native savepoint only after exact stable-archive byte equality; mismatched pending source is preserved"
+              }
+            }
+          }
+        ]
+      },
+      "noEditorStarted": true,
+      "noMapWrite": true
+    },
+    "attachedChatApiVersion": "editor-live-2026-11-08-gui-library",
+    "attachedChatHotReloaded": false,
+    "panelAutoRefresh": "Current documentState dependency included in all three maintained panel fingerprints; own idle app-server reload only"
+  },
+  "evidence": [
+    "work/live-placement-20261107/RELATED_MODULE_SAVE_FIXED.json",
+    "work/live-placement-20261107/DOCUMENT_STATE_FULL_TESTS.log"
+  ],
+  "remaining": [
+    "General resource replacement/removal and larger linked refresh imports",
+    "Complete same-file component preservation acceptance audit",
+    "Attached old chat runtime reconnection; fresh process is verified"
+  ],
+  "fullGoalComplete": false
+}

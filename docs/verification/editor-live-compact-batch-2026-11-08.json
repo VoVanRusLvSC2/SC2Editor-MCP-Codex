@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-08T17:41:09.3869748Z",
+  "status": "verified_compact_text_batch",
+  "sourceSha256": {
+    "src/app/authoringScript.ts": "f4dca267507713fd8eeaa459df6d37a9dbe6105485723ae523616668df3ea3a3",
+    "src/app/mcpBatch.ts": "20f0023d07e54dd7d5c767084735c32725dc265a94b3c5c7daf98a1df5dc2694",
+    "src/app/toolResults.ts": "3cef2e76b72b0e04df581d0f1a4d0dfa6dacecba996aff7d939608b42a593d3f",
+    "src/modules/editorLive/refreshBegin.ts": "ff1971eb53be0be24667d3ae93874bfa547a13c43b1520a20f2a34467cbfa59e",
+    "src/modules/editorLive/workspace.ts": "4b9118cda904c62bb37b3a9bdf88d6e8a4d92ca4cb787f5de1015ad247eebba7",
+    "src/tests/authoringScript.test.ts": "267f44b47f67abcec6df3c932f5b7ccedf96a75b87f034729fb589ba0874452b",
+    "src/tests/editorLiveModule.test.ts": "5efaf2e537cda01edfad5b3f3712e55e0de1df4c04e2f85b7515115e5d1413c1",
+    "src/tests/mcpBatch.test.ts": "b52165cc12d0efebae040e8fb50338452dd7abeedb0a7a97929873828433963e",
+    "src/tests/liveRefreshBegin.test.ts": "4a929dbe4ff8272cba3b9007b3a9fa9f4dbb46376539dfc18123248a97c8307d"
+  },
+  "native": {
+    "mcpCalls": 1,
+    "batchSteps": 3,
+    "textChanges": 50,
+    "samePath": true,
+    "sameWindow": true,
+    "sameProcess": true,
+    "preservedComponents": [
+      "Triggers",
+      "Objects",
+      "Assets/LiveImportQualification/NativeResource.txt"
+    ],
+    "newWorkingCopies": 0,
+    "elapsedMs": 37251,
+    "nativeDiagnosticsBeforeRows": 0,
+    "nativeDiagnosticsAfterRows": 0,
+    "proof": "work/live-placement-20261107/COMPACT_BATCH_NATIVE.json",
+    "diagnosticJobs": [
+      "bd8da342-8619-4e30-8185-b85ba35e103a",
+      "13273f00-704f-4681-9c46-5dd5c2aac611"
+    ]
+  },
+  "checks": {
+    "targetedTestsPassed": 42,
+    "typescriptBuild": true,
+    "eslint": true,
+    "prettier": true,
+    "architectureFiles": 472,
+    "architectureViolations": 0,
+    "freshRuntime": "editor-live-2026-11-08-compact-batch"
+  },
+  "limitations": [
+    "The 50 changes are localized text entries, not 50 different features.",
+    "Rendering and gameplay were not inspected.",
+    "Refresh closes and reopens the same file and resets native undo.",
+    "The previously attached root MCP process requires reconnection to load the new build.",
+    "Other fixture diagnostics previously reported UI template errors and a Cutscenes warning; causes remain unconfirmed."
+  ],
+  "fullGoalComplete": false
+}

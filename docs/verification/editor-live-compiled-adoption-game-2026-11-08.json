@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-08T18:19:25.7165941Z",
+  "scope": "Owned private game launch after same-file GUI edit and native compiled adoption",
+  "sourceMapSha256": "249c5b6d37ccf20b20c3c72bada9ac5da0623bf8aa5df372311c5d8f15fc0037",
+  "mapConfirmed": true,
+  "gameLoadingState": "in_game",
+  "trigger": {
+    "source": "TriggerDebugger",
+    "message": "00:00:00.00 Running gt_RefreshLinkedInit_Func (Event: Map Initialization)",
+    "count": 1,
+    "invocationVerified": true,
+    "newActionValueVerified": false
+  },
+  "diagnostics": {
+    "allSourcesClear": null,
+    "coverage": "partial"
+  },
+  "userGamePid": 9456,
+  "userGameStillRunning": true,
+  "privateGameDetached": true,
+  "artifact": "work/live-placement-20261107/COMPILED_ADOPTION_GAME.json",
+  "fullGoalComplete": false
+}

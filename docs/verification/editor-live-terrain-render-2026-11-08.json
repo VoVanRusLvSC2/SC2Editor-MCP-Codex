@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-08",
+  "scope": "Before/after native Editor viewport comparison of the previously applied mixed same-file refresh",
+  "previousEvidence": "docs/verification/editor-live-refresh-package-2026-11-08.json",
+  "beforeMapSha256": "dddef63dd4d81d3136daecd696c609b23eb3ac5bd7c3c47fee3ca6155ff8f2a8",
+  "afterMapSha256": "b4e93a52cabeeac2326f5147accc5525b3a3cd0a87600862b55590bbd59c05b0",
+  "camera": { "x": 22, "y": 10, "z": 8.5, "pitch": 56, "yaw": 180, "roll": 0, "distance": 25, "fov": 27.8 },
+  "cameraReadbackConfirmedForBoth": true,
+  "nativeRenderingObserved": true,
+  "visualObservation": "The after frame shows a raised terrain mound near the camera target, which is not present in the before frame.",
+  "beforeImageSha256": "7caf2c1c1d41aba4bbf4b66eeb362117d46e7d88b914271696c969f5787565a6",
+  "afterImageSha256": "09203495f404c66de6c66d7b7c5daa071ae1807ba88fa5a6fd80620219e2277a",
+  "beforeImage": "work/live-terrain-visual-20261108/Before.png",
+  "afterImage": "work/live-terrain-visual-20261108/After.png",
+  "pathingVerified": false,
+  "gameplayVerified": false,
+  "notes": [
+    "The mixed package also changed non-terrain components; scene animation and lighting can differ between captures.",
+    "The images establish one visible height edit after same-file refresh, not all terrain operations or exact numerical height."
+  ],
+  "artifacts": [
+    "work/live-terrain-visual-20261108/.sc2mcp-output/ne/jobs/0bacd816-eace-4e61-b628-207261dc22f1/job.json",
+    "work/live-terrain-visual-20261108/.sc2mcp-output/ne/jobs/e2c25263-0385-4f07-9f3d-74ef415bcd62/job.json"
+  ],
+  "fullGoalComplete": false
+}

@@ -57,6 +57,9 @@ export class ToolTelemetry {
   constructor(root: string) {
     this.file = path.join(root, ".sc2mcp-telemetry", "tools.jsonl");
   }
+  async flush() {
+    await this.pending;
+  }
   record(tool: string, args: unknown, result: unknown, durationMs: number, span?: InvocationSpan) {
     const input = JSON.stringify(args) ?? "null",
       output =

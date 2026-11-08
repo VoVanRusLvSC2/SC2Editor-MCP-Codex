@@ -1,0 +1,201 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-08T11:09:35.126Z",
+  "scope": "Add-only resource files in the current visible document through original Import Files; not full current-document coverage",
+  "module": {
+    "name": "editor-live",
+    "apiVersion": "editor-live-2026-11-08-imports",
+    "tools": [
+      "live.import.prepare",
+      "live.import.apply",
+      "live.import.verify",
+      "live.import.release"
+    ],
+    "newMapArchiveCopies": 0,
+    "applicationReopens": 0
+  },
+  "native": {
+    "editorBuild": "5.0.17.98310 English x64",
+    "transport": "Public MCP stdio",
+    "qualifiedNativeBuild": "306e1676293e889a-2bf381a1",
+    "proof": {
+      "newEntry": "Assets/LiveImportQualification/NativeResource.txt",
+      "resourceSha256": "052b2b2560b34cc33615213f3f4e89572f709baff3d06776e152c46fb7feabf2",
+      "nativeTreeVerified": true,
+      "sourceArchiveUnchangedBeforeSave": true,
+      "pendingSaveGuard": true,
+      "sameFileSaved": true,
+      "savedSha256": "dddef63dd4d81d3136daecd696c609b23eb3ac5bd7c3c47fee3ca6155ff8f2a8",
+      "preservation": [
+        {
+          "file": "Objects",
+          "byteEquivalent": true
+        },
+        {
+          "file": "Triggers",
+          "byteEquivalent": true
+        },
+        {
+          "file": "t3Terrain.xml",
+          "byteEquivalent": true
+        },
+        {
+          "file": "Base.SC2Data/UI/Layout/LiveUIQualification.SC2Layout",
+          "byteEquivalent": true
+        },
+        {
+          "file": "enUS.SC2Data/LocalizedData/GameStrings.txt",
+          "byteEquivalent": true
+        },
+        {
+          "file": "enUS.SC2Data/LocalizedData/GameHotkeys.txt",
+          "byteEquivalent": true
+        },
+        {
+          "file": "enUS.SC2Data/LocalizedData/TriggerStrings.txt",
+          "byteEquivalent": true
+        }
+      ],
+      "beforeEntries": [
+        "Base.SC2Data\\UI\\Layout\\DescIndex.SC2Layout",
+        "Base.SC2Data\\UI\\Layout\\DescIndex.version",
+        "t3TextureMasks",
+        "DocumentInfo.version",
+        "t3Terrain.version",
+        "t3HardTile",
+        "ComponentList.SC2Components",
+        "Minimap.tga",
+        "(attributes)",
+        "DocumentInfo",
+        "GameText.version",
+        "ruRU.SC2Data\\LocalizedData\\GameStrings.txt",
+        "MapInfo",
+        "Triggers.version",
+        "t3SyncCliffLevel",
+        "t3FluffDoodad",
+        "enUS.SC2Data\\LocalizedData\\GameStrings.txt",
+        "t3Terrain.xml",
+        "(listfile)",
+        "t3HeightMap",
+        "t3CellFlags",
+        "Attributes",
+        "t3Water",
+        "Preload.xml",
+        "enUS.SC2Data\\LocalizedData\\GameHotkeys.txt",
+        "DocumentHeader",
+        "PreloadAssetDB.txt",
+        "MapInfo.version",
+        "t3SyncHeightMap",
+        "Base.SC2Data\\GameData\\UnitData.xml",
+        "GameData.version",
+        "Scripts\\OdinModules.galaxy",
+        "Objects.version",
+        "Triggers",
+        "Objects",
+        "MapScript.galaxy",
+        "Base.SC2Data\\UI\\Layout\\LiveUIQualification.SC2Layout",
+        "t3SyncTextureInfo",
+        "t3VertCol",
+        "enUS.SC2Data\\LocalizedData\\TriggerStrings.txt",
+        "ruRU.SC2Data\\LocalizedData\\TriggerStrings.txt",
+        "Attributes.version"
+      ],
+      "afterEntries": [
+        "Base.SC2Data\\UI\\Layout\\DescIndex.SC2Layout",
+        "Base.SC2Data\\UI\\Layout\\DescIndex.version",
+        "t3TextureMasks",
+        "DocumentInfo.version",
+        "t3Terrain.version",
+        "t3HardTile",
+        "ComponentList.SC2Components",
+        "Minimap.tga",
+        "(attributes)",
+        "DocumentInfo",
+        "GameText.version",
+        "ruRU.SC2Data\\LocalizedData\\GameStrings.txt",
+        "MapInfo",
+        "Triggers.version",
+        "t3SyncCliffLevel",
+        "Assets\\LiveImportQualification\\NativeResource.txt",
+        "t3FluffDoodad",
+        "t3Terrain.xml",
+        "enUS.SC2Data\\LocalizedData\\GameStrings.txt",
+        "(listfile)",
+        "t3HeightMap",
+        "t3CellFlags",
+        "Attributes",
+        "t3Water",
+        "Preload.xml",
+        "enUS.SC2Data\\LocalizedData\\GameHotkeys.txt",
+        "DocumentHeader",
+        "PreloadAssetDB.txt",
+        "MapInfo.version",
+        "t3SyncHeightMap",
+        "Base.SC2Data\\GameData\\UnitData.xml",
+        "GameData.version",
+        "Scripts\\OdinModules.galaxy",
+        "Objects.version",
+        "Triggers",
+        "Objects",
+        "MapScript.galaxy",
+        "Base.SC2Data\\UI\\Layout\\LiveUIQualification.SC2Layout",
+        "t3SyncTextureInfo",
+        "t3VertCol",
+        "enUS.SC2Data\\LocalizedData\\TriggerStrings.txt",
+        "ruRU.SC2Data\\LocalizedData\\TriggerStrings.txt",
+        "Attributes.version"
+      ],
+      "copiesCreated": 0,
+      "reopensMap": false,
+      "renderedVerified": false,
+      "gameplayVerified": false
+    },
+    "loadedEditorProcesses": [
+      11284
+    ],
+    "diagnosticsSourceCoverage": "visible_original_Messages_window_only",
+    "diagnostics": "The original visible Messages window contains earlier startup Core UI errors and earlier layout-save success messages. This is not an all-clear statement or a complete log delta.",
+    "renderedVerified": false,
+    "gameplayVerified": false
+  },
+  "runtimeAtRun": {
+    "imports": "bca7ca9f1d2ed6ef984533bc7451d836545496dbcb5a829f9e0d232c2039c117",
+    "importTransfer": "2b681e9d4ddcdc3037f91957454db24923b9898c1d365cd769db0914c924018f",
+    "pendingComponent": "a796da848befb897d320e151362368480675cc6ec1d40c7f44cfa0eb85e3bdb1",
+    "pendingText": "9205b99caf653259154cfaddeedd748aae453e96f5ea04fec1df548d561cc0e6",
+    "tools": "75b81348098b08ac06368f4b99914277691b78a30eaaf3deb676f1c06f105fb6",
+    "workspace": "e45b9c3be52c325dc932e9ff05c674e77dd8b70551942d87ee2402018535985a"
+  },
+  "laterCodeChanges": "Failure-path source-handle cleanup, prior-native-path preservation and source-extension rejection were added after the native run; separately covered by build and regression tests.",
+  "staticChecks": {
+    "affectedRegressions": {
+      "passed": 52,
+      "failed": 0
+    },
+    "panelPromptAndBridge": {
+      "passed": 3,
+      "failed": 0
+    },
+    "nativeBuild": true,
+    "typescriptBuild": true
+  },
+  "limits": [
+    "16 flat files, 1 MiB each/8 MiB total",
+    "New Assets/<folder>/ destinations only; no overwrites",
+    "128 native Document Files tree nodes; four ten-minute snapshots",
+    "No reserved component application, executable/source distribution or linked-component transaction",
+    "Unknown submissions retain their shared pending guard; never replay"
+  ],
+  "architecture": {
+    "providers": "One EditorLiveWorkspace provider list and shared exclusion/disposal",
+    "sourceOwnership": "Native source handles pin staged resources and manifest until the original import returns",
+    "pending": "Shared typed PendingComponent journal preserves existing Text record compatibility and import identity across MCP sessions",
+    "archiveAccess": "Read-only collision/persistence inspection; no open archive replacement"
+  },
+  "evidenceFiles": [
+    "work/live-placement-20261107/NATIVE_IMPORT_QUALIFICATION.json",
+    "work/live-placement-20261107/IMPORT_TESTED_RUNTIME.json",
+    "work/live-placement-20261107/NATIVE_IMPORT_FINAL.json"
+  ],
+  "fullCurrentDocumentAuthoringComplete": false
+}

@@ -1,0 +1,155 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-08T10:14:31.161Z",
+  "scope": "Current-document localized Text through original export/import, existing writer, guarded native Save and post-save verification; not full current-document coverage",
+  "module": {
+    "name": "editor-live",
+    "apiVersion": "editor-live-2026-11-08-text",
+    "tools": [
+      "live.text.read",
+      "live.text.author",
+      "live.text.verify",
+      "live.text.release"
+    ],
+    "generatorsReused": [
+      "text.apply",
+      "modkit.save",
+      "StringTableDocument",
+      "compileAuthorScript"
+    ],
+    "newMapArchiveCopies": 0,
+    "applicationReopens": 0
+  },
+  "native": {
+    "editorBuild": "5.0.17.98310 English x64",
+    "transport": "Public MCP stdio",
+    "tablesPersisted": [
+      "GameStrings.txt",
+      "GameHotkeys.txt",
+      "TriggerStrings.txt"
+    ],
+    "secondaryLocalePersisted": true,
+    "apiVersion": "editor-live-2026-11-08-text",
+    "cleanDocumentBecameDirty": true,
+    "nativeSaveRequired": true,
+    "staleExportBlocked": true,
+    "crossSessionGuard": true,
+    "nativeTextVerified": true,
+    "sameFileSaved": true,
+    "persistedName": "Iron Colossus — current document",
+    "readbackName": "Iron Colossus — current document",
+    "preservation": [
+      {
+        "file": "Objects",
+        "byteEquivalent": true
+      },
+      {
+        "file": "Triggers",
+        "byteEquivalent": true
+      },
+      {
+        "file": "Base.SC2Data/UI/Layout/LiveUIQualification.SC2Layout",
+        "byteEquivalent": true
+      }
+    ],
+    "copiesCreated": 0,
+    "reopensMap": false,
+    "compilerCalls": 2,
+    "sha256": "bc006bcb75e3890c42c488a4cb813acecc059c793a9c39bbb13d2e8e02bbe472",
+    "visualVerified": false,
+    "gameplayVerified": false,
+    "originalUserArchiveUnchanged": true,
+    "originalUserArchiveSha256": "b2050d012c03164d4b5a870507916c066e5853623d48b3c3e76f961c7f2e07cd",
+    "editorProcesses": 1,
+    "diagnostics": {
+      "sourceCoverage": "visible_original_Messages_window_only",
+      "retainedStockUiWarnings": true,
+      "allClear": false
+    }
+  },
+  "development": {
+    "initialImportReceipts": "verification_failed: original exports still returned their pre-save cache",
+    "diagnosis": "Retained same-file Save proved the buffered English map-name, GUI-name and hotkey edits and the secondary locale. These iterations are not separate acceptance claims.",
+    "regression": "A shared pending record is reserved before import. Reads/writes block until Save and verify, including a new MCP process. Unknown imports retain the record and never replay.",
+    "negativeExperiments": "Releasing private source locks did not fix cached exports; that relaxation was reverted. Native source bytes remain pinned during original import.",
+    "fixtureProbe": "An early Add Text command created an unused fixture entry immediately rather than a modal dialog. This is retained fixture-only development state; no user map was edited."
+  },
+  "architecture": {
+    "provider": "Separate LiveText behind the common provider gate; no map archive writer or application reopen path",
+    "format": "Bounded pure original locale codec preserves literal values and table namespaces",
+    "runtime": "Existing Text compiler and transaction saves; no new map-content generator",
+    "dialogs": "Shared ComponentTransfer owns deferred nested file dialogs; captures checkboxes, file input and manual edits",
+    "pending": "Bounded shared process/document journal prevents cached exports from becoming fresh snapshots; closed MCP sessions do not erase pending mutations",
+    "verification": "Native acknowledgement, native Save/persistence and rendered/gameplay evidence stay distinct"
+  },
+  "checks": {
+    "build": true,
+    "releaseBuild": true,
+    "changedScopeEslint": true,
+    "regressionRuns": [
+      {
+        "tests": 70,
+        "scope": "Text/UI/Data/GUI/placement/document/layout/authoring targeted suites"
+      },
+      {
+        "tests": 23,
+        "scope": "Bridge/runtime immutability, compact authoring and grouped UI suites"
+      },
+      {
+        "tests": 7,
+        "scope": "Final localized Text codec, locale/table scope, cached export guard, cross-session verification, manual conflict and uncertainty"
+      }
+    ],
+    "panelTests": 8,
+    "architecture": {
+      "productionFiles": 457,
+      "cycles": 0,
+      "violations": 0
+    },
+    "englishDocumentation": {
+      "files": 125,
+      "violations": 0
+    }
+  },
+  "runtimeScopes": {
+    "native": {
+      "home": "live-memory/c3c86fd5775e5314-f8745ece",
+      "sourceSha256": "c3c86fd5775e5314f54de52e3791f81724ca1845fc74d31849e72301f182db1b"
+    },
+    "helper": {
+      "home": "live-bridge/b11c814b7d63dc93-6be3278c",
+      "sourceSha256": "b11c814b7d63dc9337201a254b2bd6ea8f9251aa6a9e8834f7c558c45c9a68d2"
+    },
+    "sourceHashes": {
+      "src/modules/editorLive/text.ts": "639499edcdf12e9cbc4f1460a148641aaafb7be577c3892768edea4af990ace2",
+      "src/modules/editorLive/nativeLocale.ts": "3080e478618e2beaceeaf349ad5b538b61f9b52844f1b5a9a68e9f5aff7167e7",
+      "src/modules/editorLive/pendingText.ts": "131c8654adf916f1cc7552289bfc0b19dfaf0ad4f14efa1115609621e13b57a2",
+      "src/modules/editorLive/componentTransfer.ts": "b12aff9f79f88903b8b821bac1a8769cacdcc690e730b03e9ced4359db1312b7",
+      "src/modules/editorLive/workspace.ts": "67f804edbe38af45f2086f93066af4802dac8bc5cd1c3562a54f81827d5e4f13",
+      "src/modules/editorLive/tools.ts": "b5c6643d559a5a4e311b053214e988917cafc27654e20e9c2cb45f3909c5bbab",
+      "src/modules/editorLive/runtime.ts": "0f8af46d96fe12f793d799ab874b78db38bdffb12d365452e76ee50f3ed8345e",
+      "src/app/server.ts": "0c9277e16559687302b96b5a1c427c2978c542ecb296ccae2f78cc5b6a3f2a41",
+      "src/app/authoringScript.ts": "55f19f1058ba2558162b729bb3a49206942ec4020a7777b433d99ea3962f4792",
+      "native/live-editor/file_dialog.inc": "590b57f59cbba8e0be2c1e8efe10fcaa8d4ad711b8c7b5d654279e740c530f66",
+      "native/live-editor/module_inspection.inc": "7bd885c0eef915590c42f6036a36a770e53eaf5f240bb143d8fd86a0187ce8c3",
+      "native/live-editor/MemoryData.cs": "d1bba6fcd17814878b2aed85ad2bc17f0c0a2875ede3414143eb3c92c03f37e0",
+      "native/live-editor/Program.cs": "cd0b3e9ea54e76e478ee1bf0fb0aa063210a9d97a088b55c0fd69b8619b467d1",
+      "src/tests/liveText.test.ts": "30bb690f0c71d02780bebe1e5f4f0673a586de1d97383602012b0083e5a131c8",
+      "src/tests/editorLiveModule.test.ts": "c535387601b0c28c99bf9c511182b6a5c4329b0ea7dc425c3661347b6ba13c8c"
+    }
+  },
+  "artifacts": [
+    "work/live-placement-20261107/NATIVE_TEXT_PENDING_QUALIFICATION.json",
+    "work/live-placement-20261107/NATIVE_TEXT_PERSISTENCE_DIAGNOSIS.json",
+    "work/live-placement-20261107/NATIVE_TEXT_AFTER_SAVE.json",
+    "work/live-placement-20261107/NATIVE_TEXT_FINAL.json"
+  ],
+  "limitations": [
+    "One exportable existing locale per batch; no deletion or absent/unreferenced text keys acceptance",
+    "Font/style/assets and atomic linked UI/Data/Text groups remain unfinished",
+    "Full existing GUI graph editing, Terrain application, object deletion and map settings are still outstanding",
+    "Authoritative native document/revision identity and manual external locale-import cache detection remain outstanding",
+    "Fresh MCP SDK sessions were qualified; existing connected chats are not claimed to have hot-reloaded. Panel prompt/fingerprint is updated for its next supported refresh.",
+    "No rendered/gameplay acceptance was inferred from strings or native Save"
+  ]
+}

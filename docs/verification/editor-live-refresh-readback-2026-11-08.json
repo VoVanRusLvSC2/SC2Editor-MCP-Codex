@@ -1,0 +1,73 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-08T14:03:19.029Z",
+  "status": "partial_native_acceptance",
+  "scope": "Post-publication scene readback and bounded 3D observation; multi-document refresh refusal; original dirty document restored",
+  "native": {
+    "transport": "Fresh public MCP SDK stdio; original native controls",
+    "unitCount": 10,
+    "addedMarine": {
+      "type": "Marine",
+      "x": 8,
+      "y": 12,
+      "owner": 1,
+      "nativePropertiesVerified": true
+    },
+    "nativeSceneVerified": true,
+    "sceneReadDocumentDirty": false,
+    "openDocumentCount": 3,
+    "refreshReady": false,
+    "multiDocumentRefusal": {
+      "isError": true,
+      "message": "LIVE_REFRESH_SAVE_PENDING_BUFFERS_FIRST"
+    },
+    "visual": {
+      "observed": true,
+      "description": [
+        "Actual SC2 Terrain viewport displayed the qualification map",
+        "Marine and both Odin models, ground textures and point lights visible",
+        "No black terrain gap observed in the displayed central arena"
+      ],
+      "scope": "Agent visual observation of this viewport only; not every model, terrain cell or gameplay",
+      "screenshotIds": [
+        "screenshot-0"
+      ]
+    },
+    "savedArchiveSha256": "b4e93a52cabeeac2326f5147accc5525b3a3cd0a87600862b55590bbd59c05b0",
+    "archiveUnchanged": true,
+    "saveInvoked": false,
+    "packageReapplied": false,
+    "originalDirtyDocumentRestored": true,
+    "qualificationDocumentClosed": true
+  },
+  "setup": {
+    "requestedSecondProcess": true,
+    "launcherExitCode": 0,
+    "actualBehavior": "Original Editor forwarded -loadfile to the existing process; qualification opened as another document. No second persistent Editor was created. This setup must not be repeated while another Editor exists.",
+    "processId": 1076,
+    "otherDocumentsPreserved": true
+  },
+  "newFinding": {
+    "scope": "Current-map binding for long names",
+    "readOnlyStatusError": "LIVE_DOCUMENT_WINDOW_CHANGED",
+    "shortCaptionSuffix": "delivery/<long filename>.SC2Map",
+    "reason": "The guarded abbreviation matcher requires at least three suffix path segments; the real Editor sometimes shows only directory and basename",
+    "nextAction": "Add a stronger current-map identity route rather than weakening binding to basename-only"
+  },
+  "remaining": [
+    "Authoritative/stronger binding for severely abbreviated current-map titles",
+    "Native pending writable XML-buffer refusal qualification",
+    "Broader changed-component model/readback acceptance"
+  ],
+  "fullGoalComplete": false,
+  "artifacts": {
+    "native": "work/live-placement-20261107/REFRESH_RESUMED_NATIVE_READBACK.json",
+    "visual": "work/live-placement-20261107/REFRESH_3D_OBSERVATION.json",
+    "restoration": "work/live-placement-20261107/REFRESH_RESTORE_ORIGINAL.json",
+    "binding": "work/live-placement-20261107/RESTORED_DOCUMENT_BINDING.json"
+  },
+  "notes": [
+    "An initial qualification logger assumed all MCP errors were JSON; that logger failure remains in the raw artifact. The subsequent call preserved the plain-text MCP refusal.",
+    "Graphics initialization recovered; previous graphics-failure evidence is historical and is not rewritten."
+  ]
+}

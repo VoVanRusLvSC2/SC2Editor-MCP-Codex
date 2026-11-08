@@ -7,6 +7,7 @@ import { LiveDocument } from "../modules/live/document.js";
 import { withEditorLease } from "../modules/live/editorLease.js";
 import type { EditorWindow } from "../modules/live/desktop.js";
 import { compileAuthorScript } from "../app/authoringScript.js";
+import type { MemoryDesktop } from "../modules/editorLive/memoryDesktop.js";
 
 let processId = 920000;
 async function fixture(t: test.TestContext) {
@@ -19,6 +20,7 @@ async function fixture(t: test.TestContext) {
     loseReply: false,
     remainDirty: false,
     blocked: false,
+    relatedFrames: [] as EditorWindow[],
     window: {
       windowId: "123",
       processId: ++processId,
@@ -28,26 +30,37 @@ async function fixture(t: test.TestContext) {
       acceptsFiles: true,
     } as EditorWindow,
   };
+  const desktop: MemoryDesktop = {
+    windows: async () => [structuredClone(state.window), ...structuredClone(state.relatedFrames)],
+    command: async (_w, operation) => {
+      assert.equal(operation, 24);
+      state.calls++;
+      await fs.writeFile(archive, "native saved current unsaved document");
+      if (!state.remainDirty) {
+        state.window.title = state.window.title.replace("*]", "]");
+        for (const frame of state.relatedFrames) frame.title = frame.title.replace("*]", "]");
+      }
+      if (state.loseReply) throw Error("reply lost after save");
+      return { saveRequested: true };
+    },
+  };
   const document = new LiveDocument(
     root,
-    {
-      windows: async () => [structuredClone(state.window)],
-      command: async (_w, operation) => {
-        assert.equal(operation, 24);
-        state.calls++;
-        await fs.writeFile(archive, "native saved current unsaved document");
-        if (!state.remainDirty) state.window.title = state.window.title.replace("*]", "]");
-        if (state.loseReply) throw Error("reply lost after save");
-        return { saveRequested: true };
-      },
-    },
+    desktop,
     () => state.blocked,
     async () => {},
   );
   t.after(() => document.close());
   const target = { archive, windowId: "123" };
   const status = await document.status(target);
-  return { document, state, target, input: { ...target, expectedSha256: status.sha256 }, root };
+  return {
+    document,
+    desktop,
+    state,
+    target,
+    input: { ...target, expectedSha256: status.sha256 },
+    root,
+  };
 }
 
 test("native save writes the selected current file without creating or reopening copies", async (t) => {
@@ -117,4 +130,64 @@ test("compact Save is an explicit mutation; plan mode only permits status", () =
     "plan",
   );
   assert.equal(result[0].tool, "live.document.status");
+});
+
+test("a dirty related module is saved even when the Terrain caption is clean", async (t) => {
+  const f = await fixture(t);
+  f.state.window.title = f.state.window.title.replace("*]", "]");
+  f.state.relatedFrames.push({
+    ...f.state.window,
+    windowId: "124",
+    title: `Triggers - [${f.target.archive}*] - StarCraft II Editor`,
+  });
+  assert.equal((await f.document.status(f.target)).documentDirty, true);
+  const saved = await f.document.save(f.input);
+  assert.equal(saved.status, "saved");
+  assert.equal(f.state.calls, 1);
+  assert.equal((await f.document.status(f.target)).documentDirty, false);
+});
+
+test("dirty frames of a different document do not trigger a save of the clean target", async (t) => {
+  const f = await fixture(t);
+  f.state.window.title = f.state.window.title.replace("*]", "]");
+  f.state.relatedFrames.push({
+    ...f.state.window,
+    windowId: "125",
+    title: `Triggers - [${f.root}/Other.SC2Map*] - StarCraft II Editor`,
+  });
+  assert.equal((await f.document.status(f.target)).documentDirty, false);
+  assert.equal((await f.document.save(f.input)).status, "already_clean");
+  assert.equal(f.state.calls, 0);
+});
+
+test("native dirty or pending buffers cannot be hidden behind a clean Terrain caption", async (t) => {
+  const f = await fixture(t);
+  f.state.window.title = f.state.window.title.replace("*]", "]");
+  f.desktop.documentState = async () => ({
+    documentDirty: false,
+    pendingXmlBuffers: 1,
+    pendingInput: false,
+    dialogs: [],
+  });
+  const status = await f.document.status(f.target);
+  assert.equal(status.documentDirty, true);
+  assert.equal(status.pendingXmlBuffers, 1);
+  const saved = await f.document.save(f.input);
+  assert.equal(saved.status, "unknown");
+  assert.equal(f.state.calls, 1);
+});
+
+test("pending inline input and incomplete native observations refuse before File Save", async (t) => {
+  const f = await fixture(t);
+  f.desktop.documentState = async () => ({
+    documentDirty: true,
+    pendingXmlBuffers: 0,
+    pendingInput: true,
+    dialogs: [],
+  });
+  await assert.rejects(f.document.save(f.input), /PENDING_INLINE_INPUT/);
+  f.desktop.documentState = async () => ({ documentDirty: false, dialogs: [] });
+  await assert.rejects(f.document.save(f.input), /pendingXmlBuffers/);
+  assert.equal(f.state.calls, 0);
+  assert.equal(await fs.readFile(f.target.archive, "utf8"), "original");
 });

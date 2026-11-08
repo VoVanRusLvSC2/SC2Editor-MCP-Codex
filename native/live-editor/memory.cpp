@@ -6,6 +6,7 @@
 #include <vector>
 #include <algorithm>
 #include <cmath>
+#include <cwctype>
 #include <map>
 #pragma comment(lib, "user32.lib")
 #pragma comment(lib, "comctl32.lib")
@@ -183,6 +184,13 @@ static bool Fail(LiveDataRequest *b, const wchar_t *code) {
   return false;
 }
 #include "document.inc"
+#include "placement.inc"
+#include "palette.inc"
+#include "terrain_brush.inc"
+#include "transfer_paths.inc"
+#include "xml_buffer.inc"
+#include "module_inspection.inc"
+#include "file_dialog.inc"
 static int UnitRow(HWND root, const wchar_t *unit) {
   auto list = Control(root, 1025, L"SysListView32");
   if (!list)
@@ -238,6 +246,16 @@ static bool Selected(HWND root, const wchar_t *unit) {
   return row >= 0 && SendMessageW(list, LVM_GETSELECTEDCOUNT, 0, 0) == 1 &&
          SendMessageW(list, LVM_GETNEXTITEM, WPARAM(-1), LVNI_SELECTED) == row;
 }
+static bool FieldsForUnit(HWND root, const wchar_t *unit) {
+  HWND values=Control(root,2026,L"SysListView32");
+  int row=UnitRow(root,unit);
+  if(!values||!IsWindowVisible(values)||row<0)return false;
+  HWND header=reinterpret_cast<HWND>(SendMessageW(values,LVM_GETHEADER,0,0));
+  if(SendMessageW(header,HDM_GETITEMCOUNT,0,0)!=1)return false;
+  wchar_t label[8192]{};HDITEMW item{};item.mask=HDI_TEXT;item.pszText=label;item.cchTextMax=8192;
+  if(!SendMessageW(header,HDM_GETITEMW,0,reinterpret_cast<LPARAM>(&item)))return false;
+  return std::wstring(label)==Cell(Control(root,1025,L"SysListView32"),row,0);
+}
 static HWND OwnDialog() {
   HWND found = nullptr;
   for (auto h : Roots())
@@ -286,6 +304,8 @@ static bool LocalSource(HWND root, const wchar_t *unit) {
   int row = UnitRow(root, unit);
   return row >= 0 && Cell(Control(root, 1025, L"SysListView32"), row, 1) == file;
 }
+#include "data_xml.inc"
+#include "ui_xml.inc"
 static bool OwnInline() {
   return ownInline && IsWindow(ownInline) && Inline(boundWindow) == ownInline &&
          GetPropW(ownInline, kLiveMemoryMessage) == reinterpret_cast<HANDLE>(inlineGeneration);
@@ -304,7 +324,38 @@ static void CALLBACK EditDeadline(HWND, UINT, UINT_PTR, DWORD) {
   }
 }
 static void Execute(LiveDataRequest *b, HWND root) {
-  if (b->operation == 24) {
+  if(b->operation==64) {
+    const auto temporary=LiveTemporaryDirectory(),components=LiveComponentDirectory();
+    if(temporary.empty()||components.empty()){Fail(b,L"LIVE_TRANSFER_TEMP_ROOT_INVALID");return;}
+    Result(b,L"{\"temporaryDirectory\":"+Quote(temporary)+L",\"componentDirectory\":"+Quote(components)+L"}");return;
+  }
+  if(b->operation==63) {
+    if(activeEdit){Fail(b,L"LIVE_MEMORY_EDIT_BUSY");return;}
+    TerrainBrushExecute(b,root);return;
+  }
+  if((b->operation>=60&&b->operation<=62)||b->operation==65) {
+    if(activeEdit){Fail(b,L"LIVE_MEMORY_EDIT_BUSY");return;}
+    UiXmlExecute(b,root);return;
+  }
+  if((b->operation>=51&&b->operation<=54)||(b->operation>=56&&b->operation<=59)) {
+    if(activeEdit){Fail(b,L"LIVE_MEMORY_EDIT_BUSY");return;}
+    ComponentExecute(b,root);return;
+  }
+  if(b->operation==50||b->operation==55){ModuleInspectExecute(b,root);return;}
+  if (b->operation >= 43 && b->operation <= 45) {
+    if(activeEdit){Fail(b,L"LIVE_MEMORY_EDIT_BUSY");return;}
+    PaletteExecute(b,root);return;
+  }
+  if (b->operation >= 40 && b->operation <= 42) {
+    if (activeEdit) { Fail(b, L"LIVE_MEMORY_EDIT_BUSY"); return; }
+    DataXmlExecute(b, root); return;
+  }
+  if (b->operation >= 30 && b->operation <= 39) {
+    if (activeEdit) { Fail(b, L"LIVE_MEMORY_EDIT_BUSY"); return; }
+    PlacementExecute(b, root);
+    return;
+  }
+  if (b->operation >=24&&b->operation<=26) {
     if (activeEdit) { Fail(b, L"LIVE_MEMORY_EDIT_BUSY"); return; }
     DocumentExecute(b, root);
     return;
@@ -329,7 +380,7 @@ static void Execute(LiveDataRequest *b, HWND root) {
   if (b->operation == 0) {
     int readyColumn = 0;
     bool fieldReady = b->unit[0] && b->field[0] && Selected(root, b->unit) &&
-      LocalSource(root, b->unit) && FieldRow(root, b->field, readyColumn) >= 0;
+      LocalSource(root, b->unit) && FieldsForUnit(root,b->unit) && FieldRow(root, b->field, readyColumn) >= 0;
     std::wstring j = L"{\"title\":" + Quote(Text(root)) + L",\"controls\":[";
     bool comma = false;
     for (HWND h : Children(root)) {
@@ -347,6 +398,7 @@ static void Execute(LiveDataRequest *b, HWND root) {
                   L",\"fields\":" + Table(Control(root, 2025, L"SysListView32"), 10) +
                   L",\"fieldValues\":" + Table(Control(root, 2026, L"SysListView32"), 10) +
                   L",\"unitReady\":" + std::wstring(UnitRow(root, b->unit) >= 0 ? L"true" : L"false") +
+                  L",\"fieldOwnerReady\":" + std::wstring(FieldsForUnit(root,b->unit) ? L"true" : L"false") +
                   L",\"fieldReady\":" + std::wstring(fieldReady ? L"true" : L"false") +
                   L",\"mapMutation\":false}");
     return;
@@ -386,24 +438,18 @@ static void Execute(LiveDataRequest *b, HWND root) {
       Fail(b, L"LIVE_MEMORY_EXACT_UNIT_NOT_READY");
       return;
     }
-    bool refresh = !Selected(root, b->unit);
+    bool refresh = !Selected(root, b->unit) || !FieldsForUnit(root,b->unit);
     if (refresh) {
       LVITEMW item{};
       item.stateMask = LVIS_SELECTED | LVIS_FOCUSED;
       SendMessageW(list, LVM_SETITEMSTATE, WPARAM(-1), reinterpret_cast<LPARAM>(&item));
-      item.state = LVIS_SELECTED | LVIS_FOCUSED;
-      SendMessageW(list, LVM_SETITEMSTATE, row, reinterpret_cast<LPARAM>(&item));
-      NMITEMACTIVATE event{};
-      event.hdr.hwndFrom = list;
-      event.hdr.idFrom = 1025;
-      event.hdr.code = NM_CLICK;
-      event.iItem = row;
-      LVITEMW native{};
-      native.mask = LVIF_PARAM;
-      native.iItem = row;
-      SendMessageW(list, LVM_GETITEMW, 0, reinterpret_cast<LPARAM>(&native));
-      event.lParam = native.lParam;
-      SendMessageW(GetParent(list), WM_NOTIFY, 1025, reinterpret_cast<LPARAM>(&event));
+      SendMessageW(list,LVM_ENSUREVISIBLE,row,FALSE);
+      RECT rect{};rect.left=LVIR_LABEL;
+      if(!SendMessageW(list,LVM_GETITEMRECT,row,reinterpret_cast<LPARAM>(&rect))){Fail(b,L"LIVE_MEMORY_UNIT_ROW_NOT_VISIBLE");return;}
+      SetFocus(list);LPARAM point=MAKELPARAM(rect.left+4,(rect.top+rect.bottom)/2);
+      PostMessageW(list,WM_MOUSEMOVE,0,point);
+      PostMessageW(list,WM_LBUTTONDOWN,MK_LBUTTON,point);
+      PostMessageW(list,WM_LBUTTONUP,0,point);
     }
     auto search = Control(root, 2020, L"Edit");
     auto key = std::wstring(L"CUnit_") + b->field;
@@ -413,7 +459,7 @@ static void Execute(LiveDataRequest *b, HWND root) {
       SendMessageW(GetParent(search), WM_COMMAND, MAKEWPARAM(2020, EN_CHANGE),
                    reinterpret_cast<LPARAM>(search));
     }
-    Result(b, L"{\"selected\":true,\"unit\":" + Quote(b->unit) + L",\"source\":" +
+    Result(b, L"{\"selectionRequested\":true,\"unit\":" + Quote(b->unit) + L",\"source\":" +
                   Quote(Cell(list, row, 1)) + L",\"refreshRequired\":" +
                   std::wstring(refresh ? L"true" : L"false") + L",\"mapMutation\":false}");
     return;
@@ -423,7 +469,7 @@ static void Execute(LiveDataRequest *b, HWND root) {
       Fail(b, L"LIVE_MEMORY_EXISTING_INLINE_EDIT");
       return;
     }
-    if (!Selected(root, b->unit) || !LocalSource(root, b->unit)) {
+    if (!Selected(root, b->unit) || !LocalSource(root, b->unit) || !FieldsForUnit(root,b->unit)) {
       Fail(b, L"LIVE_MEMORY_LOCAL_SELECTION_REQUIRED");
       return;
     }
@@ -521,7 +567,7 @@ static void Execute(LiveDataRequest *b, HWND root) {
       double expected = 0, current = 0;
       if (!Numeric(activeEdit->expected, expected) || !Numeric(Text(ownInline), current) ||
           current != expected || !Selected(root, activeEdit->unit) ||
-          !LocalSource(root, activeEdit->unit) || FieldRow(root, activeEdit->field, column) < 0) {
+          !LocalSource(root, activeEdit->unit) || !FieldsForUnit(root,activeEdit->unit) || FieldRow(root, activeEdit->field, column) < 0) {
         Fail(b, L"LIVE_MEMORY_STALE_INLINE_VALUE");
         return;
       }
@@ -631,7 +677,9 @@ extern "C" __declspec(dllexport) DWORD WINAPI LiveDataStart(void *argument) {
   auto name = wcsrchr(path, L'\\');
   name = name ? name + 1 : path;
   if (pid != GetCurrentProcessId() || _wcsicmp(name, L"SC2Editor_x64.exe") ||
-      (Text(target).rfind(L"Data - [", 0) != 0 && Text(target).rfind(L"Terrain - [", 0) != 0))
+      (Text(target).rfind(L"Data - [", 0) != 0 && Text(target).rfind(L"Terrain - [", 0) != 0 &&
+       Text(target).rfind(L"Triggers - [",0)!=0 && Text(target).rfind(L"UI - [",0)!=0 &&
+       Text(target).rfind(L"Import - [",0)!=0 && Text(target).rfind(L"Text - [",0)!=0))
     return ERROR_INVALID_PARAMETER;
   if (!windowProcedures.count(target)) {
     boundWindow = target;

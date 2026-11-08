@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-08T17:11:01.312Z",
+  "scope": "Broaden resource source-code extension exclusions",
+  "sourceSha256": {
+    "src/modules/editorLive/resourcePolicy.ts": "c08965d7ea9e118d80bc85be07629ca561636763211242504355e4cf9abd3c91",
+    "src/tests/liveRefreshResources.test.ts": "e1a90c9fc2dcaa3438785934275057790139633f3946a80a58215e0e8cd04b0c"
+  },
+  "tests": {
+    "resourceAndDirectImport": 10,
+    "failures": 0
+  },
+  "typescriptBuild": true,
+  "nativeAcceptance": "The preceding resource-refresh native qualification used the earlier policy snapshot. This follow-up changes only which source/resource extensions are refused; native acceptance was not replayed.",
+  "previousEvidence": "editor-live-resource-refresh-2026-11-08.json",
+  "fullGoalComplete": false
+}

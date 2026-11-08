@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-08",
+  "scope": "Native combined compile-and-apply on an owned test map with an existing GUI trigger",
+  "transport": "Fresh public workflow MCP stdio",
+  "pendingObserved": true,
+  "nativeCompilePassed": true,
+  "status": "refreshed",
+  "samePath": true,
+  "sameFrame": true,
+  "sameProcess": true,
+  "originalActionPreserved": true,
+  "newActionAndGalaxyPresent": true,
+  "objectsPreserved": true,
+  "userDesktopInput": false,
+  "gameplayVerified": false,
+  "visualActionTreeVerified": false,
+  "diagnosticsCoverage": "not independently inspected in this run",
+  "artifacts": [
+    "work/live-combined-20261108/COMPILE_APPLY_NATIVE.json",
+    "work/live-combined-20261108/qualify-compile-apply.mjs"
+  ],
+  "fullGoalComplete": false
+}

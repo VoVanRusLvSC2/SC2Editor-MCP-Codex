@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-08T18:47:10.1420357Z",
+  "scope": "One existing GUI trigger gets a visible player-property action, native compile/adoption, same-file refresh and private game observation",
+  "native": {
+    "samePath": true,
+    "sameFrame": true,
+    "sameProcess": true,
+    "triggerActions": 2,
+    "originalActionPreserved": true,
+    "generatedPlayerMineralsAction": true,
+    "objectsByteIdentical": true,
+    "sourceMapSha256": "b29281d493b0857f21b8a802f13ea52aa081df678b9016f349fcaea3237337d1",
+    "editorWarning": "Cutscenes: Command was thrown out due to data being invalid",
+    "warningCause": "unestablished",
+    "userDesktopInput": false
+  },
+  "game": {
+    "sourceMapSha256": "b29281d493b0857f21b8a802f13ea52aa081df678b9016f349fcaea3237337d1",
+    "mapConfirmed": true,
+    "loadingState": "in_game",
+    "triggerInvocation": "00:00:00.00 Running gt_RefreshLinkedInit_Func (Event: Map Initialization)",
+    "player": 1,
+    "expectedMinerals": 613,
+    "observedMinerals": 613,
+    "observedErrors": 0,
+    "allDiagnosticSourcesClear": null,
+    "privateGameDetached": true
+  },
+  "diagnostics": [
+    "7d9678a7-b19c-4216-9156-b2864e857671",
+    "620f13e8-3d1c-4b89-8a48-04049ec8884c"
+  ],
+  "artifacts": [
+    "work/live-placement-20261107/OBSERVABLE_TRIGGER_NATIVE.json",
+    "work/live-placement-20261107/OBSERVABLE_TRIGGER_GAME.json",
+    "work/live-placement-20261107/qualify-observable-trigger.mjs"
+  ],
+  "limitations": [
+    "One observable native GUI action, not all trigger or game behaviors.",
+    "Game diagnostics coverage is partial.",
+    "Editor warning cause remains unestablished.",
+    "GUI action tree was not visually inspected."
+  ],
+  "fullGoalComplete": false
+}

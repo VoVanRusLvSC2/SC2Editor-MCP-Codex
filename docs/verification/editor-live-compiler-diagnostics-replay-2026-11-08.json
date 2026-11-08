@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-08",
+  "scope": "Read-only replay of a real native compilation-failure job through current RefreshCompiler and compact MCP result formatting",
+  "nativeJob": "3b3625be-5b3b-4c11-b685-b86d55a6452c",
+  "status": "compile_failed",
+  "compilerMessageRetained": true,
+  "generatedLine": "263",
+  "file": "Generated",
+  "reportPathRetained": true,
+  "nativeEditorRerun": false,
+  "guiElementMappingVerified": false,
+  "sourceJob": "work/live-retry-20261108/.sc2mcp-output/ne/jobs/3b3625be-5b3b-4c11-b685-b86d55a6452c/job.json",
+  "fullGoalComplete": false
+}

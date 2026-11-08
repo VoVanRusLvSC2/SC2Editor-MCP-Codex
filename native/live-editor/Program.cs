@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Web.Script.Serialization;
 
-internal static class LiveEditor {
+internal static partial class LiveEditor {
   private delegate bool EnumWindow(IntPtr hwnd, IntPtr arg);
   [DllImport("user32.dll")] private static extern bool EnumWindows(EnumWindow callback, IntPtr arg);
   [DllImport("user32.dll")] private static extern bool IsWindowVisible(IntPtr hwnd);
@@ -42,11 +42,20 @@ internal static class LiveEditor {
     }
   }
   private static object Run(string[] args) {
+    if(args.Length==2&&args[0]=="window")return Read(new IntPtr(Int64.Parse(args[1])));
+    if(args.Length==6&&args[0]=="archive-owner") {
+      IntPtr hwnd=new IntPtr(Int64.Parse(args[1]));Window w=Read(hwnd);
+      if(w==null||w.processId.ToString()!=args[2]||w.processStart!=args[3]||w.title!=args[4])
+        throw new Exception("LIVE_MAP_IDENTITY_WINDOW_CHANGED");
+      return ReadArchiveIdentity(hwnd,w,args[5]);
+    }
     if((args.Length==5&&args[0]=="memory-inspect")||(args.Length==11&&args[0]=="memory-command")){
       uint operation=args.Length==5?0:UInt32.Parse(args[5]);
       IntPtr hwnd=new IntPtr(Int64.Parse(args[1]));Window w=Read(hwnd);
-      bool terrain=operation==24;
-      if(w==null||w.processId.ToString()!=args[2]||w.processStart!=args[3]||w.title.Replace("*]","]")!=args[4].Replace("*]","]")||(!w.enabled&&(operation<4||operation>6))||!w.title.StartsWith(terrain?"Terrain - [":"Data - ["))throw new Exception(terrain?"LIVE_EXACT_TERRAIN_WINDOW_REQUIRED":"LIVE_MEMORY_EXACT_DATA_WINDOW_REQUIRED");
+      bool terrain=(operation>=24&&operation<=26)||operation==63||(operation>=30&&operation<=39)||(operation>=43&&operation<=45);
+      bool modalPlacement=operation==25||operation==30||operation==36||operation==38||(operation>=52&&operation<=54)||(operation>=56&&operation<=59);
+      bool inspection=((operation>=50&&operation<=59)||(operation>=60&&operation<=62)||operation==64||operation==65)&&w!=null&&(w.title.StartsWith("Triggers - [")||w.title.StartsWith("UI - [")||w.title.StartsWith("Import - [")||w.title.StartsWith("Text - [")||w.title.StartsWith("Terrain - [")||w.title.StartsWith("Data - ["));
+      if(w==null||w.processId.ToString()!=args[2]||w.processStart!=args[3]||w.title.Replace("*]","]")!=args[4].Replace("*]","]")||(!w.enabled&&(operation<4||operation>6)&&!modalPlacement)||(!inspection&&!w.title.StartsWith(terrain?"Terrain - [":"Data - [")))throw new Exception(terrain?"LIVE_EXACT_TERRAIN_WINDOW_REQUIRED":"LIVE_MEMORY_EXACT_DATA_WINDOW_REQUIRED");
       return args.Length==5?MemoryData.Inspect(hwnd):MemoryData.Call(hwnd,operation,args[6],args[7],args[8],args[9],args[10]);
     }
     if (args.Length == 1 && args[0] == "list") {
@@ -79,13 +88,15 @@ internal static class LiveEditor {
   public static void Main(string[] args) {
     Console.InputEncoding=new UTF8Encoding(false);
     Console.OutputEncoding=new UTF8Encoding(false);
+    try { DesktopContext.Initialize(); }
+    catch(Exception error) { Console.WriteLine(Json.Serialize(new {error=error.Message}));return; }
     if(args.Length==1&&args[0]=="memory-stdio"){
       string line;
       while((line=Console.ReadLine())!=null){
         try {
           if(line.Length>16384)throw new Exception("LIVE_MEMORY_REQUEST_BOUND");
           var request=Json.Deserialize<string[]>(line);
-          if(request==null||!((request.Length==11&&request[0]=="memory-command")||(request.Length==1&&request[0]=="list")))throw new Exception("LIVE_MEMORY_REQUEST_INVALID");
+          if(request==null||!((request.Length==11&&request[0]=="memory-command")||(request.Length==1&&request[0]=="list")||(request.Length==2&&request[0]=="window")||(request.Length==6&&request[0]=="archive-owner")))throw new Exception("LIVE_MEMORY_REQUEST_INVALID");
           Console.WriteLine(Json.Serialize(Run(request)));
         }catch(Exception error){Console.WriteLine(Json.Serialize(new {error=error.Message}));}
       }

@@ -1,0 +1,138 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-07T22:17:43.068Z",
+  "scope": "New Unit/Doodad types through the original palette in the current document; no map-copy application",
+  "module": {
+    "name": "editor-live",
+    "apiVersion": "editor-live-2026-11-08-catalog",
+    "tools": [
+      "live.placement.catalog",
+      "live.placement.create"
+    ],
+    "target": "Complete current-document authoring; remaining components are unfinished"
+  },
+  "native": {
+    "editorBuild": "5.0.17.98310 x64",
+    "transport": "Public MCP stdio",
+    "copiesCreated": 0,
+    "reopenedMap": false,
+    "editorProcessesStarted": 0,
+    "unit": {
+      "originalObjectsPreserved": 23,
+      "addedObjects": 1,
+      "catalogId": "Zergling",
+      "position": "6,26,0",
+      "owner": "1",
+      "unitsAfter": 10,
+      "doodadsAfter": 12,
+      "status": "applied",
+      "saved": true,
+      "sha256": "a2804bcce5735d15934b29615f1786d02d4aa68b6d73def7fc13ad99a2fbbda7"
+    },
+    "doodad": {
+      "originalObjectsPreserved": 24,
+      "addedObjects": 1,
+      "catalogId": "BraxisAlphaBarrels",
+      "position": "26.5,26.5,8",
+      "owner": null,
+      "unitsAfter": 10,
+      "doodadsAfter": 13,
+      "firstReceipt": "verification_failed",
+      "requested": [
+        26,
+        26
+      ],
+      "nativeAdjusted": [
+        26.5,
+        26.5
+      ],
+      "creationReplayed": false,
+      "recovery": "Fresh snapshot of the same instance, verified legal coordinates, native same-file Save",
+      "saved": true,
+      "sha256": "98cb4a1da342d2df9180820779843a9127914a555a71d284f8273f7ba2d3f221"
+    },
+    "diagnostics": {
+      "sourceCoverage": "Visible original Messages window only",
+      "retainedEarlierWarning": "CWeaponLegacy could not find parent Marine, from the earlier Data development probe",
+      "cleared": false,
+      "newErrorVerdict": "Not established by a retained partial log"
+    },
+    "renderedVerified": false,
+    "gameplayVerified": false,
+    "undoVerified": false
+  },
+  "runtimeScopes": {
+    "catalogCreationQualified": {
+      "protocol": 1,
+      "sourceSha256": "6e30a8e90bc9e20e6ce5ab32b9d2309b4860c9948fa028e6e988b8077bbdaac8",
+      "sourceFiles": {
+        "memory.cpp": "73f3dadf773105d8ceb6303fe3df51af65d438ef9f522761a8618ae78dd00d9f",
+        "document.inc": "fc99971c97fc72b66d21c70dcac0b710bf3ed0eee151483c12753c004f7c5bc7",
+        "placement.inc": "1aa0b075b08d288540f772fa21f9f826d04b28474d26c5a6ad0144ce47fa0062",
+        "palette.inc": "dce94c36f2e8074160a75adbe3bd9ef61e22865655355eae335b7e0bde9335a6",
+        "data_xml.inc": "f36fa6b5047bcb125f5a409e763be333aa83fff6d15805e031ab334ba8de7601",
+        "memory_protocol.h": "be1850754b2b2f5ab39240d2fbc5f91a8f78994b4ea996ea7f68d873d85b52d3",
+        "memory_loader.cpp": "7dce8ff327caf6750264d6384832e826a43851f91524b79329a309639e1d8bb6",
+        "CMakeLists.txt": "e5ec66fc57edbfff56ec39a64b20c9d2bd90917d6ba3180fcdb5c7a9bd031b0c"
+      },
+      "home": "live-memory/6e30a8e90bc9e20e-44ae4f31",
+      "message": "SC2EditorToolkit.LiveData.v1.6e30a8e90bc9e20e-44ae4f31",
+      "files": {
+        "sc2-mcp-live-data.dll": "a36f527f665c6aec51aed825b8c40b9c7f2488be6a12ef372d9bae1981c8aa2d",
+        "sc2-mcp-live-loader.exe": "fb6363f6f9406ec442883314244821dc65cb0163e4c0846018e763f40b8950e5"
+      }
+    },
+    "currentBuild": {
+      "protocol": 1,
+      "sourceSha256": "63bfe26899dd3c71daba3238e9518c0dfaddcdb9483ec56f69b5b9654f0e2487",
+      "sourceFiles": {
+        "memory.cpp": "94b39a8ac4b01f640d20012f7df89bfba1047e1041f245873d1c71031e620cb0",
+        "document.inc": "fc99971c97fc72b66d21c70dcac0b710bf3ed0eee151483c12753c004f7c5bc7",
+        "placement.inc": "affec0dbdffaf7debd79900a590fab796d849b3f9ae89863d295ebab525dfbe9",
+        "palette.inc": "a648ba887812ea87e68c061426402ad3c274016fbb3dc30eb16d4385a7a23310",
+        "data_xml.inc": "f36fa6b5047bcb125f5a409e763be333aa83fff6d15805e031ab334ba8de7601",
+        "memory_protocol.h": "be1850754b2b2f5ab39240d2fbc5f91a8f78994b4ea996ea7f68d873d85b52d3",
+        "memory_loader.cpp": "7dce8ff327caf6750264d6384832e826a43851f91524b79329a309639e1d8bb6",
+        "CMakeLists.txt": "e5ec66fc57edbfff56ec39a64b20c9d2bd90917d6ba3180fcdb5c7a9bd031b0c"
+      },
+      "home": "live-memory/63bfe26899dd3c71-097eec3c",
+      "message": "SC2EditorToolkit.LiveData.v1.63bfe26899dd3c71-097eec3c",
+      "files": {
+        "sc2-mcp-live-data.dll": "5ee2b5b6dfe66f808d13e7888bc9d8486e90b6077292e488fa8b28e0560530af",
+        "sc2-mcp-live-loader.exe": "d42574771075cf07fc01abdf651d31d219b39306c0b028c37171065f89b2b390"
+      }
+    },
+    "currentBuildQualification": "Built and native read-only palette/available-owner inspection passed; creation evidence retains its original runtime, not relabelled as a full rerun"
+  },
+  "sourceFingerprints": {
+    "native/live-editor/palette.inc": "a648ba887812ea87e68c061426402ad3c274016fbb3dc30eb16d4385a7a23310",
+    "native/live-editor/placement.inc": "affec0dbdffaf7debd79900a590fab796d849b3f9ae89863d295ebab525dfbe9",
+    "native/live-editor/memory.cpp": "94b39a8ac4b01f640d20012f7df89bfba1047e1041f245873d1c71031e620cb0",
+    "native/live-editor/MemoryData.cs": "4d208255091a14bc4d2de72bc89c54011bc4839e4cee2eca537fc617ea2815db",
+    "native/live-editor/Program.cs": "1dd2d4a8b8d122768c29a5b5453306355c6120c46a892f31a82592284faf7d89",
+    "scripts/build-live-memory.mjs": "397b1855f67056163dfd535191ec4063cca8a3293737fbf0729ca50498049229",
+    "src/modules/editorLive/placement.ts": "5a7438bcb91127620d8a9f1578b42e939df99659e6c265d443adf32b1afff867",
+    "src/modules/editorLive/tools.ts": "96e0a16a7ddd41a5ca96e9f9c6b9275a4ce1c30d0add25ddfd6045ce2b53bf1d",
+    "src/modules/editorLive/workspace.ts": "762d7121ea07a5edf0c44c9789360b89af4fb1349f541c9d6cbbcab545c26dc7",
+    "src/app/authoringScript.ts": "3ed10e0bd60350a1a7be5aee22c8dfc50718575e2a37d41629179ee3631a6bec",
+    "src/tests/livePlacement.test.ts": "5051e6adb3c8f9eaf189cd0aa682eba5f4ea5fc1ab55693835a2a9dc6b70b9db",
+    "src/tests/editorLiveModule.test.ts": "7507cec9e323449e82780dc0d0261b743223a64e9ffdf6bcb23cd4d953e7067c"
+  },
+  "checks": {
+    "testsPassed": 25,
+    "failed": 0,
+    "scope": "Current module/profile, native placement failure handling, catalog staleness/identity/owner/snapping/64-bit compact guards, immutable runtime cache",
+    "build": true,
+    "releaseBuild": true,
+    "eslint": true
+  },
+  "limits": [
+    "Current UI filters and at most 10000 palette rows; pages contain at most 16 matches. Scene/group bounds remain 256/16.",
+    "Original display labels and catalog IDs are distinct. Optional expectedId refuses a different native brush ID before creation; no Model ID is inferred.",
+    "Exact coordinate mismatches remain verification_failed; a footprint/grid adjustment is not silently accepted and creation is never replayed.",
+    "Native original properties, counts and native-saved Objects were verified. No rendered appearance, pathing or gameplay acceptance is inferred.",
+    "The target remains full live editing. Terrain, GUI trigger graph, UI/Text/import, map settings and lighting application are not implemented by this change.",
+    "Original user document was restored clean in the same single Editor process. Development qualification used its already-open fixture; no new map archive was created for application.",
+    "Private Toolkit sources, binaries, user maps/assets and local native traces remain outside this record."
+  ]
+}

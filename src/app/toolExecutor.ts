@@ -12,9 +12,18 @@ export interface InvocationSpan {
 /** Both MCP and batch invocations pass through this boundary after schema parsing. */
 export class ToolExecutor {
   private readonly spans = new AsyncLocalStorage<InvocationSpan>();
+  private readonly running = new Set<Promise<unknown>>();
   private sequence = 0;
 
-  constructor(private readonly telemetry: Pick<ToolTelemetry, "record">) {}
+  constructor(
+    private readonly telemetry: Pick<ToolTelemetry, "record"> &
+      Partial<Pick<ToolTelemetry, "flush">>,
+  ) {}
+
+  async drain() {
+    while (this.running.size) await Promise.allSettled([...this.running]);
+    await this.telemetry.flush?.();
+  }
 
   async invoke(
     name: string,
@@ -29,7 +38,7 @@ export class ToolExecutor {
       origin,
       ...(parent ? { parentSpanId: parent.spanId } : {}),
     };
-    return this.spans.run(span, async () => {
+    const task = this.spans.run(span, async () => {
       const start = performance.now();
       try {
         const result = await callback(args, context);
@@ -51,5 +60,11 @@ export class ToolExecutor {
         throw error;
       }
     });
+    this.running.add(task);
+    try {
+      return await task;
+    } finally {
+      this.running.delete(task);
+    }
   }
 }

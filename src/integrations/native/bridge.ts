@@ -257,6 +257,24 @@ export class NativeEditorBridge {
     for(const input of [proof.template,proof.output])if(!await this.unchanged(input))throw Error('NATIVE_GUI_ARTIFACT_STALE');
     return structuredClone(proof);
   }
+  /** Internal proof for a full-map native compilation, not an arbitrary file import. */
+  async compiledGalaxy(id:string){
+    const job=this.jobs.get(id),result=job?.result,compile=result?.checks?.compile,galaxy=result?.galaxy,artifact=galaxy?.artifact;
+    if(!job||job.operation!=='check'||job.state!=='completed'||result?.outcome!=='passed'||result.sourceUnchanged!==true||result.fullMapCompilation!==true||
+       compile?.nativeGenerationVerified!==true||compile?.nativeCompilePassed!==true||galaxy?.status!=='GALAXY_EXPORTED'||
+       galaxy.nativeCompilePassed!==true||typeof result.source!=='string'||typeof result.sourceSha256!=='string'||
+       typeof artifact?.path!=='string'||typeof artifact.sha256!=='string'||!/^[a-f0-9]{64}$/.test(artifact.sha256)||
+       !Number.isSafeInteger(artifact.bytes)||artifact.bytes<1)
+      throw Error('NATIVE_COMPILED_MAP_ARTIFACT_REQUIRED');
+    const expected=path.join(path.dirname(job.report),'Native.galaxy');
+    if(path.resolve(artifact.path)!==path.resolve(expected))throw Error('NATIVE_COMPILED_MAP_ARTIFACT_PATH_INVALID');
+    const source={absolute:result.source as string,sha256:result.sourceSha256 as string};
+    if(!await this.unchanged(source))throw Error('NATIVE_COMPILED_MAP_SOURCE_STALE');
+    const bytes=await this.storage.readCaptureArtifact(expected,path.dirname(job.report),16*1024*1024);
+    if(bytes.length!==artifact.bytes||hash(bytes)!==artifact.sha256)throw Error('NATIVE_COMPILED_MAP_OUTPUT_STALE');
+    if(!await this.unchanged(source))throw Error('NATIVE_COMPILED_MAP_SOURCE_STALE');
+    return {jobId:id,source,outputSha256:artifact.sha256 as string,bytes};
+  }
   private receipt(job:Job){return {...job,deadlineExceeded:job.state==='running'&&Date.now()-Date.parse(job.startedAt!)>job.deadlineSeconds*1000,
     cancellation:'Outer deadlines are advisory. Explicit sc2_job_cancel applies only to a native job admitted by this bridge; the SDK discards only its owned private Editor when required.'};}
   async details(id:string,pointer='',offset=0,limit=12){
@@ -367,6 +385,7 @@ export class NativeEditorBridge {
       this.ownedDocument=failed||incomplete?undefined:source;
       await fs.writeFile(job.report,JSON.stringify(evidence,null,2)+'\n');
       return {failed,outcome:failed?'failed':incomplete?'incomplete':'passed',source:source.absolute,sourceSha256:source.sha256,sourceUnchanged:evidence.sourceUnchanged,
+        fullMapCompilation:checks.includes('compile')&&!args.scope&&!args.contextLabel&&!args.locale,
         checks:Object.fromEntries(Object.entries(evidence.checks).map(([key,value])=>[key,this.summary(value as Record<string,any>)])),
         ...(evidence.galaxy?{galaxy:this.summary(evidence.galaxy)}:{}),report:job.report,gameplayVerified:false};
     });

@@ -140,6 +140,12 @@ test("connectivity inspection accepts dirty documents without importing a checkp
   const windows = await f.live.windows();
   assert.match(windows[0].title, /\*\]/);
   const routes = f.live.capabilities().routing;
+  const capability = f.live.capabilities();
+  assert.equal(capability.refresh, capability.currentDocument.refresh);
+  assert.equal(capability.sourceOverwriteScope, capability.currentDocument.sourceOverwriteScope);
+  assert.equal(routes.refresh.mode, "same_file_refresh");
+  assert.equal(routes.refresh.createsNewWorkingMap, false);
+  assert.ok(capability.commands.includes("live.refresh.apply"));
   assert.equal(routes.connectivityTest.requiresSave, false);
   assert.equal(routes.connectivityTest.requiresConnect, false);
   assert.equal(routes.memory.requiresConnect, false);

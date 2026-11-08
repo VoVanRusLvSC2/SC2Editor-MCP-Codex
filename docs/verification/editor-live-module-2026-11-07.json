@@ -1,0 +1,146 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-07T21:46:18.378Z",
+  "scope": "Separate editor-live current-document module; existing-template Unit duplication, Doodad movement and native same-file Save",
+  "module": {
+    "name": "editor-live",
+    "implementation": "src/modules/editorLive",
+    "profile": "editor-live",
+    "toolCompatibility": "Existing live.* names retained",
+    "checkpointToolsInProfile": false
+  },
+  "native": {
+    "transport": "Public MCP stdio",
+    "editorBuild": "5.0.17.98310 x64",
+    "existingEditorProcessId": 9592,
+    "editorProcessesStarted": 0,
+    "mapCopiesCreatedByApplication": 0,
+    "reopenedMap": false,
+    "fixture": "Already-open development qualification document, separate from the user document",
+    "unitDuplication": {
+      "allOriginalObjectsPreserved": true,
+      "originalObjects": 22,
+      "addedObjects": 1,
+      "newUnit": {
+        "Id": "1484550743",
+        "Position": "24,24,0",
+        "Scale": "1,1,1",
+        "Name": "Live attached test Odin",
+        "UnitType": "IronColossus",
+        "Player": "1"
+      },
+      "unitsBefore": 8,
+      "unitsAfter": 9,
+      "doodadsBefore": 12,
+      "doodadsAfter": 12,
+      "visualVerified": false,
+      "gameplayVerified": false,
+      "saved": true,
+      "savedSha256": "fa32c0d5db556d50d3e3dad35a07ec8605bf113b3124e59aca6ddc4598a9fcc5"
+    },
+    "doodadMovement": {
+      "before": {
+        "x": 12,
+        "y": 4,
+        "name": "Qualified staging light"
+      },
+      "after": {
+        "x": 12,
+        "y": 5,
+        "name": "Qualified staging light"
+      },
+      "countBefore": 12,
+      "countAfter": 12,
+      "verified": true,
+      "saved": true
+    },
+    "originalDocumentRecovery": {
+      "before": [
+        8,
+        3
+      ],
+      "after": [
+        10,
+        28
+      ],
+      "sameFileSaved": true,
+      "objectsAfter": 13,
+      "extraDuplicateCreated": false
+    },
+    "visualVerified": false,
+    "gameplayVerified": false,
+    "undoVerified": false
+  },
+  "nativeRuntime": {
+    "protocol": 1,
+    "sourceSha256": "3d36ddf5922aa80f6ed2c5e030a6985000a82d65e6948b28ef0012f7291cc083",
+    "sourceFiles": {
+      "memory.cpp": "28d0ed2428695da30d1ce4704bc4da06c334c8166748983f04d5fed32acd669f",
+      "document.inc": "fc99971c97fc72b66d21c70dcac0b710bf3ed0eee151483c12753c004f7c5bc7",
+      "placement.inc": "097bef43379d27a4b1ad199fd466614966e03d00dc023a1eb41265766e708179",
+      "data_xml.inc": "f36fa6b5047bcb125f5a409e763be333aa83fff6d15805e031ab334ba8de7601",
+      "memory_protocol.h": "be1850754b2b2f5ab39240d2fbc5f91a8f78994b4ea996ea7f68d873d85b52d3",
+      "memory_loader.cpp": "7dce8ff327caf6750264d6384832e826a43851f91524b79329a309639e1d8bb6",
+      "CMakeLists.txt": "e5ec66fc57edbfff56ec39a64b20c9d2bd90917d6ba3180fcdb5c7a9bd031b0c"
+    },
+    "home": "live-memory/3d36ddf5922aa80f-142c47f3",
+    "message": "SC2EditorToolkit.LiveData.v1.3d36ddf5922aa80f-142c47f3",
+    "files": {
+      "sc2-mcp-live-data.dll": "e7eeef7a3e532a0b9fe6ef3f4195f77651aaea2ff24c64b793195ed1b2740434",
+      "sc2-mcp-live-loader.exe": "7307766c5c4cc9f931d6d3d7e19e1b55942f3eb77ac605af56857eaf40a2855c"
+    }
+  },
+  "sourceFingerprints": {
+    "src/modules/editorLive/dataXml.ts": "b4cfe513bd7ea5df411f5e85d74fb9fc989c5f54e916f909ed3c2640070f65ca",
+    "src/modules/editorLive/desktop.ts": "d1d5a3c01a00492e7ab51b00f75a1ca250f7ee29e3cdb8ab682d6a696fad1ce4",
+    "src/modules/editorLive/document.ts": "404e9464b5791bcbdc7f51dbb8a5302359413dde1d74a8c9e2f728886f847647",
+    "src/modules/editorLive/editorLease.ts": "4d5f3397ec192b2155286e681ac017bf0453221ff3cb6b3ffe9786e72f254d1d",
+    "src/modules/editorLive/memory.ts": "949271260fd1dd8892f1cd9f2bad220ec13b71f910024a128eebd9a93db3bec0",
+    "src/modules/editorLive/memoryDesktop.ts": "66ef72da276395a0e8f2044efcf2737f9a48e3daf9034ac84e3937d75006484d",
+    "src/modules/editorLive/memoryTools.ts": "c3779120cfc4347e18c0e292c6539207c51eea134597ed84b3995deb745f473b",
+    "src/modules/editorLive/placement.ts": "504eafcdad27703949b7fb447ef7192778c53b387fe698fc231653aa36b28b49",
+    "src/modules/editorLive/runtime.ts": "378545068fe66ce9f26ed64c5ebaf787d01fe8c2844ea0b2af6f1f35adc63008",
+    "src/modules/editorLive/tools.ts": "fe116015a0efce3439669f7c934a2d21f39d37f0ca8f2983d5655829ecda2425",
+    "src/modules/editorLive/workspace.ts": "5c1c47aef13028258feb3eb70fe662ceeaafa2f5d9850ed87e1f550424cdef52",
+    "src/modules/live/workspace.ts": "974c4aaffa1ac2d351c00dc63d5b3ffd24a28da890cd7f7af307deedbcd399b8",
+    "src/modules/live/tools.ts": "3888207a904f5ebc031964b0be1e302d6295e237cc69e1dfc99f91a0bcac9088",
+    "src/app/moduleSelection.ts": "4e04ee7e5fa528fc1ce82342728077cc32fc85fb44c1b14ec9d4b24314b095de",
+    "src/app/server.ts": "e8215b4dc2a2fee091f56bf8ace498b296436688b835b86d17c4887e6b62b43e",
+    "native/live-editor/placement.inc": "097bef43379d27a4b1ad199fd466614966e03d00dc023a1eb41265766e708179",
+    "native/live-editor/memory.cpp": "28d0ed2428695da30d1ce4704bc4da06c334c8166748983f04d5fed32acd669f",
+    "scripts/live-runtime-cache.mjs": "b9a5d790932df4f1622ff0f14704e49054b679c03e9951ff1b3acc8ade6cc3d6",
+    "scripts/build-live-memory.mjs": "e9180d1064da87bdf31d800b6bad422e56ecad36df468aa2875b3299051083f9"
+  },
+  "regression": {
+    "latest": {
+      "testsPassed": 15,
+      "failed": 0,
+      "scope": "Current module lifecycle/profile and placement stale/layer/coordinate/Unit regressions"
+    },
+    "earlier": {
+      "testsPassed": 59,
+      "failed": 0,
+      "scope": "Module, scalar, same-file Save, XML Data, placement, checkpoint and module selection; overlaps latest tests, not additive"
+    },
+    "runtimeCache": {
+      "testsPassed": 3,
+      "failed": 0
+    },
+    "build": true,
+    "releaseBuild": true,
+    "eslint": true,
+    "architecture": {
+      "cycles": 0,
+      "violations": 0
+    }
+  },
+  "limits": [
+    "Existing-template objects only; no arbitrary catalog placement, deletion, Terrain application or GUI/UI component application.",
+    "Early Unit properties experiments timed out before creation. The changed message handling passed the final targeted Unit and Doodad cases; earlier failures are not erased.",
+    "Native Unit owner/type and preservation of all original placed objects were checked from the native-saved archive. No native Unit model/animation, navigation or gameplay acceptance is inferred.",
+    "Data recipes retain separate XML/native/static evidence. The Data catalog native test was not replayed solely for this module extraction.",
+    "Selecting a different already-open document sometimes timed out before the eventual switch. Fresh document inspection established the result; selection was not blindly replayed.",
+    "Installed panel scripts were updated. A loaded bridge/thread may retain its old prompt/tools until its normal reconnect or restart; no active other-chat bridge was terminated.",
+    "Private Toolkit source, binaries, maps, game assets and local traces are not included in this record."
+  ]
+}

@@ -87,7 +87,7 @@ internal static class MemoryData {
     uint thread = GetWindowThreadProcessId(hwnd, out pid);
     var title = new StringBuilder(1024);
     GetWindowText(hwnd, title, 1024);
-    if ((operation > 6 && operation != 24) || title.Length >= 1023 || unit.Length >= 128 || field.Length >= 128 ||
+    if ((operation > 6 && (operation<24||operation>26) && operation!=63 && operation!=64 && operation!=65 && (operation < 60 || operation > 62) && (operation < 50 || operation > 59) && (operation < 30 || operation > 39) && (operation < 40 || operation > 45)) || title.Length >= 1023 || unit.Length >= 128 || field.Length >= 128 ||
         expected.Length >= 128 || value.Length >= 128 || token.Length >= 64)
       throw new Exception("LIVE_MEMORY_REQUEST_INVALID");
     var request =
@@ -102,6 +102,9 @@ internal static class MemoryData {
                       token = operation == 3 && token.Length == 0 ? Guid.NewGuid().ToString("N")
                                                                   : token };
     string baseDir = Path.GetFullPath(AppDomain.CurrentDomain.BaseDirectory);
+    var runtimeDirectory=new DirectoryInfo(baseDir);
+    if(runtimeDirectory.Parent!=null&&runtimeDirectory.Parent.Name=="live-bridge"&&runtimeDirectory.Parent.Parent!=null)
+      baseDir=runtimeDirectory.Parent.Parent.FullName;
     var config = new JavaScriptSerializer().Deserialize<Dictionary<string, object>>(
         File.ReadAllText(Path.Combine(baseDir, "sc2-mcp-live-memory.json")));
     string home = Path.GetFullPath(Path.Combine(baseDir, (string)config["home"]));
@@ -150,8 +153,12 @@ internal static class MemoryData {
           Thread.Sleep(20);
           view.ReadArray(0, bytes, 0, bytes.Length);
           request = Decode(bytes);
+          if ((operation == 32 || operation == 35 || operation == 41 || operation == 51) && request.state == 1 && i >= 9)
+            return new { status = "pending", token = request.token, retryMutation = false };
           if (operation == 24 && request.state == 1 && i >= 9)
             return new { status = "save_pending", saveRequested = true, retryMutation = false };
+          if(operation==39&&request.state==1&&i>=9)
+            return new{status="delete_pending",deleteRequested=true,retryMutation=false};
           if (operation == 3 && request.state == 1 && i >= 9)
             return new { status = "pending", token = request.token, nativeState = request.state,
                          commitRequested = false };

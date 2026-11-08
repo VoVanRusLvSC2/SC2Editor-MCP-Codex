@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-08T17:56:06.3698585Z",
+  "scope": "Append one typed action to an existing GUI trigger through same-file refresh on an owned fixture",
+  "native": {
+    "samePath": true,
+    "sameWindow": true,
+    "sameProcess": true,
+    "openDocuments": 1,
+    "nativeReady": true,
+    "triggerId": "8A3D6703",
+    "actionsBefore": 1,
+    "actionsAfter": 2,
+    "originalActionPreserved": true,
+    "objectsByteIdentical": true,
+    "triggerModuleRootTreeReadable": true,
+    "changedActionNativeTreeReadback": false,
+    "nativeCompile": false,
+    "runtimeRegeneration": false,
+    "gameplay": false,
+    "newWorkingCopies": 0,
+    "userDesktopInput": false,
+    "diagnosticsBeforeMessages": 0,
+    "diagnosticsAfterMessages": 0,
+    "diagnosticsAfterOpeningTriggersMessages": 0
+  },
+  "artifacts": [
+    "work/live-placement-20261107/EXISTING_GUI_REFRESH_NATIVE.json",
+    "work/live-placement-20261107/EXISTING_GUI_REFRESH_INSPECT.json",
+    "work/live-placement-20261107/EXISTING_GUI_WRONG_MODULE_ATTEMPT.json"
+  ],
+  "diagnosticJobs": [
+    "1ec70939-0f14-4be8-9b1c-6ceaa9a86380",
+    "904988bc-c5f8-40eb-a080-b2148212e64a",
+    "b657e823-b390-4616-aa99-b5e0b3aac68e"
+  ],
+  "limitations": [
+    "The initial owned worker started in Triggers and the Terrain-only helper rejected before any mutation; it was stopped and a new Terrain-start fixture was used.",
+    "GUI XML and native root tree do not establish the displayed action tree or compiled runtime.",
+    "MapScript was not regenerated; game execution is unverified."
+  ],
+  "fullGoalComplete": false
+}

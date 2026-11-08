@@ -1,0 +1,82 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-08T14:39:32.370Z",
+  "status": "scoped_native_acceptance",
+  "scope": "Long-name local map binding and precise refresh refusal; native map content was not changed",
+  "apiVersion": "editor-live-2026-11-08-map-identity",
+  "implementation": {
+    "sharedBoundary": "src/modules/editorLive/documentIdentity.ts",
+    "nativeReader": "native/live-editor/ArchiveIdentity.cs",
+    "nativeMechanism": "Read-only Windows Restart Manager archive owners plus unique original Window-menu document and frame recheck",
+    "noRestartOrShutdownApi": true,
+    "noSaveDialog": true,
+    "noNativeDllInjectionForBinding": true,
+    "legacyGuardedCaptionCompatibility": true,
+    "directWindowLookup": "Scalar and GUI providers prefer the exact HWND instead of enumerating unrelated windows"
+  },
+  "native": {
+    "positiveAccepted": true,
+    "unownedSameNameFileRejected": true,
+    "specificMultiDocumentRefusal": true,
+    "refusal": "LIVE_REFRESH_SINGLE_DOCUMENT_REQUIRED",
+    "sourceUnchanged": true,
+    "saveInvoked": false,
+    "mapContentWrites": false,
+    "helperManifest": {
+      "protocol": 1,
+      "sourceSha256": "a24bece479c5b8d4a3b268d09e9ad858c2ff8e9d26f61028260616f1a2662c5b",
+      "home": "live-bridge/a24bece479c5b8d4-d0491d5b",
+      "sourceFiles": {
+        "Program.cs": "5b531ff560f8bdde11145633cd98c852fbee1b3874f5e8124cabdf981a5fe7c6",
+        "MemoryData.cs": "1016eb71a43ead30c03652af750c0ac6aaf48e85834bd03e115baea77bbae302",
+        "ArchiveIdentity.cs": "aef0440099975a7b580133f864523f0fb239e955bf319ef7146b2e8bc22f5b62"
+      },
+      "files": {
+        "sc2-mcp-live.exe": "796659ccc52342f49667c77e07f1c19bfd74ddaa1848ff6d7ee3cf9a36d94f3f"
+      }
+    }
+  },
+  "checks": {
+    "typescriptBuild": "passed",
+    "csharpBuild": "passed",
+    "moduleRegressions": {
+      "passed": 128,
+      "failed": 0,
+      "scope": "dist/tests/live*.test.js and editorLiveModule"
+    },
+    "scopedLint": "passed",
+    "scopedFormatting": "passed",
+    "panelSyntax": "passed for all three copies",
+    "architecture": {
+      "productionFiles": 466,
+      "relativeValueImportCycles": 0,
+      "boundaryViolations": 0
+    }
+  },
+  "currentSourceSnapshot": {
+    "src/modules/editorLive/documentIdentity.ts": "9418e32bdce370d33f01fb79d22eb610a4528dee34f4f5a6fb4297fd16754542",
+    "src/modules/editorLive/memoryDesktop.ts": "9a398e56173c389a718cfb9a855afe042f097edd2828687a4fb4a37942dbfd21",
+    "src/modules/editorLive/identity.ts": "cef54c8f75e1338202041bbe42a91fd26583c6430725caa96d39b86e2c0b910d",
+    "src/modules/editorLive/document.ts": "c39cd12ecd1667a34a64bf45e4fd809585cc9fe3d850d37c53aff5cb449ae348",
+    "src/modules/editorLive/memory.ts": "102ad3fe87d5c48380cc421ccbb643c69c72b7f5670206ff6baac8b3041a01e3",
+    "src/modules/editorLive/placement.ts": "5f1446d5b45c18dbe8f031874d1d8c626438068df58d35f9a5d114c4cd1074f1",
+    "src/modules/editorLive/dataXml.ts": "807b1a012d68e8324205aaa8a61488d1dc31293dbc666eeb782d725875062ef0",
+    "src/modules/editorLive/triggers.ts": "22d19d68fadd7cc4c33a162a86b8e8ec3d9982c16f33033ee9181d07a6035946",
+    "src/modules/editorLive/refreshTransfer.ts": "8a3b22fc20e262110b79e7d0fb23cb6b7c08aa5841fb7a78a67ca0f757c72428",
+    "src/modules/editorLive/refresh.ts": "98e33923a1b574dcd6404ded50d4d9218f1b9a11bac2a79a70932f4e8034741f",
+    "native/live-editor/ArchiveIdentity.cs": "aef0440099975a7b580133f864523f0fb239e955bf319ef7146b2e8bc22f5b62",
+    "native/live-editor/Program.cs": "5b531ff560f8bdde11145633cd98c852fbee1b3874f5e8124cabdf981a5fe7c6",
+    "scripts/build-live-editor.mjs": "ea39029f1b3b29543c276c55a959c779b26e049f8a204f61dab174e6c7b792f7"
+  },
+  "limitations": [
+    "Short Mod captions refuse because dependency archives can share names",
+    "Missing map ownership, ambiguous document names, mismatched root/suffix and changed frame refuse",
+    "This is guarded native/OS evidence, not an authoritative MFC document/revision identifier",
+    "Full changed-component and pending-XML native acceptance remains separate"
+  ],
+  "artifacts": {
+    "native": "work/live-placement-20261107/LONG_MAP_IDENTITY_NATIVE.json",
+    "publicFinal": "work/live-placement-20261107/LONG_MAP_IDENTITY_FINAL.json"
+  },
+  "fullGoalComplete": false
+}

@@ -1,8 +1,12 @@
 import { promises as fs } from "node:fs";
 import path from "node:path";
 import { createHash, randomUUID } from "node:crypto";
-import { LiveMemory } from "./memory.js";
-import { LiveDocument } from "./document.js";
+import type { LiveMemory } from "./memory.js";
+import { EditorLiveWorkspace } from "../editorLive/workspace.js";
+import type { LiveRuntime, LiveRuntimeFactory } from "../editorLive/runtime.js";
+import type { LiveDocument } from "./document.js";
+import type { LivePlacement } from "./placement.js";
+import type { LiveDataXml } from "./dataXml.js";
 import { Workspace } from "../../core/workspace.js";
 import { directoryManifest, extractArchive } from "../../archive/archiveAdapter.js";
 import {
@@ -13,13 +17,7 @@ import {
   type EditorWindow,
 } from "./desktop.js";
 
-export interface LiveRuntime {
-  workspace: Workspace;
-  call(tool: string, args: Record<string, unknown>, context?: unknown): Promise<unknown>;
-  export(archive: string): Promise<unknown>;
-  close(): Promise<void>;
-}
-export type LiveRuntimeFactory = (root: string) => Promise<LiveRuntime>;
+export type { LiveRuntime, LiveRuntimeFactory } from "../editorLive/runtime.js";
 interface Checkpoint {
   archive: string;
   sha256: string;
@@ -44,8 +42,11 @@ const allowedTool =
 
 /** Saved checkpoint collaboration, independent of the hidden native acceptance bridge. */
 export class LiveWorkspace {
+  readonly current: EditorLiveWorkspace;
   readonly memory: LiveMemory;
   readonly document: LiveDocument;
+  readonly placement: LivePlacement;
+  readonly data: LiveDataXml;
   private readonly sessions = new Map<string, Session>();
   private connecting = false;
   private closing = false;
@@ -61,31 +62,38 @@ export class LiveWorkspace {
       directory: string,
     ) => Promise<unknown> = extractArchive,
   ) {
-    this.memory = new LiveMemory(
-      workspace.root,
-      undefined,
-      () => this.closing || this.connecting || this.sessions.size > 0 || this.document.busy,
+    this.current = new EditorLiveWorkspace(
+      workspace,
+      () => this.runtimeFactory,
+      () => this.closing || this.connecting || this.sessions.size > 0,
+      desktop,
     );
-    this.document = new LiveDocument(
-      workspace.root,
-      undefined,
-      () => this.closing || this.connecting || this.sessions.size > 0 || this.memory.busy,
-    );
+    this.memory = this.current.memory;
+    this.document = this.current.document;
+    this.placement = this.current.placement;
+    this.data = this.current.data;
   }
 
   capabilities() {
+    const current = this.current.capabilities();
     return {
       module: "live",
-      apiVersion: "live-2026-11-07-document-save",
+      apiVersion: current.apiVersion,
+      currentDocument: current,
+      refresh: current.refresh,
+      triggers: current.triggers,
+      ui: current.ui,
+      text: current.text,
+      imports: current.imports,
+      componentTransfer: current.componentTransfer,
       backend: "current_document",
-      capabilityScope:
-        "Current-document workflow by default; checkpoint copies require explicit user selection. Direct-memory editing remains limited to existing Unit numeric fields.",
+      capabilityScope: current.capabilityScope,
       defaultWorkflow: {
         mode: "current_document",
         copies: false,
         save: "live.document.save",
         unsupportedOperation:
-          "Report the missing operation; never silently substitute a checkpoint copy",
+          "Use supported direct providers or explicitly accepted same_file_refresh; report missing operations without substituting a checkpoint copy",
       },
       document: {
         status: "live.document.status",
@@ -97,15 +105,25 @@ export class LiveWorkspace {
           "Exact Terrain window and existing archive; save verifies clean document and stable same-file metadata",
       },
       memory: this.memory.capabilities(),
+      placement: this.placement.capabilities(),
+      data: this.data.capabilities(),
       directInMemoryMutation: true,
       sourceOverwrite: false,
-      sourceOverwriteScope:
-        "No offline archive replacement; explicit native Save writes the same current file",
+      sourceOverwriteScope: current.sourceOverwriteScope,
       dllInjection: true,
       dllScope:
-        "Only the optional original visible adapter for explicit memory/save operations; never the private hidden test DLL",
+        "Only the optional original visible adapter for explicit memory/placement/save operations; never the private hidden test DLL",
       startsEditor: false,
       routing: {
+        refresh: {
+          tools: current.refresh.tools,
+          mode: "same_file_refresh",
+          requiresExplicitMode: true,
+          requiresCleanDocument: true,
+          requiresConnect: false,
+          createsNewWorkingMap: false,
+          reopensSamePath: true,
+        },
         connectivityTest: {
           tools: ["live.windows", "live.memory.capabilities"],
           requiresSave: false,
@@ -119,6 +137,18 @@ export class LiveWorkspace {
         },
         document: {
           tools: ["live.document.status", "live.document.save"],
+          requiresConnect: false,
+          copiesCreated: 0,
+        },
+        placement: {
+          tools: [
+            "live.placement.prepare",
+            "live.placement.inspect",
+            "live.placement.catalog",
+            "live.placement.create",
+            "live.placement.duplicate",
+            "live.placement.move",
+          ],
           requiresConnect: false,
           copiesCreated: 0,
         },
@@ -137,7 +167,21 @@ export class LiveWorkspace {
       refreshVerification:
         "Exact window/process identity, full or qualified abbreviated title path and archive hash; title matching is not an authoritative in-memory document path or visual proof",
       commands: [
+        ...current.refresh.tools,
+        ...current.triggers.tools,
+        ...current.ui.tools,
+        ...current.text.tools,
+        ...current.imports.tools,
         "live.windows",
+        "live.placement.prepare",
+        "live.placement.inspect",
+        "live.placement.catalog",
+        "live.placement.create",
+        "live.placement.duplicate",
+        "live.placement.move",
+        "live.data.read",
+        "live.data.author",
+        "live.data.release",
         "live.document.status",
         "live.document.save",
         "live.memory.capabilities",
@@ -260,7 +304,14 @@ export class LiveWorkspace {
   }
 
   async connect(archive: string, windowId?: string) {
-    if (this.closing || this.connecting || this.memory.busy || this.document.busy)
+    if (
+      this.closing ||
+      this.connecting ||
+      this.memory.busy ||
+      this.document.busy ||
+      this.placement.busy ||
+      this.data.busy
+    )
       throw Error("LIVE_CONNECT_BUSY");
     this.connecting = true;
     let release!: () => void;
@@ -535,8 +586,7 @@ export class LiveWorkspace {
 
   private async closeImpl() {
     this.closing = true;
-    await this.document.close();
-    await this.memory.close();
+    await this.current.close();
     await Promise.all([...this.inflight]);
     const results = await Promise.allSettled(
       [...this.sessions.values()].map((s) => s.runtime.close()),

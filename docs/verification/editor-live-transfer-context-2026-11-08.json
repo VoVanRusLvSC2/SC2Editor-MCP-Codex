@@ -1,0 +1,91 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-08T15:36:18.004Z",
+  "status": "partial_native_acceptance",
+  "scope": "Target-process component transport, native saved-UI-buffer reconciliation and linked same-file GUI/UI/settings/text package",
+  "architecture": {
+    "sharedTransferPathBoundary": "transferDirectory.ts",
+    "savedBufferReconciliation": "savedUiBuffer.ts",
+    "sameFileApplication": "Existing refreshPackage/refreshTransfer and domain generators reused",
+    "newPublicTools": 0,
+    "newProtocolOperations": [
+      64,
+      65
+    ],
+    "sourceSha256": {
+      "src/modules/editorLive/transferDirectory.ts": "6aeb55947323aee0424e647caec24f70b4bc52f46927644747af67578bdb9d3e",
+      "src/modules/editorLive/savedUiBuffer.ts": "8fef8c83976378096cec059e8fd202b023c071405f19fe02376a5122aebd3c38",
+      "src/modules/editorLive/document.ts": "2bf4ed1186930328b8c9f4340ceb2cfcde434f83c4804f02af03687c9866d2a9",
+      "src/modules/editorLive/memoryDesktop.ts": "a291dc5d548cd3abe64c3f4cb5f6550ed98669da22b42582330440440d89bd32",
+      "src/modules/editorLive/ui.ts": "7e4f49779cb9eec76e3b5e21b636cf93b682c5cc4ba5634c7f93c0e18bb71412",
+      "src/modules/editorLive/dataXml.ts": "7eb56d009fd144d9493b4aa00780a399bbd19b42f5f0353f1f4248798c01273f",
+      "src/modules/editorLive/componentTransfer.ts": "75fa652607ab93349a838af771c08a97c0a3546fd8310748b586ec4a58acab1c",
+      "src/modules/editorLive/importTransfer.ts": "88552ce1f9f5015ba5045aa428ee06b7c2922502f99c7182a6c0532f9c4fb283",
+      "src/modules/editorLive/imports.ts": "76f6ac141e62914f37eed387fac500461c54ddd21ab97b443a48584032fbe996",
+      "src/modules/editorLive/workspace.ts": "4856fc312e435ec2242d3f81694572fc29045362a1b252225f15b6541a4dce8a",
+      "native/live-editor/memory.cpp": "025c652dac4e178691c8d0385de330a8dab97f272080aa268da8ce0016bb5fd0",
+      "native/live-editor/ui_xml.inc": "6af0ea67a920c80127ac46bd04ebd05b8ed9366ceb2f805e928483968800cae0",
+      "native/live-editor/xml_buffer.inc": "f17decffe81f99a2c51cc57b9bccf6fbed2f413e8520b1b00f0add22de215986",
+      "native/live-editor/file_dialog.inc": "010a872ed8fb3dc3431574d41c1a9ca6e57a85921b25ac35522a1f340b40369d",
+      "native/live-editor/import_dialog.inc": "6d35bfdf642b74cc635e3e6a36e5ba2d69fd9da811027b19f5dece3b0a7df19e",
+      "native/live-editor/data_xml.inc": "71fc3683c1378fbf540906bdb764fdafd7aef3671cae1363feb5f1fddf098607",
+      "native/live-editor/MemoryData.cs": "c8df74acf0b78fcaa1ca8df474d326d94982f40b51c010d51a9663937afda8db",
+      "native/live-editor/Program.cs": "4fce5d394d160f119f05ee37f112c1b9ee21c721026d699cafbab916c5878204"
+    }
+  },
+  "native": {
+    "helperBuild": "live-bridge/354c24c2db4da322-643707bc",
+    "adapterBuild": "live-memory/97f35a19fd452a10-bfac6165",
+    "processId": 7604,
+    "sameFile": "K:/SC2_MAP_Workspace/SC2Editor-MCP-Codex/work/live-placement-20261107/.sc2mcp-output/ne/w/02536085fa234bffbe455e1718911383/workers/f29f63a0827f42cd8335e8030c289fa0/Seed.SC2Map",
+    "sameTerrainFrame": true,
+    "sameProcess": true,
+    "newWorkingMapCopies": 0,
+    "openDocuments": 1,
+    "linkedGui": true,
+    "registeredLayoutStyles": true,
+    "nativeUiBytes": 1215,
+    "playerColor": 5,
+    "localizedText": true,
+    "oldExecutableGuiElementsPreserved": 22,
+    "oldExecutableGuiElementsChanged": 0,
+    "pendingUiBufferPreserved": true,
+    "unsavedArchivePreserved": true,
+    "savedUiAcknowledged": [],
+    "generatedGalaxySha256": "364cbad51f4f2d17ab28938df317a6eff9fc430f3437414b93ed6fa2316c45dc",
+    "generatedCounterAssignment": 9,
+    "nativeCompilationReport": "work/live-placement-20261107/.sc2mcp-output/ne/jobs/a22a77ec-174d-49be-8693-26f896e31dd4/result.json",
+    "nativeCompilePassed": true,
+    "inputInjectionUsed": false,
+    "desktopSwitchApiUsed": false,
+    "desktopObservationScope": "SDK cumulative observation includes external input-desktop changes; no claim that the desktop stayed unchanged throughout",
+    "ownedWorkerStopped": true,
+    "userEditorClosed": false
+  },
+  "verification": {
+    "liveTests": 134,
+    "liveFailures": 0,
+    "build": true,
+    "scopedLint": true,
+    "format": true,
+    "panelSyntaxChecks": 3,
+    "architecture": "No relative value-import cycles or violations"
+  },
+  "artifacts": {
+    "guard": "work/live-placement-20261107/OWNED_PENDING_UI_GUARD.json",
+    "readbackBeforeCorrectedWrite": "work/live-placement-20261107/OWNED_UI_REJECTION_READBACK.json",
+    "candidateFailure": "work/live-placement-20261107/OWNED_PENDING_UI_CANDIDATE_REJECTION.json",
+    "postSaveFalseRefusal": "work/live-placement-20261107/OWNED_POST_SAVE_GUARD_REFUSAL.json",
+    "package": "work/live-placement-20261107/OWNED_LINKED_REFRESH.json",
+    "nativeRuntime": "work/live-placement-20261107/.sc2mcp-output/ne/jobs/f8bed3e7-7307-4360-8c44-1cecc1675933/Native.galaxy",
+    "tests": "work/live-placement-20261107/TRANSFER_CONTEXT_TESTS.log",
+    "wrongDocumentRefusal": "work/live-placement-20261107/OWNED_IMPORT_WRONG_DOCUMENT_REFUSAL.json"
+  },
+  "remaining": [
+    "Resource import with the target-process temp root was refused before mutation because native compilation opened its own temporary working map. Requalify on the correctly bound owned fixture, without relaxing document identity.",
+    "First GUI planning attempt widened CASC mount metadata and refused with STALE_DEPENDENCY. Resuming the preserved session after hydration succeeded; eliminate this first-use self-invalidation without weakening transaction guards.",
+    "End-to-end component round-trip/preservation audit and current connection/profile deployment audit remain incomplete.",
+    "Rendered presentation and gameplay of the new linked timer/trigger package were not tested; earlier bounded rendering evidence retains its separate scope."
+  ],
+  "fullGoalComplete": false
+}

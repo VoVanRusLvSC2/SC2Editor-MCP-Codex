@@ -1,0 +1,183 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-08T16:15:36.416Z",
+  "status": "partial_native_acceptance",
+  "scope": "Shared physical transport, first-use Data XML selection, CASC hydration and capability/deployment discovery",
+  "architecture": {
+    "sourceSha256": {
+      "src/modules/casc/workspace.ts": "432022cb5b7fffe9c4127608dacd8c37836ce69e081ec85c9a925f473aaeec44",
+      "src/modules/editorLive/dataXml.ts": "4156074bd9a31bb4cf8327e9c150def123be4b74c3cfd0b3b7e553724474d342",
+      "src/modules/editorLive/transferDirectory.ts": "d820ee0fe4d8dc2b05e4d8626dc02cf7b2999bb7a2fc1fb1b61d95d5ec30b08f",
+      "src/modules/editorLive/memoryDesktop.ts": "83bb99e13ef7430a52591867a79adedf4841656eedee2f67cd3017be3775f192",
+      "src/modules/editorLive/workspace.ts": "702d5a85c8fc81d22e9f1457abdebec9d26767d887272bce3c9bd15c64fe126e",
+      "src/modules/editorLive/tools.ts": "1167ba6cb40de07af169d9561d2f06d599264d3ea2188bdc8000f72d74109a27",
+      "src/modules/live/workspace.ts": "52ac07ae1e4555149884641511d86035753142b197e2dcb51014152d71d85349",
+      "native/live-editor/transfer_paths.inc": "c7ac2819d9783dbd4cae8d4abe76a1ddadaae8b3440668ae81c166bf92be0845",
+      "native/live-editor/file_dialog.inc": "e9a06b834d469af7eaefe469ea17d3cf1bef00c706e1b6094966cb029083d89e",
+      "native/live-editor/xml_buffer.inc": "ce2d302e771b620c2603f67f3f37e7146bead32c087d05b6775bb28b5c3cb25c",
+      "native/live-editor/memory.cpp": "1a6166dd84bdb925cbee73c4f5d5a5a4a605e44b41b4a50a12c6dc76dee9b35d",
+      "scripts/build-live-memory.mjs": "93d100c8ee7966fe2398ebda13b85a458089897df5677e4fbce434e5f7bbcd46"
+    },
+    "sharedNativeBoundary": "transfer_paths.inc",
+    "sharedClientBoundary": "transferDirectory.ts",
+    "temporaryRoot": "Editor-reported per-user .sc2mcp/transfer; not client TEMP or virtualized AppData",
+    "legacyDialogBudget": "UUID folder plus maximum accepted asset filename below MAX_PATH",
+    "cascHydration": "Intermediate registrations are restored without tracking; each completed requested manifest is then pinned. Explicit restore still guards the complete registry.",
+    "capabilityAuthority": "editorLive providers; workflow facade exposes the same current refresh route at top level",
+    "nativeRuntime": "live-memory/3154cc66988771b8-3af69f33"
+  },
+  "native": {
+    "resourceImport": {
+      "sameArchive": "K:\\SC2_MAP_Workspace\\SC2Editor-MCP-Codex/work/live-placement-20261107/.sc2mcp-output/ne/w/02536085fa234bffbe455e1718911383/workers/fb82b83c52134ef799651e566846e01d/Seed.SC2Map",
+      "sameProcess": 25832,
+      "sameFrame": "919502",
+      "nativeTreeVerified": true,
+      "previousPathsPreserved": true,
+      "exactSavedBytes": true,
+      "newWorkingMapCopies": 0,
+      "userDesktopInput": false
+    },
+    "readOnlyExports": {
+      "sameArchive": true,
+      "archiveSha256": "01a62bf29cacfc8be085b4ea214b82e0d336131c669dc425cbfd2b833a5d1747",
+      "uiExactSavedBytes": true,
+      "dataXmlBytes": 20493,
+      "dataBufferModified": false,
+      "textRead": true,
+      "savedArchiveUnchanged": true,
+      "nativeRefreshReady": false,
+      "userDesktopInput": false,
+      "workingCopiesCreated": 0
+    },
+    "physicalRoot": {
+      "temporaryDirectory": "C:\\Users\\Vladimir\\.sc2mcp\\transfer\\",
+      "componentDirectory": "C:\\Users\\Vladimir\\.sc2mcp\\transfer\\SC2EditorToolkit-live-components",
+      "canonical": "C:\\Users\\Vladimir\\.sc2mcp\\transfer\\SC2EditorToolkit-live-components"
+    },
+    "observedAppDataRedirection": [
+      {
+        "requested": "C:/Users/Vladimir/AppData/Local/SC2EditorToolkit-live-components",
+        "actual": "C:\\Users\\Vladimir\\AppData\\Local\\Packages\\OpenAI.Codex_2p2nqsd0c76g0\\LocalCache\\Local\\SC2EditorToolkit-live-components"
+      },
+      {
+        "requested": "C:/Users/Vladimir/AppData/LocalLow/SC2EditorToolkit-live-components",
+        "actual": "C:\\Users\\Vladimir\\AppData\\Local\\Packages\\OpenAI.Codex_2p2nqsd0c76g0\\LocalCache\\LocalLow\\SC2EditorToolkit-live-components"
+      }
+    ],
+    "ownedFixtureProcessId": 25832,
+    "ownedWorkerStopped": true,
+    "noCommandsToUserEditor": true,
+    "sourcePrivateRuntimeCopiedIntoMap": false,
+    "renderingAcceptance": false,
+    "gameplayAcceptance": false
+  },
+  "verification": {
+    "typescriptBuild": true,
+    "scopedTests": 186,
+    "failures": 0,
+    "scopedLint": true,
+    "scopedFormatting": true,
+    "architecture": {
+      "productionFiles": 468,
+      "valueImportCycles": 0,
+      "violations": 0
+    },
+    "panelRefreshTests": 2,
+    "panelSyntaxChecks": 3,
+    "gitDiffCheck": true
+  },
+  "deployment": {
+    "fresh": {
+      "at": "2026-11-08T16:13:24.674Z",
+      "configuredEntry": "K:\\SC2_MAP_Workspace\\SC2Editor-MCP-Codex\\dist\\index.js",
+      "result": {
+        "ok": true,
+        "completed": 1,
+        "steps": [
+          {
+            "id": "version",
+            "tool": "live.capabilities",
+            "ok": true,
+            "ms": 4,
+            "result": {
+              "module": "live",
+              "apiVersion": "editor-live-2026-11-08-shared-transport",
+              "refresh": {
+                "backend": "same_file_refresh",
+                "requiresExplicitMode": true,
+                "tools": [
+                  "live.refresh.prepare",
+                  "live.refresh.resume",
+                  "live.refresh.call",
+                  "live.refresh.author",
+                  "live.refresh.apply",
+                  "live.refresh.recover",
+                  "live.refresh.release"
+                ],
+                "scope": "Existing component authoring generators, validated same-file publication and original native document reload",
+                "createsNewWorkingMap": false,
+                "reopensSamePath": true,
+                "startsEditor": false,
+                "resetsNativeUndo": true,
+                "requires": "Clean current Terrain document, no pending XML/inline buffers; explicit same_file_refresh workflow",
+                "recovery": "Shared journal before close, internal rollback archive, preserved components and one-shot open marker",
+                "evidence": "Native load/title and saved-file checks do not establish every component's model, rendering or gameplay"
+              },
+              "componentTransfer": {
+                "tempRoot": "Process-reported per-user physical staging store outside MSIX AppData redirection",
+                "legacyDialogPaths": "Bounded short paths shared by the packaged client and original Editor",
+                "longFilePaths": true,
+                "persistedUiBuffer": "Native savepoint only after exact stable-archive byte equality; mismatched pending source is preserved"
+              }
+            }
+          }
+        ]
+      },
+      "noEditorStarted": true,
+      "noMapWrite": true
+    },
+    "attached": {
+      "recordedAt": "2026-11-08T16:09:35.176Z",
+      "scope": "Already attached Codex MCP connection; read-only discovery",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"ok\":true,\"completed\":1,\"steps\":[{\"id\":\"version\",\"tool\":\"live.capabilities\",\"ok\":true,\"ms\":2,\"result\":{\"module\":\"live\",\"apiVersion\":\"editor-live-2026-11-08-gui-library\"}}]}"
+          }
+        ],
+        "isError": false
+      },
+      "reconnectRequired": true,
+      "mapMutation": false
+    },
+    "panelFingerprintIncludes": [
+      "app/project.js",
+      "app/server.js",
+      "modules/casc/workspace.js",
+      "modules/editorLive providers",
+      "native live runtime manifests"
+    ],
+    "attachedConnectionHotReloadClaimed": false
+  },
+  "artifacts": {
+    "nativeImport": "work/live-placement-20261107/OWNED_IMPORT_TEMP_CONTEXT.json",
+    "readback": "work/live-placement-20261107/SHARED_TRANSPORT_READBACK.json",
+    "cascTests": "work/live-placement-20261107/CASC_HYDRATION_TESTS_CURRENT.log",
+    "allScopedTests": "work/live-placement-20261107/LIVE_CASC_FINAL_TESTS.log",
+    "cancellations": [
+      "work/live-placement-20261107/IMPORT_DIRECTORY_CANCELLATION.json",
+      "work/live-placement-20261107/IMPORT_SHELL_PREFIX_CANCELLATION.json",
+      "work/live-placement-20261107/IMPORT_PIDL_CANCELLATION.json"
+    ],
+    "moduleObservationTimeout": "work/live-placement-20261107/SHARED_TRANSPORT_INITIAL_MODULE_TIMEOUT.json",
+    "xmlSelectionFailure": "work/live-placement-20261107/DATA_FIRST_XML_SELECTION_FAILURE.json"
+  },
+  "remaining": [
+    "Native Save/status currently decide already_clean from Terrain caption only; qualify and handle dirty related module buffers without weakening manual-buffer guards. The retained read-only fixture had a dirty Triggers module while Terrain was clean, so full document cleanliness is not claimed.",
+    "Audit all existing component generators against refresh dispatch, including general resource replacement/removal/large imports and any omitted component families; do not call the complete current-map goal achieved from the qualified package alone.",
+    "The already attached chat MCP remains editor-live-2026-11-08-gui-library. The current configured entry in a fresh process reports editor-live-2026-11-08-shared-transport. Panel idle app-server refresh is configured and unit-tested; active connection replacement is not claimed.",
+    "Complete the same-file component round-trip and preservation acceptance audit."
+  ],
+  "fullGoalComplete": false
+}

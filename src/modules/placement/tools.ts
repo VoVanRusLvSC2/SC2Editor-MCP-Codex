@@ -176,10 +176,15 @@ export function registerPlacementTools(server: McpServer, context: PlacementTool
     "placement.scan",
     {
       description:
-        "Parse the real plain-XML Objects component losslessly and report ObjectUnit/ObjectDoodad/generic placed objects, ids and validation.",
-      inputSchema: z.object({ objectFile: z.string().default("Objects") }),
+        "Parse the real plain-XML Objects component losslessly and report ObjectUnit/ObjectDoodad/generic placed objects, ids and validation. Supply offset and limit for a bounded page; component IDs are distinct from live Editor object keys.",
+      inputSchema: z.object({ objectFile: z.string().default("Objects"), offset: z.number().int().min(0).optional(), limit: z.number().int().min(1).max(5000).optional() }),
     },
-    async ({ objectFile }) => textResult(await placement.scan(objectFile)),
+    async ({ objectFile, offset, limit }) => {
+      const result = await placement.scan(objectFile);
+      if (offset === undefined && limit === undefined) return textResult(result);
+      const start = offset ?? 0, objects = result.objects.slice(start, start + (limit ?? 8)), next = start + objects.length;
+      return textResult({ ...result, objects, offset: start, total: result.objects.length, nextOffset: next < result.objects.length ? next : null });
+    },
   );
   server.registerTool(
     "placement.addUnit",

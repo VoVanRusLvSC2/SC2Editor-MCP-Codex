@@ -1,0 +1,177 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-08T12:52:30.753Z",
+  "status": "incomplete_native_acceptance",
+  "objective": "Complete current-map MCP authoring and verify readable module boundaries; user accepts same-file refresh as well as direct application",
+  "previousGoalTurn": "progress",
+  "requirements": [
+    {
+      "id": "separate_module",
+      "state": "implemented",
+      "evidence": [
+        "src/modules/editorLive/workspace.ts",
+        "src/modules/editorLive/tools.ts"
+      ],
+      "scope": "Current-document provider ownership, shared lifecycle and busy guard; existing live.* tool names retained"
+    },
+    {
+      "id": "reuse_generators",
+      "state": "implemented_with_partial_native_evidence",
+      "evidence": [
+        "src/app/server.ts",
+        "src/modules/editorLive/runtime.ts",
+        "src/modules/editorLive/refreshPolicy.ts",
+        "docs/verification/editor-live-refresh-package-2026-11-08.json"
+      ],
+      "scope": "Existing component writers prepare one complete package; 55-command native package covered UI/Data/height/Text/Units, not every generator"
+    },
+    {
+      "id": "same_file_without_new_working_map",
+      "state": "native_case_verified",
+      "evidence": [
+        "docs/verification/editor-live-refresh-package-2026-11-08.json"
+      ],
+      "scope": "Original Close, atomic same-path publication and original Open; same process/frame; internal staging and rollback retained; native Undo resets"
+    },
+    {
+      "id": "protect_manual_drafts",
+      "state": "incomplete_native_qualification",
+      "evidence": [
+        "native/live-editor/document.inc",
+        "src/tests/liveRefresh.test.ts"
+      ],
+      "scope": "Native clean-document and pending-buffer guards implemented; targeted real-Editor dirty/pending-buffer refusal remains unqualified"
+    },
+    {
+      "id": "broad_component_loading_and_scene",
+      "state": "incomplete",
+      "evidence": [
+        "docs/verification/editor-live-refresh-package-2026-11-08.json"
+      ],
+      "scope": "Native UI XML and Unit health read back. Scene inspection timed out; terrain-native, settings, changed existing GUI graph and linked-resource native acceptance remain unproven"
+    },
+    {
+      "id": "no_replay_recovery",
+      "state": "regression_verified_native_failures_incomplete",
+      "evidence": [
+        "src/tests/liveRefresh.test.ts",
+        "src/tests/livePendingComponent.test.ts"
+      ],
+      "scope": "Cross-session lost Close/Open, pending readiness, publication status, conflicts and bounded journals pass regression cases. Replaced Editor process/frame refuses; automatic rebind is not claimed"
+    },
+    {
+      "id": "cross_volume_and_rollback",
+      "state": "filesystem_regression_verified",
+      "evidence": [
+        "src/modules/editorLive/refreshPackage.ts",
+        "src/tests/liveRefreshPackage.test.ts"
+      ],
+      "scope": "Different device ID simulated; staging bytes, hashes and final rename are real filesystem operations. No real cross-volume native Editor case claimed"
+    },
+    {
+      "id": "prepared_project_ownership",
+      "state": "regression_verified",
+      "evidence": [
+        "src/modules/editorLive/refreshProject.ts",
+        "src/tests/liveRefreshProject.test.ts"
+      ],
+      "scope": "Existing workspace gate serializes concurrent stale-owner reclamation; process lease remains independent"
+    },
+    {
+      "id": "readable_architecture",
+      "state": "static_and_scope_review_verified",
+      "evidence": [
+        "src/modules/editorLive/refreshPackage.ts",
+        "src/modules/editorLive/refreshTransfer.ts",
+        "src/modules/editorLive/refreshProject.ts",
+        "docs/EDITOR_LIVE.md"
+      ],
+      "scope": "Session, package preparation, native transitions and project ownership separated; 465 production files, no static relative value-import cycles or boundary violations. Not proof of every runtime dependency or globally optimal design"
+    },
+    {
+      "id": "fresh_contract_and_panel_guidance",
+      "state": "fresh_session_verified_existing_connection_not_reloaded",
+      "evidence": [
+        "work/live-placement-20261107/REFRESH_CURRENT_CONTRACT.json"
+      ],
+      "scope": "Fresh API editor-live-2026-11-08-refresh exposes seven tools; all three panel fingerprints include refreshPackage. Older attached connection requires reconnect"
+    },
+    {
+      "id": "private_native_code",
+      "state": "bounded_archive_check_passed",
+      "evidence": [
+        "publication-policy.json"
+      ],
+      "scope": "No native executable/source file extensions in the inspected qualification archive; no private Toolkit source or binary copied by this work. This is not a content or full Git-history audit"
+    },
+    {
+      "id": "rendered_acceptance",
+      "state": "blocked",
+      "evidence": [
+        "work/live-placement-20261107/REFRESH_GRAPHICS_BLOCKER.json"
+      ],
+      "scope": "Editor graphics initialization fails; Computer Use was stopped by physical Escape. No further window input or launch in this turn"
+    }
+  ],
+  "checksObservedInPreviousGoalTurn": {
+    "typescriptBuild": "passed",
+    "focusedRegressions": {
+      "passed": 42,
+      "failed": 0
+    },
+    "scopedEslint": "passed",
+    "scopedFormatting": "passed",
+    "architecture": {
+      "productionFiles": 465,
+      "relativeValueImportCycles": 0,
+      "boundaryViolations": 0
+    },
+    "panelSyntax": {
+      "files": 3,
+      "status": "passed"
+    },
+    "note": "Retained prior observed checks; no green native fixtures replayed. Source snapshot below records current bytes and is not a new native qualification."
+  },
+  "currentSourceSnapshot": {
+    "src/modules/editorLive/refresh.ts": "6df4f314e7e7d9cf9b2fd696f023a1b26cdf079c800c95894c53544a1a522994",
+    "src/modules/editorLive/refreshPackage.ts": "7d181279ca450492764f0d376c9ac2f7c093be78f70a5aae36624eab9072ac3b",
+    "src/modules/editorLive/refreshTransfer.ts": "0ba866e3c690b94ef64727641178ad3588efeede051262ddec106b9e376f0f96",
+    "src/modules/editorLive/refreshProject.ts": "c5fd2c3a0da950aec8492d6c4a026de5c3807ae8615828e5e53d1fad65023e94",
+    "src/modules/editorLive/refreshPolicy.ts": "087aa391beb49045c0afc18643380a73a1ae52ffca28e36087ce78a7541e2651",
+    "src/modules/editorLive/workspace.ts": "a5daf4f69adb11b395eefb38b6cdb1ef0276812317d4fc593659d540e2f32327",
+    "src/modules/editorLive/tools.ts": "b5dfc39416b52fe0c39b000a32f47cd051932a4e3e73ae37e2bc0616ec54f5de",
+    "src/modules/editorLive/pendingComponent.ts": "8dbaad208b3b43f5465936e25a43ce8b894322c7b23569e6751c74118a1c8a9c",
+    "src/tests/liveRefresh.test.ts": "f36b6e3027e4e264761b30b2b6ed0fb17d5adcad77282f683770b85b5c7daeb8",
+    "src/tests/liveRefreshPackage.test.ts": "d114f02a5ea180f624837136ea48e10884a78fa5e6073040290e5d02d13d37a6",
+    "src/tests/liveRefreshProject.test.ts": "426587c2dd0cb28e8c36ad80e328002e542e926d0209520a6cce00a5b3b92786",
+    "src/tests/livePendingComponent.test.ts": "301ca62a83742e3e67898bed73eb17fe581f2de91e8368e83634cef90ecd5347"
+  },
+  "currentFixture": {
+    "sha256": "b4e93a52cabeeac2326f5147accc5525b3a3cd0a87600862b55590bbd59c05b0",
+    "expectedAppliedSha256": "b4e93a52cabeeac2326f5147accc5525b3a3cd0a87600862b55590bbd59c05b0",
+    "nativeExtensionEntries": [],
+    "inspectionScope": "Archive entry names only"
+  },
+  "currentBlocker": {
+    "editorProcessId": 4992,
+    "processObservedAlive": true,
+    "latestGraphicsLog": "2026-11-08 14.47.25 Graphics.txt",
+    "observedFailureLines": [
+      "GFX  14:47:26.122 DirectX call  failed with error code -2005530520",
+      "GFX  14:47:27.188 DirectX call  failed with error code -2005530520",
+      "GFX  14:47:28.251 DirectX call  failed with error code -2005530520",
+      "GFX  14:47:29.301 DirectX call  failed with error code -2005530520",
+      "GFX  14:47:30.346 DirectX call  failed with error code -2005530520",
+      "GFX  14:47:31.360 CreateDevice failed:"
+    ],
+    "controlsAfterUserEscape": "No further Computer Use or native mutations",
+    "sameFailureAcrossGoalTurns": 3
+  },
+  "remaining": [
+    "Restore a usable Editor graphics session without disturbing other game processes",
+    "Qualify the new native ready-state observation and dirty/pending-buffer refusal",
+    "Inspect already-saved scene/terrain and remaining changed components without reapplying the 55-command package",
+    "Reconnect the old MCP client before testing its exposed current contract"
+  ],
+  "fullGoalComplete": false
+}

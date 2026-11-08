@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-08",
+  "status": "inconclusive",
+  "scope": "Attempt to test native compiler failure and retry on an owned fixture",
+  "initialAttempt": "The supported Custom Script generator refused this fixture because its trigger file contains libraries; no map change was applied.",
+  "secondAttempt": "A manually inserted test-only Custom Script declaration with an undefined function produced a successful native compile, and the declaration was absent from exported Galaxy. Its constructed XML or references may not represent a valid native element.",
+  "compileJob": "c403d346-95a2-41d3-aed9-adf1dfae1463",
+  "preparedSession": "9e065c8d-b2b2-4ffe-99be-5025fd416598",
+  "userMapChanged": false,
+  "nativeFailureVerified": false,
+  "retryVerified": false,
+  "gameplayVerified": false,
+  "artifacts": [
+    "work/live-placement-20261107/FAILURE_RETRY_NATIVE.json",
+    "work/live-placement-20261107/FAILURE_RETRY_FIXTURE_NATIVE.json",
+    "work/live-placement-20261107/qualify-native-failure-retry.mjs"
+  ],
+  "nextAction": "Use a native-verified GUI element or a qualified compiler failure fixture before evaluating retry; do not infer general Custom Script behavior from the handcrafted XML.",
+  "fullGoalComplete": false
+}

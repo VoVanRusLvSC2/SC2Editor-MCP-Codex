@@ -1,0 +1,130 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-08T17:22:50.023Z",
+  "status": "bounded_native_acceptance",
+  "scope": "Begin same-file refresh with an explicitly authorized native Save for an already-dirty document",
+  "architecture": {
+    "sourceSha256": {
+      "src/modules/editorLive/refreshBegin.ts": "ff1971eb53be0be24667d3ae93874bfa547a13c43b1520a20f2a34467cbfa59e",
+      "src/modules/editorLive/refresh.ts": "cc44b89422d823558e10e76ddbde1263673eb2b21498336544b617d0e50c7561",
+      "src/modules/editorLive/workspace.ts": "34e14f647b8d048e3a22f9a6a4b59c4eb17dd712836a8d57437d540cdcdcccbe",
+      "src/modules/editorLive/tools.ts": "05989eb1d7313a6bad4b9eda10db91a92734218258451c725f19b4a71821e907",
+      "src/tests/liveRefreshBegin.test.ts": "4a929dbe4ff8272cba3b9007b3a9fa9f4dbb46376539dfc18123248a97c8307d",
+      "src/tests/editorLiveModule.test.ts": "1647ec2977a694d5b93cca23a5f8e0253f0d76fe8a8e313a401cfa3295308991"
+    },
+    "orchestration": "refreshBegin.ts reuses LiveDocument and LiveRefresh with an expected process/revision guard",
+    "productionFiles": 472,
+    "valueImportCycles": 0,
+    "violations": 0
+  },
+  "native": {
+    "samePath": true,
+    "sameFrame": true,
+    "sameProcess": true,
+    "nativeReady": true,
+    "openDocuments": 1,
+    "initiallyDirty": true,
+    "noSaveModeRefused": true,
+    "authorizedNativeSave": "saved",
+    "uiMarkerSaved": true,
+    "followupTextSaved": true,
+    "newWorkingCopies": 0,
+    "userDesktopInput": false,
+    "rendered": false,
+    "gameplay": false,
+    "diagnostics": {
+      "before": {
+        "errors": 0,
+        "warnings": 0,
+        "rows": 0
+      },
+      "after": {
+        "errors": 8,
+        "warnings": 0,
+        "rows": 9
+      },
+      "interpretation": "Eight known UI template/include errors appeared when the UI module opened, before the dirty edit and Save; the same messages are present in earlier fixture reports. No warning was observed in the after snapshot. These findings do not establish an error-free map.",
+      "beforeReport": "work/live-placement-20261107/.sc2mcp-output/ne/jobs/a8d5c843-0626-4451-aa8c-a5e9f61951d1/result.json",
+      "afterReport": "work/live-placement-20261107/.sc2mcp-output/ne/jobs/b45754f1-b7a5-428f-80f3-75ebf953242d/result.json"
+    },
+    "ownedWorkerStopped": true
+  },
+  "sourceTiming": "After the native success run, only the handling of a confirmed Save with a UI reconciliation error was changed in refreshBegin.ts. This failure-path correction is covered by the focused regression and was not represented as a replayed native test.",
+  "verification": {
+    "typescriptBuild": true,
+    "focusedTests": 37,
+    "failures": 0,
+    "scopedLint": true,
+    "prettier": true,
+    "architectureCheck": true,
+    "panelRefreshTests": 2,
+    "panelSyntaxChecks": 3
+  },
+  "deployment": {
+    "fresh": {
+      "at": "2026-11-08T17:22:10.978Z",
+      "configuredEntry": "K:\\SC2_MAP_Workspace\\SC2Editor-MCP-Codex\\dist\\index.js",
+      "result": {
+        "ok": true,
+        "completed": 1,
+        "steps": [
+          {
+            "id": "version",
+            "tool": "live.capabilities",
+            "ok": true,
+            "ms": 3,
+            "result": {
+              "module": "live",
+              "apiVersion": "editor-live-2026-11-08-refresh-begin",
+              "refresh": {
+                "backend": "same_file_refresh",
+                "requiresExplicitMode": true,
+                "tools": [
+                  "live.refresh.prepare",
+                  "live.refresh.begin",
+                  "live.refresh.resume",
+                  "live.refresh.call",
+                  "live.refresh.author",
+                  "live.refresh.resources",
+                  "live.refresh.apply",
+                  "live.refresh.recover",
+                  "live.refresh.release"
+                ],
+                "scope": "Existing component authoring generators, validated same-file publication and original native document reload",
+                "createsNewWorkingMap": false,
+                "reopensSamePath": true,
+                "startsEditor": false,
+                "resetsNativeUndo": true,
+                "requires": "Clean current Terrain document, no pending XML/inline buffers; explicit same_file_refresh workflow",
+                "recovery": "Shared journal before close, internal rollback archive, preserved components and one-shot open marker",
+                "evidence": "Native load/title and saved-file checks do not establish every component's model, rendering or gameplay",
+                "resources": "Add, replace or remove Assets files in one guarded prepared group; 32 files, 64 MiB each, 128 MiB total source and original bytes"
+              },
+              "componentTransfer": {
+                "tempRoot": "Process-reported per-user physical staging store outside MSIX AppData redirection",
+                "legacyDialogPaths": "Bounded short paths shared by the packaged client and original Editor",
+                "longFilePaths": true,
+                "persistedUiBuffer": "Native savepoint only after exact stable-archive byte equality; mismatched pending source is preserved"
+              }
+            }
+          }
+        ]
+      },
+      "noEditorStarted": true,
+      "noMapWrite": true
+    },
+    "previouslyAttachedChatApiVersion": "editor-live-2026-11-08-gui-library",
+    "attachedChatHotReloaded": false,
+    "panelFingerprintIncludesBegin": true
+  },
+  "evidence": [
+    "work/live-placement-20261107/REFRESH_BEGIN_NATIVE.json"
+  ],
+  "limitations": [
+    "Rendering and gameplay not verified",
+    "Already attached older MCP connections still require their own reload",
+    "Pending inline edits and unrelated native dialogs are preserved and block automatic Save",
+    "UI template/include errors remain unresolved"
+  ],
+  "fullGoalComplete": false
+}

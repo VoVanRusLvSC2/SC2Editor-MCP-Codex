@@ -1,0 +1,118 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-08T10:39:25.372Z",
+  "status": "partial_native_acceptance",
+  "scope": "Current active-layer Doodad/Unit deletion, not whole-document object serialization preservation",
+  "module": {
+    "name": "editor-live",
+    "apiVersion": "editor-live-2026-11-08-delete",
+    "tools": [
+      "live.placement.delete"
+    ],
+    "copiesCreated": 0,
+    "reopensMap": false
+  },
+  "native": {
+    "transport": "Public MCP stdio",
+    "editorBuild": "5.0.17.98310 English x64",
+    "selectedInstancesRemoved": true,
+    "activeLayerVisiblePropertiesPreserved": true,
+    "sameFileSaved": true,
+    "savedArchiveSha256": "51da1a2f8e331e54d66fc96160568f377fd1cd68b575a74d752b5ebe9af114ab",
+    "deletedObjects": [
+      {
+        "type": "Zergling",
+        "name": "Live palette Zergling",
+        "x": 6,
+        "y": 26,
+        "owner": 1
+      },
+      {
+        "type": "Barrels",
+        "name": "Live palette Barrels",
+        "x": 26.5,
+        "y": 26.5
+      }
+    ],
+    "removedIds": [
+      "480563918",
+      "1960675346"
+    ],
+    "unrelatedNonObjectComponentsByteEquivalent": [
+      {
+        "file": "Triggers",
+        "byteEquivalent": true
+      },
+      {
+        "file": "Base.SC2Data/UI/Layout/LiveUIQualification.SC2Layout",
+        "byteEquivalent": true
+      },
+      {
+        "file": "enUS.SC2Data/LocalizedData/GameStrings.txt",
+        "byteEquivalent": true
+      },
+      {
+        "file": "enUS.SC2Data/LocalizedData/GameHotkeys.txt",
+        "byteEquivalent": true
+      },
+      {
+        "file": "enUS.SC2Data/LocalizedData/TriggerStrings.txt",
+        "byteEquivalent": true
+      }
+    ],
+    "wholeDocumentObjectPreservation": false,
+    "changedSurvivingObjectIds": [
+      "966418988",
+      "20068028",
+      "562500035",
+      "852831602"
+    ],
+    "editorProcesses": 1,
+    "originalUserArchiveUnchanged": true,
+    "originalUserArchiveSha256": "b2050d012c03164d4b5a870507916c066e5853623d48b3c3e76f961c7f2e07cd",
+    "diagnostics": {
+      "sourceCoverage": "visible_original_Messages_window_only",
+      "retainedStockUiWarnings": true,
+      "allClear": false
+    },
+    "renderedVerified": false,
+    "gameplayVerified": false
+  },
+  "unresolved": {
+    "issue": "Four surviving object nodes changed during native Save, despite matching active-layer visible native properties. That broader preservation assertion failed and stays failed.",
+    "evidenceLimit": "The exact pre-run Objects XML was not retained. An older retained component cannot establish the exact field diff of this run. Do not dismiss the changes as formatting or attribute them conclusively to deletion, property inspection or native serialization.",
+    "recovery": "Passing deletion targets were not recreated or deleted again. Future targeted checks retain both component versions; no offline archive restoration is substituted."
+  },
+  "architecture": {
+    "backend": "Existing LivePlacement snapshots, source guards, properties and original Clear; no archive writer",
+    "identity": "UI row keys are transient; comparison uses type/property multisets after reindexing",
+    "bounds": "At most 32 listed objects for complete active-layer visible-property inspection",
+    "unknownPolicy": "Snapshot consumed before mutation; lost reply/dialog never replays or automatically dismisses a confirmation"
+  },
+  "checks": {
+    "build": true,
+    "releaseBuild": true,
+    "changedScopeEslint": true,
+    "targetedRegressionTests": 34
+  },
+  "runtimeScopes": {
+    "native": {
+      "home": "live-memory/e3f4bed487be4bd8-eccd1510",
+      "sourceSha256": "e3f4bed487be4bd868b8a248bd84721abeeffc3c7b6113cf498bf2a2b9fa8591"
+    },
+    "helper": {
+      "home": "live-bridge/87a3ce74bda53101-2fbeb3b9",
+      "sourceSha256": "87a3ce74bda53101337c92d489edc53befedc0233106ff884771c0a49c46d3ea"
+    }
+  },
+  "artifacts": [
+    "work/live-placement-20261107/NATIVE_DELETE_QUALIFICATION.json",
+    "work/live-placement-20261107/NATIVE_DELETE_FINAL.json"
+  ],
+  "remaining": [
+    "Whole-document object preservation acceptance",
+    "Larger layers and nonmodal native object snapshots",
+    "General points/regions/cameras and property editing",
+    "Other unfinished current-document providers"
+  ]
+}

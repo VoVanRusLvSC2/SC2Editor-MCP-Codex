@@ -1,0 +1,96 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-08T11:39:43.959Z",
+  "status": "partial_native_acceptance",
+  "scope": "Clean current-document source release and same-file original reopening, preparatory to the user-accepted refresh workflow; changed-component application remains unfinished",
+  "native": {
+    "sameProcess": true,
+    "sameProcessStart": true,
+    "samePath": true,
+    "sourceUnchanged": true,
+    "newWorkingMapCopies": 0,
+    "contentWritten": false,
+    "originalNativeClose": true,
+    "originalSameFileDropOpen": true,
+    "loaded": {
+      "windowId": "593814",
+      "processId": 16988,
+      "processStart": "639297344153320401",
+      "title": "Terrain - [K:/.../work/live-placement-20261107/Qualification.SC2Map] - StarCraft II Editor",
+      "enabled": true,
+      "acceptsFiles": true
+    },
+    "editorBuild": "5.0.17.98310 English x64",
+    "qualificationTransport": "Private development adapter commands, not new public MCP refresh tools",
+    "nativeManifest": {
+      "protocol": 1,
+      "sourceSha256": "162e62d866c3e63f5e58d896d21139836bfc9764abda92e5f5c0435ba86909f4",
+      "sourceFiles": {
+        "memory.cpp": "ca79501df9bbf0d55fb1eb9a74e07829c7bacb41441e8b2ffb785bd8eb3ac18f",
+        "document.inc": "a80d3758fd50a6f9224bd4c9c942a85188040047668cc9246d0f6275268922fc",
+        "placement.inc": "19024949dc11e7fe122ee0f0813b6838bcb86908a25fea89c3a6741a54e4957c",
+        "palette.inc": "a648ba887812ea87e68c061426402ad3c274016fbb3dc30eb16d4385a7a23310",
+        "terrain_brush.inc": "aeebe7ee65dc1b14cab2990c0e0eb410c9b3b0968fdb8ba2e72287d6b0ecd6d7",
+        "xml_buffer.inc": "fa85bb6e15258154988e1ea9b4ee904edda8b8e1f8f93a2578c65b224251526a",
+        "ui_xml.inc": "442490048f3dbf5b0d5c95746728d800e0535b8453e6a0ba10faf944e87a104e",
+        "file_dialog.inc": "e6dc1c2d2b92cc08f62d1b0ab4bd5115d1ad0c0e35db9f5cf50f51dba5c268e5",
+        "import_dialog.inc": "661249799033bc245e884df99f72d8e5a746ee8a4afdc9c210bb6c800af9d13b",
+        "module_inspection.inc": "7bd885c0eef915590c42f6036a36a770e53eaf5f240bb143d8fd86a0187ce8c3",
+        "data_xml.inc": "aa4cd999e9236fecd33aafe831c5b9a759af6087a7b8d8776c1cddb77007a8e1",
+        "memory_protocol.h": "be1850754b2b2f5ab39240d2fbc5f91a8f78994b4ea996ea7f68d873d85b52d3",
+        "memory_loader.cpp": "7dce8ff327caf6750264d6384832e826a43851f91524b79329a309639e1d8bb6",
+        "CMakeLists.txt": "e5ec66fc57edbfff56ec39a64b20c9d2bd90917d6ba3180fcdb5c7a9bd031b0c"
+      },
+      "home": "live-memory/162e62d866c3e63f-aa65b872",
+      "message": "SC2EditorToolkit.LiveData.v1.162e62d866c3e63f-aa65b872",
+      "files": {
+        "sc2-mcp-live-data.dll": "897a0b4e8e93ff3789a124ab2396a65da2d4cd80a1f9998a02e59b6f93fce2d1",
+        "sc2-mcp-live-loader.exe": "4bc4d11f7c37a4b5e18e36715adff85821f75db39d9ee1327a1cda623c701c0c"
+      }
+    },
+    "bridgeManifest": {
+      "protocol": 1,
+      "sourceSha256": "087adf4ca48f94c0c780888f58a3cee417a85648772e5e15b9184b36bfd60c2f",
+      "home": "live-bridge/087adf4ca48f94c0-80416fe2",
+      "sourceFiles": {
+        "Program.cs": "ae7cf4c7fd0ce7fad27edfb04670fb27c2e51472768b82f7bc6f72a6d58862c7",
+        "MemoryData.cs": "1016eb71a43ead30c03652af750c0ac6aaf48e85834bd03e115baea77bbae302"
+      },
+      "files": {
+        "sc2-mcp-live.exe": "b5cf1196977b40649060dfe817f8488786019624e9ec545510caeb9cb1699391"
+      }
+    }
+  },
+  "sourceLock": {
+    "atomicReplacement": "EPERM",
+    "nonWritingReadWriteOpen": "EBUSY",
+    "lockingOwner": {
+      "ProcessId": 11284,
+      "AppName": "SC2Edit",
+      "AppType": 1
+    },
+    "sourceUnchanged": true,
+    "forceClosedHandles": false
+  },
+  "failedProbesRetained": [
+    "TERRAIN_PICK_INSPECTION.json",
+    "TERRAIN_PICK_ACTIVE_INSPECTION.json",
+    "TERRAIN_PICK_SETTLED.json",
+    "PROBE_settings_options.json",
+    "CURRENT_FILE_RELEASE_PROBE.json"
+  ],
+  "notes": [
+    "Posted viewport hover did not produce an authoritative requested-world-point sample; the hover branch was removed from production.",
+    "The settings.options probe returned a native timeout and the prior owned Editor process was later confirmed absent. No application crash cause was established; that experimental mode was removed.",
+    "Initial release inspection mistook ordinary #32770 Editor frames for modals; the corrected classifier checks disabled owners/frames. No close was attempted by the refused probe."
+  ],
+  "remaining": [
+    "Public prepare/author/call/apply/recover lifecycle using existing generators",
+    "Changed-component publication to the same file",
+    "Cross-session recovery journal and rollback artifact",
+    "Dirty/pending-buffer refusal qualification",
+    "Native component readback, diagnostics and rendered acceptance after changed-file refresh"
+  ],
+  "newWorkingMapCopies": 0,
+  "fullCurrentDocumentAuthoringComplete": false
+}

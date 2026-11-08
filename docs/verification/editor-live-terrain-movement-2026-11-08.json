@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-08",
+  "scope": "One Marine movement observation on the terrain changed by the existing same-file refresh fixture",
+  "sourceMapSha256": "b4e93a52cabeeac2326f5147accc5525b3a3cd0a87600862b55590bbd59c05b0",
+  "previousRenderEvidence": "docs/verification/editor-live-terrain-render-2026-11-08.json",
+  "session": "e87e8e402504be38a87a65dbb24e8970",
+  "mapConfirmed": true,
+  "unitType": "Marine",
+  "unitOwner": 1,
+  "unitWasTestOwned": true,
+  "observations": [
+    { "kind": "created", "gameTime": 13.0, "position": { "x": 19, "y": 10 } },
+    { "kind": "moveAccepted", "gameTime": 19.0, "target": { "x": 25, "y": 10 } },
+    { "kind": "positionObserved", "gameTime": 24.125, "position": { "x": 25, "y": 10 } },
+    { "kind": "moveAccepted", "gameTime": 30.375, "target": { "x": 22, "y": 10 } },
+    { "kind": "positionObserved", "gameTime": 35.25, "position": { "x": 22, "y": 10 } },
+    { "kind": "moveAccepted", "gameTime": 40.875, "target": { "x": 19, "y": 10 } },
+    { "kind": "positionObserved", "gameTime": 45.75, "position": { "x": 19, "y": 10 } }
+  ],
+  "normalGameplayOrders": true,
+  "intermediateRouteNotRecorded": true,
+  "gameDiagnosticsCoverage": "partial; returned page has more entries and absence of errors is not established",
+  "ownedGameDetached": true,
+  "limitations": [
+    "Only this Marine and these points were tested; route samples between points were not recorded.",
+    "Other unit sizes, cliffs, ramps and arbitrary terrain edits remain unverified."
+  ],
+  "fullGoalComplete": false
+}

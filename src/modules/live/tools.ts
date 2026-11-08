@@ -1,8 +1,7 @@
 import type { McpServer } from "@modelcontextprotocol/server";
 import * as z from "zod/v4";
 import type { LiveRuntimeFactory, LiveWorkspace } from "./workspace.js";
-import { registerMemoryTools } from "./memoryTools.js";
-import { documentTargetSchema, documentSaveSchema } from "./document.js";
+import { registerEditorLiveTools } from "../editorLive/tools.js";
 
 const sessionId = z.string().uuid();
 const result = (value: unknown) => ({
@@ -13,48 +12,15 @@ export function registerLiveTools(
   server: McpServer,
   live: LiveWorkspace,
   factory: LiveRuntimeFactory,
+  checkpoints = true,
 ) {
   live.runtimeFactory = factory;
-  registerMemoryTools(server, live.memory);
-  server.registerTool(
-    "live.document.status",
-    {
-      description:
-        "Read the selected current Terrain document identity, dirty/dialog flags and saved archive SHA-256. No map copy, save, DLL load or checkpoint import. Use the returned hash for live.document.save.",
-      inputSchema: documentTargetSchema,
-      annotations: { readOnlyHint: true },
-    },
-    async (a) => result(await live.document.status(a)),
+  registerEditorLiveTools(
+    server,
+    live.current,
+    checkpoints ? () => live.capabilities() : undefined,
   );
-  server.registerTool(
-    "live.document.save",
-    {
-      description:
-        "Save the explicitly selected current open map with native File > Save, never Save As or checkpoint export. Requires a fresh same-archive SHA-256 from live.document.status. Includes current unsaved user edits. Verifies unchanged document identity, clean title and stable same-file disk readback. Dialogs and unknown outcomes are never dismissed or retried. Does not add objects or expand memory editing scope.",
-      inputSchema: documentSaveSchema,
-    },
-    async (a) => result(await live.document.save(a)),
-  );
-  server.registerTool(
-    "live.capabilities",
-    {
-      description:
-        "Read-only API version/connectivity/routing check; no save or live.connect required. Current-document editing and native same-file Save are the default, with no map copy. Unit memory edits remain scalar-only; Terrain/object placement is not implemented in memory. Checkpoints require explicit user selection.",
-      inputSchema: z.object({}).strict(),
-      annotations: { readOnlyHint: true },
-    },
-    async () => result(live.capabilities()),
-  );
-  server.registerTool(
-    "live.windows",
-    {
-      description:
-        "Read-only connectivity/window inspection, including unsaved documents; no save or live.connect required. Lists existing Editor window/process identities, titles and file-drop availability. For live.memory edits select the matching Data window, even if the panel belongs to Terrain. Does not start or inject Editor.",
-      inputSchema: z.object({}).strict(),
-      annotations: { readOnlyHint: true },
-    },
-    async () => result(await live.windows()),
-  );
+  if (!checkpoints) return;
   server.registerTool(
     "live.connect",
     {
