@@ -12,13 +12,62 @@ const keys = [
   "jobId",
   "sessionId",
   "snapshotId",
+  "sceneHash",
+  "layer",
+  "selectedKey",
+  "count",
+  "objectKey",
+  "type",
+  "name",
+  "x",
+  "y",
+  "owner",
   "pendingId",
   "windowId",
+  "sourceWindowId",
   "processId",
   "processStart",
   "preparedDirectory",
   "componentDirectory",
   "retryMutation",
+  "createdAction",
+  "createdEvent",
+  "eventName",
+  "event",
+  "kind",
+  "eventIndex",
+  "events",
+  "totalEvents",
+  "section",
+  "parameterVerified",
+  "parametersVerified",
+  "parameterState",
+  "actionName",
+  "nativeLabel",
+  "category",
+  "detailFingerprint",
+  "parameterFingerprint",
+  "parameters",
+  "totalParameters",
+  "parameterRoot",
+  "itemIndex",
+  "itemText",
+  "parameterIndex",
+  "parameter",
+  "remainingParameters",
+  "unitName",
+  "pointName",
+  "pointIdentity",
+  "unitIdentity",
+  "catalogIdVerified",
+  "previousValue",
+  "actions",
+  "totalActions",
+  "actionIndex",
+  "previousSeconds",
+  "seconds",
+  "path",
+  "referenceSafety",
   "saveAttempted",
   "prepared",
   "savedMap",
@@ -26,6 +75,14 @@ const keys = [
   "copiesCreated",
   "reopensMap",
   "nativeModelVerified",
+  "nativeLibraryVerified",
+  "nativeCatalogVerified",
+  "catalogReferenceCount",
+  "catalogRevision",
+  "existingRootLabelsVerified",
+  "player",
+  "every",
+  "amount",
   "nativeCompilePassed",
   "gameplayVerified",
   "nativeMutationAttempted",
@@ -53,6 +110,7 @@ const keys = [
   "ready",
   "state",
   "phase",
+  "index",
   "outcome",
   "nativeProfile",
   "organization",
@@ -357,6 +415,12 @@ function compactGeneralResult(value: unknown) {
     };
   }
   for (const key of keys) if (v[key] !== undefined) out[key] = v[key];
+  if(v.nativeCatalogVerified===true&&Array.isArray(v.references))
+    out.references=v.references.slice(0,32).map(value=>{
+      const r=value as Record<string,unknown>;
+      return {domain:r.domain,id:r.id,source:r.source};
+    });
+  if (typeof v.value === "number" && Number.isFinite(v.value)) out.value = v.value;
   if (v.module === "editor-live" || v.module === "live") {
     const current =
       v.module === "live" &&
@@ -447,6 +511,7 @@ function compactGeneralResult(value: unknown) {
       ],
     ],
     ["recoveryContext", ["token", "windowId", "mode", "componentFile"]],
+    ["tree", ["id", "count", "total", "offset", "fingerprint", "truncated"]],
   ] as const) {
     const item = v[key];
     if (!item || typeof item !== "object" || Array.isArray(item)) continue;
@@ -454,6 +519,13 @@ function compactGeneralResult(value: unknown) {
     out[key] = Object.fromEntries(
       fields.filter((k) => source[k] !== undefined).map((k) => [k, source[k]]),
     );
+    if (key === "tree" && Array.isArray(source.items)) {
+      (out[key] as Record<string, unknown>).items = source.items.slice(0, 128).map(row => {
+        if (!row || typeof row !== "object" || Array.isArray(row)) return {};
+        const node = row as Record<string, unknown>;
+        return Object.fromEntries(["handle", "parent", "depth", "text"].filter(k => node[k] !== undefined).map(k => [k, node[k]]));
+      });
+    }
     if (Array.isArray(source.diagnostics)) {
       const receipt = out[key] as Record<string, unknown>;
       receipt.diagnosticsTotal = source.diagnosticsTotal ?? source.diagnostics.length;

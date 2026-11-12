@@ -5,9 +5,20 @@ description: Implement or review SC2 abilities, progression, gameplay coordinati
 
 # Native Data and coordinating logic
 
-Read `docs/AUTHORING_PROTOCOL.md`, then relevant parts of `docs/DATA_MCP.md` and
-`docs/TRIGGER_ORGANIZATION_PROTOCOL.md`. Read `docs/NATIVE_EDITOR.md` for authorized
+Read `docs/AUTHORING_PROTOCOL.md`, then only the guide for the requested operation.
+Data work uses `docs/DATA_MCP.md`; GUI organization uses
+`docs/TRIGGER_ORGANIZATION_PROTOCOL.md`. Read `docs/NATIVE_EDITOR.md` when doing
 original Editor checks. Inspect actual tool schemas before using recipes.
+
+For a new self-contained GUI system in an open Editor, prefer `live.trigger.create`
+with an inline typed plan, or `live.trigger.income` for periodic mineral income.
+Use the supplied AI/Terrain/Triggers window identity; the adapter resolves the
+native Trigger Editor. Existing unsaved changes and the AI panel are allowed.
+No external plan file, workspace reconfiguration or advance Save is required.
+For a requested Save, use `live.document.status/save` after successful application.
+Inspect the returned native graph verification and preserve uncertain results
+without repeating import. Unit/Actor inspection and conversion guides below are
+only relevant when the request actually involves those systems or conversion.
 
 1. Inspect the unit, ability/effect graph, actors, strings, dependencies and logic
    source. Reuse verified native presentations where possible.
@@ -69,3 +80,23 @@ Review actual native frames with `project.test.review`; record concrete,
 image-bound agent observations through `project.test.observe` without treating
 them as human approval. Reuse unchanged passing evidence; rerun the affected
 cast/travel/impact/cleanup phases when presentation changes.
+
+## Standard unit presentation
+
+A model assignment alone does not copy the native unit panel or attack events.
+For derived player-facing units, use `data unit` with its native source Actor;
+retain UnitIcon, HeroIcon, GroupIcon, Wireframe, LifeArmorIcon and applicable shield
+icons along with the main Actor's attack, movement and death presentation. Keep
+source asset identity tokens bound to the source; remap only the actual duplicated
+catalog identities. A custom unit must not acquire an invented texture path.
+
+Inspect `data unit.presentation unit=Hero` and resolve selection/armor/attack
+review findings before delivery. Ordinary Data validation also warns about a
+narrow generic-parent clone missing presentation declared by its native source.
+Existing stripped Actors can be repaired explicitly with
+`data unit.presentation.repair unit=Hero actor=HeroActor sourceActor=Marine`.
+The selected native UI groups are replaced; missing native attack handlers are
+added while custom spell events, models, scales and attached modules remain.
+Intentional custom icons or invisible helpers are explicit exceptions. Existing
+conflicting manual attack handlers and unsupported source layers require review;
+static Data restoration does not prove native animation playback.

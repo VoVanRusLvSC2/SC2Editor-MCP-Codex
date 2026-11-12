@@ -32,8 +32,18 @@ localization, resource IDs and original catalog source annotations.
   preservation from this in-memory check. Preserve native confirmation dialogs
   and unknown deletions. The retained deletion fixture found four other saved
   object nodes changed, so that broader preservation claim remains unaccepted.
-  New self-contained GUI libraries use `live.trigger.prepare/apply` with an existing
-  GUI plan file and exact current Triggers window. It reuses the existing generator
+  New self-contained GUI libraries prefer `live.trigger.create` with an inline
+  typed plan; `live.trigger.income` handles periodic mineral income with a few
+  scalar parameters. They accept the current AI/Terrain/Triggers window and resolve
+  the same process and document automatically. No workspace change, plan file or
+  advance Save is needed. The AI panel is not itself a blocking modal dialog.
+  Separate `live.trigger.prepare/apply` accepts an inline plan or existing file.
+  Game Links use original Data lists from this document, including committed
+  unsaved objects; `live.trigger.catalog` verifies exact case-sensitive domain/ID
+  and native source identity. Creation automatically rechecks before import.
+  Preserve pending Data XML, manual filters and stale/unknown outcomes; never
+  invent catalog entries or import last-saved Data as current memory evidence.
+  It reuses the existing generator
   and original Import Library; no map copy, Custom Script substitute or graph
   replacement. `live.trigger.verify` re-exports the same library for recovery
   without replaying import. Native graph, compilation and gameplay are separate.

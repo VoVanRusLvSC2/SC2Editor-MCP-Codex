@@ -1,6 +1,7 @@
 // Transfer the original Data XML buffer, then use its native Commit XML Changes.
 // No map archive writes, engine offsets, private Toolkit or replacement document.
 constexpr size_t kDataXmlLimit = kLiveXmlLimit;
+static std::map<HWND,std::pair<std::wstring,std::wstring>> liveCommittedXml;
 
 static HWND DataXmlControl(HWND root) {
   HWND found = nullptr;
@@ -14,6 +15,14 @@ static HWND DataXmlControl(HWND root) {
 
 static bool DataXmlText(HWND edit, std::string &bytes, std::wstring &text) {
   return LiveXmlText(edit,bytes,text);
+}
+static bool DataXmlPendingManual(HWND root) {
+  auto edit=DataXmlControl(root);
+  if(!edit||!SendMessageW(edit,2159,0,0))return false;
+  const auto known=liveCommittedXml.find(root);
+  if(known==liveCommittedXml.end()||known->second.first!=PlacementTitle(Text(root)))return true;
+  std::string bytes;std::wstring text;
+  return !DataXmlText(edit,bytes,text)||PlacementHash(text)!=known->second.second;
 }
 
 static std::wstring DataXmlTransfer(const wchar_t *token, bool candidate) {
@@ -105,5 +114,10 @@ static void DataXmlExecute(LiveDataRequest *b, HWND root) {
   if (!Invoke(root, L"Commit XML Changes")) {
     Fail(b, L"LIVE_DATA_XML_COMMIT_UNCERTAIN_PRESERVE_BUFFER"); return;
   }
+  // The native semantic commit may leave SCI_GETMODIFY set. Only this exact
+  // tool-owned committed buffer qualifies; later user text remains protected.
+  std::string committedBytes;std::wstring committedText;
+  if(DataXmlText(edit,committedBytes,committedText))
+    liveCommittedXml[root]={PlacementTitle(Text(root)),PlacementHash(committedText)};
   Result(b, L"{\"commitRequested\":true,\"retryMutation\":false,\"verification\":\"fresh_native_xml_required\"}");
 }

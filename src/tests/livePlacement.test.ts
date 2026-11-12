@@ -12,6 +12,7 @@ import {
 import type { EditorWindow } from "../modules/live/desktop.js";
 import { withEditorLease } from "../modules/live/editorLease.js";
 import { compileAuthorScript } from "../app/authoringScript.js";
+import { compactResult } from "../app/mcpBatch.js";
 
 let pid = 930000;
 async function fixture(t: test.TestContext) {
@@ -43,6 +44,7 @@ async function fixture(t: test.TestContext) {
     nativeSnap: false,
     collateralDelete: false,
     calls: [] as number[],
+    countReads: 0,
   };
   const item = () => state.objects.find((o) => o.key === state.selected)!;
   const fingerprint = () => JSON.stringify([item().x, item().y, item().name]);
@@ -65,7 +67,7 @@ async function fixture(t: test.TestContext) {
       windows: async () => [structuredClone(state.window)],
       command: async (_w, op, a = {}) => {
         state.calls.push(op);
-        if (op === 37) return scene();
+        if (op === 37) { if (a.field === "count") state.countReads++; return scene(); }
         if (op === 43) {
           if (a.field === "list") return { listStyleRequested: true };
           return {
@@ -176,12 +178,26 @@ async function fixture(t: test.TestContext) {
   return { state, placement, target, write, root };
 }
 
+test("individual properties can be inspected without consuming the snapshot or mutating the scene", async (t) => {
+  const { state, placement, target } = await fixture(t);
+  const snapshot = await placement.inspect(target);
+  const object = await placement.inspectObject({ snapshotId: snapshot.snapshotId, objectKey: "100" });
+  assert.equal(object.x, 2);
+  assert.equal(object.y, 4);
+  assert.equal(object.mapMutation, false);
+  assert.equal(state.calls.includes(36), false);
+  const moved = await placement.move({ snapshotId: snapshot.snapshotId, objectKey: "100", x: 3, y: 5 });
+  assert.equal(moved.status, "applied");
+});
+
 test("deletion verifies every surviving instance after row reindexing without saving the map", async (t) => {
   const f = await fixture(t);
   f.state.objects.push({ row: 1, key: "101", type: "Rock", name: "Other", x: 8, y: 7 });
   const snapshot = await f.placement.inspect(f.target),
     result = await f.placement.delete({ snapshotId: snapshot.snapshotId, objectKey: "100" });
   assert.equal(result.status, "applied");
+  assert.equal(result.referenceSafety, "not_checked");
+  assert.equal((compactResult(result) as { referenceSafety: string }).referenceSafety, "not_checked");
   assert.equal(f.state.calls.filter((c) => c === 39).length, 1);
   assert.equal(f.state.objects.length, 1);
   assert.equal(f.state.objects[0].name, "Other");
@@ -197,6 +213,7 @@ test("a lost deletion reply cannot replay its consumed snapshot", async (t) => {
   const args = { snapshotId: f.write.snapshotId, objectKey: "100" },
     result = await f.placement.delete(args);
   assert.equal(result.status, "unknown");
+  assert.equal(result.referenceSafety, "not_checked");
   assert.equal(f.state.objects.length, 0);
   await assert.rejects(f.placement.delete(args), /CONSUMED/);
   assert.equal(f.state.calls.filter((c) => c === 39).length, 1);
@@ -338,9 +355,9 @@ test("clearing an instance name uses owned readback after row reindexing", async
   assert.equal(f.state.objects[0].name, "");
   assert.equal(f.state.objects[0].x, 12);
 });
-test("template-group limits refuse before creating an unpositioned seventeenth instance", async (t) => {
+test("template-group limits refuse before creating an unpositioned sixty-fifth instance", async (t) => {
   const f = await fixture(t);
-  f.state.objects = Array.from({ length: 16 }, (_, i) => ({
+  f.state.objects = Array.from({ length: 64 }, (_, i) => ({
     row: i,
     key: String(100 + i),
     type: "Lamp",
@@ -353,8 +370,34 @@ test("template-group limits refuse before creating an unpositioned seventeenth i
     f.placement.duplicate({ ...f.write, snapshotId: snapshot.snapshotId }),
     /TEMPLATE_GROUP_BOUND/,
   );
-  assert.equal(f.state.objects.length, 16);
+  assert.equal(f.state.objects.length, 64);
   assert.equal(f.state.calls.includes(33), false);
+});
+
+test("group preflight checks all requested types against the complete snapshot", async (t) => {
+  const f = await fixture(t);
+  f.state.objects = Array.from({ length: 20 }, (_, i) => ({
+    row: i, key: String(100 + i), type: "Lamp", name: `Original ${i}`, x: i, y: 4,
+  }));
+  const snapshot = await f.placement.inspect(f.target);
+  assert.doesNotThrow(() => f.placement.checkGroupCapacity(snapshot.snapshotId, Array(44).fill({type: "Lamp"})));
+  assert.throws(() => f.placement.checkGroupCapacity(snapshot.snapshotId, Array(45).fill({type: "Lamp"})), /TEMPLATE_GROUP_BOUND/);
+  assert.throws(() => f.placement.checkGroupCapacity(snapshot.snapshotId, [{type: "Rock", name: "Original 0"}]), /UNIQUE_NAME_REQUIRED/);
+  assert.throws(() => f.placement.checkGroupCapacity(snapshot.snapshotId, [{type: "Rock", name: "New"}, {type: "Lamp", name: "New"}]), /UNIQUE_NAME_REQUIRED/);
+  assert.equal(f.state.calls.includes(33), false);
+});
+
+test("a seventeenth matching object is identified after native row reindexing", async (t) => {
+  const f = await fixture(t);
+  f.state.objects = Array.from({ length: 16 }, (_, i) => ({
+    row: i, key: String(100 + i), type: "Lamp", name: `Original ${i}`, x: i, y: 4,
+  }));
+  const snapshot = await f.placement.inspect(f.target);
+  const result = await f.placement.duplicate({ ...f.write, snapshotId: snapshot.snapshotId });
+  assert.equal(result.status, "applied");
+  assert.equal(f.state.objects.length, 17);
+  assert.equal(f.state.objects.filter(o => o.name === "Z lamp").length, 1);
+  assert.equal(f.state.calls.filter(op => op === 33).length, 1);
 });
 
 test("a layer switch refuses even if the native scene hash incorrectly stays the same", async (t) => {
@@ -413,6 +456,8 @@ test("native catalog creates a type absent from the scene and verifies explicit 
   assert.equal(result.after.y, 26);
   assert.equal(f.state.objects.length, 2);
   assert.equal(f.state.calls.filter((op) => op === 45).length, 1);
+  assert.ok(f.state.countReads >= 1);
+  assert.ok(!("objects" in result.scene));
 });
 
 test("lost catalog creation never repeats the brush click or positions an arbitrary existing Unit", async (t) => {

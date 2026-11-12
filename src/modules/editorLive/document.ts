@@ -173,7 +173,20 @@ export class LiveDocument {
             stable = undefined;
             continue;
           }
-          const after = await this.archive(target.archive);
+          let after: Awaited<ReturnType<LiveDocument["archive"]>>;
+          try {
+            after = await this.archive(target.archive);
+          } catch (error) {
+            // Native Save can still be writing while its first read begins.
+            // Retry only the read, never the submitted Save, and require two
+            // subsequent matching snapshots before claiming persistence.
+            const transientReplace = error instanceof Error && "code" in error && error.code === "ENOENT";
+            if (!(error instanceof Error) || (error.message !== "LIVE_FILE_CHANGED_DURING_HASH" && !transientReplace))
+              throw error;
+            stable = undefined;
+            reconciledStamp = undefined;
+            continue;
+          }
           const diskChanged = after.sha256 !== before.sha256 || after.mtimeMs !== before.mtimeMs;
           const stamp = `${after.sha256}:${after.mtimeMs}:${after.size}`;
           if (diskChanged && stamp === stable) {

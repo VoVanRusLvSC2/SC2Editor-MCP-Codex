@@ -5,21 +5,8 @@ import { LiveDocument, documentTargetSchema } from "./document.js";
 import { documentDirty, type EditorWindow } from "./desktop.js";
 import { withEditorLease } from "./editorLease.js";
 import { WindowsMemoryDesktop, type MemoryDesktop } from "./memoryDesktop.js";
+import { placementObjectSchema as objectSchema, placementSceneSchema as sceneSchema, readPlacementScenePages } from "./placementScene.js";
 
-const objectSchema = z.object({
-  row: z.number().int().nonnegative(),
-  key: z.string().regex(/^\d+$/),
-  type: z.string(),
-  name: z.string(),
-});
-const sceneSchema = z.object({
-  layer: z.enum(["Doodads", "Units"]).default("Doodads"),
-  count: z.number().int().min(0).max(256),
-  selectedKey: z.string(),
-  sceneHash: z.string(),
-  preview: z.string(),
-  objects: z.array(objectSchema).max(256),
-});
 const propertiesSchema = z.object({
   fingerprint: z.string(),
   initial: z.string(),
@@ -40,24 +27,23 @@ interface Snapshot {
   scene: Scene;
   expires: number;
 }
+export const placementNameSchema = z.string().max(80).refine(
+  (name) => [...name].every((c) => c.charCodeAt(0) >= 32),
+  "Name must not contain control characters",
+);
 export const placementWriteSchema = z
   .object({
     snapshotId: z.string().uuid(),
     objectKey: z.string().regex(/^\d+$/),
     x: z.number().min(0).max(4096).multipleOf(0.5),
     y: z.number().min(0).max(4096).multipleOf(0.5),
-    name: z
-      .string()
-      .max(80)
-      .refine(
-        (name) => [...name].every((c) => c.charCodeAt(0) >= 32),
-        "Name must not contain control characters",
-      )
-      .optional(),
+    name: placementNameSchema.optional(),
   })
   .strict();
 export const placementInspectSchema = documentTargetSchema
-  .extend({ details: z.boolean().default(false) })
+  .extend({ details: z.boolean().default(false), offset: z.number().int().min(0).max(8192).default(0),
+    limit: z.number().int().min(1).max(256).default(128),
+    expectedSceneHash: z.string().regex(/^\d+$/).optional() })
   .strict();
 export const placementDeleteSchema = placementWriteSchema
   .pick({ snapshotId: true, objectKey: true })
@@ -98,6 +84,9 @@ const catalogSchema = z.object({
 type Write = z.infer<typeof placementWriteSchema>;
 
 /** Original visible objects copy/place/properties, never a map archive writer. */
+// Full native-property comparison is bounded to limit editor work per mutation.
+const templateGroupLimit = 64;
+
 export class LivePlacement {
   busy = false;
   private closed = false;
@@ -122,8 +111,13 @@ export class LivePlacement {
       tools: [
         "live.placement.prepare",
         "live.placement.inspect",
+        "live.placement.inspect_object",
         "live.placement.catalog",
         "live.placement.create",
+        "live.placement.create_group",
+        "live.placement.job_start",
+        "live.placement.job_status",
+        "live.placement.job_cancel",
         "live.placement.duplicate",
         "live.placement.move",
         "live.placement.delete",
@@ -132,7 +126,7 @@ export class LivePlacement {
       reopensMap: false,
       requiresConnect: false,
       requires:
-        "Editor 5.0.17.98310 x64; English Terrain controls; Doodads or Units layer; at most 256 listed objects and 16 matching instances including a new duplicate; half-unit coordinates",
+        "Editor 5.0.17.98310 x64; English Terrain controls; Doodads or Units layer; at most 8192 listed objects and 64 matching instances including a new duplicate; half-unit coordinates",
       unsupported: [
         "Types absent from the current filtered palette",
         "Deletion in layers with more than 32 objects",
@@ -141,6 +135,8 @@ export class LivePlacement {
       ],
       evidence:
         "Native instance/count/coordinate readback; rendered appearance and pathing need separate review",
+      deletionReferenceSafety:
+        "not_checked: list-view keys are not persistent component IDs; unsaved GUI, Galaxy and other references are not examined",
       save: "live.document.status then live.document.save",
     };
   }
@@ -204,7 +200,14 @@ export class LivePlacement {
     return result;
   }
   private async scene(s: Snapshot) {
-    const scene = sceneSchema.parse(await this.command(s, 37));
+    let scene: Scene;
+    try { scene = sceneSchema.parse(await this.command(s, 37)); }
+    catch (error) {
+      if (!String(error).includes("LIVE_PLACEMENT_OBJECT_SCENE_BOUND") &&
+          !String(error).includes("LIVE_MEMORY_RESULT_BOUND")) throw error;
+      scene = await readPlacementScenePages((offset, expected) =>
+        this.command(s, 37, { field: "page", value: String(offset), expected }));
+    }
     if (s.scene && scene.layer !== s.scene.layer) throw Error("LIVE_PLACEMENT_LAYER_CHANGED");
     if (
       scene.count !== scene.objects.length ||
@@ -225,7 +228,7 @@ export class LivePlacement {
       this.current = undefined;
     }
   }
-  async inspect(input: Target & { details?: boolean }) {
+  async inspect(input: z.input<typeof placementInspectSchema>) {
     return this.run(async () => {
       const parsed = placementInspectSchema.parse(input),
         target = { archive: parsed.archive, windowId: parsed.windowId },
@@ -242,6 +245,9 @@ export class LivePlacement {
       };
       return withEditorLease(window, async () => {
         s.scene = await this.scene(s);
+        if (parsed.expectedSceneHash && parsed.expectedSceneHash !== s.scene.sceneHash)
+          throw Error("LIVE_PLACEMENT_SCENE_CHANGED");
+        if (parsed.offset > s.scene.count) throw Error("LIVE_PLACEMENT_PAGE_INVALID");
         const details: Record<string, unknown> = {};
         if (parsed.details) {
           if (s.scene.count > 32) throw Error("LIVE_PLACEMENT_DETAILS_BOUND");
@@ -260,6 +266,9 @@ export class LivePlacement {
           snapshotId,
           expiresInSeconds: 90,
           ...s.scene,
+          objects: s.scene.objects.slice(parsed.offset, parsed.offset + parsed.limit),
+          offset: parsed.offset,
+          nextOffset: parsed.offset + parsed.limit < s.scene.count ? parsed.offset + parsed.limit : null,
           ...(parsed.details ? { details } : {}),
           windowId: window.windowId,
           archive: target.archive,
@@ -319,9 +328,12 @@ export class LivePlacement {
     throw Error("LIVE_PLACEMENT_PROPERTIES_UNCONFIRMED");
   }
   private async waitEnabled(s: Snapshot) {
-    for (let i = 0; i < 40; i++) {
+    // Large maps can spend several seconds refreshing the native Terrain view
+    // after a properties dialog closes. Observe the original window once; never
+    // replay the submitted edit while the editor is still processing it.
+    for (let i = 0; i < 200; i++) {
       if ((await this.window(s.target, s.window)).enabled) return;
-      await this.pause(50);
+      await this.pause(100);
     }
     throw Error("LIVE_PLACEMENT_DIALOG_OUTCOME_UNKNOWN");
   }
@@ -340,13 +352,25 @@ export class LivePlacement {
   }
   private async captureType(s: Snapshot, scene: Scene, type: string) {
     const objects = scene.objects.filter((o) => o.type === type);
-    if (objects.length > 16) throw Error("LIVE_PLACEMENT_TEMPLATE_GROUP_BOUND");
+    if (objects.length > templateGroupLimit) throw Error("LIVE_PLACEMENT_TEMPLATE_GROUP_BOUND");
     const records = [];
     for (const object of objects)
       records.push({ object, ...(await this.readProperties(s, object)) });
     if ((await this.scene(s)).sceneHash !== scene.sceneHash)
       throw Error("LIVE_PLACEMENT_SCENE_CHANGED");
     return records;
+  }
+  private async waitForCountChange(s: Snapshot, beforeCount: number) {
+    for (let i = 0; i < 100; i++) {
+      const current = z.object({ layer: z.enum(["Doodads", "Units"]), count: z.number().int().min(0).max(8192) })
+        .parse(await this.command(s, 37, { field: "count" }));
+      if (current.layer !== s.scene.layer) throw Error("LIVE_PLACEMENT_LAYER_CHANGED");
+      if (current.count !== beforeCount) break;
+      await this.pause(100);
+    }
+    // A changed count is only a signal: reconstruct and verify the complete
+    // guarded scene once before identifying or editing the new instance.
+    return this.scene(s);
   }
   private async position(s: Snapshot, object: Item, input: Write) {
     const before = await this.properties(s, object);
@@ -405,7 +429,7 @@ export class LivePlacement {
         ...(after.owner !== undefined ? { owner: after.owner } : {}),
       },
       objectKey: current.key,
-      scene,
+      scene: { layer: scene.layer, count: scene.count, selectedKey: scene.selectedKey, sceneHash: scene.sceneHash },
     };
   }
   async move(input: Write) {
@@ -490,6 +514,7 @@ export class LivePlacement {
             layer: before.layer,
             remainingPropertiesPreserved: preserved,
             wholeDocumentPersistenceVerified: false,
+            referenceSafety: "not_checked",
             documentDirty: documentDirty(fresh),
             copiesCreated: 0,
             reopensMap: false,
@@ -502,6 +527,7 @@ export class LivePlacement {
             status: attempted ? "unknown" : "failed",
             deleteAttempted: attempted,
             error: String(error),
+            referenceSafety: "not_checked",
             copiesCreated: 0,
             reopensMap: false,
             saved: false,
@@ -518,6 +544,37 @@ export class LivePlacement {
     if (consume) this.snapshots.delete(id);
     if (!s || s.expires <= Date.now()) throw Error("LIVE_PLACEMENT_SNAPSHOT_EXPIRED_OR_CONSUMED");
     return s;
+  }
+  /** Preflight a group against one snapshot; each individual mutation still revalidates it. */
+  checkGroupCapacity(snapshotId: string, objects: readonly { type: string; name?: string }[]) {
+    const scene = this.snapshot(snapshotId).scene;
+    if (scene.count + objects.length > 8192) throw Error("LIVE_PLACEMENT_SCENE_BOUND");
+    const counts = new Map<string, number>(), names = new Set(scene.objects.map(object => object.name).filter(Boolean));
+    for (const object of scene.objects) counts.set(object.type, (counts.get(object.type) ?? 0) + 1);
+    for (const { type, name } of objects) {
+      const count = (counts.get(type) ?? 0) + 1;
+      if (count > templateGroupLimit) throw Error("LIVE_PLACEMENT_TEMPLATE_GROUP_BOUND");
+      counts.set(type, count);
+      if (name) {
+        if (names.has(name)) throw Error("LIVE_PLACEMENT_UNIQUE_NAME_REQUIRED");
+        names.add(name);
+      }
+    }
+  }
+  async inspectObject(input: z.input<typeof placementDeleteSchema>) {
+    return this.run(async () => {
+      const args = placementDeleteSchema.parse(input), s = this.snapshot(args.snapshotId);
+      return withEditorLease(await this.guard(s), async () => {
+        const before = await this.scene(s);
+        if (before.sceneHash !== s.scene.sceneHash) throw Error("LIVE_PLACEMENT_SCENE_CHANGED");
+        const item = before.objects.find(object => object.key === args.objectKey);
+        if (!item) throw Error("LIVE_PLACEMENT_SOURCE_NOT_IN_SNAPSHOT");
+        const properties = await this.readProperties(s, item);
+        if ((await this.scene(s)).sceneHash !== before.sceneHash) throw Error("LIVE_PLACEMENT_SCENE_CHANGED");
+        return { snapshotId: args.snapshotId, objectKey: item.key, type: item.type, layer: before.layer,
+          sceneHash: before.sceneHash, ...properties, copiesCreated: 0, mapMutation: false };
+      });
+    });
   }
   async catalog(input: z.input<typeof placementCatalogSchema>) {
     return this.run(async () => {
@@ -554,7 +611,7 @@ export class LivePlacement {
         const before = await this.scene(s);
         if (before.sceneHash !== s.scene.sceneHash) throw Error("LIVE_PLACEMENT_SCENE_CHANGED");
         if (before.preview) throw Error("LIVE_PLACEMENT_EXISTING_PASTE_PREVIEW");
-        if (before.count >= 256 || before.objects.filter((o) => o.type === args.type).length >= 16)
+        if (before.count >= 8192 || before.objects.filter((o) => o.type === args.type).length >= templateGroupLimit)
           throw Error("LIVE_PLACEMENT_TEMPLATE_GROUP_BOUND");
         const name = args.name ?? `MCP ${args.type.slice(0, 40)} ${randomUUID().slice(0, 8)}`;
         if (!name) throw Error("LIVE_PLACEMENT_CREATE_UNIQUE_NAME_REQUIRED");
@@ -602,11 +659,7 @@ export class LivePlacement {
             value: String(args.catalogRow),
             token: args.owner === undefined ? "" : String(args.owner),
           });
-          let placed = await this.scene(s);
-          for (let i = 0; placed.count === before.count && i < 30; i++) {
-            await this.pause(50);
-            placed = await this.scene(s);
-          }
+          const placed = await this.waitForCountChange(s, before.count);
           if (placed.count !== before.count + 1) throw Error("LIVE_PLACEMENT_CREATION_UNCONFIRMED");
           await this.command(s, 31, { field: "selection" });
           const after = await this.captureType(s, placed, args.type);
@@ -691,9 +744,9 @@ export class LivePlacement {
         )
           throw Error("LIVE_PLACEMENT_UNIQUE_NAME_REQUIRED");
         const matchingCount = before.objects.filter((o) => o.type === object.type).length;
-        if (duplicate && (before.count >= 256 || matchingCount >= 16))
+        if (duplicate && (before.count >= 8192 || matchingCount >= templateGroupLimit))
           throw Error("LIVE_PLACEMENT_TEMPLATE_GROUP_BOUND");
-        if (!input.name && matchingCount > 16) throw Error("LIVE_PLACEMENT_TEMPLATE_GROUP_BOUND");
+        if (!input.name && matchingCount > templateGroupLimit) throw Error("LIVE_PLACEMENT_TEMPLATE_GROUP_BOUND");
         let changed = false,
           createdKey: string | undefined;
         try {
@@ -724,11 +777,7 @@ export class LivePlacement {
               unit: preview.preview,
               expected: preview.sceneHash,
             });
-            let placed = await this.scene(s);
-            for (let i = 0; placed.count === before.count && i < 30; i++) {
-              await this.pause(50);
-              placed = await this.scene(s);
-            }
+            const placed = await this.waitForCountChange(s, before.count);
             if (placed.count !== before.count + 1)
               throw Error("LIVE_PLACEMENT_CREATION_UNCONFIRMED");
             await this.command(s, 31, { field: "selection" });

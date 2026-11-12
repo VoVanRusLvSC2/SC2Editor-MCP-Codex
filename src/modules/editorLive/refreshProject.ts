@@ -1,5 +1,6 @@
 import { promises as fs } from "node:fs";
 import path from "node:path";
+import os from "node:os";
 import { randomUUID } from "node:crypto";
 import * as z from "zod/v4";
 import { withWorkspaceLock } from "../../core/workspaceLock.js";
@@ -95,12 +96,22 @@ export async function readRefreshProject(root: string, directory: string) {
 }
 
 /** One MCP owner per prepared project; never steals a live owner's drafts. */
-export async function acquireRefreshProject(directory: string) {
+export async function acquireRefreshProject(directory: string, markerRoot = path.join(os.tmpdir(), 'SC2EditorToolkit-live-refresh')) {
   // Reuse the existing filesystem gate for stale-owner reclamation. A native
   // process lease alone cannot serialize two different Editors resuming one project.
-  return withWorkspaceLock(directory, async () => {
+  const owner = randomUUID(), marker = path.join(markerRoot, `${process.pid}-${owner}.lock`), markerText = 'active-refresh\n';
+  // The panel holds this same gate while checking markers and requesting reload.
+  // Create the marker under it before opening a mutable prepared session.
+  await withWorkspaceLock(markerRoot, async () => {
+    await fs.writeFile(marker, markerText, {flag:'wx'});
+  });
+  const releaseMarker = async () => {
+    const stat = await fs.lstat(marker);
+    if (!stat.isFile() || stat.isSymbolicLink() || (await fs.readFile(marker,'utf8')) !== markerText) throw Error('LIVE_REFRESH_MARKER_CHANGED');
+    await fs.unlink(marker);
+  };
+  try { return await withWorkspaceLock(directory, async () => {
     const file = path.join(directory, "Prepared.lock"),
-      owner = randomUUID(),
       text = JSON.stringify({ pid: process.pid, owner }) + "\n";
     let handle;
     try {
@@ -131,11 +142,13 @@ export async function acquireRefreshProject(directory: string) {
     } finally {
       await handle.close();
     }
-    return () =>
-      withWorkspaceLock(directory, async () => {
+    return async () => {
+      await withWorkspaceLock(directory, async () => {
         if ((await fs.readFile(file, "utf8")) !== text)
           throw Error("LIVE_REFRESH_PROJECT_OWNER_CHANGED");
         await fs.unlink(file);
       });
-  });
+      await releaseMarker();
+    };
+  }); } catch (error) { await releaseMarker(); throw error; }
 }

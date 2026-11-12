@@ -8,6 +8,154 @@ legacy `live` profile retains explicitly requested checkpoint collaboration.
 Complete current-document coverage is the requested target. The scope below is
 progress toward that target, not acceptance of a permanently limited live mode.
 
+## Place a small group in the open document
+
+`live.placement.create_group` places up to eight objects through the original
+palette and properties controls without reopening the map. The compact authoring
+form avoids an object array, for example:
+
+`live placement.group archive=Current.SC2Map windowId=123 type=Barrels points="26.5,26.5;28.5,26.5"`
+
+Use `mode=stage`. Units require `layer=Units owner=1`; Doodads are the default.
+Names must be exact palette display types. Each object is verified separately,
+and a failed or unknown placement stops the group without repeating it. Earlier
+objects remain in the open document; this is not an atomic transaction. Save
+the current file separately when requested. Terrain and editing existing GUI
+graphs directly still require other supported workflows.
+
+For a longer series, use `live.placement.job_start` or compact
+`live placement.start ... points="x,y;x,y" saveOnComplete=true` and poll
+`live.placement.job_status`. The job accepts up to 50 placements but the
+existing scene (8192) and matching-type (64, including newly created objects) limits still apply. The 64-object bound retains full property comparisons but may be slow; it has not yet been accepted with a native large-type placement run. The optional
+same-file native Save runs once only after every placement succeeds and includes
+other unsaved edits. Cancellation waits for the current placement; it cannot
+interrupt a Save already submitted. Job IDs and progress belong to the current
+MCP process and disappear on restart; inspect the open map after a disconnect,
+never replay an uncertain series. The series preflights total and matching-type capacity and explicitly requested names against the first complete scene snapshot; duplicate names or invalid name characters stop before placement. It caches each exact palette lookup for the series, while the native create path still checks the palette hash and exact row before each placement; other errors can still leave an incomplete series. The series is not atomic.
+
+`live.placement.inspect` pages the current scene with `offset`/`limit` and
+`nextOffset`; carry `sceneHash` as `expectedSceneHash` on subsequent pages.
+Use the corresponding fresh snapshot and object key with
+`live.placement.inspect_object` to read one object's native coordinates and
+name, even when the scene has more than 32 objects. Large-scene inventory and
+one object's verified move were checked on a 406-object fixture; a palette
+creation was verified on a separate 312-object fixture.
+Native placement at the viewport centre and exact movement of every object
+type remain unconfirmed; a failed or unknown result must not be replayed.
+
+## Whole-map height field in the open document
+
+`live.terrain.flatten_all` uses the original Editor's **Modify Height Field**
+dialog to set one height across the entire current map. Both `entireMap=true`
+and `clearUndo=true` are mandatory: the Editor warns that this operation cannot
+be undone and clears all existing Undo history. Call it only when the user has
+explicitly authorized those consequences. It can affect cliffs, ramps, terrain
+paths and manual sculpting. A matching original warning is accepted once; other
+or manually changed dialogs are left alone. The dialog acknowledgement does not
+independently verify the resulting terrain, rendering or pathing. Save separately
+when requested. This does not implement a regional brush.
+
+## Rename an existing GUI item
+
+`live.trigger.tree` pages the current Trigger Editor tree, returning at most
+128 nodes per call. Pass `nextOffset` and the first page's `tree.fingerprint`
+as `expectedFingerprint` to reject a changed tree between pages. Native
+selection and edits use a fingerprint of the complete tree, up to 8192 nodes.
+Labels beyond the native bound or trees deeper than 16 levels are refused. Use
+`live.trigger.rename` with an exact slash-separated path such as
+`MAIN/Wave Start` and a new name to invoke the Editor's own Rename command.
+The path must identify a unique child at each level; sibling name collisions,
+inaccessible inline editors and trees over 8192 nodes refuse. The native tree is
+checked after the command, and the map is saved separately when requested.
+For variables, use the name as displayed in the tree, including any type suffix;
+the original inline editor receives only the new name. The native suffix is
+preserved and verified on readback.
+For an existing trigger, `live.trigger.append_action` can append the built-in
+`skip_remaining` action or `wait` with an explicit `seconds` value in Game Time.
+It uses the original Action and Real dialogs, checks the new action is last,
+and verifies the Wait parameter separately. If parameter editing stops after the
+action was created, the result is partial: inspect the existing action, never
+append it again blindly. Other action and event types, general graph edits,
+compiled runtime behavior and localization remain separate capabilities.
+An explicitly selected `builtin_default` action uses the exact built-in name,
+optionally its category, and `useDefaults=true`. Its default parameters may be
+incomplete or invalid; inspect, configure and validate them before relying on
+the action. A successful insertion returns `needs_parameters` and stops a
+compact batch before later mutations or Save. Custom Script is rejected.
+`live.trigger.append_event` also supports `event=periodic seconds=...` in Game
+Time, configuring and verifying the interval in the original Real dialog.
+`live.trigger.details section=events` supplies 1-based indices and a guarded
+fingerprint for `live.trigger.set_periodic` to edit an existing interval.
+An exact built-in event by name can instead use `useDefaults=true`; it returns
+`needs_parameters`. Native GUI readback is distinct from runtime registration.
+`live.trigger.append_numeric` combines insertion with one named literal Real
+or Integer parameter in a single call, for actions and events. Its compact form:
+
+`live trigger.append_numeric archive=Current.SC2Map windowId=456 path="MAIN/Start" kind=action name="Set Global Time Scale" parameter="Time Scale" numberType=real value=2.5`
+
+If other parameters exist, it returns `needs_parameters` and stops a batch
+before Save. If setup fails after insertion, inspect the existing item and do
+not repeat the insertion. Compilation and gameplay are separate checks.
+`live.trigger.details` pages existing direct actions with 1-based indices;
+`live.trigger.set_wait` requires that page's `detailFingerprint` as
+`expectedDetailHash` and changes the duration of one existing literal Game Time
+Wait through the original Real dialog without adding another action. Variable,
+expression and non-Game-Time waits are refused. Neither command saves the map.
+
+`live.trigger.parameters` lists direct parameters of an action or event selected
+by the 1-based index and guarded detail fingerprint from
+`live.trigger.details`. For a direct literal number, use its index and the
+returned parameter fingerprint with `live.trigger.set_real` or
+`live.trigger.set_integer`, matching the parameter type. The original editor
+dialog is used; expressions, variables, nested parameters and mismatched
+numeric types are refused. After a single submission the editor tree is checked;
+an uncertain result is never retried automatically. Save separately when
+requested. For example, Set Global Time Scale has been edited in the open
+editor, as has the Integer count of a Create Units action. This does not
+establish compilation or gameplay for arbitrary actions.
+
+`live.trigger.set_unit` uses the same detail and parameter fingerprints to set
+one direct literal Unit Type through the original Game Link dialog. Supply the
+exact displayed unit name. If the current catalog contains multiple identical
+names, the operation refuses rather than guessing; this workflow verifies a
+unique displayed selection and GUI readback, not a requested catalog ID. A
+saved fixture confirmed the chosen Murloc Marine link. Variables, expressions
+and other link kinds still require separate support.
+
+`live.trigger.set_point` uses the same guarded workflow to select one existing
+named map point through the original Point dialog. Names must uniquely identify
+a displayed point; duplicates and missing points refuse. It does not create
+points or accept arbitrary coordinates. On a saved fixture, GUI readback and
+the persisted point reference were verified; compilation and gameplay remain
+separate checks. Save the current map separately when requested.
+
+## Configure several existing GUI parameters
+
+`live.trigger.configure` composes the existing literal setters into one guarded
+operation for an existing action or event. Use `live.trigger.details` first and
+pass its item index and detail fingerprint. The compact `edits` string accepts up
+to eight semicolon-separated assignments, for example:
+
+`live trigger.configure archive=Current.SC2Map windowId=456 path="MAIN/Start" section=actions itemIndex=2 expectedDetailHash=<fingerprint> edits="integer:Count=6;unit:Type=Murloc Marine;point:Point=MCP Spawn Point"`
+
+Types are `integer`, `real`, `unit` and `point`. Parameter names must be unique;
+unit and point values use unique displayed names and retain the limitations of
+their individual setters. Every assignment is validated and every parameter
+located before changing the map. Each verified edit returns the fresh editor
+fingerprints that guard the next edit. A partial or unknown result must be
+inspected without replay. Unedited parameters produce `needs_parameters`, not
+an assertion that their defaults are correct. The call does not save or compile.
+A real Editor fixture confirmed the three assignments and same-file persistence;
+other actions, runtime behavior and gameplay remain separate checks.
+
+`live.trigger.append_configured` also inserts a built-in action or event once,
+then applies the same compact assignments to it. It validates the assignments
+before inserting; an unknown or partial result may already have created the item
+and must never be retried as another insertion. A real Editor fixture verified
+insertion and the three assignments above, with two default parameters still
+reported as unverified. The separate native Save confirmed persistence; compiler
+and gameplay results were not assessed.
+
 ## Begin with an authorized same-file Save
 
 When the user has requested saving, `live.refresh.begin` with
@@ -96,12 +244,35 @@ native acknowledgement, native readback, same-file persistence, rendered result
 and gameplay result are separate states. Unknown writes never replay. Native Save
 includes the current unsaved user edits and remains a separate operation.
 
+Each active same-file refresh project holds a process-scoped marker in the local
+temporary directory in addition to its per-project lease. The updated Editor AI
+panel checks these markers before automatically reloading its MCP configuration:
+live process markers defer reload, and a failed reload is not marked as complete.
+Marker creation and the panel's check/reload request use the same cross-process
+workspace lock, closing the race in which a new refresh begins between the check
+and reload. If that lock implementation is unavailable or busy, the panel defers
+the update rather than guessing it is safe. This coordination requires both
+processes to use the same temporary directory and current compatible code.
+Owned original Editor tests prepared a text edit through MCP, including one
+in-memory staged edit not yet saved to the component workspace. The panel guard
+deferred a simulated reload request; after explicit save and same-file apply, the
+edit was preserved in the same frame and the guard allowed the simulated request.
+See [reload guard evidence](verification/editor-live-reload-guard-2026-11-12.json).
+This does not test the actual Codex app-server reload or arbitrary staged binary
+and multi-component drafts.
+This prevents that automatic panel reload from closing a marked refresh session
+and discarding its in-memory drafts. It does not prevent manual shutdown, process
+crashes, reloads from other clients, or loss of snapshots from other providers;
+older MCP processes without markers are not protected. Markers contain no map
+content, dead process markers are ignored, and PID reuse can conservatively delay
+an update. The updated panel and MCP must both be running for the guard to apply.
+
 ## Direct-mode scope
 
 | Component | Available application | Remaining boundary |
 | --- | --- | --- |
 | Data | One current map-local XML dataspace through existing MCP recipes; guarded Unit scalars | First local Unit, additional localized/import components and general scalar selection are not qualified |
-| Objects | Native filtered-palette Doodad/Unit creation; duplication, coordinates/names and bounded original Clear | Deletion checks visible properties in layers up to 32 objects; whole-document object serialization preservation remains unresolved |
+| Objects | Native filtered-palette Doodad/Unit creation; duplication, coordinates/names and bounded original Clear | Direct deletion checks visible properties in layers up to 32 objects, but does not inspect GUI, Galaxy or other references; whole-document object serialization preservation remains unresolved |
 | Save | Original File > Save, same archive, related module captions/XML buffers and stable disk checks | Native errors, pending inline edits, dialogs and unknown outcomes must be retained |
 | Terrain | Existing offline authoring remains available | No current-document component application provider |
 | GUI triggers | Existing typed generator prepares a new self-contained library; original Import Library applies it to the current document; original export verifies the new graph | Existing-graph replacement/editing, translated/non-name text, other libraries and map-instance references remain unfinished |
@@ -116,9 +287,32 @@ route can use the compact `objects remove ids=101,102` command after identifying
 the exact component IDs using paged `placement.scan` (`offset`/`limit`) inside
 the prepared session. The Editor's live `objectKey` is a list-view key and must
 not be treated as the component ID. Removal does not rewrite Trigger/Galaxy
-references; inspect those separately. The compact component workflow is covered
-by automated tests; this particular fallback has not been qualified in a native
-Editor run.
+references; inspect those separately. Automated component tests now page a
+66-object fixture through the actual registered tool, remove 40 exact IDs through
+compact authoring, and check the untouched source nodes and custom fields. This
+does not itself exercise the refresh lifecycle or an original Editor. A separate
+native Editor test used the same-file refresh on a private 1,128-object map and
+removed 40 exact Doodad IDs. The original frame and process reopened the same
+file, all remaining object records matched, and Triggers bytes were unchanged:
+[large removal evidence](verification/editor-live-large-removal-2026-11-12.json).
+This evidence does not validate original Editor per-instance readback, visual
+appearance, gameplay, collisions, or references to the removed IDs.
+For candidate placed-unit IDs, `objects unit_refs ids=101,102` (or
+`placement.gui_unit_references`) checks explicit typed unit literals in the
+selected `Triggers` component. It reports the owning GUI element and reads
+staged text. This is a read-only, partial check: Galaxy, Custom Script, other
+libraries, dynamic IDs, Doodad references and other representations remain
+uncovered. Zero results do not prove deletion is safe; the tool does not rewrite
+references. Batch planning and placement apply refuse a Unit removal if they find
+one of these exact GUI literals. Apply checks again in the transaction and records
+the Triggers read as a dependency, so an intervening change also blocks a later
+staged save. This guard does not cover the other reference forms above. Run the
+read-only check in the prepared refresh session using `live.refresh.author` to
+inspect known references, then assess the uncovered forms separately.
+Two separate original Editor captures of the saved before/after revisions show
+one tree disappearing while a nearby conifer remains. Both use the same verified
+camera; the visible tree was not tied to an individual component ID. See
+[render evidence](verification/editor-live-large-removal-render-2026-11-12.json).
 The same snapshot/instance/property workflow duplicates or moves a Unit and
 preserves its owner. The final native qualification created a ninth Unit from an
 existing Odin, confirmed `(24, 24)` and saved the same archive. Earlier properties
@@ -186,10 +380,67 @@ just to renew evidence. See [deletion evidence](verification/editor-live-delete-
 
 ## Current GUI library application
 
-Use the exact current **Triggers** window from `live.windows`, independently of
-the Terrain frame. `live.trigger.inspect` reads bounded original root labels.
+Game Link literals now use the same document's original Data lists, rather than
+an empty generator workspace or a mirror of last-saved catalog XML. The adapter
+temporarily selects the native catalog, All Data and raw-ID search, requires an
+exact unique ID and source, then restores its owned filters. `live.trigger.catalog`
+accepts up to 32 domain/ID references and an AI/Terrain/Triggers/Data window ID.
+Loaded dependencies and committed unsaved local objects qualify. Pending XML,
+inline edits, changed filters, unavailable native domain views and unresolved IDs
+stop without dismissing input or submitting a trigger import.
+
+`live.trigger.create` binds only these verified identities to the existing typed
+generator, including batch planning. It rechecks the live identities before native
+Import Library; disappearance/source changes refuse as stale. No fake Data entries
+or game assets are added to its component workspace. Evidence covers exact identity
+and source, not effective field values, model playback, native compile or gameplay.
+These checks do not provide an authoritative engine document/revision lock against
+concurrent human edits. Catalog views not exposed by this English native Data UI
+remain unsupported. The same-ID case is significant (`move` differs from `Move`).
+
+The retained native check resolved Unit, Ability and Effect identities from loaded
+dependencies and from newly committed, unsaved local XML. A generated GUI library
+then retained those custom Unit/Effect initializers plus a native Marauder creation
+action. Original re-export omitted redundant `ValueType.GameType` attributes; the
+comparison now normalizes them only when the owning VariableType or exact Core
+ParamDef independently establishes that same single domain. Wrong/unknown domains
+still differ. Verification was recovered on the already imported library, without
+replaying import. The saved archive changed and its original generated Galaxy
+retained the library, custom initializers and Marauder creation. The Save receipt
+remained unknown because the semantically committed Data XML still had its native
+modified flag; Save was not replayed. Clean-document acknowledgement, native
+compilation and game execution are not claimed by this check.
+
+`live.data.append_xml` exposes the existing add-only XML commit path for 1–64 new
+entries in one `live.data.read` snapshot. Replacements/duplicate domain+ID entries
+refuse. It requires an existing local Unit anchor and preserves snapshot, archive
+and pending-input guards. Native XML readback is not complete Data validation;
+use the existing typed recipes for common mechanics and save separately.
+
+For new self-contained GUI systems prefer `live.trigger.create` with an inline
+typed `plan` (one existing trigger request or a batch). It accepts the current
+AI, Terrain or Triggers window, resolves the same process/document's Trigger
+Editor, and opens that native module when necessary. Existing unsaved work and
+the open AI panel do not require an advance Save. Genuine blocked native dialogs
+still refuse without dismissing user input. No external plan file, workspace
+change, map copy or reopen is needed.
+
+For periodic mineral income, use a single compact command:
+
+```text
+live trigger.income archive="K:/Maps/Current.SC2Map" windowId=<current-window> player=1 every=5 amount=100 name="Mineral Income"
+```
+
+The recipe uses the shared typed generator for a game-time periodic event and
+an Add Minerals action. It does not save implicitly. For requested same-file
+saving, follow with `live.document.status` and `live.document.save` using the
+returned archive hash. Preserve `planId` and verification status on uncertain
+results; never repeat an import to recover missing acknowledgement.
+
+The separate staged workflow uses the exact current **Triggers** window from
+`live.windows`. `live.trigger.inspect` reads bounded original root labels.
 `live.trigger.prepare archive=... windowId=... name="Round system"
-planFile=plans/rounds.json` reuses `trigger.plan_file`, `trigger.apply` and
+planFile=plans/rounds.json` (or inline `plan`) reuses `trigger.plan_file`, `trigger.apply` and
 `trigger.save` in a tool-owned component workspace. The saved plan contains one
 existing typed GUI request or a batch, with no new map archive. Its generated
 folders, events, actions, functions and variables remain ordinary editable GUI.
@@ -676,9 +927,11 @@ session was retained and resumed without creating the trigger again. See
 For a concise agent-facing workflow call `modkit.author_help` with
 `section=live`. Its guidance also survives compact `modkit.batch` responses;
 the currently connected MCP process must be restarted to load new tool schemas.
-The API marker for compile-and-apply is
-`editor-live-2026-11-08-compile-apply`. An older marker means the
-connected process must be reconnected before relying on those features.
+The compile-and-apply workflow was introduced with marker
+`editor-live-2026-11-08-compile-apply`. The current marker is
+`editor-live-2026-11-12-gui-catalog`; reconnect an older process before
+relying on the new multi-parameter trigger tools. Inspect actual tools as well:
+a marker alone does not verify the editor or a particular operation.
 Compact `live.capabilities` responses preserve this marker, the limitations of
 direct editing and the same-file refresh route in both `editor-live` and
 `workflow` profiles. A fresh workflow stdio process has been checked for these

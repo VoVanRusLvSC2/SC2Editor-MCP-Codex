@@ -6,13 +6,21 @@ localization. Historical evidence is retained under `work/`; it is not agent pol
 
 ## Entry points and cost
 
+For landscape palette selection, use `terrain.visual_reference` to search the external SC2 Mapping Reference for pictured doodads, cliffs and tilesets when network access is available. Search names are visual leads, not verified catalog IDs: resolve candidates against the actual map and use local measurements, dependency and pathing checks before placement. The external catalogue may be unavailable or change format; retain the local palette workflow as the offline fallback. See [Decor visual workflow](DECOR_VISUAL_WORKFLOW.md).
+
 Current-document application belongs to the separate `editorLive` module and
 `editor-live` MCP profile. Reuse existing generators through its supported
 providers. See [Editor live module](EDITOR_LIVE.md); its native API extension
 requirements are not completed capabilities. Existing-template Unit duplication
 and movement use the same bounded placement provider as Doodads.
 Self-contained new GUI libraries now use the existing typed generator and the
-original current-document Import Library path. Use `live.trigger.prepare/apply`;
+original current-document Import Library path. Prefer `live.trigger.create` with
+an inline typed plan (`live.trigger.income` for periodic mineral income).
+Game Links are checked against the same document's original Data lists and
+rechecked before import, including committed unsaved local objects. Pending XML
+is not committed implicitly. Use `live.trigger.catalog` for exact-ID discovery;
+this verifies identity, not complete Data semantics or gameplay. `prepare/apply`
+remains available for separately staged creation;
 use `live.trigger.verify` to recover graph verification without replaying import.
 This does not qualify existing-graph editing or arbitrary localized trigger text.
 Current map-local UI layouts use `live.ui.create/read/author`. Their current XML

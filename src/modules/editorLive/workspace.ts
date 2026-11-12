@@ -12,12 +12,17 @@ import { beginRefresh, refreshBeginSchema } from "./refreshBegin.js";
 import type * as z from "zod/v4";
 import { WindowsLiveDesktop, type LiveDesktop } from "./desktop.js";
 import type { LiveRuntimeFactory } from "./runtime.js";
+import { AsyncLocalStorage } from "node:async_hooks";
+import { LivePlacementJobs } from "./placementJobs.js";
+import { LiveTerrain } from "./terrain.js";
 
 /** Current document providers plus explicitly selected same-file refresh; no new working map. */
 export class EditorLiveWorkspace {
   readonly memory: LiveMemory;
   readonly document: LiveDocument;
   readonly placement: LivePlacement;
+  readonly placementJobs: LivePlacementJobs;
+  readonly terrain: LiveTerrain;
   readonly data: LiveDataXml;
   readonly triggers: LiveTriggers;
   readonly ui: LiveUi;
@@ -34,10 +39,17 @@ export class EditorLiveWorkspace {
     blocked: () => boolean = () => false,
     readonly desktop: LiveDesktop = new WindowsLiveDesktop(),
   ) {
-    const unavailable = () => this.closing || blocked() || this.busy;
+    const jobContext = new AsyncLocalStorage<boolean>();
+    const providersBusy = () => this.providers.some((provider) => provider.busy);
+    const unavailable = () => this.closing || blocked() || providersBusy() ||
+      (this.placementJobs?.busy && !jobContext.getStore());
     this.memory = new LiveMemory(workspace.root, undefined, unavailable);
     this.document = new LiveDocument(workspace.root, undefined, unavailable);
     this.placement = new LivePlacement(workspace.root, undefined, unavailable);
+    this.placementJobs = new LivePlacementJobs(this.placement, this.document,
+      (fn) => jobContext.run(true, fn),
+      () => this.closing || blocked() || providersBusy());
+    this.terrain = new LiveTerrain(workspace.root, undefined, unavailable);
     this.data = new LiveDataXml(workspace, factory, undefined, unavailable);
     this.triggers = new LiveTriggers(workspace, factory, undefined, unavailable);
     this.ui = new LiveUi(workspace, factory, undefined, unavailable);
@@ -48,6 +60,7 @@ export class EditorLiveWorkspace {
       this.memory,
       this.document,
       this.placement,
+      this.terrain,
       this.data,
       this.triggers,
       this.ui,
@@ -58,7 +71,7 @@ export class EditorLiveWorkspace {
   }
 
   get busy() {
-    return this.providers.some((provider) => provider.busy);
+    return this.placementJobs.busy || this.providers.some((provider) => provider.busy);
   }
 
   windows() {
@@ -72,7 +85,7 @@ export class EditorLiveWorkspace {
   capabilities() {
     return {
       module: "editor-live",
-      apiVersion: "editor-live-2026-11-08-compile-apply",
+      apiVersion: "editor-live-2026-11-12-gui-catalog",
       backend: "current_document",
       copiesCreated: 0,
       reopensMap: false,
@@ -113,6 +126,7 @@ export class EditorLiveWorkspace {
       },
       memory: this.memory.capabilities(),
       placement: this.placement.capabilities(),
+      terrain: { tools: ["live.terrain.flatten_all"], scope: "Original full height-field dialog; direct current document; exact terrain readback unverified", regionalBrush: false },
       data: this.data.capabilities(),
       triggers: this.triggers.capabilities(),
       ui: this.ui.capabilities(),
@@ -122,8 +136,8 @@ export class EditorLiveWorkspace {
       unsupportedScope:
         "Direct in-memory mode only; explicit same_file_refresh can prepare these components with existing generators. Native model/rendering acceptance remains per component.",
       unsupported: [
-        "Terrain component application",
-        "Editing/replacing existing GUI trigger graphs and general localized trigger content",
+        "Direct regional terrain brush and general terrain component application",
+        "General editing/replacing existing GUI trigger graphs beyond supported append, rename and literal-parameter operations, and general localized trigger content",
         "Atomic UI/Data batches with linked localized Text, style and import components",
         "Map settings and lighting application",
         "Placement of types absent from the current filtered palette",
@@ -141,6 +155,7 @@ export class EditorLiveWorkspace {
   close() {
     this.closing = true;
     return (this.closeTask ??= (async () => {
+      await this.placementJobs.close();
       const results = await Promise.allSettled(this.providers.map((provider) => provider.close()));
       if (results.some((r) => r.status === "rejected")) throw Error("EDITOR_LIVE_CLOSE_FAILED");
     })());

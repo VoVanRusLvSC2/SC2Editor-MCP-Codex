@@ -43,6 +43,10 @@ test("editor-live profile exposes current-document tools without checkpoint impo
       "live.placement.catalog",
       "live.placement.create",
       "live.trigger.prepare",
+      "live.trigger.create",
+      "live.trigger.income",
+      "live.trigger.catalog",
+      "live.data.append_xml",
       "live.trigger.apply",
       "live.ui.create",
       "live.ui.author",
@@ -50,6 +54,8 @@ test("editor-live profile exposes current-document tools without checkpoint impo
       "live.import.prepare",
       "live.import.apply",
       "live.import.verify",
+      "live.trigger.configure",
+      "live.trigger.append_configured",
       "live.refresh.prepare",
       "live.refresh.begin",
       "live.refresh.author",
@@ -73,7 +79,7 @@ test("editor-live profile exposes current-document tools without checkpoint impo
       assert.equal(tools.has(name), false, name);
     const cap = project.live.current.capabilities();
     assert.equal(cap.module, "editor-live");
-    assert.equal(cap.apiVersion, "editor-live-2026-11-08-compile-apply");
+    assert.equal(cap.apiVersion, "editor-live-2026-11-12-gui-catalog");
     const compactCapabilities = await runMcpBatch(
       [{ id: "cap", tool: "live.capabilities", args: {} }],
       tools,
@@ -85,7 +91,7 @@ test("editor-live profile exposes current-document tools without checkpoint impo
       refresh: { backend: string; reopensSamePath: boolean };
     };
     assert.equal(compact.apiVersion, cap.apiVersion);
-    assert.ok(compact.unsupported.includes("Terrain component application"));
+    assert.ok(compact.unsupported.includes("Direct regional terrain brush and general terrain component application"));
     assert.equal(compact.refresh.backend, "same_file_refresh");
     assert.equal(compact.refresh.reopensSamePath, true);
     const workflowCompact = compactResult({
@@ -94,7 +100,7 @@ test("editor-live profile exposes current-document tools without checkpoint impo
       currentDocument: cap,
     }) as typeof compact;
     assert.equal(workflowCompact.apiVersion, cap.apiVersion);
-    assert.ok(workflowCompact.unsupported.includes("Terrain component application"));
+    assert.ok(workflowCompact.unsupported.includes("Direct regional terrain brush and general terrain component application"));
     assert.equal(workflowCompact.refresh.backend, "same_file_refresh");
     assert.equal(cap.copiesCreated, 0);
     assert.equal(cap.reopensMap, false);
@@ -259,6 +265,28 @@ test("current-document module blocks overlapping backends and checkpoint ownersh
     live.triggers.busy = false;
     live.ui.busy = false;
     live.text.busy = false;
+    await live.close();
+    await fs.rm(root, { recursive: true, force: true });
+  }
+});
+
+test("a background placement job blocks other live edits until it stops", async () => {
+  const root = await fs.mkdtemp(path.join(os.tmpdir(), "sc2-editor-live-job-lock-"));
+  const live = new EditorLiveWorkspace(new Workspace(root), () => undefined);
+  let release!: () => void;
+  const barrier = new Promise<void>(resolve => { release = resolve; });
+  live.placement.prepare = async () => { await barrier; return {} as never; };
+  try {
+    const job = live.placementJobs.start({ archive: "User.SC2Map", windowId: "1",
+      objects: [{ type: "Lamp", x: 1, y: 1 }] });
+    assert.equal(live.busy, true);
+    await assert.rejects(live.document.save({ archive: "User.SC2Map", windowId: "1", expectedSha256: "a".repeat(64) }), /WORKFLOW_BUSY/);
+    live.placementJobs.cancel(job.jobId);
+    release();
+    await live.close();
+    assert.equal(live.placementJobs.status(job.jobId).status, "cancelled");
+  } finally {
+    release();
     await live.close();
     await fs.rm(root, { recursive: true, force: true });
   }

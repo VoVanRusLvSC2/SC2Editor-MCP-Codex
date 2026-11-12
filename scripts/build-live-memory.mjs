@@ -23,6 +23,7 @@ try {
     "import_dialog.inc",
     "module_inspection.inc",
     "data_xml.inc",
+    "catalog.inc",
     "memory_protocol.h",
     "memory_loader.cpp",
     "desktop_context.h",

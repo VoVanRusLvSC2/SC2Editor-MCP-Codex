@@ -13,6 +13,21 @@ export const authoringGuide = {
       "Use one compact command per line with modkit.author; mode=plan previews, while mode=stage performs supported live operations. Obtain the actual sessionId from the begin receipt; @s1.sessionId only references a prior step inside the same author request.",
     examples: [
       "Inspect live.windows and live.capabilities first; do not save or dismiss dialogs just to inspect.",
+      'live placement.group archive=Current.SC2Map windowId=123 type=Barrels points="26.5,26.5;28.5,26.5"',
+      'live placement.start archive=Current.SC2Map windowId=123 type=Barrels points="26.5,26.5;28.5,26.5"',
+      "Poll live placement.job_status jobId=<jobId> before any subsequent Save.",
+      'live trigger.income archive=Current.SC2Map windowId=<AI-or-Terrain-window> player=1 every=5 amount=100 name="Mineral Income"',
+      'live trigger.append_action archive=Current.SC2Map windowId=456 path="MAIN/End Phase" action=skip_remaining',
+      'live trigger.append_action archive=Current.SC2Map windowId=456 path="MAIN/End Phase" action=builtin_default actionName="Set Variable" useDefaults=true',
+      'live trigger.append_event archive=Current.SC2Map windowId=456 path="MAIN/End Phase" eventName="Map Initialization" useDefaults=true',
+      'live trigger.append_event archive=Current.SC2Map windowId=456 path="MAIN/End Phase" event=periodic seconds=5',
+      'live trigger.append_numeric archive=Current.SC2Map windowId=456 path="MAIN/End Phase" kind=action name="Set Global Time Scale" parameter="Time Scale" numberType=real value=2.5',
+      'live trigger.details archive=Current.SC2Map windowId=456 path="MAIN/End Phase"',
+      'live trigger.set_wait archive=Current.SC2Map windowId=456 path="MAIN/End Phase" actionIndex=2 expectedDetailHash=<fingerprint> seconds=3.5',
+      'live trigger.append_configured archive=Current.SC2Map windowId=456 path="MAIN/Start" kind=action name="Create Units With Default Facing" edits="integer:Count=6;unit:Type=Murloc Marine;point:Point=Spawn"',
+      'live trigger.configure archive=Current.SC2Map windowId=456 path="MAIN/Start" section=actions itemIndex=1 expectedDetailHash=<fingerprint> edits="integer:Count=7;unit:Type=Murloc Marine;point:Point=Spawn"',
+      'live trigger.set_unit archive=Current.SC2Map windowId=456 path="MAIN/Start" section=actions itemIndex=1 expectedDetailHash=<fingerprint> parameterIndex=2 expectedParameterHash=<fingerprint> unitName="Murloc Marine"',
+      'live trigger.set_point archive=Current.SC2Map windowId=456 path="MAIN/Start" section=actions itemIndex=1 expectedDetailHash=<fingerprint> parameterIndex=4 expectedParameterHash=<fingerprint> pointName="MCP Spawn Point"',
       "live refresh.begin archive=Current.SC2Map windowId=123 mode=same_file_refresh saveIfDirty=true",
       "live refresh.author sessionId=<sessionId> <<EDITS\n<compact component commands>\nEDITS",
       "If GUI Triggers changed: live refresh.compile_begin sessionId=<sessionId>; then live refresh.compile_finish sessionId=<sessionId>.",
@@ -65,6 +80,7 @@ export const authoringGuide = {
     "terrain catalog tileset=Agria section=vegetation limit=8",
     "terrain style tileset=Agria profile=forest",
     "terrain palette_preview tileset=Agria section=vegetation limit=6 includeImage=false",
+    "terrain visual_reference category=doodads query=forest limit=8",
     "terrain measure id=ChainLinkFenceStraight includeImage=false",
     "terrain load.inspect",
     "terrain prefab tileset=Agria recipe=base_entrance clearance=6 includeImage=false",
@@ -75,6 +91,7 @@ export const authoringGuide = {
     "terrain pathing rect=10,10,20,20 layer=noBuilding mode=block",
     "objects unit id=Marine at=25,31 owner=1 count=3",
     "objects remove ids=101,102",
+    "objects unit_refs ids=101,102",
     "data set id=MyMarine path=LifeMax value=600",
     "data card.check unit=Hero",
     "data unit id=Hero from=Marine life=600 scale=1.2 heroic=true",
@@ -149,6 +166,7 @@ const aliases: Record<string, string> = {
   "objects.unit": "placement.addUnit",
   "objects.doodad": "placement.addDoodad",
   "objects.remove": "placement.removeBatch",
+  "objects.unit_refs": "placement.gui_unit_references",
   "objects.variants": "placement.setVariations",
   "data.find": "data.peek",
   "data.unit": "data.unit.copy",
@@ -180,8 +198,14 @@ const aliases: Record<string, string> = {
 const directCommands = new Set([
   "live.windows",
   "live.placement.inspect",
+  "live.placement.inspect_object",
+  "live.terrain.flatten_all",
   "live.placement.catalog",
   "live.placement.create",
+  "live.placement.create_group",
+  "live.placement.job_start",
+  "live.placement.job_status",
+  "live.placement.job_cancel",
   "live.placement.prepare",
   "live.placement.duplicate",
   "live.placement.move",
@@ -190,6 +214,23 @@ const directCommands = new Set([
   "live.data.author",
   "live.data.release",
   "live.trigger.inspect",
+  "live.trigger.tree",
+  "live.trigger.rename",
+  "live.trigger.append_action",
+  "live.trigger.append_event",
+  "live.trigger.append_numeric",
+  "live.trigger.append_configured",
+  "live.trigger.configure",
+  "live.trigger.details",
+  "live.trigger.parameters",
+  "live.trigger.set_real",
+  "live.trigger.set_integer",
+  "live.trigger.set_unit",
+  "live.trigger.set_point",
+  "live.trigger.set_wait",
+  "live.trigger.set_periodic",
+  "live.trigger.create",
+  "live.trigger.income",
   "live.trigger.prepare",
   "live.trigger.apply",
   "live.trigger.verify",
@@ -250,6 +291,7 @@ const directCommands = new Set([
   "terrain.compose",
   "terrain.measure",
   "terrain.palette_preview",
+  "terrain.visual_reference",
   "terrain.prefab",
   "terrain.site.plan",
   "terrain.assemble",
@@ -295,6 +337,7 @@ const directCommands = new Set([
   "terrain.modkit.inspect",
   "terrain.modkit.plan_file",
   "placement.scan",
+  "placement.gui_unit_references",
   "placement.validate",
   "placement.geometry_check",
   "placement.addUnit",
@@ -475,7 +518,7 @@ function argumentsOf(tokens: string[], tool = ""): Args {
     } else
       parsed =
         tool.startsWith("live.") &&
-        ["windowId", "objectKey", "catalogHash", "expectedId"].includes(key)
+        ["windowId", "objectKey", "catalogHash", "expectedId", "expectedDetailHash", "expectedParameterHash", "expectedFingerprint", "expectedSceneHash"].includes(key)
           ? value
           : scalar(value);
     assign(args, key, parsed);
@@ -515,7 +558,20 @@ function shorthand(
   args: Args,
   block?: string,
 ): { tool: string; args: Args; saveFile?: string } {
-  if (name === "objects.remove") {
+  if (name === "live.placement.group" || name === "live.placement.start") {
+    const type = take(args, "type"), points = take(args, "points"), expectedId = take(args, "expectedId");
+    if (typeof type !== "string" || !type || typeof points !== "string" || !points || args.objects !== undefined)
+      throw Error("AUTHOR_LIVE_PLACEMENT_GROUP_TYPE_AND_POINTS_REQUIRED");
+    const coordinates = points.split(";");
+    if (coordinates.length > (name === "live.placement.start" ? 50 : 8) || coordinates.some((p) => !p.trim()))
+      throw Error("AUTHOR_LIVE_PLACEMENT_GROUP_POINTS_INVALID");
+    args.objects = coordinates.map((p) => {
+      const [x, y] = point(p, 2, "LIVE_PLACEMENT_GROUP");
+      return { type, x, y, ...(expectedId === undefined ? {} : { expectedId }) };
+    });
+    return { tool: name === "live.placement.start" ? "live.placement.job_start" : "live.placement.create_group", args };
+  }
+  if (name === "objects.remove" || name === "objects.unit_refs") {
     const raw = take(args, "ids");
     if (raw === undefined || args.objectIds !== undefined)
       throw Error("AUTHOR_OBJECT_IDS_REQUIRED");
@@ -529,7 +585,7 @@ function shorthand(
     )
       throw Error("AUTHOR_OBJECT_IDS_INVALID");
     args.objectIds = ids;
-    return { tool: "placement.removeBatch", args };
+    return { tool: name === "objects.remove" ? "placement.removeBatch" : "placement.gui_unit_references", args };
   }
   if (name === "live.refresh.author" && block !== undefined) {
     if (args.script !== undefined) throw Error("AUTHOR_REFRESH_SCRIPT_CONFLICT");
@@ -945,7 +1001,12 @@ function lifecycle(
         "live.document.status",
         "live.memory.capabilities",
         "live.placement.inspect",
+        "live.placement.inspect_object",
+        "live.placement.job_status",
         "live.trigger.inspect",
+        "live.trigger.tree",
+        "live.trigger.details",
+        "live.trigger.parameters",
         "live.ui.read",
         "live.text.read",
         "live.text.verify",

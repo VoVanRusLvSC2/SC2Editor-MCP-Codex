@@ -1,5 +1,6 @@
 import { createHash } from "node:crypto";
 import { decodeXmlValue, scanXml } from "../../core/xmlScanner.js";
+import { registry } from "../trigger/authoring.js";
 
 const encode = (value: string) =>
   value.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
@@ -86,13 +87,44 @@ export function triggerLibrarySignature(source: string) {
     parsed.diagnostics.some((d) => d.severity === "error")
   )
     throw Error("LIVE_TRIGGER_LIBRARY_INVALID");
+  const implicitGameTypes=new Map<string,Set<string>>();
+  const addDomain=(id:string,domain:string)=>{
+    let domains=implicitGameTypes.get(id);if(!domains)implicitGameTypes.set(id,domains=new Set());domains.add(domain);
+  };
+  for(const owner of parsed.nodes.filter(n=>n.tag==="Element"&&n.attrs.Type==="Variable")) {
+    const children=owner.childIds.map(id=>parsed.nodes[id]);
+    const type=children.find(n=>n.tag==="VariableType");
+    const domain=type?.childIds.map(id=>parsed.nodes[id]).find(n=>n.tag==="GameType")?.attrs.Value;
+    const value=children.find(n=>n.tag==="Value"&&n.attrs.Type==="Param");
+    if(domain&&value?.attrs.Id)addDomain(value.attrs.Id,domain);
+  }
+  if(parsed.nodes.some(n=>n.tag==="ValueType"&&n.attrs.GameType)) {
+    const core=registry(),domains=new Map<string,Set<string>>();
+    for(const fn of core.definitions??core.functions)for(const parameter of fn.parameters)
+      if(parameter.type==="gamelink"&&parameter.gameType){
+        let set=domains.get(parameter.id);if(!set)domains.set(parameter.id,set=new Set());set.add(parameter.gameType);
+      }
+    for(const param of parsed.nodes.filter(n=>n.tag==="Element"&&n.attrs.Type==="Param")) {
+      const def=param.childIds.map(id=>parsed.nodes[id]).find(n=>n.tag==="ParameterDef"&&n.attrs.Library==="Ntve");
+      for(const domain of domains.get(def?.attrs.Id??"")??[])addDomain(param.attrs.Id,domain);
+    }
+  }
+  const attrs=(id:number)=>{
+    const node=parsed.nodes[id],parent=node.parentId===null?undefined:parsed.nodes[node.parentId];
+    const domains=parent?.tag==="Element"&&parent.attrs.Type==="Param"?implicitGameTypes.get(parent.attrs.Id):undefined;
+    // Original export omits only this redundant attribute. The owning VariableType
+    // or exact Core ParamDef must establish the same single domain; other changes
+    // and untyped/wrong domains remain significant.
+    const redundant=node.tag==="ValueType"&&node.attrs.Type==="gamelink"&&domains?.size===1&&domains.has(node.attrs.GameType);
+    return Object.entries(node.attrs).filter(([key])=>!redundant||key!=="GameType").sort(([a],[b])=>a.localeCompare(b));
+  };
   const render = (id: number): unknown => {
     const node = parsed.nodes[id],
       values: unknown[] = [];
     if (!node.childIds.length)
       return [
         node.tag,
-        Object.entries(node.attrs).sort(([a], [b]) => a.localeCompare(b)),
+        attrs(id),
         node.selfClosing
           ? ""
           : decodeXmlValue(source.slice(node.startTagEnd, node.endTagStart)).replaceAll(
@@ -134,7 +166,7 @@ export function triggerLibrarySignature(source: string) {
       if (tail) values.push(tail);
     }
     values.push(...children.map(render));
-    return [node.tag, Object.entries(node.attrs).sort(([a], [b]) => a.localeCompare(b)), values];
+    return [node.tag, attrs(id), values];
   };
   return createHash("sha256")
     .update(JSON.stringify(render(parsed.rootIds[0])))

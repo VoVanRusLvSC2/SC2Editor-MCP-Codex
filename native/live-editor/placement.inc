@@ -97,7 +97,7 @@ static std::wstring PlacementLayer(HWND root) {
 }
 static std::wstring PlacementSceneHash(HWND list) {
   int count=int(SendMessageW(list,LVM_GETITEMCOUNT,0,0));std::wstring text;
-  if(!list||count<0||count>256)return L"";
+  if(!list||count<0||count>8192)return L"";
   for(int i=0;i<count;i++)text+=PlacementKey(list,i)+L"\x1f"+Cell(list,i,0)+L"\x1f"+Cell(list,i,1)+L"\x1e";
   return PlacementHash(text);
 }
@@ -145,12 +145,26 @@ static void PlacementExecute(LiveDataRequest *b, HWND root) {
     HWND list=PlacementList(root);int count=int(SendMessageW(list,LVM_GETITEMCOUNT,0,0));
     auto layer=PlacementLayer(root);std::wstring preview;
     for(HWND h:Children(root))if(Class(h)==L"Static"&&Text(h).rfind(L"Pasting: ",0)==0)preview=Text(h);
-    if(layer.empty()||!list||count<0||count>256){Fail(b,L"LIVE_PLACEMENT_OBJECT_SCENE_BOUND");return;}
+    if(std::wstring(b->field)==L"count") {
+      if(layer.empty()||!list||count<0||count>8192){Fail(b,L"LIVE_PLACEMENT_OBJECT_SCENE_BOUND");return;}
+      Result(b,L"{\"layer\":"+Quote(layer)+L",\"count\":"+std::to_wstring(count)+L",\"mapMutation\":false}");return;
+    }
+    bool paged=std::wstring(b->field)==L"page";int offset=0;
+    if(paged){wchar_t *end=nullptr;long n=wcstol(b->value,&end,10);if(!b->value[0]||!end||*end||n<0||n>8192){Fail(b,L"LIVE_PLACEMENT_PAGE_INVALID");return;}offset=int(n);}
+    else if(b->field[0]){Fail(b,L"LIVE_PLACEMENT_PAGE_INVALID");return;}
+    if(layer.empty()||!list||count<0||count>8192||(!paged&&count>256)||offset>count){Fail(b,L"LIVE_PLACEMENT_OBJECT_SCENE_BOUND");return;}
     int selected=int(SendMessageW(list,LVM_GETNEXTITEM,WPARAM(-1),LVNI_SELECTED));
     std::wstring selectedKey=SendMessageW(list,LVM_GETSELECTEDCOUNT,0,0)==1&&selected>=0?PlacementKey(list,selected):L"";
-    std::wstring out=L"{\"layer\":"+Quote(layer)+L",\"count\":"+std::to_wstring(count)+L",\"selectedKey\":"+Quote(selectedKey)+L",\"sceneHash\":"+Quote(PlacementHash(layer+L":"+PlacementSceneHash(list)))+L",\"preview\":"+Quote(preview)+L",\"objects\":[";
-    for(int i=0;i<count;i++){if(i)out+=L",";out+=L"{\"row\":"+std::to_wstring(i)+L",\"key\":"+Quote(PlacementKey(list,i))+L",\"type\":"+Quote(Cell(list,i,0))+L",\"name\":"+Quote(Cell(list,i,1))+L"}";}
-    Result(b,out+L"]}");return;
+    auto sceneHash=PlacementHash(layer+L":"+PlacementSceneHash(list));
+    if(paged&&b->expected[0]&&sceneHash!=b->expected){Fail(b,L"LIVE_PLACEMENT_SCENE_CHANGED");return;}
+    std::wstring out=L"{\"layer\":"+Quote(layer)+L",\"count\":"+std::to_wstring(count)+L",\"selectedKey\":"+Quote(selectedKey)+L",\"sceneHash\":"+Quote(sceneHash)+L",\"preview\":"+Quote(preview)+L",\"objects\":[";
+    int emitted=0;for(int i=offset;i<count;i++){
+      auto row=L"{\"row\":"+std::to_wstring(i)+L",\"key\":"+Quote(PlacementKey(list,i))+L",\"type\":"+Quote(Cell(list,i,0))+L",\"name\":"+Quote(Cell(list,i,1))+L"}";
+      if(paged&&(emitted>=128||out.size()+row.size()>24000))break;
+      if(emitted)out+=L",";out+=row;emitted++;
+    }
+    if(paged)out+=L"],\"offset\":"+std::to_wstring(offset)+L"}";else out+=L"]}";
+    Result(b,out);return;
   }
   if (b->operation == 30) {
     if(std::wstring(b->field)==L"menus") {
@@ -299,6 +313,13 @@ static void PlacementExecute(LiveDataRequest *b, HWND root) {
       if(!PlacementPropertiesMatch(dialog)){Fail(b,L"LIVE_PLACEMENT_SELECTED_OBJECT_MISMATCH");return;}
       wchar_t *endX=nullptr,*endY=nullptr;double x=wcstod(b->unit,&endX),y=wcstod(b->field,&endY);
       if(!b->unit[0]||!b->field[0]||!endX||!endY||*endX||*endY||!std::isfinite(x)||!std::isfinite(y)||x<0||y<0||x>4096||y>4096){Fail(b,L"LIVE_PLACEMENT_COORDINATES_INVALID");return;}
+      for(int id:{34,36,14}) {
+        if(id==14&&!b->value[0])continue;
+        HWND edit=GetDlgItem(dialog,id);
+        if(!edit||!IsWindowEnabled(edit)||(GetWindowLongPtrW(edit,GWL_STYLE)&ES_READONLY)) {
+          Fail(b,L"LIVE_PLACEMENT_FIELD_READ_ONLY");return;
+        }
+      }
       for(int id:{34,36,14}){if(id==14&&!b->value[0])continue;HWND edit=GetDlgItem(dialog,id);const wchar_t *v=id==34?b->unit:id==36?b->field:(std::wstring(b->value)==L"\x1f"?L"":b->value);SendMessageW(edit,WM_SETTEXT,0,reinterpret_cast<LPARAM>(v));SendMessageW(dialog,WM_COMMAND,MAKEWPARAM(id,EN_CHANGE),reinterpret_cast<LPARAM>(edit));}
       PostMessageW(dialog,WM_COMMAND,MAKEWPARAM(11,BN_CLICKED),reinterpret_cast<LPARAM>(GetDlgItem(dialog,11)));Result(b,L"{\"commitRequested\":true,\"retryMutation\":false}");return;
     }

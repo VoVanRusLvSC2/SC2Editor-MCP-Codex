@@ -11,6 +11,7 @@ struct ComponentDialogState {
   HHOOK input=nullptr;
   UINT_PTR timer=0;
   bool manual=false;
+  bool heightCommitSubmitted=false;
   bool deferred=false,opened=false;
   bool fileSubmitted=false;
   int transition=0; // 1: our Browse child; 2: return from our submitted/cancelled child.
@@ -25,6 +26,10 @@ static const ComponentCommand *ComponentCommandFor(const std::wstring &mode) {
   static const ComponentCommand commands[]={
     {L"library.export",L"Triggers",L"Export Library...",false},
     {L"library.import",L"Triggers",L"Import Library...",false},
+    {L"trigger.action",L"Triggers",L"New Action",true},
+    {L"trigger.event",L"Triggers",L"New Event",true},
+    {L"trigger.real",L"Triggers",L"",true},
+    {L"trigger.choice",L"Triggers",L"",true},
     {L"layout.add",L"UI",L"Add Layout...",true},
     {L"terrain.heightfield",L"Terrain",L"Modify Height Field...",true},
     {L"import.files",L"Import",L"Import Files...",true},
@@ -78,6 +83,8 @@ static HWND ComponentDialogWindow() {
     for(int i=0;owner&&i<16;i++,owner=GetWindow(owner,GW_OWNER))if(owner==componentDialog.root)ours=true;
     if(ours){
       if(componentDialog.mode==L"layout.add"&&(Text(h)!=L"Enter Layout File Name"||!Control(h,13,L"Edit")||!GetDlgItem(h,11)||!GetDlgItem(h,12)))continue;
+      if(componentDialog.mode==L"trigger.real"&&((Text(h)!=L"Real"&&Text(h)!=L"Integer")||!GetDlgItem(h,11)||!GetDlgItem(h,12)))continue;
+      if(componentDialog.mode==L"trigger.choice"&&(!GetDlgItem(h,11)||!GetDlgItem(h,12)))continue;
       if(found&&!ComponentDescendant(found,h)&&!ComponentDescendant(h,found))return nullptr;
       if(!found||ComponentDescendant(h,found))found=h;
     }
@@ -88,11 +95,18 @@ static std::wstring ComponentDialogFingerprint(HWND dialog) {
   std::wstring text=Text(dialog);
   for(HWND h:Children(dialog))if(IsWindowVisible(h)) {
     auto c=Class(h);
-    if(c==L"Edit"||c==L"RichEdit20W"||c==L"ComboBox"||c==L"Static")
+    // The action description is an asynchronous read-only preview of the
+    // selected row, not an input; it may update after selection returns.
+    if(c==L"Edit"||(c==L"RichEdit20W"&&componentDialog.mode!=L"trigger.action"&&componentDialog.mode!=L"trigger.event")||c==L"ComboBox"||(c==L"Static"&&componentDialog.mode!=L"trigger.choice"))
       text+=L"\x1e"+std::to_wstring(GetDlgCtrlID(h))+L":"+c+L":"+Text(h);
     if(c==L"Button")text+=L"\x1e"+std::to_wstring(GetDlgCtrlID(h))+L":check:"+std::to_wstring(SendMessageW(h,BM_GETCHECK,0,0));
     if(c==L"msctls_trackbar32")text+=L"\x1e"+std::to_wstring(GetDlgCtrlID(h))+L":position:"+std::to_wstring(SendMessageW(h,TBM_GETPOS,0,0));
     if(c==L"SysTreeView32"&&(GetDlgCtrlID(h)==14||GetDlgCtrlID(h)==15))text+=L"\x1e"+ModuleTree(h).hash;
+    if(c==L"SysListView32"&&(componentDialog.mode==L"trigger.action"||componentDialog.mode==L"trigger.event"||componentDialog.mode==L"trigger.choice")) {
+      auto selected=SendMessageW(h,LVM_GETNEXTITEM,WPARAM(-1),LVNI_SELECTED);
+      text+=L"\x1e"+std::to_wstring(GetDlgCtrlID(h))+L":list:"+std::to_wstring(SendMessageW(h,LVM_GETITEMCOUNT,0,0))+L":"+std::to_wstring(selected);
+      if(selected>=0)text+=L":"+Cell(h,int(selected),0)+L":"+Cell(h,int(selected),1)+L":"+Cell(h,int(selected),2);
+    }
   }
   return PlacementHash(text);
 }
@@ -102,6 +116,13 @@ static LRESULT CALLBACK ComponentInput(int code,WPARAM wp,LPARAM lp) {
     if(m==WM_CHAR||m==WM_KEYDOWN||m==WM_LBUTTONDOWN||m==WM_LBUTTONDBLCLK) {
       HWND dialog=ComponentDialogWindow();
       if(dialog&&(message->hwnd==dialog||IsChild(dialog,message->hwnd)))componentDialog.manual=true;
+      // The original undo warning is a thread-owned top-level window without
+      // an owner. Never race a human interacting with that warning.
+      if(componentDialog.mode==L"terrain.heightfield"&&componentDialog.heightCommitSubmitted) {
+        HWND top=GetAncestor(message->hwnd,GA_ROOT);
+        if(top&&Text(top)==L"Warning"&&std::find(componentDialog.before.begin(),componentDialog.before.end(),top)==componentDialog.before.end())
+          componentDialog.manual=true;
+      }
     }
   }
   return CallNextHookEx(componentDialog.input,code,wp,lp);
@@ -113,9 +134,28 @@ static void ComponentFinish() {
   if(componentDialog.localeSource!=INVALID_HANDLE_VALUE)CloseHandle(componentDialog.localeSource);componentDialog.localeSource=INVALID_HANDLE_VALUE;
   for(auto file:componentDialog.importSources)CloseHandle(file);componentDialog.importSources.clear();componentDialog.importNames.clear();componentDialog.importPrefix.clear();
   componentDialog.deferred=false;
+  componentDialog.heightCommitSubmitted=false;
   componentDialog.active=nullptr;componentDialog.parent=nullptr;componentDialog.transition=0;
 }
 static void CALLBACK ComponentInitial(HWND,UINT,UINT_PTR,DWORD) {
+  if(componentDialog.mode==L"terrain.heightfield"&&componentDialog.heightCommitSubmitted&&!componentDialog.manual&&
+     componentDialog.active&&IsWindow(componentDialog.active)&&!IsWindowEnabled(componentDialog.active)) {
+    HWND found=nullptr,yes=nullptr;bool ambiguous=false;
+    for(HWND h:Roots()) {
+      if(!IsWindowVisible(h)||Class(h)!=L"#32770"||Text(h)!=L"Warning"||
+         std::find(componentDialog.before.begin(),componentDialog.before.end(),h)!=componentDialog.before.end())continue;
+      HWND y=GetDlgItem(h,IDYES),n=GetDlgItem(h,IDNO);bool message=false;
+      for(HWND child:Children(h))if(Class(child)==L"Static"&&Text(child)==L"This operation cannot be undone, and all existing undo information will be cleared.  Continue?")message=true;
+      if(y&&n&&Clean(Text(y))==L"Yes"&&Clean(Text(n))==L"No"&&message&&IsWindowEnabled(y)) {
+        if(found){ambiguous=true;break;}found=h;yes=y;
+      }
+    }
+    if(found&&!ambiguous) {
+      componentDialog.heightCommitSubmitted=false; // Single submission; never repeat Yes.
+      PostMessageW(found,WM_COMMAND,MAKEWPARAM(IDYES,BN_CLICKED),reinterpret_cast<LPARAM>(yes));
+      return;
+    }
+  }
   HWND dialog=ComponentDialogWindow();
   if(!dialog) {
     if(componentDialog.deferred&&(componentDialog.opened||GetTickCount64()>componentDialog.expires))ComponentFinish();
@@ -176,6 +216,28 @@ static void ComponentExecute(LiveDataRequest *b,HWND root) {
   }
   if(b->operation==51) {
     if(componentDialog.input||ComponentDialogWindow()||!b->token[0]){Fail(b,L"LIVE_COMPONENT_DIALOG_BUSY");return;}
+    if(mode==L"trigger.action"||mode==L"trigger.event") {
+      HWND rootTree=Control(root,28,L"SysTreeView32"),detailTree=Control(root,134,L"SysTreeView32");
+      auto left=rootTree?ModuleTree(rootTree):ModuleTreeView{},right=detailTree?ModuleTree(detailTree):ModuleTreeView{};
+      auto trigger=rootTree?reinterpret_cast<HTREEITEM>(SendMessageW(rootTree,TVM_GETNEXTITEM,TVGN_CARET,0)):nullptr;
+      auto action=detailTree?reinterpret_cast<HTREEITEM>(SendMessageW(detailTree,TVM_GETNEXTITEM,TVGN_CARET,0)):nullptr;
+      auto selected=std::to_wstring(reinterpret_cast<uintptr_t>(trigger))+L":"+std::to_wstring(reinterpret_cast<uintptr_t>(action));
+      if(!trigger||!action||left.hash.empty()||right.hash.empty()||std::wstring(b->expected)!=left.hash+L":"+right.hash||selected!=b->value) {
+        Fail(b,L"LIVE_TRIGGER_ACTION_SELECTION_CHANGED");return;
+      }
+    }
+    if(mode==L"trigger.real"||mode==L"trigger.choice") {
+      HWND rootTree=Control(root,28,L"SysTreeView32"),detailTree=Control(root,134,L"SysTreeView32"),paramTree=Control(root,468,L"SysTreeView32");
+      auto left=rootTree?ModuleTree(rootTree):ModuleTreeView{},middle=detailTree?ModuleTree(detailTree):ModuleTreeView{},right=paramTree?ModuleTree(paramTree):ModuleTreeView{};
+      auto trigger=rootTree?reinterpret_cast<HTREEITEM>(SendMessageW(rootTree,TVM_GETNEXTITEM,TVGN_CARET,0)):nullptr;
+      auto action=detailTree?reinterpret_cast<HTREEITEM>(SendMessageW(detailTree,TVM_GETNEXTITEM,TVGN_CARET,0)):nullptr;
+      auto param=paramTree?reinterpret_cast<HTREEITEM>(SendMessageW(paramTree,TVM_GETNEXTITEM,TVGN_CARET,0)):nullptr;
+      auto selected=std::to_wstring(reinterpret_cast<uintptr_t>(trigger))+L":"+std::to_wstring(reinterpret_cast<uintptr_t>(action))+L":"+std::to_wstring(reinterpret_cast<uintptr_t>(param));
+      if(!trigger||!action||!param||left.hash.empty()||middle.hash.empty()||right.hash.empty()||
+         std::wstring(b->expected)!=left.hash+L":"+middle.hash+L":"+right.hash||selected!=b->value) {
+        Fail(b,L"LIVE_TRIGGER_PARAMETER_SELECTION_CHANGED");return;
+      }
+    }
     if(ui) {HWND edit=Control(root,19,L"Scintilla");if(edit&&SendMessageW(edit,2159,0,0)&&!SendMessageW(edit,2140,0,0)){Fail(b,L"LIVE_UI_PENDING_BUFFER_PRESERVED");return;}}
     std::wstring path=ComponentLibraryPath(b->unit,mode.rfind(L"locale.",0)==0?L".txt":L".SC2Lib");
     if(path.empty()){Fail(b,L"LIVE_COMPONENT_OPERATION_UNSUPPORTED");return;}
@@ -212,7 +274,13 @@ static void ComponentExecute(LiveDataRequest *b,HWND root) {
       Fail(b,L"LIVE_COMPONENT_DIALOG_GUARD_UNAVAILABLE");return;
     }
     SetActiveWindow(root);
-    bool invoked=Invoke(root,spec->command);
+    bool invoked=false;
+    if(mode==L"trigger.real"||mode==L"trigger.choice") {
+      HWND tree=Control(root,468,L"SysTreeView32");
+      if(tree&&GetFocus()==tree) {
+        invoked=PostMessageW(tree,WM_KEYDOWN,VK_RETURN,0)&&PostMessageW(tree,WM_KEYUP,VK_RETURN,0);
+      }
+    } else invoked=Invoke(root,spec->command);
     if(spec->deferred&&invoked){Result(b,L"{\"status\":\"pending\",\"token\":"+Quote(componentDialog.token)+L",\"retryMutation\":false}");return;}
     ComponentFinish();
     if(!invoked){Fail(b,L"LIVE_COMPONENT_COMMAND_UNAVAILABLE");return;}
@@ -230,6 +298,7 @@ static void ComponentExecute(LiveDataRequest *b,HWND root) {
       out+=L"{\"id\":"+std::to_wstring(GetDlgCtrlID(h))+L",\"type\":"+Quote(Class(h))+L",\"text\":"+Quote(Text(h))+L",\"enabled\":"+std::wstring(IsWindowEnabled(h)?L"true":L"false");
       if(Class(h)==L"Button")out+=L",\"checked\":"+std::to_wstring(SendMessageW(h,BM_GETCHECK,0,0));
       if(Class(h)==L"msctls_trackbar32")out+=L",\"position\":"+std::to_wstring(SendMessageW(h,TBM_GETPOS,0,0));
+      if(Class(h)==L"SysListView32"&&(componentDialog.mode==L"trigger.action"||componentDialog.mode==L"trigger.event"||componentDialog.mode==L"trigger.choice"))out+=L",\"table\":"+Table(h,16);
       if(Class(h)==L"SysTreeView32"&&(GetDlgCtrlID(h)==14||GetDlgCtrlID(h)==15))out+=L",\"tree\":"+ModuleTree(h).json;
       out+=L"}";
     }
@@ -237,6 +306,155 @@ static void ComponentExecute(LiveDataRequest *b,HWND root) {
   }
   if(componentDialog.manual||fingerprint!=componentDialog.initial||fingerprint!=b->expected){Fail(b,L"LIVE_COMPONENT_MANUAL_DIALOG_CHANGED");return;}
   if(mode==L"import.files"&&(b->operation==58||b->operation==59)){ImportDialogExecute(b,dialog);return;}
+  if(mode==L"trigger.choice"&&b->operation==59&&std::wstring(b->field)==L"list") {
+    HWND option=Control(dialog,190,L"Button");
+    if(componentDialog.parent||componentDialog.transition||Text(dialog)!=L"Game Link - Unit"||
+       !option||Clean(Text(option))!=L"List"||!IsWindowEnabled(option)){Fail(b,L"LIVE_TRIGGER_UNIT_CHOICE_UNAVAILABLE");return;}
+    if(SendMessageW(option,BM_GETCHECK,0,0)!=BST_CHECKED)SendMessageW(option,BM_CLICK,0,0);
+    if(SendMessageW(option,BM_GETCHECK,0,0)!=BST_CHECKED){Fail(b,L"LIVE_TRIGGER_UNIT_LIST_UNCONFIRMED");return;}
+    componentDialog.initial=ComponentDialogFingerprint(dialog);
+    Result(b,L"{\"optionsSet\":true,\"fingerprint\":"+Quote(componentDialog.initial)+L",\"mapMutation\":false}");return;
+  }
+  if(mode==L"trigger.choice"&&(b->operation==58||b->operation==59)&&std::wstring(b->field)==L"unit") {
+    HWND list=Control(dialog,202,L"SysListView32"),value=Control(dialog,39,L"Button"),listView=Control(dialog,190,L"Button"),
+         type=Control(dialog,15,L"ComboBox"),accept=GetDlgItem(dialog,11);
+    const std::wstring requested=b->value;
+    if(componentDialog.parent||componentDialog.transition||Text(dialog)!=L"Game Link - Unit"||!type||Text(type)!=L"Unit Type"||
+       !value||SendMessageW(value,BM_GETCHECK,0,0)!=BST_CHECKED||!listView||SendMessageW(listView,BM_GETCHECK,0,0)!=BST_CHECKED||
+       !list||!IsWindowVisible(list)||requested.empty()||requested.size()>100||!accept||!IsWindowEnabled(accept)||Clean(Text(accept))!=L"OK") {
+      Fail(b,L"LIVE_TRIGGER_UNIT_CHOICE_UNAVAILABLE");return;
+    }
+    int count=int(SendMessageW(list,LVM_GETITEMCOUNT,0,0)),match=-1;
+    if(count<0||count>10000){Fail(b,L"LIVE_TRIGGER_UNIT_LIST_BOUND");return;}
+    for(int row=0;row<count;row++)if(Cell(list,row,0)==requested) {
+      if(match>=0){Fail(b,L"LIVE_TRIGGER_UNIT_NAME_AMBIGUOUS");return;}match=row;
+    }
+    if(match<0){Fail(b,L"LIVE_TRIGGER_UNIT_NAME_NOT_FOUND");return;}
+    if(b->operation==59) {
+      LVITEMW selection{};selection.stateMask=LVIS_SELECTED|LVIS_FOCUSED;
+      SendMessageW(list,LVM_SETITEMSTATE,WPARAM(-1),reinterpret_cast<LPARAM>(&selection));
+      selection.state=LVIS_SELECTED|LVIS_FOCUSED;
+      SendMessageW(list,LVM_SETITEMSTATE,match,reinterpret_cast<LPARAM>(&selection));
+      SendMessageW(list,LVM_ENSUREVISIBLE,match,FALSE);SetFocus(list);
+    }
+    if(SendMessageW(list,LVM_GETSELECTEDCOUNT,0,0)!=1||int(SendMessageW(list,LVM_GETNEXTITEM,WPARAM(-1),LVNI_SELECTED))!=match||
+       Cell(list,match,0)!=requested){Fail(b,L"LIVE_TRIGGER_UNIT_SELECTION_UNCONFIRMED");return;}
+    if(b->operation==59) {
+      componentDialog.initial=ComponentDialogFingerprint(dialog);
+      Result(b,L"{\"optionsSet\":true,\"fingerprint\":"+Quote(componentDialog.initial)+L",\"mapMutation\":false}");return;
+    }
+    PostMessageW(accept,BM_CLICK,0,0);
+    Result(b,L"{\"submitted\":true,\"retryMutation\":false,\"mapMutation\":\"unconfirmed\"}");return;
+  }
+  if(mode==L"trigger.choice"&&(b->operation==58||b->operation==59)&&std::wstring(b->field)==L"point") {
+    HWND list=Control(dialog,125,L"SysListView32"),value=Control(dialog,39,L"Button"),type=Control(dialog,15,L"ComboBox"),accept=GetDlgItem(dialog,11);
+    const std::wstring requested=b->value;
+    if(componentDialog.parent||componentDialog.transition||Text(dialog)!=L"Point"||!type||Text(type)!=L"Point"||
+       !value||SendMessageW(value,BM_GETCHECK,0,0)!=BST_CHECKED||!list||!IsWindowVisible(list)||
+       requested.empty()||requested.size()>100||!accept||Clean(Text(accept))!=L"OK") {
+      Fail(b,L"LIVE_TRIGGER_POINT_CHOICE_UNAVAILABLE");return;
+    }
+    int count=int(SendMessageW(list,LVM_GETITEMCOUNT,0,0)),match=-1;
+    if(count<0||count>10000){Fail(b,L"LIVE_TRIGGER_POINT_LIST_BOUND");return;}
+    for(int row=0;row<count;row++)if(Cell(list,row,0)==requested) {
+      if(match>=0){Fail(b,L"LIVE_TRIGGER_POINT_NAME_AMBIGUOUS");return;}match=row;
+    }
+    if(match<0){Fail(b,L"LIVE_TRIGGER_POINT_NAME_NOT_FOUND");return;}
+    if(b->operation==59) {
+      LVITEMW selection{};selection.stateMask=LVIS_SELECTED|LVIS_FOCUSED;
+      SendMessageW(list,LVM_SETITEMSTATE,WPARAM(-1),reinterpret_cast<LPARAM>(&selection));
+      selection.state=LVIS_SELECTED|LVIS_FOCUSED;
+      SendMessageW(list,LVM_SETITEMSTATE,match,reinterpret_cast<LPARAM>(&selection));
+      SendMessageW(list,LVM_ENSUREVISIBLE,match,FALSE);SetFocus(list);
+    }
+    if(SendMessageW(list,LVM_GETSELECTEDCOUNT,0,0)!=1||int(SendMessageW(list,LVM_GETNEXTITEM,WPARAM(-1),LVNI_SELECTED))!=match||
+       Cell(list,match,0)!=requested||!IsWindowEnabled(accept)){Fail(b,L"LIVE_TRIGGER_POINT_SELECTION_UNCONFIRMED");return;}
+    if(b->operation==59) {
+      componentDialog.initial=ComponentDialogFingerprint(dialog);
+      Result(b,L"{\"optionsSet\":true,\"fingerprint\":"+Quote(componentDialog.initial)+L",\"mapMutation\":false}");return;
+    }
+    PostMessageW(accept,BM_CLICK,0,0);
+    Result(b,L"{\"submitted\":true,\"retryMutation\":false,\"mapMutation\":\"unconfirmed\"}");return;
+  }
+  if(mode==L"trigger.real"&&(b->operation==58||b->operation==59)) {
+    const auto field=std::wstring(b->field);
+    bool integer=field==L"integer";
+    if(componentDialog.parent||componentDialog.transition||(field!=L"seconds"&&field!=L"real"&&!integer)||
+       Text(dialog)!=(integer?L"Integer":L"Real")) {Fail(b,L"LIVE_TRIGGER_REAL_DIALOG_REQUIRED");return;}
+    HWND edit=Control(dialog,92,L"Edit"),value=GetDlgItem(dialog,39),accept=GetDlgItem(dialog,11);
+    wchar_t *end=nullptr;double requested=wcstod(b->value,&end);
+    double minimum=integer?-2147483648.0:(field==L"seconds"?0.0:-3600.0),maximum=integer?2147483647.0:3600.0;
+    if(!b->value[0]||!end||*end||!std::isfinite(requested)||requested<minimum||requested>maximum||
+       (integer&&std::floor(requested)!=requested)||!edit||!value||
+       SendMessageW(value,BM_GETCHECK,0,0)!=BST_CHECKED||!IsWindowEnabled(edit)||!accept||Clean(Text(accept))!=L"OK"||!IsWindowEnabled(accept)) {
+      Fail(b,L"LIVE_TRIGGER_REAL_VALUE_INVALID");return;
+    }
+    if(b->operation==59) {
+      SendMessageW(edit,WM_SETTEXT,0,reinterpret_cast<LPARAM>(b->value));
+      SendMessageW(GetParent(edit),WM_COMMAND,MAKEWPARAM(92,EN_CHANGE),reinterpret_cast<LPARAM>(edit));
+    }
+    auto actual=Text(edit);wchar_t *actualEnd=nullptr;double readback=wcstod(actual.c_str(),&actualEnd);
+    if(actual.empty()||!actualEnd||*actualEnd||!std::isfinite(readback)||fabs(readback-requested)>0.00001){Fail(b,L"LIVE_TRIGGER_REAL_VALUE_UNCONFIRMED");return;}
+    if(b->operation==59) {
+      componentDialog.initial=ComponentDialogFingerprint(dialog);
+      Result(b,L"{\"optionsSet\":true,\"fingerprint\":"+Quote(componentDialog.initial)+L",\"mapMutation\":false}");return;
+    }
+    PostMessageW(accept,BM_CLICK,0,0);
+    Result(b,L"{\"submitted\":true,\"retryMutation\":false,\"mapMutation\":\"unconfirmed\"}");return;
+  }
+  if((mode==L"trigger.action"||mode==L"trigger.event")&&b->operation==59) {
+    if(componentDialog.parent||componentDialog.transition||Text(dialog)!=(mode==L"trigger.action"?L"Action":L"Event")||!b->field[0]) {Fail(b,L"LIVE_TRIGGER_ACTION_DIALOG_REQUIRED");return;}
+    HWND list=Control(dialog,20,L"SysListView32");int count=list?int(SendMessageW(list,LVM_GETITEMCOUNT,0,0)):-1,match=-1;
+    if(count<0||count>10000){Fail(b,L"LIVE_TRIGGER_ACTION_LIST_UNAVAILABLE");return;}
+    for(int row=0;row<count;row++)if(Cell(list,row,0)==b->field&&(!b->value[0]||Cell(list,row,1)==b->value)&&Cell(list,row,2)==L"Built-In") {
+      if(match>=0){Fail(b,L"LIVE_TRIGGER_ACTION_AMBIGUOUS");return;}match=row;
+    }
+    if(match<0){Fail(b,L"LIVE_TRIGGER_ACTION_NOT_FOUND");return;}
+    LVITEMW selection{};selection.stateMask=LVIS_SELECTED|LVIS_FOCUSED;
+    SendMessageW(list,LVM_SETITEMSTATE,WPARAM(-1),reinterpret_cast<LPARAM>(&selection));
+    selection.state=LVIS_SELECTED|LVIS_FOCUSED;
+    SendMessageW(list,LVM_SETITEMSTATE,match,reinterpret_cast<LPARAM>(&selection));
+    SendMessageW(list,LVM_ENSUREVISIBLE,match,FALSE);SetFocus(list);
+    if(SendMessageW(list,LVM_GETSELECTEDCOUNT,0,0)!=1||int(SendMessageW(list,LVM_GETNEXTITEM,WPARAM(-1),LVNI_SELECTED))!=match){Fail(b,L"LIVE_TRIGGER_ACTION_SELECTION_UNCONFIRMED");return;}
+    componentDialog.initial=ComponentDialogFingerprint(dialog);
+    Result(b,L"{\"optionsSet\":true,\"category\":"+Quote(Cell(list,match,1))+L",\"fingerprint\":"+Quote(componentDialog.initial)+L",\"mapMutation\":false}");return;
+  }
+  if((mode==L"trigger.action"||mode==L"trigger.event")&&b->operation==58) {
+    auto requested=std::wstring(b->field);for(auto &ch:requested)ch=towlower(ch);
+    if(componentDialog.parent||componentDialog.transition||Text(dialog)!=(mode==L"trigger.action"?L"Action":L"Event")||requested.empty()||requested==L"custom script") {Fail(b,L"LIVE_TRIGGER_ACTION_UNSUPPORTED");return;}
+    HWND list=Control(dialog,20,L"SysListView32"),accept=GetDlgItem(dialog,11);
+    int selected=list?int(SendMessageW(list,LVM_GETNEXTITEM,WPARAM(-1),LVNI_SELECTED)):-1;
+    if(selected<0||SendMessageW(list,LVM_GETSELECTEDCOUNT,0,0)!=1||Cell(list,selected,0)!=b->field||
+       Cell(list,selected,1)!=b->value||Cell(list,selected,2)!=L"Built-In"||
+       !accept||Clean(Text(accept))!=L"OK"||!IsWindowEnabled(accept)){Fail(b,L"LIVE_TRIGGER_ACTION_SELECTION_CHANGED");return;}
+    PostMessageW(accept,BM_CLICK,0,0);
+    Result(b,L"{\"submitted\":true,\"retryMutation\":false,\"mapMutation\":\"unconfirmed\"}");return;
+  }
+  if(mode==L"terrain.heightfield"&&(b->operation==58||b->operation==59)) {
+    if(componentDialog.parent||componentDialog.transition||Text(dialog)!=L"Modify Height Field") {Fail(b,L"LIVE_HEIGHTFIELD_DIALOG_REQUIRED");return;}
+    HWND keep=Control(dialog,13,L"Button"),height=Control(dialog,14,L"Edit"),random=Control(dialog,16,L"Button"),accept=GetDlgItem(dialog,11);
+    if(!keep||Text(keep)!=L"Retain Existing Heights"||!height||!random||Text(random)!=L"Add Random Height"||
+       !accept||Clean(Text(accept))!=L"OK"||!IsWindowEnabled(accept)) {Fail(b,L"LIVE_HEIGHTFIELD_CONTROLS_CHANGED");return;}
+    if(b->operation==59) {
+      wchar_t *end=nullptr;double value=wcstod(b->value,&end);
+      if(!b->value[0]||!end||*end||!std::isfinite(value)||value<0||value>16){Fail(b,L"LIVE_HEIGHTFIELD_VALUE_INVALID");return;}
+      if(SendMessageW(keep,BM_GETCHECK,0,0)==BST_CHECKED)SendMessageW(keep,BM_CLICK,0,0);
+      if(SendMessageW(random,BM_GETCHECK,0,0)==BST_CHECKED)SendMessageW(random,BM_CLICK,0,0);
+      if(!IsWindowEnabled(height)){Fail(b,L"LIVE_HEIGHTFIELD_BASE_DISABLED");return;}
+      SendMessageW(height,WM_SETTEXT,0,reinterpret_cast<LPARAM>(b->value));
+      SendMessageW(dialog,WM_COMMAND,MAKEWPARAM(14,EN_CHANGE),reinterpret_cast<LPARAM>(height));
+      SendMessageW(dialog,WM_COMMAND,MAKEWPARAM(14,EN_KILLFOCUS),reinterpret_cast<LPARAM>(height));
+      auto actual=Text(height);wchar_t *actualEnd=nullptr;double readback=wcstod(actual.c_str(),&actualEnd);
+      if(SendMessageW(keep,BM_GETCHECK,0,0)!=BST_UNCHECKED||SendMessageW(random,BM_GETCHECK,0,0)!=BST_UNCHECKED||
+         !actualEnd||*actualEnd||!std::isfinite(readback)||fabs(readback-value)>0.00001){Fail(b,L"LIVE_HEIGHTFIELD_VALUE_UNCONFIRMED");return;}
+      componentDialog.initial=ComponentDialogFingerprint(dialog);
+      Result(b,L"{\"optionsSet\":true,\"fingerprint\":"+Quote(componentDialog.initial)+L",\"mapMutation\":false}");return;
+    }
+    if(std::wstring(b->value)!=L"clearUndo"||SendMessageW(keep,BM_GETCHECK,0,0)!=BST_UNCHECKED||SendMessageW(random,BM_GETCHECK,0,0)!=BST_UNCHECKED){Fail(b,L"LIVE_HEIGHTFIELD_OPTIONS_CHANGED");return;}
+    componentDialog.heightCommitSubmitted=true;
+    PostMessageW(accept,BM_CLICK,0,0);
+    Result(b,L"{\"submitted\":true,\"retryMutation\":false,\"mapMutation\":\"unconfirmed\"}");return;
+  }
   if(b->operation==59) {
     if(componentDialog.parent||componentDialog.transition||mode.rfind(L"locale.",0)!=0||
        (Text(dialog)!=L"Export Localized Text"&&Text(dialog)!=L"Import Localized Text")) {Fail(b,L"LIVE_LOCALE_DIALOG_REQUIRED");return;}

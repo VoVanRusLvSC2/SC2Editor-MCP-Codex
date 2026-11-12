@@ -8,6 +8,7 @@
 #include <cmath>
 #include <cwctype>
 #include <map>
+#include <unordered_set>
 #pragma comment(lib, "user32.lib")
 #pragma comment(lib, "comctl32.lib")
 static HWND boundWindow = nullptr;
@@ -306,6 +307,7 @@ static bool LocalSource(HWND root, const wchar_t *unit) {
 }
 #include "data_xml.inc"
 #include "ui_xml.inc"
+#include "catalog.inc"
 static bool OwnInline() {
   return ownInline && IsWindow(ownInline) && Inline(boundWindow) == ownInline &&
          GetPropW(ownInline, kLiveMemoryMessage) == reinterpret_cast<HANDLE>(inlineGeneration);
@@ -341,10 +343,17 @@ static void Execute(LiveDataRequest *b, HWND root) {
     if(activeEdit){Fail(b,L"LIVE_MEMORY_EDIT_BUSY");return;}
     ComponentExecute(b,root);return;
   }
-  if(b->operation==50||b->operation==55){ModuleInspectExecute(b,root);return;}
+  if(b->operation==50||b->operation==55||b->operation==66){
+    if(b->operation==66&&activeEdit){Fail(b,L"LIVE_MEMORY_EDIT_BUSY");return;}
+    ModuleInspectExecute(b,root);return;
+  }
   if (b->operation >= 43 && b->operation <= 45) {
     if(activeEdit){Fail(b,L"LIVE_MEMORY_EDIT_BUSY");return;}
     PaletteExecute(b,root);return;
+  }
+  if (b->operation >= 91 && b->operation <= 93) {
+    if(activeEdit){Fail(b,L"LIVE_MEMORY_EDIT_BUSY");return;}
+    CatalogExecute(b,root);return;
   }
   if (b->operation >= 40 && b->operation <= 42) {
     if (activeEdit) { Fail(b, L"LIVE_MEMORY_EDIT_BUSY"); return; }

@@ -6,6 +6,7 @@ import type * as z from 'zod/v4';
 import {ScriptWorkspace} from '../script/workspace.js';
 import {emitGuiGalaxy} from './runtime.js';
 import {TriggerLibraries} from './libraries.js';
+import type { GuiCatalogContext } from './catalogContext.js';
 import type {CascWorkspace} from '../casc/workspace.js';
 import {GUI_TYPE_CODES,GUI_VARIABLE_TYPES,definitionsFor} from './typeSystem.js';
 import {DataWorkspace} from "../data/workspace.js";
@@ -170,6 +171,7 @@ function graft(target: string, source: string, sourceTrigger: string, targetTrig
 }
 
 export class TriggerWorkspace {
+  guiCatalogContext?: GuiCatalogContext;
   nativeGuiArtifact?: (jobId:string)=>Promise<NativeGuiEvidence>;
   constructor(
     private readonly workspace: Workspace,
@@ -504,6 +506,7 @@ export class TriggerWorkspace {
       planner = new TriggerWorkspace(virtual, this.registryFile, data, this.casc),
       steps: Array<Awaited<ReturnType<TriggerWorkspace["plan"]>>> = [];
     data.nativeCatalogFiles = this.data.nativeCatalogFiles;
+    planner.guiCatalogContext = this.guiCatalogContext;
     for (const root of this.data.extraRoots) {
       const profile = this.data.nativePackageProfile(root);
       if (profile) data.addDependencyRoot(root, profile);
@@ -575,6 +578,7 @@ export class TriggerWorkspace {
     return {valid:issues.length===0,issues,nativeProfile:nativeGuiProfile(text,g.parsed),scope:'XML and local typed graph (not a compiler)',externalLibraries:[...new Set(g.elements.flatMap(e=>g.refs(e).filter(r=>r.library!==e.library).map(r=>r.library)))],compiler:'NOT_EXECUTED'};
   }
   private async catalogRevision(values?:Array<{domain:string;id:string}>) {
+    if(this.guiCatalogContext) return this.guiCatalogContext.validate(values);
     const records=await this.data.catalog();
     if(records.issues.length)throw new Error('GUI_GAMELINK_COVERAGE_UNKNOWN');
     for(const value of values??[]){const matches=records.flatMap(r=>r.engineActive===false&&r.dependencyAvailability!=='DECLARED_AVAILABLE'||!r.document.source.includes(value.id)?[]:r.document.entries()).filter(o=>dataDomainFromType(o.tag)===value.domain&&o.attrs.id===value.id);if(!matches.length)throw new Error('GUI_GAMELINK_UNRESOLVED: '+value.domain+':'+value.id);}
@@ -606,7 +610,7 @@ export class TriggerWorkspace {
     }
     const libraryContext = await this.libraries.context(
         registry(this.registryFile),
-        gamelinks.length > 0,
+        gamelinks.length > 0 && !this.guiCatalogContext,
       ),
       schema = libraryContext.registry;
     const catalogRevision = gamelinks.length ? await this.catalogRevision(gamelinks) : undefined;
@@ -850,7 +854,7 @@ export class TriggerWorkspace {
       catalogRevision,
       objectsRevision,
       libraryRevision: libraryContext.revision,
-      needsCatalogs: gamelinks.length > 0,
+      needsCatalogs: gamelinks.length > 0 && !this.guiCatalogContext,
     });
     while (
       this.plans.size > 32 ||
