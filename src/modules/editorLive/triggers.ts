@@ -22,6 +22,17 @@ import { resolveTriggerContext } from "./triggerContext.js";
 import { collectGuiValues } from "../trigger/authoring.js";
 import type { GuiCatalogIdentity } from "../trigger/catalogContext.js";
 import { captureTriggerCatalog, liveCatalogReferences } from "./triggerCatalog.js";
+import {
+  triggerChildPath,
+  triggerSection,
+  triggerSectionLabel,
+  triggerItemAtPath,
+  triggerChildren,
+  triggerAncestors,
+  verifyTriggerInsertion,
+  assertTriggerContainer,
+  triggerNestedFields,
+} from "./triggerPaths.js";
 
 export const triggerTargetSchema = z
   .object({ archive: z.string().min(1).max(4096), windowId: z.string().regex(/^\d+$/) })
@@ -85,6 +96,8 @@ export const triggerRenameSchema = triggerTargetSchema
 export const triggerAppendActionSchema = triggerTargetSchema
   .extend({
     path: triggerRenameSchema.shape.path,
+    groupPath: triggerChildPath.optional(),
+    expectedDetailHash: z.string().regex(/^\d+$/).optional(),
     action: z.enum(["skip_remaining", "wait", "builtin_default"]),
     seconds: z.number().min(0).max(3600).multipleOf(0.01).optional(),
     actionName: z.string().trim().min(1).max(100).optional(),
@@ -93,6 +106,8 @@ export const triggerAppendActionSchema = triggerTargetSchema
   })
   .strict()
   .superRefine((value, ctx) => {
+    if (value.groupPath?.length && !value.expectedDetailHash)
+      ctx.addIssue({ code: "custom", message: "Nested insertion requires expectedDetailHash" });
     if ((value.action === "wait") !== (value.seconds !== undefined))
       ctx.addIssue({
         code: "custom",
@@ -154,6 +169,21 @@ export const triggerAppendEventSchema = triggerTargetSchema
         message: "builtin_default requires eventName and useDefaults=true and omits seconds",
       });
   });
+export const triggerAppendConditionSchema = triggerTargetSchema
+  .extend({
+    path: triggerRenameSchema.shape.path,
+    section: z.enum(["actions", "conditions"]).default("conditions"),
+    groupPath: triggerChildPath.optional(),
+    expectedDetailHash: z.string().regex(/^\d+$/).optional(),
+    conditionName: z.literal("Comparison"),
+    category: z.literal("General").optional(),
+    useDefaults: z.literal(true),
+  })
+  .strict()
+  .superRefine((value, ctx) => {
+    if (value.groupPath?.length && !value.expectedDetailHash)
+      ctx.addIssue({ code: "custom", message: "Nested insertion requires expectedDetailHash" });
+  });
 export const triggerSetPeriodicSchema = triggerTargetSchema
   .extend({
     path: triggerRenameSchema.shape.path,
@@ -165,7 +195,9 @@ export const triggerSetPeriodicSchema = triggerTargetSchema
 export const triggerDetailsSchema = triggerTargetSchema
   .extend({
     path: triggerRenameSchema.shape.path,
-    section: z.enum(["actions", "events"]).default("actions"),
+    section: triggerSection.default("actions"),
+    groupPath: triggerChildPath.optional(),
+    expectedDetailHash: z.string().regex(/^\d+$/).optional(),
     offset: z.number().int().min(0).max(8192).default(0),
     limit: z.number().int().min(1).max(32).default(16),
     includeDetail: z.boolean().default(false),
@@ -174,7 +206,9 @@ export const triggerDetailsSchema = triggerTargetSchema
 export const triggerParametersSchema = triggerTargetSchema
   .extend({
     path: triggerRenameSchema.shape.path,
-    section: z.enum(["actions", "events"]),
+    section: triggerSection,
+    groupPath: triggerChildPath.optional(),
+    parameterPath: triggerChildPath.optional(),
     itemIndex: z.number().int().min(1).max(8192),
     expectedDetailHash: z.string().regex(/^\d+$/),
     offset: z.number().int().min(0).max(8192).default(0),
@@ -249,16 +283,20 @@ function canonicalTree(tree: FullTree) {
   }));
 }
 function detailPreserved(before: FullTree, after: FullTree, changedHandle: string) {
+  const changedAncestors = triggerAncestors(before.items, changedHandle);
+  const old = canonicalTree(before),
+    current = canonicalTree(after);
   return (
-    after.items.length === before.items.length &&
-    before.items.every((old) =>
-      after.items.some(
-        (now) =>
-          now.handle === old.handle &&
-          now.parent === old.parent &&
-          (old.handle === changedHandle || now.text === old.text),
-      ),
-    )
+    current.length === old.length &&
+    old.every((item, index) => {
+      const now = current[index];
+      return (
+        now.parent === item.parent &&
+        now.depth === item.depth &&
+        ((item.parent !== -1 && changedAncestors.has(before.items[index].handle)) ||
+          now.text === item.text)
+      );
+    })
   );
 }
 interface PreparedLibrary {
@@ -323,6 +361,7 @@ export class LiveTriggers {
         "live.trigger.details",
         "live.trigger.set_wait",
         "live.trigger.append_event",
+        "live.trigger.append_condition",
         "live.trigger.append_numeric",
         "live.trigger.append_configured",
         "live.trigger.configure",
@@ -334,14 +373,14 @@ export class LiveTriggers {
         "live.trigger.set_point",
       ],
       scope:
-        "Add a self-contained GUI library; rename GUI elements; append built-in actions/events and edit existing direct literal Real, Integer, Unit Type or named Point parameters",
+        "Add self-contained GUI libraries; rename GUI elements; append compound built-in actions/events and native default Comparison conditions; browse nested branches and edit literal Real, Integer, Unit Type or named Point leaves inside nested parameters",
       copiesCreated: 0,
       reopensMap: false,
       savesMap: false,
       limits:
         "1 MiB; Core GUI references; up to 32 exact live Game Links; English embedded names; 4 prepared libraries for 10 minutes",
       unsupported: [
-        "Replacing existing map-root/library graphs or editing parameters beyond supported direct literal Real, Integer, Unit Type or named Point values",
+        "Replacing existing map-root/library graphs or editing parameter sources beyond supported literal Real, Integer, Unit Type or named Point leaves; arbitrary boolean functions and variable/reference/type binding",
         "Custom Script",
         "Map-instance references",
         "Non-name localization and translated strings",
@@ -377,9 +416,15 @@ export class LiveTriggers {
     return { archive, sha256: await liveFileDigest(archive) };
   }
   private async window(target: Target, previous?: EditorWindow) {
-    const w = this.desktop.window
+    let w = this.desktop.window
       ? await this.desktop.window(target.windowId)
       : (await this.desktop.windows()).find((w) => w.windowId === target.windowId);
+    if (w && !previous && !w.title.startsWith("Triggers - [")) {
+      w = await resolveTriggerContext(this.desktop, target, this.pause);
+      // Subsequent readback stays on this exact module. Never reopen a
+      // disappeared native module while recovering an uncertain submission.
+      target.windowId = w.windowId;
+    }
     if (
       !w ||
       !w.enabled ||
@@ -422,7 +467,9 @@ export class LiveTriggers {
   private async selectTrigger(
     w: EditorWindow,
     path: string,
-    groupName: "Actions" | "Events" = "Actions",
+    groupName: "Actions" | "Events" | "Conditions" = "Actions",
+    groupPath: readonly number[] = [],
+    expectedDetailHash?: string,
   ) {
     const left = await this.fullTree(w);
     let parent = "0",
@@ -465,7 +512,10 @@ export class LiveTriggers {
         ? detail.items.filter((item) => item.parent === roots[0].handle && item.text === groupName)
         : [];
     if (groups.length !== 1) throw Error("LIVE_TRIGGER_ACTION_GROUP_NOT_FOUND");
-    return { left, trigger, detail, group: groups[0] };
+    if (expectedDetailHash && detail.fingerprint !== expectedDetailHash)
+      throw Error("LIVE_TRIGGER_DETAIL_CHANGED");
+    const group = triggerItemAtPath(detail.items, groups[0], groupPath);
+    return { left, trigger, detail, group };
   }
   async details(input: z.input<typeof triggerDetailsSchema>) {
     return this.run(async () => {
@@ -477,18 +527,22 @@ export class LiveTriggers {
         const selected = await this.selectTrigger(
           w,
           args.path,
-          args.section === "events" ? "Events" : "Actions",
+          triggerSectionLabel[args.section],
+          args.groupPath,
+          args.expectedDetailHash,
         );
-        const allActions = selected.detail.items
-          .filter((item) => item.parent === selected.group.handle)
-          .map((item, index) => ({ index: index + 1, text: item.text }));
+        const allActions = triggerChildren(selected.detail.items, selected.group);
         const actions = allActions.slice(args.offset, args.offset + args.limit);
         return {
           path: args.path,
           section: args.section,
+          ...triggerNestedFields(args),
           ...(args.section === "events"
             ? { events: actions, totalEvents: allActions.length }
-            : { actions, totalActions: allActions.length }),
+            : args.section === "conditions"
+              ? { conditions: actions, totalConditions: allActions.length }
+              : { actions, totalActions: allActions.length }),
+          items: actions,
           detailFingerprint: selected.detail.fingerprint,
           offset: args.offset,
           nextOffset:
@@ -509,7 +563,9 @@ export class LiveTriggers {
     const selected = await this.selectTrigger(
       w,
       args.path,
-      args.section === "events" ? "Events" : "Actions",
+      triggerSectionLabel[args.section],
+      args.groupPath,
+      args.expectedDetailHash,
     );
     if (selected.detail.fingerprint !== args.expectedDetailHash)
       throw Error("LIVE_TRIGGER_DETAIL_CHANGED");
@@ -546,7 +602,8 @@ export class LiveTriggers {
     if (!parameters || !stable) throw Error("LIVE_TRIGGER_PARAMETERS_UNAVAILABLE");
     const roots = parameters.items.filter((row) => row.parent === "0");
     if (roots.length !== 1) throw Error("LIVE_TRIGGER_PARAMETERS_AMBIGUOUS");
-    return { ...selected, item, parameters, root: roots[0] };
+    const parameterGroup = triggerItemAtPath(parameters.items, roots[0], args.parameterPath);
+    return { ...selected, item, parameters, root: roots[0], parameterGroup };
   }
   async parameters(input: z.input<typeof triggerParametersSchema>) {
     return this.run(async () => {
@@ -556,9 +613,7 @@ export class LiveTriggers {
         w = await this.window(target);
       return withEditorLease(w, async () => {
         const selected = await this.selectItemParameters(w, args);
-        const allParameters = selected.parameters.items
-          .filter((item) => item.parent === selected.root.handle)
-          .map((item, index) => ({ index: index + 1, text: item.text }));
+        const allParameters = triggerChildren(selected.parameters.items, selected.parameterGroup);
         const parameters = allParameters.slice(args.offset, args.offset + args.limit);
         return {
           path: args.path,
@@ -566,6 +621,8 @@ export class LiveTriggers {
           itemIndex: args.itemIndex,
           itemText: selected.item.text,
           parameterRoot: selected.root.text,
+          parameterContainer: selected.parameterGroup.text,
+          ...triggerNestedFields(args),
           parameters,
           totalParameters: allParameters.length,
           offset: args.offset,
@@ -599,7 +656,7 @@ export class LiveTriggers {
         if (selected.parameters.fingerprint !== args.expectedParameterHash)
           throw Error("LIVE_TRIGGER_PARAMETER_CHANGED");
         const rows = selected.parameters.items.filter(
-          (item) => item.parent === selected.root.handle,
+          (item) => item.parent === selected.parameterGroup.handle,
         );
         const parameter = rows[args.parameterIndex - 1],
           match = parameter?.text.match(/^(.+?):\s*(-?\d+(?:\.\d+)?)$/);
@@ -632,6 +689,7 @@ export class LiveTriggers {
           section: args.section,
           itemIndex: args.itemIndex,
           parameterIndex: args.parameterIndex,
+          ...triggerNestedFields(args),
           previousValue,
           value: args.value,
           saved: false,
@@ -654,13 +712,15 @@ export class LiveTriggers {
             (item) => item.handle === parameter.handle,
           );
           const changed = after[targetIndex]?.text.match(/^(.+?):\s*(-?\d+(?:\.\d+)?)$/);
+          const changedAncestors = triggerAncestors(selected.parameters.items, parameter.handle);
           const parameterPreserved =
             before.length === after.length &&
             before.every(
               (old, index) =>
                 old.parent === after[index]?.parent &&
                 old.depth === after[index]?.depth &&
-                (index === targetIndex || old.text === after[index]?.text),
+                (changedAncestors.has(selected.parameters.items[index].handle) ||
+                  old.text === after[index]?.text),
             );
           const verified =
             preservedDetail &&
@@ -714,7 +774,7 @@ export class LiveTriggers {
         if (selected.parameters.fingerprint !== args.expectedParameterHash)
           throw Error("LIVE_TRIGGER_PARAMETER_CHANGED");
         const rows = selected.parameters.items.filter(
-          (item) => item.parent === selected.root.handle,
+          (item) => item.parent === selected.parameterGroup.handle,
         );
         const parameter = rows[args.parameterIndex - 1],
           match = parameter?.text.match(/^(.+?):\s*(.*)$/);
@@ -746,6 +806,7 @@ export class LiveTriggers {
           section: args.section,
           itemIndex: args.itemIndex,
           parameterIndex: args.parameterIndex,
+          ...triggerNestedFields(args),
           ...(kind === "unit" ? { unitName: name } : { pointName: name }),
           saved: false,
           copiesCreated: 0,
@@ -761,13 +822,15 @@ export class LiveTriggers {
           const index = selected.parameters.items.findIndex(
             (item) => item.handle === parameter.handle,
           );
+          const changedAncestors = triggerAncestors(selected.parameters.items, parameter.handle);
           const preserved =
             before.length === after.length &&
             before.every(
               (old, i) =>
                 old.parent === after[i]?.parent &&
                 old.depth === after[i]?.depth &&
-                (i === index || old.text === after[i]?.text),
+                (changedAncestors.has(selected.parameters.items[i].handle) ||
+                  old.text === after[i]?.text),
             );
           const verified =
             detailPreserved(selected.detail, afterDetail, selected.item.handle) &&
@@ -1000,10 +1063,17 @@ export class LiveTriggers {
   async appendEvent(input: z.input<typeof triggerAppendEventSchema>) {
     return this.appendGuiItem({ kind: "event", args: triggerAppendEventSchema.parse(input) });
   }
+  async appendCondition(input: z.input<typeof triggerAppendConditionSchema>) {
+    return this.appendGuiItem({
+      kind: "condition",
+      args: triggerAppendConditionSchema.parse(input),
+    });
+  }
   private async appendGuiItem(
     input:
       | { kind: "action"; args: z.infer<typeof triggerAppendActionSchema> }
-      | { kind: "event"; args: z.infer<typeof triggerAppendEventSchema> },
+      | { kind: "event"; args: z.infer<typeof triggerAppendEventSchema> }
+      | { kind: "condition"; args: z.infer<typeof triggerAppendConditionSchema> },
   ) {
     return this.run(async () => {
       const args = input.args,
@@ -1011,33 +1081,57 @@ export class LiveTriggers {
         isEvent = input.kind === "event";
       const actionArgs = input.kind === "action" ? input.args : undefined;
       const eventArgs = input.kind === "event" ? input.args : undefined;
+      const conditionArgs = input.kind === "condition" ? input.args : undefined;
+      const nesting = conditionArgs ?? actionArgs;
       const periodic = eventArgs?.event === "periodic";
-      const nativeAction = eventArgs
-        ? periodic
-          ? "Periodic Event"
-          : eventArgs.eventName!
-        : actionArgs!.action === "wait"
-          ? "Wait"
-          : actionArgs!.action === "skip_remaining"
-            ? "Skip Remaining Actions"
-            : actionArgs!.actionName!;
-      const category = eventArgs
-        ? periodic
-          ? "Timer"
-          : (eventArgs.category ?? "")
-        : actionArgs!.action === "builtin_default"
-          ? (actionArgs!.category ?? "")
-          : "General";
-      const kind = eventArgs ? eventArgs.event : actionArgs!.action;
-      const dialogTitle = isEvent ? "Event" : "Action";
+      const nativeAction = conditionArgs
+        ? conditionArgs.conditionName
+        : eventArgs
+          ? periodic
+            ? "Periodic Event"
+            : eventArgs.eventName!
+          : actionArgs!.action === "wait"
+            ? "Wait"
+            : actionArgs!.action === "skip_remaining"
+              ? "Skip Remaining Actions"
+              : actionArgs!.actionName!;
+      const category = conditionArgs
+        ? (conditionArgs.category ?? "")
+        : eventArgs
+          ? periodic
+            ? "Timer"
+            : (eventArgs.category ?? "")
+          : actionArgs!.action === "builtin_default"
+            ? (actionArgs!.category ?? "")
+            : "General";
+      const kind = conditionArgs
+        ? "builtin_default"
+        : eventArgs
+          ? eventArgs.event
+          : actionArgs!.action;
+      const dialogTitle = conditionArgs ? "Configure Condition" : isEvent ? "Event" : "Action";
       const target = { archive: archive.archive, windowId: args.windowId },
         w = await this.window(target);
       return withEditorLease(w, async () => {
         const { left, trigger, detail, group } = await this.selectTrigger(
           w,
           args.path,
-          isEvent ? "Events" : "Actions",
+          conditionArgs
+            ? triggerSectionLabel[conditionArgs.section]
+            : isEvent
+              ? "Events"
+              : "Actions",
+          nesting?.groupPath,
+          nesting?.expectedDetailHash,
         );
+        assertTriggerContainer(group, !!nesting?.groupPath?.length);
+        if (
+          nesting?.groupPath?.length &&
+          (conditionArgs
+            ? !["Conditions", "If"].includes(group.text)
+            : ["Conditions", "If"].includes(group.text))
+        )
+          throw Error("LIVE_TRIGGER_CHILD_CONTAINER_KIND_MISMATCH");
         const insertion =
           detail.items.filter((item) => item.parent === group.handle).at(-1) ?? group;
         z.object({ selectionRequested: z.literal(true) }).parse(
@@ -1065,7 +1159,11 @@ export class LiveTriggers {
           z.object({ status: z.literal("pending") }).parse(
             await this.desktop.command(w, 51, {
               unit: randomUUID(),
-              field: isEvent ? "trigger.event" : "trigger.action",
+              field: conditionArgs
+                ? "trigger.condition"
+                : isEvent
+                  ? "trigger.event"
+                  : "trigger.action",
               expected: left.fingerprint + ":" + detail.fingerprint,
               value: trigger.handle + ":" + insertion.handle,
               token,
@@ -1120,16 +1218,9 @@ export class LiveTriggers {
             await this.pause(100);
           }
           if (!current?.enabled) throw Error("LIVE_TRIGGER_ACTION_COMPLETION_UNKNOWN");
-          const after = await this.moduleTree(current, 134),
-            previous = new Map(detail.items.map((item) => [item.handle, item]));
-          const unchanged = detail.items.every((item) =>
-            after.items.some(
-              (now) =>
-                now.handle === item.handle && now.parent === item.parent && now.text === item.text,
-            ),
-          );
-          const added = after.items.filter((item) => !previous.has(item.handle));
-          const groupChildren = after.items.filter((item) => item.parent === group.handle);
+          const after = await this.moduleTree(current, 134);
+          const addedRoot = verifyTriggerInsertion(detail.items, after.items, group.handle);
+          const groupChildren = after.items.filter((item) => item.parent === addedRoot?.parent);
           const expectedAction =
             kind === "wait"
               ? /^General\s*-\s*Wait\s+\d+(?:\.\d+)?\s+Game Time seconds$/i
@@ -1138,12 +1229,7 @@ export class LiveTriggers {
                 : kind === "skip_remaining"
                   ? /skip remaining actions/i
                   : /\S/;
-          const verified =
-            unchanged &&
-            added.length === 1 &&
-            added[0].parent === group.handle &&
-            groupChildren.at(-1)?.handle === added[0].handle &&
-            expectedAction.test(added[0].text);
+          const verified = !!addedRoot && expectedAction.test(addedRoot.text);
           if (verified && (actionArgs?.action === "wait" || periodic)) {
             actionVerified = true;
             const configure = periodic ? configureLivePeriodic : configureLiveWait;
@@ -1151,7 +1237,7 @@ export class LiveTriggers {
               desktop: this.desktop,
               window: current,
               triggerHandle: trigger.handle,
-              actionHandle: added[0].handle,
+              actionHandle: addedRoot!.handle,
               left: await this.fullTree(current),
               detail: after,
               seconds: periodic ? eventArgs!.seconds! : actionArgs!.seconds!,
@@ -1170,6 +1256,7 @@ export class LiveTriggers {
                   ? { event: "periodic", createdEvent: true, seconds: eventArgs!.seconds }
                   : {
                       action: actionArgs!.action,
+                      ...triggerNestedFields(nesting ?? {}),
                       createdAction: true,
                       seconds: actionArgs!.seconds,
                     }),
@@ -1183,6 +1270,7 @@ export class LiveTriggers {
             return {
               status: "applied",
               path: args.path,
+              ...triggerNestedFields(nesting ?? {}),
               ...(periodic
                 ? { event: "periodic", seconds: eventArgs!.seconds }
                 : { action: actionArgs!.action, seconds: actionArgs!.seconds }),
@@ -1199,14 +1287,24 @@ export class LiveTriggers {
             status: verified ? (defaults ? "needs_parameters" : "applied") : "verification_failed",
             path: args.path,
             kind,
-            ...(!isEvent ? { action: kind } : {}),
+            ...(!isEvent && !conditionArgs ? { action: kind } : {}),
+            ...triggerNestedFields(nesting ?? {}),
             ...(defaults
               ? {
-                  ...(isEvent
-                    ? { createdEvent: verified ? true : "unconfirmed", eventName: nativeAction }
-                    : { createdAction: verified ? true : "unconfirmed", actionName: nativeAction }),
+                  ...(conditionArgs
+                    ? {
+                        createdCondition: verified ? true : "unconfirmed",
+                        conditionName: nativeAction,
+                        section: conditionArgs.section,
+                      }
+                    : isEvent
+                      ? { createdEvent: verified ? true : "unconfirmed", eventName: nativeAction }
+                      : {
+                          createdAction: verified ? true : "unconfirmed",
+                          actionName: nativeAction,
+                        }),
                   category: selection.category,
-                  nativeLabel: added[0]?.text,
+                  nativeLabel: addedRoot?.text,
                   itemIndex: verified ? groupChildren.length : undefined,
                   detailFingerprint: verified ? after.fingerprint : undefined,
                   parametersVerified: false,

@@ -107,8 +107,9 @@ by the 1-based index and guarded detail fingerprint from
 `live.trigger.details`. For a direct literal number, use its index and the
 returned parameter fingerprint with `live.trigger.set_real` or
 `live.trigger.set_integer`, matching the parameter type. The original editor
-dialog is used; expressions, variables, nested parameters and mismatched
-numeric types are refused. After a single submission the editor tree is checked;
+dialog is used. Existing nested expression leaves can be selected with
+`parameterPath`; replacing an expression, variable source or mismatched numeric
+type is refused. After a single submission the editor tree is checked;
 an uncertain result is never retried automatically. Save separately when
 requested. For example, Set Global Time Scale has been edited in the open
 editor, as has the Integer count of a Create Units action. This does not
@@ -128,6 +129,73 @@ a displayed point; duplicates and missing points refuse. It does not create
 points or accept arbitrary coordinates. On a saved fixture, GUI readback and
 the persisted point reference were verified; compilation and gameplay remain
 separate checks. Save the current map separately when requested.
+
+## Nested GUI branches and expression leaves
+
+The existing live commands resolve an AI/Terrain/Triggers window to the same
+open document's Trigger Editor. The AI panel and existing unsaved changes do
+not require closing, a checkpoint copy or a preliminary Save.
+
+`details` accepts `section=actions|events|conditions`. Optional `groupPath`
+walks one-based child indexes from that section, for example `3/1/1/2` into a
+Then branch. Each returned item has `hasChildren`. Pass the fresh
+`detailFingerprint` as `expectedDetailHash` on the next edit. Paths refer to
+that snapshot, not permanent identities; inspect again after changes.
+
+`append_action` can append inside a supported Actions/If-Then-Else body with
+`groupPath` and a required `expectedDetailHash`. A compound built-in such as
+If Then Else adds one subtree, including its native If, Then and Else groups.
+The verifier compares structure, labels and sibling order; the Editor may
+rebuild/recycle all tree handles after creating a condition. Existing sibling
+changes and insertion in another branch still fail verification.
+
+`append_condition conditionName=Comparison useDefaults=true` creates the
+observed native default comparison through Configure Condition. It accepts
+`section=conditions`, or `section=actions groupPath=...` pointing to an existing
+If/Conditions group. It returns `needs_parameters`: the default comparison
+(Owner of Triggering unit == 1) is not the requested gameplay condition by
+itself. Other boolean functions and source/type selection are not implemented.
+Never repeat a successful or uncertain insertion just to configure it.
+
+`parameters` accepts the same `groupPath` plus an optional `parameterPath`
+relative to the selected item's parameter root. This walks an existing nested
+function, not a new custom script. For example, after inspecting the branch:
+
+`live trigger.parameters archive=Current.SC2Map windowId=456 path="MAIN/Rounds" section=actions groupPath=3/1/1/2 itemIndex=1 parameterPath=2 expectedDetailHash=<fresh-detail-hash>`
+
+The response lists children of that parameter container. `set_integer`,
+`set_real`, `set_unit`, `set_point` and `configure` retain both paths. A numeric
+leaf inside `(30 + (Round * 10))` can change to 42 while its parent expression,
+variable references and unrelated siblings are preserved. `configure` names
+are relative to the selected parameter container; append/configure helpers
+retain the selected nested action group. User paths are bounded to 16 child
+steps and full native tree reads to 8192 nodes.
+
+This is still not arbitrary GUI graph replacement. Creating/rebinding local
+variables, changing a parameter between literal/function/variable sources,
+changing types, callbacks/references, deleting/reordering arbitrary blocks and
+translated trigger content remain separate missing operations. Native GUI
+readback, same-file Save, native compilation and gameplay are different checks.
+A Toolkit compile of a saved archive does not validate unsaved editor changes.
+
+### Acceptance on 2026-11-14
+
+On an owned original Editor 5.0.17.98310 test document, the adapter edited the
+literal 30 to 42 inside `BaseReward = (30 + (Round * 10))`, inserted compound
+If/Then/Else blocks under existing Else branches, created a Comparison eight
+child steps into a branch, and configured a nested Wait to 0.2 Game Time
+seconds. Native tree readback confirmed these operations. The saved archive
+hash remained unchanged: these were in-memory edits, with no Save, checkpoint
+or document reopen by the live commands. The owned test Editor was stopped
+afterward; no user document was changed.
+
+The focused regression run passed 304 tests, including structural verification
+when the Editor recycles tree handles, wrong-branch and sibling-change rejection,
+stale snapshots, selector propagation and uncertain commits without replay.
+TypeScript and the C++/C# adapters built successfully. This does not establish
+same-file persistence, compilation or gameplay of that newly edited fixture.
+The native compile performed earlier loaded the saved baseline, so it is not
+evidence that the unsaved 42-valued expression was compiled.
 
 ## Configure several existing GUI parameters
 

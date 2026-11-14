@@ -47,6 +47,13 @@ localization, resource IDs and original catalog source annotations.
   and original Import Library; no map copy, Custom Script substitute or graph
   replacement. `live.trigger.verify` re-exports the same library for recovery
   without replaying import. Native graph, compilation and gameplay are separate.
+  Existing GUI branches use fresh `live.trigger.details` fingerprints and compact
+  one-based `groupPath` selectors; `parameterPath` reaches existing expression
+  containers for literal-leaf edits. Preserve both selectors through wrappers.
+  Native condition commits can rebuild tree handles: compare graph structure,
+  order and labels, not handle persistence. `append_condition` currently creates
+  only the native default Comparison and returns `needs_parameters`. Variable,
+  function-source/type rebinding and arbitrary graph replacement remain missing.
   Current map-local UI layouts use `live.ui.create/read/author` in the exact UI
   window. Existing compact `ui frame/property/anchor/remove/template` commands
   reuse the typed writer; omit file=. A pending current buffer is captured without

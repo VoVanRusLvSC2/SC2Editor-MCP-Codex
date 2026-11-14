@@ -15,6 +15,14 @@ with an inline typed plan, or `live.trigger.income` for periodic mineral income.
 Use the supplied AI/Terrain/Triggers window identity; the adapter resolves the
 native Trigger Editor. Existing unsaved changes and the AI panel are allowed.
 No external plan file, workspace reconfiguration or advance Save is required.
+For edits inside existing GUI systems, inspect `live.trigger.details` and use
+its fresh detail fingerprint. `groupPath=3/1/1/2` selects a nested action/body;
+`parameterPath=2/3` selects an existing expression's parameter container.
+Preserve both selectors through parameter discovery, configure and literal
+setters. Compound action insertion creates a subtree, not necessarily one row.
+`append_condition` currently creates only the native default Comparison and
+returns `needs_parameters`; do not claim arbitrary variable/function/type
+binding. See `docs/EDITOR_LIVE.md` for the bounded current scope.
 For a requested Save, use `live.document.status/save` after successful application.
 Inspect the returned native graph verification and preserve uncertain results
 without repeating import. Unit/Actor inspection and conversion guides below are

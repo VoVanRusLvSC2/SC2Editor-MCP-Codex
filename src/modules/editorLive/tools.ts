@@ -25,6 +25,7 @@ import {
   triggerRenameSchema,
   triggerAppendActionSchema,
   triggerAppendEventSchema,
+  triggerAppendConditionSchema,
   triggerDetailsSchema,
   triggerSetWaitSchema,
   triggerSetPeriodicSchema,
@@ -129,7 +130,7 @@ export function registerEditorLiveTools(
     "live.trigger.append_action",
     {
       description:
-        "Append a built-in GUI action to an existing trigger through the original Action dialog. action=skip_remaining takes no parameters; action=wait requires seconds (0–3600, 0.01 increments) in Game Time; action=builtin_default requires exact actionName and useDefaults=true, with optional exact category to disambiguate. Built-in defaults may be incomplete or invalid and are never considered verified; configure and validate the parameters. Custom Script is refused. path is exact slash-separated labels. Guards trees and verifies insertion last; wait also verifies its Real parameter. A partial result means an action already exists: inspect it, do not append again. Compile/runtime behavior requires separate verification. No save, copy or reopen; uncertain commits are never replayed.",
+        "Append a built-in GUI action to an existing trigger through the original Action dialog. Optional groupPath (one-based child indexes, e.g. 3/1/2) appends inside an existing Actions/Then/Else body and requires expectedDetailHash. Compound built-ins are verified as one inserted subtree. action=skip_remaining takes no parameters; action=wait requires seconds (0–3600, 0.01 increments) in Game Time; action=builtin_default requires exact actionName and useDefaults=true, with optional exact category to disambiguate. Built-in defaults may be incomplete or invalid and are never considered verified; configure and validate the parameters. Custom Script is refused. path is exact slash-separated labels. Guards trees and verifies insertion last; wait also verifies its Real parameter. A partial result means an action already exists: inspect it, do not append again. Compile/runtime behavior requires separate verification. No save, copy or reopen; uncertain commits are never replayed.",
       inputSchema: triggerAppendActionSchema,
     },
     async (a) => result(await live.triggers.appendAction(a)),
@@ -144,6 +145,15 @@ export function registerEditorLiveTools(
     async (a) => result(await live.triggers.appendEvent(a)),
   );
   server.registerTool(
+    "live.trigger.append_condition",
+    {
+      description:
+        "Append the native default Comparison through original New Condition / Configure Condition; conditionName=Comparison and useDefaults=true are required. Arbitrary boolean functions and parameter source/type selection are not implemented. Default section=conditions; use section=actions and groupPath for the If/Conditions branch of a nested control-flow action. groupPath accepts one-based child indexes or a compact path such as 1/1 and requires expectedDetailHash. Re-reads the complete affected tree, preserves existing order and accepts only one appended subtree. Returns needs_parameters for unverified defaults. Inspect/configure that same condition without repeating insertion. No save, copy, reopen, compilation or gameplay claim.",
+      inputSchema: triggerAppendConditionSchema,
+    },
+    async (a) => result(await live.triggers.appendCondition(a)),
+  );
+  server.registerTool(
     "live.trigger.append_numeric",
     {
       description:
@@ -156,7 +166,7 @@ export function registerEditorLiveTools(
     "live.trigger.append_configured",
     {
       description:
-        "Append one built-in GUI action or event to an existing trigger and configure up to eight direct literal parameters in the open Trigger Editor. Use kind, exact name and edits such as integer:Count=6;unit:Type=Murloc Marine;point:Point=Spawn. All assignment syntax is checked before insertion. Each native edit is fingerprint guarded; remaining parameters are not assumed valid and return needs_parameters. A partial or unknown result may already have inserted the item: inspect and never replay insertion. No Custom Script, save, copy, reopen, compile or gameplay verification.",
+        "Append one built-in GUI action or event to an existing trigger and configure up to eight literal parameters in the open Trigger Editor. Use kind, exact name and edits such as integer:Count=6;unit:Type=Murloc Marine;point:Point=Spawn. All assignment syntax is checked before insertion. Each native edit is fingerprint guarded; remaining parameters are not assumed valid and return needs_parameters. A partial or unknown result may already have inserted the item: inspect and never replay insertion. No Custom Script, save, copy, reopen, compile or gameplay verification.",
       inputSchema: triggerAppendConfiguredSchema,
     },
     async (a) => result(await appendConfiguredTrigger(live.triggers, a)),
@@ -165,7 +175,7 @@ export function registerEditorLiveTools(
     "live.trigger.configure",
     {
       description:
-        "Configure up to eight direct literal parameters of one existing GUI action or event in the open Trigger Editor. Supply a guarded itemIndex/expectedDetailHash from live.trigger.details and edits such as integer:Count=7;unit:Type=Murloc Marine;point:Point=Spawn. Types: integer, real, unit, point. Unit and point names must be unique displayed entries. All syntax and parameter names are checked before edits; after each change verified native fingerprints guard the next. Other parameters return needs_parameters. A partial or unknown result must be inspected, never replayed. No save, copy, reopen, compile or gameplay verification.",
+        "Configure up to eight literal parameters of one existing GUI action, event or condition in the open Trigger Editor. groupPath selects a nested action branch; parameterPath selects an existing function parameter container, both as one-based child paths such as 1/2. Supply a guarded itemIndex/expectedDetailHash from live.trigger.details and edits such as integer:Count=7;unit:Type=Murloc Marine;point:Point=Spawn. Types: integer, real, unit, point. Unit and point names must be unique displayed entries. All syntax and parameter names are checked before edits; after each change verified native fingerprints guard the next. Other parameters return needs_parameters. A partial or unknown result must be inspected, never replayed. No save, copy, reopen, compile or gameplay verification.",
       inputSchema: triggerConfigureSchema,
     },
     async (a) => result(await configureTrigger(live.triggers, a)),
@@ -174,7 +184,7 @@ export function registerEditorLiveTools(
     "live.trigger.details",
     {
       description:
-        "Select a uniquely named existing trigger in the current Trigger Editor and page its direct actions or events with 1-based indices for editing. includeDetail=true also returns the native Events, Conditions and Actions tree. Selection changes only the editor view. At most 8192 tree nodes. No Save or map mutation.",
+        "Select a uniquely named existing trigger in the current Trigger Editor and page its actions, events or conditions with 1-based indices for editing. Optional groupPath=1/2 walks child indexes into a nested branch; item indexes are relative to that branch. expectedDetailHash rejects stale nested selection. includeDetail=true also returns the native Events, Conditions and Actions tree. Selection changes only the editor view. At most 8192 tree nodes. No Save or map mutation.",
       inputSchema: triggerDetailsSchema,
       annotations: { readOnlyHint: true },
     },
@@ -184,7 +194,7 @@ export function registerEditorLiveTools(
     "live.trigger.parameters",
     {
       description:
-        "Select an existing action or event and page its visible native GUI parameters with 1-based indices and a parameterFingerprint. Supply the itemIndex and exact detailFingerprint from live.trigger.details as expectedDetailHash. Selection changes only the editor view; no map edit or save. Tree sizes are bounded to 8192 nodes.",
+        "Select an existing action, event or condition and page its visible native GUI parameters with 1-based indices and a parameterFingerprint. Supply the itemIndex and exact detailFingerprint from live.trigger.details as expectedDetailHash. Optional groupPath selects a nested branch and parameterPath walks into an existing function parameter container, e.g. 1/2; hasChildren marks further containers. Selection changes only the editor view; no map edit or save. Tree sizes are bounded to 8192 nodes.",
       inputSchema: triggerParametersSchema,
       annotations: { readOnlyHint: true },
     },
@@ -194,7 +204,7 @@ export function registerEditorLiveTools(
     "live.trigger.set_real",
     {
       description:
-        "Set one existing direct literal Real parameter of an action or event in the open Trigger Editor. Use live.trigger.details then live.trigger.parameters to obtain 1-based itemIndex/parameterIndex and detailFingerprint/parameterFingerprint; provide both as expectedDetailHash/expectedParameterHash. Requires an existing literal numeric value and the original Real Value dialog, -3600–3600 in 0.01 increments. Integer, expressions, variables, nested parameters and other types refuse. Verifies the chosen value and other visible GUI nodes, not compilation or gameplay. No save, copy or reopen; uncertain commits are never replayed.",
+        "Set one existing literal Real parameter of an action, event or condition in the open Trigger Editor. Use live.trigger.details then live.trigger.parameters to obtain 1-based itemIndex/parameterIndex and detailFingerprint/parameterFingerprint; provide both as expectedDetailHash/expectedParameterHash. Requires an existing literal numeric value and the original Real Value dialog, -3600–3600 in 0.01 increments. groupPath and parameterPath reach nested branches and existing expression leaves. Replacing expressions, variable references, Integer and other types refuses. Verifies the chosen value and other visible GUI nodes, not compilation or gameplay. No save, copy or reopen; uncertain commits are never replayed.",
       inputSchema: triggerSetRealSchema,
     },
     async (a) => result(await live.triggers.setReal(a)),
@@ -203,7 +213,7 @@ export function registerEditorLiveTools(
     "live.trigger.set_integer",
     {
       description:
-        "Set one existing direct literal Integer parameter of an action or event in the open Trigger Editor. Use live.trigger.details and live.trigger.parameters for itemIndex, parameterIndex and their expected fingerprints. Requires the original Integer Value dialog and a signed 32-bit integer. Real values, expressions, variables and nested parameters refuse. The visible GUI trees are checked after submission. No save, copy or reopen; uncertain commits are never replayed.",
+        "Set one existing literal Integer parameter of an action, event or condition in the open Trigger Editor. Use live.trigger.details and live.trigger.parameters for itemIndex, parameterIndex and their expected fingerprints. Requires the original Integer Value dialog and a signed 32-bit integer. groupPath and parameterPath reach nested branches and existing expression leaves. Real values and replacing expressions or variable references refuse. The visible GUI trees are checked after submission. No save, copy or reopen; uncertain commits are never replayed.",
       inputSchema: triggerSetIntegerSchema,
     },
     async (a) => result(await live.triggers.setInteger(a)),
@@ -212,7 +222,7 @@ export function registerEditorLiveTools(
     "live.trigger.set_unit",
     {
       description:
-        "Set one existing direct literal Unit Type parameter in an action or event through the original Game Link - Unit dialog. Use live.trigger.details then live.trigger.parameters for itemIndex, parameterIndex and their expected fingerprints. unitName is the exact display name in the Editor's current Unit Type list; missing or duplicate names refuse, and this does not verify a catalog ID. Variables, expressions, nested parameters and other dialog types refuse. Verifies the visible GUI tree only; no save, copy or reopen. Uncertain commits are never replayed.",
+        "Set one existing literal Unit Type parameter in an action, event or condition through the original Game Link - Unit dialog. Use live.trigger.details then live.trigger.parameters for itemIndex, parameterIndex and their expected fingerprints. unitName is the exact display name in the Editor's current Unit Type list; missing or duplicate names refuse, and this does not verify a catalog ID. groupPath and parameterPath can select nested literal leaves; replacing variables/expressions and other dialog types refuses. Verifies the visible GUI tree only; no save, copy or reopen. Uncertain commits are never replayed.",
       inputSchema: triggerSetUnitSchema,
     },
     async (a) => result(await live.triggers.setUnit(a)),
@@ -221,7 +231,7 @@ export function registerEditorLiveTools(
     "live.trigger.set_point",
     {
       description:
-        "Set one existing direct literal Point parameter in an action or event to an existing uniquely named map point through the original Point dialog. Use live.trigger.details and live.trigger.parameters for itemIndex, parameterIndex and their expected fingerprints. pointName must exactly match one listed point; missing or duplicate names refuse. This does not create a point or accept arbitrary coordinates. Variables, expressions, nested parameters and other dialogs refuse. Verifies visible GUI readback; no save, copy or reopen. Uncertain commits are never replayed.",
+        "Set one existing literal Point parameter in an action, event or condition to an existing uniquely named map point through the original Point dialog. Use live.trigger.details and live.trigger.parameters for itemIndex, parameterIndex and their expected fingerprints. pointName must exactly match one listed point; missing or duplicate names refuse. This does not create a point or accept arbitrary coordinates. groupPath and parameterPath can select nested literal leaves; replacing variables/expressions and other dialogs refuses. Verifies visible GUI readback; no save, copy or reopen. Uncertain commits are never replayed.",
       inputSchema: triggerSetPointSchema,
     },
     async (a) => result(await live.triggers.setPoint(a)),

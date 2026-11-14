@@ -25,12 +25,21 @@ struct ComponentCommand {
   const wchar_t *mode, *module, *command;
   bool deferred;
 };
+static bool TriggerPickerMode(const std::wstring &mode) {
+  return mode == L"trigger.action" || mode == L"trigger.event" || mode == L"trigger.condition";
+}
+static const wchar_t *TriggerPickerTitle(const std::wstring &mode) {
+  return mode == L"trigger.condition" ? L"Configure Condition"
+         : mode == L"trigger.event"   ? L"Event"
+                                      : L"Action";
+}
 static const ComponentCommand *ComponentCommandFor(const std::wstring &mode) {
   static const ComponentCommand commands[] = {
       {L"library.export", L"Triggers", L"Export Library...", false},
       {L"library.import", L"Triggers", L"Import Library...", false},
       {L"trigger.action", L"Triggers", L"New Action", true},
       {L"trigger.event", L"Triggers", L"New Event", true},
+      {L"trigger.condition", L"Triggers", L"New Condition", true},
       {L"trigger.real", L"Triggers", L"", true},
       {L"trigger.choice", L"Triggers", L"", true},
       {L"layout.add", L"UI", L"Add Layout...", true},
@@ -152,22 +161,23 @@ static std::wstring ComponentDialogFingerprint(HWND dialog) {
       auto c = Class(h);
       // The action description is an asynchronous read-only preview of the
       // selected row, not an input; it may update after selection returns.
-      if (c == L"Edit" ||
-          (c == L"RichEdit20W" && componentDialog.mode != L"trigger.action" &&
-           componentDialog.mode != L"trigger.event") ||
+      if (c == L"Edit" || (c == L"RichEdit20W" && !TriggerPickerMode(componentDialog.mode)) ||
           c == L"ComboBox" || (c == L"Static" && componentDialog.mode != L"trigger.choice"))
         text += L"\x1e" + std::to_wstring(GetDlgCtrlID(h)) + L":" + c + L":" + Text(h);
+      if (c == L"Button" && componentDialog.mode == L"trigger.condition")
+        text += L"\x1e" + std::to_wstring(GetDlgCtrlID(h)) + L":button:" + Text(h);
       if (c == L"Button")
         text += L"\x1e" + std::to_wstring(GetDlgCtrlID(h)) + L":check:" +
                 std::to_wstring(SendMessageW(h, BM_GETCHECK, 0, 0));
       if (c == L"msctls_trackbar32")
         text += L"\x1e" + std::to_wstring(GetDlgCtrlID(h)) + L":position:" +
                 std::to_wstring(SendMessageW(h, TBM_GETPOS, 0, 0));
-      if (c == L"SysTreeView32" && (GetDlgCtrlID(h) == 14 || GetDlgCtrlID(h) == 15))
+      if (c == L"SysTreeView32" &&
+          (GetDlgCtrlID(h) == 14 || GetDlgCtrlID(h) == 15 ||
+           (componentDialog.mode == L"trigger.condition" && GetDlgCtrlID(h) == 455)))
         text += L"\x1e" + ModuleTree(h).hash;
       if (c == L"SysListView32" &&
-          (componentDialog.mode == L"trigger.action" || componentDialog.mode == L"trigger.event" ||
-           componentDialog.mode == L"trigger.choice")) {
+          (TriggerPickerMode(componentDialog.mode) || componentDialog.mode == L"trigger.choice")) {
         auto selected = SendMessageW(h, LVM_GETNEXTITEM, WPARAM(-1), LVNI_SELECTED);
         text += L"\x1e" + std::to_wstring(GetDlgCtrlID(h)) + L":list:" +
                 std::to_wstring(SendMessageW(h, LVM_GETITEMCOUNT, 0, 0)) + L":" +
@@ -361,7 +371,7 @@ static void ComponentExecute(LiveDataRequest *b, HWND root) {
       Fail(b, L"LIVE_COMPONENT_DIALOG_BUSY");
       return;
     }
-    if (mode == L"trigger.action" || mode == L"trigger.event") {
+    if (TriggerPickerMode(mode)) {
       HWND rootTree = Control(root, 28, L"SysTreeView32"),
            detailTree = Control(root, 134, L"SysTreeView32");
       auto left = rootTree ? ModuleTree(rootTree) : ModuleTreeView{},
@@ -540,10 +550,11 @@ static void ComponentExecute(LiveDataRequest *b, HWND root) {
         if (Class(h) == L"msctls_trackbar32")
           out += L",\"position\":" + std::to_wstring(SendMessageW(h, TBM_GETPOS, 0, 0));
         if (Class(h) == L"SysListView32" &&
-            (componentDialog.mode == L"trigger.action" ||
-             componentDialog.mode == L"trigger.event" || componentDialog.mode == L"trigger.choice"))
+            (TriggerPickerMode(componentDialog.mode) || componentDialog.mode == L"trigger.choice"))
           out += L",\"table\":" + Table(h, 16);
-        if (Class(h) == L"SysTreeView32" && (GetDlgCtrlID(h) == 14 || GetDlgCtrlID(h) == 15))
+        if (Class(h) == L"SysTreeView32" &&
+            (GetDlgCtrlID(h) == 14 || GetDlgCtrlID(h) == 15 ||
+             (componentDialog.mode == L"trigger.condition" && GetDlgCtrlID(h) == 455)))
           out += L",\"tree\":" + ModuleTree(h).json;
         out += L"}";
       }
@@ -734,9 +745,33 @@ static void ComponentExecute(LiveDataRequest *b, HWND root) {
     Result(b, L"{\"submitted\":true,\"retryMutation\":false,\"mapMutation\":\"unconfirmed\"}");
     return;
   }
-  if ((mode == L"trigger.action" || mode == L"trigger.event") && b->operation == 59) {
+  if (mode == L"trigger.condition" && (b->operation == 59 || b->operation == 58)) {
+    // New Condition opens a configured Comparison directly, unlike the
+    // action/event catalog picker. Accept only the observed native default;
+    // arbitrary boolean functions need their own source/type selection flow.
+    HWND accept = Control(dialog, 11, L"Button");
     if (componentDialog.parent || componentDialog.transition ||
-        Text(dialog) != (mode == L"trigger.action" ? L"Action" : L"Event") || !b->field[0]) {
+        Text(dialog) != L"Configure Condition" || std::wstring(b->field) != L"Comparison" ||
+        (b->value[0] && std::wstring(b->value) != L"General") ||
+        !Control(dialog, 455, L"SysTreeView32") || Text(Control(dialog, 152, L"Button")) != L"(" ||
+        Text(Control(dialog, 154, L"Button")) != L"Triggering unit" ||
+        Text(Control(dialog, 156, L"Button")) != L"==" ||
+        Text(Control(dialog, 158, L"Button")) != L"1" || !accept || Clean(Text(accept)) != L"OK" ||
+        !IsWindowEnabled(accept)) {
+      Fail(b, L"LIVE_TRIGGER_COMPARISON_DEFAULT_REQUIRED");
+      return;
+    }
+    if (b->operation == 59) {
+      Result(b, L"{\"optionsSet\":true,\"category\":\"General\",\"mapMutation\":false}");
+      return;
+    }
+    PostMessageW(accept, BM_CLICK, 0, 0);
+    Result(b, L"{\"submitted\":true,\"retryMutation\":false,\"mapMutation\":\"unconfirmed\"}");
+    return;
+  }
+  if (TriggerPickerMode(mode) && b->operation == 59) {
+    if (componentDialog.parent || componentDialog.transition ||
+        Text(dialog) != TriggerPickerTitle(mode) || !b->field[0]) {
       Fail(b, L"LIVE_TRIGGER_ACTION_DIALOG_REQUIRED");
       return;
     }
@@ -777,12 +812,12 @@ static void ComponentExecute(LiveDataRequest *b, HWND root) {
                   L",\"mapMutation\":false}");
     return;
   }
-  if ((mode == L"trigger.action" || mode == L"trigger.event") && b->operation == 58) {
+  if (TriggerPickerMode(mode) && b->operation == 58) {
     auto requested = std::wstring(b->field);
     for (auto &ch : requested)
       ch = towlower(ch);
     if (componentDialog.parent || componentDialog.transition ||
-        Text(dialog) != (mode == L"trigger.action" ? L"Action" : L"Event") || requested.empty() ||
+        Text(dialog) != TriggerPickerTitle(mode) || requested.empty() ||
         requested == L"custom script") {
       Fail(b, L"LIVE_TRIGGER_ACTION_UNSUPPORTED");
       return;

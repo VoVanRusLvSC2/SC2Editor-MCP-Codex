@@ -55,6 +55,7 @@ test("editor-live profile exposes current-document tools without checkpoint impo
       "live.import.apply",
       "live.import.verify",
       "live.trigger.configure",
+      "live.trigger.append_condition",
       "live.trigger.append_configured",
       "live.refresh.prepare",
       "live.refresh.begin",
@@ -79,7 +80,7 @@ test("editor-live profile exposes current-document tools without checkpoint impo
       assert.equal(tools.has(name), false, name);
     const cap = project.live.current.capabilities();
     assert.equal(cap.module, "editor-live");
-    assert.equal(cap.apiVersion, "editor-live-2026-11-12-gui-catalog");
+    assert.equal(cap.apiVersion, "editor-live-2026-11-14-gui-nesting");
     const compactCapabilities = await runMcpBatch(
       [{ id: "cap", tool: "live.capabilities", args: {} }],
       tools,

@@ -7,6 +7,7 @@ import {
   triggerSetPointSchema,
 } from "./triggers.js";
 import type { LiveTriggers } from "./triggers.js";
+import { triggerNestedFields } from "./triggerPaths.js";
 
 export const triggerConfigureSchema = triggerParametersSchema
   .omit({ offset: true, limit: true })
@@ -57,7 +58,7 @@ export function parseTriggerEdits(
   });
 }
 
-/** Configure existing direct literal parameters without repeating an uncertain mutation. */
+/** Configure existing literal leaves in the selected native parameter container without repeating an uncertain mutation. */
 export async function configureTrigger(
   triggers: TriggerMethods,
   input: z.input<typeof triggerConfigureSchema>,
@@ -71,6 +72,7 @@ export async function configureTrigger(
     section: args.section,
     itemIndex: args.itemIndex,
     expectedDetailHash: args.expectedDetailHash,
+    ...triggerNestedFields(args),
   };
   const completed: Array<{ parameter: string; kind: Kind }> = [];
   let phase = "inspect",

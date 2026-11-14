@@ -15,6 +15,8 @@ internal static partial class LiveEditor {
   [DllImport("user32.dll")] private static extern bool IsWindowEnabled(IntPtr hwnd);
   [DllImport("user32.dll")] private static extern uint GetWindowThreadProcessId(IntPtr hwnd, out uint pid);
   [DllImport("user32.dll", CharSet=CharSet.Unicode)] private static extern int GetWindowText(IntPtr hwnd, StringBuilder text, int count);
+  [DllImport("user32.dll", CharSet=CharSet.Unicode)] private static extern int GetClassName(IntPtr hwnd, StringBuilder text, int count);
+  [DllImport("user32.dll")] private static extern IntPtr GetWindow(IntPtr hwnd, uint command);
   [DllImport("user32.dll", EntryPoint="GetWindowLongPtrW")] private static extern IntPtr GetWindowLongPtr(IntPtr hwnd, int index);
   [DllImport("user32.dll", SetLastError=true)] private static extern bool PostMessage(IntPtr hwnd, uint message, IntPtr wparam, IntPtr lparam);
   [DllImport("kernel32.dll")] private static extern IntPtr GlobalAlloc(uint flags, UIntPtr bytes);
@@ -35,7 +37,13 @@ internal static partial class LiveEditor {
       if (!String.Equals(name, "SC2Editor_x64.exe", StringComparison.OrdinalIgnoreCase) &&
           !String.Equals(name, "SC2Editor.exe", StringComparison.OrdinalIgnoreCase)) return null;
       StringBuilder title = new StringBuilder(8192); GetWindowText(hwnd, title, title.Capacity);
-      if (!title.ToString().Contains("StarCraft II Editor")) return null;
+      if (!title.ToString().Contains("StarCraft II Editor")) {
+        // Native parameter/function dialogs omit the product name. Include
+        // owned modal windows in read-only inventory instead of hiding the
+        // reason a document frame is disabled. Other process names still refuse.
+        StringBuilder kind = new StringBuilder(64); GetClassName(hwnd, kind, kind.Capacity);
+        if(kind.ToString()!="#32770" || GetWindow(hwnd,4)==IntPtr.Zero) return null;
+      }
       return new Window { windowId=hwnd.ToInt64().ToString(), processId=(int)pid,
         processStart=process.StartTime.ToUniversalTime().Ticks.ToString(), title=title.ToString(),
         enabled=IsWindowEnabled(hwnd), acceptsFiles=(GetWindowLongPtr(hwnd,-20).ToInt64() & 16)!=0 };

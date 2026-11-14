@@ -1,11 +1,14 @@
 import * as z from "zod/v4";
 import { triggerTargetSchema } from "./triggers.js";
 import type { LiveTriggers } from "./triggers.js";
+import { triggerChildPath, triggerNestedFields } from "./triggerPaths.js";
 
 export const triggerNumericAppendSchema = triggerTargetSchema
   .extend({
     path: z.string().min(1).max(1024),
     kind: z.enum(["action", "event"]),
+    groupPath: triggerChildPath.optional(),
+    expectedDetailHash: z.string().regex(/^\d+$/).optional(),
     name: z
       .string()
       .trim()
@@ -24,6 +27,11 @@ export const triggerNumericAppendSchema = triggerTargetSchema
   })
   .strict()
   .superRefine((args, ctx) => {
+    if (args.groupPath?.length && (args.kind !== "action" || !args.expectedDetailHash))
+      ctx.addIssue({
+        code: "custom",
+        message: "Nested insertion requires kind=action and expectedDetailHash",
+      });
     const valid =
       args.numberType === "integer"
         ? Number.isInteger(args.value) && args.value >= -2147483648 && args.value <= 2147483647
@@ -49,6 +57,7 @@ export async function appendNumericTrigger(
       archive: args.archive,
       windowId: args.windowId,
       path: args.path,
+      ...triggerNestedFields(args),
     };
   const inserted =
     args.kind === "event"
@@ -61,6 +70,7 @@ export async function appendNumericTrigger(
       : await triggers.appendAction({
           ...target,
           action: "builtin_default",
+          expectedDetailHash: args.expectedDetailHash,
           actionName: args.name,
           category: args.category,
           useDefaults: true,
@@ -78,6 +88,7 @@ export async function appendNumericTrigger(
     path: args.path,
     kind: args.kind,
     name: args.name,
+    ...triggerNestedFields(args),
     ...(args.kind === "action" ? { createdAction: true } : { createdEvent: true }),
     itemIndex: inserted.itemIndex,
     saved: false,

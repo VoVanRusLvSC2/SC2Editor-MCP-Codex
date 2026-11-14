@@ -7,11 +7,14 @@ import {
 } from "./triggers.js";
 import type { LiveTriggers } from "./triggers.js";
 import { configureTrigger, parseTriggerEdits, triggerConfigureSchema } from "./triggerConfigure.js";
+import { triggerChildPath, triggerNestedFields } from "./triggerPaths.js";
 
 export const triggerAppendConfiguredSchema = triggerTargetSchema
   .extend({
     path: triggerRenameSchema.shape.path,
     kind: z.enum(["action", "event"]),
+    groupPath: triggerChildPath.optional(),
+    expectedDetailHash: z.string().regex(/^\d+$/).optional(),
     name: z
       .string()
       .trim()
@@ -21,7 +24,14 @@ export const triggerAppendConfiguredSchema = triggerTargetSchema
     category: z.string().trim().max(100).optional(),
     edits: z.string().min(1).max(2048),
   })
-  .strict();
+  .strict()
+  .superRefine((args, ctx) => {
+    if (args.groupPath?.length && (args.kind !== "action" || !args.expectedDetailHash))
+      ctx.addIssue({
+        code: "custom",
+        message: "Nested insertion requires kind=action and expectedDetailHash",
+      });
+  });
 type Methods = Pick<
   LiveTriggers,
   "appendAction" | "appendEvent" | "parameters" | "setInteger" | "setReal" | "setUnit" | "setPoint"
@@ -33,7 +43,12 @@ export async function appendConfiguredTrigger(
   input: z.input<typeof triggerAppendConfiguredSchema>,
 ) {
   const args = triggerAppendConfiguredSchema.parse(input);
-  const target = { archive: args.archive, windowId: args.windowId, path: args.path };
+  const target = {
+    archive: args.archive,
+    windowId: args.windowId,
+    path: args.path,
+    ...triggerNestedFields(args),
+  };
   // Validate the entire request before inserting anything, including all literal types.
   const placeholder = triggerConfigureSchema.parse({
     ...target,
@@ -47,6 +62,7 @@ export async function appendConfiguredTrigger(
     triggerAppendActionSchema.parse({
       ...target,
       action: "builtin_default",
+      expectedDetailHash: args.expectedDetailHash,
       actionName: args.name,
       category: args.category,
       useDefaults: true,
@@ -63,6 +79,7 @@ export async function appendConfiguredTrigger(
       ? await triggers.appendAction({
           ...target,
           action: "builtin_default",
+          expectedDetailHash: args.expectedDetailHash,
           actionName: args.name,
           category: args.category,
           useDefaults: true,
@@ -85,6 +102,7 @@ export async function appendConfiguredTrigger(
     path: args.path,
     kind: args.kind,
     name: args.name,
+    ...triggerNestedFields(args),
     itemIndex: inserted.itemIndex,
     ...(args.kind === "action" ? { createdAction: true } : { createdEvent: true }),
     copiesCreated: 0,

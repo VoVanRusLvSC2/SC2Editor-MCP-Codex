@@ -91,7 +91,7 @@ export class EditorLiveWorkspace {
   capabilities() {
     return {
       module: "editor-live",
-      apiVersion: "editor-live-2026-11-12-gui-catalog",
+      apiVersion: "editor-live-2026-11-14-gui-nesting",
       backend: "current_document",
       copiesCreated: 0,
       reopensMap: false,
@@ -148,7 +148,7 @@ export class EditorLiveWorkspace {
         "Direct in-memory mode only; explicit same_file_refresh can prepare these components with existing generators. Native model/rendering acceptance remains per component.",
       unsupported: [
         "Direct regional terrain brush and general terrain component application",
-        "General editing/replacing existing GUI trigger graphs beyond supported append, rename and literal-parameter operations, and general localized trigger content",
+        "General editing/replacing existing GUI trigger graphs beyond supported nested append, Comparison condition creation, rename and literal-leaf operations, and general localized trigger content",
         "Atomic UI/Data batches with linked localized Text, style and import components",
         "Map settings and lighting application",
         "Placement of types absent from the current filtered palette",
