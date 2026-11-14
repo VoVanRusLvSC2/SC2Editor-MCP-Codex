@@ -41,13 +41,15 @@ function makeImports(names) {
   return {
     data,
     used: cursor,
-    iatRva: Object.fromEntries(names.map((name, index) => [name, IDATA_RVA + iatOffset + index * 8])),
+    iatRva: Object.fromEntries(
+      names.map((name, index) => [name, IDATA_RVA + iatOffset + index * 8]),
+    ),
     iatOffset,
     iatSize: (names.length + 1) * 8,
   };
 }
 
-function makeCode(iatRva) {
+function makeCode(iatRva, scriptName) {
   const bytes = [];
   const labels = new Map();
   const fixups = [];
@@ -91,11 +93,17 @@ function makeCode(iatRva) {
   emit(0x31, 0xc9); // xor ecx, ecx
   rel32("call", iatRva.ExitProcess);
   label("command");
-  emit(...Buffer.from('powershell.exe -NoProfile -WindowStyle Hidden -ExecutionPolicy Bypass -File "SC2-UI-Workbench.ps1"\0', "ascii"));
+  emit(
+    ...Buffer.from(
+      `powershell.exe -NoProfile -WindowStyle Hidden -ExecutionPolicy Bypass -File "${scriptName}"\0`,
+      "ascii",
+    ),
+  );
 
   const code = Buffer.from(bytes);
   for (const fixup of fixups) {
-    const targetOffset = typeof fixup.target === "number" ? fixup.target - TEXT_RVA : labels.get(fixup.target);
+    const targetOffset =
+      typeof fixup.target === "number" ? fixup.target - TEXT_RVA : labels.get(fixup.target);
     if (targetOffset === undefined) throw new Error(`Unknown PE fixup target: ${fixup.target}`);
     const displacement = targetOffset - (fixup.at + 4);
     code.writeInt32LE(displacement, fixup.at);
@@ -103,9 +111,15 @@ function makeCode(iatRva) {
   return code;
 }
 
-export async function buildPeLauncher(outputFile) {
-  const imports = makeImports(["GetModuleFileNameW", "SetCurrentDirectoryW", "WinExec", "ExitProcess"]);
-  const code = makeCode(imports.iatRva);
+export async function buildPeLauncher(outputFile, scriptName = "SC2-UI-Workbench.ps1") {
+  if (!/^[A-Za-z0-9-]+\.ps1$/.test(scriptName)) throw Error("LAUNCHER_SCRIPT_NAME_INVALID");
+  const imports = makeImports([
+    "GetModuleFileNameW",
+    "SetCurrentDirectoryW",
+    "WinExec",
+    "ExitProcess",
+  ]);
+  const code = makeCode(imports.iatRva, scriptName);
   if (code.length > FILE_ALIGNMENT) throw new Error("Launcher code exceeds .text raw section");
   const file = Buffer.alloc(0x600);
   file.write("MZ", 0, "ascii");
@@ -163,7 +177,12 @@ export async function buildPeLauncher(outputFile) {
   imports.data.copy(file, 0x400);
   await fs.mkdir(path.dirname(path.resolve(outputFile)), { recursive: true });
   await fs.writeFile(outputFile, file);
-  return { outputFile: path.resolve(outputFile), bytes: file.length, machine: "x86-64", subsystem: "Windows GUI" };
+  return {
+    outputFile: path.resolve(outputFile),
+    bytes: file.length,
+    machine: "x86-64",
+    subsystem: "Windows GUI",
+  };
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {

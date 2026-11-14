@@ -1,0 +1,8 @@
+{
+  "id": "editor-ai-button",
+  "version": "0.34.2-alpha",
+  "repository": "https://github.com/VoVanRusLvSC2/SC2Editor-AI-Button",
+  "revision": "25b0ac5c8b14f40511a0675f34c053fd86331aeb",
+  "editorExecutable": "SC2Editor_x64.exe",
+  "editorVersion": "5.0.17.98310"
+}

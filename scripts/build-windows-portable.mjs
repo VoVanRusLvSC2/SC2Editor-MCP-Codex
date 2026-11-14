@@ -2,6 +2,7 @@ import { promises as fs } from "node:fs";
 import path from "node:path";
 import process from "node:process";
 import { buildPeLauncher } from "./build-pe-launcher.mjs";
+import { installAiButtonHost } from "./ai-button-module.mjs";
 import {checkDistributionPrivacy} from './check-distribution-privacy.mjs';
 
 const projectRoot = process.cwd();
@@ -83,6 +84,9 @@ for (const file of ["casc-tools.json", "settings-tools.json", "settings-evidence
 await fs.cp(path.join(projectRoot, "docs"), path.join(output, "docs"), { recursive: true });
 // Private test maps and generated examples are not runtime dependencies.
 await buildPeLauncher(path.join(output, "SC2-UI-Workbench.exe"));
+// Keep the original DLL and bridge as an optional module. Do not embed their
+// source or replace the user's MCP configuration when starting the extension.
+const aiButtonModule = await installAiButtonHost(projectRoot, output, { optional: true });
 
 const {version}=JSON.parse(await fs.readFile(path.join(projectRoot,"package.json"),"utf8"));
 let bundledNode = false;
@@ -100,6 +104,7 @@ await fs.writeFile(path.join(output, "BUILD-INFO.json"), `${JSON.stringify({
   bundledArchiveBackend: true,
   bundledCascBackend: true,
   publicModules: 18,
+  aiButtonModule: aiButtonModule ?? null,
   privateGameToolkitBundled: false,
   mcpLauncher: "SC2-MCP.cmd",
   mcpDefaultProfile: "all",

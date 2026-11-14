@@ -4,6 +4,12 @@ The portable package uses `runtime\node.exe` with `app\dist\index.js`, or the
 `SC2-MCP.cmd` launcher. Installing npm or Node.js is unnecessary for the portable
 package. `SC2-UI-Workbench.exe` opens the optional web GUI; stdio MCP does not need it.
 
+Build the optional toolbar/chat extension with `npm run ai-button:build` before
+packaging to include `SC2EditorToolkit.exe` and `modules/ai-button`. That EXE
+connects the original AI Button DLL to a selected, already-running Editor and
+reuses your configured MCP. See `docs/AI_BUTTON_MODULE.md` for requirements,
+the separate small module package, and package verification.
+
 ## MCP client configuration
 
 ```json

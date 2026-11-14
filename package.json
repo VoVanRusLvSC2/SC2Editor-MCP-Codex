@@ -11,6 +11,9 @@
   "type": "module",
   "description": "MCP bridge for StarCraft II map authoring, native terrain, local CASC resources and lossless lobby/player settings, with existing UI, data, script and scene modules.",
   "scripts": {
+    "ai-button:build": "node scripts/build-ai-button-module.mjs",
+    "ai-button:package": "node scripts/package-ai-button-module.mjs",
+    "ai-button:test": "node --test tests/ai-button-module/*.test.mjs",
     "live:build": "node scripts/build-live-editor.mjs",
     "publication:audit": "node scripts/audit-publication.mjs",
     "publication:prepare": "node scripts/prepare-publication.mjs",
@@ -22,7 +25,7 @@
     "dev": "tsx src/index.ts",
     "gui": "npm run build && node dist/gui/main.js",
     "gui:dev": "node --import tsx src/gui/main.ts",
-    "test": "npm run build && node --test --test-concurrency=4 dist/tests/*.test.js tests/terrain-surface/*.test.mjs",
+    "test": "npm run build && node --test --test-concurrency=4 dist/tests/*.test.js tests/terrain-surface/*.test.mjs tests/ai-button-module/*.test.mjs",
     "ai:discover": "node --import tsx scripts/discover-ai-module.ts",
     "benchmark:ai": "node --import tsx scripts/benchmark-ai-efficiency.ts",
     "ai:schemas": "node --import tsx scripts/generate-ai-schemas.ts",

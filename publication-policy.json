@@ -17,6 +17,7 @@
     "publication-policy.json",
     "native-toolkit-release.json",
     "game-toolkit-release.json",
+    "ai-button-release.json",
     "README.md",
     "README_LEGACY.md",
     "SCRIPT-GUIDE.md",
@@ -30,6 +31,7 @@
     "scripts/",
     "windows/",
     "tests/terrain-surface/",
+    "tests/ai-button-module/",
     "resources/authoring-catalog/",
     "docs/verification/",
     ".agents/skills/",
@@ -81,6 +83,7 @@
     "data-xsd-index/"
   ],
   "documentation": [
+    "AI_BUTTON_MODULE.md",
     "AI_CODEX_GUIDE.md",
     "AI_IMPLEMENTATION_STATUS.md",
     "AI_MCP.md",
