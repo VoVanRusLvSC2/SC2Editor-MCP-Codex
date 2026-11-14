@@ -95,7 +95,9 @@ export function createProjectServer(project: Project) {
             registry = projectToolRegistry(childServer);
           return {
             workspace: child.workspace,
-            bindTriggerCatalog: context => { child.trigger.guiCatalogContext = context; },
+            bindTriggerCatalog: (context) => {
+              child.trigger.guiCatalogContext = context;
+            },
             call: async (name, args, context) => {
               const tool = registry.batchTools.get(name);
               if (!tool) throw Error("LIVE_AUTHORING_TOOL_UNAVAILABLE: " + name);

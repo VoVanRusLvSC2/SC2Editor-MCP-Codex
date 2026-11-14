@@ -518,7 +518,16 @@ function argumentsOf(tokens: string[], tool = ""): Args {
     } else
       parsed =
         tool.startsWith("live.") &&
-        ["windowId", "objectKey", "catalogHash", "expectedId", "expectedDetailHash", "expectedParameterHash", "expectedFingerprint", "expectedSceneHash"].includes(key)
+        [
+          "windowId",
+          "objectKey",
+          "catalogHash",
+          "expectedId",
+          "expectedDetailHash",
+          "expectedParameterHash",
+          "expectedFingerprint",
+          "expectedSceneHash",
+        ].includes(key)
           ? value
           : scalar(value);
     assign(args, key, parsed);
@@ -559,17 +568,34 @@ function shorthand(
   block?: string,
 ): { tool: string; args: Args; saveFile?: string } {
   if (name === "live.placement.group" || name === "live.placement.start") {
-    const type = take(args, "type"), points = take(args, "points"), expectedId = take(args, "expectedId");
-    if (typeof type !== "string" || !type || typeof points !== "string" || !points || args.objects !== undefined)
+    const type = take(args, "type"),
+      points = take(args, "points"),
+      expectedId = take(args, "expectedId");
+    if (
+      typeof type !== "string" ||
+      !type ||
+      typeof points !== "string" ||
+      !points ||
+      args.objects !== undefined
+    )
       throw Error("AUTHOR_LIVE_PLACEMENT_GROUP_TYPE_AND_POINTS_REQUIRED");
     const coordinates = points.split(";");
-    if (coordinates.length > (name === "live.placement.start" ? 50 : 8) || coordinates.some((p) => !p.trim()))
+    if (
+      coordinates.length > (name === "live.placement.start" ? 50 : 8) ||
+      coordinates.some((p) => !p.trim())
+    )
       throw Error("AUTHOR_LIVE_PLACEMENT_GROUP_POINTS_INVALID");
     args.objects = coordinates.map((p) => {
       const [x, y] = point(p, 2, "LIVE_PLACEMENT_GROUP");
       return { type, x, y, ...(expectedId === undefined ? {} : { expectedId }) };
     });
-    return { tool: name === "live.placement.start" ? "live.placement.job_start" : "live.placement.create_group", args };
+    return {
+      tool:
+        name === "live.placement.start"
+          ? "live.placement.job_start"
+          : "live.placement.create_group",
+      args,
+    };
   }
   if (name === "objects.remove" || name === "objects.unit_refs") {
     const raw = take(args, "ids");
@@ -585,7 +611,10 @@ function shorthand(
     )
       throw Error("AUTHOR_OBJECT_IDS_INVALID");
     args.objectIds = ids;
-    return { tool: name === "objects.remove" ? "placement.removeBatch" : "placement.gui_unit_references", args };
+    return {
+      tool: name === "objects.remove" ? "placement.removeBatch" : "placement.gui_unit_references",
+      args,
+    };
   }
   if (name === "live.refresh.author" && block !== undefined) {
     if (args.script !== undefined) throw Error("AUTHOR_REFRESH_SCRIPT_CONFLICT");

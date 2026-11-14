@@ -33,11 +33,13 @@ export const dataAuthorSchema = z
     apply: z.boolean().default(false),
   })
   .strict();
-export const dataAppendXmlSchema = z.object({
-  snapshotId: z.string().uuid(),
-  xml: z.string().min(1).max(limit),
-  apply: z.boolean().default(false),
-}).strict();
+export const dataAppendXmlSchema = z
+  .object({
+    snapshotId: z.string().uuid(),
+    xml: z.string().min(1).max(limit),
+    apply: z.boolean().default(false),
+  })
+  .strict();
 type Target = z.infer<typeof dataReadSchema>;
 interface Snapshot {
   target: Target;
@@ -103,27 +105,38 @@ export function appendDataXml(source: string, addition: string) {
   dataXmlSignature(source);
   const wrapped = addition.trim();
   dataXmlSignature(wrapped);
-  const before = scanXml(source), incoming = scanXml(wrapped);
-  const originalRoot = before.nodes[before.rootIds[0]], inputRoot = incoming.nodes[incoming.rootIds[0]];
+  const before = scanXml(source),
+    incoming = scanXml(wrapped);
+  const originalRoot = before.nodes[before.rootIds[0]],
+    inputRoot = incoming.nodes[incoming.rootIds[0]];
   if (originalRoot.selfClosing || !inputRoot.childIds.length || inputRoot.childIds.length > 64)
     throw Error("LIVE_DATA_XML_APPEND_ENTRY_BOUND");
   const identities = new Set<string>();
   for (const id of originalRoot.childIds) {
-    const node = before.nodes[id], domain = dataDomainFromType(node.tag);
+    const node = before.nodes[id],
+      domain = dataDomainFromType(node.tag);
     if (domain && node.attrs.id) identities.add(domain + ":" + node.attrs.id);
   }
   const entries: Array<{ domain: string; id: string; type: string }> = [];
   const pieces: string[] = [];
   for (const childId of inputRoot.childIds) {
-    const node = incoming.nodes[childId], domain = dataDomainFromType(node.tag), id = node.attrs.id;
+    const node = incoming.nodes[childId],
+      domain = dataDomainFromType(node.tag),
+      id = node.attrs.id;
     if (!domain || !id || !/^[A-Za-z_][A-Za-z0-9_]{0,126}$/.test(id))
       throw Error("LIVE_DATA_XML_APPEND_ENTRY_INVALID");
     const key = domain + ":" + id;
     if (identities.has(key)) throw Error("LIVE_DATA_XML_APPEND_DUPLICATE_ID");
-    identities.add(key); entries.push({ domain, id, type: node.tag });
+    identities.add(key);
+    entries.push({ domain, id, type: node.tag });
     pieces.push(wrapped.slice(node.start, node.end));
   }
-  const candidate = source.slice(0, originalRoot.endTagStart) + "\n" + pieces.join("\n") + "\n" + source.slice(originalRoot.endTagStart);
+  const candidate =
+    source.slice(0, originalRoot.endTagStart) +
+    "\n" +
+    pieces.join("\n") +
+    "\n" +
+    source.slice(originalRoot.endTagStart);
   dataXmlSignature(candidate);
   return { candidate, entries };
 }
@@ -390,7 +403,6 @@ export class LiveDataXml {
         };
         if (!args.apply) return { status: "prepared", ...receipt, nativeMutationAttempted: false };
         return this.applyCandidate(args.snapshotId, s, candidate, signature, receipt);
-
       } finally {
         await runtime?.close();
       }
@@ -399,41 +411,75 @@ export class LiveDataXml {
   /** Apply one add-only XML patch through the same guarded native buffer path. */
   async appendXml(input: z.input<typeof dataAppendXmlSchema>) {
     return this.run(async () => {
-      const args = dataAppendXmlSchema.parse(input), snapshot = this.snapshots.get(args.snapshotId);
+      const args = dataAppendXmlSchema.parse(input),
+        snapshot = this.snapshots.get(args.snapshotId);
       if (!snapshot || snapshot.expires < Date.now()) throw Error("LIVE_DATA_SNAPSHOT_EXPIRED");
       const { candidate, entries } = appendDataXml(snapshot.source, args.xml);
       const signature = dataXmlSignature(candidate);
-      const receipt = { candidateSha256: digest(candidate), entries, copiesCreated: 0, reopensMap: false, saved: false };
+      const receipt = {
+        candidateSha256: digest(candidate),
+        entries,
+        copiesCreated: 0,
+        reopensMap: false,
+        saved: false,
+      };
       if (!args.apply) return { status: "prepared", ...receipt, nativeMutationAttempted: false };
       return this.applyCandidate(args.snapshotId, snapshot, candidate, signature, receipt);
     });
   }
-  private async applyCandidate(id: string, s: Snapshot, candidate: string, signature: string, receipt: object) {
+  private async applyCandidate(
+    id: string,
+    s: Snapshot,
+    candidate: string,
+    signature: string,
+    receipt: object,
+  ) {
     // Consume before crossing the native mutation boundary; unknown commits are never replayed.
     this.snapshots.delete(id);
     const w = await this.window(s.target, s.window);
     return withEditorLease(w, async () => {
-      if ((await this.archive(s.target.archive)).sha256 !== s.archiveSha256) throw Error("LIVE_DATA_ARCHIVE_CHANGED");
+      if ((await this.archive(s.target.archive)).sha256 !== s.archiveSha256)
+        throw Error("LIVE_DATA_ARCHIVE_CHANGED");
       const current = await this.capture(w, s.target.unit);
-      if (current.fingerprint !== s.fingerprint || current.source !== s.source) throw Error("LIVE_DATA_STALE_BUFFER");
+      if (current.fingerprint !== s.fingerprint || current.source !== s.source)
+        throw Error("LIVE_DATA_STALE_BUFFER");
       const token = randomUUID();
       await fs.writeFile(await this.transfer(w, token, true), candidate, { flag: "wx" });
       let submitted = false;
       try {
         submitted = true;
-        const native = await this.command(w, 41, { unit: s.target.unit, token, expected: s.fingerprint });
+        const native = await this.command(w, 41, {
+          unit: s.target.unit,
+          token,
+          expected: s.fingerprint,
+        });
         await this.pause(150);
-        const fresh = await this.window(s.target, w), readback = await this.capture(fresh, s.target.unit);
+        const fresh = await this.window(s.target, w),
+          readback = await this.capture(fresh, s.target.unit);
         const verified = dataXmlSignature(readback.source) === signature;
         const diagnostics = await this.command(fresh, 40, { field: "messages" });
         const archiveUnchanged = (await this.archive(s.target.archive)).sha256 === s.archiveSha256;
-        return { status: verified && archiveUnchanged ? "applied" : "verification_failed", ...receipt,
-          native, nativeXmlVerified: verified, archiveUnchanged, diagnostics, nativeModelVerified: false,
-          visualVerified: false, retryMutation: false };
+        return {
+          status: verified && archiveUnchanged ? "applied" : "verification_failed",
+          ...receipt,
+          native,
+          nativeXmlVerified: verified,
+          archiveUnchanged,
+          diagnostics,
+          nativeModelVerified: false,
+          visualVerified: false,
+          retryMutation: false,
+        };
       } catch (error) {
         if (!submitted) throw error;
-        return { status: "unknown", ...receipt, error: String(error), retryMutation: false,
-          recovery: "Inspect the same document and XML buffer; never repeat the native commit or overwrite the map archive" };
+        return {
+          status: "unknown",
+          ...receipt,
+          error: String(error),
+          retryMutation: false,
+          recovery:
+            "Inspect the same document and XML buffer; never repeat the native commit or overwrite the map archive",
+        };
       }
     });
   }

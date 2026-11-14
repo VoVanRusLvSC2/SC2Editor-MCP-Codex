@@ -91,7 +91,11 @@ test("editor-live profile exposes current-document tools without checkpoint impo
       refresh: { backend: string; reopensSamePath: boolean };
     };
     assert.equal(compact.apiVersion, cap.apiVersion);
-    assert.ok(compact.unsupported.includes("Direct regional terrain brush and general terrain component application"));
+    assert.ok(
+      compact.unsupported.includes(
+        "Direct regional terrain brush and general terrain component application",
+      ),
+    );
     assert.equal(compact.refresh.backend, "same_file_refresh");
     assert.equal(compact.refresh.reopensSamePath, true);
     const workflowCompact = compactResult({
@@ -100,7 +104,11 @@ test("editor-live profile exposes current-document tools without checkpoint impo
       currentDocument: cap,
     }) as typeof compact;
     assert.equal(workflowCompact.apiVersion, cap.apiVersion);
-    assert.ok(workflowCompact.unsupported.includes("Direct regional terrain brush and general terrain component application"));
+    assert.ok(
+      workflowCompact.unsupported.includes(
+        "Direct regional terrain brush and general terrain component application",
+      ),
+    );
     assert.equal(workflowCompact.refresh.backend, "same_file_refresh");
     assert.equal(cap.copiesCreated, 0);
     assert.equal(cap.reopensMap, false);
@@ -274,13 +282,24 @@ test("a background placement job blocks other live edits until it stops", async 
   const root = await fs.mkdtemp(path.join(os.tmpdir(), "sc2-editor-live-job-lock-"));
   const live = new EditorLiveWorkspace(new Workspace(root), () => undefined);
   let release!: () => void;
-  const barrier = new Promise<void>(resolve => { release = resolve; });
-  live.placement.prepare = async () => { await barrier; return {} as never; };
+  const barrier = new Promise<void>((resolve) => {
+    release = resolve;
+  });
+  live.placement.prepare = async () => {
+    await barrier;
+    return {} as never;
+  };
   try {
-    const job = live.placementJobs.start({ archive: "User.SC2Map", windowId: "1",
-      objects: [{ type: "Lamp", x: 1, y: 1 }] });
+    const job = live.placementJobs.start({
+      archive: "User.SC2Map",
+      windowId: "1",
+      objects: [{ type: "Lamp", x: 1, y: 1 }],
+    });
     assert.equal(live.busy, true);
-    await assert.rejects(live.document.save({ archive: "User.SC2Map", windowId: "1", expectedSha256: "a".repeat(64) }), /WORKFLOW_BUSY/);
+    await assert.rejects(
+      live.document.save({ archive: "User.SC2Map", windowId: "1", expectedSha256: "a".repeat(64) }),
+      /WORKFLOW_BUSY/,
+    );
     live.placementJobs.cancel(job.jobId);
     release();
     await live.close();

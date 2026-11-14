@@ -415,10 +415,10 @@ function compactGeneralResult(value: unknown) {
     };
   }
   for (const key of keys) if (v[key] !== undefined) out[key] = v[key];
-  if(v.nativeCatalogVerified===true&&Array.isArray(v.references))
-    out.references=v.references.slice(0,32).map(value=>{
-      const r=value as Record<string,unknown>;
-      return {domain:r.domain,id:r.id,source:r.source};
+  if (v.nativeCatalogVerified === true && Array.isArray(v.references))
+    out.references = v.references.slice(0, 32).map((value) => {
+      const r = value as Record<string, unknown>;
+      return { domain: r.domain, id: r.id, source: r.source };
     });
   if (typeof v.value === "number" && Number.isFinite(v.value)) out.value = v.value;
   if (v.module === "editor-live" || v.module === "live") {
@@ -520,10 +520,14 @@ function compactGeneralResult(value: unknown) {
       fields.filter((k) => source[k] !== undefined).map((k) => [k, source[k]]),
     );
     if (key === "tree" && Array.isArray(source.items)) {
-      (out[key] as Record<string, unknown>).items = source.items.slice(0, 128).map(row => {
+      (out[key] as Record<string, unknown>).items = source.items.slice(0, 128).map((row) => {
         if (!row || typeof row !== "object" || Array.isArray(row)) return {};
         const node = row as Record<string, unknown>;
-        return Object.fromEntries(["handle", "parent", "depth", "text"].filter(k => node[k] !== undefined).map(k => [k, node[k]]));
+        return Object.fromEntries(
+          ["handle", "parent", "depth", "text"]
+            .filter((k) => node[k] !== undefined)
+            .map((k) => [k, node[k]]),
+        );
       });
     }
     if (Array.isArray(source.diagnostics)) {

@@ -40,7 +40,9 @@ export async function captureTriggerCatalog(
   values: readonly GuiCatalogReference[],
   pause: (ms: number) => Promise<void>,
 ) {
-  const refs = liveCatalogReferences.parse(values.map(({domain,id})=>({domain,id})));
+  // Rechecks may receive identities with a source field. Only domain/ID belong
+  // to the strict native request; source must be read again from the Editor.
+  const refs = liveCatalogReferences.parse(values.map(({ domain, id }) => ({ domain, id })));
   const data = await resolveEditorModuleContext(desktop, target, pause, "Data");
   return withEditorLease(data, async () => {
     const identities: GuiCatalogIdentity[] = [];
@@ -58,11 +60,15 @@ export async function captureTriggerCatalog(
       const token = randomUUID();
       let prepared = false;
       try {
+        // The token owns a temporary Data view, not a map mutation. The native
+        // adapter refuses restoration if the user has since changed that view.
         z.object({ prepared: z.literal(true) }).parse(
           await desktop.command(current, 91, { token, unit: ref.id, value: ref.domain }),
         );
         prepared = true;
         let identity: z.infer<typeof row> | undefined;
+        // Native filter changes finish asynchronously. Poll for a matching row
+        // instead of treating the previous catalog's visible rows as current.
         for (let i = 0; i < 20; i++) {
           const value = await desktop.command(current, 92, { token });
           const parsed = row.safeParse(value);
@@ -80,6 +86,7 @@ export async function captureTriggerCatalog(
           throw Error("LIVE_CATALOG_IDENTITY_MISMATCH");
         identities.push({ domain: ref.domain, id: ref.id, source: identity.source });
       } finally {
+        // A refused prepare never acquired the view and must not restore it.
         if (prepared)
           z.object({ viewRestored: z.literal(true) }).parse(
             await desktop.command(current, 93, { token }),

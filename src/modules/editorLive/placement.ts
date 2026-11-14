@@ -5,7 +5,11 @@ import { LiveDocument, documentTargetSchema } from "./document.js";
 import { documentDirty, type EditorWindow } from "./desktop.js";
 import { withEditorLease } from "./editorLease.js";
 import { WindowsMemoryDesktop, type MemoryDesktop } from "./memoryDesktop.js";
-import { placementObjectSchema as objectSchema, placementSceneSchema as sceneSchema, readPlacementScenePages } from "./placementScene.js";
+import {
+  placementObjectSchema as objectSchema,
+  placementSceneSchema as sceneSchema,
+  readPlacementScenePages,
+} from "./placementScene.js";
 
 const propertiesSchema = z.object({
   fingerprint: z.string(),
@@ -27,10 +31,13 @@ interface Snapshot {
   scene: Scene;
   expires: number;
 }
-export const placementNameSchema = z.string().max(80).refine(
-  (name) => [...name].every((c) => c.charCodeAt(0) >= 32),
-  "Name must not contain control characters",
-);
+export const placementNameSchema = z
+  .string()
+  .max(80)
+  .refine(
+    (name) => [...name].every((c) => c.charCodeAt(0) >= 32),
+    "Name must not contain control characters",
+  );
 export const placementWriteSchema = z
   .object({
     snapshotId: z.string().uuid(),
@@ -41,9 +48,12 @@ export const placementWriteSchema = z
   })
   .strict();
 export const placementInspectSchema = documentTargetSchema
-  .extend({ details: z.boolean().default(false), offset: z.number().int().min(0).max(8192).default(0),
+  .extend({
+    details: z.boolean().default(false),
+    offset: z.number().int().min(0).max(8192).default(0),
     limit: z.number().int().min(1).max(256).default(128),
-    expectedSceneHash: z.string().regex(/^\d+$/).optional() })
+    expectedSceneHash: z.string().regex(/^\d+$/).optional(),
+  })
   .strict();
 export const placementDeleteSchema = placementWriteSchema
   .pick({ snapshotId: true, objectKey: true })
@@ -201,12 +211,17 @@ export class LivePlacement {
   }
   private async scene(s: Snapshot) {
     let scene: Scene;
-    try { scene = sceneSchema.parse(await this.command(s, 37)); }
-    catch (error) {
-      if (!String(error).includes("LIVE_PLACEMENT_OBJECT_SCENE_BOUND") &&
-          !String(error).includes("LIVE_MEMORY_RESULT_BOUND")) throw error;
+    try {
+      scene = sceneSchema.parse(await this.command(s, 37));
+    } catch (error) {
+      if (
+        !String(error).includes("LIVE_PLACEMENT_OBJECT_SCENE_BOUND") &&
+        !String(error).includes("LIVE_MEMORY_RESULT_BOUND")
+      )
+        throw error;
       scene = await readPlacementScenePages((offset, expected) =>
-        this.command(s, 37, { field: "page", value: String(offset), expected }));
+        this.command(s, 37, { field: "page", value: String(offset), expected }),
+      );
     }
     if (s.scene && scene.layer !== s.scene.layer) throw Error("LIVE_PLACEMENT_LAYER_CHANGED");
     if (
@@ -268,7 +283,8 @@ export class LivePlacement {
           ...s.scene,
           objects: s.scene.objects.slice(parsed.offset, parsed.offset + parsed.limit),
           offset: parsed.offset,
-          nextOffset: parsed.offset + parsed.limit < s.scene.count ? parsed.offset + parsed.limit : null,
+          nextOffset:
+            parsed.offset + parsed.limit < s.scene.count ? parsed.offset + parsed.limit : null,
           ...(parsed.details ? { details } : {}),
           windowId: window.windowId,
           archive: target.archive,
@@ -362,7 +378,8 @@ export class LivePlacement {
   }
   private async waitForCountChange(s: Snapshot, beforeCount: number) {
     for (let i = 0; i < 100; i++) {
-      const current = z.object({ layer: z.enum(["Doodads", "Units"]), count: z.number().int().min(0).max(8192) })
+      const current = z
+        .object({ layer: z.enum(["Doodads", "Units"]), count: z.number().int().min(0).max(8192) })
         .parse(await this.command(s, 37, { field: "count" }));
       if (current.layer !== s.scene.layer) throw Error("LIVE_PLACEMENT_LAYER_CHANGED");
       if (current.count !== beforeCount) break;
@@ -429,7 +446,12 @@ export class LivePlacement {
         ...(after.owner !== undefined ? { owner: after.owner } : {}),
       },
       objectKey: current.key,
-      scene: { layer: scene.layer, count: scene.count, selectedKey: scene.selectedKey, sceneHash: scene.sceneHash },
+      scene: {
+        layer: scene.layer,
+        count: scene.count,
+        selectedKey: scene.selectedKey,
+        sceneHash: scene.sceneHash,
+      },
     };
   }
   async move(input: Write) {
@@ -549,7 +571,8 @@ export class LivePlacement {
   checkGroupCapacity(snapshotId: string, objects: readonly { type: string; name?: string }[]) {
     const scene = this.snapshot(snapshotId).scene;
     if (scene.count + objects.length > 8192) throw Error("LIVE_PLACEMENT_SCENE_BOUND");
-    const counts = new Map<string, number>(), names = new Set(scene.objects.map(object => object.name).filter(Boolean));
+    const counts = new Map<string, number>(),
+      names = new Set(scene.objects.map((object) => object.name).filter(Boolean));
     for (const object of scene.objects) counts.set(object.type, (counts.get(object.type) ?? 0) + 1);
     for (const { type, name } of objects) {
       const count = (counts.get(type) ?? 0) + 1;
@@ -563,16 +586,26 @@ export class LivePlacement {
   }
   async inspectObject(input: z.input<typeof placementDeleteSchema>) {
     return this.run(async () => {
-      const args = placementDeleteSchema.parse(input), s = this.snapshot(args.snapshotId);
+      const args = placementDeleteSchema.parse(input),
+        s = this.snapshot(args.snapshotId);
       return withEditorLease(await this.guard(s), async () => {
         const before = await this.scene(s);
         if (before.sceneHash !== s.scene.sceneHash) throw Error("LIVE_PLACEMENT_SCENE_CHANGED");
-        const item = before.objects.find(object => object.key === args.objectKey);
+        const item = before.objects.find((object) => object.key === args.objectKey);
         if (!item) throw Error("LIVE_PLACEMENT_SOURCE_NOT_IN_SNAPSHOT");
         const properties = await this.readProperties(s, item);
-        if ((await this.scene(s)).sceneHash !== before.sceneHash) throw Error("LIVE_PLACEMENT_SCENE_CHANGED");
-        return { snapshotId: args.snapshotId, objectKey: item.key, type: item.type, layer: before.layer,
-          sceneHash: before.sceneHash, ...properties, copiesCreated: 0, mapMutation: false };
+        if ((await this.scene(s)).sceneHash !== before.sceneHash)
+          throw Error("LIVE_PLACEMENT_SCENE_CHANGED");
+        return {
+          snapshotId: args.snapshotId,
+          objectKey: item.key,
+          type: item.type,
+          layer: before.layer,
+          sceneHash: before.sceneHash,
+          ...properties,
+          copiesCreated: 0,
+          mapMutation: false,
+        };
       });
     });
   }
@@ -611,7 +644,10 @@ export class LivePlacement {
         const before = await this.scene(s);
         if (before.sceneHash !== s.scene.sceneHash) throw Error("LIVE_PLACEMENT_SCENE_CHANGED");
         if (before.preview) throw Error("LIVE_PLACEMENT_EXISTING_PASTE_PREVIEW");
-        if (before.count >= 8192 || before.objects.filter((o) => o.type === args.type).length >= templateGroupLimit)
+        if (
+          before.count >= 8192 ||
+          before.objects.filter((o) => o.type === args.type).length >= templateGroupLimit
+        )
           throw Error("LIVE_PLACEMENT_TEMPLATE_GROUP_BOUND");
         const name = args.name ?? `MCP ${args.type.slice(0, 40)} ${randomUUID().slice(0, 8)}`;
         if (!name) throw Error("LIVE_PLACEMENT_CREATE_UNIQUE_NAME_REQUIRED");
@@ -746,7 +782,8 @@ export class LivePlacement {
         const matchingCount = before.objects.filter((o) => o.type === object.type).length;
         if (duplicate && (before.count >= 8192 || matchingCount >= templateGroupLimit))
           throw Error("LIVE_PLACEMENT_TEMPLATE_GROUP_BOUND");
-        if (!input.name && matchingCount > templateGroupLimit) throw Error("LIVE_PLACEMENT_TEMPLATE_GROUP_BOUND");
+        if (!input.name && matchingCount > templateGroupLimit)
+          throw Error("LIVE_PLACEMENT_TEMPLATE_GROUP_BOUND");
         let changed = false,
           createdKey: string | undefined;
         try {

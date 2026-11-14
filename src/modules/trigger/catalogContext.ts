@@ -15,16 +15,20 @@ export interface GuiCatalogContext {
 export function bindGuiCatalogContext(
   identities: readonly GuiCatalogIdentity[],
 ): GuiCatalogContext {
+  // Copy caller-owned identities so later mutation cannot change this snapshot.
   const rows = identities
     .map((v) => ({ domain: v.domain, id: v.id, source: v.source }))
     .sort((a, b) => JSON.stringify(a).localeCompare(JSON.stringify(b)));
   const known = new Set(rows.map((v) => JSON.stringify([v.domain, v.id])));
   if (known.size !== rows.length || rows.some((v) => !v.domain || !v.id || !v.source))
     throw Error("GUI_CATALOG_IDENTITIES_INVALID");
+  // Include the native source, not just the ID: a same-named object from another
+  // dependency must invalidate a prepared import. Sorting ignores lookup order.
   const revision = createHash("sha256").update(JSON.stringify(rows)).digest("hex");
   return Object.freeze({
     revision,
     validate(values?: readonly GuiCatalogReference[]) {
+      // This allowlist proves identity only, not field values or gameplay.
       for (const v of values ?? [])
         if (!known.has(JSON.stringify([v.domain, v.id])))
           throw Error("GUI_GAMELINK_UNRESOLVED: " + v.domain + ":" + v.id);

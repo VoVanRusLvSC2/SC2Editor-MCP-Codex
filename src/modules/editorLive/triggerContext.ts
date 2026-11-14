@@ -27,6 +27,7 @@ export async function resolveEditorModuleContext(
     throw Error("LIVE_TRIGGER_SOURCE_DOCUMENT_CHANGED");
   const sameProcess = (w: EditorWindow) =>
     w.processId === source.processId && w.processStart === source.processStart;
+  // Titles alone are insufficient when several Editor processes/maps are open.
   const related = async (module: string) => {
     const found: EditorWindow[] = [];
     for (const w of windows)
@@ -64,6 +65,8 @@ export async function resolveEditorModuleContext(
     if (result.error || result.moduleRequested !== module)
       throw Error(result.error ?? "LIVE_TRIGGER_MODULE_OPEN_UNCONFIRMED");
   });
+  // Opening a module is asynchronous; rediscover its actual document-bound
+  // window rather than assuming the original chat window is the target.
   for (let i = 0; i < 50; i++) {
     windows = await desktop.windows();
     trigger = await related(module);

@@ -96,59 +96,74 @@ export async function readRefreshProject(root: string, directory: string) {
 }
 
 /** One MCP owner per prepared project; never steals a live owner's drafts. */
-export async function acquireRefreshProject(directory: string, markerRoot = path.join(os.tmpdir(), 'SC2EditorToolkit-live-refresh')) {
+export async function acquireRefreshProject(
+  directory: string,
+  markerRoot = path.join(os.tmpdir(), "SC2EditorToolkit-live-refresh"),
+) {
   // Reuse the existing filesystem gate for stale-owner reclamation. A native
   // process lease alone cannot serialize two different Editors resuming one project.
-  const owner = randomUUID(), marker = path.join(markerRoot, `${process.pid}-${owner}.lock`), markerText = 'active-refresh\n';
+  const owner = randomUUID(),
+    marker = path.join(markerRoot, `${process.pid}-${owner}.lock`),
+    markerText = "active-refresh\n";
   // The panel holds this same gate while checking markers and requesting reload.
   // Create the marker under it before opening a mutable prepared session.
   await withWorkspaceLock(markerRoot, async () => {
-    await fs.writeFile(marker, markerText, {flag:'wx'});
+    await fs.writeFile(marker, markerText, { flag: "wx" });
   });
   const releaseMarker = async () => {
     const stat = await fs.lstat(marker);
-    if (!stat.isFile() || stat.isSymbolicLink() || (await fs.readFile(marker,'utf8')) !== markerText) throw Error('LIVE_REFRESH_MARKER_CHANGED');
+    if (
+      !stat.isFile() ||
+      stat.isSymbolicLink() ||
+      (await fs.readFile(marker, "utf8")) !== markerText
+    )
+      throw Error("LIVE_REFRESH_MARKER_CHANGED");
     await fs.unlink(marker);
   };
-  try { return await withWorkspaceLock(directory, async () => {
-    const file = path.join(directory, "Prepared.lock"),
-      text = JSON.stringify({ pid: process.pid, owner }) + "\n";
-    let handle;
-    try {
-      handle = await fs.open(file, "wx");
-    } catch (error) {
-      if ((error as NodeJS.ErrnoException).code !== "EEXIST") throw error;
-      const stat = await fs.lstat(file);
-      if (!stat.isFile() || stat.isSymbolicLink() || stat.size > 256)
-        throw Error("LIVE_REFRESH_PROJECT_LEASE_INVALID", { cause: error });
-      const before = await fs.readFile(file, "utf8"),
-        old = z
-          .object({ pid: z.number().int().positive(), owner: z.string().uuid() })
-          .strict()
-          .parse(JSON.parse(before));
+  try {
+    return await withWorkspaceLock(directory, async () => {
+      const file = path.join(directory, "Prepared.lock"),
+        text = JSON.stringify({ pid: process.pid, owner }) + "\n";
+      let handle;
       try {
-        process.kill(old.pid, 0);
-        throw Error("LIVE_REFRESH_PROJECT_OWNED", { cause: error });
-      } catch (state) {
-        if ((state as NodeJS.ErrnoException).code !== "ESRCH") throw state;
-      }
-      if ((await fs.readFile(file, "utf8")) !== before)
-        throw Error("LIVE_REFRESH_PROJECT_OWNER_CHANGED", { cause: error });
-      await fs.unlink(file);
-      handle = await fs.open(file, "wx");
-    }
-    try {
-      await handle.writeFile(text);
-    } finally {
-      await handle.close();
-    }
-    return async () => {
-      await withWorkspaceLock(directory, async () => {
-        if ((await fs.readFile(file, "utf8")) !== text)
-          throw Error("LIVE_REFRESH_PROJECT_OWNER_CHANGED");
+        handle = await fs.open(file, "wx");
+      } catch (error) {
+        if ((error as NodeJS.ErrnoException).code !== "EEXIST") throw error;
+        const stat = await fs.lstat(file);
+        if (!stat.isFile() || stat.isSymbolicLink() || stat.size > 256)
+          throw Error("LIVE_REFRESH_PROJECT_LEASE_INVALID", { cause: error });
+        const before = await fs.readFile(file, "utf8"),
+          old = z
+            .object({ pid: z.number().int().positive(), owner: z.string().uuid() })
+            .strict()
+            .parse(JSON.parse(before));
+        try {
+          process.kill(old.pid, 0);
+          throw Error("LIVE_REFRESH_PROJECT_OWNED", { cause: error });
+        } catch (state) {
+          if ((state as NodeJS.ErrnoException).code !== "ESRCH") throw state;
+        }
+        if ((await fs.readFile(file, "utf8")) !== before)
+          throw Error("LIVE_REFRESH_PROJECT_OWNER_CHANGED", { cause: error });
         await fs.unlink(file);
-      });
-      await releaseMarker();
-    };
-  }); } catch (error) { await releaseMarker(); throw error; }
+        handle = await fs.open(file, "wx");
+      }
+      try {
+        await handle.writeFile(text);
+      } finally {
+        await handle.close();
+      }
+      return async () => {
+        await withWorkspaceLock(directory, async () => {
+          if ((await fs.readFile(file, "utf8")) !== text)
+            throw Error("LIVE_REFRESH_PROJECT_OWNER_CHANGED");
+          await fs.unlink(file);
+        });
+        await releaseMarker();
+      };
+    });
+  } catch (error) {
+    await releaseMarker();
+    throw error;
+  }
 }

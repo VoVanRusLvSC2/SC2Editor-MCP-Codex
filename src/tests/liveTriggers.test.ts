@@ -75,7 +75,15 @@ async function fixture(t: { after(fn: () => Promise<unknown>): void }) {
     calls: number[] = [];
   let fingerprint = "original";
   const desktop: MemoryDesktop = {
-    windows: async () => [window, { ...window, windowId: "456", title: window.title.replace("Triggers - [", "AI Assistant - ["), acceptsFiles: false }],
+    windows: async () => [
+      window,
+      {
+        ...window,
+        windowId: "456",
+        title: window.title.replace("Triggers - [", "AI Assistant - ["),
+        acceptsFiles: false,
+      },
+    ],
     command: async (_w, op, args) => {
       calls.push(op);
       if (op === 50)
@@ -137,7 +145,9 @@ async function fixture(t: { after(fn: () => Promise<unknown>): void }) {
     root,
     archive,
     calls,
-    markDirty: () => { window.title = window.title.replace(".SC2Map]", ".SC2Map*]"); },
+    markDirty: () => {
+      window.title = window.title.replace(".SC2Map]", ".SC2Map*]");
+    },
     changeRoots: () => {
       fingerprint = "changed";
     },
@@ -165,26 +175,42 @@ test("lost native import acknowledgement consumes the plan; recovery cannot repl
   assert.equal(await fs.readFile(f.archive, "utf8"), "same current archive");
 });
 
-test("inline plans do not require a saved workspace plan file", async t => {
+test("inline plans do not require a saved workspace plan file", async (t) => {
   const f = await fixture(t);
   await fs.rm(path.join(f.root, "plan.json"));
-  const prepared = await f.live.prepare({ ...f.target, name: "InlineSystem", plan: { create: { identifier: "Start" } } });
+  const prepared = await f.live.prepare({
+    ...f.target,
+    name: "InlineSystem",
+    plan: { create: { identifier: "Start" } },
+  });
   assert.equal(prepared.status, "prepared");
   assert.equal(f.calls.includes(51), false);
 });
-test("one-call creation accepts the AI window while preserving dirty current work", async t => {
+test("one-call creation accepts the AI window while preserving dirty current work", async (t) => {
   const f = await fixture(t);
   f.markDirty();
   await fs.rm(path.join(f.root, "plan.json"));
-  const result = await f.live.create({ ...f.target, windowId: "456", name: "InlineSystem", plan: { create: { identifier: "Start" } } });
+  const result = await f.live.create({
+    ...f.target,
+    windowId: "456",
+    name: "InlineSystem",
+    plan: { create: { identifier: "Start" } },
+  });
   assert.equal(result.status, "unknown"); // fixture simulates a lost native import reply
   assert.equal(result.windowId, "123");
   assert.equal(result.sourceWindowId, "456");
-  assert.equal(f.calls.filter(op => op === 51).length, 1);
+  assert.equal(f.calls.filter((op) => op === 51).length, 1);
   assert.equal(await fs.readFile(f.archive, "utf8"), "same current archive");
 });
-test("inline plan and planFile cannot be combined", async t => {
+test("inline plan and planFile cannot be combined", async (t) => {
   const f = await fixture(t);
-  await assert.rejects(f.live.prepare({ ...f.target, name: "System", planFile: "plan.json", plan: { create: { identifier: "Start" } } }));
+  await assert.rejects(
+    f.live.prepare({
+      ...f.target,
+      name: "System",
+      planFile: "plan.json",
+      plan: { create: { identifier: "Start" } },
+    }),
+  );
   assert.equal(f.calls.includes(51), false);
 });

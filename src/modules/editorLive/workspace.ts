@@ -41,14 +41,20 @@ export class EditorLiveWorkspace {
   ) {
     const jobContext = new AsyncLocalStorage<boolean>();
     const providersBusy = () => this.providers.some((provider) => provider.busy);
-    const unavailable = () => this.closing || blocked() || providersBusy() ||
+    const unavailable = () =>
+      this.closing ||
+      blocked() ||
+      providersBusy() ||
       (this.placementJobs?.busy && !jobContext.getStore());
     this.memory = new LiveMemory(workspace.root, undefined, unavailable);
     this.document = new LiveDocument(workspace.root, undefined, unavailable);
     this.placement = new LivePlacement(workspace.root, undefined, unavailable);
-    this.placementJobs = new LivePlacementJobs(this.placement, this.document,
+    this.placementJobs = new LivePlacementJobs(
+      this.placement,
+      this.document,
       (fn) => jobContext.run(true, fn),
-      () => this.closing || blocked() || providersBusy());
+      () => this.closing || blocked() || providersBusy(),
+    );
     this.terrain = new LiveTerrain(workspace.root, undefined, unavailable);
     this.data = new LiveDataXml(workspace, factory, undefined, unavailable);
     this.triggers = new LiveTriggers(workspace, factory, undefined, unavailable);
@@ -126,7 +132,12 @@ export class EditorLiveWorkspace {
       },
       memory: this.memory.capabilities(),
       placement: this.placement.capabilities(),
-      terrain: { tools: ["live.terrain.flatten_all"], scope: "Original full height-field dialog; direct current document; exact terrain readback unverified", regionalBrush: false },
+      terrain: {
+        tools: ["live.terrain.flatten_all"],
+        scope:
+          "Original full height-field dialog; direct current document; exact terrain readback unverified",
+        regionalBrush: false,
+      },
       data: this.data.capabilities(),
       triggers: this.triggers.capabilities(),
       ui: this.ui.capabilities(),

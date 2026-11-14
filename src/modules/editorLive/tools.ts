@@ -16,13 +16,33 @@ import {
   placementDeleteSchema,
 } from "./placement.js";
 import { dataReadSchema, dataAuthorSchema, dataAppendXmlSchema } from "./dataXml.js";
-import { triggerTargetSchema, triggerTreeSchema, triggerPrepareSchema, triggerCreateSchema, triggerVerifySchema, triggerRenameSchema, triggerAppendActionSchema, triggerAppendEventSchema, triggerDetailsSchema, triggerSetWaitSchema, triggerSetPeriodicSchema, triggerParametersSchema, triggerSetRealSchema, triggerSetIntegerSchema, triggerSetUnitSchema, triggerSetPointSchema } from "./triggers.js";
+import {
+  triggerTargetSchema,
+  triggerTreeSchema,
+  triggerPrepareSchema,
+  triggerCreateSchema,
+  triggerVerifySchema,
+  triggerRenameSchema,
+  triggerAppendActionSchema,
+  triggerAppendEventSchema,
+  triggerDetailsSchema,
+  triggerSetWaitSchema,
+  triggerSetPeriodicSchema,
+  triggerParametersSchema,
+  triggerSetRealSchema,
+  triggerSetIntegerSchema,
+  triggerSetUnitSchema,
+  triggerSetPointSchema,
+} from "./triggers.js";
 import { uiReadSchema, uiAuthorSchema } from "./ui.js";
 import { appendNumericTrigger, triggerNumericAppendSchema } from "./triggerNumericAppend.js";
 import { createPeriodicIncome, triggerIncomeSchema } from "./triggerIncome.js";
 import { triggerCatalogSchema } from "./triggers.js";
 import { configureTrigger, triggerConfigureSchema } from "./triggerConfigure.js";
-import { appendConfiguredTrigger, triggerAppendConfiguredSchema } from "./triggerAppendConfigured.js";
+import {
+  appendConfiguredTrigger,
+  triggerAppendConfiguredSchema,
+} from "./triggerAppendConfigured.js";
 import { textReadSchema, textAuthorSchema, textVerifySchema } from "./text.js";
 import { importPrepareSchema, importApplySchema, importVerifySchema } from "./imports.js";
 import {
@@ -49,87 +69,190 @@ export function registerEditorLiveTools(
   capabilities: () => unknown = () => live.capabilities(),
 ) {
   registerMemoryTools(server, live.memory);
-  server.registerTool("live.data.append_xml",{
-    description:"Add 1–64 new Catalog XML entries to one live.data.read snapshot and optionally commit through the same native XML path. Requires an existing local Unit anchor. Duplicate domain/ID entries, replacements, changed/manual buffers and changed archives refuse. Does not overwrite existing declarations or save the map. XML syntax/native readback do not establish linked Data validity, models or gameplay; prefer existing recipes for common mechanics.",
-    inputSchema:dataAppendXmlSchema,
-  },async a=>result(await live.data.appendXml(a)));
-  server.registerTool("live.trigger.catalog",{
-    description:"Verify up to 32 exact domain/id Game Links against the current map's original Data lists, including committed unsaved local objects and loaded dependencies. Accepts AI/Terrain/Triggers/Data windowId. Temporarily selects raw Data catalog/search/source filters and restores owned filters; never saves, copies or reopens the map. Pending XML, manual edits, missing/ambiguous IDs or unavailable native domains refuse. Identity evidence only, not full Data validation or gameplay. live.trigger.create automatically performs these checks for inline Game Links and rechecks before import.",
-    inputSchema:triggerCatalogSchema,
-    annotations:{readOnlyHint:true},
-  },async a=>result(await live.triggers.catalog(a)));
-  server.registerTool("live.trigger.create", {
-    description: "Create a self-contained native GUI trigger library in the current open map from an inline typed trigger.plan request or array. Accepts AI/Terrain/Triggers windowId and finds the same document's Trigger Editor. Game Links automatically verify up to 32 exact IDs in original Data lists, including loaded dependencies and committed unsaved local objects, then recheck before import. Pending XML/manual input, missing IDs and stale sources refuse. No external plan file, workspace change, copy, reopen or Custom Script. Re-export verifies the imported graph; compilation/gameplay remain separate. Uncertain imports never replay. No Save unless separately requested.",
-    inputSchema: triggerCreateSchema,
-  }, async a => result(await live.triggers.create(a)));
-  server.registerTool("live.trigger.income", {
-    description: "Create real GUI mineral income in the current open map: every seconds of game time adds amount minerals to player. Defaults: every=5, amount=100, player=1, folder=ECONOMY. Pass the current AI/Terrain/Triggers windowId; resolves the same native Trigger Editor automatically while the AI panel can remain open. Uses the existing typed GUI generator and native Import Library; no plan file, workspace reconfiguration, map copy, reopen or Custom Script. Existing unsaved edits are retained. Returns graph verification; no native compilation/gameplay claim and no automatic Save. Existing matching library names refuse; never repeat an uncertain import.",
-    inputSchema: triggerIncomeSchema,
-  }, async a => result(await createPeriodicIncome(live.triggers,a)));
-  server.registerTool("live.trigger.tree", {
-    description: "Read one page of the current Trigger Editor's GUI tree with parent/child relations and current UI snapshot handles. Use offset/limit and nextOffset for trees up to 8192 nodes; pass the first tree fingerprint as expectedFingerprint on later pages to reject changes. No changes or Save.",
-    inputSchema: triggerTreeSchema, annotations: { readOnlyHint: true },
-  }, async a => result(await live.triggers.tree(a)));
-  server.registerTool("live.trigger.rename", {
-    description: "Rename one existing GUI folder or element directly in the open Trigger Editor through its original Rename command. path is exact slash-separated GUI labels, e.g. MAIN/My Trigger; each segment must be unique among siblings. Current tree, process and saved archive are guarded. Names with slash or asterisk are unsupported; 8192-node bound. Checks the native tree after submission; graph semantics and runtime compilation are not verified. Does not save, copy or reopen. Unknown outcomes are never replayed.",
-    inputSchema: triggerRenameSchema,
-  }, async a => result(await live.triggers.rename(a)));
-  server.registerTool("live.trigger.append_action", {
-    description: "Append a built-in GUI action to an existing trigger through the original Action dialog. action=skip_remaining takes no parameters; action=wait requires seconds (0–3600, 0.01 increments) in Game Time; action=builtin_default requires exact actionName and useDefaults=true, with optional exact category to disambiguate. Built-in defaults may be incomplete or invalid and are never considered verified; configure and validate the parameters. Custom Script is refused. path is exact slash-separated labels. Guards trees and verifies insertion last; wait also verifies its Real parameter. A partial result means an action already exists: inspect it, do not append again. Compile/runtime behavior requires separate verification. No save, copy or reopen; uncertain commits are never replayed.",
-    inputSchema: triggerAppendActionSchema,
-  }, async a => result(await live.triggers.appendAction(a)));
-  server.registerTool("live.trigger.append_event", {
-    description: "Append a built-in GUI event to an existing trigger through the original Event dialog. event=periodic requires seconds 0.01–3600 in 0.01 increments and verifies the Game Time interval; event=builtin_default (default) requires exact eventName and useDefaults=true, with optional category to disambiguate. Generic default parameters may be incomplete or invalid: successful insertion returns needs_parameters and stops a batch before Save. Inspect/configure the existing event without appending it again. Exact slash-separated path, guarded tree and insertion position; no save, copy or reopen. Compile/runtime behavior remain unverified.",
-    inputSchema: triggerAppendEventSchema,
-  }, async a => result(await live.triggers.appendEvent(a)));
-  server.registerTool("live.trigger.append_numeric", {
-    description: "Append one exact built-in GUI action or event and configure one direct literal numeric parameter in the current Trigger Editor. Provide kind, exact name, optional category, exact parameter name, numberType (integer or real) and value. Uses native dialogs and guarded fingerprints; no Custom Script, save, copy or reopen. If other parameters remain, returns needs_parameters and stops the batch before Save. If configuration fails, the item already exists: inspect it and never repeat insertion. Compile and gameplay are not verified.",
-    inputSchema: triggerNumericAppendSchema,
-  }, async a => result(await appendNumericTrigger(live.triggers, a)));
-  server.registerTool("live.trigger.append_configured", {
-    description: "Append one built-in GUI action or event to an existing trigger and configure up to eight direct literal parameters in the open Trigger Editor. Use kind, exact name and edits such as integer:Count=6;unit:Type=Murloc Marine;point:Point=Spawn. All assignment syntax is checked before insertion. Each native edit is fingerprint guarded; remaining parameters are not assumed valid and return needs_parameters. A partial or unknown result may already have inserted the item: inspect and never replay insertion. No Custom Script, save, copy, reopen, compile or gameplay verification.",
-    inputSchema: triggerAppendConfiguredSchema,
-  }, async a => result(await appendConfiguredTrigger(live.triggers, a)));
-  server.registerTool("live.trigger.configure", {
-    description: "Configure up to eight direct literal parameters of one existing GUI action or event in the open Trigger Editor. Supply a guarded itemIndex/expectedDetailHash from live.trigger.details and edits such as integer:Count=7;unit:Type=Murloc Marine;point:Point=Spawn. Types: integer, real, unit, point. Unit and point names must be unique displayed entries. All syntax and parameter names are checked before edits; after each change verified native fingerprints guard the next. Other parameters return needs_parameters. A partial or unknown result must be inspected, never replayed. No save, copy, reopen, compile or gameplay verification.",
-    inputSchema: triggerConfigureSchema,
-  }, async a => result(await configureTrigger(live.triggers, a)));
-  server.registerTool("live.trigger.details", {
-    description: "Select a uniquely named existing trigger in the current Trigger Editor and page its direct actions or events with 1-based indices for editing. includeDetail=true also returns the native Events, Conditions and Actions tree. Selection changes only the editor view. At most 8192 tree nodes. No Save or map mutation.",
-    inputSchema: triggerDetailsSchema, annotations: { readOnlyHint: true },
-  }, async a => result(await live.triggers.details(a)));
-  server.registerTool("live.trigger.parameters", {
-    description: "Select an existing action or event and page its visible native GUI parameters with 1-based indices and a parameterFingerprint. Supply the itemIndex and exact detailFingerprint from live.trigger.details as expectedDetailHash. Selection changes only the editor view; no map edit or save. Tree sizes are bounded to 8192 nodes.",
-    inputSchema: triggerParametersSchema, annotations: { readOnlyHint: true },
-  }, async a => result(await live.triggers.parameters(a)));
-  server.registerTool("live.trigger.set_real", {
-    description: "Set one existing direct literal Real parameter of an action or event in the open Trigger Editor. Use live.trigger.details then live.trigger.parameters to obtain 1-based itemIndex/parameterIndex and detailFingerprint/parameterFingerprint; provide both as expectedDetailHash/expectedParameterHash. Requires an existing literal numeric value and the original Real Value dialog, -3600–3600 in 0.01 increments. Integer, expressions, variables, nested parameters and other types refuse. Verifies the chosen value and other visible GUI nodes, not compilation or gameplay. No save, copy or reopen; uncertain commits are never replayed.",
-    inputSchema: triggerSetRealSchema,
-  }, async a => result(await live.triggers.setReal(a)));
-  server.registerTool("live.trigger.set_integer", {
-    description: "Set one existing direct literal Integer parameter of an action or event in the open Trigger Editor. Use live.trigger.details and live.trigger.parameters for itemIndex, parameterIndex and their expected fingerprints. Requires the original Integer Value dialog and a signed 32-bit integer. Real values, expressions, variables and nested parameters refuse. The visible GUI trees are checked after submission. No save, copy or reopen; uncertain commits are never replayed.",
-    inputSchema: triggerSetIntegerSchema,
-  }, async a => result(await live.triggers.setInteger(a)));
-  server.registerTool("live.trigger.set_unit", {
-    description: "Set one existing direct literal Unit Type parameter in an action or event through the original Game Link - Unit dialog. Use live.trigger.details then live.trigger.parameters for itemIndex, parameterIndex and their expected fingerprints. unitName is the exact display name in the Editor's current Unit Type list; missing or duplicate names refuse, and this does not verify a catalog ID. Variables, expressions, nested parameters and other dialog types refuse. Verifies the visible GUI tree only; no save, copy or reopen. Uncertain commits are never replayed.",
-    inputSchema: triggerSetUnitSchema,
-  }, async a => result(await live.triggers.setUnit(a)));
-  server.registerTool("live.trigger.set_point", {
-    description: "Set one existing direct literal Point parameter in an action or event to an existing uniquely named map point through the original Point dialog. Use live.trigger.details and live.trigger.parameters for itemIndex, parameterIndex and their expected fingerprints. pointName must exactly match one listed point; missing or duplicate names refuse. This does not create a point or accept arbitrary coordinates. Variables, expressions, nested parameters and other dialogs refuse. Verifies visible GUI readback; no save, copy or reopen. Uncertain commits are never replayed.",
-    inputSchema: triggerSetPointSchema,
-  }, async a => result(await live.triggers.setPoint(a)));
-  server.registerTool("live.trigger.set_wait", {
-    description: "Change the seconds of one existing literal Game Time Wait in the open Trigger Editor through the original Real parameter dialog. Use live.trigger.details first for the 1-based direct actionIndex and exact detailFingerprint as expectedDetailHash; stale trees refuse. Exact trigger path required. Supports 0–3600 in 0.01 increments. Checks native tree, parameter and other action preservation; variable/function or non-Game-Time waits refuse. No save, copy or reopen. Unknown commits are never replayed.",
-    inputSchema: triggerSetWaitSchema,
-  }, async a => result(await live.triggers.setWait(a)));
-  server.registerTool("live.trigger.set_periodic", {
-    description: "Change one existing literal Game Time Periodic Event interval in the open Trigger Editor through the original Real dialog. Use live.trigger.details section=events first for the 1-based eventIndex and detailFingerprint as expectedDetailHash; stale trees refuse. Supports 0.01–3600 seconds in 0.01 increments. Preserves other nodes; variable/function or non-Game-Time intervals refuse. No save, copy or reopen; uncertain commits are never replayed.",
-    inputSchema: triggerSetPeriodicSchema,
-  }, async a => result(await live.triggers.setPeriodic(a)));
-  server.registerTool("live.terrain.flatten_all", {
-    description: "Apply the original Modify Height Field dialog directly to the entire current open map at the supplied base height, with retain-existing and random-height disabled. This replaces height across the whole map, CANNOT BE UNDONE and CLEARS ALL existing Editor Undo history; it can affect cliffs, pathing and manual terrain. Call only when the user explicitly authorizes those consequences, with entireMap=true and clearUndo=true. A matching original warning is accepted once; other dialogs remain untouched. Native dialog closure is observed but terrain readback, gameplay and rendering are not verified. No save, copy or reopen. Unknown commits are never retried.",
-    inputSchema: liveTerrainFlattenSchema,
-  }, async (a) => result(await live.terrain.flatten(a)));
+  server.registerTool(
+    "live.data.append_xml",
+    {
+      description:
+        "Add 1–64 new Catalog XML entries to one live.data.read snapshot and optionally commit through the same native XML path. Requires an existing local Unit anchor. Duplicate domain/ID entries, replacements, changed/manual buffers and changed archives refuse. Does not overwrite existing declarations or save the map. XML syntax/native readback do not establish linked Data validity, models or gameplay; prefer existing recipes for common mechanics.",
+      inputSchema: dataAppendXmlSchema,
+    },
+    async (a) => result(await live.data.appendXml(a)),
+  );
+  server.registerTool(
+    "live.trigger.catalog",
+    {
+      description:
+        "Verify up to 32 exact domain/id Game Links against the current map's original Data lists, including committed unsaved local objects and loaded dependencies. Accepts AI/Terrain/Triggers/Data windowId. Temporarily selects raw Data catalog/search/source filters and restores owned filters; never saves, copies or reopens the map. Pending XML, manual edits, missing/ambiguous IDs or unavailable native domains refuse. Identity evidence only, not full Data validation or gameplay. live.trigger.create automatically performs these checks for inline Game Links and rechecks before import.",
+      inputSchema: triggerCatalogSchema,
+      annotations: { readOnlyHint: true },
+    },
+    async (a) => result(await live.triggers.catalog(a)),
+  );
+  server.registerTool(
+    "live.trigger.create",
+    {
+      description:
+        "Create a self-contained native GUI trigger library in the current open map from an inline typed trigger.plan request or array. Accepts AI/Terrain/Triggers windowId and finds the same document's Trigger Editor. Game Links automatically verify up to 32 exact IDs in original Data lists, including loaded dependencies and committed unsaved local objects, then recheck before import. Pending XML/manual input, missing IDs and stale sources refuse. No external plan file, workspace change, copy, reopen or Custom Script. Re-export verifies the imported graph; compilation/gameplay remain separate. Uncertain imports never replay. No Save unless separately requested.",
+      inputSchema: triggerCreateSchema,
+    },
+    async (a) => result(await live.triggers.create(a)),
+  );
+  server.registerTool(
+    "live.trigger.income",
+    {
+      description:
+        "Create real GUI mineral income in the current open map: every seconds of game time adds amount minerals to player. Defaults: every=5, amount=100, player=1, folder=ECONOMY. Pass the current AI/Terrain/Triggers windowId; resolves the same native Trigger Editor automatically while the AI panel can remain open. Uses the existing typed GUI generator and native Import Library; no plan file, workspace reconfiguration, map copy, reopen or Custom Script. Existing unsaved edits are retained. Returns graph verification; no native compilation/gameplay claim and no automatic Save. Existing matching library names refuse; never repeat an uncertain import.",
+      inputSchema: triggerIncomeSchema,
+    },
+    async (a) => result(await createPeriodicIncome(live.triggers, a)),
+  );
+  server.registerTool(
+    "live.trigger.tree",
+    {
+      description:
+        "Read one page of the current Trigger Editor's GUI tree with parent/child relations and current UI snapshot handles. Use offset/limit and nextOffset for trees up to 8192 nodes; pass the first tree fingerprint as expectedFingerprint on later pages to reject changes. No changes or Save.",
+      inputSchema: triggerTreeSchema,
+      annotations: { readOnlyHint: true },
+    },
+    async (a) => result(await live.triggers.tree(a)),
+  );
+  server.registerTool(
+    "live.trigger.rename",
+    {
+      description:
+        "Rename one existing GUI folder or element directly in the open Trigger Editor through its original Rename command. path is exact slash-separated GUI labels, e.g. MAIN/My Trigger; each segment must be unique among siblings. Current tree, process and saved archive are guarded. Names with slash or asterisk are unsupported; 8192-node bound. Checks the native tree after submission; graph semantics and runtime compilation are not verified. Does not save, copy or reopen. Unknown outcomes are never replayed.",
+      inputSchema: triggerRenameSchema,
+    },
+    async (a) => result(await live.triggers.rename(a)),
+  );
+  server.registerTool(
+    "live.trigger.append_action",
+    {
+      description:
+        "Append a built-in GUI action to an existing trigger through the original Action dialog. action=skip_remaining takes no parameters; action=wait requires seconds (0–3600, 0.01 increments) in Game Time; action=builtin_default requires exact actionName and useDefaults=true, with optional exact category to disambiguate. Built-in defaults may be incomplete or invalid and are never considered verified; configure and validate the parameters. Custom Script is refused. path is exact slash-separated labels. Guards trees and verifies insertion last; wait also verifies its Real parameter. A partial result means an action already exists: inspect it, do not append again. Compile/runtime behavior requires separate verification. No save, copy or reopen; uncertain commits are never replayed.",
+      inputSchema: triggerAppendActionSchema,
+    },
+    async (a) => result(await live.triggers.appendAction(a)),
+  );
+  server.registerTool(
+    "live.trigger.append_event",
+    {
+      description:
+        "Append a built-in GUI event to an existing trigger through the original Event dialog. event=periodic requires seconds 0.01–3600 in 0.01 increments and verifies the Game Time interval; event=builtin_default (default) requires exact eventName and useDefaults=true, with optional category to disambiguate. Generic default parameters may be incomplete or invalid: successful insertion returns needs_parameters and stops a batch before Save. Inspect/configure the existing event without appending it again. Exact slash-separated path, guarded tree and insertion position; no save, copy or reopen. Compile/runtime behavior remain unverified.",
+      inputSchema: triggerAppendEventSchema,
+    },
+    async (a) => result(await live.triggers.appendEvent(a)),
+  );
+  server.registerTool(
+    "live.trigger.append_numeric",
+    {
+      description:
+        "Append one exact built-in GUI action or event and configure one direct literal numeric parameter in the current Trigger Editor. Provide kind, exact name, optional category, exact parameter name, numberType (integer or real) and value. Uses native dialogs and guarded fingerprints; no Custom Script, save, copy or reopen. If other parameters remain, returns needs_parameters and stops the batch before Save. If configuration fails, the item already exists: inspect it and never repeat insertion. Compile and gameplay are not verified.",
+      inputSchema: triggerNumericAppendSchema,
+    },
+    async (a) => result(await appendNumericTrigger(live.triggers, a)),
+  );
+  server.registerTool(
+    "live.trigger.append_configured",
+    {
+      description:
+        "Append one built-in GUI action or event to an existing trigger and configure up to eight direct literal parameters in the open Trigger Editor. Use kind, exact name and edits such as integer:Count=6;unit:Type=Murloc Marine;point:Point=Spawn. All assignment syntax is checked before insertion. Each native edit is fingerprint guarded; remaining parameters are not assumed valid and return needs_parameters. A partial or unknown result may already have inserted the item: inspect and never replay insertion. No Custom Script, save, copy, reopen, compile or gameplay verification.",
+      inputSchema: triggerAppendConfiguredSchema,
+    },
+    async (a) => result(await appendConfiguredTrigger(live.triggers, a)),
+  );
+  server.registerTool(
+    "live.trigger.configure",
+    {
+      description:
+        "Configure up to eight direct literal parameters of one existing GUI action or event in the open Trigger Editor. Supply a guarded itemIndex/expectedDetailHash from live.trigger.details and edits such as integer:Count=7;unit:Type=Murloc Marine;point:Point=Spawn. Types: integer, real, unit, point. Unit and point names must be unique displayed entries. All syntax and parameter names are checked before edits; after each change verified native fingerprints guard the next. Other parameters return needs_parameters. A partial or unknown result must be inspected, never replayed. No save, copy, reopen, compile or gameplay verification.",
+      inputSchema: triggerConfigureSchema,
+    },
+    async (a) => result(await configureTrigger(live.triggers, a)),
+  );
+  server.registerTool(
+    "live.trigger.details",
+    {
+      description:
+        "Select a uniquely named existing trigger in the current Trigger Editor and page its direct actions or events with 1-based indices for editing. includeDetail=true also returns the native Events, Conditions and Actions tree. Selection changes only the editor view. At most 8192 tree nodes. No Save or map mutation.",
+      inputSchema: triggerDetailsSchema,
+      annotations: { readOnlyHint: true },
+    },
+    async (a) => result(await live.triggers.details(a)),
+  );
+  server.registerTool(
+    "live.trigger.parameters",
+    {
+      description:
+        "Select an existing action or event and page its visible native GUI parameters with 1-based indices and a parameterFingerprint. Supply the itemIndex and exact detailFingerprint from live.trigger.details as expectedDetailHash. Selection changes only the editor view; no map edit or save. Tree sizes are bounded to 8192 nodes.",
+      inputSchema: triggerParametersSchema,
+      annotations: { readOnlyHint: true },
+    },
+    async (a) => result(await live.triggers.parameters(a)),
+  );
+  server.registerTool(
+    "live.trigger.set_real",
+    {
+      description:
+        "Set one existing direct literal Real parameter of an action or event in the open Trigger Editor. Use live.trigger.details then live.trigger.parameters to obtain 1-based itemIndex/parameterIndex and detailFingerprint/parameterFingerprint; provide both as expectedDetailHash/expectedParameterHash. Requires an existing literal numeric value and the original Real Value dialog, -3600–3600 in 0.01 increments. Integer, expressions, variables, nested parameters and other types refuse. Verifies the chosen value and other visible GUI nodes, not compilation or gameplay. No save, copy or reopen; uncertain commits are never replayed.",
+      inputSchema: triggerSetRealSchema,
+    },
+    async (a) => result(await live.triggers.setReal(a)),
+  );
+  server.registerTool(
+    "live.trigger.set_integer",
+    {
+      description:
+        "Set one existing direct literal Integer parameter of an action or event in the open Trigger Editor. Use live.trigger.details and live.trigger.parameters for itemIndex, parameterIndex and their expected fingerprints. Requires the original Integer Value dialog and a signed 32-bit integer. Real values, expressions, variables and nested parameters refuse. The visible GUI trees are checked after submission. No save, copy or reopen; uncertain commits are never replayed.",
+      inputSchema: triggerSetIntegerSchema,
+    },
+    async (a) => result(await live.triggers.setInteger(a)),
+  );
+  server.registerTool(
+    "live.trigger.set_unit",
+    {
+      description:
+        "Set one existing direct literal Unit Type parameter in an action or event through the original Game Link - Unit dialog. Use live.trigger.details then live.trigger.parameters for itemIndex, parameterIndex and their expected fingerprints. unitName is the exact display name in the Editor's current Unit Type list; missing or duplicate names refuse, and this does not verify a catalog ID. Variables, expressions, nested parameters and other dialog types refuse. Verifies the visible GUI tree only; no save, copy or reopen. Uncertain commits are never replayed.",
+      inputSchema: triggerSetUnitSchema,
+    },
+    async (a) => result(await live.triggers.setUnit(a)),
+  );
+  server.registerTool(
+    "live.trigger.set_point",
+    {
+      description:
+        "Set one existing direct literal Point parameter in an action or event to an existing uniquely named map point through the original Point dialog. Use live.trigger.details and live.trigger.parameters for itemIndex, parameterIndex and their expected fingerprints. pointName must exactly match one listed point; missing or duplicate names refuse. This does not create a point or accept arbitrary coordinates. Variables, expressions, nested parameters and other dialogs refuse. Verifies visible GUI readback; no save, copy or reopen. Uncertain commits are never replayed.",
+      inputSchema: triggerSetPointSchema,
+    },
+    async (a) => result(await live.triggers.setPoint(a)),
+  );
+  server.registerTool(
+    "live.trigger.set_wait",
+    {
+      description:
+        "Change the seconds of one existing literal Game Time Wait in the open Trigger Editor through the original Real parameter dialog. Use live.trigger.details first for the 1-based direct actionIndex and exact detailFingerprint as expectedDetailHash; stale trees refuse. Exact trigger path required. Supports 0–3600 in 0.01 increments. Checks native tree, parameter and other action preservation; variable/function or non-Game-Time waits refuse. No save, copy or reopen. Unknown commits are never replayed.",
+      inputSchema: triggerSetWaitSchema,
+    },
+    async (a) => result(await live.triggers.setWait(a)),
+  );
+  server.registerTool(
+    "live.trigger.set_periodic",
+    {
+      description:
+        "Change one existing literal Game Time Periodic Event interval in the open Trigger Editor through the original Real dialog. Use live.trigger.details section=events first for the 1-based eventIndex and detailFingerprint as expectedDetailHash; stale trees refuse. Supports 0.01–3600 seconds in 0.01 increments. Preserves other nodes; variable/function or non-Game-Time intervals refuse. No save, copy or reopen; uncertain commits are never replayed.",
+      inputSchema: triggerSetPeriodicSchema,
+    },
+    async (a) => result(await live.triggers.setPeriodic(a)),
+  );
+  server.registerTool(
+    "live.terrain.flatten_all",
+    {
+      description:
+        "Apply the original Modify Height Field dialog directly to the entire current open map at the supplied base height, with retain-existing and random-height disabled. This replaces height across the whole map, CANNOT BE UNDONE and CLEARS ALL existing Editor Undo history; it can affect cliffs, pathing and manual terrain. Call only when the user explicitly authorizes those consequences, with entireMap=true and clearUndo=true. A matching original warning is accepted once; other dialogs remain untouched. Native dialog closure is observed but terrain readback, gameplay and rendering are not verified. No save, copy or reopen. Unknown commits are never retried.",
+      inputSchema: liveTerrainFlattenSchema,
+    },
+    async (a) => result(await live.terrain.flatten(a)),
+  );
   server.registerTool(
     "live.refresh.begin",
     {
@@ -408,18 +531,34 @@ export function registerEditorLiveTools(
     },
     async (a) => result(await createPlacementGroup(live.placement, a)),
   );
-  server.registerTool("live.placement.job_start", {
-    description: "Start one process-local background series of up to 50 direct native palette placements in the open map. Returns jobId immediately; poll job_status. Stops on first failure or uncertain outcome and never retries or reopens. saveOnComplete=true invokes native Save in the same file once, only after all placements succeed and the user requested saving; includes their other unsaved changes. Cancellation and MCP shutdown stop at the next object boundary. Other live edits are blocked during this job. Existing 8192-object scene and 64-per-type bounds still apply.",
-    inputSchema: placementJobStartSchema,
-  }, async (a) => result(live.placementJobs.start(a)));
-  server.registerTool("live.placement.job_status", {
-    description: "Poll a process-local live placement job. Running, applied, stopped and cancelled are distinct; earlier completed objects remain in the open map. The job ID is invalid after MCP restart. Save separately after the job has stopped and the user requested it.",
-    inputSchema: z.object({ jobId: z.string().uuid() }).strict(), annotations: { readOnlyHint: true },
-  }, async (a) => result(live.placementJobs.status(a.jobId)));
-  server.registerTool("live.placement.job_cancel", {
-    description: "Request cancellation at the next object boundary; the current submitted placement is allowed to finish and is never replayed. A native Save already submitted cannot be cancelled. Poll job_status until terminal. Does not undo earlier objects.",
-    inputSchema: z.object({ jobId: z.string().uuid() }).strict(),
-  }, async (a) => result(live.placementJobs.cancel(a.jobId)));
+  server.registerTool(
+    "live.placement.job_start",
+    {
+      description:
+        "Start one process-local background series of up to 50 direct native palette placements in the open map. Returns jobId immediately; poll job_status. Stops on first failure or uncertain outcome and never retries or reopens. saveOnComplete=true invokes native Save in the same file once, only after all placements succeed and the user requested saving; includes their other unsaved changes. Cancellation and MCP shutdown stop at the next object boundary. Other live edits are blocked during this job. Existing 8192-object scene and 64-per-type bounds still apply.",
+      inputSchema: placementJobStartSchema,
+    },
+    async (a) => result(live.placementJobs.start(a)),
+  );
+  server.registerTool(
+    "live.placement.job_status",
+    {
+      description:
+        "Poll a process-local live placement job. Running, applied, stopped and cancelled are distinct; earlier completed objects remain in the open map. The job ID is invalid after MCP restart. Save separately after the job has stopped and the user requested it.",
+      inputSchema: z.object({ jobId: z.string().uuid() }).strict(),
+      annotations: { readOnlyHint: true },
+    },
+    async (a) => result(live.placementJobs.status(a.jobId)),
+  );
+  server.registerTool(
+    "live.placement.job_cancel",
+    {
+      description:
+        "Request cancellation at the next object boundary; the current submitted placement is allowed to finish and is never replayed. A native Save already submitted cannot be cancelled. Poll job_status until terminal. Does not undo earlier objects.",
+      inputSchema: z.object({ jobId: z.string().uuid() }).strict(),
+    },
+    async (a) => result(live.placementJobs.cancel(a.jobId)),
+  );
   server.registerTool(
     "live.data.read",
     {
@@ -466,10 +605,16 @@ export function registerEditorLiveTools(
     },
     async (a) => result(await live.placement.inspect(a)),
   );
-  server.registerTool("live.placement.inspect_object", {
-    description: "Read the native properties of one Doodad or Unit selected by objectKey from a fresh live.placement.inspect snapshot. Guards the full current scene before and after opening the original properties dialog; changes selection only. Returns coordinates, name and Unit owner. Does not consume the snapshot, mutate, save or reopen the map.",
-    inputSchema: placementDeleteSchema, annotations: { readOnlyHint: true },
-  }, async a => result(await live.placement.inspectObject(a)));
+  server.registerTool(
+    "live.placement.inspect_object",
+    {
+      description:
+        "Read the native properties of one Doodad or Unit selected by objectKey from a fresh live.placement.inspect snapshot. Guards the full current scene before and after opening the original properties dialog; changes selection only. Returns coordinates, name and Unit owner. Does not consume the snapshot, mutate, save or reopen the map.",
+      inputSchema: placementDeleteSchema,
+      annotations: { readOnlyHint: true },
+    },
+    async (a) => result(await live.placement.inspectObject(a)),
+  );
   server.registerTool(
     "live.placement.delete",
     {

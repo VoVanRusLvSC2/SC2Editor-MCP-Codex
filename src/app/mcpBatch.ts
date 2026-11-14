@@ -10,8 +10,12 @@ export interface BatchStep {
   args: Record<string, unknown>;
   select?: string[];
 }
-type BatchImage = { type: 'image'; mimeType: 'image/png' | 'image/jpeg' | 'image/webp'; data: string };
-type BatchMedia = { type: 'text'; text: string } | BatchImage;
+type BatchImage = {
+  type: "image";
+  mimeType: "image/png" | "image/jpeg" | "image/webp";
+  data: string;
+};
+type BatchMedia = { type: "text"; text: string } | BatchImage;
 
 /** Explicit opt-in media stays outside the compact JSON and has one shared response budget. */
 export class BatchMediaCollector {
@@ -21,20 +25,41 @@ export class BatchMediaCollector {
   private bytes = 0;
   collect(step: BatchStep, result: unknown) {
     if (step.args.includeImages !== true && step.args.includeImage !== true) return;
-    const blocks = (result as {content?: unknown})?.content;
+    const blocks = (result as { content?: unknown })?.content;
     if (!Array.isArray(blocks)) return;
-    let label = '';
+    let label = "";
     for (const block of blocks) {
-      if (!block || typeof block !== 'object') continue;
-      if (block.type === 'text' && typeof block.text === 'string') { label = block.text.startsWith('{') ? '' : block.text.slice(0, 200); continue; }
-      if (block.type !== 'image') continue;
-      const data = block.data, mimeType = block.mimeType;
-      if (typeof data !== 'string' || !['image/png','image/jpeg','image/webp'].includes(mimeType) || data.length > 700_000 || !/^[A-Za-z0-9+/]*={0,2}$/.test(data) || this.included >= 4 || this.bytes + data.length > 1_500_000) { this.omitted++; continue; }
-      this.content.push({type:'text',text:`Step ${step.id} (${step.tool})${label ? ': '+label : ''}`},{type:'image',mimeType,data} as BatchImage);
-      this.included++; this.bytes += data.length; label = '';
+      if (!block || typeof block !== "object") continue;
+      if (block.type === "text" && typeof block.text === "string") {
+        label = block.text.startsWith("{") ? "" : block.text.slice(0, 200);
+        continue;
+      }
+      if (block.type !== "image") continue;
+      const data = block.data,
+        mimeType = block.mimeType;
+      if (
+        typeof data !== "string" ||
+        !["image/png", "image/jpeg", "image/webp"].includes(mimeType) ||
+        data.length > 700_000 ||
+        !/^[A-Za-z0-9+/]*={0,2}$/.test(data) ||
+        this.included >= 4 ||
+        this.bytes + data.length > 1_500_000
+      ) {
+        this.omitted++;
+        continue;
+      }
+      this.content.push(
+        { type: "text", text: `Step ${step.id} (${step.tool})${label ? ": " + label : ""}` },
+        { type: "image", mimeType, data } as BatchImage,
+      );
+      this.included++;
+      this.bytes += data.length;
+      label = "";
     }
   }
-  receipt() { return {included:this.included, omitted:this.omitted}; }
+  receipt() {
+    return { included: this.included, omitted: this.omitted };
+  }
 }
 function jsonResult(result: unknown) {
   const structured = (result as { structuredContent?: unknown })?.structuredContent;
@@ -157,6 +182,9 @@ export async function runMcpBatch(
         (json as { valid?: boolean; ok?: boolean })?.valid === false ||
         (json as { ok?: boolean })?.ok === false ||
         (json as { accepted?: boolean })?.accepted === false ||
+        // Live providers can return a partial/unknown receipt without throwing.
+        // Stop dependent steps; earlier native mutations cannot be rolled back
+        // by treating this batch as an ordinary failed JSON request.
         (s.tool.startsWith("live.") &&
           [
             "unknown",
@@ -270,7 +298,16 @@ export function registerMcpBatch(server: McpServer, tools: ReadonlyMap<string, B
       const result = await runMcpBatch(a.steps, tools, context, media);
       return {
         isError: !result.ok,
-        content: [{ type: "text" as const, text: JSON.stringify({...result, ...(media.included || media.omitted ? {media:media.receipt()} : {})}) }, ...media.content],
+        content: [
+          {
+            type: "text" as const,
+            text: JSON.stringify({
+              ...result,
+              ...(media.included || media.omitted ? { media: media.receipt() } : {}),
+            }),
+          },
+          ...media.content,
+        ],
       };
     },
   );

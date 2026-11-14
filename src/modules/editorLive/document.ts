@@ -180,8 +180,12 @@ export class LiveDocument {
             // Native Save can still be writing while its first read begins.
             // Retry only the read, never the submitted Save, and require two
             // subsequent matching snapshots before claiming persistence.
-            const transientReplace = error instanceof Error && "code" in error && error.code === "ENOENT";
-            if (!(error instanceof Error) || (error.message !== "LIVE_FILE_CHANGED_DURING_HASH" && !transientReplace))
+            const transientReplace =
+              error instanceof Error && "code" in error && error.code === "ENOENT";
+            if (
+              !(error instanceof Error) ||
+              (error.message !== "LIVE_FILE_CHANGED_DURING_HASH" && !transientReplace)
+            )
               throw error;
             stable = undefined;
             reconciledStamp = undefined;

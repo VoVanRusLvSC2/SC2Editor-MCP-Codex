@@ -1,38 +1,65 @@
-import {organizeTriggerXml,ensureTriggerFolder,organizationSchema,type OrganizationArgs} from './organization.js';
-import {dataDomainFromType} from '../data/domains.js';
-import {skirmishRecipe,type SkirmishOptions} from './recipes/skirmish.js';
-import {heroSelectionRecipe,heroSelectionSchema} from './recipes/heroSelection.js';
-import type * as z from 'zod/v4';
-import {ScriptWorkspace} from '../script/workspace.js';
-import {emitGuiGalaxy} from './runtime.js';
-import {TriggerLibraries} from './libraries.js';
-import type { GuiCatalogContext } from './catalogContext.js';
-import type {CascWorkspace} from '../casc/workspace.js';
-import {GUI_TYPE_CODES,GUI_VARIABLE_TYPES,definitionsFor} from './typeSystem.js';
-import {DataWorkspace} from "../data/workspace.js";
-import {promises as fs} from "node:fs";
-import {StringTableDocument} from "../text/stringTable.js";
-import {projectPath} from "../../app/paths.js";
-import {describeFunction, renderCalls, registry, registryDigest, registrySourceDigest, digest, encode, type GuiRequest, type GuiText, functionSupport, registrationSupport, inspectGuiVariables, validateGuiRequestSize, collectGuiValues, inspectGuiFunctions, withGuiFunctions, resolveFunction} from './authoring.js';
-import {triggerPlanSchema} from './schemas.js';
-import {nativeGuiProfile} from './nativeProfile.js';
-import {declareVariables} from './variables.js';
-import {declareGuiTypes} from './declarations.js';
-import {declareFunctions,populateFunctions} from './functions.js';
-import {PlacementDocument} from '../placement/document.js';
-import { randomBytes } from 'node:crypto';
-import { Workspace } from '../../core/workspace.js';
+import {
+  organizeTriggerXml,
+  ensureTriggerFolder,
+  organizationSchema,
+  type OrganizationArgs,
+} from "./organization.js";
+import { dataDomainFromType } from "../data/domains.js";
+import { skirmishRecipe, type SkirmishOptions } from "./recipes/skirmish.js";
+import { heroSelectionRecipe, heroSelectionSchema } from "./recipes/heroSelection.js";
+import type * as z from "zod/v4";
+import { ScriptWorkspace } from "../script/workspace.js";
+import { emitGuiGalaxy } from "./runtime.js";
+import { TriggerLibraries } from "./libraries.js";
+import type { GuiCatalogContext } from "./catalogContext.js";
+import type { CascWorkspace } from "../casc/workspace.js";
+import { GUI_TYPE_CODES, GUI_VARIABLE_TYPES, definitionsFor } from "./typeSystem.js";
+import { DataWorkspace } from "../data/workspace.js";
+import { promises as fs } from "node:fs";
+import { StringTableDocument } from "../text/stringTable.js";
+import { projectPath } from "../../app/paths.js";
+import {
+  describeFunction,
+  renderCalls,
+  registry,
+  registryDigest,
+  registrySourceDigest,
+  digest,
+  encode,
+  type GuiRequest,
+  type GuiText,
+  functionSupport,
+  registrationSupport,
+  inspectGuiVariables,
+  validateGuiRequestSize,
+  collectGuiValues,
+  inspectGuiFunctions,
+  withGuiFunctions,
+  resolveFunction,
+} from "./authoring.js";
+import { triggerPlanSchema } from "./schemas.js";
+import { nativeGuiProfile } from "./nativeProfile.js";
+import { declareVariables } from "./variables.js";
+import { declareGuiTypes } from "./declarations.js";
+import { declareFunctions, populateFunctions } from "./functions.js";
+import { PlacementDocument } from "../placement/document.js";
+import { randomBytes } from "node:crypto";
+import { Workspace } from "../../core/workspace.js";
 import { decodeXmlValue } from "../../core/xmlScanner.js";
 import { readTriggerXml as scanXml } from "./preparedXml.js";
-import type { XmlNode } from '../../core/types.js';
-import { normalizeCustomScriptLayout } from './scriptLayout.js';
-import {upsertCustomScripts,customScriptsSchema,type CustomScriptsArgs} from './customScripts.js';
-import {inspectRevisedGui} from './revisedImport.js';
-import {bindNativeGuiContext} from './nativeImport.js';
-import type {NativeGuiEvidence} from '../../integrations/native/guiEvidence.js';
+import type { XmlNode } from "../../core/types.js";
+import { normalizeCustomScriptLayout } from "./scriptLayout.js";
+import {
+  upsertCustomScripts,
+  customScriptsSchema,
+  type CustomScriptsArgs,
+} from "./customScripts.js";
+import { inspectRevisedGui } from "./revisedImport.js";
+import { bindNativeGuiContext } from "./nativeImport.js";
+import type { NativeGuiEvidence } from "../../integrations/native/guiEvidence.js";
 
-type Kind = 'Event' | 'Action';
-const key = (library: string, type: string, id: string) => JSON.stringify([library,type,id]);
+type Kind = "Event" | "Action";
+const key = (library: string, type: string, id: string) => JSON.stringify([library, type, id]);
 function buildGraph(xml: string, parsed: ReturnType<typeof scanXml>) {
   if (parsed.diagnostics.some((d) => d.severity === "error"))
     throw new Error("TRIGGER_XML_INVALID: " + JSON.stringify(parsed.diagnostics.slice(0, 5)));
@@ -98,81 +125,182 @@ function graph(xml: string) {
   return view;
 }
 function trigger(xml: string, name: string) {
-  const g=graph(xml);
-  const split=name.indexOf('::'),scope=split<0?undefined:name.slice(0,split),lookup=split<0?name:name.slice(split+2);
-  const matches=g.elements.filter(e=>e.type==='Trigger' && (scope===undefined||e.library===scope) && (e.id===lookup || e.node.childIds.some(id=>{const n=g.parsed.nodes[id];return n.tag==='Identifier' && decodeXmlValue(xml.slice(n.startTagEnd,n.endTagStart))===lookup;})));
-  if(matches.length!==1) throw new Error(`TRIGGER_NOT_UNIQUE: ${name} (${matches.length})`);
-  return {...matches[0],offset:matches[0].node.start};
+  const g = graph(xml);
+  const split = name.indexOf("::"),
+    scope = split < 0 ? undefined : name.slice(0, split),
+    lookup = split < 0 ? name : name.slice(split + 2);
+  const matches = g.elements.filter(
+    (e) =>
+      e.type === "Trigger" &&
+      (scope === undefined || e.library === scope) &&
+      (e.id === lookup ||
+        e.node.childIds.some((id) => {
+          const n = g.parsed.nodes[id];
+          return (
+            n.tag === "Identifier" &&
+            decodeXmlValue(xml.slice(n.startTagEnd, n.endTagStart)) === lookup
+          );
+        })),
+  );
+  if (matches.length !== 1) throw new Error(`TRIGGER_NOT_UNIQUE: ${name} (${matches.length})`);
+  return { ...matches[0], offset: matches[0].node.start };
 }
 function list(xml: string) {
-  const g=graph(xml);
-  return g.elements.filter(e=>e.type==='Trigger').map(e=>({id:e.id,library:e.library,identifier:e.node.childIds.map(id=>g.parsed.nodes[id]).filter(n=>n.tag==='Identifier').map(n=>decodeXmlValue(xml.slice(n.startTagEnd,n.endTagStart)))[0] ?? e.id,events:g.refs(e).filter(r=>r.node.tag==='Event').map(r=>r.id),actions:g.refs(e).filter(r=>r.node.tag==='Action').map(r=>r.id)}));
+  const g = graph(xml);
+  return g.elements
+    .filter((e) => e.type === "Trigger")
+    .map((e) => ({
+      id: e.id,
+      library: e.library,
+      identifier:
+        e.node.childIds
+          .map((id) => g.parsed.nodes[id])
+          .filter((n) => n.tag === "Identifier")
+          .map((n) => decodeXmlValue(xml.slice(n.startTagEnd, n.endTagStart)))[0] ?? e.id,
+      events: g
+        .refs(e)
+        .filter((r) => r.node.tag === "Event")
+        .map((r) => r.id),
+      actions: g
+        .refs(e)
+        .filter((r) => r.node.tag === "Action")
+        .map((r) => r.id),
+    }));
 }
-function libraryId(xml:string) { return graph(xml).libraries[0]?.attrs.Id ?? ''; }
-function graft(target: string, source: string, sourceTrigger: string, targetTrigger: string, kind: Kind, index: number) {
-  if(!Number.isInteger(index)||index<0) throw new Error('TRIGGER_INDEX_INVALID');
-  const sg=graph(source),tg=graph(target),sb=trigger(source,sourceTrigger),tb=trigger(target,targetTrigger);
-  const selected=sg.refs(sb).filter(r=>r.node.tag===kind)[index];
-  if(!selected) throw new Error(`TRIGGER_${kind.toUpperCase()}_INDEX_MISSING`);
-  if(selected.library!==sb.library) throw new Error('TRIGGER_EXTERNAL_ROOT_UNSUPPORTED');
-  const closure:typeof sg.elements=[],seen=new Set<string>();
-  const visit=(k:string)=>{
-    if(seen.has(k))return;seen.add(k);
-    const element=sg.byKey.get(k);if(!element)throw new Error('TRIGGER_DANGLING_SOURCE_REF: '+k);
+function libraryId(xml: string) {
+  return graph(xml).libraries[0]?.attrs.Id ?? "";
+}
+function graft(
+  target: string,
+  source: string,
+  sourceTrigger: string,
+  targetTrigger: string,
+  kind: Kind,
+  index: number,
+) {
+  if (!Number.isInteger(index) || index < 0) throw new Error("TRIGGER_INDEX_INVALID");
+  const sg = graph(source),
+    tg = graph(target),
+    sb = trigger(source, sourceTrigger),
+    tb = trigger(target, targetTrigger);
+  const selected = sg.refs(sb).filter((r) => r.node.tag === kind)[index];
+  if (!selected) throw new Error(`TRIGGER_${kind.toUpperCase()}_INDEX_MISSING`);
+  if (selected.library !== sb.library) throw new Error("TRIGGER_EXTERNAL_ROOT_UNSUPPORTED");
+  const closure: typeof sg.elements = [],
+    seen = new Set<string>();
+  const visit = (k: string) => {
+    if (seen.has(k)) return;
+    seen.add(k);
+    const element = sg.byKey.get(k);
+    if (!element) throw new Error("TRIGGER_DANGLING_SOURCE_REF: " + k);
     closure.push(element);
-    for(const ref of sg.refs(element)){if(ref.library===sb.library)visit(ref.key);else if(sg.byKey.has(ref.key)&&!tg.byKey.has(ref.key))throw new Error('TRIGGER_CROSS_LIBRARY_RESOURCE_REQUIRED: '+ref.key);}
+    for (const ref of sg.refs(element)) {
+      if (ref.library === sb.library) visit(ref.key);
+      else if (sg.byKey.has(ref.key) && !tg.byKey.has(ref.key))
+        throw new Error("TRIGGER_CROSS_LIBRARY_RESOURCE_REQUIRED: " + ref.key);
+    }
   };
   visit(selected.key);
-  const used=new Set(tg.byKey.keys()),remap=new Map<string,string>();
-  for(const e of closure){let id=e.id;while(used.has(key(tb.library,e.type,id)))id=randomBytes(4).toString('hex').toUpperCase();used.add(key(tb.library,e.type,id));remap.set(key(e.library,e.type,e.id),id);}
-  const patch=(raw:string,offset:number,patches:Array<{start:number;end:number;text:string}>)=>{
-    for(const p of patches.sort((a,b)=>b.start-a.start))raw=raw.slice(0,p.start-offset)+p.text+raw.slice(p.end-offset);return raw;
+  const used = new Set(tg.byKey.keys()),
+    remap = new Map<string, string>();
+  for (const e of closure) {
+    let id = e.id;
+    while (used.has(key(tb.library, e.type, id))) id = randomBytes(4).toString("hex").toUpperCase();
+    used.add(key(tb.library, e.type, id));
+    remap.set(key(e.library, e.type, e.id), id);
+  }
+  const patch = (
+    raw: string,
+    offset: number,
+    patches: Array<{ start: number; end: number; text: string }>,
+  ) => {
+    for (const p of patches.sort((a, b) => b.start - a.start))
+      raw = raw.slice(0, p.start - offset) + p.text + raw.slice(p.end - offset);
+    return raw;
   };
-  const encode=(value:string)=>value.replaceAll('&','&amp;').replaceAll('"','&quot;').replaceAll("'",'&apos;').replaceAll('<','&lt;');
-  const rewrite=(e:typeof closure[number])=>{
-    const patches:Array<{start:number;end:number;text:string}>=[];
-    const id=e.node.attrSpans.find(s=>s.name==='Id')!;
-    patches.push({start:id.valueStart,end:id.valueEnd,text:remap.get(key(e.library,e.type,e.id))!});
-    for(const ref of sg.refs(e)){
-      if(ref.library!==sb.library)continue;
-      const idSpan=ref.node.attrSpans.find(s=>s.name==='Id')!;
-      patches.push({start:idSpan.valueStart,end:idSpan.valueEnd,text:remap.get(ref.key)!});
-      const libSpan=ref.node.attrSpans.find(s=>s.name==='Library');
-      if(libSpan)patches.push({start:libSpan.valueStart,end:libSpan.valueEnd,text:encode(tb.library)});
+  const encode = (value: string) =>
+    value
+      .replaceAll("&", "&amp;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&apos;")
+      .replaceAll("<", "&lt;");
+  const rewrite = (e: (typeof closure)[number]) => {
+    const patches: Array<{ start: number; end: number; text: string }> = [];
+    const id = e.node.attrSpans.find((s) => s.name === "Id")!;
+    patches.push({
+      start: id.valueStart,
+      end: id.valueEnd,
+      text: remap.get(key(e.library, e.type, e.id))!,
+    });
+    for (const ref of sg.refs(e)) {
+      if (ref.library !== sb.library) continue;
+      const idSpan = ref.node.attrSpans.find((s) => s.name === "Id")!;
+      patches.push({ start: idSpan.valueStart, end: idSpan.valueEnd, text: remap.get(ref.key)! });
+      const libSpan = ref.node.attrSpans.find((s) => s.name === "Library");
+      if (libSpan)
+        patches.push({
+          start: libSpan.valueStart,
+          end: libSpan.valueEnd,
+          text: encode(tb.library),
+        });
     }
-    return patch(e.xml,e.node.start,patches);
+    return patch(e.xml, e.node.start, patches);
   };
-  const nl=target.includes('\r\n')?'\r\n':'\n';
-  const rootId=remap.get(selected.key)!;
-  const eventRef=`${nl}            <${kind} Type="${encode(selected.type)}" Library="${encode(tb.library)}" Id="${rootId}" />`;
-  let updated:string;
-  if(tb.node.selfClosing)updated=tb.xml.replace(/\/\s*>$/, '>')+eventRef+`</Element>`;
+  const nl = target.includes("\r\n") ? "\r\n" : "\n";
+  const rootId = remap.get(selected.key)!;
+  const eventRef = `${nl}            <${kind} Type="${encode(selected.type)}" Library="${encode(tb.library)}" Id="${rootId}" />`;
+  let updated: string;
+  if (tb.node.selfClosing) updated = tb.xml.replace(/\/\s*>$/, ">") + eventRef + `</Element>`;
   else {
-    const siblings=tb.node.childIds.map(id=>tg.parsed.nodes[id]);
-    const same=siblings.filter(n=>n.tag===kind);
+    const siblings = tb.node.childIds.map((id) => tg.parsed.nodes[id]);
+    const same = siblings.filter((n) => n.tag === kind);
     // Append to the existing kind group. New events precede Conditions/Actions.
-    const insertion=same.at(-1)?.end ?? (kind==='Event' ? siblings.find(n=>['Condition','Action'].includes(n.tag))?.start : undefined) ?? tb.node.endTagStart;
-    updated=patch(tb.xml,tb.offset,[{start:insertion,end:insertion,text:eventRef}]);
+    const insertion =
+      same.at(-1)?.end ??
+      (kind === "Event"
+        ? siblings.find((n) => ["Condition", "Action"].includes(n.tag))?.start
+        : undefined) ??
+      tb.node.endTagStart;
+    updated = patch(tb.xml, tb.offset, [{ start: insertion, end: insertion, text: eventRef }]);
   }
-  for(const e of closure){
-    const nodes=scanXml(e.xml).nodes;
-    const localized=nodes.find(n=>(n.tag==='ValueType'&&n.attrs.Type==='text')||(n.tag==='Type'&&n.attrs.Value==='text'));
-    if(localized)throw new Error('TRIGGER_LOCALIZATION_RESOURCE_REQUIRED: '+key(e.library,e.type,e.id)+'@'+localized.start);
+  for (const e of closure) {
+    const nodes = scanXml(e.xml).nodes;
+    const localized = nodes.find(
+      (n) =>
+        (n.tag === "ValueType" && n.attrs.Type === "text") ||
+        (n.tag === "Type" && n.attrs.Value === "text"),
+    );
+    if (localized)
+      throw new Error(
+        "TRIGGER_LOCALIZATION_RESOURCE_REQUIRED: " +
+          key(e.library, e.type, e.id) +
+          "@" +
+          localized.start,
+      );
   }
-  let copied=closure.map(rewrite).join(nl);
-  const open=`<TriggerData><Library Id="${encode(tb.library)}">`,close='</Library></TriggerData>';
-  copied=normalizeCustomScriptLayout(open+copied+close).xml.slice(open.length,-close.length);
-  const lib=tg.libraries.find(n=>n.attrs.Id===tb.library) ?? (tb.library==='' ? tg.parsed.nodes[tg.parsed.rootIds[0]] : undefined);
-  if(!lib)throw new Error('TRIGGER_IMPLICIT_LIBRARY_GRAFT_UNSUPPORTED');
-  const xml=patch(target,0,[{start:tb.offset,end:tb.node.end,text:updated},{start:lib.endTagStart,end:lib.endTagStart,text:copied+nl}]);
-  const result=graph(xml);
-  for(const e of result.elements.filter(e=>e.library===tb.library))for(const r of result.refs(e))if(r.library===tb.library&&!result.byKey.has(r.key))throw new Error('TRIGGER_DANGLING_RESULT_REF: '+r.key);
-  return {xml,copied:closure.length,rootId};
+  let copied = closure.map(rewrite).join(nl);
+  const open = `<TriggerData><Library Id="${encode(tb.library)}">`,
+    close = "</Library></TriggerData>";
+  copied = normalizeCustomScriptLayout(open + copied + close).xml.slice(open.length, -close.length);
+  const lib =
+    tg.libraries.find((n) => n.attrs.Id === tb.library) ??
+    (tb.library === "" ? tg.parsed.nodes[tg.parsed.rootIds[0]] : undefined);
+  if (!lib) throw new Error("TRIGGER_IMPLICIT_LIBRARY_GRAFT_UNSUPPORTED");
+  const xml = patch(target, 0, [
+    { start: tb.offset, end: tb.node.end, text: updated },
+    { start: lib.endTagStart, end: lib.endTagStart, text: copied + nl },
+  ]);
+  const result = graph(xml);
+  for (const e of result.elements.filter((e) => e.library === tb.library))
+    for (const r of result.refs(e))
+      if (r.library === tb.library && !result.byKey.has(r.key))
+        throw new Error("TRIGGER_DANGLING_RESULT_REF: " + r.key);
+  return { xml, copied: closure.length, rootId };
 }
 
 export class TriggerWorkspace {
   guiCatalogContext?: GuiCatalogContext;
-  nativeGuiArtifact?: (jobId:string)=>Promise<NativeGuiEvidence>;
+  nativeGuiArtifact?: (jobId: string) => Promise<NativeGuiEvidence>;
   constructor(
     private readonly workspace: Workspace,
     private readonly registryFile = projectPath("generated/trigger-authoring-registry.json"),
@@ -182,9 +310,21 @@ export class TriggerWorkspace {
   ) {
     this.libraries = new TriggerLibraries(workspace, data, casc);
   }
-  private readonly libraries:TriggerLibraries;
-  private async stringFiles():Promise<string[]> {return (await fs.readdir(this.workspace.root,{withFileTypes:true})).filter(e=>e.isDirectory()&&!/^Base\.SC2Data$/i.test(e.name)&&/^[a-z]{4}\.SC2Data$/i.test(e.name)).map(e=>e.name+'/LocalizedData/TriggerStrings.txt').sort();}
-  private nameKey(type:string,library:string,id:string){return type+'/Name/'+(library?'lib_'+library+'_':'')+id;}
+  private readonly libraries: TriggerLibraries;
+  private async stringFiles(): Promise<string[]> {
+    return (await fs.readdir(this.workspace.root, { withFileTypes: true }))
+      .filter(
+        (e) =>
+          e.isDirectory() &&
+          !/^Base\.SC2Data$/i.test(e.name) &&
+          /^[a-z]{4}\.SC2Data$/i.test(e.name),
+      )
+      .map((e) => e.name + "/LocalizedData/TriggerStrings.txt")
+      .sort();
+  }
+  private nameKey(type: string, library: string, id: string) {
+    return type + "/Name/" + (library ? "lib_" + library + "_" : "") + id;
+  }
   async organize(input: OrganizationArgs) {
     const args = organizationSchema.parse(input),
       raw = await this.workspace.readRaw("Triggers"),
@@ -225,101 +365,437 @@ export class TriggerWorkspace {
       sourceOfTruth: "Triggers",
     };
   }
-  async customScripts(input:CustomScriptsArgs){
-    const args=customScriptsSchema.parse(input),raw=await this.workspace.readRaw('Triggers'),result=upsertCustomScripts(raw.text,args,await this.localizedNames()),locales=await this.stringFiles();
-    if(!locales.length)locales.push('enUS.SC2Data/LocalizedData/TriggerStrings.txt');
-    const transaction=await this.workspace.applyRawTransaction(this.workspace.coupledDraftFiles(['Triggers',...locales]),files=>{
-      if(digest(files.get('Triggers')??'')!==digest(raw.text))throw new Error('GUI_CUSTOM_SCRIPT_SOURCE_STALE');
-      const next=new Map(files);next.set('Triggers',result.xml);
-      for(const file of locales){const table=new StringTableDocument(files.get(file)??'');for(const folder of result.created)table.set(this.nameKey('Category','',folder.id),folder.name);for(const label of result.labels)table.set(label.key,label.value);next.set(file,table.source);}
-      return next;
-    },{dryRun:args.dryRun,stage:args.stage,backup:true,summary:'Author visible Custom Script declarations/actions in GUI folders'});
-    return {...result,xml:undefined,transaction,compiler:'NOT_EXECUTED',sourceOfTruth:'Triggers',rawScript:true};
+  async customScripts(input: CustomScriptsArgs) {
+    const args = customScriptsSchema.parse(input),
+      raw = await this.workspace.readRaw("Triggers"),
+      result = upsertCustomScripts(raw.text, args, await this.localizedNames()),
+      locales = await this.stringFiles();
+    if (!locales.length) locales.push("enUS.SC2Data/LocalizedData/TriggerStrings.txt");
+    const transaction = await this.workspace.applyRawTransaction(
+      this.workspace.coupledDraftFiles(["Triggers", ...locales]),
+      (files) => {
+        if (digest(files.get("Triggers") ?? "") !== digest(raw.text))
+          throw new Error("GUI_CUSTOM_SCRIPT_SOURCE_STALE");
+        const next = new Map(files);
+        next.set("Triggers", result.xml);
+        for (const file of locales) {
+          const table = new StringTableDocument(files.get(file) ?? "");
+          for (const folder of result.created)
+            table.set(this.nameKey("Category", "", folder.id), folder.name);
+          for (const label of result.labels) table.set(label.key, label.value);
+          next.set(file, table.source);
+        }
+        return next;
+      },
+      {
+        dryRun: args.dryRun,
+        stage: args.stage,
+        backup: true,
+        summary: "Author visible Custom Script declarations/actions in GUI folders",
+      },
+    );
+    return {
+      ...result,
+      xml: undefined,
+      transaction,
+      compiler: "NOT_EXECUTED",
+      sourceOfTruth: "Triggers",
+      rawScript: true,
+    };
   }
-  private async localizedNames(){const files=await this.stringFiles();const table=new Map<string,string>();for(const file of files){const raw=await this.workspace.readRaw(file);for(const entry of new StringTableDocument(raw.text).list(undefined,100000))if(!table.has(entry.key))table.set(entry.key,entry.value);}return table;}
-  async labels(query='',offset=0,limit=100) {
-    const {text}=await this.workspace.readRaw('Triggers'),g=graph(text);
-    const localized=new Map<string,Map<string,string>>();
-    for(const file of await this.stringFiles()){
-      const locale=file.slice(0,4).toLowerCase(),entries=new Map<string,string>();
-      const raw=await this.workspace.readRaw(file);
-      for(const item of new StringTableDocument(raw.text).list(undefined,100000))entries.set(item.key,item.value);
-      localized.set(locale,entries);
+  private async localizedNames() {
+    const files = await this.stringFiles();
+    const table = new Map<string, string>();
+    for (const file of files) {
+      const raw = await this.workspace.readRaw(file);
+      for (const entry of new StringTableDocument(raw.text).list(undefined, 100000))
+        if (!table.has(entry.key)) table.set(entry.key, entry.value);
     }
-    const native=(registry(this.registryFile).labels??[]).map(label=>({...label,source:'NativeLib97563',name:label.names.enUS??label.id}));
-    const local=g.elements.filter(e=>e.type==='Label').map(e=>{
-      const children=e.node.childIds.map(id=>g.parsed.nodes[id]);
-      const content=(tag:string)=>{const n=children.find(n=>n.tag===tag);return n?decodeXmlValue(text.slice(n.startTagEnd,n.endTagStart)):null;};
-      const nameKey=this.nameKey('Label',e.library,e.id),enUS=localized.get('enus')?.get(nameKey)??null,ruRU=localized.get('ruru')?.get(nameKey)??null;
-      return {library:e.library,type:'Label',id:e.id,names:{enUS,ruRU},name:enUS??ruRU??e.id,icon:content('Icon'),color:content('Color'),source:'project'};
-    });
-    const all=[...native,...local],needle=query.toLowerCase();
-    const selected=all.filter(l=>!needle||[l.library,l.id,l.name,l.names.ruRU??''].some(v=>v.toLowerCase().includes(needle)));
-    return {total:selected.length,offset,limit,next:offset+limit<selected.length?offset+limit:null,truncated:offset+limit<selected.length,labels:selected.slice(offset,offset+limit),mutation:'UNSUPPORTED: Editor-saved FunctionCall before/after and None/default encoding required'};
+    return table;
   }
-  async labelOf(target:{library:string;type:string;id:string}) {
-    const {text}=await this.workspace.readRaw('Triggers'),g=graph(text),e=g.byKey.get(key(target.library,target.type,target.id));
-    if(!e)throw new Error('TRIGGER_ELEMENT_NOT_FOUND');
-    const children=e.node.childIds.map(id=>g.parsed.nodes[id]);
-    const own=children.find(n=>n.tag==='Label');
-    if(own)return {target,own:{library:own.attrs.Library??e.library,type:own.attrs.Type??'Label',id:own.attrs.Id},source:'explicit',effectiveStatus:'declared',mutation:'UNSUPPORTED'};
-    const def=children.find(n=>n.tag==='FunctionDef');
-    if(def){
-      const library=def.attrs.Library??e.library,id=def.attrs.Id;
-      const local=g.byKey.get(key(library,'FunctionDef',id));
-      const localLabel=local?.node.childIds.map(index=>g.parsed.nodes[index]).find(n=>n.tag==='Label');
-      if(localLabel)return {target,own:null,inherited:{library:localLabel.attrs.Library??library,type:localLabel.attrs.Type??'Label',id:localLabel.attrs.Id},source:'local FunctionDef',effectiveStatus:'inherited',mutation:'UNSUPPORTED'};
-      const native=library==='Ntve'?registry(this.registryFile).functions.find(f=>f.id===id):undefined;
-      if(native?.xml){const parsed=scanXml(native.xml),label=parsed.nodes.find(n=>n.tag==='Label');if(label)return {target,own:null,inherited:{library:label.attrs.Library??'Ntve',type:label.attrs.Type??'Label',id:label.attrs.Id},source:'verified NativeLib FunctionDef',effectiveStatus:'inherited',mutation:'UNSUPPORTED'};}
-      return {target,own:null,inherited:null,source:'FunctionDef unavailable',effectiveStatus:'unknown',mutation:'UNSUPPORTED'};
+  async labels(query = "", offset = 0, limit = 100) {
+    const { text } = await this.workspace.readRaw("Triggers"),
+      g = graph(text);
+    const localized = new Map<string, Map<string, string>>();
+    for (const file of await this.stringFiles()) {
+      const locale = file.slice(0, 4).toLowerCase(),
+        entries = new Map<string, string>();
+      const raw = await this.workspace.readRaw(file);
+      for (const item of new StringTableDocument(raw.text).list(undefined, 100000))
+        entries.set(item.key, item.value);
+      localized.set(locale, entries);
     }
-    return {target,own:null,inherited:null,source:'no own Label; inheritance unverified for type',effectiveStatus:'unknown',mutation:'UNSUPPORTED'};
+    const native = (registry(this.registryFile).labels ?? []).map((label) => ({
+      ...label,
+      source: "NativeLib97563",
+      name: label.names.enUS ?? label.id,
+    }));
+    const local = g.elements
+      .filter((e) => e.type === "Label")
+      .map((e) => {
+        const children = e.node.childIds.map((id) => g.parsed.nodes[id]);
+        const content = (tag: string) => {
+          const n = children.find((n) => n.tag === tag);
+          return n ? decodeXmlValue(text.slice(n.startTagEnd, n.endTagStart)) : null;
+        };
+        const nameKey = this.nameKey("Label", e.library, e.id),
+          enUS = localized.get("enus")?.get(nameKey) ?? null,
+          ruRU = localized.get("ruru")?.get(nameKey) ?? null;
+        return {
+          library: e.library,
+          type: "Label",
+          id: e.id,
+          names: { enUS, ruRU },
+          name: enUS ?? ruRU ?? e.id,
+          icon: content("Icon"),
+          color: content("Color"),
+          source: "project",
+        };
+      });
+    const all = [...native, ...local],
+      needle = query.toLowerCase();
+    const selected = all.filter(
+      (l) =>
+        !needle ||
+        [l.library, l.id, l.name, l.names.ruRU ?? ""].some((v) => v.toLowerCase().includes(needle)),
+    );
+    return {
+      total: selected.length,
+      offset,
+      limit,
+      next: offset + limit < selected.length ? offset + limit : null,
+      truncated: offset + limit < selected.length,
+      labels: selected.slice(offset, offset + limit),
+      mutation:
+        "UNSUPPORTED: Editor-saved FunctionCall before/after and None/default encoding required",
+    };
+  }
+  async labelOf(target: { library: string; type: string; id: string }) {
+    const { text } = await this.workspace.readRaw("Triggers"),
+      g = graph(text),
+      e = g.byKey.get(key(target.library, target.type, target.id));
+    if (!e) throw new Error("TRIGGER_ELEMENT_NOT_FOUND");
+    const children = e.node.childIds.map((id) => g.parsed.nodes[id]);
+    const own = children.find((n) => n.tag === "Label");
+    if (own)
+      return {
+        target,
+        own: {
+          library: own.attrs.Library ?? e.library,
+          type: own.attrs.Type ?? "Label",
+          id: own.attrs.Id,
+        },
+        source: "explicit",
+        effectiveStatus: "declared",
+        mutation: "UNSUPPORTED",
+      };
+    const def = children.find((n) => n.tag === "FunctionDef");
+    if (def) {
+      const library = def.attrs.Library ?? e.library,
+        id = def.attrs.Id;
+      const local = g.byKey.get(key(library, "FunctionDef", id));
+      const localLabel = local?.node.childIds
+        .map((index) => g.parsed.nodes[index])
+        .find((n) => n.tag === "Label");
+      if (localLabel)
+        return {
+          target,
+          own: null,
+          inherited: {
+            library: localLabel.attrs.Library ?? library,
+            type: localLabel.attrs.Type ?? "Label",
+            id: localLabel.attrs.Id,
+          },
+          source: "local FunctionDef",
+          effectiveStatus: "inherited",
+          mutation: "UNSUPPORTED",
+        };
+      const native =
+        library === "Ntve"
+          ? registry(this.registryFile).functions.find((f) => f.id === id)
+          : undefined;
+      if (native?.xml) {
+        const parsed = scanXml(native.xml),
+          label = parsed.nodes.find((n) => n.tag === "Label");
+        if (label)
+          return {
+            target,
+            own: null,
+            inherited: {
+              library: label.attrs.Library ?? "Ntve",
+              type: label.attrs.Type ?? "Label",
+              id: label.attrs.Id,
+            },
+            source: "verified NativeLib FunctionDef",
+            effectiveStatus: "inherited",
+            mutation: "UNSUPPORTED",
+          };
+      }
+      return {
+        target,
+        own: null,
+        inherited: null,
+        source: "FunctionDef unavailable",
+        effectiveStatus: "unknown",
+        mutation: "UNSUPPORTED",
+      };
+    }
+    return {
+      target,
+      own: null,
+      inherited: null,
+      source: "no own Label; inheritance unverified for type",
+      effectiveStatus: "unknown",
+      mutation: "UNSUPPORTED",
+    };
   }
   async inspect(query?: string, offset = 0, limit = 100) {
-    const { text, exists } = await this.workspace.readRaw('Triggers');
+    const { text, exists } = await this.workspace.readRaw("Triggers");
     if (!exists) return { exists: false, triggers: [] };
-    const names=await this.localizedNames();
-    const all = list(text).map(t=>({...t,displayName:names.get(this.nameKey("Trigger",t.library,t.id)) ?? t.identifier})), selected = query ? all.filter(t => (t.identifier+" "+t.displayName).toLowerCase().includes(query.toLowerCase())) : all;
-    const functions=[...new Set(['',...graph(text).libraries.map(n=>n.attrs.Id??'')])].flatMap(library=>inspectGuiFunctions(text,library)).map(f=>({id:f.id,name:f.name,library:f.library,flags:f.flags,returnType:f.returnType,parameters:f.parameters.map(p=>({id:p.id,name:p.name,type:p.type}))}));
-    return { exists: true, functions, libraryId: libraryId(text), variables:[...new Set(['',...graph(text).libraries.map(n=>n.attrs.Id??'')])].flatMap(library=>inspectGuiVariables(text,library)), count: all.length, matching: selected.length,total:selected.length,truncated:offset+limit<selected.length,next:offset+limit<selected.length?offset+limit:null, triggers: selected.slice(offset, offset + limit) };
+    const names = await this.localizedNames();
+    const all = list(text).map((t) => ({
+        ...t,
+        displayName: names.get(this.nameKey("Trigger", t.library, t.id)) ?? t.identifier,
+      })),
+      selected = query
+        ? all.filter((t) =>
+            (t.identifier + " " + t.displayName).toLowerCase().includes(query.toLowerCase()),
+          )
+        : all;
+    const functions = [...new Set(["", ...graph(text).libraries.map((n) => n.attrs.Id ?? "")])]
+      .flatMap((library) => inspectGuiFunctions(text, library))
+      .map((f) => ({
+        id: f.id,
+        name: f.name,
+        library: f.library,
+        flags: f.flags,
+        returnType: f.returnType,
+        parameters: f.parameters.map((p) => ({ id: p.id, name: p.name, type: p.type })),
+      }));
+    return {
+      exists: true,
+      functions,
+      libraryId: libraryId(text),
+      variables: [...new Set(["", ...graph(text).libraries.map((n) => n.attrs.Id ?? "")])].flatMap(
+        (library) => inspectGuiVariables(text, library),
+      ),
+      count: all.length,
+      matching: selected.length,
+      total: selected.length,
+      truncated: offset + limit < selected.length,
+      next: offset + limit < selected.length ? offset + limit : null,
+      triggers: selected.slice(offset, offset + limit),
+    };
   }
-  async get(identifier: string, options: {includeRaw?:boolean;offset?:number;limit?:number} = {}) {
-    const { text } = await this.workspace.readRaw('Triggers');
+  async get(
+    identifier: string,
+    options: { includeRaw?: boolean; offset?: number; limit?: number } = {},
+  ) {
+    const { text } = await this.workspace.readRaw("Triggers");
     const found = trigger(text, identifier);
     const nodes = graph(text);
-    const refs = nodes.refs(found).filter(r => r.node.tag === 'Event' || r.node.tag === 'Condition' || r.node.tag === 'Action').map(r => ({ kind:r.node.tag, id:r.id, library:r.library, definition:nodes.byKey.get(r.key)?.xml ?? null }));
-    const offset=options.offset??0,limit=options.limit??100;
-    return {identifier,id:found.id,library:found.library,xml:options.includeRaw ? found.xml : found.xml.slice(0,16384),xmlTruncated:!options.includeRaw&&found.xml.length>16384,total:refs.length,next:offset+limit<refs.length?offset+limit:null,truncated:offset+limit<refs.length,references:refs.slice(offset,offset+limit).map(r=>({...r,definition:options.includeRaw?r.definition:r.definition?.slice(0,4096)??null,definitionTruncated:!options.includeRaw&&(r.definition?.length??0)>4096}))};
+    const refs = nodes
+      .refs(found)
+      .filter(
+        (r) => r.node.tag === "Event" || r.node.tag === "Condition" || r.node.tag === "Action",
+      )
+      .map((r) => ({
+        kind: r.node.tag,
+        id: r.id,
+        library: r.library,
+        definition: nodes.byKey.get(r.key)?.xml ?? null,
+      }));
+    const offset = options.offset ?? 0,
+      limit = options.limit ?? 100;
+    return {
+      identifier,
+      id: found.id,
+      library: found.library,
+      xml: options.includeRaw ? found.xml : found.xml.slice(0, 16384),
+      xmlTruncated: !options.includeRaw && found.xml.length > 16384,
+      total: refs.length,
+      next: offset + limit < refs.length ? offset + limit : null,
+      truncated: offset + limit < refs.length,
+      references: refs.slice(offset, offset + limit).map((r) => ({
+        ...r,
+        definition: options.includeRaw ? r.definition : (r.definition?.slice(0, 4096) ?? null),
+        definitionTruncated: !options.includeRaw && (r.definition?.length ?? 0) > 4096,
+      })),
+    };
   }
-  async graft(args: { sourceFile: string; sourceTrigger: string; targetTrigger: string; kind: Kind; index: number; dryRun?: boolean; stage?: boolean }) {
+  async graft(args: {
+    sourceFile: string;
+    sourceTrigger: string;
+    targetTrigger: string;
+    kind: Kind;
+    index: number;
+    dryRun?: boolean;
+    stage?: boolean;
+  }) {
     this.workspace.resolveUserPath(args.sourceFile);
     let result: ReturnType<typeof graft> | undefined;
-    const transaction = await this.workspace.applyRawTransaction(this.workspace.coupledDraftFiles(['Triggers']), async files => {
-      const source = (await this.workspace.readRaw(args.sourceFile)).text;
-      result = graft(files.get('Triggers')!, source, args.sourceTrigger, args.targetTrigger, args.kind, args.index);
-      return new Map([...files,['Triggers', result.xml]]);
-    }, { dryRun: args.dryRun ?? true, stage: args.stage ?? true, requireExisting: true, summary: `Graft ${args.kind} ${args.index} from ${args.sourceTrigger} into ${args.targetTrigger}` });
+    const transaction = await this.workspace.applyRawTransaction(
+      this.workspace.coupledDraftFiles(["Triggers"]),
+      async (files) => {
+        const source = (await this.workspace.readRaw(args.sourceFile)).text;
+        result = graft(
+          files.get("Triggers")!,
+          source,
+          args.sourceTrigger,
+          args.targetTrigger,
+          args.kind,
+          args.index,
+        );
+        return new Map([...files, ["Triggers", result.xml]]);
+      },
+      {
+        dryRun: args.dryRun ?? true,
+        stage: args.stage ?? true,
+        requireExisting: true,
+        summary: `Graft ${args.kind} ${args.index} from ${args.sourceTrigger} into ${args.targetTrigger}`,
+      },
+    );
     return { ...transaction, copiedElements: result?.copied, eventOrActionId: result?.rootId };
   }
-  private readonly plans = new Map<string,{before:string;xml:string;schema:string;schemaFile:string;root:string;strings:Map<string,string>;stringRevisions:Map<string,string>;catalogRevision?:string;objectsRevision?:string;libraryRevision?:string;needsCatalogs?:boolean}>();
-  searchFunctions(query='',offset=0,limit=50){
-    const r=registry(this.registryFile),needle=query.toLowerCase(),all=(r.definitions??r.functions).filter(f=>f.name.toLowerCase().includes(needle));
-    return {total:all.length,offset,truncated:offset+limit<all.length,next:offset+limit<all.length?offset+limit:null,items:all.slice(offset,offset+limit).map(f=>({library:f.library,id:f.id,name:f.name,flags:f.flags,returnType:(f as typeof f & {returnType?:string}).returnType,parameters:f.parameters.map(p=>({id:p.id,name:p.name,type:p.type,gameType:p.gameType})),serializerSupported:functionSupport(f).supported,unsupportedReasons:functionSupport(f).reasons,registration:registrationSupport(f)})),source:r.source,sha256:r.sha256,editor:'NOT_RUN'};
+  private readonly plans = new Map<
+    string,
+    {
+      before: string;
+      xml: string;
+      schema: string;
+      schemaFile: string;
+      root: string;
+      strings: Map<string, string>;
+      stringRevisions: Map<string, string>;
+      catalogRevision?: string;
+      objectsRevision?: string;
+      libraryRevision?: string;
+      needsCatalogs?: boolean;
+    }
+  >();
+  searchFunctions(query = "", offset = 0, limit = 50) {
+    const r = registry(this.registryFile),
+      needle = query.toLowerCase(),
+      all = (r.definitions ?? r.functions).filter((f) => f.name.toLowerCase().includes(needle));
+    return {
+      total: all.length,
+      offset,
+      truncated: offset + limit < all.length,
+      next: offset + limit < all.length ? offset + limit : null,
+      items: all.slice(offset, offset + limit).map((f) => ({
+        library: f.library,
+        id: f.id,
+        name: f.name,
+        flags: f.flags,
+        returnType: (f as typeof f & { returnType?: string }).returnType,
+        parameters: f.parameters.map((p) => ({
+          id: p.id,
+          name: p.name,
+          type: p.type,
+          gameType: p.gameType,
+        })),
+        serializerSupported: functionSupport(f).supported,
+        unsupportedReasons: functionSupport(f).reasons,
+        registration: registrationSupport(f),
+      })),
+      source: r.source,
+      sha256: r.sha256,
+      editor: "NOT_RUN",
+    };
   }
-  describeFunction(name:string) { return describeFunction(name,registry(this.registryFile)); }
-  async searchAvailableFunctions(query='',offset=0,limit=10,library='',registrationOnly=false) {
-    const raw=await this.workspace.readRaw('Triggers'),context=await this.libraries.context(registry(this.registryFile)),r=withGuiFunctions(context.registry,raw.text,library),needle=query.toLowerCase();
-    const all=(r.definitions??r.functions).filter(f=>f.name.toLowerCase().includes(needle)&&(!registrationOnly||f.flags.includes('FlagEvent')));
-    return {total:all.length,offset,next:offset+limit<all.length?offset+limit:null,items:all.slice(offset,offset+limit).map(f=>({id:f.id,name:f.name,library:f.library,source:f.origin==='map'?'map':f.library==='Ntve'?'NativeLib':'dependency',flags:f.flags,returnType:f.returnType,parameters:f.parameters.map(p=>({name:p.name,type:p.type,gameType:p.gameType})),supported:functionSupport(f).supported,registration:registrationSupport(f)})),libraries:context.libraries,libraryCacheHit:context.cacheHit,compiler:'NOT_EXECUTED'};
+  describeFunction(name: string) {
+    return describeFunction(name, registry(this.registryFile));
   }
-  async describeFunctions(names:string[],library='',presetLimit=12){
-    if(!names.length||names.length>40)throw new Error('GUI_DESCRIBE_BATCH_LIMIT');
-    const context=await this.libraries.context(registry(this.registryFile)),xml=(await this.workspace.readRaw('Triggers')).text,r=withGuiFunctions(context.registry,xml,library);
-    return {cacheHit:context.cacheHit,libraryRevision:context.revision,items:names.map(name=>{try{const f=resolveFunction(name,r);return {name:f.name,id:f.id,library:f.library,roles:f.flags.filter(v=>['FlagEvent','FlagAction','FlagCall','FlagCondition'].includes(v)),returnType:f.returnGuiType,parameters:f.parameters.map(p=>({name:p.name,id:p.id,type:p.type,gameType:p.gameType,typeElement:p.typeElement,flags:p.flags,hasDefault:!!p.defaultXml,presets:p.presets?.slice(0,presetLimit),presetCount:p.presets?.length??0,presetsTruncated:(p.presets?.length??0)>presetLimit})),support:functionSupport(f),registration:registrationSupport(f)};}catch(error){return {name,error:error instanceof Error?error.message:String(error)};}})};
+  async searchAvailableFunctions(
+    query = "",
+    offset = 0,
+    limit = 10,
+    library = "",
+    registrationOnly = false,
+  ) {
+    const raw = await this.workspace.readRaw("Triggers"),
+      context = await this.libraries.context(registry(this.registryFile)),
+      r = withGuiFunctions(context.registry, raw.text, library),
+      needle = query.toLowerCase();
+    const all = (r.definitions ?? r.functions).filter(
+      (f) =>
+        f.name.toLowerCase().includes(needle) &&
+        (!registrationOnly || f.flags.includes("FlagEvent")),
+    );
+    return {
+      total: all.length,
+      offset,
+      next: offset + limit < all.length ? offset + limit : null,
+      items: all.slice(offset, offset + limit).map((f) => ({
+        id: f.id,
+        name: f.name,
+        library: f.library,
+        source: f.origin === "map" ? "map" : f.library === "Ntve" ? "NativeLib" : "dependency",
+        flags: f.flags,
+        returnType: f.returnType,
+        parameters: f.parameters.map((p) => ({
+          name: p.name,
+          type: p.type,
+          gameType: p.gameType,
+        })),
+        supported: functionSupport(f).supported,
+        registration: registrationSupport(f),
+      })),
+      libraries: context.libraries,
+      libraryCacheHit: context.cacheHit,
+      compiler: "NOT_EXECUTED",
+    };
   }
-  async runtimeSourceForPreview(file='Triggers'){
-    const raw=await this.workspace.readRaw(file),context=await this.libraries.context(registry(this.registryFile));
-    return {...emitGuiGalaxy(raw.text,context.registry),sourceFile:file,sourceSha256:digest(raw.text),librarySources:context.sources,registryRevision:context.revision};
+  async describeFunctions(names: string[], library = "", presetLimit = 12) {
+    if (!names.length || names.length > 40) throw new Error("GUI_DESCRIBE_BATCH_LIMIT");
+    const context = await this.libraries.context(registry(this.registryFile)),
+      xml = (await this.workspace.readRaw("Triggers")).text,
+      r = withGuiFunctions(context.registry, xml, library);
+    return {
+      cacheHit: context.cacheHit,
+      libraryRevision: context.revision,
+      items: names.map((name) => {
+        try {
+          const f = resolveFunction(name, r);
+          return {
+            name: f.name,
+            id: f.id,
+            library: f.library,
+            roles: f.flags.filter((v) =>
+              ["FlagEvent", "FlagAction", "FlagCall", "FlagCondition"].includes(v),
+            ),
+            returnType: f.returnGuiType,
+            parameters: f.parameters.map((p) => ({
+              name: p.name,
+              id: p.id,
+              type: p.type,
+              gameType: p.gameType,
+              typeElement: p.typeElement,
+              flags: p.flags,
+              hasDefault: !!p.defaultXml,
+              presets: p.presets?.slice(0, presetLimit),
+              presetCount: p.presets?.length ?? 0,
+              presetsTruncated: (p.presets?.length ?? 0) > presetLimit,
+            })),
+            support: functionSupport(f),
+            registration: registrationSupport(f),
+          };
+        } catch (error) {
+          return { name, error: error instanceof Error ? error.message : String(error) };
+        }
+      }),
+    };
+  }
+  async runtimeSourceForPreview(file = "Triggers") {
+    const raw = await this.workspace.readRaw(file),
+      context = await this.libraries.context(registry(this.registryFile));
+    return {
+      ...emitGuiGalaxy(raw.text, context.registry),
+      sourceFile: file,
+      sourceSha256: digest(raw.text),
+      librarySources: context.sources,
+      registryRevision: context.revision,
+    };
   }
   async generateRuntime(dryRun = true, stage = true) {
     const raw = await this.workspace.readRaw("Triggers"),
@@ -352,10 +828,27 @@ export class TriggerWorkspace {
       converterUsed: false,
     };
   }
-  recipeSkirmish(options:SkirmishOptions){return this.planBatch(skirmishRecipe(options));}
-  async recipeHeroSelection(input:z.input<typeof heroSelectionSchema>){
-    const args=heroSelectionSchema.parse(input),plan=await this.planBatch(heroSelectionRecipe(args));
-    return {...plan,system:{kind:'hero_selection',heroes:args.heroes,players:args.players,preview:'native_UnitModel_control',folder:'GAMEPLAY/HERO_SELECTION',selectedUnitVariable:args.prefix+'Hero',confirmedVariable:args.prefix+'Locked',stateScope:'Arrays indexed by player 0..15; only declared players may confirm; normal Unit creation and Data mechanics',nativePlayback:'not_checked'}};
+  recipeSkirmish(options: SkirmishOptions) {
+    return this.planBatch(skirmishRecipe(options));
+  }
+  async recipeHeroSelection(input: z.input<typeof heroSelectionSchema>) {
+    const args = heroSelectionSchema.parse(input),
+      plan = await this.planBatch(heroSelectionRecipe(args));
+    return {
+      ...plan,
+      system: {
+        kind: "hero_selection",
+        heroes: args.heroes,
+        players: args.players,
+        preview: "native_UnitModel_control",
+        folder: "GAMEPLAY/HERO_SELECTION",
+        selectedUnitVariable: args.prefix + "Hero",
+        confirmedVariable: args.prefix + "Locked",
+        stateScope:
+          "Arrays indexed by player 0..15; only declared players may confirm; normal Unit creation and Data mechanics",
+        nativePlayback: "not_checked",
+      },
+    };
   }
   async importRevised(args: {
     file: string;
@@ -483,7 +976,13 @@ export class TriggerWorkspace {
       nativeContext,
     };
   }
-  async planFile(file:string){const raw=await this.workspace.readRaw(file);if(!raw.exists&&!raw.staged)throw new Error('GUI_PLAN_FILE_MISSING');if(Buffer.byteLength(raw.text)>1024*1024)throw new Error('GUI_PLAN_FILE_BYTE_LIMIT');const value=JSON.parse(raw.text);return Array.isArray(value)?this.planBatch(value):this.plan(value);}
+  async planFile(file: string) {
+    const raw = await this.workspace.readRaw(file);
+    if (!raw.exists && !raw.staged) throw new Error("GUI_PLAN_FILE_MISSING");
+    if (Buffer.byteLength(raw.text) > 1024 * 1024) throw new Error("GUI_PLAN_FILE_BYTE_LIMIT");
+    const value = JSON.parse(raw.text);
+    return Array.isArray(value) ? this.planBatch(value) : this.plan(value);
+  }
   async planBatch(requests: GuiRequest[]) {
     return this.workspace.withReadSet(() => this.planBatchTracked(requests));
   }
@@ -562,27 +1061,134 @@ export class TriggerWorkspace {
       sourceFilesStaged: false,
     };
   }
-  async describeAvailableFunction(name:string,library='') {
-    const raw=await this.workspace.readRaw('Triggers'),context=await this.libraries.context(registry(this.registryFile)),r=withGuiFunctions(context.registry,raw.text,library);
-    if(!name.startsWith('custom:')&&!inspectGuiFunctions(raw.text,library).some(f=>f.id===name||f.name===name)){const f=resolveFunction(name,r);return {...f,xml:undefined,support:functionSupport(f),registration:registrationSupport(f),compiler:'NOT_EXECUTED'};}
-    const f=resolveFunction(name,r);return {...f,xml:undefined,support:functionSupport(f),registration:registrationSupport(f),arguments:'Parameter IDs or unique names',compiler:'NOT_EXECUTED'};
+  async describeAvailableFunction(name: string, library = "") {
+    const raw = await this.workspace.readRaw("Triggers"),
+      context = await this.libraries.context(registry(this.registryFile)),
+      r = withGuiFunctions(context.registry, raw.text, library);
+    if (
+      !name.startsWith("custom:") &&
+      !inspectGuiFunctions(raw.text, library).some((f) => f.id === name || f.name === name)
+    ) {
+      const f = resolveFunction(name, r);
+      return {
+        ...f,
+        xml: undefined,
+        support: functionSupport(f),
+        registration: registrationSupport(f),
+        compiler: "NOT_EXECUTED",
+      };
+    }
+    const f = resolveFunction(name, r);
+    return {
+      ...f,
+      xml: undefined,
+      support: functionSupport(f),
+      registration: registrationSupport(f),
+      arguments: "Parameter IDs or unique names",
+      compiler: "NOT_EXECUTED",
+    };
   }
-  async types(query='',offset=0,limit=30,library=''){
-    const context=await this.libraries.context(registry(this.registryFile)),xml=(await this.workspace.readRaw('Triggers')).text,defs=definitionsFor(xml,library,context.registry),needle=query.toLowerCase();
-    const all=[...GUI_TYPE_CODES.map(code=>({kind:'type',name:code,variable:GUI_VARIABLE_TYPES.includes(code as typeof GUI_VARIABLE_TYPES[number])})),...defs.presets.map(p=>({kind:'preset',name:p.name??p.id,id:p.id,library:p.library,baseType:p.baseType,asBits:p.asBits,members:p.values.length})),...defs.structures.map(s=>({kind:'record',name:s.name??s.id,id:s.id,library:s.library,fields:s.variables.map(ref=>{const f=defs.variables.find(v=>v.id===ref.id&&v.library===(ref.library??s.library));return {id:ref.id,name:f?.name,type:f?.variableType,arraySizes:f?.arraySizes};})}))].filter(v=>!needle||JSON.stringify(v).toLowerCase().includes(needle));
-    return {total:all.length,offset,next:offset+limit<all.length?offset+limit:null,items:all.slice(offset,offset+limit),libraries:context.libraries,cacheHit:context.cacheHit,compiler:'NOT_EXECUTED'};
+  async types(query = "", offset = 0, limit = 30, library = "") {
+    const context = await this.libraries.context(registry(this.registryFile)),
+      xml = (await this.workspace.readRaw("Triggers")).text,
+      defs = definitionsFor(xml, library, context.registry),
+      needle = query.toLowerCase();
+    const all = [
+      ...GUI_TYPE_CODES.map((code) => ({
+        kind: "type",
+        name: code,
+        variable: GUI_VARIABLE_TYPES.includes(code as (typeof GUI_VARIABLE_TYPES)[number]),
+      })),
+      ...defs.presets.map((p) => ({
+        kind: "preset",
+        name: p.name ?? p.id,
+        id: p.id,
+        library: p.library,
+        baseType: p.baseType,
+        asBits: p.asBits,
+        members: p.values.length,
+      })),
+      ...defs.structures.map((s) => ({
+        kind: "record",
+        name: s.name ?? s.id,
+        id: s.id,
+        library: s.library,
+        fields: s.variables.map((ref) => {
+          const f = defs.variables.find(
+            (v) => v.id === ref.id && v.library === (ref.library ?? s.library),
+          );
+          return { id: ref.id, name: f?.name, type: f?.variableType, arraySizes: f?.arraySizes };
+        }),
+      })),
+    ].filter((v) => !needle || JSON.stringify(v).toLowerCase().includes(needle));
+    return {
+      total: all.length,
+      offset,
+      next: offset + limit < all.length ? offset + limit : null,
+      items: all.slice(offset, offset + limit),
+      libraries: context.libraries,
+      cacheHit: context.cacheHit,
+      compiler: "NOT_EXECUTED",
+    };
   }
   async validate() {
-    const {text}=await this.workspace.readRaw('Triggers');const g=graph(text);
-    const issues=g.elements.flatMap(e=>g.refs(e).filter(r=>r.library===e.library&&!g.byKey.has(r.key)).map(r=>({code:'TRIGGER_DANGLING_REFERENCE',key:r.key,offset:r.node.start})));
-    return {valid:issues.length===0,issues,nativeProfile:nativeGuiProfile(text,g.parsed),scope:'XML and local typed graph (not a compiler)',externalLibraries:[...new Set(g.elements.flatMap(e=>g.refs(e).filter(r=>r.library!==e.library).map(r=>r.library)))],compiler:'NOT_EXECUTED'};
+    const { text } = await this.workspace.readRaw("Triggers");
+    const g = graph(text);
+    const issues = g.elements.flatMap((e) =>
+      g
+        .refs(e)
+        .filter((r) => r.library === e.library && !g.byKey.has(r.key))
+        .map((r) => ({ code: "TRIGGER_DANGLING_REFERENCE", key: r.key, offset: r.node.start })),
+    );
+    return {
+      valid: issues.length === 0,
+      issues,
+      nativeProfile: nativeGuiProfile(text, g.parsed),
+      scope: "XML and local typed graph (not a compiler)",
+      externalLibraries: [
+        ...new Set(
+          g.elements.flatMap((e) =>
+            g
+              .refs(e)
+              .filter((r) => r.library !== e.library)
+              .map((r) => r.library),
+          ),
+        ),
+      ],
+      compiler: "NOT_EXECUTED",
+    };
   }
-  private async catalogRevision(values?:Array<{domain:string;id:string}>) {
-    if(this.guiCatalogContext) return this.guiCatalogContext.validate(values);
-    const records=await this.data.catalog();
-    if(records.issues.length)throw new Error('GUI_GAMELINK_COVERAGE_UNKNOWN');
-    for(const value of values??[]){const matches=records.flatMap(r=>r.engineActive===false&&r.dependencyAvailability!=='DECLARED_AVAILABLE'||!r.document.source.includes(value.id)?[]:r.document.entries()).filter(o=>dataDomainFromType(o.tag)===value.domain&&o.attrs.id===value.id);if(!matches.length)throw new Error('GUI_GAMELINK_UNRESOLVED: '+value.domain+':'+value.id);}
-    return digest(records.map(r=>r.absolute+'\0'+r.document.sha256+'\0'+r.engineActive+'\0'+r.dependencyAvailability).sort().join('\n'));
+  private async catalogRevision(values?: Array<{ domain: string; id: string }>) {
+    if (this.guiCatalogContext) return this.guiCatalogContext.validate(values);
+    const records = await this.data.catalog();
+    if (records.issues.length) throw new Error("GUI_GAMELINK_COVERAGE_UNKNOWN");
+    for (const value of values ?? []) {
+      const matches = records
+        .flatMap((r) =>
+          (r.engineActive === false && r.dependencyAvailability !== "DECLARED_AVAILABLE") ||
+          !r.document.source.includes(value.id)
+            ? []
+            : r.document.entries(),
+        )
+        .filter((o) => dataDomainFromType(o.tag) === value.domain && o.attrs.id === value.id);
+      if (!matches.length)
+        throw new Error("GUI_GAMELINK_UNRESOLVED: " + value.domain + ":" + value.id);
+    }
+    return digest(
+      records
+        .map(
+          (r) =>
+            r.absolute +
+            "\0" +
+            r.document.sha256 +
+            "\0" +
+            r.engineActive +
+            "\0" +
+            r.dependencyAvailability,
+        )
+        .sort()
+        .join("\n"),
+    );
   }
   async plan(request: GuiRequest) {
     validateGuiRequestSize(request);
@@ -901,29 +1507,70 @@ export class TriggerWorkspace {
       compiler: "NOT_EXECUTED",
     };
   }
-  async applyPlan(planId:string,dryRun=true,stage=true) {
-    const plan=this.plans.get(planId);if(!plan)throw new Error('GUI_PLAN_NOT_FOUND');
-    if(plan.root!==this.workspace.root||plan.schema!==registryDigest(registry(this.registryFile)))throw new Error('GUI_PLAN_CONTEXT_STALE');
-    return this.workspace.applyRawTransaction(this.workspace.coupledDraftFiles(['Triggers',...plan.strings.keys()]),async files=>{
-      if(plan.libraryRevision&&(await this.libraries.context(registry(this.registryFile),plan.needsCatalogs)).revision!==plan.libraryRevision)throw new Error('GUI_PLAN_LIBRARIES_STALE');
-      if(plan.objectsRevision&&digest((await this.workspace.readRaw('Objects')).text)!==plan.objectsRevision)throw new Error('GUI_PLAN_OBJECTS_STALE');
-      if(plan.catalogRevision&&await this.catalogRevision()!==plan.catalogRevision)throw new Error('GUI_PLAN_DEPENDENCY_STALE');
-      const schemaSource=await this.workspace.readDependency(this.registryFile);
-      if(digest(schemaSource)!==plan.schemaFile)throw new Error('GUI_PLAN_SCHEMA_STALE');
-      if(digest(files.get('Triggers')!)!==plan.before)throw new Error('GUI_PLAN_SOURCE_STALE');
-      for(const [file,revision]of plan.stringRevisions)if(digest(files.get(file)??'')!==revision)throw new Error('GUI_PLAN_STRINGS_STALE: '+file);
-      graph(plan.xml);return new Map([...files,['Triggers',plan.xml],...plan.strings]);
-    },{dryRun,stage,summary:'Apply typed GUI authoring plan'});
+  async applyPlan(planId: string, dryRun = true, stage = true) {
+    const plan = this.plans.get(planId);
+    if (!plan) throw new Error("GUI_PLAN_NOT_FOUND");
+    if (
+      plan.root !== this.workspace.root ||
+      plan.schema !== registryDigest(registry(this.registryFile))
+    )
+      throw new Error("GUI_PLAN_CONTEXT_STALE");
+    return this.workspace.applyRawTransaction(
+      this.workspace.coupledDraftFiles(["Triggers", ...plan.strings.keys()]),
+      async (files) => {
+        if (
+          plan.libraryRevision &&
+          (await this.libraries.context(registry(this.registryFile), plan.needsCatalogs))
+            .revision !== plan.libraryRevision
+        )
+          throw new Error("GUI_PLAN_LIBRARIES_STALE");
+        if (
+          plan.objectsRevision &&
+          digest((await this.workspace.readRaw("Objects")).text) !== plan.objectsRevision
+        )
+          throw new Error("GUI_PLAN_OBJECTS_STALE");
+        if (plan.catalogRevision && (await this.catalogRevision()) !== plan.catalogRevision)
+          throw new Error("GUI_PLAN_DEPENDENCY_STALE");
+        const schemaSource = await this.workspace.readDependency(this.registryFile);
+        if (digest(schemaSource) !== plan.schemaFile) throw new Error("GUI_PLAN_SCHEMA_STALE");
+        if (digest(files.get("Triggers")!) !== plan.before)
+          throw new Error("GUI_PLAN_SOURCE_STALE");
+        for (const [file, revision] of plan.stringRevisions)
+          if (digest(files.get(file) ?? "") !== revision)
+            throw new Error("GUI_PLAN_STRINGS_STALE: " + file);
+        graph(plan.xml);
+        return new Map([...files, ["Triggers", plan.xml], ...plan.strings]);
+      },
+      { dryRun, stage, summary: "Apply typed GUI authoring plan" },
+    );
   }
 
-  save(backup = true) { return this.workspace.save('Triggers', { backup }); }
+  save(backup = true) {
+    return this.workspace.save("Triggers", { backup });
+  }
   async normalizeScriptLayout(dryRun = true, stage = true) {
     let result: ReturnType<typeof normalizeCustomScriptLayout> | undefined;
-    const transaction = await this.workspace.applyRawTransaction(this.workspace.coupledDraftFiles(['Triggers']), async files => {
-      result = normalizeCustomScriptLayout(files.get('Triggers')!);
-      return new Map([...files,['Triggers', result.xml]]);
-    }, { dryRun, stage, requireExisting: true, summary: 'Normalize editor ScriptCode indentation; preserve all trigger elements and references' });
-    return { ...transaction, changedScriptBlocks: result?.changedScriptBlocks, ownerIds: result?.ownerIds };
+    const transaction = await this.workspace.applyRawTransaction(
+      this.workspace.coupledDraftFiles(["Triggers"]),
+      async (files) => {
+        result = normalizeCustomScriptLayout(files.get("Triggers")!);
+        return new Map([...files, ["Triggers", result.xml]]);
+      },
+      {
+        dryRun,
+        stage,
+        requireExisting: true,
+        summary:
+          "Normalize editor ScriptCode indentation; preserve all trigger elements and references",
+      },
+    );
+    return {
+      ...transaction,
+      changedScriptBlocks: result?.changedScriptBlocks,
+      ownerIds: result?.ownerIds,
+    };
   }
-  discard() { return this.workspace.discard('Triggers'); }
+  discard() {
+    return this.workspace.discard("Triggers");
+  }
 }

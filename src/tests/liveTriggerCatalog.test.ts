@@ -51,8 +51,13 @@ test("live catalog reads unsaved committed IDs and restores the native filter fo
   assert.equal(result.identities.length, 2);
   assert.equal(result.context.validate([{ domain: "Abil", id: "UnsavedSpell" }]), result.revision);
   assert.deepEqual(f.calls, [91, 92, 92, 93, 91, 92, 93]);
-  const again=await captureTriggerCatalog(f.desktop,{archive,windowId:"1"},result.identities,async()=>{});
-  assert.equal(again.revision,result.revision);
+  const again = await captureTriggerCatalog(
+    f.desktop,
+    { archive, windowId: "1" },
+    result.identities,
+    async () => {},
+  );
+  assert.equal(again.revision, result.revision);
 });
 test("missing IDs restore the view and pending manual XML is never dismissed", async () => {
   const f = fixture("missing");

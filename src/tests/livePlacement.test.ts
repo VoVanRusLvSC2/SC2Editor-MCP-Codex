@@ -67,7 +67,10 @@ async function fixture(t: test.TestContext) {
       windows: async () => [structuredClone(state.window)],
       command: async (_w, op, a = {}) => {
         state.calls.push(op);
-        if (op === 37) { if (a.field === "count") state.countReads++; return scene(); }
+        if (op === 37) {
+          if (a.field === "count") state.countReads++;
+          return scene();
+        }
         if (op === 43) {
           if (a.field === "list") return { listStyleRequested: true };
           return {
@@ -181,12 +184,20 @@ async function fixture(t: test.TestContext) {
 test("individual properties can be inspected without consuming the snapshot or mutating the scene", async (t) => {
   const { state, placement, target } = await fixture(t);
   const snapshot = await placement.inspect(target);
-  const object = await placement.inspectObject({ snapshotId: snapshot.snapshotId, objectKey: "100" });
+  const object = await placement.inspectObject({
+    snapshotId: snapshot.snapshotId,
+    objectKey: "100",
+  });
   assert.equal(object.x, 2);
   assert.equal(object.y, 4);
   assert.equal(object.mapMutation, false);
   assert.equal(state.calls.includes(36), false);
-  const moved = await placement.move({ snapshotId: snapshot.snapshotId, objectKey: "100", x: 3, y: 5 });
+  const moved = await placement.move({
+    snapshotId: snapshot.snapshotId,
+    objectKey: "100",
+    x: 3,
+    y: 5,
+  });
   assert.equal(moved.status, "applied");
 });
 
@@ -197,7 +208,10 @@ test("deletion verifies every surviving instance after row reindexing without sa
     result = await f.placement.delete({ snapshotId: snapshot.snapshotId, objectKey: "100" });
   assert.equal(result.status, "applied");
   assert.equal(result.referenceSafety, "not_checked");
-  assert.equal((compactResult(result) as { referenceSafety: string }).referenceSafety, "not_checked");
+  assert.equal(
+    (compactResult(result) as { referenceSafety: string }).referenceSafety,
+    "not_checked",
+  );
   assert.equal(f.state.calls.filter((c) => c === 39).length, 1);
   assert.equal(f.state.objects.length, 1);
   assert.equal(f.state.objects[0].name, "Other");
@@ -377,27 +391,53 @@ test("template-group limits refuse before creating an unpositioned sixty-fifth i
 test("group preflight checks all requested types against the complete snapshot", async (t) => {
   const f = await fixture(t);
   f.state.objects = Array.from({ length: 20 }, (_, i) => ({
-    row: i, key: String(100 + i), type: "Lamp", name: `Original ${i}`, x: i, y: 4,
+    row: i,
+    key: String(100 + i),
+    type: "Lamp",
+    name: `Original ${i}`,
+    x: i,
+    y: 4,
   }));
   const snapshot = await f.placement.inspect(f.target);
-  assert.doesNotThrow(() => f.placement.checkGroupCapacity(snapshot.snapshotId, Array(44).fill({type: "Lamp"})));
-  assert.throws(() => f.placement.checkGroupCapacity(snapshot.snapshotId, Array(45).fill({type: "Lamp"})), /TEMPLATE_GROUP_BOUND/);
-  assert.throws(() => f.placement.checkGroupCapacity(snapshot.snapshotId, [{type: "Rock", name: "Original 0"}]), /UNIQUE_NAME_REQUIRED/);
-  assert.throws(() => f.placement.checkGroupCapacity(snapshot.snapshotId, [{type: "Rock", name: "New"}, {type: "Lamp", name: "New"}]), /UNIQUE_NAME_REQUIRED/);
+  assert.doesNotThrow(() =>
+    f.placement.checkGroupCapacity(snapshot.snapshotId, Array(44).fill({ type: "Lamp" })),
+  );
+  assert.throws(
+    () => f.placement.checkGroupCapacity(snapshot.snapshotId, Array(45).fill({ type: "Lamp" })),
+    /TEMPLATE_GROUP_BOUND/,
+  );
+  assert.throws(
+    () =>
+      f.placement.checkGroupCapacity(snapshot.snapshotId, [{ type: "Rock", name: "Original 0" }]),
+    /UNIQUE_NAME_REQUIRED/,
+  );
+  assert.throws(
+    () =>
+      f.placement.checkGroupCapacity(snapshot.snapshotId, [
+        { type: "Rock", name: "New" },
+        { type: "Lamp", name: "New" },
+      ]),
+    /UNIQUE_NAME_REQUIRED/,
+  );
   assert.equal(f.state.calls.includes(33), false);
 });
 
 test("a seventeenth matching object is identified after native row reindexing", async (t) => {
   const f = await fixture(t);
   f.state.objects = Array.from({ length: 16 }, (_, i) => ({
-    row: i, key: String(100 + i), type: "Lamp", name: `Original ${i}`, x: i, y: 4,
+    row: i,
+    key: String(100 + i),
+    type: "Lamp",
+    name: `Original ${i}`,
+    x: i,
+    y: 4,
   }));
   const snapshot = await f.placement.inspect(f.target);
   const result = await f.placement.duplicate({ ...f.write, snapshotId: snapshot.snapshotId });
   assert.equal(result.status, "applied");
   assert.equal(f.state.objects.length, 17);
-  assert.equal(f.state.objects.filter(o => o.name === "Z lamp").length, 1);
-  assert.equal(f.state.calls.filter(op => op === 33).length, 1);
+  assert.equal(f.state.objects.filter((o) => o.name === "Z lamp").length, 1);
+  assert.equal(f.state.calls.filter((op) => op === 33).length, 1);
 });
 
 test("a layer switch refuses even if the native scene hash incorrectly stays the same", async (t) => {
