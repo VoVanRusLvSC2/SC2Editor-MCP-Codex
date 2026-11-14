@@ -81,14 +81,19 @@ static ModuleTreeView ModuleTree(HWND tree, bool rootsOnly = false, int offset =
               items + L"]}",
           hash};
 }
+#include "trigger_graph.inc"
 static void ModuleInspectExecute(LiveDataRequest *b, HWND root) {
+  if (b->operation == 68) {
+    TriggerGraphTransfer(b, root);
+    return;
+  }
   if (b->pid != GetCurrentProcessId() || !IsWindow(root) || !IsWindowEnabled(root) ||
       PlacementTitle(Text(root)) != PlacementTitle(b->title)) {
     Fail(b, L"LIVE_MODULE_CONTEXT_CHANGED");
     return;
   }
-  if (b->operation == 55 || b->operation == 66) {
-    bool rename = b->operation == 66;
+  if (b->operation == 55 || b->operation == 66 || b->operation == 67) {
+    bool rename = b->operation == 66, editGraph = b->operation == 67;
     if (rename && Text(root).rfind(L"Triggers - [", 0) != 0) {
       Fail(b, L"LIVE_TRIGGER_RENAME_CONTEXT_REQUIRED");
       return;
@@ -138,6 +143,34 @@ static void ModuleInspectExecute(LiveDataRequest *b, HWND root) {
     }
     if (!found) {
       Fail(b, L"LIVE_MODULE_TREE_ITEM_INVALID");
+      return;
+    }
+    if (editGraph) {
+      const auto action = std::wstring(b->value);
+      const wchar_t *label = action == L"delete" ? L"Clear"
+                             : action == L"up"   ? L"Move Up"
+                             : action == L"down" ? L"Move Down"
+                             : action == L"in"   ? L"Move In"
+                             : action == L"out"  ? L"Move Out"
+                                                 : nullptr;
+      if (Text(root).rfind(L"Triggers - [", 0) != 0 || id != 134 || !label ||
+          SendMessageW(tree, TVM_GETEDITCONTROL, 0, 0)) {
+        Fail(b, L"LIVE_TRIGGER_GRAPH_COMMAND_INVALID");
+        return;
+      }
+      SetActiveWindow(root);
+      SetFocus(tree);
+      SendMessageW(tree, TVM_SELECTITEM, TVGN_CARET, reinterpret_cast<LPARAM>(target));
+      if (GetFocus() != tree || reinterpret_cast<HTREEITEM>(
+                                    SendMessageW(tree, TVM_GETNEXTITEM, TVGN_CARET, 0)) != target) {
+        Fail(b, L"LIVE_TRIGGER_GRAPH_SELECTION_CHANGED");
+        return;
+      }
+      if (!TriggerGraphSingleSelection(tree) || !Invoke(root, label)) {
+        Fail(b, L"LIVE_TRIGGER_GRAPH_COMMAND_UNAVAILABLE");
+        return;
+      }
+      Result(b, L"{\"submitted\":true,\"retryMutation\":false}");
       return;
     }
     if (rename) {

@@ -21,8 +21,13 @@ its fresh detail fingerprint. `groupPath=3/1/1/2` selects a nested action/body;
 Preserve both selectors through parameter discovery, configure and literal
 setters. Compound action insertion creates a subtree, not necessarily one row.
 `append_condition` currently creates only the native default Comparison and
-returns `needs_parameters`; do not claim arbitrary variable/function/type
-binding. See `docs/EDITOR_LIVE.md` for the bounded current scope.
+returns `needs_parameters`; configure its native parameters afterward.
+Use `binding_options` then `bind` to select an exact compatible variable,
+function or preset name/origin, or a numeric value. Type changes require an
+editable original type chooser and `allowTypeReset=true`; inspect dependent
+parameters before saving. Use `edit` for deletion/sibling reorder and `move`
+for another compatible branch. Preserve pendingId across `move_recover`; never
+repeat Cut after an uncertain transfer. See `docs/EDITOR_LIVE.md` for the bounded current scope.
 For a requested Save, use `live.document.status/save` after successful application.
 Inspect the returned native graph verification and preserve uncertain results
 without repeating import. Unit/Actor inspection and conversion guides below are

@@ -171,31 +171,92 @@ are relative to the selected parameter container; append/configure helpers
 retain the selected nested action group. User paths are bounded to 16 child
 steps and full native tree reads to 8192 nodes.
 
-This is still not arbitrary GUI graph replacement. Creating/rebinding local
-variables, changing a parameter between literal/function/variable sources,
-changing types, callbacks/references, deleting/reordering arbitrary blocks and
-translated trigger content remain separate missing operations. Native GUI
-readback, same-file Save, native compilation and gameplay are different checks.
-A Toolkit compile of a saved archive does not validate unsaved editor changes.
+Existing parameters now also support `binding_options` and `bind` as described
+below. Atomic whole-library/map-root replacement, declaration/signature editing
+and translated trigger content are separate capabilities. Native GUI readback,
+same-file Save, native compilation and gameplay are distinct checks.
 
 ### Acceptance on 2026-11-14
 
-On an owned original Editor 5.0.17.98310 test document, the adapter edited the
-literal 30 to 42 inside `BaseReward = (30 + (Round * 10))`, inserted compound
-If/Then/Else blocks under existing Else branches, created a Comparison eight
-child steps into a branch, and configured a nested Wait to 0.2 Game Time
-seconds. Native tree readback confirmed these operations. The saved archive
-hash remained unchanged: these were in-memory edits, with no Save, checkpoint
-or document reopen by the live commands. The owned test Editor was stopped
-afterward; no user document was changed.
+An owned original Editor 5.0.17.98310 verified the following on a private fixture:
 
-The focused regression run passed 304 tests, including structural verification
-when the Editor recycles tree handles, wrong-branch and sibling-change rejection,
-stale snapshots, selector propagation and uncertain commits without replay.
-TypeScript and the C++/C# adapters built successfully. This does not establish
-same-file persistence, compilation or gameplay of that newly edited fixture.
-The native compile performed earlier loaded the saved baseline, so it is not
-evidence that the unsaved 42-valued expression was compiled.
+- Edit 30 to 42 inside `BaseReward = (30 + (Round * 10))`.
+- Bind that leaf to the current local Round, replace it with an Arithmetic
+  function, inspect its children and replace the function with the literal 42.
+- Change a native Comparison operand to Real and configure `5.5 > 4.5`,
+  including the operator preset and dependent second operand.
+- Reorder siblings, transfer an entire nested loop with its branches/array and
+  local references into another Then branch and back, and delete an If subtree.
+- Restore the native clipboard after each transfer. An injected lost observation
+  was cancelled and another was completed using the original pendingId; neither
+  recovery repeated Cut.
+- Save through the original File/Save to the same archive and confirm all related
+  modules clean. The archive SHA-256 changed from `1a14da18...` to `bb65f9e5...`.
+- Compile that exact saved fixture with the original generator/compiler, with
+  zero compiler errors. Its exported Galaxy contains both
+  `lv_BaseReward = (42 + (lv_Round * 10));` and `if ((5.5 > 4.5))`.
+
+The focused regression suite passed 320 tests, including stale snapshots,
+collateral edits, handle recycling, source/type validation, nested selectors,
+transfer recovery and uncertain outcomes without replay. TypeScript and C++/C#
+adapters built successfully. These are editor/model/persistence/compiler checks;
+whole-map gameplay and universal semantic equivalence are not claimed. The owned
+Editor was stopped afterward. No user document was changed or reopened.
+
+## Existing parameter sources, types and GUI block edits
+
+`live.trigger.binding_options` opens the original parameter chooser, selects
+`source=variable|function|preset`, returns at most 32 compatible choices and
+cancels the chooser without committing. Names and origins come from the open
+Editor, including current locals and committed unsaved definitions. Preserve
+`groupPath`, `parameterPath`, `itemIndex`, `parameterIndex` and both snapshot
+fingerprints. A single-step compact path may be a number, such as
+`parameterPath=2`; deeper paths use slash-separated indexes.
+
+`live.trigger.bind` selects an exact compatible name/origin. Duplicate names
+without a distinguishing origin refuse. Functions include native and existing
+custom functions exposed by the Editor's current type filter; their default
+arguments return `needs_parameters` and must be configured afterward. The
+Custom Script source is never selected. `source=value value=42` changes a
+numeric literal or replaces an existing function/variable subtree with a number.
+Native Integer and Real bounds apply; this does not write arbitrary source text.
+
+An optional `type` uses the original type chooser only where the Editor enables
+it. `allowTypeReset=true` is required because changing a generic parameter's
+type can reset dependent parameters. The receipt returns `needs_parameters`
+and `dependentParametersUnverified=true`; inspect/configure the remaining
+parameters before Save. A native default Comparison can therefore be converted
+from Owner of Triggering unit == 1 into a typed comparison such as 5.5 > 4.5.
+Changing a declaration or callback signature is outside this parameter operation.
+
+`live.trigger.edit operation=delete|up|down` uses original Clear/Move Up/Move Down
+on one complete action, condition or event subtree. Structural groups themselves
+are protected. The entire resulting tree is checked, including unchanged siblings
+and all descendants. Clipboard contents are not needed for sibling reordering.
+
+`live.trigger.move` transfers a complete subtree to a compatible branch of the
+same trigger. Source selectors are `section/groupPath/itemIndex`; destination
+selectors are `destinationSection/destinationGroupPath`. Omit `afterIndex` to
+append, or use zero to place it first. Cycles and action/condition/event kind
+mismatches refuse before Cut. For example:
+
+`live trigger.move archive=Current.SC2Map windowId=456 path="MAIN/Rounds" section=actions itemIndex=3 expectedDetailHash=<fresh-detail> destinationGroupPath=6/2`
+
+The original Cut/Paste handlers can defer model updates or preserve the source
+until insertion. The adapter observes each stage. If Paste exposes a copy, it
+clears the original only after verifying the complete expected duplicate graph.
+A native clipboard snapshot is restored after completion; unknown non-HGLOBAL
+formats, oversized data or an unavailable clipboard refuse before Cut. Clipboard
+payloads are never returned to the client or written into reports. New clipboard
+content from another process is preserved instead of being overwritten. Clipboard
+restoration and the expected GUI graph each have a separate receipt field.
+
+A pending/unknown transfer returns `pendingId`. Call
+`live.trigger.move_recover action=finish|cancel` with that same token, never start
+another Cut. Cancellation restores only a confirmed original/Cut state; manual
+edits or mismatched state refuse. Other native writes are blocked while a
+transfer is pending. Native Undo history is retained, but this multi-command
+workflow does not promise one atomic Undo step. Save remains a separate command.
 
 ## Configure several existing GUI parameters
 

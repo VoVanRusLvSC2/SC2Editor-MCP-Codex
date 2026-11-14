@@ -87,7 +87,7 @@ internal static class MemoryData {
     uint thread = GetWindowThreadProcessId(hwnd, out pid);
     var title = new StringBuilder(1024);
     GetWindowText(hwnd, title, 1024);
-    if ((operation > 6 && (operation<91||operation>93) && (operation<24||operation>26) && operation!=63 && operation!=64 && operation!=65 && operation!=66 && (operation < 60 || operation > 62) && (operation < 50 || operation > 59) && (operation < 30 || operation > 39) && (operation < 40 || operation > 45)) || title.Length >= 1023 || unit.Length >= 128 || field.Length >= 128 ||
+    if ((operation > 6 && (operation<91||operation>93) && (operation<24||operation>26) && operation!=63 && operation!=64 && operation!=65 && operation!=66 && operation!=67 && operation!=68 && (operation < 60 || operation > 62) && (operation < 50 || operation > 59) && (operation < 30 || operation > 39) && (operation < 40 || operation > 45)) || title.Length >= 1023 || unit.Length >= 128 || field.Length >= 128 ||
         expected.Length >= 128 || value.Length >= 128 || token.Length >= 64)
       throw new Exception("LIVE_MEMORY_REQUEST_INVALID");
     var request =

@@ -333,6 +333,11 @@ static void CALLBACK EditDeadline(HWND, UINT, UINT_PTR, DWORD) {
   }
 }
 static void Execute(LiveDataRequest *b, HWND root) {
+  if (triggerTransfer && b->operation != 68 && b->operation != 50 && b->operation != 55 &&
+      b->operation != 64) {
+    Fail(b, L"LIVE_TRIGGER_TRANSFER_PENDING");
+    return;
+  }
   if (b->operation == 64) {
     const auto temporary = LiveTemporaryDirectory(), components = LiveComponentDirectory();
     if (temporary.empty() || components.empty()) {
@@ -367,8 +372,9 @@ static void Execute(LiveDataRequest *b, HWND root) {
     ComponentExecute(b, root);
     return;
   }
-  if (b->operation == 50 || b->operation == 55 || b->operation == 66) {
-    if (b->operation == 66 && activeEdit) {
+  if (b->operation == 50 || b->operation == 55 || b->operation == 66 || b->operation == 67 ||
+      b->operation == 68) {
+    if ((b->operation == 66 || b->operation == 67 || b->operation == 68) && activeEdit) {
       Fail(b, L"LIVE_MEMORY_EDIT_BUSY");
       return;
     }

@@ -52,8 +52,16 @@ localization, resource IDs and original catalog source annotations.
   containers for literal-leaf edits. Preserve both selectors through wrappers.
   Native condition commits can rebuild tree handles: compare graph structure,
   order and labels, not handle persistence. `append_condition` currently creates
-  only the native default Comparison and returns `needs_parameters`. Variable,
-  function-source/type rebinding and arbitrary graph replacement remain missing.
+  only the native default Comparison and returns `needs_parameters`. Configure
+  it with `live.trigger.bind`: compatible variable/function/preset/value sources
+  come from `binding_options`. Exact origins disambiguate identical names.
+  An enabled original type chooser can change type with `allowTypeReset=true`;
+  inspect dependent parameters afterward. Use `live.trigger.edit` for Clear or
+  sibling reorder, and `live.trigger.move` for a same-trigger branch transfer.
+  A pending transfer must finish/cancel through `move_recover` with its pendingId,
+  never repeat Cut. Clipboard formats stay native and are restored after the
+  complete expected graph is confirmed. Declaration/signature editing and
+  atomic whole-graph replacement remain outside these operations.
   Current map-local UI layouts use `live.ui.create/read/author` in the exact UI
   window. Existing compact `ui frame/property/anchor/remove/template` commands
   reuse the typed writer; omit file=. A pending current buffer is captured without

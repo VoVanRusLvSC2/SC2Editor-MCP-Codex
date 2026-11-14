@@ -161,7 +161,9 @@ static std::wstring ComponentDialogFingerprint(HWND dialog) {
       auto c = Class(h);
       // The action description is an asynchronous read-only preview of the
       // selected row, not an input; it may update after selection returns.
-      if (c == L"Edit" || (c == L"RichEdit20W" && !TriggerPickerMode(componentDialog.mode)) ||
+      if (c == L"Edit" ||
+          (c == L"RichEdit20W" && !TriggerPickerMode(componentDialog.mode) &&
+           componentDialog.mode != L"trigger.choice") ||
           c == L"ComboBox" || (c == L"Static" && componentDialog.mode != L"trigger.choice"))
         text += L"\x1e" + std::to_wstring(GetDlgCtrlID(h)) + L":" + c + L":" + Text(h);
       if (c == L"Button" && componentDialog.mode == L"trigger.condition")
@@ -568,6 +570,190 @@ static void ComponentExecute(LiveDataRequest *b, HWND root) {
   }
   if (mode == L"import.files" && (b->operation == 58 || b->operation == 59)) {
     ImportDialogExecute(b, dialog);
+    return;
+  }
+  if (mode == L"trigger.choice" && b->operation == 59 && std::wstring(b->field) == L"source") {
+    const auto source = std::wstring(b->value);
+    int id = source == L"function"   ? 36
+             : source == L"preset"   ? 37
+             : source == L"variable" ? 38
+             : source == L"value"    ? 39
+                                     : 0;
+    HWND radio = id ? Control(dialog, id, L"Button") : nullptr;
+    if (componentDialog.parent || componentDialog.transition || !radio || !IsWindowEnabled(radio) ||
+        !Control(dialog, 15, L"ComboBox") || !Control(dialog, 11, L"Button") ||
+        !Control(dialog, 12, L"Button")) {
+      Fail(b, L"LIVE_TRIGGER_PARAMETER_SOURCE_UNAVAILABLE");
+      return;
+    }
+    SendMessageW(radio, BM_CLICK, 0, 0);
+    if (SendMessageW(radio, BM_GETCHECK, 0, 0) != BST_CHECKED) {
+      Fail(b, L"LIVE_TRIGGER_PARAMETER_SOURCE_UNCONFIRMED");
+      return;
+    }
+    componentDialog.initial = ComponentDialogFingerprint(dialog);
+    Result(b, L"{\"optionsSet\":true,\"fingerprint\":" + Quote(componentDialog.initial) +
+                  L",\"mapMutation\":false}");
+    return;
+  }
+  if (mode == L"trigger.choice" && b->operation == 59 && std::wstring(b->field) == L"type") {
+    HWND type = Control(dialog, 15, L"ComboBox");
+    if (componentDialog.parent || componentDialog.transition || !type || !IsWindowEnabled(type) ||
+        !b->value[0]) {
+      Fail(b, L"LIVE_TRIGGER_PARAMETER_TYPE_UNAVAILABLE");
+      return;
+    }
+    int count = int(SendMessageW(type, CB_GETCOUNT, 0, 0)), match = -1;
+    if (count < 1 || count > 512) {
+      Fail(b, L"LIVE_TRIGGER_PARAMETER_TYPE_BOUND");
+      return;
+    }
+    for (int i = 0; i < count; i++) {
+      wchar_t label[256]{};
+      if (SendMessageW(type, CB_GETLBTEXTLEN, i, 0) >= 256)
+        continue;
+      SendMessageW(type, CB_GETLBTEXT, i, reinterpret_cast<LPARAM>(label));
+      if (std::wstring(label) == b->value) {
+        if (match >= 0) {
+          Fail(b, L"LIVE_TRIGGER_PARAMETER_TYPE_AMBIGUOUS");
+          return;
+        }
+        match = i;
+      }
+    }
+    if (match < 0) {
+      Fail(b, L"LIVE_TRIGGER_PARAMETER_TYPE_MISSING");
+      return;
+    }
+    SendMessageW(type, CB_SETCURSEL, match, 0);
+    SendMessageW(dialog, WM_COMMAND, MAKEWPARAM(15, CBN_SELCHANGE), reinterpret_cast<LPARAM>(type));
+    if (Text(type) != b->value) {
+      Fail(b, L"LIVE_TRIGGER_PARAMETER_TYPE_UNCONFIRMED");
+      return;
+    }
+    componentDialog.initial = ComponentDialogFingerprint(dialog);
+    Result(b, L"{\"optionsSet\":true,\"fingerprint\":" + Quote(componentDialog.initial) +
+                  L",\"mapMutation\":false}");
+    return;
+  }
+  if (mode == L"trigger.choice" && (b->operation == 59 || b->operation == 58) &&
+      (std::wstring(b->field) == L"function" || std::wstring(b->field) == L"variable" ||
+       std::wstring(b->field) == L"preset" || std::wstring(b->field) == L"choices")) {
+    const auto kind =
+        std::wstring(b->field) == L"choices" ? std::wstring(b->value) : std::wstring(b->field);
+    int radioId = kind == L"function" ? 36 : kind == L"variable" ? 38 : kind == L"preset" ? 37 : 0;
+    int listId = kind == L"function" ? 43 : kind == L"variable" ? 67 : kind == L"preset" ? 59 : 0;
+    HWND radio = Control(dialog, radioId, L"Button"),
+         list = Control(dialog, listId, L"SysListView32"), accept = Control(dialog, 11, L"Button");
+    if (componentDialog.parent || componentDialog.transition || !radio || !list ||
+        !IsWindowVisible(list) || SendMessageW(radio, BM_GETCHECK, 0, 0) != BST_CHECKED ||
+        !accept) {
+      Fail(b, L"LIVE_TRIGGER_BINDING_SOURCE_REQUIRED");
+      return;
+    }
+    int count = int(SendMessageW(list, LVM_GETITEMCOUNT, 0, 0));
+    if (count < 0 || count > 10000) {
+      Fail(b, L"LIVE_TRIGGER_BINDING_LIST_BOUND");
+      return;
+    }
+    if (std::wstring(b->field) == L"choices") {
+      wchar_t *end = nullptr;
+      long offset = b->unit[0] ? wcstol(b->unit, &end, 10) : 0;
+      if (offset < 0 || offset > 10000 || (b->unit[0] && (!end || *end))) {
+        Fail(b, L"LIVE_TRIGGER_BINDING_OFFSET_INVALID");
+        return;
+      }
+      std::wstring out = L"{\"total\":" + std::to_wstring(count) + L",\"items\":[";
+      for (int row = int(offset); row < count && row < offset + 32; row++) {
+        if (row > offset)
+          out += L",";
+        out += L"{\"name\":" + Quote(Cell(list, row, 0)) + L",\"category\":" +
+               Quote(Cell(list, row, 1)) + L",\"origin\":" + Quote(Cell(list, row, 2)) + L"}";
+      }
+      Result(b, out + L"],\"mapMutation\":false}");
+      return;
+    }
+    int match = -1;
+    for (int row = 0; row < count; row++) {
+      auto label = Cell(list, row, 0), name = label;
+      if (kind == L"variable") {
+        const auto valueAt = name.find(L" = "), typeAt = name.find(L" <");
+        name = name.substr(0, (std::min)(valueAt, typeAt));
+      }
+      if ((label == b->value || name == b->value) &&
+          (!b->unit[0] || Cell(list, row, 2) == b->unit)) {
+        if (match >= 0) {
+          Fail(b, L"LIVE_TRIGGER_BINDING_AMBIGUOUS");
+          return;
+        }
+        match = row;
+      }
+    }
+    if (match < 0) {
+      Fail(b, L"LIVE_TRIGGER_BINDING_NOT_FOUND");
+      return;
+    }
+    if (b->operation == 59) {
+      LVITEMW item{};
+      item.stateMask = LVIS_SELECTED | LVIS_FOCUSED;
+      SendMessageW(list, LVM_SETITEMSTATE, WPARAM(-1), reinterpret_cast<LPARAM>(&item));
+      item.state = LVIS_SELECTED | LVIS_FOCUSED;
+      SendMessageW(list, LVM_SETITEMSTATE, match, reinterpret_cast<LPARAM>(&item));
+      SendMessageW(list, LVM_ENSUREVISIBLE, match, FALSE);
+      SetFocus(list);
+    }
+    if (int(SendMessageW(list, LVM_GETNEXTITEM, WPARAM(-1), LVNI_SELECTED)) != match ||
+        SendMessageW(list, LVM_GETSELECTEDCOUNT, 0, 0) != 1 || !IsWindowEnabled(accept)) {
+      Fail(b, L"LIVE_TRIGGER_BINDING_SELECTION_UNCONFIRMED");
+      return;
+    }
+    if (b->operation == 59) {
+      componentDialog.initial = ComponentDialogFingerprint(dialog);
+      Result(b, L"{\"optionsSet\":true,\"name\":" + Quote(Cell(list, match, 0)) + L",\"origin\":" +
+                    Quote(Cell(list, match, 2)) + L",\"fingerprint\":" +
+                    Quote(componentDialog.initial) + L",\"mapMutation\":false}");
+      return;
+    }
+    PostMessageW(accept, BM_CLICK, 0, 0);
+    Result(b, L"{\"submitted\":true,\"retryMutation\":false,\"mapMutation\":\"unconfirmed\"}");
+    return;
+  }
+  if (mode == L"trigger.choice" && (b->operation == 59 || b->operation == 58) &&
+      std::wstring(b->field) == L"binding_value") {
+    const auto type = Text(Control(dialog, 15, L"ComboBox"));
+    bool integer = type == L"Integer";
+    HWND radio = Control(dialog, 39, L"Button"), edit = Control(dialog, 92, L"Edit"),
+         accept = Control(dialog, 11, L"Button");
+    wchar_t *end = nullptr;
+    double value = wcstod(b->value, &end);
+    if ((type != L"Integer" && type != L"Real") || !radio || !edit || !accept ||
+        !IsWindowEnabled(edit) || SendMessageW(radio, BM_GETCHECK, 0, 0) != BST_CHECKED ||
+        !b->value[0] || !end || *end || !std::isfinite(value) ||
+        value < (integer ? -2147483648.0 : -3600.0) || value > (integer ? 2147483647.0 : 3600.0) ||
+        (integer && std::floor(value) != value)) {
+      Fail(b, L"LIVE_TRIGGER_BINDING_VALUE_INVALID");
+      return;
+    }
+    if (b->operation == 59) {
+      SendMessageW(edit, WM_SETTEXT, 0, reinterpret_cast<LPARAM>(b->value));
+      SendMessageW(dialog, WM_COMMAND, MAKEWPARAM(92, EN_CHANGE), reinterpret_cast<LPARAM>(edit));
+    }
+    wchar_t *actualEnd = nullptr;
+    auto actual = Text(edit);
+    double readback = wcstod(actual.c_str(), &actualEnd);
+    if (actual.empty() || !actualEnd || *actualEnd || fabs(readback - value) > 0.00001 ||
+        !IsWindowEnabled(accept)) {
+      Fail(b, L"LIVE_TRIGGER_BINDING_VALUE_UNCONFIRMED");
+      return;
+    }
+    if (b->operation == 59) {
+      componentDialog.initial = ComponentDialogFingerprint(dialog);
+      Result(b, L"{\"optionsSet\":true,\"fingerprint\":" + Quote(componentDialog.initial) +
+                    L",\"mapMutation\":false}");
+      return;
+    }
+    PostMessageW(accept, BM_CLICK, 0, 0);
+    Result(b, L"{\"submitted\":true,\"retryMutation\":false,\"mapMutation\":\"unconfirmed\"}");
     return;
   }
   if (mode == L"trigger.choice" && b->operation == 59 && std::wstring(b->field) == L"list") {

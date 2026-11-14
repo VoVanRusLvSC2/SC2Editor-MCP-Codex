@@ -26,6 +26,11 @@ import {
   triggerAppendActionSchema,
   triggerAppendEventSchema,
   triggerAppendConditionSchema,
+  triggerBindSchema,
+  triggerBindingOptionsSchema,
+  triggerGraphEditSchema,
+  triggerMoveSchema,
+  triggerMoveRecoverySchema,
   triggerDetailsSchema,
   triggerSetWaitSchema,
   triggerSetPeriodicSchema,
@@ -148,7 +153,7 @@ export function registerEditorLiveTools(
     "live.trigger.append_condition",
     {
       description:
-        "Append the native default Comparison through original New Condition / Configure Condition; conditionName=Comparison and useDefaults=true are required. Arbitrary boolean functions and parameter source/type selection are not implemented. Default section=conditions; use section=actions and groupPath for the If/Conditions branch of a nested control-flow action. groupPath accepts one-based child indexes or a compact path such as 1/1 and requires expectedDetailHash. Re-reads the complete affected tree, preserves existing order and accepts only one appended subtree. Returns needs_parameters for unverified defaults. Inspect/configure that same condition without repeating insertion. No save, copy, reopen, compilation or gameplay claim.",
+        "Append the native default Comparison through original New Condition / Configure Condition; conditionName=Comparison and useDefaults=true are required. This creation command supplies the native Comparison only; configure compatible variable/function/preset/value sources afterward with live.trigger.bind. Default section=conditions; use section=actions and groupPath for the If/Conditions branch of a nested control-flow action. groupPath accepts one-based child indexes or a compact path such as 1/1 and requires expectedDetailHash. Re-reads the complete affected tree, preserves existing order and accepts only one appended subtree. Returns needs_parameters for unverified defaults. Inspect/configure that same condition without repeating insertion. No save, copy, reopen, compilation or gameplay claim.",
       inputSchema: triggerAppendConditionSchema,
     },
     async (a) => result(await live.triggers.appendCondition(a)),
@@ -179,6 +184,52 @@ export function registerEditorLiveTools(
       inputSchema: triggerConfigureSchema,
     },
     async (a) => result(await configureTrigger(live.triggers, a)),
+  );
+  server.registerTool(
+    "live.trigger.binding_options",
+    {
+      description:
+        "Inspect native compatible variable, function or preset choices for an existing GUI parameter, including nested expressions. Requires the fresh detail and parameter fingerprints. Original source/type dialogs are cancelled without committing. Optional type asks the original type chooser only where enabled. Returns up to 32 exact names with origin; duplicate names require an origin when binding. Does not save, copy or reopen.",
+      inputSchema: triggerBindingOptionsSchema,
+      annotations: { readOnlyHint: true },
+    },
+    async (a) => result(await live.triggers.bindingOptions(a)),
+  );
+  server.registerTool(
+    "live.trigger.bind",
+    {
+      description:
+        "Replace an existing GUI parameter source with a compatible variable, function, preset or numeric literal through the original Editor. Preserve groupPath/parameterPath and both fresh fingerprints. Use source and exact name/origin from binding_options, or source=value with value. Functions return needs_parameters: configure their native children. Optional type changes only an enabled original type chooser and requires allowTypeReset=true; dependent parameters may reset and must be reviewed. No Custom Script, Save, copy or reopen; uncertain commits never replay.",
+      inputSchema: triggerBindSchema,
+    },
+    async (a) => result(await live.triggers.bind(a)),
+  );
+  server.registerTool(
+    "live.trigger.edit",
+    {
+      description:
+        "Delete or reorder one existing GUI action/event/condition subtree through native Clear/Move Up/Down. Supply operation=delete|up|down, section, optional nested groupPath, itemIndex and expectedDetailHash. Protected structural groups refuse. Verifies the complete subtree and all other branches despite handle recycling. Use live.trigger.move for transfer to another branch. Boundary, incompatible destination or native confirmation can stop the command; inspect unknown outcomes instead of repeating. No Save, copy or reopen.",
+      inputSchema: triggerGraphEditSchema,
+    },
+    async (a) => result(await live.triggers.editGraph(a)),
+  );
+  server.registerTool(
+    "live.trigger.move",
+    {
+      description:
+        "Move one complete GUI subtree to another compatible branch of the same trigger through original Cut/Paste, without reopening. Source: section/groupPath/itemIndex plus fresh expectedDetailHash. Destination: destinationSection/destinationGroupPath; afterIndex=0 puts it first, omitted appends. Rejects cycles and action/condition/event kind mismatches before Cut. Native clipboard formats are backed up and restored; an unsupported/large/busy clipboard refuses before Cut. Verifies the complete expected graph and other branches after transfer. Unknown/partial outcomes never replay. No Save, copy or reopen.",
+      inputSchema: triggerMoveSchema,
+    },
+    async (a) => result(await live.triggers.move(a)),
+  );
+  server.registerTool(
+    "live.trigger.move_recover",
+    {
+      description:
+        "Observe/finish one previously submitted native subtree transfer using its pendingId, without repeating Cut. action=cancel rolls back only a Cut whose entire native graph is still confirmed unchanged since that Cut. Manual edits or different state refuse. Clipboard restoration and the entire native transfer graph are checked independently. No Save or reopen.",
+      inputSchema: triggerMoveRecoverySchema,
+    },
+    async (a) => result(await live.triggers.recoverMove(a)),
   );
   server.registerTool(
     "live.trigger.details",

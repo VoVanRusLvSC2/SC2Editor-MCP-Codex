@@ -16,6 +16,7 @@ import { nativeGuiProfile } from "../trigger/nativeProfile.js";
 import { directoryManifest } from "../../archive/archiveAdapter.js";
 import { configureLiveWait, configureLivePeriodic } from "./triggerWait.js";
 import { editLiteralNumber } from "./triggerNumber.js";
+import { editParameterBinding } from "./triggerBinding.js";
 import { editLiteralChoice } from "./triggerChoice.js";
 import { readTriggerTreePage, readTriggerTreePages } from "./triggerTreePages.js";
 import { resolveTriggerContext } from "./triggerContext.js";
@@ -32,6 +33,10 @@ import {
   verifyTriggerInsertion,
   assertTriggerContainer,
   triggerNestedFields,
+  verifyGraphEdit,
+  verifyParameterRebind,
+  expectedGraphTransfer,
+  structuralTree,
 } from "./triggerPaths.js";
 
 export const triggerTargetSchema = z
@@ -215,6 +220,71 @@ export const triggerParametersSchema = triggerTargetSchema
     limit: z.number().int().min(1).max(32).default(16),
   })
   .strict();
+export const triggerGraphEditSchema = triggerParametersSchema
+  .omit({ parameterPath: true, offset: true, limit: true })
+  .extend({ operation: z.enum(["delete", "up", "down"]) })
+  .strict();
+export const triggerMoveSchema = triggerGraphEditSchema
+  .omit({ operation: true })
+  .extend({
+    destinationSection: triggerSection.default("actions"),
+    destinationGroupPath: triggerChildPath.optional(),
+    afterIndex: z.number().int().min(0).max(8192).optional(),
+  })
+  .strict();
+export const triggerMoveRecoverySchema = triggerTargetSchema
+  .extend({ pendingId: z.string().uuid(), action: z.enum(["finish", "cancel"]).default("finish") })
+  .strict();
+const bindingDisplayName = z
+  .string()
+  .trim()
+  .min(1)
+  .max(100)
+  .refine(
+    (value) => [...value].every((c) => c.charCodeAt(0) >= 32),
+    "Control characters are not allowed in native displayed names",
+  );
+const bindingFields = {
+  source: z.enum(["variable", "function", "preset", "value"]),
+  type: bindingDisplayName.optional(),
+};
+export const triggerBindingOptionsSchema = triggerParametersSchema
+  .extend({
+    ...bindingFields,
+    source: z.enum(["variable", "function", "preset"]),
+    parameterIndex: z.number().int().min(1).max(8192),
+    expectedParameterHash: z.string().regex(/^\d+$/),
+    offset: z.number().int().min(0).max(10000).default(0),
+  })
+  .strict();
+export const triggerBindSchema = triggerParametersSchema
+  .extend({
+    ...bindingFields,
+    parameterIndex: z.number().int().min(1).max(8192),
+    expectedParameterHash: z.string().regex(/^\d+$/),
+    name: bindingDisplayName.optional(),
+    origin: bindingDisplayName.optional(),
+    value: z.number().finite().min(-2147483648).max(2147483647).optional(),
+    allowTypeReset: z.literal(true).optional(),
+  })
+  .strict()
+  .superRefine((args, ctx) => {
+    if (
+      args.source === "value"
+        ? args.value === undefined || args.name !== undefined || args.origin !== undefined
+        : !args.name || args.value !== undefined
+    )
+      ctx.addIssue({
+        code: "custom",
+        message: "value source requires only value; other sources require name and optional origin",
+      });
+    if (args.type && !args.allowTypeReset)
+      ctx.addIssue({
+        code: "custom",
+        message:
+          "Changing the native type requires allowTypeReset=true and may reset dependent parameters",
+      });
+  });
 export const triggerSetRealSchema = triggerParametersSchema
   .extend({
     parameterIndex: z.number().int().min(1).max(8192),
@@ -362,6 +432,11 @@ export class LiveTriggers {
         "live.trigger.set_wait",
         "live.trigger.append_event",
         "live.trigger.append_condition",
+        "live.trigger.binding_options",
+        "live.trigger.bind",
+        "live.trigger.edit",
+        "live.trigger.move",
+        "live.trigger.move_recover",
         "live.trigger.append_numeric",
         "live.trigger.append_configured",
         "live.trigger.configure",
@@ -373,14 +448,14 @@ export class LiveTriggers {
         "live.trigger.set_point",
       ],
       scope:
-        "Add self-contained GUI libraries; rename GUI elements; append compound built-in actions/events and native default Comparison conditions; browse nested branches and edit literal Real, Integer, Unit Type or named Point leaves inside nested parameters",
+        "Create self-contained GUI libraries; edit existing nested actions/events/conditions, compatible native parameter sources and editable types; delete, reorder and transfer complete subtrees within the same trigger",
       copiesCreated: 0,
       reopensMap: false,
       savesMap: false,
       limits:
         "1 MiB; Core GUI references; up to 32 exact live Game Links; English embedded names; 4 prepared libraries for 10 minutes",
       unsupported: [
-        "Replacing existing map-root/library graphs or editing parameter sources beyond supported literal Real, Integer, Unit Type or named Point leaves; arbitrary boolean functions and variable/reference/type binding",
+        "Atomic whole map-root/library replacement and editing declaration signatures; parameter source/type choices are limited to the compatible options exposed by the original Editor",
         "Custom Script",
         "Map-instance references",
         "Non-name localization and translated strings",
@@ -1052,6 +1127,372 @@ export class LiveTriggers {
             saved: false,
             recovery:
               "Inspect the same GUI tree and any native dialog; do not replay an uncertain rename.",
+          };
+        }
+      });
+    });
+  }
+  async bindingOptions(input: z.input<typeof triggerBindingOptionsSchema>) {
+    return this.bindingImpl(triggerBindingOptionsSchema.parse(input), true);
+  }
+  async bind(input: z.input<typeof triggerBindSchema>) {
+    return this.bindingImpl(triggerBindSchema.parse(input), false);
+  }
+  private async bindingImpl(
+    args: z.infer<typeof triggerBindSchema> | z.infer<typeof triggerBindingOptionsSchema>,
+    listOnly: boolean,
+  ) {
+    return this.run(async () => {
+      const archive = await this.archive(args.archive),
+        target = { archive: archive.archive, windowId: args.windowId },
+        w = await this.window(target);
+      return withEditorLease(w, async () => {
+        const selected = await this.selectItemParameters(w, args);
+        if (selected.parameters.fingerprint !== args.expectedParameterHash)
+          throw Error("LIVE_TRIGGER_PARAMETER_CHANGED");
+        const rows = selected.parameters.items.filter(
+            (row) => row.parent === selected.parameterGroup.handle,
+          ),
+          parameter = rows[args.parameterIndex - 1];
+        if (!parameter || !parameter.text.includes(":"))
+          throw Error("LIVE_TRIGGER_PARAMETER_NOT_BINDABLE");
+        const result = await editParameterBinding({
+          desktop: this.desktop,
+          window: w,
+          triggerHandle: selected.trigger.handle,
+          itemHandle: selected.item.handle,
+          parameterHandle: parameter.handle,
+          leftHash: selected.left.fingerprint,
+          detailHash: selected.detail.fingerprint,
+          parameterHash: selected.parameters.fingerprint,
+          source: args.source,
+          type: args.type,
+          ...(!listOnly
+            ? {
+                name: (args as z.infer<typeof triggerBindSchema>).name,
+                origin: (args as z.infer<typeof triggerBindSchema>).origin,
+                value: (args as z.infer<typeof triggerBindSchema>).value,
+              }
+            : {}),
+          listOnly,
+          offset: args.offset,
+          pause: this.pause,
+          guardArchive: async () => {
+            if ((await this.archive(target.archive)).sha256 !== archive.sha256)
+              throw Error("LIVE_TRIGGER_ARCHIVE_CHANGED");
+          },
+        });
+        if (result.status !== "submitted") return { ...result, ...triggerNestedFields(args) };
+        try {
+          const afterDetail = await this.moduleTree(result.window, 134),
+            afterParams = await this.moduleTree(result.window, 468);
+          const verified = verifyParameterRebind(
+            selected.parameters.items,
+            afterParams.items,
+            parameter.handle,
+            "allowTypeReset" in args && args.allowTypeReset === true,
+          );
+          const preserved = detailPreserved(selected.detail, afterDetail, selected.item.handle);
+          const accepted = verified.verified && preserved;
+          return {
+            status: accepted
+              ? args.type || args.source === "function"
+                ? "needs_parameters"
+                : "applied"
+              : "verification_failed",
+            ...triggerNestedFields(args),
+            path: args.path,
+            section: args.section,
+            itemIndex: args.itemIndex,
+            parameterIndex: args.parameterIndex,
+            source: args.source,
+            nativeType: result.nativeType,
+            selectedName: result.selectedName,
+            selectedOrigin: result.selectedOrigin,
+            previousValue: parameter.text,
+            nativeLabel: verified.bound?.text,
+            nativeBindingVerified: accepted,
+            parameterGraphVerified: accepted,
+            dependentParametersUnverified: !!args.type,
+            parametersVerified: false,
+            detailFingerprint: afterDetail.fingerprint,
+            parameterFingerprint: afterParams.fingerprint,
+            copiesCreated: 0,
+            reopensMap: false,
+            saved: false,
+            retryMutation: false,
+          };
+        } catch (error) {
+          return {
+            status: "unknown",
+            error: String(error),
+            retryMutation: false,
+            saved: false,
+            recovery: "Inspect the existing parameter; do not repeat an uncertain binding.",
+          };
+        }
+      });
+    });
+  }
+  async move(input: z.input<typeof triggerMoveSchema>) {
+    const args = triggerMoveSchema.parse(input);
+    return this.run(async () => {
+      const archive = await this.archive(args.archive),
+        target = { archive: archive.archive, windowId: args.windowId },
+        w = await this.window(target);
+      return withEditorLease(w, async () => {
+        const selected = await this.selectTrigger(
+          w,
+          args.path,
+          triggerSectionLabel[args.section],
+          args.groupPath,
+          args.expectedDetailHash,
+        );
+        const source = selected.detail.items.filter((row) => row.parent === selected.group.handle)[
+          args.itemIndex - 1
+        ];
+        if (!source) throw Error("LIVE_TRIGGER_ITEM_INDEX_OUT_OF_RANGE");
+        if (
+          ["Events", "Conditions", "Local Variables", "Actions", "If", "Then", "Else"].includes(
+            source.text,
+          )
+        )
+          throw Error("LIVE_TRIGGER_PROTECTED_GROUP");
+        const root = selected.detail.items.find((row) => row.depth === 0)!;
+        const section = selected.detail.items.find(
+          (row) =>
+            row.parent === root.handle && row.text === triggerSectionLabel[args.destinationSection],
+        );
+        if (!section) throw Error("LIVE_TRIGGER_DESTINATION_GROUP_MISSING");
+        const destination = triggerItemAtPath(
+          selected.detail.items,
+          section,
+          args.destinationGroupPath,
+        );
+        assertTriggerContainer(destination, true);
+        const kind = (text: string) =>
+          text === "Events"
+            ? "event"
+            : ["If", "Conditions"].includes(text)
+              ? "condition"
+              : "action";
+        if (kind(selected.group.text) !== kind(destination.text))
+          throw Error("LIVE_TRIGGER_MOVE_KIND_MISMATCH");
+        const children = selected.detail.items.filter((row) => row.parent === destination.handle),
+          after = args.afterIndex ?? children.length;
+        if (after > children.length)
+          throw Error("LIVE_TRIGGER_MOVE_DESTINATION_INDEX_OUT_OF_RANGE");
+        const insertion = after ? children[after - 1] : destination;
+        if (insertion.handle === source.handle)
+          return {
+            status: "already_applied",
+            nativeTreeVerified: true,
+            saved: false,
+            copiesCreated: 0,
+            reopensMap: false,
+          };
+        const expected = expectedGraphTransfer(
+          selected.detail.items,
+          source.handle,
+          destination.handle,
+          insertion.handle,
+        );
+        if ((await this.archive(target.archive)).sha256 !== archive.sha256)
+          throw Error("LIVE_TRIGGER_ARCHIVE_CHANGED");
+        const pendingId = randomUUID();
+        try {
+          let receipt = (await this.desktop.command(w, 68, {
+            unit: insertion.handle,
+            field: source.handle,
+            expected: selected.detail.fingerprint,
+            value: "begin",
+            token: pendingId,
+          })) as Record<string, unknown>;
+          for (let i = 0; i < 50 && receipt.status === "pending"; i++) {
+            await this.pause(100);
+            receipt = (await this.desktop.command(w, 68, {
+              value: "advance",
+              token: pendingId,
+            })) as Record<string, unknown>;
+          }
+          if (receipt.status === "pending")
+            return {
+              status: "pending",
+              pendingId,
+              phase: receipt.phase,
+              saved: false,
+              retryMutation: false,
+              recovery:
+                "Poll live.trigger.move_recover with the same pendingId; never begin the transfer again.",
+            };
+          const nativeReceipt = z
+            .object({
+              submitted: z.literal(true),
+              phase: z.string(),
+              clipboardRestored: z.boolean(),
+              nativeTreeVerified: z.boolean(),
+            })
+            .parse(receipt);
+          const current = await this.window(target, w);
+          if (!current.enabled) throw Error("LIVE_TRIGGER_TRANSFER_DIALOG_PRESENT");
+          const actual = await this.moduleTree(current, 134);
+          const verified =
+            nativeReceipt.phase === "pasted" &&
+            JSON.stringify(structuralTree(expected)) ===
+              JSON.stringify(structuralTree(actual.items));
+          return {
+            status:
+              verified && nativeReceipt.clipboardRestored
+                ? "applied"
+                : verified
+                  ? "partial"
+                  : "verification_failed",
+            path: args.path,
+            ...triggerNestedFields(args),
+            destinationSection: args.destinationSection,
+            destinationGroupPath: args.destinationGroupPath,
+            afterIndex: after,
+            itemIndex: args.itemIndex,
+            nativeTreeVerified: verified,
+            clipboardRestored: nativeReceipt.clipboardRestored,
+            phase: nativeReceipt.phase,
+            detailFingerprint: actual.fingerprint,
+            copiesCreated: 0,
+            reopensMap: false,
+            saved: false,
+            retryMutation: false,
+          };
+        } catch (error) {
+          return {
+            status: "unknown",
+            pendingId,
+            error: String(error),
+            saved: false,
+            retryMutation: false,
+            recovery:
+              "Inspect the same trigger and native Undo state. Do not repeat an uncertain transfer.",
+          };
+        }
+      });
+    });
+  }
+  async recoverMove(input: z.input<typeof triggerMoveRecoverySchema>) {
+    const args = triggerMoveRecoverySchema.parse(input);
+    return this.run(async () => {
+      const archive = await this.archive(args.archive),
+        w = await this.window({ archive: archive.archive, windowId: args.windowId });
+      return withEditorLease(w, async () => {
+        let response = (await this.desktop.command(w, 68, {
+          value: args.action === "cancel" ? "cancel" : "advance",
+          token: args.pendingId,
+        })) as Record<string, unknown>;
+        for (let i = 0; i < 50 && response.status === "pending"; i++) {
+          await this.pause(100);
+          response = (await this.desktop.command(w, 68, {
+            value: "advance",
+            token: args.pendingId,
+          })) as Record<string, unknown>;
+        }
+        const pending = response.status === "pending";
+        return {
+          ...response,
+          status: pending
+            ? "pending"
+            : response.nativeTreeVerified === true && response.clipboardRestored === true
+              ? response.phase === "cancelled"
+                ? "cancelled"
+                : "applied"
+              : "verification_failed",
+          ...(pending ? { pendingId: args.pendingId } : {}),
+          saved: false,
+          copiesCreated: 0,
+          reopensMap: false,
+          retryMutation: false,
+        };
+      });
+    });
+  }
+  async editGraph(input: z.input<typeof triggerGraphEditSchema>) {
+    const args = triggerGraphEditSchema.parse(input);
+    return this.run(async () => {
+      const archive = await this.archive(args.archive),
+        target = { archive: archive.archive, windowId: args.windowId },
+        w = await this.window(target);
+      return withEditorLease(w, async () => {
+        const selected = await this.selectTrigger(
+          w,
+          args.path,
+          triggerSectionLabel[args.section],
+          args.groupPath,
+          args.expectedDetailHash,
+        );
+        const children = selected.detail.items.filter(
+            (row) => row.parent === selected.group.handle,
+          ),
+          item = children[args.itemIndex - 1];
+        if (!item) throw Error("LIVE_TRIGGER_ITEM_INDEX_OUT_OF_RANGE");
+        if (
+          ["Events", "Conditions", "Local Variables", "Actions", "If", "Then", "Else"].includes(
+            item.text,
+          )
+        )
+          throw Error("LIVE_TRIGGER_PROTECTED_GROUP");
+        if (
+          (args.operation === "up" && args.itemIndex === 1) ||
+          (args.operation === "down" && args.itemIndex === children.length)
+        )
+          throw Error("LIVE_TRIGGER_MOVE_BOUNDARY");
+        if ((await this.archive(target.archive)).sha256 !== archive.sha256)
+          throw Error("LIVE_TRIGGER_ARCHIVE_CHANGED");
+        let submitted = false;
+        try {
+          submitted = true;
+          z.object({ submitted: z.literal(true) }).parse(
+            await this.desktop.command(w, 67, {
+              unit: "134",
+              field: item.handle,
+              expected: selected.detail.fingerprint,
+              value: args.operation,
+            }),
+          );
+          let after: FullTree | undefined;
+          for (let i = 0; i < 50; i++) {
+            const current = await this.window(target, w);
+            if (!current.enabled) throw Error("LIVE_TRIGGER_GRAPH_DIALOG_PRESENT");
+            after = await this.moduleTree(current, 134);
+            if (after.fingerprint !== selected.detail.fingerprint) break;
+            await this.pause(100);
+          }
+          if (!after) throw Error("LIVE_TRIGGER_GRAPH_COMPLETION_UNKNOWN");
+          const verification = verifyGraphEdit(
+            selected.detail.items,
+            after.items,
+            item.handle,
+            args.operation,
+          );
+          return {
+            status: verification.verified ? "applied" : "verification_failed",
+            path: args.path,
+            operation: args.operation,
+            ...triggerNestedFields(args),
+            itemIndex: args.itemIndex,
+            movedPath: "movedPath" in verification ? verification.movedPath : undefined,
+            nativeTreeVerified: verification.verified,
+            detailFingerprint: after.fingerprint,
+            copiesCreated: 0,
+            reopensMap: false,
+            saved: false,
+            retryMutation: false,
+          };
+        } catch (error) {
+          return {
+            status: submitted ? "unknown" : "stopped",
+            path: args.path,
+            error: String(error),
+            saved: false,
+            retryMutation: false,
+            recovery:
+              "Inspect this document and any native confirmation. Do not repeat an uncertain block edit.",
           };
         }
       });

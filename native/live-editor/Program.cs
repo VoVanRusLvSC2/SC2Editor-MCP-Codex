@@ -62,7 +62,7 @@ internal static partial class LiveEditor {
       IntPtr hwnd=new IntPtr(Int64.Parse(args[1]));Window w=Read(hwnd);
       bool terrain=(operation>=24&&operation<=26)||operation==63||(operation>=30&&operation<=39)||(operation>=43&&operation<=45);
       bool modalPlacement=operation==25||operation==30||operation==36||operation==38||(operation>=52&&operation<=54)||(operation>=56&&operation<=59);
-      bool inspection=(((operation>=50&&operation<=59)||(operation>=60&&operation<=62)||operation==64||operation==65)&&w!=null&&(w.title.StartsWith("Triggers - [")||w.title.StartsWith("UI - [")||w.title.StartsWith("Import - [")||w.title.StartsWith("Text - [")||w.title.StartsWith("Terrain - [")||w.title.StartsWith("Data - [")))||(operation==66&&w!=null&&w.title.StartsWith("Triggers - ["));
+      bool inspection=(((operation>=50&&operation<=59)||(operation>=60&&operation<=62)||operation==64||operation==65)&&w!=null&&(w.title.StartsWith("Triggers - [")||w.title.StartsWith("UI - [")||w.title.StartsWith("Import - [")||w.title.StartsWith("Text - [")||w.title.StartsWith("Terrain - [")||w.title.StartsWith("Data - [")))||((operation==66||operation==67||operation==68)&&w!=null&&w.title.StartsWith("Triggers - ["));
       if(w==null||w.processId.ToString()!=args[2]||w.processStart!=args[3]||w.title.Replace("*]","]")!=args[4].Replace("*]","]")||(!w.enabled&&(operation<4||operation>6)&&!modalPlacement)||(!inspection&&!w.title.StartsWith(terrain?"Terrain - [":"Data - [")))throw new Exception(terrain?"LIVE_EXACT_TERRAIN_WINDOW_REQUIRED":"LIVE_MEMORY_EXACT_DATA_WINDOW_REQUIRED");
       return args.Length==5?MemoryData.Inspect(hwnd):MemoryData.Call(hwnd,operation,args[6],args[7],args[8],args[9],args[10]);
     }
